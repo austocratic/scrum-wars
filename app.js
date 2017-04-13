@@ -1,11 +1,4 @@
 
-
-
-console.log('Testing outside of if: ', process.env.SLACK_HOOK);
-
-var testJS = require('./test');
-
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');

@@ -19,8 +19,6 @@ var app = require('../app');
 var debug = require('debug')('scrum-wars:server');
 var http = require('http');
 
-console.log('Testing inside of www: ', process.env.SLACK_HOOK);
-
 /**
  * Get port from environment and store in Express.
  */
