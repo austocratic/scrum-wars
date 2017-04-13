@@ -1,8 +1,7 @@
 
 
+exports.PostActionList = (req, res, next) => {
 
-exports.PostProfile = (req, res, next) => {
-    
     var attributes = {
         health: 10,
         attack: 15
