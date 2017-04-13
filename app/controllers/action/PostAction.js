@@ -4,6 +4,8 @@ var Alert = require('../../../app/libraries/slack').Alert;
 
 exports.PostAction = (req, res, next) => {
 
+    console.log('PostAction called, req: ', req.body);
+
     var action = req.body.actions[0].value;
 
     var slackResponse = {
