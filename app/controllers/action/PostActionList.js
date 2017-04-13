@@ -2,34 +2,40 @@
 
 exports.PostActionList = (req, res, next) => {
 
-    var attributes = {
-        health: 10,
-        attack: 15
-    };
-
     var slackResponse = {
         "attachments": [
             {
-                "image_url": "http://orig06.deviantart.net/23db/f/2013/201/4/6/paladin_basic_version_by_thomaswievegg-d6eaz66.jpg",
-                "fields": [
+                "text": "Choose an action",
+                "fallback": "You are unable to choose an action",
+                "callback_id": "wopr_game",
+                "color": "#3AA3E3",
+                "attachment_type": "default",
+                "actions": [
                     {
-                        "title": "Profile",
-                        "value": "Montaigne",
-                        "short": false
-                    }
-                ]
-            },
-            {
-                "fields": [
-                    {
-                        "title": "Health",
-                        "value": attributes.health,
-                        "short": true
+                        "name": "action",
+                        "text": "Attack",
+                        "style": "danger",
+                        "type": "button",
+                        "value": "attack"/*,
+                     "confirm": {
+                     "title": "Are you sure?",
+                     "text": "This action will put your character on the offensive!",
+                     "ok_text": "Yes",
+                     "dismiss_text": "No"
+                     }*/
                     },
                     {
-                        "title": "Attack",
-                        "value": attributes.attack,
-                        "short": true
+                        "name": "action",
+                        "text": "Defend",
+                        "style": "primary",
+                        "type": "button",
+                        "value": "defend"/*,
+                     "confirm": {
+                     "title": "Are you sure?",
+                     "text": "This action will defend your character from possible attacks!",
+                     "ok_text": "Yes",
+                     "dismiss_text": "No"
+                     }*/
                     }
                 ]
             }
