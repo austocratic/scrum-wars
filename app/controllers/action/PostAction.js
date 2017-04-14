@@ -6,7 +6,13 @@ exports.PostAction = (req, res, next) => {
 
     console.log('PostAction called, req: ', req.body);
 
-    var action = req.body.payload.actions[0].value;
+    var payload = JSON.parse(req.body.payload);
+
+    console.log('payload: ', payload);
+
+    //var action = req.body.payload.actions[0].value;
+    var action = payload.actions[0].value;
+
 
     var slackResponse = {
         "text": ("Action triggered: " + action)

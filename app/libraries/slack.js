@@ -3,7 +3,9 @@
 // ---Modules---
 var request = require('request');
 
-var slackHook = process.env.SLACK_HOOK;
+//var slackHook = process.env.SLACK_HOOK;
+
+var slackHook = 'https://hooks.slack.com/services/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';
 
 
 class Slack {
