@@ -5,7 +5,9 @@
 
 exports.InteractiveMessages = (req, res, next) => {
 
-    console.log('Incoming interactive message, req.body: ', req.body);
+    var messagePayload = JSON.parse(req.body.payload);
+
+    console.log('Incoming interactive message, parsed body: ', messagePayload);
     
     var slackResponse = {
         "text": 'received input'
