@@ -30,10 +30,18 @@ exports.InteractiveMessages = (req, res, next) => {
                     }
                 };
 
+                console.log('Creating character with properties: ', charProps);
+
                 //write to DB
                 var firebase = new Firebase();
 
-                firebase.create(charProps);
+                firebase.create(charProps)
+                    .then( fbResponse => {
+                        console.log('fbResponse: ', fbResponse)
+                    })
+                    .catch( err => {
+                        console.log('Error when writing to firebase: ', err)
+                    });
 
                 //Respond with next question
 
