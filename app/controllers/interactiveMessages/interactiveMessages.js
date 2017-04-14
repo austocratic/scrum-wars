@@ -37,7 +37,7 @@ exports.InteractiveMessages = (req, res, next) => {
                 //Actually, should not write to the DB until all character creation steps are complete
                 var firebase = new Firebase();
 
-                firebase.create(charProps)
+                firebase.create('character', charProps)
                     .then( fbResponse => {
                         console.log('fbResponse: ', fbResponse)
                     })

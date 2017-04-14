@@ -4,7 +4,6 @@ var request = require('request');
 var CREDENTIAL = process.env.FIREBASE_KEY;
 
 var firebaseName = 'scrum-wars';
-var baseURL = 'https://' + firebaseName + '.firebaseio.com/data.json?auth=' + CREDENTIAL;
 
 
 class Firebase {
@@ -14,14 +13,15 @@ class Firebase {
 
     _setOptions() {
         this.options = {
-            uri:                     'https://scrum-wars.firebaseio.com/character.json?auth=' + CREDENTIAL,
             resolveWithFullResponse: true,
             json:                    true
         }
     }
 
-    update(data) {
+    update(table, data) {
 
+        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+        
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {
@@ -34,8 +34,10 @@ class Firebase {
         })
     }
 
-    create(data) {
+    create(table, data) {
 
+        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+        
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {
