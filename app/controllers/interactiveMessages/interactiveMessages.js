@@ -24,6 +24,7 @@ exports.InteractiveMessages = (req, res, next) => {
 
                 var charProps = {
                     character: {
+                        user_id: messagePayload.user.id,
                         strength: 15,
                         stamina: 10,
                         class: messagePayload.actions[0].value
@@ -33,6 +34,7 @@ exports.InteractiveMessages = (req, res, next) => {
                 console.log('Creating character with properties: ', charProps);
 
                 //write to DB
+                //Actually, should not write to the DB until all character creation steps are complete
                 var firebase = new Firebase();
 
                 firebase.create(charProps)
