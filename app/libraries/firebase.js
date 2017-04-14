@@ -14,7 +14,7 @@ class Firebase {
 
     _setOptions() {
         this.options = {
-            uri:                     'https://scrum-wars.firebaseio.com/character.json?auth=' + CREDENTIAL,
+            uri:                     'https://scrum-wars.firebaseio.com/.json?auth=' + CREDENTIAL,
             resolveWithFullResponse: true,
             json:                    true
         }
@@ -39,7 +39,7 @@ class Firebase {
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {
-            request.put(this.options, (err, httpResponse, body) => {
+            request.post(this.options, (err, httpResponse, body) => {
                 if (err) {
                     reject(err);
                 }
