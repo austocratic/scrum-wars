@@ -1,12 +1,16 @@
 
+var Firebase = require('../../libraries/firebase').Firebase;
 
 
-exports.PostProfile = (req, res, next) => {
+exports.profile = (req, res, next) => {
     
-    var attributes = {
-        health: 10,
-        attack: 15
-    };
+    console.log('Called /profile, req.body: ', req.body);
+    
+    //Get user id making the request
+
+    //Need to look at user making request - get their id.
+
+    //Look up that player's character
 
     var slackResponse = {
         "attachments": [
@@ -24,12 +28,12 @@ exports.PostProfile = (req, res, next) => {
                 "fields": [
                     {
                         "title": "Health",
-                        "value": attributes.health,
+                        //"value": attributes.health,
                         "short": true
                     },
                     {
                         "title": "Attack",
-                        "value": attributes.attack,
+                       // "value": attributes.attack,
                         "short": true
                     }
                 ]

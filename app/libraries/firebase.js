@@ -18,10 +18,26 @@ class Firebase {
         }
     }
 
+/*
+    get(table, data) {
+
+        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+        this.options.body = data;
+
+        return new Promise( (resolve, reject) => {
+            request.patch(this.options, (err, httpResponse, body) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(body);
+            })
+        })
+    }*/
+
+
     update(table, data) {
 
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
-        
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {
@@ -37,7 +53,6 @@ class Firebase {
     create(table, data) {
 
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
-        
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {

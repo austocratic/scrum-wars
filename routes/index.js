@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
-var profile = require('../app/controllers/profile/PostProfile');
+var profile = require('../app/controllers/commands/profile');
 var actionList = require('../app/controllers/action/PostActionList');
 var action = require('../app/controllers/action/PostAction');
 var generate = require('../app/controllers/commands/generate');
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/api/profile', function(req, res, next) {
-    profile.PostProfile(req, res, next);
+    profile.profile(req, res, next);
 });
 
 router.post('/api/actionList', function(req, res, next) {
