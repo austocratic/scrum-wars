@@ -18,7 +18,7 @@ exports.InteractiveMessages = (req, res, next) => {
 
     //Read callback to determine what path to take
     function determineResponse(){
-        switch(messagePayload){
+        switch(messagePayload.callback_id){
 
             case 'characterClass':
 
@@ -32,7 +32,7 @@ exports.InteractiveMessages = (req, res, next) => {
 
                 //write to DB
                 var firebase = new Firebase();
-                
+
                 firebase.create(charProps);
 
                 //Respond with next question
@@ -44,6 +44,8 @@ exports.InteractiveMessages = (req, res, next) => {
                 break;
 
             default:
+
+                return "ERROR: option not available"
         }
     }
 
