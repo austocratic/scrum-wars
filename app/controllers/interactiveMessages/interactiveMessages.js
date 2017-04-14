@@ -23,12 +23,12 @@ exports.InteractiveMessages = (req, res, next) => {
             case 'characterClass':
 
                 var charProps = {
-                    character: {
-                        user_id: messagePayload.user.id,
-                        strength: 15,
-                        stamina: 10,
-                        class: messagePayload.actions[0].value
-                    }
+
+                    user_id: messagePayload.user.id,
+                    strength: 15,
+                    stamina: 10,
+                    class: messagePayload.actions[0].value
+
                 };
 
                 console.log('Creating character with properties: ', charProps);

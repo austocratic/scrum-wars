@@ -14,7 +14,7 @@ class Firebase {
 
     _setOptions() {
         this.options = {
-            uri:                     'https://scrum-wars.firebaseio.com/.json?auth=' + CREDENTIAL,
+            uri:                     'https://scrum-wars.firebaseio.com/character.json?auth=' + CREDENTIAL,
             resolveWithFullResponse: true,
             json:                    true
         }
