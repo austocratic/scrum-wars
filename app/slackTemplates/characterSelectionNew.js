@@ -10,7 +10,7 @@ exports.characterSelectionNew = payload => {
             {
                 "text": "Hail traveler, are you ready to embark on a NEW faithful journey to lands uncharted and depths unknown?  All your previous progress will be lost",
                 "fallback": "You are unable to choose an action",
-                "callback_id": "setCharacterClass",
+                "callback_id": "characterSelectionNew",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "actions": [
