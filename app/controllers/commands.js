@@ -9,18 +9,14 @@ exports.commands = (req, res, next) => {
     
     //TODO need validation to ensure request came from slack and is structured correctly
 
-    console.log('called commands function, req.body: ', req.body);
-
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
     //Parse the payload of the message
     var messagePayload;
     try {
-        messagePayload = JSON.parse(req.body.payload);
+        messagePayload = JSON.parse(req.body);
     } catch(err){
-        messagePayload = req.body.payload;
+        messagePayload = req.body;
     }
-
-    console.log('messagePayload: ', messagePayload);
     
     //Get the command property
     var command = messagePayload.command;
