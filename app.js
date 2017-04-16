@@ -11,6 +11,26 @@ var index = require('./routes/index');
 
 var app = express();
 
+/*
+var Firebase = require('./app/libraries/firebase').Firebase;
+
+//test
+var firebase = new Firebase();
+
+firebase.get('character', 'U4ZA6CCBG')
+    .then( fbResponse => {
+        console.log('fbResponse: ', fbResponse)
+
+        
+
+
+    })
+    .catch( err => {
+        console.log('Error when writing to firebase: ', err)
+    });
+*/
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

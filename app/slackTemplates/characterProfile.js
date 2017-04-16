@@ -1,19 +1,8 @@
 
-var Firebase = require('../../libraries/firebase').Firebase;
 
+exports.characterProfile = payload => {
 
-exports.profile = (req, res, next) => {
-    
-    console.log('Called /profile, req.body: ', req.body);
-    
-    //Get user id making the request
-
-    //Incoming requests have a user_id, use it to determine who's character details should be pulled
-    var userID = req.body.user_id;
-
-    //Look up that player's character
-
-    var slackResponse = {
+    return {
         "attachments": [
             {
                 "image_url": "http://orig06.deviantart.net/23db/f/2013/201/4/6/paladin_basic_version_by_thomaswievegg-d6eaz66.jpg",
@@ -34,13 +23,11 @@ exports.profile = (req, res, next) => {
                     },
                     {
                         "title": "Attack",
-                       // "value": attributes.attack,
+                        // "value": attributes.attack,
                         "short": true
                     }
                 ]
             }
         ]
     };
-
-    res.status(200).send(slackResponse);
 };

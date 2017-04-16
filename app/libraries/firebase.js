@@ -18,21 +18,25 @@ class Firebase {
         }
     }
 
-/*
+
+
     get(table, data) {
 
+        //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?orderBy="$value"&equalTo=auth=' + CREDENTIAL;
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+       // this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?orderBy="user_id"&equalTo=' + data + '?auth=' + CREDENTIAL;
+        
         this.options.body = data;
 
         return new Promise( (resolve, reject) => {
-            request.patch(this.options, (err, httpResponse, body) => {
+            request.get(this.options, (err, httpResponse, body) => {
                 if (err) {
                     reject(err);
                 }
                 resolve(body);
             })
         })
-    }*/
+    }
 
 
     update(table, data) {

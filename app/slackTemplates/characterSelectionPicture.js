@@ -1,38 +1,33 @@
 
-var Firebase = require('../../libraries/firebase').Firebase;
 
 
-exports.generate = (req, res, next) => {
+exports.characterSelectionPicture = payload => {
 
-    var slackResponse = {
+    return {
         "attachments": [
             {
-                "text": "Choose a character class",
+                "text": "Choose a character profile picture",
                 "fallback": "You are unable to choose an action",
-                "callback_id": "characterClass",
+                "callback_id": "characterSelectionPicture",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "actions": [
                     {
                         "name": "warrior",
-                        "text": "Warrior",
+                        "text": "Option 1",
                         "style": "danger",
                         "type": "button",
-                        "value": "warrior"
-                  
+                        "value": "1"
                     },
                     {
                         "name": "wizard",
-                        "text": "Wizard",
+                        "text": "Option 2",
                         "style": "primary",
                         "type": "button",
-                        "value": "wizard"
+                        "value": "2"
                     }
                 ]
             }
         ]
     };
-
-    res.status(200).send(slackResponse);
 };
-
