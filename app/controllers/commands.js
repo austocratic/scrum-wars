@@ -49,6 +49,15 @@ exports.commands = (req, res, next) => {
                             resolve(interactionResponse)
                         });
                     break;
+                
+                case '/travel':
+
+                    interactions('travel', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+                    
 
                 default:
             }
