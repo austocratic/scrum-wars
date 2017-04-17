@@ -1,14 +1,11 @@
-
+"use strict";
 
 var characterSelectionIndex = require('./../slackTemplates/characterSelectionIndex').characterSelectionIndex;
 var characterProfile = require('./../slackTemplates/characterProfile').characterProfile;
+var Firebase = require('../libraries/firebase').Firebase;
 
-//Interactions are follow up responses to messages
-//These functions read the type of interaction and control response
 
-exports.interactions = (interactionType) => {
-    
-    console.log("called interactions function");
+exports.interactions = (interactionType, messagePayloadInput) => {
 
     return new Promise((resolve, reject) => {
 
@@ -18,27 +15,96 @@ exports.interactions = (interactionType) => {
 
             case 'characterProfile':
 
+                //Get the template for character profile
                 template = characterProfile();
 
-                resolve(template);
+                //Create new firebase object
+                var firebase = new Firebase();
+
+                //Get the slack user ID who made the selection
+                var userID = messagePayloadInput.user_id;
+
+                //Use Slack user ID to lookup the user's character
+                firebase.get('character', 'user_id', userID)
+                    .then( character => {
+
+                        //Convert the returned object into array of character IDs.  This works since the query only returns one result
+                        var characterID = Object.keys(character)[0];
+
+                        var characterStats = character[characterID];
+
+                        //Array of stat keys
+                        var statKeys = Object.keys(characterStats);
+
+                        //Array of profile field elements
+                        var characterFields = template.attachments[1].fields;
+
+                        //Iterate through the stat keys
+                        var newArray = statKeys.map( key =>{
+
+                            return {
+                                "title": key,
+                                "value": characterStats[key],
+                                "short": true
+                            };
+                        });
+
+                        template.attachments[1].fields = newArray;
+                        
+                        resolve(template);
+                        
+                    });
                 
                 break;
             
             case 'characterSelectionNew':
-                
-                template = characterSelectionIndex.characterSelectionNew();
-                
-                resolve(template);
 
-                //Then some database stuff
+                template = characterSelectionIndex.characterSelectionNew();
+
+                resolve(template);
 
                 break;
 
             case 'characterSelectionClass':
 
-                template = characterSelectionIndex.characterSelectionClass();
+                //Determine if the user selected yes or no on previous screen
+                
+                if (messagePayloadInput.actions[0].value === "yes") {
 
-                resolve(template);
+                    //Get the appropriate response template
+                    template = characterSelectionIndex.characterSelectionClass();
+
+                    var charProps = {
+                        user_id: messagePayloadInput.user.id,
+                        strength: 15,
+                        stamina: 10
+                    };
+
+                    //Create new firebase object
+                    var firebase = new Firebase();
+
+                    //Add properties to DB
+                    firebase.create('character', charProps)
+                    //After writing to DB, resolve the template
+                        .then( fbResponse => {
+                            console.log('fbResponse: ', fbResponse);
+                            resolve(template);
+                        })
+                        .catch( err => {
+                            console.log('Error when writing to firebase: ', err);
+                            reject(err);
+                        });
+                    
+                } else if (messagePayloadInput.actions[0].value === "no") {
+
+                    //Need to close the dialogue
+                    
+                    
+                } else {
+                    //Something went wrong, input option is not supported
+                }
+                
+                //resolve(template);
 
                 break;
 
@@ -46,7 +112,41 @@ exports.interactions = (interactionType) => {
 
                 template = characterSelectionIndex.characterSelectionPicture();
 
-                resolve(template);
+                //Create new firebase object
+                var firebase = new Firebase();
+
+                //Get the slack user ID who made the selection
+                var userID = messagePayloadInput.user.id;
+
+                //TODO: need to check to see if class is already set and prevent it from being set
+                
+                //Use Slack user ID to lookup the associated character
+                firebase.get('character', 'user_id', userID)
+                    .then( character => {
+
+                        //Convert the returned object into array of character IDs.  This works since the query only returns one result
+                        var characterID = Object.keys(character)[0];
+                        
+                        //Create a table reference to be used for locating the character
+                        var tableRef = 'character/' + characterID;
+                        
+                        //Define the properties to add to character
+                        var updates = {
+                            "class": messagePayloadInput.actions[0].value
+                        };
+
+                        //Now update the character with new properties
+                        firebase.update(tableRef, updates)
+                            .then( fbResponse => {
+                                console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
+                                resolve(template);
+                            })
+                            .catch( err => {
+                                console.log('Error when writing to firebase: ', err);
+                                reject(err);
+                            });
+
+                    });
 
                 break;
 
@@ -54,38 +154,5 @@ exports.interactions = (interactionType) => {
 
                 //return "ERROR: template not supported"
         }
-        
-        
     });
-    
-    
-
-
-    
-    
-    
-    
-    //TODO this may be uneccesary, could be handled by the interaction switch above
-    //Returns a interaction template to be used in response to client
-    function getTemplate(templateName){
-
-        switch(templateName){
-
-            case 'characterSelectionNew':
-                return characterSelectionIndex.characterSelectionNew(payload);
-                break;
-
-            case 'characterSelectionClass':
-                resolve(characterSelectionIndex.characterSelectionClass(payload));
-                break;
-
-            case 'characterSelectionPicture':
-                resolve(characterSelectionIndex.characterSelectionPicture(payload));
-                break;
-
-            default:
-
-                return "ERROR: template not supported"
-        }
-    }
 };

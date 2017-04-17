@@ -4,7 +4,6 @@
 var interactions = require('./interactions').interactions;
 
 
-
 exports.interactiveMessages = (req, res, next) => {
 
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
@@ -19,7 +18,8 @@ exports.interactiveMessages = (req, res, next) => {
     //Get the callback property
     var callback = messagePayload.callback_id;
 
-    getInteraction(callback)
+    //Get the interaction then write to DB then respond to client
+    getInteraction(callback, messagePayload)
         .then( messageResponse =>{
             res.status(200).send(messageResponse);
         })
@@ -27,15 +27,18 @@ exports.interactiveMessages = (req, res, next) => {
             res.status(200).send('Uh oh! Server error: ', err);
         });
 
-    function getInteraction(callbackInput){
+    //Notes: currently I'm only sending the callbackInput to the getInteraction function.  Where should the DB call come from?
+    //Getting data from the DB to populate in the template should probably happen in the template itself
+    //But how about writing to the DB?
+
+    //Get the next template to return to the client
+    function getInteraction(callbackInput, messagePayloadInput){
         return new Promise((resolve, reject) => {
             switch(callbackInput) {
 
                 case 'characterSelectionNew':
-                    
-                    console.log('case characterSelectionNew in interactive message');
 
-                    interactions('characterSelectionClass')
+                    interactions('characterSelectionClass', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });
@@ -44,7 +47,7 @@ exports.interactiveMessages = (req, res, next) => {
 
                 case 'characterSelectionClass':
 
-                    interactions('characterSelectionPicture')
+                    interactions('characterSelectionPicture', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });

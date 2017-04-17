@@ -22,7 +22,7 @@ exports.commands = (req, res, next) => {
     var command = messagePayload.command;
 
     //Read the command and call the corresponding interaction
-    getInteraction(command)
+    getInteraction(command, messagePayload)
         .then( messageResponse =>{
             res.status(200).send(messageResponse);
         })
@@ -30,13 +30,13 @@ exports.commands = (req, res, next) => {
             res.status(200).send('Uh oh! Server error: ', err);
         });
     
-    function getInteraction(commandInput){
+    function getInteraction(commandInput, messagePayloadInput){
         return new Promise((resolve, reject) => { 
             switch(commandInput) {
 
                 case '/generate':
 
-                    interactions('characterSelectionNew')
+                    interactions('characterSelectionNew', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });
@@ -44,7 +44,7 @@ exports.commands = (req, res, next) => {
 
                 case '/profile':
 
-                    interactions('characterProfile')
+                    interactions('characterProfile', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });

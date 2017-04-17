@@ -32,35 +32,4 @@ exports.characterSelectionClass = payload => {
         ]
     };
     
-    
-    
-    /*
-    return new Promise( (resolve, reject) => {
-
-        var charProps = {
-
-            user_id: payload.user.id,
-            strength: 15,
-            stamina: 10,
-            class: payload.actions[0].value
-
-        };
-
-        console.log('Creating character with properties: ', charProps);
-
-        //write to DB
-        var firebase = new Firebase();
-
-        //Need to verify the property schema before writing to DB
-        
-        firebase.create('character', charProps)
-            .then( fbResponse => {
-                console.log('fbResponse: ', fbResponse);
-                resolve();
-            })
-            .catch( err => {
-                console.log('Error when writing to firebase: ', err);
-                reject(err);
-            });
-    });*/
 };

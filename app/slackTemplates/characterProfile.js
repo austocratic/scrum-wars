@@ -16,16 +16,16 @@ exports.characterProfile = payload => {
             },
             {
                 "fields": [
-                    {
-                        "title": "Health",
+                    /*{
+                        //"title": "Health",
                         //"value": attributes.health,
                         "short": true
                     },
                     {
-                        "title": "Attack",
+                        //"title": "Attack",
                         // "value": attributes.attack,
                         "short": true
-                    }
+                    }*/
                 ]
             }
         ]
