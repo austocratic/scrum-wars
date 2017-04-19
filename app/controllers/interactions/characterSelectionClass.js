@@ -1,7 +1,7 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-var characterSelectionClass = require('../../slackTemplates/characterProfile').characterSelectionClass;
+var characterSelectionClass = require('../../slackTemplates/characterSelectionClass').characterSelectionClass;
 
 
 exports.characterSelectionClass = payload => {
@@ -9,7 +9,13 @@ exports.characterSelectionClass = payload => {
     return new Promise( (resolve, reject) => {
 
         var template;
-        
+
+        console.log('Class payload:', payload);
+
+        console.log('Response value:', payload.actions[0].value);
+
+        console.log('userID: ', payload.user.id);
+
         //Determine if the user selected yes or no on previous screen
         if (payload.actions[0].value === "yes") {
 
@@ -29,11 +35,11 @@ exports.characterSelectionClass = payload => {
             //Add properties to DB
             firebase.create('character', charProps)
             //After writing to DB, resolve the template
-                .then( fbResponse => {
+                .then(fbResponse => {
                     console.log('fbResponse: ', fbResponse);
                     resolve(template);
                 })
-                .catch( err => {
+                .catch(err => {
                     console.log('Error when writing to firebase: ', err);
                     reject(err);
                 });
@@ -45,10 +51,10 @@ exports.characterSelectionClass = payload => {
 
         } else {
             //Something went wrong, input option is not supported
+            console.log('Hit else condition')
         }
 
         //resolve(template);
-
 
     })
 };
