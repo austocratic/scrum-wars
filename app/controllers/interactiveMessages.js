@@ -36,7 +36,7 @@ exports.interactiveMessages = (req, res, next) => {
         return new Promise((resolve, reject) => {
             switch(callbackInput) {
 
-                case 'playerAction':
+                case 'actionMenu':
 
                     interactions('playerActionSelection', messagePayloadInput)
                         .then( interactionResponse => {

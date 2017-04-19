@@ -27,8 +27,7 @@ exports.playerAction = payload => {
                 //template.callback_id = 'townAction';
 
                 //Set the available actions
-                availableActions = {
-                    "actions": [
+                availableActions = [
                         {
                             "name": "shop",
                             "text": "Shop",
@@ -36,10 +35,8 @@ exports.playerAction = payload => {
                             "type": "button",
                             "value": "shop"
                         }
-                    ]
-                };
-
-
+                    ];
+                
                 break;
 
             //Zone = arena
