@@ -15,12 +15,16 @@ exports.nameCharacter = payload => {
         //Create new firebase object
         var firebase = new Firebase();
 
+        var template;
+        
         //First check to ensure the character name is not in use
         firebase.get('character', 'name', characterName)
             .then( character => {
 
                 //Array of character IDs already using that name
                 var existingCharacter = Object.keys(character);
+
+                console.log('Existing characters: ', existingCharacter);
 
                 //If array of existing character's length > 0, name is already taken, return "name taken" template
                 if (existingCharacter.length > 0){
@@ -29,9 +33,13 @@ exports.nameCharacter = payload => {
                     resolve(characterNameTaken());
                 }
 
+                template = characterNameAccepted();
+
+                //Concatenate character name into template
+                template.attachments[0].text = (template.attachments[0].text + characterName);
+                
                 //If not, resolve the confirmation template
-                //var template = characterNameAccepted()
-                resolve(characterNameAccepted());
+                resolve(template);
             });
         
         //Get the slack user ID who made the selection

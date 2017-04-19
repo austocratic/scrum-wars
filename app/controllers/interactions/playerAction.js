@@ -14,12 +14,14 @@ exports.playerAction = payload => {
 
         var template = actionMenu();
 
+        console.log('Channel ID: ', channelID);
+
         //Set the availableActions property depending on the zone
         //TODO Should not hard code this.  Should use DB values here
         switch(channelID) {
 
             //Zone = town
-            case '':
+            case 'C4Z4P1BUH':
 
                 //Overwrite template default callback
                 //template.callback_id = 'townAction';
@@ -41,14 +43,13 @@ exports.playerAction = payload => {
                 break;
 
             //Zone = arena
-            case '':
+            case 'C4Z7F8XMW':
 
                 //Overwrite template default callback
                 //template.callback_id = 'arenaAction';
                 
                 //Set the available actions
-                availableActions = {
-                    "actions": [
+                availableActions = [
                         {
                             "name": "attack",
                             "text": "Attack",
@@ -63,8 +64,7 @@ exports.playerAction = payload => {
                             "type": "button",
                             "value": "defend"
                         }
-                    ]
-                };
+                    ];
 
                 break;
 
@@ -74,11 +74,14 @@ exports.playerAction = payload => {
                 resolve(template);
         }
 
+        console.log('availableActions: ', availableActions);
+
         //Overwrite template default
         template.attachments[0].text = 'Choose an action';
 
-        //TODO need to use method for adding an object
-        template.attachments[0].push(availableActions);
+        template.attachments[0].actions = availableActions;
+
+        console.log('Modified template: ', template);
 
         resolve(template);
 

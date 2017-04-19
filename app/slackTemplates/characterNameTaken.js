@@ -4,7 +4,7 @@
 exports.characterNameTaken = payload => {
 
     return {
-        "username": "A mysterious voice",
+        "user_name": "A mysterious voice",
 
         "attachments": [
             {
