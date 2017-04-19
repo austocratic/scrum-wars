@@ -6,6 +6,16 @@ exports.characterSelectionPicture = payload => {
     return {
         "attachments": [
             {
+                "image_url": "http://orig06.deviantart.net/23db/f/2013/201/4/6/paladin_basic_version_by_thomaswievegg-d6eaz66.jpg",
+                "fields": [
+                    {
+                        "title": "Profile picture",
+                        "value": "Montaigne",
+                        "short": false
+                    }
+                ]
+            },
+            {
                 "text": "Choose a character profile picture",
                 "fallback": "You are unable to choose an action",
                 "callback_id": "characterSelectionPicture",

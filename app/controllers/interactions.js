@@ -1,7 +1,7 @@
 "use strict";
 
-var characterSelectionIndex = require('./../slackTemplates/characterSelectionIndex').characterSelectionIndex;
-var characterProfile = require('./../slackTemplates/characterProfile').characterProfile;
+//This index file contains references to all the interaction files
+var interactions = require('./interactions/interactionsIndex').interactionsIndex;
 var Firebase = require('../libraries/firebase').Firebase;
 
 
@@ -9,188 +9,109 @@ exports.interactions = (interactionType, messagePayloadInput) => {
 
     return new Promise((resolve, reject) => {
 
-        var template;
-
         switch(interactionType){
 
             case 'travel':
 
-                //TODO: need to add a template: something announcing to the zone that character 'XXX' has entered the zone
-
-                //Create new firebase object
-                var firebase = new Firebase();
-
-                //Get the slack user ID who made the selection
-                var userID = messagePayloadInput.user_id;
-                var channelID = messagePayloadInput.channel_id;
-
-                //Use Slack user ID to lookup the user's character
-                var get1 = firebase.get('character', 'user_id', userID);
-
-                //Use Slack channel ID to lookup the zone id
-                var get2 = firebase.get('zone', 'channel_id', channelID);
-
-                Promise.all([get1, get2])
-                    .then( props =>{
-
-                        var characterID = Object.keys(props[0])[0];
-                        var zoneID = Object.keys(props[1])[0];
-
-                        //Create a table reference to be used for locating the character
-                        var tableRef = 'character/' + characterID;
-
-                        //Define the properties to add to character
-                        var updates = {
-                            "zone_id": zoneID
-                        };
-
-                        //Now update the character with new properties
-                        firebase.update(tableRef, updates)
-                            .then( fbResponse => {
-                                console.log('interaction /travel fbResponse: ', fbResponse);
-                                resolve();
-                            })
-                            .catch( err => {
-                                console.log('Error when /travel writing to firebase: ', err);
-                                reject(err);
-                            });
+                interactions.travel(messagePayloadInput)
+                    .then( () =>{
+                        resolve();
+                        
+                    })
+                    .catch( () =>{
+                        reject();
                     });
+                
+                break;
 
+            //Set the name property user's character
+            case 'nameCharacter':
+
+                interactions.nameCharacter(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+                
                 break;
 
             case 'characterProfile':
 
-                //Get the template for character profile
-                template = characterProfile();
-
-                //Create new firebase object
-                var firebase = new Firebase();
-
-                //Get the slack user ID who made the selection
-                var userID = messagePayloadInput.user_id;
-
-                //Use Slack user ID to lookup the user's character
-                firebase.get('character', 'user_id', userID)
-                    .then( character => {
-
-                        //Convert the returned object into array of character IDs.  This works since the query only returns one result
-                        var characterID = Object.keys(character)[0];
-
-                        var characterStats = character[characterID];
-
-                        //Array of stat keys
-                        var statKeys = Object.keys(characterStats);
-
-                        //Array of profile field elements
-                        var characterFields = template.attachments[1].fields;
-
-                        //Iterate through the stat keys
-                        var newArray = statKeys.map( key =>{
-
-                            return {
-                                "title": key,
-                                "value": characterStats[key],
-                                "short": true
-                            };
-                        });
-
-                        template.attachments[1].fields = newArray;
-                        
+                interactions.characterProfile(messagePayloadInput)
+                    .then( template =>{
                         resolve(template);
-                        
+
+                    })
+                    .catch( () =>{
+                        reject();
                     });
                 
                 break;
             
             case 'characterSelectionNew':
 
-                template = characterSelectionIndex.characterSelectionNew();
+                interactions.characterSelectionNew(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
 
-                resolve(template);
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
 
                 break;
 
             case 'characterSelectionClass':
 
-                //Determine if the user selected yes or no on previous screen
+                interactions.characterSelectionClass(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
                 
-                if (messagePayloadInput.actions[0].value === "yes") {
-
-                    //Get the appropriate response template
-                    template = characterSelectionIndex.characterSelectionClass();
-
-                    var charProps = {
-                        user_id: messagePayloadInput.user.id,
-                        strength: 15,
-                        stamina: 10
-                    };
-
-                    //Create new firebase object
-                    var firebase = new Firebase();
-
-                    //Add properties to DB
-                    firebase.create('character', charProps)
-                    //After writing to DB, resolve the template
-                        .then( fbResponse => {
-                            console.log('fbResponse: ', fbResponse);
-                            resolve(template);
-                        })
-                        .catch( err => {
-                            console.log('Error when writing to firebase: ', err);
-                            reject(err);
-                        });
-                    
-                } else if (messagePayloadInput.actions[0].value === "no") {
-
-                    //Need to close the dialogue
-                    
-                    
-                } else {
-                    //Something went wrong, input option is not supported
-                }
-                
-                //resolve(template);
-
                 break;
 
             case 'characterSelectionPicture':
 
-                template = characterSelectionIndex.characterSelectionPicture();
+                interactions.characterSelectionPicture(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
 
-                //Create new firebase object
-                var firebase = new Firebase();
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
 
-                //Get the slack user ID who made the selection
-                var userID = messagePayloadInput.user.id;
+                break;
 
-                //TODO: need to check to see if class is already set and prevent it from being set
+            case 'playerAction':
+
+                interactions.playerAction(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
                 
-                //Use Slack user ID to lookup the associated character
-                firebase.get('character', 'user_id', userID)
-                    .then( character => {
+                break;
 
-                        //Convert the returned object into array of character IDs.  This works since the query only returns one result
-                        var characterID = Object.keys(character)[0];
-                        
-                        //Create a table reference to be used for locating the character
-                        var tableRef = 'character/' + characterID;
-                        
-                        //Define the properties to add to character
-                        var updates = {
-                            "class": messagePayloadInput.actions[0].value
-                        };
+            case 'playerActionSelection':
 
-                        //Now update the character with new properties
-                        firebase.update(tableRef, updates)
-                            .then( fbResponse => {
-                                console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
-                                resolve(template);
-                            })
-                            .catch( err => {
-                                console.log('Error when writing to firebase: ', err);
-                                reject(err);
-                            });
+                interactions.playerActionSelection(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
 
+                    })
+                    .catch( () =>{
+                        reject();
                     });
 
                 break;

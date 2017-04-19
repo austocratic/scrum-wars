@@ -34,6 +34,14 @@ exports.commands = (req, res, next) => {
         return new Promise((resolve, reject) => { 
             switch(commandInput) {
 
+                case '/action':
+
+                    interactions('playerAction', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+                
                 case '/generate':
 
                     interactions('characterSelectionNew', messagePayloadInput)
@@ -53,6 +61,14 @@ exports.commands = (req, res, next) => {
                 case '/travel':
 
                     interactions('travel', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+                
+                case '/name':
+
+                    interactions('nameCharacter', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });

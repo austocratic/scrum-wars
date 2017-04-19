@@ -36,6 +36,15 @@ exports.interactiveMessages = (req, res, next) => {
         return new Promise((resolve, reject) => {
             switch(callbackInput) {
 
+                case 'playerAction':
+
+                    interactions('playerActionSelection', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+
+                    break;
+                
                 case 'characterSelectionNew':
 
                     interactions('characterSelectionClass', messagePayloadInput)
