@@ -19,14 +19,7 @@ class Firebase {
     }
 
     get(table, key, value) {
-
-        //key = 'user_id';
-        //value = 'U4ZA6CCBG';
-
-        //These work
-        //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
-        //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?orderByChild="class"&auth=' + CREDENTIAL;
-
+        
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?orderBy="' + key + '"&equalTo="' + value + '"&auth=' + CREDENTIAL;
 
         console.log('Options: ', this.options.uri);
@@ -71,6 +64,23 @@ class Firebase {
                 if (err) {
                     reject(err);
                 }
+                resolve(body);
+            })
+        })
+    }
+
+    delete(table) {
+        
+        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+
+        return new Promise( (resolve, reject) => {
+            request.delete(this.options, (err, httpResponse, body) => {
+                if (err) {
+                    console.log('DB err results: ', err);
+                    reject(err);
+                }
+
+                console.log('DB results: ', body);
                 resolve(body);
             })
         })

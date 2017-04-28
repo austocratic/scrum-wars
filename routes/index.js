@@ -3,8 +3,6 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 var profile = require('../app/controllers/commands/profile');
-var actionList = require('../app/controllers/action/PostActionList');
-var action = require('../app/controllers/action/PostAction');
 
 
 var commands = require('../app/controllers/commands').commands;

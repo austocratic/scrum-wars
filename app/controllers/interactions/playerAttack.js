@@ -10,8 +10,6 @@ exports.playerAttack = payload => {
         //Get the name of the player to attack
         //TODO I currently populate the attack targets with player names.  I could populate names but populate targets with IDs
         var targetPlayer = payload.actions[0].value;
-        
-        console.log('Target player: ', targetPlayer);
 
         //Return the default template
         var template = attackCharacterComplete();
@@ -20,19 +18,13 @@ exports.playerAttack = payload => {
 
         //Get the slack user ID who called the action
         var userID = payload.user.id;
-
-        console.log('userID: ', userID);
         
         //Get that user's character
         firebase.get('character', 'user_id', userID)
             .then( character => {
 
-                console.log('user character:' , character);
-
                 //Character's ID
                 var characterID = Object.keys(character)[0];
-
-                console.log('Character ID: ', characterID);
                 
                 var characterStrength = character[characterID].strength;
 
@@ -46,8 +38,6 @@ exports.playerAttack = payload => {
                 //TODO for phase 1 simplicity: damage will be a random # up to strength value
                 //Generate a random number based on character strength
                 var randomDamage = getRandomIntInclusive(1, characterStrength);
-
-                console.log('Random damage: ', randomDamage);
                 
                 //Get the ID of the target character:
                 //TODO I could use promise.all to do this lookup with the user's character lookup
