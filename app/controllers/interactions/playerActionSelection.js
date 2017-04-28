@@ -1,7 +1,7 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-var attackMenu = require('../../slackTemplates/attackMenu').attackMenu;
+var attackCharacterSelection = require('../../slackTemplates/attackCharacterSelection').attackCharacterSelection;
 
 exports.playerActionSelection = payload => {
 
@@ -18,7 +18,7 @@ exports.playerActionSelection = payload => {
             case 'attack':
 
                 //Return the default template
-                var template = attackMenu();
+                var template = attackCharacterSelection();
 
                 var firebase = new Firebase();
 

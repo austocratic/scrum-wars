@@ -61,6 +61,16 @@ exports.interactiveMessages = (req, res, next) => {
                             resolve(interactionResponse)
                         });
                     break;
+
+
+                case 'attackCharacterSelection':
+
+                    //TODO
+                    interactions('playerAttack', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
                 
 
                 default:

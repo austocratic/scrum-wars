@@ -6,6 +6,7 @@ var characterSelectionClass = require('./characterSelectionClass').characterSele
 var characterSelectionPicture = require('./characterSelectionPicture').characterSelectionPicture;
 var nameCharacter = require('./nameCharacter').nameCharacter;
 var playerAction = require('./playerAction').playerAction;
+var playerAttack = require('./playerAttack').playerAttack;
 var playerActionSelection = require('./playerActionSelection').playerActionSelection;
 var travel = require('./travel').travel;
 
@@ -18,6 +19,7 @@ exports.interactionsIndex = {
     characterSelectionPicture: characterSelectionPicture,
     nameCharacter: nameCharacter,
     playerAction: playerAction,
+    playerAttack: playerAttack,
     playerActionSelection: playerActionSelection,
     travel: travel
 };
