@@ -24,40 +24,47 @@ exports.characterSelectionClass = payload => {
                 .then( character => {
 
                     //Character's ID
-                    var characterID = Object.keys(character)[0];
-                    
-                    //Delete that user's character
-                    firebase.delete(('character/' + characterID))
-                        .then( deleteResults => {
+                    var characterKeys = Object.keys(character);
 
-                            //Get the appropriate response template
-                            template = characterSelectionClass();
+                    //If player has a character, delete it
+                    if (characterKeys.length > 0) {
 
-                            var charProps = {
-                                name: 'Unknown Traveler',
-                                user_id: payload.user.id,
-                                strength: 15,
-                                stamina: 10
-                            };
+                        var characterID = characterKeys[0];
 
-                            //Add properties to DB
-                            firebase.create('character', charProps)
-                            //After writing to DB, resolve the template
-                                .then(fbResponse => {
-                                    console.log('fbResponse: ', fbResponse);
-                                    resolve(template);
-                                })
-                                .catch(err => {
-                                    console.log('Error when writing to firebase: ', err);
-                                    reject(err);
-                                });
+                        //Delete that user's character
+                        firebase.delete(('character/' + characterID))
+                            .then(deleteResults => {
+                                console.log('deleteResults: ', deleteResults);
+                            });
+                    }
 
+                    //Get the appropriate response template
+                    template = characterSelectionClass();
+
+                    var charProps = {
+                        name: 'Unknown Traveler',
+                        user_id: payload.user.id,
+                        strength: 15,
+                        stamina: 10
+                    };
+
+                    //Add properties to DB
+                    firebase.create('character', charProps)
+                    //After writing to DB, resolve the template
+                        .then(fbResponse => {
+                            console.log('fbResponse: ', fbResponse);
+                            resolve(template);
                         })
-                        .catch( err =>{
+                        .catch(err => {
+                            console.log('Error when writing to firebase: ', err);
+                            reject(err);
+                        });
 
-                        })
-                    
-                });
+                    })
+                    .catch( err =>{
+                        console.log('Error when getting player character: ', err)
+                    })
+
             
         } else if (payload.actions[0].value === "no") {
 
