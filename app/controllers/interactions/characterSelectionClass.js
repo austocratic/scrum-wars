@@ -132,10 +132,10 @@ exports.characterSelectionClass = payload => {
 
                                     "title": className,
                                     "fallback": "You are unable to choose an action",
-                                    "callback_id": "characterSelectionPicture",
+                                    "callback_id": "characterSelectionClass",
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
-                                    "image_url": "https://scrum-wars.herokuapp.com/file/ " + className + ".jpg",
+                                    "image_url": "https://scrum-wars.herokuapp.com/file/" + className + ".jpg",
                                     "actions": [{
                                         "name": className,
                                         "text": className,
