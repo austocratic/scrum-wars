@@ -66,7 +66,7 @@ exports.characterSelectionClass = payload => {
                             });
 
                             var actionsBaseTemplate = {
-                                "name": '',
+                                "name": 'classOptions',
                                 "text": '',
                                 "type": 'select',
                                 "options": []
