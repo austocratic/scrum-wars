@@ -80,9 +80,9 @@ exports.characterSelectionClass = payload => {
                                 }
                             });
 
-                            actionsBaseTemplate.options[0] = optionsTemplate;
+                            actionsBaseTemplate.options = optionsTemplate;
 
-                            template.attachments[0].actions = actionsBaseTemplate;
+                            template.attachments[0].actions[0] = actionsBaseTemplate;
 
                             console.log('Final template: ', JSON.stringify(template));
                             
