@@ -77,9 +77,9 @@ exports.interactions = (interactionType, messagePayloadInput) => {
                 
                 break;
 
-            case 'characterSelectionPicture':
+            case 'characterClassSelectionConfirmation':
 
-                interactions.characterSelectionPicture(messagePayloadInput)
+                interactions.characterClassSelectionConfirmation(messagePayloadInput)
                     .then( template =>{
                         resolve(template);
 

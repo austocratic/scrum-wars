@@ -56,7 +56,7 @@ exports.interactiveMessages = (req, res, next) => {
 
                 case 'characterSelectionClass':
 
-                    interactions('characterSelectionPicture', messagePayloadInput)
+                    interactions('characterClassSelectionConfirmation', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });
