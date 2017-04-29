@@ -31,7 +31,8 @@ exports.characterProfile = payload => {
                 console.log('Char name: ', characterStats.name);
 
                 //Set Message properties:
-                template.username = (characterStats.name + "s Profile");
+                //template.username = (characterStats.name + "s Profile");
+                template.username = "TEST";
 
                 console.log('username: ', template.username);
                 
