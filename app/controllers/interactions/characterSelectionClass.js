@@ -48,7 +48,8 @@ exports.characterSelectionClass = payload => {
                         profile_image: 'unknown_character.jpg',
                         user_id: payload.user.id,
                         armor: 0,
-                        hit_points: 100
+                        hit_points: 100,
+                        is_defending: false
                     };
 
                     //Get all the available classes from the DB

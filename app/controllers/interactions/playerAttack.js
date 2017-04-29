@@ -46,19 +46,43 @@ exports.playerAttack = payload => {
 
                         //Target character's ID
                         var targetCharacterID = Object.keys(target)[0];
-                        
-                        //Target's current health
-                        var targetHealth = target[targetCharacterID].health;
-                        
-                        var newHealth = (targetHealth - randomDamage);
+
+                        //Determine if the target is defending
+                        var targetDefending = target[targetCharacterID].is_defending;
+
+                        var updates;
+
+                        //If target is defending, they will take no damage, instead remove is_defending
+                        if (targetDefending) {
+
+                            updates = {
+                                "is_defending": false
+                            };
+
+                            //Change template to reflect that the target defended
+                            template.attachments[0].text = "You attack but the target was defending, attack is blocked!";
+
+
+                        } else {
+
+                            //Target's current health
+                            var targetHealth = target[targetCharacterID].health;
+
+                            var newHealth = (targetHealth - randomDamage);
+
+                            //Define the properties to add to character
+                            updates = {
+                                "health": newHealth
+                            };
+
+                            template.attachments[0].text = "You attack and score a crushing blow!";
+
+                        }
+
+
 
                         //Create a table reference to be used for locating the character
                         var tableRef = 'character/' + targetCharacterID;
-
-                        //Define the properties to add to character
-                        var updates = {
-                            "health": newHealth
-                        };
 
                         //Reduce target's health
                         firebase.update(tableRef, updates)

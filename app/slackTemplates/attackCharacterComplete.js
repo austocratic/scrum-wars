@@ -4,7 +4,7 @@ exports.attackCharacterComplete = payload => {
     return {
         "attachments": [
             {
-                "text": "You attack and score a crushing blow!",
+                "text": "Default Text: this is a bug",
                 "fallback": "You are unable to choose an action",
                 "callback_id": "attackCharacterComplete",
                 "color": "#3AA3E3",

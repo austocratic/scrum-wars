@@ -71,11 +71,31 @@ exports.playerActionSelection = payload => {
             
             case 'defend':
 
-                resolve(
-                    {
-                        "text": "You raise your shield to defend yourself"
-                    }
-                );
+                //Return the default template
+                var template = attackCharacterSelection();
+
+                var firebase = new Firebase();
+
+                //Get the slack user ID who called the action
+                var userID = payload.user.id;
+
+                //Get that user's character
+                firebase.get('character', 'user_id', userID)
+                    .then( character => {
+
+                        //Character's ID
+                        var characterID = Object.keys(character)[0];
+
+                        //Get the Zone ID of that character
+                        var characterZoneID = character[characterID].zone_id;
+
+
+                        //Set that character's is_defending property to true
+
+                            resolve(template);
+
+
+                    });
                 
                 break;
             
