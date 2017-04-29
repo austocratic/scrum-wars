@@ -68,20 +68,10 @@ exports.playerAttack = payload => {
                             //Generate a random number based on character strength
                             var randomDamage = getRandomIntInclusive(1, characterStrength);
 
-                            console.log('randomDamage: ', randomDamage);
-
-                            console.log('target: ', target);
-
-                            console.log('targetCharacterID: ', targetCharacterID);
-
                             //Target's current health
                             var targetHealth = target[targetCharacterID].hit_points;
 
-                            console.log('targetHealth: ', targetHealth);
-
                             var newHealth = (targetHealth - randomDamage);
-
-                            console.log('New health: ', newHealth);
 
                             //Define the properties to add to character
                             updates = {

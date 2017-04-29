@@ -2,6 +2,7 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var attackCharacterSelection = require('../../slackTemplates/attackCharacterSelection').attackCharacterSelection;
+var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 
 exports.playerActionSelection = payload => {
 
@@ -72,29 +73,33 @@ exports.playerActionSelection = payload => {
             case 'defend':
 
                 //Return the default template
-                var template = attackCharacterSelection();
+                var template = defendCharacterSelection();
 
                 var firebase = new Firebase();
 
                 //Get the slack user ID who called the action
                 var userID = payload.user.id;
 
-                //Get that user's character
+                //Get your character
                 firebase.get('character', 'user_id', userID)
                     .then( character => {
 
                         //Character's ID
                         var characterID = Object.keys(character)[0];
 
-                        //Get the Zone ID of that character
-                        var characterZoneID = character[characterID].zone_id;
+                        var updates = {
+                            "is_defending": true
+                        };
 
+                        //Create a table reference to be used for locating the character
+                        var tableRef = 'character/' + characterID;
 
-                        //Set that character's is_defending property to true
-
-                            resolve(template);
-
-
+                        //Set your is_defending property
+                        firebase.update(tableRef, updates)
+                            .then( ()=> {
+                                //Then return the new template
+                                resolve(template)
+                            })
                     });
                 
                 break;
