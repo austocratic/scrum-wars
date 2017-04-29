@@ -41,10 +41,8 @@ exports.playerActionSelection = payload => {
                                     //Get the array position of the player's character:
                                     var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
 
-                                    console.log('Player character position: ', playerCharacterArrayPosition);
-
                                     if (playerCharacterArrayPosition > -1) {
-                                        charactersInZoneIDs = charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
+                                        charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
                                     }
 
                                     var namesInZone = charactersInZoneIDs.map( charID =>{
