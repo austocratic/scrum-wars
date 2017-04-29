@@ -4,8 +4,7 @@ var bodyParser = require('body-parser');
 
 var profile = require('../app/controllers/commands/profile');
 
-var stockImage = require('../app/assets/wizardImage.jpg');
-
+//var stockImage = require('../app/assets/wizardImage.jpg');
 
 var commands = require('../app/controllers/commands').commands;
 var interactiveMessages = require('../app/controllers/interactiveMessages').interactiveMessages;
@@ -19,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/image', function(req, res, next) {
-    res.sendFile(stockImage);
+    res.sendFile('../app/assets/wizardImage.jpg');
 });
 
 router.post('/api/commands', (req, res, next) => {
