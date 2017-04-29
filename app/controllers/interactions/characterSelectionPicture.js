@@ -28,21 +28,37 @@ exports.characterSelectionPicture = payload => {
                 //Create a table reference to be used for locating the character
                 var tableRef = 'character/' + characterID;
 
-                //Define the properties to add to character
-                var updates = {
-                    "class": payload.actions[0].value
-                };
+                //Lookup the character's starting properties
+                firebase.get('class', 'name', payload.actions[0].value)
+                    .then( characterClass => {
 
-                //Now update the character with new properties
-                firebase.update(tableRef, updates)
-                    .then( fbResponse => {
-                        console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
-                        resolve(template);
+                        //Convert the returned object into array of class IDs.  This works since the query only returns one result
+                        var classID = Object.keys(characterClass)[0];
+
+                        var startingAttributes = characterClass[classID].starting_attributes;
+
+                        console.log('Starting attributes: ', startingAttributes);
+
+                        //Define the properties to add to character
+                        var updates = {
+                            "class": payload.actions[0].value,
+                            "strength": startingAttributes.strength,
+                            "toughness": startingAttributes.toughness,
+                            "dexterity": startingAttributes.dexterity,
+                            "intelligence": startingAttributes.intelligence
+                        };
+
+                        //Now update the character with new properties
+                        firebase.update(tableRef, updates)
+                            .then( fbResponse => {
+                                console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
+                                resolve(template);
+                            })
+                            .catch( err => {
+                                console.log('Error when writing to firebase: ', err);
+                                reject(err);
+                            });
                     })
-                    .catch( err => {
-                        console.log('Error when writing to firebase: ', err);
-                        reject(err);
-                    });
             });
     })
 };

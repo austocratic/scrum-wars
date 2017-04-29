@@ -46,10 +46,6 @@ exports.characterSelectionClass = payload => {
                     var charProps = {
                         name: 'Unknown Traveler',
                         user_id: payload.user.id,
-                        strength: 10,
-                        toughness: 10,
-                        dexterity: 10,
-                        intelligence: 10,
                         armor: 0,
                         hit_points: 100
                     };
