@@ -65,18 +65,26 @@ exports.characterSelectionClass = payload => {
                                 return characterClasses[classID].name;
                             });
 
-                            var classTemplate = classNames.map( className =>{
+                            var actionsBaseTemplate = {
+                                "name": '',
+                                "text": '',
+                                "type": 'select',
+                                "options": []
+                            };
+
+                            var optionsTemplate = classNames.map( className =>{
 
                                 return {
-                                    "name": "playerClass",
                                     "text": className,
-                                    "style": "default",
-                                    "type": "button",
                                     "value": className
                                 }
                             });
 
-                            template.attachments[0].actions = classTemplate;
+                            actionsBaseTemplate.options[0] = optionsTemplate;
+
+                            template.attachments[0].actions = actionsBaseTemplate;
+
+                            console.log('Final template: ', JSON.stringify(template));
                             
                             //Add properties to DB
                             firebase.create('character', charProps)

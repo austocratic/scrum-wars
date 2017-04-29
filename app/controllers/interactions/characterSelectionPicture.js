@@ -32,7 +32,7 @@ exports.characterSelectionPicture = payload => {
                 var updates = {
                     "class": payload.actions[0].value
                 };
-                
+
                 //Now update the character with new properties
                 firebase.update(tableRef, updates)
                     .then( fbResponse => {
