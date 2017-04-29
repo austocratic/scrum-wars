@@ -28,9 +28,8 @@ exports.characterProfile = payload => {
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
 
-                //Array of profile field elements
-                //var characterFields = template.attachments[1].fields;
-
+                template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/file/wizard_image.jpg";
+                
                 //Iterate through the stat keys
                 template.attachments[1].fields = statKeys.map( key =>{
 
