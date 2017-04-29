@@ -19,8 +19,24 @@ class Firebase {
     }
 
     get(table, key, value) {
+
+        //Default of key and or value not defined
+        var localKey, localValue;
+
+        if (key){
+            localKey = 'orderBy="' + key;
+        } else {
+            localKey = '';
+        }
+
+        if (value){
+            localValue = '"&equalTo="' + value
+        } else {
+            localValue = '';
+        }
+
         
-        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?orderBy="' + key + '"&equalTo="' + value + '"&auth=' + CREDENTIAL;
+        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?' + localKey + localValue + '"&auth=' + CREDENTIAL;
 
         console.log('Options: ', this.options.uri);
 

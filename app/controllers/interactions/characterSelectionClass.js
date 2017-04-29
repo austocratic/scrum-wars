@@ -6,6 +6,8 @@ var characterSelectionClass = require('../../slackTemplates/characterSelectionCl
 
 exports.characterSelectionClass = payload => {
 
+    console.log('called: characterSelectionClass');
+
     return new Promise( (resolve, reject) => {
 
         var template;
@@ -44,22 +46,50 @@ exports.characterSelectionClass = payload => {
                     var charProps = {
                         name: 'Unknown Traveler',
                         user_id: payload.user.id,
-                        strength: 15,
-                        stamina: 10
+                        strength: 10,
+                        toughness: 10,
+                        dexterity: 10,
+                        intelligence: 10,
+                        armor: 0,
+                        hit_points: 100
                     };
 
-                    //Add properties to DB
-                    firebase.create('character', charProps)
-                    //After writing to DB, resolve the template
-                        .then(fbResponse => {
-                            console.log('fbResponse: ', fbResponse);
-                            resolve(template);
-                        })
-                        .catch(err => {
-                            console.log('Error when writing to firebase: ', err);
-                            reject(err);
-                        });
+                    //Get all the available classes from the DB
+                    firebase.get('class')
+                        .then( characterClasses => {
 
+                            //Get an array of all class IDs
+                            var classIDs = Object.keys(characterClasses);
+                            
+                            var classNames = classIDs.map( classID =>{
+                                return characterClasses[classID].name;
+                            });
+
+                            var classTemplate = classNames.map( className =>{
+
+                                return {
+                                    "name": "playerClass",
+                                    "text": className,
+                                    "style": "default",
+                                    "type": "button",
+                                    "value": className
+                                }
+                            });
+
+                            template.attachments[0].actions = classTemplate;
+                            
+                            //Add properties to DB
+                            firebase.create('character', charProps)
+                            //After writing to DB, resolve the template
+                                .then(fbResponse => {
+                                    console.log('fbResponse: ', fbResponse);
+                                    resolve(template);
+                                })
+                                .catch(err => {
+                                    console.log('Error when writing to firebase: ', err);
+                                    reject(err);
+                                });
+                        });
                     })
                     .catch( err =>{
                         console.log('Error when getting player character: ', err)
