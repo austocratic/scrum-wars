@@ -51,6 +51,12 @@ exports.playerAttack = payload => {
 
                         var updates;
 
+                        //Get the attacking player's character name
+                        var attackerName = character[characterID].name;
+
+                        //Get the defending player's character name
+                        var defenderName = target[targetCharacterID].name;
+
                         //If target is defending, they will take no damage, instead remove is_defending
                         if (targetDefending) {
 
@@ -58,9 +64,12 @@ exports.playerAttack = payload => {
                                 "is_defending": false
                             };
 
-                            //Change template to reflect that the target defended
-                            template.attachments[0].text = "You attack but the target was defending, attack is blocked!";
+                            //Set the response template to display to all players in channel
+                            template.response_type = "in_channel";
 
+                            //Change template to reflect that the target defended
+                            template.text = (attackerName + " moves in with a fierce strike, however " + defenderName + " blocks the attack!");
+                            //template.attachments[0].text = (attackerName + " moves in with a fierce strike, however " + defenderName + " blocks the attack!");
 
                         } else {
 
@@ -78,7 +87,11 @@ exports.playerAttack = payload => {
                                 "hit_points": newHealth
                             };
 
-                            template.attachments[0].text = "You attack and score a crushing blow!";
+                            //Set the response template to display to all players in channel
+                            template.response_type = "in_channel";
+
+                            template.text = (attackerName + " lunges forward with a powerful strike and lands a crushing blow on " + defenderName + " for " + randomDamage + " points of damage!");
+                            //template.attachments[0].text = (attackerName + " lunges forward with a powerful strike and lands a crushing blow on " + defenderName + " for " + randomDamage + " points of damage!");
 
                         }
                         
