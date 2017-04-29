@@ -62,24 +62,93 @@ exports.characterSelectionClass = payload => {
                                 return characterClasses[classID].name;
                             });
 
+                            /*
+                            var base2 = {"attachments": [
+                                {
+                                    "title": "Paladin",
+                                    "text": "Paladins are mighty warriors, fueled by divine fury.  \n The paladins arrived in Luthadel on a great crusade",
+                                    "fallback": "You are unable to choose an action",
+                                    "callback_id": "characterSelectionPicture",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "image_url": "https://sites.google.com/site/fagewiki/_/rsrc/1451615340298/specializations/warrior-specializations/paladin/Paladin.png?height=361&width=400",
+                                    "actions": [
+                                        {
+                                            "name": "warrior",
+                                            "text": "Paladin",
+                                            "style": "default",
+                                            "type": "button",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Shadow Knight",
+                                    "fallback": "You are unable to choose an action",
+                                    "callback_id": "characterSelectionPicture",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "image_url": "https://s-media-cache-ak0.pinimg.com/originals/7f/44/8d/7f448dbb91ff3fa441876c26e441dd7e.jpg",
+                                    "actions": [
+                                        {
+                                            "name": "warrior",
+                                            "text": "Shadow Knight",
+                                            "style": "default",
+                                            "type": "button",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Rogue",
+                                    "fallback": "You are unable to choose an action",
+                                    "callback_id": "characterSelectionPicture",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "image_url": "https://s-media-cache-ak0.pinimg.com/originals/d5/3d/f6/d53df60a068d03e6bcbe89ae280999de.jpg",
+                                    "actions": [
+                                        {
+                                            "name": "warrior",
+                                            "text": "Rogue",
+                                            "style": "default",
+                                            "type": "button",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            ]};*/
+
+                            /*
                             var actionsBaseTemplate = {
                                 "name": 'classOptions',
                                 "text": '',
                                 "type": 'select',
                                 "options": []
-                            };
+                            };*/
 
-                            var optionsTemplate = classNames.map( className =>{
+                            template.attachments = classNames.map( className =>{
 
                                 return {
-                                    "text": className,
-                                    "value": className
+
+                                    "title": className,
+                                    "fallback": "You are unable to choose an action",
+                                    "callback_id": "characterSelectionPicture",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "image_url": "https://scrum-wars.herokuapp.com/file/ " + className + ".jpg",
+                                    "actions": [{
+                                        "name": className,
+                                        "text": className,
+                                        "style": "default",
+                                        "type": "button",
+                                        "value": className
+                                    }]
                                 }
                             });
 
-                            actionsBaseTemplate.options = optionsTemplate;
+                            //actionsBaseTemplate.options = optionsTemplate;
 
-                            template.attachments[0].actions[0] = actionsBaseTemplate;
+                            //template.attachments = attachmentTemplate;
 
                             console.log('Final template: ', JSON.stringify(template));
                             

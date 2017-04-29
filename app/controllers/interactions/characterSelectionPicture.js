@@ -51,6 +51,13 @@ exports.characterSelectionPicture = payload => {
                         //Now update the character with new properties
                         firebase.update(tableRef, updates)
                             .then( fbResponse => {
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
                                 resolve(template);
                             })
