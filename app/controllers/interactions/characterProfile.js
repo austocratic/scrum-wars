@@ -28,7 +28,7 @@ exports.characterProfile = payload => {
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
 
-                //Get & set profile image
+                //If the player has a profile picture: get & set profile image
                 template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/file/" + characterStats.profile_image;
                 
                 //Iterate through the stat keys
