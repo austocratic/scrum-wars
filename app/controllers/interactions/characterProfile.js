@@ -28,8 +28,12 @@ exports.characterProfile = payload => {
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
 
+                console.log('Char name: ', characterStats.name);
+
                 //Set Message properties:
-                template.username = (characterStats.name + "'s Profile");
+                template.username = (characterStats.name + "s Profile");
+
+                console.log('username: ', template.username);
                 
                 //If the player has a profile picture: get & set profile image
                 template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/file/" + characterStats.class + ".jpg";
@@ -43,6 +47,8 @@ exports.characterProfile = payload => {
                         "short": true
                     };
                 });
+
+                console.log('Final template: ', JSON.stringify(template));
 
                 resolve(template);
 
