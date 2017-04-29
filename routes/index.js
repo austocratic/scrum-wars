@@ -17,8 +17,25 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
-router.get('/image', function(req, res, next) {
-    res.sendFile('../app/assets/wizardImage.jpg');
+router.get('/file/:name', function (req, res, next) {
+
+    var options = {
+        root: process.cwd() + '/app/assets/',
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+
+    var fileName = req.params.name;
+    res.sendFile(fileName, options, function (err) {
+        if (err) {
+            next(err);
+        } else {
+            console.log('Sent:', fileName);
+        }
+    });
 });
 
 router.post('/api/commands', (req, res, next) => {
