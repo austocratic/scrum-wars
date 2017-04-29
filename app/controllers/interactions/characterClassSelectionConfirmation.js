@@ -1,14 +1,14 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-var characterSelectionPicture = require('../../slackTemplates/characterSelectionPicture').characterSelectionPicture;
+var characterClassSelectionConfirmation = require('../../slackTemplates/characterClassSelectionConfirmation').characterClassSelectionConfirmation;
 
 
-exports.characterSelectionPicture = payload => {
+exports.characterClassSelectionConfirmation = payload => {
 
     return new Promise( (resolve, reject) => {
 
-        var template = characterSelectionPicture();
+        var template = characterClassSelectionConfirmation();
 
         //Create new firebase object
         var firebase = new Firebase();
@@ -51,13 +51,6 @@ exports.characterSelectionPicture = payload => {
                         //Now update the character with new properties
                         firebase.update(tableRef, updates)
                             .then( fbResponse => {
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
                                 resolve(template);
                             })

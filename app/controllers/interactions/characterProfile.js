@@ -28,6 +28,9 @@ exports.characterProfile = payload => {
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
 
+                //Set Message properties:
+                template.username = (characterStats.name + "'s Profile");
+                
                 //If the player has a profile picture: get & set profile image
                 template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/file/" + characterStats.class + ".jpg";
 

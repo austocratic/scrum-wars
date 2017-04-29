@@ -5,6 +5,7 @@ exports.characterProfile = payload => {
     return {
         "attachments": [
             {
+
                 "image_url": "https://scrum-wars.herokuapp.com/file/unknown_character.jpg",
                 "fields": [
                     {
@@ -15,6 +16,7 @@ exports.characterProfile = payload => {
                 ]
             },
             {
+                "title": "Character Stats",
                 "fields": [
                 ]
             }

@@ -3,7 +3,7 @@
 var characterProfile = require('./characterProfile').characterProfile;
 var characterSelectionNew = require('./characterSelectionNew').characterSelectionNew;
 var characterSelectionClass = require('./characterSelectionClass').characterSelectionClass;
-var characterSelectionPicture = require('./characterSelectionPicture').characterSelectionPicture;
+var characterClassSelectionConfirmation = require('./characterClassSelectionConfirmation').characterClassSelectionConfirmation;
 var nameCharacter = require('./nameCharacter').nameCharacter;
 var playerAction = require('./playerAction').playerAction;
 var playerAttack = require('./playerAttack').playerAttack;
@@ -16,7 +16,7 @@ exports.interactionsIndex = {
     characterProfile: characterProfile,
     characterSelectionNew: characterSelectionNew,
     characterSelectionClass: characterSelectionClass,
-    characterSelectionPicture: characterSelectionPicture,
+    characterClassSelectionConfirmation: characterClassSelectionConfirmation,
     nameCharacter: nameCharacter,
     playerAction: playerAction,
     playerAttack: playerAttack,
