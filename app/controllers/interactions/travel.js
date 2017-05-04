@@ -51,7 +51,8 @@ exports.travel = payload => {
                         var travelAlertDetails = {
                             "username": "A mysterious voice",
                             "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                            "channel_id": characterZone.channel_id,
+                            //"channel_id": characterZone.channel_id,
+                            "channel": ("#" + characterZone.name),
                             "text": (characterProperties.name + ' has entered ' + characterZone.name)
                         };
                         
