@@ -118,29 +118,26 @@ exports.playerActionSelection = payload => {
                                 var activeMerchant = merchantsInZone[merchantsInZoneID];
 
                                 //Iterate over active merchant's for_sale array and lookup the names return as an array
+                                //Return an array of objects in the format for Slack
                                 var itemNamePromises = activeMerchant.for_sale.map( itemID =>{
 
                                     return new Promise((resolve, reject)=>{
                                         firebase.get('item/' + itemID)
                                             .then(itemProfile => {
-                                                resolve(itemProfile.name)
+                                                resolve({
+                                                    "text": itemProfile.name,
+                                                    "value": itemID
+                                                })
                                         })
                                     })
                                 });
                                 
                                 Promise.all(itemNamePromises)
-                                    .then( itemNames =>{
+                                    .then( itemSlackFormat =>{
 
-                                        //TODO: need to make value below the item's ID not name
+                                        console.log('Item names: ', JSON.stringify(itemSlackFormat));
 
-                                        var actionList = itemNames.map( singleName =>{
-                                            return {
-                                                "text": singleName,
-                                                "value": singleName
-                                            }
-                                        });
-
-                                        responseTemplate.attachments[0].actions[0].options = actionList;
+                                        responseTemplate.attachments[0].actions[0].options = itemSlackFormat;
 
                                         resolve(responseTemplate);
                                     });
