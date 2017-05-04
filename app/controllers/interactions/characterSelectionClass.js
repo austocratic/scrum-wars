@@ -47,6 +47,7 @@ exports.characterSelectionClass = payload => {
                         name: 'Unknown Traveler',
                         profile_image: 'unknown_character.jpg',
                         user_id: payload.user.id,
+                        gold: 100,
                         armor: 0,
                         hit_points: 100,
                         is_defending: false
