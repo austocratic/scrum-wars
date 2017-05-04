@@ -99,8 +99,10 @@ exports.playerAttack = payload => {
                         var tableRef = 'character/' + targetCharacterID;
 
                         console.log('Updates: ', updates);
+                        
+                        console.log('Final attack template: ', template);
 
-                        //Reduce target's health
+                        //Change target attributes
                         firebase.update(tableRef, updates)
                             .then( ()=> {
                                 //Then return the new template

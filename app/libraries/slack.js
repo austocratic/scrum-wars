@@ -3,9 +3,7 @@
 // ---Modules---
 var request = require('request');
 
-//var slackHook = process.env.SLACK_HOOK;
-
-var slackHook = 'https://hooks.slack.com/services/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';
+var slackHook = process.env.SLACK_HOOK;
 
 
 class Slack {
@@ -13,10 +11,10 @@ class Slack {
     }
 
     //TODO: need to add validation to ensure that this.options are set before calling
-    sendToSlack(params){
+    sendToSlack(){
 
         return new Promise( (resolve, reject) => {
-            request.post(params, (err, httpResponse, body) => {
+            request.post(this.options, (err, httpResponse, body) => {
                 if (err) {
                     reject(err);
                 }
@@ -47,7 +45,9 @@ class Alert extends Slack {
             resolveWithFullResponse: true,
             json:                    true,
             body:                    this.params
-        }
+        };
+
+        console.log('slack parameters: ', this. options)
     }
 }
 
