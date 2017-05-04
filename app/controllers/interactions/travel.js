@@ -49,7 +49,9 @@ exports.travel = payload => {
                         
                         //Send a message to the channel saying that a new traveler has entered the zone
                         var travelAlertDetails = {
-                            "channel": characterZone,
+                            "username": "A mysterious voice",
+                            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                            "channel_id": characterZone.channel_id,
                             "text": (characterProperties.name + ' has entered ' + characterZone.name)
                         };
                         
