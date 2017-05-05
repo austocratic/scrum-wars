@@ -4,7 +4,7 @@ var shopPurchaseConfirm = require('../../slackTemplates/shopPurchaseConfirm').sh
 
 exports.shopItemSelection = payload => {
 
-    console.log('shopItemSelection called')
+    console.log('shopItemSelection called, payload: ', payload);
 
     var firebase = new Firebase();
 
