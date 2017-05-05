@@ -15,6 +15,8 @@ exports.shopItemSelection = payload => {
         //get the value of the item selected
         var purchaseSelection = payload.actions[0].value;
 
+        console.log('purchaseSelection', purchaseSelection);
+
         //Use previous selection ID to lookup the item properties
         firebase.get(('item/' + purchaseSelection))
             .then( itemProps => {
