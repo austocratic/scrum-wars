@@ -115,11 +115,23 @@ exports.interactions = (interactionType, messagePayloadInput) => {
                     });
 
                 break;
-
-
+            
             case 'playerAttack':
 
                 interactions.playerAttack(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+
+                break;
+
+            case 'shopItemSelection':
+
+                interactions.shopItemSelection(messagePayloadInput)
                     .then( template =>{
                         resolve(template);
 
