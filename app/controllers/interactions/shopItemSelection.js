@@ -13,7 +13,7 @@ exports.shopItemSelection = payload => {
     return new Promise((resolve, reject) => {
 
         //get the value of the item selected
-        var purchaseSelection = payload.actions[0].selected_options[0];
+        var purchaseSelection = payload.actions[0].selected_options[0].value;
 
         console.log('purchaseSelection', purchaseSelection);
 
