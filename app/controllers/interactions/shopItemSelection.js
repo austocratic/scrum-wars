@@ -23,6 +23,8 @@ exports.shopItemSelection = payload => {
 
                 console.log('ItemProps', itemProps);
 
+                responseTemplate.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/app/assets/thumb/" + itemProps.name + ".jpg";
+
                 //Create the fields to show
                 responseTemplate.attachments[0].fields = [
                     {

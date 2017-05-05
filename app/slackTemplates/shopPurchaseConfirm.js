@@ -7,7 +7,6 @@ exports.shopPurchaseConfirm = payload => {
                 "fallback": "You are unable to choose an action",
                 "callback_id": "shopPurchaseConfirm",
                 "color": "#3AA3E3",
-                "thumb_url": "http://www.dundjinni.com/forums/uploads/forumLurker/82F_Sword_Ancient_LRK.png",
                 "attachment_type": "default",
                 "fields": [
              
