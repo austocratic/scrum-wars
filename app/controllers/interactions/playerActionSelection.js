@@ -135,8 +135,6 @@ exports.playerActionSelection = payload => {
                                 Promise.all(itemNamePromises)
                                     .then( itemSlackFormat =>{
 
-                                        console.log('Item names: ', JSON.stringify(itemSlackFormat));
-
                                         responseTemplate.attachments[0].actions[0].options = itemSlackFormat;
 
                                         resolve(responseTemplate);

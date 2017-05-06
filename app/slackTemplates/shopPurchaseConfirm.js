@@ -12,18 +12,7 @@ exports.shopPurchaseConfirm = payload => {
              
                 ],
                 "actions": [
-                    {
-                        "name": "purchaseConfirm",
-                        "text": "Yes, I'll take it",
-                        "type": "button",
-                        "value": "yes"
-                    },
-                    {
-                        "name": "purchaseConfirm",
-                        "text": "No thanks, I'll keep browsing",
-                        "type": "button",
-                        "value": "no"
-                    }
+                    
 
                 ]
             }

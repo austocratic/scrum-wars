@@ -41,10 +41,24 @@ exports.shopItemSelection = payload => {
                         "title": prop,
                         "value": `${itemProps[prop]}`,
                         "short": true
-                    })
-
-                    console.log('responseTemplate.attachments[0].fields: ', JSON.stringify(responseTemplate.attachments[0].fields))
+                    });
                 }
+
+                //Add in respond fields to the template, "yes" will pass the item ID to the next screen
+                responseTemplate.attachments[0].fields = [{
+                    "name": "purchaseConfirm",
+                    "text": "Yes, I'll take it!",
+                    "type": "button",
+                    //Use the item's ID to pass to the next page where DB writing will take place
+                    "value": purchaseSelection
+                },
+                {
+                    "name": "purchaseConfirm",
+                    "text": "No thanks",
+                    "type": "button",
+                    "style": "danger",
+                    "value": "no"
+                }];
 
                 console.log('Response template: ', JSON.stringify(responseTemplate));
                 
