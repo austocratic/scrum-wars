@@ -27,6 +27,8 @@ exports.characterClassSelectionConfirmation = payload => {
                 //Convert the returned object into array of character IDs.  This works since the query only returns one result
                 var characterID = Object.keys(character)[0];
 
+                var classSelectionID = payload.actions[0].value;
+
                 console.log('characterID: ', characterID);
 
                 console.log('payload: ', payload);
@@ -35,23 +37,24 @@ exports.characterClassSelectionConfirmation = payload => {
                 var tableRef = 'character/' + characterID;
 
                 //Lookup the character's starting properties
-                firebase.get('class', 'name', payload.actions[0].value)
+                firebase.get('class/' + classSelectionID)
                     .then( characterClass => {
 
                         console.log('characterClass: ', characterClass);
 
+                        /*
                         //Convert the returned object into array of class IDs.  This works since the query only returns one result
                         var classID = Object.keys(characterClass)[0];
 
-                        console.log('classID: ', classID);
+                        console.log('classID: ', classID);*/
 
-                        var startingAttributes = characterClass[classID].starting_attributes;
+                        var startingAttributes = characterClass[classSelectionID].starting_attributes;
 
                         console.log('Starting attributes: ', startingAttributes);
 
                         //Define the properties to add to character
                         var updates = {
-                            "class": payload.actions[0].value,
+                            "class": classSelectionID,
                             "strength": startingAttributes.strength,
                             "toughness": startingAttributes.toughness,
                             "dexterity": startingAttributes.dexterity,
