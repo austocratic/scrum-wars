@@ -50,6 +50,7 @@ exports.characterSelectionClass = payload => {
                         gold: 100,
                         armor: 0,
                         hit_points: 100,
+                        inventory: [],
                         is_defending: false
                     };
 

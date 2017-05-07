@@ -45,7 +45,7 @@ exports.shopItemSelection = payload => {
                 }
 
                 //Add in respond fields to the template, "yes" will pass the item ID to the next screen
-                responseTemplate.attachments[0].fields = [{
+                responseTemplate.attachments[0].actions = [{
                     "name": "purchaseConfirm",
                     "text": "Yes, I'll take it!",
                     "type": "button",
