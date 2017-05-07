@@ -22,8 +22,14 @@ exports.characterClassSelectionConfirmation = payload => {
         firebase.get('character', 'user_id', userID)
             .then( character => {
 
+                console.log('character: ', character);
+
                 //Convert the returned object into array of character IDs.  This works since the query only returns one result
                 var characterID = Object.keys(character)[0];
+
+                console.log('characterID: ', characterID);
+
+                console.log('payload: ', payload);
 
                 //Create a table reference to be used for locating the character
                 var tableRef = 'character/' + characterID;
