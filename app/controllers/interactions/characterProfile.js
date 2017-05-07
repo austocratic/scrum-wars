@@ -37,7 +37,7 @@ exports.characterProfile = payload => {
                 console.log('username: ', template.username);
                 
                 //If the player has a profile picture: get & set profile image
-                template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/file/" + characterStats.class + ".jpg";
+                template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + characterID + ".jpg";
 
                 //Iterate through the stat keys
                 template.attachments[1].fields = statKeys.map( key =>{

@@ -1,6 +1,7 @@
 "use strict";
 var Firebase = require('../../libraries/firebase').Firebase;
-
+//var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
+var playerActionSelection = require('./playerActionSelection').playerActionSelection;
 
 
 exports.shopItemSelectionConfirmation = payload => {
@@ -44,11 +45,17 @@ exports.shopItemSelectionConfirmation = payload => {
             //If user selected no, return them to the main shopping screen
             if (purchaseSelection === "no") {
 
+                responseTemplate = payload;
+                
                 //Set the callback to trigger the shopping menu again
                 responseTemplate.callback_id = "actionMenu";
                 responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];
 
-                resolve(responseTemplate);
+                playerActionSelection(responseTemplate)
+                    .then(shopResponse=>{
+                        console.log('shopResponse: ', shopResponse);
+                        resolve(shopResponse);
+                    })
 
             } else {
 
