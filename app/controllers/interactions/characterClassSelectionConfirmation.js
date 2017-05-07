@@ -54,7 +54,7 @@ exports.characterClassSelectionConfirmation = payload => {
 
                         //Define the properties to add to character
                         var updates = {
-                            "class": classSelectionID,
+                            "class_id": classSelectionID,
                             "strength": startingAttributes.strength,
                             "toughness": startingAttributes.toughness,
                             "dexterity": startingAttributes.dexterity,
