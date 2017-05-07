@@ -9,6 +9,7 @@ var playerAction = require('./playerAction').playerAction;
 var playerAttack = require('./playerAttack').playerAttack;
 var playerActionSelection = require('./playerActionSelection').playerActionSelection;
 var shopItemSelection = require('./shopItemSelection').shopItemSelection;
+var shopItemSelectionConfirmation = require('./shopItemSelectionConfirmation').shopItemSelectionConfirmation;
 var travel = require('./travel').travel;
 
 //Character index file used to manage the import of character related templates 
@@ -23,5 +24,6 @@ exports.interactionsIndex = {
     playerAttack: playerAttack,
     playerActionSelection: playerActionSelection,
     shopItemSelection: shopItemSelection,
+    shopItemSelectionConfirmation: shopItemSelectionConfirmation,
     travel: travel
 };

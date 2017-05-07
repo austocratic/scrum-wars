@@ -4,8 +4,6 @@ var shopPurchaseConfirm = require('../../slackTemplates/shopPurchaseConfirm').sh
 
 exports.shopItemSelection = payload => {
 
-    console.log('shopItemSelection called, payload: ', JSON.stringify(payload));
-
     var firebase = new Firebase();
 
     var responseTemplate = shopPurchaseConfirm();
@@ -14,8 +12,6 @@ exports.shopItemSelection = payload => {
 
         //get the value of the item selected
         var purchaseSelection = payload.actions[0].selected_options[0].value;
-
-        console.log('purchaseSelection', purchaseSelection);
 
         //Use previous selection ID to lookup the item properties
         firebase.get(('item/' + purchaseSelection))

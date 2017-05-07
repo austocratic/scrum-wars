@@ -142,6 +142,19 @@ exports.interactions = (interactionType, messagePayloadInput) => {
 
                 break;
 
+            case 'shopPurchaseConfirm':
+
+                interactions.shopItemSelectionConfirmation(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+
+                break;
+
             default:
 
                 //return "ERROR: template not supported"

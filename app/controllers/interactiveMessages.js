@@ -79,6 +79,14 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
+                case 'shopPurchaseConfirm':
+
+                    interactions('shopPurchaseConfirm', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+
                 default:
 
             }

@@ -3,7 +3,7 @@ var Firebase = require('../../libraries/firebase').Firebase;
 
 
 
-exports.shopItemSelection = payload => {
+exports.shopItemSelectionConfirmation = payload => {
 
     //Need to read the value from the previous selection
     //How do we get the item ID from the previous screen?
@@ -15,8 +15,12 @@ exports.shopItemSelection = payload => {
 
     console.log('shopItemSelection payload: ', JSON.stringify(payload));
 
+    console.log('user: ', payload.user);
+
     //Get the slack user ID who called the action
     var userID = payload.user.id;
+
+    console.log('userID: ', userID);
 
     return new Promise((resolve, reject) => {
 
@@ -32,8 +36,10 @@ exports.shopItemSelection = payload => {
             //Set the player's character locally
             var playerCharacter = character[characterID];
 
+            console.log('playerCharacter: ', playerCharacter);
+
             //get the value of the item selected
-            var purchaseSelection = payload.actions[0].selected_options[0].value;
+            var purchaseSelection = payload.actions[0].value;
 
             //If user selected no, return them to the main shopping screen
             if (purchaseSelection === "no") {
