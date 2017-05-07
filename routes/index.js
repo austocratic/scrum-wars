@@ -38,10 +38,10 @@ router.get('/file/:name', function (req, res, next) {
     });
 });
 
-router.get('/assets/thumb/:id', function (req, res, next) {
+router.get('/assets/:folder/:id', function (req, res, next) {
 
     var options = {
-        root: process.cwd() + '/app/assets/thumb/',
+        root: process.cwd() + '/app/assets/' + req.params.folder + '/',
         dotfiles: 'deny',
         headers: {
             'x-timestamp': Date.now(),
