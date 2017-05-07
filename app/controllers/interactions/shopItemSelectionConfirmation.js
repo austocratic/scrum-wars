@@ -46,7 +46,8 @@ exports.shopItemSelectionConfirmation = payload => {
             if (purchaseSelection === "no") {
 
                 responseTemplate = payload;
-                
+
+                responseTemplate.text = "Ok, what else can I interest you in?";
                 //Set the callback to trigger the shopping menu again
                 responseTemplate.callback_id = "actionMenu";
                 responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];

@@ -40,6 +40,8 @@ router.get('/file/:name', function (req, res, next) {
 
 router.get('/assets/:folder/:id', function (req, res, next) {
 
+    console.log('folder: ', req.params.folder);
+
     var options = {
         root: process.cwd() + '/app/assets/' + req.params.folder + '/',
         dotfiles: 'deny',
