@@ -47,13 +47,15 @@ exports.shopItemSelectionConfirmation = payload => {
 
                 responseTemplate = payload;
 
-                responseTemplate.text = "Ok, what else can I interest you in?";
                 //Set the callback to trigger the shopping menu again
                 responseTemplate.callback_id = "actionMenu";
                 responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];
 
                 playerActionSelection(responseTemplate)
                     .then(shopResponse=>{
+
+                        shopResponse.text = "Ok, what else can I interest you in?";
+                        
                         console.log('shopResponse: ', shopResponse);
                         resolve(shopResponse);
                     })
