@@ -65,8 +65,12 @@ exports.characterSelectionClass = payload => {
                                 return characterClasses[classID].name;
                             });
 
-                            template.attachments = classNames.map( className =>{
+                            //template.attachments = classNames.map( className =>{
+                            template.attachments = classIDs.map( singleClassID =>{
 
+                                //Get the name for the class ID
+                                var className = characterClasses[singleClassID].name;
+                                
                                 return {
 
                                     "title": className,
@@ -74,13 +78,13 @@ exports.characterSelectionClass = payload => {
                                     "callback_id": "characterSelectionClass",
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
-                                    "image_url": "https://scrum-wars.herokuapp.com/file/" + className + ".jpg",
+                                    "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + singleClassID + ".jpg",
                                     "actions": [{
                                         "name": className,
                                         "text": className,
                                         "style": "default",
                                         "type": "button",
-                                        "value": className
+                                        "value": singleClassID
                                     }]
                                 }
                             });

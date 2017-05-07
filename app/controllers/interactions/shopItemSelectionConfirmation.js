@@ -44,6 +44,12 @@ exports.shopItemSelectionConfirmation = payload => {
             //If user selected no, return them to the main shopping screen
             if (purchaseSelection === "no") {
 
+                //Set the callback to trigger the shopping menu again
+                responseTemplate.callback_id = "actionMenu";
+                responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];
+
+                resolve(responseTemplate);
+
             } else {
 
                 //Now that we have determined that the player wants to buy the item, lookup the item's price
@@ -64,7 +70,7 @@ exports.shopItemSelectionConfirmation = payload => {
                             "\nCan I interest you in something else?";
 
                             responseTemplate.callback_id = "actionMenu";
-                            responseTemplate.actions =[{"name":"class","type":"button","value":"shop"}];
+                            responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];
 
                             //Character does not have enough gold, resolve with template that will return them to shopping screen
                             resolve(responseTemplate)
@@ -90,7 +96,7 @@ exports.shopItemSelectionConfirmation = payload => {
                             .then( ()=> {
 
                                 //Set the response template to successful purchase
-                                responseTemplate.text = "_You hand the merchant " +itemCost + "in exchange for the " + itemProps.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
+                                responseTemplate.text = "_You hand the merchant " +itemCost + " in exchange for the " + itemProps.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
 
                                 //Then return the new template
                                 resolve(responseTemplate)
