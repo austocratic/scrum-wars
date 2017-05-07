@@ -48,7 +48,7 @@ exports.characterClassSelectionConfirmation = payload => {
 
                         console.log('classID: ', classID);*/
 
-                        var startingAttributes = characterClass[classSelectionID].starting_attributes;
+                        var startingAttributes = characterClass.starting_attributes;
 
                         console.log('Starting attributes: ', startingAttributes);
 
