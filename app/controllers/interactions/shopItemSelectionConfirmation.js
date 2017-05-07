@@ -55,7 +55,7 @@ exports.shopItemSelectionConfirmation = payload => {
                     .then(shopResponse=>{
 
                         shopResponse.text = "Ok, what else can I interest you in?";
-                        
+
                         console.log('shopResponse: ', shopResponse);
                         resolve(shopResponse);
                     })
