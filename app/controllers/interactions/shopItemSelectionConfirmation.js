@@ -104,9 +104,6 @@ exports.shopItemSelectionConfirmation = payload => {
                                     console.log('shopResponse: ', shopResponse);
                                     resolve(shopResponse);
                                 });
-
-                            //Character does not have enough gold, resolve with template that will return them to shopping screen
-                            resolve(responseTemplate)
                         }
 
                         //Decrement the player's gold locally
