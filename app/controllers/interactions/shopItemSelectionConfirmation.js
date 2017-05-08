@@ -68,10 +68,16 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         var playerGold = playerCharacter.gold;
 
+                        console.log('playerGold: ', playerGold);
+
                         //Get the player's inventory array so it can be adjusted locally
                         var playerInventory = playerCharacter.inventory;
 
+                        console.log('playerInventory: ', playerInventory);
+
                         var itemCost = itemProps.cost;
+
+                        console.log('itemCost: ', itemCost);
 
                         //Compare the item's price to the character's gold
                         if (itemCost > playerGold) {
@@ -91,6 +97,8 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         //Add the purchased item to inventory array
                         playerInventory.push(purchaseSelection);
+
+                        console.log('playerInventory updated: ', playerInventory);
 
                         //Update player's character by setting the adjusted gold & adjusted inventory
                         var updates = {
