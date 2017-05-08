@@ -14,14 +14,8 @@ exports.shopItemSelectionConfirmation = payload => {
 
     };
 
-    console.log('shopItemSelection payload: ', JSON.stringify(payload));
-
-    console.log('user: ', payload.user);
-
     //Get the slack user ID who called the action
     var userID = payload.user.id;
-
-    console.log('userID: ', userID);
 
     return new Promise((resolve, reject) => {
 
@@ -29,15 +23,11 @@ exports.shopItemSelectionConfirmation = payload => {
     firebase.get('character', 'user_id', userID)
         .then( character => {
 
-            console.log('character: ', character);
-
             //Character's ID
             var characterID = Object.keys(character)[0];
 
             //Set the player's character locally
             var playerCharacter = character[characterID];
-
-            console.log('playerCharacter: ', playerCharacter);
 
             //get the value of the item selected
             var purchaseSelection = payload.actions[0].value;
@@ -56,7 +46,6 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         shopResponse.text = "Ok, what else can I interest you in?";
 
-                        console.log('shopResponse: ', shopResponse);
                         resolve(shopResponse);
                     })
 
@@ -68,8 +57,6 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         var playerGold = playerCharacter.gold;
 
-                        console.log('playerGold: ', playerGold);
-
                         var playerInventory;
 
                         //Get the player's inventory array so it can be adjusted locally
@@ -80,11 +67,7 @@ exports.shopItemSelectionConfirmation = payload => {
                             playerInventory = [];
                         }
 
-                        console.log('playerInventory: ', playerInventory);
-
                         var itemCost = itemProps.cost;
-
-                        console.log('itemCost: ', itemCost);
 
                         //Compare the item's price to the character's gold
                         if (itemCost > playerGold) {
@@ -98,10 +81,9 @@ exports.shopItemSelectionConfirmation = payload => {
                             playerActionSelection(responseTemplate)
                                 .then(shopResponse=>{
 
-                                    responseTemplate.text = "I'm sorry traveler, you don't have " + itemCost + " gold." +
+                                    shopResponse.text = "I'm sorry traveler, you don't have " + itemCost + " gold." +
                                         "\nCan I interest you in something else?";
 
-                                    console.log('shopResponse: ', shopResponse);
                                     resolve(shopResponse);
                                 });
                         } else {
@@ -111,8 +93,6 @@ exports.shopItemSelectionConfirmation = payload => {
 
                             //Add the purchased item to inventory array
                             playerInventory.push(purchaseSelection);
-
-                            console.log('playerInventory updated: ', playerInventory);
 
                             //Update player's character by setting the adjusted gold & adjusted inventory
                             var updates = {
