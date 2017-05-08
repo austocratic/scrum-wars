@@ -70,8 +70,15 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         console.log('playerGold: ', playerGold);
 
+                        var playerInventory;
+
                         //Get the player's inventory array so it can be adjusted locally
-                        var playerInventory = playerCharacter.inventory;
+                        //Check that the player has inventory set
+                        if (playerCharacter.inventory) {
+                            playerInventory = playerCharacter.inventory;
+                        } else {
+                            playerInventory = [];
+                        }
 
                         console.log('playerInventory: ', playerInventory);
 
