@@ -104,35 +104,36 @@ exports.shopItemSelectionConfirmation = payload => {
                                     console.log('shopResponse: ', shopResponse);
                                     resolve(shopResponse);
                                 });
+                        } else {
+
+                            //Decrement the player's gold locally
+                            playerGold = playerGold - itemCost;
+
+                            //Add the purchased item to inventory array
+                            playerInventory.push(purchaseSelection);
+
+                            console.log('playerInventory updated: ', playerInventory);
+
+                            //Update player's character by setting the adjusted gold & adjusted inventory
+                            var updates = {
+                                "gold": playerGold,
+                                "inventory": playerInventory
+                            };
+
+                            //Create a table reference to be used for locating the character
+                            var tableRef = 'character/' + characterID;
+
+                            //Update the character
+                            firebase.update(tableRef, updates)
+                                .then( ()=> {
+
+                                    //Set the response template to successful purchase
+                                    responseTemplate.text = "_You hand the merchant " +itemCost + " in exchange for the " + itemProps.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
+
+                                    //Then return the new template
+                                    resolve(responseTemplate)
+                                })
                         }
-
-                        //Decrement the player's gold locally
-                        playerGold = playerGold - itemCost;
-
-                        //Add the purchased item to inventory array
-                        playerInventory.push(purchaseSelection);
-
-                        console.log('playerInventory updated: ', playerInventory);
-
-                        //Update player's character by setting the adjusted gold & adjusted inventory
-                        var updates = {
-                            "gold": playerGold,
-                            "inventory": playerInventory
-                        };
-
-                        //Create a table reference to be used for locating the character
-                        var tableRef = 'character/' + characterID;
-
-                        //Update the character
-                        firebase.update(tableRef, updates)
-                            .then( ()=> {
-
-                                //Set the response template to successful purchase
-                                responseTemplate.text = "_You hand the merchant " +itemCost + " in exchange for the " + itemProps.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
-
-                                //Then return the new template
-                                resolve(responseTemplate)
-                            })
                     })
                 }
             });
