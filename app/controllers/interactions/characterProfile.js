@@ -27,39 +27,36 @@ exports.characterProfile = payload => {
 
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
+                
+                    //TODO maybe move fields/image into one attachment
+                
+                    template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + characterStats.class_id + ".jpg";
 
-                console.log('Char name: ', characterStats.name);
+                    //Iterate through the stat keys
+                    template.attachments[1].fields = statKeys.map( key =>{
 
-                //Set Message properties:
-                //template.username = (characterStats.name + "s Profile");
-                template.username = "TEST";
+                        return {
+                            "title": key,
+                            "value": characterStats[key],
+                            "short": true
+                        };
+                    });
+                
+                    //Interactive portion of profile menu
+                    template.attachments[2] = {
+                        
+                        "actions": [{
+                            "name": "inventory",
+                            "text": "Inventory",
+                            "style": "default",
+                            "type": "button",
+                            "value": "inventory" //TODO make this interactive
+                        }]
+                    };
 
-                console.log('username: ', template.username);
+                    console.log('Final template: ', JSON.stringify(template));
 
-                //Get properties of the player's class
-                //firebase.get('class/' + character.class_id)
-                //    .then( characterClass => {
-
-                        //var classID = Object.keys(characterClass)[0];
-
-                        //If the player has a profile picture: get & set profile image
-                        template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + characterStats.class_id + ".jpg";
-
-                        //Iterate through the stat keys
-                        template.attachments[1].fields = statKeys.map( key =>{
-
-                            return {
-                                "title": key,
-                                "value": characterStats[key],
-                                "short": true
-                            };
-                        });
-
-                        console.log('Final template: ', JSON.stringify(template));
-
-                        resolve(template);
-
-                    //});
+                    resolve(template);
 
             });
     })

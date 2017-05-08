@@ -14,6 +14,11 @@ exports.characterProfile = payload => {
                 "title": "Character Stats",
                 "fields": [
                 ]
+            },
+            {
+                "fields": [
+                    
+                ]
             }
         ]
     };

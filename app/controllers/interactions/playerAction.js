@@ -44,24 +44,45 @@ exports.playerAction = payload => {
 
                 //Overwrite template default callback
                 //template.callback_id = 'arenaAction';
-                
-                //Set the available actions
-                availableActions = [
-                        {
-                            "name": "attack",
-                            "text": "Attack",
-                            "style": "default",
-                            "type": "button",
-                            "value": "attack"
-                        },
-                        {
-                            "name": "defend",
-                            "text": "Defend",
-                            "style": "default",
-                            "type": "button",
-                            "value": "defend"
-                        }
-                    ];
+
+                template.attachments = [
+                    //Attack oriented actions
+                    {
+                        "title": "Attack actions",
+                        "fallback": "You are unable to choose an action",
+                        "callback_id": "actionMenu",
+                        "color": "#3AA3E3", //TODO change to attack oriented color
+                        "attachment_type": "default",
+                        //TODO add tiny_url for attack symbol
+                        "actions": [
+                            {
+                                "name": "attack",
+                                "text": "Attack",
+                                "style": "default",
+                                "type": "button",
+                                "value": "attack"
+                            }]
+                    },
+                    //Defense oriented actions
+                    {
+                        "title": "Defensive actions",
+                        "text": "No actions available in this zone", //Default value to be overwritten
+                        "fallback": "You are unable to choose an action",
+                        "callback_id": "actionMenu",
+                        "color": "#3AA3E3", //TODO change to defense oriented color
+                        "attachment_type": "default",
+                        //TODO add tiny_url for defense symbol
+                        "actions": [
+                            {
+                                "name": "defend",
+                                "text": "Defend",
+                                "style": "default",
+                                "type": "button",
+                                "value": "defend"
+                            }]
+                    }
+                    //Magic oriented actions (to add)
+                ];
 
                 break;
 
@@ -71,14 +92,8 @@ exports.playerAction = payload => {
                 resolve(template);
         }
 
-        console.log('availableActions: ', availableActions);
-
         //Overwrite template default
-        template.attachments[0].text = 'Choose an action';
-
-        template.attachments[0].actions = availableActions;
-
-        console.log('Modified template: ', template);
+        template.text = 'Choose an action';
 
         resolve(template);
 
