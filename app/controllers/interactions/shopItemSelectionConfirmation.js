@@ -89,11 +89,21 @@ exports.shopItemSelectionConfirmation = payload => {
                         //Compare the item's price to the character's gold
                         if (itemCost > playerGold) {
 
-                            responseTemplate.text = "I'm sorry traveler, you don't have " + itemCost + " gold." +
-                            "\nCan I interest you in something else?";
+                            responseTemplate = payload;
 
+                            //Set the callback to trigger the shopping menu again
                             responseTemplate.callback_id = "actionMenu";
                             responseTemplate.actions = [{"name":"class","type":"button","value":"shop"}];
+
+                            playerActionSelection(responseTemplate)
+                                .then(shopResponse=>{
+
+                                    responseTemplate.text = "I'm sorry traveler, you don't have " + itemCost + " gold." +
+                                        "\nCan I interest you in something else?";
+
+                                    console.log('shopResponse: ', shopResponse);
+                                    resolve(shopResponse);
+                                });
 
                             //Character does not have enough gold, resolve with template that will return them to shopping screen
                             resolve(responseTemplate)
