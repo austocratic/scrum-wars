@@ -33,7 +33,7 @@ exports.characterProfile = payload => {
                     template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + characterStats.class_id + ".jpg";
 
                     //Iterate through the stat keys
-                    template.attachments[1].fields = statKeys.map( key =>{
+                    template.attachments[0].fields = statKeys.map( key =>{
 
                         return {
                             "title": key,
@@ -43,7 +43,7 @@ exports.characterProfile = payload => {
                     });
                 
                     //Interactive portion of profile menu
-                    template.attachments[2] = {
+                    template.attachments[1] = {
                         
                         "actions": [{
                             "name": "inventory",
