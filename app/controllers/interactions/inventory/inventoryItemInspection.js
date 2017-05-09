@@ -1,6 +1,6 @@
 "use strict";
 
-var Firebase = require('../libraries/firebase').Firebase;
+var Firebase = require('../../../libraries/firebase').Firebase;
 var itemDetail = require('../../../components/item/itemDetail').itemDetail;
 
 exports.inventoryItemInspection = payload => {
