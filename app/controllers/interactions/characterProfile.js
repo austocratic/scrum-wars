@@ -28,6 +28,7 @@ exports.characterProfile = payload => {
 
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
+
                 
                     //TODO maybe move fields/image into one attachment
                 

@@ -2,11 +2,14 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var shopPurchaseConfirm = require('../../slackTemplates/shopPurchaseConfirm').shopPurchaseConfirm;
 
+var itemDetail = require('../../components/item/itemDetail').itemDetail;
+
 exports.shopItemSelection = payload => {
 
     var firebase = new Firebase();
 
-    var responseTemplate = shopPurchaseConfirm();
+    //var responseTemplate = shopPurchaseConfirm();
+    var responseTemplate;
 
     return new Promise((resolve, reject) => {
 
@@ -19,6 +22,10 @@ exports.shopItemSelection = payload => {
 
                 console.log('ItemProps', itemProps);
 
+                
+                responseTemplate = itemDetail(purchaseSelection, itemProps);
+
+                /*
                 responseTemplate.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + purchaseSelection + ".jpg";
 
                 //Create the fields to show
@@ -38,7 +45,7 @@ exports.shopItemSelection = payload => {
                         "value": `${itemProps[prop]}`,
                         "short": true
                     });
-                }
+                }*/
 
                 //Add in respond fields to the template, "yes" will pass the item ID to the next screen
                 responseTemplate.attachments[0].actions = [{
