@@ -39,40 +39,44 @@ exports.inventoryMenu = payload => {
                 var unequippedInventoryOptions = unequippedInventory.map(singleUnequippedItemID => {
 
                     //Get the item's name property
-                    firebase.get('item/' + singleUnequippedItemID)
-                        .then(singleUnequippedItem => {
-                            return {
-                                "text": singleUnequippedItem.name,
-                                "value": singleUnequippedItemID
-                            }
-                        });
+                    return new Promise((resolve, reject)=> {
+                        firebase.get('item/' + singleUnequippedItemID)
+                            .then(singleUnequippedItem => {
+                                resolve({
+                                    "text": singleUnequippedItem.name,
+                                    "value": singleUnequippedItemID
+                                })
+                            });
+                    });
                 });
 
                 var slackTemplate = {
 
-                    "attachment": [{
+                    "attachments": [{
                         "text": "Equipped Inventory",
-                        "callback_id": "game_selection",
+                        "callback_id": "inventoryMenu",
                         "actions": [
                             {
                                 "name": "unequippedInventory",
                                 "type": "select",
                                 "options": []
-                            }
-                        ]
-                    },
+                            }]
+                        },
                         {
                             "text": "Unequipped Inventory"
                         }]
                 };
 
-                slackTemplate.attachment[0].actions[0].options = unequippedInventoryOptions;
+                Promise.all(unequippedInventoryOptions)
+                    .then( itemSlackFormat =>{
 
-                resolve(slackTemplate);
+                        slackTemplate.attachments[0].actions[0].options = itemSlackFormat;
 
-                console.log('slackTemplate inventoryMenu: ', slackTemplate);
+                        resolve(slackTemplate);
 
+                        console.log('slackTemplate inventoryMenu: ', slackTemplate);
 
+                    });
             });
     });
 };
