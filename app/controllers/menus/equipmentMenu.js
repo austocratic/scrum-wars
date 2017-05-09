@@ -56,33 +56,34 @@ exports.equipmentMenu = payload => {
                             "text": "Equipped Gear",
                             "attachments": [
                                 {
-                                    "text": "Chest",
+                                    "title": "Chest",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 },
                                 {
-                                    "text": "Head",
+                                    "title": "Head",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 },
                                 {
-                                    "text": "Arms",
+                                    "title": "Arms",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 },
                                 {
-                                    "text": "Legs",
+                                    "title": "Legs",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 },
                                 {
-                                    "text": "Feet",
+                                    "title": "Feet",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 },
                                 {
-                                    "text": "Primary hand",
+                                    "title": "Primary hand",
                                     "callback_id": "equipmentMenu",
+                                    "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + singleHandID + ".jpg",
                                     "fields": [
                                         {
                                             "title": "Equipment name",
@@ -92,7 +93,7 @@ exports.equipmentMenu = payload => {
                                     ]
                                 },
                                 {
-                                    "text": "Secondary hand",
+                                    "title": "Secondary hand",
                                     "callback_id": "equipmentMenu",
                                     "fields": []
                                 }
