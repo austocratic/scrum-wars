@@ -1,8 +1,8 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-var inventoryMenu = require('../inventoryMenu').inventoryMenu;
-var equipmentMenu = require('../equipmentMenu').equipmentMenu;
+var inventoryMenu = require('../menus/inventoryMenu').inventoryMenu;
+var equipmentMenu = require('../menus/equipmentMenu').equipmentMenu;
 
 
 exports.profileOptionSelection = payload => {
