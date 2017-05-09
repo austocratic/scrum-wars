@@ -7,8 +7,7 @@ var itemDetail = require('../../components/item/itemDetail').itemDetail;
 exports.shopItemSelection = payload => {
 
     var firebase = new Firebase();
-
-    //var responseTemplate = shopPurchaseConfirm();
+    
     var responseTemplate;
 
     return new Promise((resolve, reject) => {
@@ -20,32 +19,8 @@ exports.shopItemSelection = payload => {
         firebase.get(('item/' + purchaseSelection))
             .then( itemProps => {
 
-                console.log('ItemProps', itemProps);
-
-                
+                //Get the standard itemDetail object
                 responseTemplate = itemDetail(purchaseSelection, itemProps);
-
-                /*
-                responseTemplate.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + purchaseSelection + ".jpg";
-
-                //Create the fields to show
-                responseTemplate.attachments[0].fields = [
-                    {
-                        "title": itemProps.name,
-                        "short": false
-                    }
-                ];
-
-                //Iterate through the object adding to the template
-                for (var prop in itemProps) {
-                    //console.log(`obj.${prop} = ${itemProps[prop]}`);
-
-                    responseTemplate.attachments[0].fields.push({
-                        "title": prop,
-                        "value": `${itemProps[prop]}`,
-                        "short": true
-                    });
-                }*/
 
                 //Add in respond fields to the template, "yes" will pass the item ID to the next screen
                 responseTemplate.attachments[0].actions = [{
@@ -62,8 +37,6 @@ exports.shopItemSelection = payload => {
                     "style": "danger",
                     "value": "no"
                 }];
-
-                console.log('Response template: ', JSON.stringify(responseTemplate));
                 
                 resolve(responseTemplate)
             });

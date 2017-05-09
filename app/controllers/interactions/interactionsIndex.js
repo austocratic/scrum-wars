@@ -5,6 +5,7 @@ var characterSelectionNew = require('./characterSelectionNew').characterSelectio
 var characterSelectionClass = require('./characterSelectionClass').characterSelectionClass;
 var characterClassSelectionConfirmation = require('./characterClassSelectionConfirmation').characterClassSelectionConfirmation;
 var profileOptionSelection = require('./profileOptionSelection').profileOptionSelection;
+var inventoryItemInspection = require('./inventory/inventoryItemInspection').inventoryItemInspection;
 var nameCharacter = require('./nameCharacter').nameCharacter;
 var playerAction = require('./playerAction').playerAction;
 var playerAttack = require('./playerAttack').playerAttack;
@@ -21,6 +22,7 @@ exports.interactionsIndex = {
     characterSelectionClass: characterSelectionClass,
     characterClassSelectionConfirmation: characterClassSelectionConfirmation,
     profileOptionSelection: profileOptionSelection,
+    inventoryItemInspection: inventoryItemInspection,
     nameCharacter: nameCharacter,
     playerAction: playerAction,
     playerAttack: playerAttack,
