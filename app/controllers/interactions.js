@@ -90,9 +90,9 @@ exports.interactions = (interactionType, messagePayloadInput) => {
 
                 break;
 
-            case 'inventoryMenu':
+            case 'profileOptionSelection':
 
-                interactions.inventoryMenu(messagePayloadInput)
+                interactions.profileOptionSelection(messagePayloadInput)
                     .then( template =>{
                         resolve(template);
 

@@ -87,9 +87,9 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
-                case 'profileInventory':
+                case 'profileOptionSelection':
 
-                    interactions('inventoryMenu', messagePayloadInput)
+                    interactions('profileOptionSelection', messagePayloadInput)
                         .then( interactionResponse => {
                             resolve(interactionResponse)
                         });

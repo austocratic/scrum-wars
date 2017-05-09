@@ -46,13 +46,20 @@ exports.characterProfile = payload => {
                     //Interactive portion of profile menu
                     template.attachments[2] = {
                         
-                        "callback_id": "profileInventory",
+                        "callback_id": "profileOptionSelection",
                         "actions": [{
                             "name": "inventory",
                             "text": "Inventory",
                             "style": "default",
                             "type": "button",
-                            "value": "inventory" //TODO make this interactive
+                            "value": "inventory"
+                        },
+                        {
+                            "name": "equipment",
+                            "text": "Equipped Items",
+                            "style": "default",
+                            "type": "button",
+                            "value": "equipment"
                         }]
                     };
 
