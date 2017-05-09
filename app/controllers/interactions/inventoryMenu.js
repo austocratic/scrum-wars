@@ -27,11 +27,6 @@ exports.inventoryMenu = payload => {
                 //Set the player's character locally
                 var playerCharacter = character[characterID];
 
-                //Inventory menu is divided into 2 attachments: Equipped inventory & unequipped inventory
-
-                //Get the character's equipped inventory
-                var equippedInventory = playerCharacter.inventory.equipped;
-
                 //Get the character's unequipped inventory
                 var unequippedInventory = playerCharacter.inventory.unequipped;
 
@@ -52,18 +47,16 @@ exports.inventoryMenu = payload => {
 
                 var slackTemplate = {
 
-                    "attachments": [{
-                        "text": "Equipped Inventory",
-                        "callback_id": "inventoryMenu",
-                        "actions": [
-                            {
-                                "name": "unequippedInventory",
-                                "type": "select",
-                                "options": []
-                            }]
-                        },
+                    "attachments": [
                         {
-                            "text": "Unequipped Inventory"
+                            "text": "Unequipped Inventory",
+                            "callback_id": "inventoryMenu",
+                            "actions": [
+                                {
+                                    "name": "unequippedInventory",
+                                    "type": "select",
+                                    "options": []
+                                }]
                         }]
                 };
 
