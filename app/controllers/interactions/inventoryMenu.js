@@ -5,12 +5,17 @@ var firebase = require('../../libraries/firebase').Firebase;
 
 exports.inventoryMenu = payload => {
 
+    console.log('Called inventoryMenu');
+    
     try {
 
         return new Promise((resolve, reject) => {
 
+            console.log('inventoryMenu payload: ', JSON.stringify(payload));
+
             //Get the slack user ID who made the selection
-            var userID = payload.user_id;
+            //var userID = payload.user_id;
+            var userID = payload.user.id;
 
             //Use Slack user ID to lookup the user's character
             firebase.get('character', 'user_id', userID)
