@@ -27,7 +27,7 @@ exports.playerAction = payload => {
                 //template.callback_id = 'townAction';
 
                 //Set the available actions
-                template.attachments[0].actions[0] = [
+                template.attachments[0].actions = [
                         {
                             "name": "shop",
                             "text": "Shop",
