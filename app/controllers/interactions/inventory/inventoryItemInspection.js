@@ -31,7 +31,9 @@ exports.inventoryItemInspection = payload => {
                         "type": "button",
                         "value": "inventory"
                     }
-                ]
+                ];
+
+                resolve(responseTemplate);
 
             });
     })
