@@ -91,8 +91,8 @@ exports.shopItemSelectionConfirmation = payload => {
                             //Decrement the player's gold locally
                             playerGold = playerGold - itemCost;
 
-                            //Add the purchased item to inventory array
-                            playerInventory.push(purchaseSelection);
+                            //Add the purchased item to unequipped inventory array
+                            playerInventory.unequipped.push(purchaseSelection);
 
                             //Update player's character by setting the adjusted gold & adjusted inventory
                             var updates = {

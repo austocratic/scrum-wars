@@ -87,6 +87,14 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
+                case 'profileInventory':
+
+                    interactions('inventoryMenu', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+
                 default:
 
             }

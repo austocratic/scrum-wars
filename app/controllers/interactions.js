@@ -90,6 +90,19 @@ exports.interactions = (interactionType, messagePayloadInput) => {
 
                 break;
 
+            case 'inventoryMenu':
+
+                interactions.inventoryMenu(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+
+                break;
+
             case 'playerAction':
 
                 interactions.playerAction(messagePayloadInput)
