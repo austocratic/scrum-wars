@@ -5,64 +5,75 @@ var firebase = require('../../libraries/firebase').Firebase;
 
 exports.inventoryMenu = payload => {
 
-    return new Promise((resolve, reject) => {
+    try {
 
-        //Get the slack user ID who made the selection
-        var userID = payload.user_id;
+        return new Promise((resolve, reject) => {
 
-        //Use Slack user ID to lookup the user's character
-        firebase.get('character', 'user_id', userID)
-            .then( character => {
+            //Get the slack user ID who made the selection
+            var userID = payload.user_id;
 
-                //Character's ID
-                var characterID = Object.keys(character)[0];
+            //Use Slack user ID to lookup the user's character
+            firebase.get('character', 'user_id', userID)
+                .then(character => {
 
-                //Set the player's character locally
-                var playerCharacter = character[characterID];
+                    console.log('character inventoryMenu:', character);
 
-                //Inventory menu is divided into 2 attachments: Equipped inventory & unequipped inventory
+                    //Character's ID
+                    var characterID = Object.keys(character)[0];
 
-                //Get the character's equipped inventory
-                var equippedInventory = playerCharacter.inventory.equipped;
+                    //Set the player's character locally
+                    var playerCharacter = character[characterID];
 
-                //Get the character's unequipped inventory
-                var unequippedInventory = playerCharacter.inventory.unequipped;
+                    //Inventory menu is divided into 2 attachments: Equipped inventory & unequipped inventory
 
-                //For each item in unequipped inventory, look up it's name and add to options list
-                var unequippedInventoryOptions = unequippedInventory.map( singleUnequippedItemID =>{
+                    //Get the character's equipped inventory
+                    var equippedInventory = playerCharacter.inventory.equipped;
 
-                    //Get the item's name property
-                    firebase.get('item/' + singleUnequippedItemID)
-                        .then( singleUnequippedItem => {
-                            return {
-                                "text": singleUnequippedItem.name,
-                                "value": singleUnequippedItemID
-                            }
-                        });
-                });
+                    //Get the character's unequipped inventory
+                    var unequippedInventory = playerCharacter.inventory.unequipped;
 
-                var slackTemplate = {
+                    //For each item in unequipped inventory, look up it's name and add to options list
+                    var unequippedInventoryOptions = unequippedInventory.map(singleUnequippedItemID => {
 
-                    "attachment": [{
-                        "text": "Equipped Inventory",
-                        "callback_id": "game_selection",
-                        "actions": [
+                        //Get the item's name property
+                        firebase.get('item/' + singleUnequippedItemID)
+                            .then(singleUnequippedItem => {
+                                return {
+                                    "text": singleUnequippedItem.name,
+                                    "value": singleUnequippedItemID
+                                }
+                            });
+                    });
+
+                    var slackTemplate = {
+
+                        "attachment": [{
+                            "text": "Equipped Inventory",
+                            "callback_id": "game_selection",
+                            "actions": [
+                                {
+                                    "name": "unequippedInventory",
+                                    "type": "select",
+                                    "options": []
+                                }
+                            ]
+                        },
                             {
-                                "name": "unequippedInventory",
-                                "type": "select",
-                                "options": []
-                            }
-                        ]
-                    },
-                    {
-                        "text": "Unequipped Inventory"
-                    }]
-                };
+                                "text": "Unequipped Inventory"
+                            }]
+                    };
 
-                slackTemplate.attachment[0].actions[0].options = unequippedInventoryOptions;
+                    slackTemplate.attachment[0].actions[0].options = unequippedInventoryOptions;
 
-                resolve(slackTemplate);
+                    resolve(slackTemplate);
 
-            });
-    });
+                    console.log('slackTemplate inventoryMenu: ', slackTemplate);
+
+
+                });
+        });
+
+    }catch(err){
+        console.log('CAUGHT ERROR inventoryMenu: ', err)
+    }
 };
