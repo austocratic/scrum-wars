@@ -1,4 +1,5 @@
 "use strict";
+
 var Firebase = require('../../libraries/firebase').Firebase;
 //var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 var playerActionSelection = require('./playerActionSelection').playerActionSelection;

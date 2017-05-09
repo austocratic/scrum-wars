@@ -12,10 +12,9 @@ exports.characterProfile = payload => {
 
         //Create new firebase object
         var firebase = new Firebase();
-
-        console.log('characterProfile payload: ', JSON.stringify(payload));
         
         //Get the slack user ID who made the selection
+        //Slash commands have format payload.user_id
         var userID = payload.user_id;
 
         //Use Slack user ID to lookup the user's character
