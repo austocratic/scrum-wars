@@ -6,7 +6,9 @@ exports.itemDetail = (itemID, itemProps) => {
 
     var template = {
         "attachments": [
+            {
             
+            }
         ]
     };
 
