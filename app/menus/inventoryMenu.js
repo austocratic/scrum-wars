@@ -67,7 +67,7 @@ exports.inventoryMenu = payload => {
 
                         resolve(slackTemplate);
 
-                        console.log('slackTemplate inventoryMenu: ', slackTemplate);
+                        console.log('slackTemplate inventoryMenu: ', JSON.stringify(slackTemplate));
 
                     });
             });
