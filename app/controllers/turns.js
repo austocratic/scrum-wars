@@ -15,7 +15,7 @@ exports.newTurn = (req, res, next) => {
             .then( matchID => {
 
             //Lookup that match by ID.
-            firebase.get('global_state/' + matchID)
+            firebase.get('match/' + matchID)
                 .then( match => {
 
                     var turnNumber = match.number_turns;
@@ -25,7 +25,7 @@ exports.newTurn = (req, res, next) => {
                     turnNumber++;
 
                     console.log('New turn #: ', turnNumber);
-                    
+
                     var updates = {
                         "number_turns": turnNumber
                     };
