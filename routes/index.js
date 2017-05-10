@@ -8,6 +8,7 @@ var profile = require('../app/controllers/commands/profile');
 
 var commands = require('../app/controllers/commands').commands;
 var interactiveMessages = require('../app/controllers/interactiveMessages').interactiveMessages;
+var turns = require('../app/controllers/turns');
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -17,6 +18,7 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+//TODO To delete
 router.get('/file/:name', function (req, res, next) {
 
     var options = {
@@ -68,6 +70,11 @@ router.post('/api/commands', (req, res, next) => {
 //All client interactive-message responses pass through this route
 router.post('/api/interactive-messages', (req, res, next) => {
     interactiveMessages(req, res, next);
+});
+
+//All client interactive-message responses pass through this route
+router.post('/api/turn/new', (req, res, next) => {
+    turns.newTurn(req, res, next);
 });
 
 
