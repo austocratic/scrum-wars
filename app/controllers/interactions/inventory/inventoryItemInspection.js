@@ -21,8 +21,6 @@ exports.inventoryItemInspection = payload => {
                 //Get the standard itemDetail object
                 responseTemplate = itemDetail(itemID, itemProps);
 
-                responseTemplate.attachments[0].callback_id = "profileOptionSelection";
-
                 responseTemplate.attachments[0].actions = [
                     {
                         "name": "inventory",
@@ -32,6 +30,9 @@ exports.inventoryItemInspection = payload => {
                         "value": "inventory"
                     }
                 ];
+
+                //Set the callback to be read by interactiveMessages.js
+                responseTemplate.attachments[0].callback_id = "profileOptionSelection";
 
                 resolve(responseTemplate);
 

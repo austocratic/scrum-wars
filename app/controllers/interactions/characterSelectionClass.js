@@ -43,6 +43,7 @@ exports.characterSelectionClass = payload => {
                     //Get the appropriate response template
                     template = characterSelectionClass();
 
+                    //TODO currently hardcoding starting values. Should have a default table set these
                     var charProps = {
                         name: 'Unknown Traveler',
                         profile_image: 'unknown_character.jpg',
@@ -50,7 +51,17 @@ exports.characterSelectionClass = payload => {
                         gold: 100,
                         armor: 0,
                         hit_points: 100,
-                        inventory: [],
+                        max_hit_points: 100,
+                        inventory: {
+                            equipped: {
+                                hand_1: "-Kjk3sGUJy5Nu8GWsdff"
+                            },
+                            unequipped: [
+                                "-Kjk3sGUJy5Nu8GWsdff"
+                            ]
+
+
+                        },
                         is_defending: false
                     };
 
@@ -115,7 +126,9 @@ exports.characterSelectionClass = payload => {
             
         } else if (payload.actions[0].value === "no") {
 
-            //Need to load a confirmation message here
+            template = {
+                "text": "You decide to continue your journey with your current character"
+            }
 
 
         } else {
