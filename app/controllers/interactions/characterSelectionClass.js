@@ -128,8 +128,9 @@ exports.characterSelectionClass = payload => {
 
             template = {
                 "text": "You decide to continue your journey with your current character"
-            }
+            };
 
+            resolve(template);
 
         } else {
             //Something went wrong, input option is not supported
