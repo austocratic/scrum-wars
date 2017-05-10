@@ -37,6 +37,9 @@ exports.shopItemSelection = payload => {
                     "style": "danger",
                     "value": "no"
                 }];
+
+                //Set the callback to be read by interactiveMessages.js
+                responseTemplate.attachments[0].callback_id = "shopPurchaseConfirm";
                 
                 resolve(responseTemplate)
             });
