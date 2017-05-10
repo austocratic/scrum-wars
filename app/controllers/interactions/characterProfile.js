@@ -27,7 +27,7 @@ exports.characterProfile = payload => {
         }
 
         //If characterProfile was called by interactive message than payload formatted differently:
-        
+
         console.log('characterProfile userID: ', userID);
 
         //Use Slack user ID to lookup the user's character
@@ -58,6 +58,7 @@ exports.characterProfile = payload => {
                     template.attachments[2] = {
                         
                         "callback_id": "profileOptionSelection",
+                        "fallback": "Unable to load inventory buttons",
                         "actions": [{
                             "name": "inventory",
                             "text": "Inventory",
