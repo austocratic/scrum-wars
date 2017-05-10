@@ -120,7 +120,7 @@ exports.equipmentMenu = payload => {
 
                         slackTemplate.attachments.push(backButton);
 
-                        console.log('equipment slack template: ', slackTemplate);
+                        console.log('equipment slack template: ', JSON.stringify(slackTemplate));
                         
                         resolve(slackTemplate);
                         
