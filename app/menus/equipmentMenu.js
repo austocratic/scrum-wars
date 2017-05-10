@@ -109,9 +109,10 @@ exports.equipmentMenu = payload => {
                         
                         var backButton = {
                         "fallback": "Unable to return to previous menu",
+                        "callback_id": "characterProfile",
                         "actions": [{
                             "name": "back",
-                            "text": "Back to Inventory",
+                            "text": "Back to profile",
                             "style": "default",
                             "type": "button",
                             "value": "back"

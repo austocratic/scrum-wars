@@ -111,6 +111,14 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
+                case 'characterProfile':
+
+                    interactions('characterProfile', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+
                 default:
 
             }
