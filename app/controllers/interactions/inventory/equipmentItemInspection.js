@@ -3,7 +3,9 @@
 var Firebase = require('../../../libraries/firebase').Firebase;
 var itemDetail = require('../../../components/item/itemDetail').itemDetail;
 
-exports.inventoryItemInspection = payload => {
+var characterProfile = require('../characterProfile').characterProfile;
+
+exports.equipmentItemInspection = payload => {
 
     var firebase = new Firebase();
 
@@ -11,8 +13,16 @@ exports.inventoryItemInspection = payload => {
 
     return new Promise((resolve, reject)=>{
 
-        //get the value of the item selected
-        var itemID = payload.actions[0].selected_options[0].value;
+        //get the value of the item selected or "back" if the user selected to go back
+        var itemID = payload.actions[0].value;
+
+        //If the player chose "back" return the profile template
+        if (itemID === "back"){
+            characterProfile(payload)
+                .then( charProfile =>{
+                    resolve(charProfile)
+                })
+        }
 
         //Use previous selection ID to lookup the item properties
         firebase.get(('item/' + itemID))
@@ -21,7 +31,6 @@ exports.inventoryItemInspection = payload => {
                 //Get the standard itemDetail object
                 responseTemplate = itemDetail(itemID, itemProps);
 
-                //Add in a back button
                 responseTemplate.attachments[0].actions = [
                     {
                         "name": "inventory",

@@ -181,6 +181,19 @@ exports.interactions = (interactionType, messagePayloadInput) => {
 
                 break;
 
+            case 'equipmentItemInspection':
+
+                interactions.equipmentItemInspection(messagePayloadInput)
+                    .then( template =>{
+                        resolve(template);
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+
+                break;
+
             default:
 
                 //return "ERROR: template not supported"

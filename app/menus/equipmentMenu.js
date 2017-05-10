@@ -90,7 +90,14 @@ exports.equipmentMenu = payload => {
                                             "value": handItem.name,
                                             "short": false
                                         }
-                                    ]
+                                    ],
+                                    "actions": {
+                                        "name": "inspect",
+                                        "text": "Inspect item",
+                                        "style": "default",
+                                        "type": "button",
+                                        "value": singleHandID
+                                    }
                                 },
                                 {
                                     "title": "Secondary hand",
@@ -99,7 +106,20 @@ exports.equipmentMenu = payload => {
                                 }
                             ]
                         };
+                        
+                        var backButton = {
+                            
+                        "actions": {
+                            "name": "back",
+                            "text": "Back to Inventory",
+                            "style": "default",
+                            "type": "button",
+                            "value": "back"
+                            }
+                        };
 
+                        slackTemplate.attachments.push(backButton);
+                        
                         resolve(slackTemplate);
                         
                     });

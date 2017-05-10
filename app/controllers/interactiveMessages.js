@@ -103,6 +103,14 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
+                case 'equipmentMenu':
+
+                    interactions('equipmentItemInspection', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+
                 default:
 
             }
