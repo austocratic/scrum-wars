@@ -12,10 +12,14 @@ exports.characterProfile = payload => {
 
         //Create new firebase object
         var firebase = new Firebase();
+
+        console.log('characterProfile payload: ', payload);
         
         //Get the slack user ID who made the selection
         //Slash commands have format payload.user_id
         var userID = payload.user_id;
+
+        console.log('characterProfile userID: ', userID);
 
         //Use Slack user ID to lookup the user's character
         firebase.get('character', 'user_id', userID)
@@ -28,9 +32,6 @@ exports.characterProfile = payload => {
 
                 //Array of stat keys
                 var statKeys = Object.keys(characterStats);
-
-                
-                    //TODO maybe move fields/image into one attachment
                 
                     template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + characterStats.class_id + ".jpg";
 
