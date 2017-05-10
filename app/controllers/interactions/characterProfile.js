@@ -17,8 +17,17 @@ exports.characterProfile = payload => {
         
         //Get the slack user ID who made the selection
         //Slash commands have format payload.user_id
-        var userID = payload.user_id;
+        //TODO Interactions should have a user ID argument passed in.  commands should pull the ID form payload differntly then interactiveMesages do
+        var userID;
 
+        if (payload.user_id) {
+            userID = payload.user_id;
+        } else {
+            userID = payload.user.id;
+        }
+
+        //If characterProfile was called by interactive message than payload formatted differently:
+        
         console.log('characterProfile userID: ', userID);
 
         //Use Slack user ID to lookup the user's character
