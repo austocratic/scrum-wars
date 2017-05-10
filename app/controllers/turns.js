@@ -32,8 +32,8 @@ exports.newTurn = (req, res, next) => {
 
                     console.log('Updated stats: ', updates);
 
-                    //Now update the character with new properties
-                    firebase.update('global_state/' + matchID, updates)
+                    //Increment the turn # & write it to DB
+                    firebase.update('match/' + matchID, updates)
                         .then( fbResponse => {
                             console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
                             resolve(res.status(200));
@@ -51,7 +51,7 @@ exports.newTurn = (req, res, next) => {
         //Get the turn # of current match
 
 
-        //Increment the turn # & write it to DB
+
 
 
     });
