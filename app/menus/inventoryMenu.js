@@ -65,6 +65,20 @@ exports.inventoryMenu = payload => {
 
                         slackTemplate.attachments[0].actions[0].options = itemSlackFormat;
 
+                        var backButton = {
+                            "fallback": "Unable to return to previous menu",
+                            "callback_id": "characterProfile",
+                            "actions": [{
+                                "name": "back",
+                                "text": "Back to profile",
+                                "style": "default",
+                                "type": "button",
+                                "value": "back"
+                            }]
+                        };
+
+                        slackTemplate.attachments.push(backButton);
+
                         resolve(slackTemplate);
 
                         console.log('slackTemplate inventoryMenu: ', JSON.stringify(slackTemplate));
