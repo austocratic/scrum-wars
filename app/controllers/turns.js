@@ -1,8 +1,7 @@
 "use strict";
 
-//This index file contains references to all the interaction files
-var interactions = require('./interactions/interactionsIndex').interactionsIndex;
 var Firebase = require('../libraries/firebase').Firebase;
+var Slack = require('../libraries/slack').Alert;
 
 var firebase = new Firebase();
 
@@ -35,7 +34,28 @@ exports.newTurn = (req, res, next) => {
                     //Increment the turn # & write it to DB
                     firebase.update('match/' + matchID, updates)
                         .then( fbResponse => {
-                            console.log('interaction characterSelectionPicture fbResponse: ', fbResponse);
+
+                            //Build the details of the slack message
+                            var alertDetails = {
+                                "username": "A mysterious voice",
+                                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                //TODO dont hardcode the arena
+                                "channel": ("#arena"),
+                                "text": "Prepare for battle! A new turn turn has arrived!"
+                            };
+                            //Create a new slack alert object
+                            var channelAlert = new Slack(alertDetails);
+
+                            //Send alert to slack
+                            channelAlert.sendToSlack(this.params)
+                                .then(() =>{
+                                    console.log('Successfully posted to slack')
+                                })
+                                .catch(error =>{
+                                    console.log('Error when sending to slack: ', error)
+                                });
+
+                            //Resolve regardless of slack message success
                             resolve(res.status(200));
                         })
                         .catch( err => {
