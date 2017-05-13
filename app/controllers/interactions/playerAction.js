@@ -83,9 +83,13 @@ exports.playerAction = payload => {
                         firebase.get('character', 'user_id', userID)
                             .then( userCharacter =>{
 
+                                console.log('userCharacter: ', userCharacter);
+
                                 var characterID = Object.keys(userCharacter)[0];
 
                                 var characterProperties = userCharacter[characterID];
+
+                                console.log('characterProperties: ', characterProperties);
 
                                 var characterZoneID = characterProperties.zone_id;
 
