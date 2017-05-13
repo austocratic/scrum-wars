@@ -24,8 +24,6 @@ exports.nameCharacter = payload => {
                 //Array of character IDs already using that name
                 var existingCharacter = Object.keys(character);
 
-                console.log('Existing characters: ', existingCharacter);
-
                 //If array of existing character's length > 0, name is already taken, return "name taken" template
                 if (existingCharacter.length > 0){
                     //var template = characterNameTaken();

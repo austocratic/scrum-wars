@@ -35,7 +35,6 @@ class Firebase {
             localValue = '';
         }
 
-        
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?' + localKey + localValue + '"&auth=' + CREDENTIAL;
 
         console.log('Options: ', this.options.uri);
@@ -48,8 +47,6 @@ class Firebase {
                     console.log('DB err results: ', err);
                     reject(err);
                 }
-
-                console.log('DB results: ', body);
                 resolve(body);
             })
         })
@@ -97,8 +94,6 @@ class Firebase {
                     console.log('DB err results: ', err);
                     reject(err);
                 }
-
-                console.log('DB results: ', body);
                 resolve(body);
             })
         })
