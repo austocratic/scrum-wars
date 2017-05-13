@@ -92,6 +92,11 @@ exports.playerAction = payload => {
                                 //Array of character action objects
                                 var characterActions = characterProperties.actions;
 
+                                console.log('characterActions: ', characterActions);
+
+                                console.log('characterActions stringify: ', JSON.stringify(characterActions));
+
+                                /*
                                 var attachments = [{
                                     "title": "Offensive actions",
                                     "fallback": "You are unable to choose an action",
@@ -100,7 +105,7 @@ exports.playerAction = payload => {
                                     "attachment_type": "default",
                                     //TODO add tiny_url for attack symbol
                                     "actions": []
-                                }];
+                                }];*/
 
                                 /* TO DELETE
                                 var attachmentTest = [
