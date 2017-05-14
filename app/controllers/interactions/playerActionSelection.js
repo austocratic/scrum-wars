@@ -28,7 +28,7 @@ exports.playerActionSelection = payload => {
 
                 switch(payload.actions[0].value) {
 
-                    case 'attack':
+                    case 'Attack':
 
                         //Return the default template
                         responseTemplate = attackCharacterSelection();
@@ -70,7 +70,7 @@ exports.playerActionSelection = payload => {
 
                         break;
 
-                    case 'defend':
+                    case 'Defend':
 
                         //Return the default template
                         responseTemplate = defendCharacterSelection();
