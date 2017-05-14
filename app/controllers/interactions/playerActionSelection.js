@@ -30,7 +30,8 @@ exports.playerActionSelection = payload => {
 
                 switch(payload.actions[0].value) {
 
-                    case 'Attack':
+                    //TODO: currently hard coding action ID, need to make these dynamic
+                    case '-Kjpe29q_fDkJG-73AQO':
 
                         //Return the default template
                         responseTemplate = attackCharacterSelection();
@@ -72,7 +73,7 @@ exports.playerActionSelection = payload => {
 
                         break;
 
-                    case 'Defend':
+                    case '-KjpeJT7Oct3ZCtLhENO':
 
                         //Return the default template
                         responseTemplate = defendCharacterSelection();
