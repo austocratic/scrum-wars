@@ -7,6 +7,8 @@ var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelectio
 
 exports.playerActionSelection = payload => {
 
+    console.log('playerActionSelection: ', JSON.stringify(payload));
+
     return new Promise((resolve, reject) => {
 
         var firebase = new Firebase();
