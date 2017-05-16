@@ -31,6 +31,7 @@ exports.playerActionSelection = payload => {
                 switch(payload.actions[0].value) {
 
                     //TODO: currently hard coding action ID, need to make these dynamic
+                    //Attack action
                     case '-Kjpe29q_fDkJG-73AQO':
 
                         //Return the default template
@@ -73,6 +74,8 @@ exports.playerActionSelection = payload => {
 
                         break;
 
+                    //TODO: currently hard coding action ID, need to make these dynamic
+                    //Defend action
                     case '-KjpeJT7Oct3ZCtLhENO':
 
                         //Return the default template

@@ -7,6 +7,8 @@ var firebase = new Firebase();
 
 exports.playerAction = payload => {
 
+    console.log('playerAction payload: ', payload);
+
     return new Promise( (resolve, reject) => {
 
         //Get the channel id
@@ -24,6 +26,8 @@ exports.playerAction = payload => {
 
             //Zone = town
             case 'C4Z4P1BUH':
+
+                console.log('Triggered town zone action');
 
                 //Set the available actions
                 template.attachments[0].actions = [
