@@ -39,6 +39,8 @@ exports.playerAction = payload => {
                             "value": "shop"
                         }
                     ];
+
+                console.log('action in town zone template: ', JSON.stringify(template));
                 
                 break;
 
