@@ -41,6 +41,8 @@ exports.playerAction = payload => {
                     ];
 
                 console.log('action in town zone template: ', JSON.stringify(template));
+
+                resolve(template);
                 
                 break;
 
@@ -194,7 +196,7 @@ exports.playerAction = payload => {
                                             }
                                         }
 
-                                        resolve();
+                                        resolve(template);
 
                                     }
                                 });
@@ -202,13 +204,13 @@ exports.playerAction = payload => {
                         });
 
                         Promise.all(actionPromises)
-                            .then(()=>{
+                            .then( finalTemplate =>{
 
-                                template.text = 'Choose an action';
+                                finalTemplate.text = 'Choose an action';
 
-                                console.log('Final template resolved: ', JSON.stringify(template));
+                                console.log('Final template resolved: ', JSON.stringify(finalTemplate));
 
-                                resolve(template);
+                                resolve(finalTemplate);
                             })
                     });
 
