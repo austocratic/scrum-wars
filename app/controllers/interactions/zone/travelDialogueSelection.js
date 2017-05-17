@@ -18,19 +18,18 @@ exports.travelDialogueSelection = payload => {
         if (payload.actions[0].value === "no"){
             console.log('travelDialogueSelection passed the === no check');
             resolve()
+        } else {
+
+            //Get the slack user ID who made the selection
+            var userID = payload.user.id;
+            var channelID = payload.channel.id;
+
+            //If not "no" call the travel action
+            //Travel expects payload to contain user_id & channel_id
+            travel(userID, channelID)
+                .then(()=>{
+                    resolve();
+                })
         }
-
-        //Get the slack user ID who made the selection
-        var userID = payload.user.id;
-        var channelID = payload.channel.id;
-        
-        //If not "no" call the travel action
-        //Travel expects payload to contain user_id & channel_id
-        travel(userID, channelID)
-            .then(()=>{
-                resolve();
-            })
-
     })
-
 };
