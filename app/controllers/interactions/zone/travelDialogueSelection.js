@@ -12,6 +12,8 @@ exports.travelDialogueSelection = payload => {
 
     return new Promise((resolve, reject)=> {
 
+        console.log('payload.actions[0].value: ', payload.actions[0].value);
+
         //If "no" dont move the player's character and return a blank resolution
         if (payload.actions[0].value === "no"){
             resolve()
