@@ -10,7 +10,7 @@ exports.playerAction = payload => {
 
     console.log('playerAction payload: ', payload);
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
         //Get the channel id
         var channelID = payload.channel_id;
@@ -28,7 +28,7 @@ exports.playerAction = payload => {
         var characterPromise = firebase.get('character', 'user_id', userID);
 
         Promise.all([zonePromise, characterPromise])
-            .then( resultsArray =>{
+            .then(resultsArray => {
 
                 var zoneCalled = resultsArray[0];
                 var zoneID = Object.keys(zoneCalled)[0];
@@ -50,7 +50,7 @@ exports.playerAction = payload => {
                     //TODO to delete the get character call here, duplicate from above
                     //Get the user's character
                     firebase.get('character', 'user_id', userID)
-                        .then( userCharacter =>{
+                        .then(userCharacter => {
 
                             var characterID = Object.keys(userCharacter)[0];
 
@@ -96,7 +96,7 @@ exports.playerAction = payload => {
                                                     //Push action into an array of its own
                                                     var subArray = [];
 
-                                                    var attachmentFormat =  {
+                                                    var attachmentFormat = {
                                                         "title": action.type,
                                                         "fallback": "You are unable to choose an action",
                                                         "callback_id": "actionMenu",
@@ -117,9 +117,6 @@ exports.playerAction = payload => {
 
                                                     console.log("empty root array: ", JSON.stringify(template));
 
-                                                    //console.log('Root array is empty adding');
-                                                    //actionArray.push(subArray);
-                                                    //console.log("empty root array: ", JSON.stringify(actionArray));
 
                                                 } else {
 
@@ -171,7 +168,7 @@ exports.playerAction = payload => {
 
                                                             actionTemplate = {
                                                                 "title": action.type,
-                                                                "fallback":"You are unable to choose an action",
+                                                                "fallback": "You are unable to choose an action",
                                                                 "callback_id": "actionMenu",
                                                                 "color": "#3AA3E3",
                                                                 "attachment_type": "default",
@@ -199,7 +196,9 @@ exports.playerAction = payload => {
                             });
 
                             Promise.all(actionPromises)
-                                .then( finalTemplate =>{
+                                .then(finalTemplate => {
+
+                                    console.log('FInal promise.all resolved');
 
                                     //finalTemplate[0].text = 'Choose an action';
 
@@ -212,10 +211,14 @@ exports.playerAction = payload => {
                                     resolve(template);
                                     //resolve(finalTemplate);
                                 })
-                                .catch((err)=>{
+                                .catch((err)=> {
                                     console.log('Error when trying to resolve all promises: ', err);
                                 })
                         });
+                }
+            });
+    });
+}
 
                     //Look at the zone to determine what actions are available
                     /*
@@ -418,9 +421,9 @@ exports.playerAction = payload => {
 
                             //Resolve default template
                             resolve(template);
-                    }*/
+                    }
                 }
-            });
+            });*/
 
 
 
@@ -628,6 +631,6 @@ exports.playerAction = payload => {
 
                 //Resolve default template
                 resolve(template);
-        }*/
+        }
     })
-};
+};*/
