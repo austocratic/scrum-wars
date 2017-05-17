@@ -71,7 +71,7 @@ exports.playerAction = payload => {
                                 var actionTemplate;
 
                                 return new Promise((resolve, reject) => {
-                                    //lookup that action Id's zone
+                                    //lookup that action Id's zones that can be performed in
                                     firebase.get(('action/' + characterAction.action_id))
                                         .then(action => {
 
@@ -79,7 +79,7 @@ exports.playerAction = payload => {
 
                                             console.log('characterZoneID: ', characterZoneID);
 
-                                            //Check each action's zone_id to see if it
+                                            //Check each action's zone_id to see if it matches the characters zone
                                             if (action.zone_id.indexOf(characterZoneID) > -1) {
                                                 console.log('Its a match!');
 
@@ -193,7 +193,6 @@ exports.playerAction = payload => {
                                                 console.log('playerAction, resolving the template: ', JSON.stringify(template));
 
                                                 resolve(template);
-
                                             }
                                         });
                                 });
@@ -212,6 +211,9 @@ exports.playerAction = payload => {
 
                                     resolve(template);
                                     //resolve(finalTemplate);
+                                })
+                                .catch((err)=>{
+                                    console.log('Error when trying to resolve all promises: ', err);
                                 })
                         });
 
