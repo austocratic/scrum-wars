@@ -13,7 +13,7 @@ exports.moveCharacter = (zoneID, zoneName) => {
 
     template.text = "_You can't perform an action in a zone that your character is not in_";
 
-    template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + zoneID + ".jpg";
+    template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + zoneID + ".jpg";
 
     template.attachments[0].fallback = "Unable to travel to " + zoneName + " at this time";
 
