@@ -68,6 +68,8 @@ exports.playerAction = payload => {
                             //For each action the character can perform
                             var actionPromises = characterActions.map(characterAction => {
 
+                                console.log('Iteratting through characterActions to build actionPromises');
+
                                 var actionTemplate;
 
                                 return new Promise((resolve, reject) => {
@@ -218,7 +220,7 @@ exports.playerAction = payload => {
                 }
             });
     });
-}
+};
 
                     //Look at the zone to determine what actions are available
                     /*
