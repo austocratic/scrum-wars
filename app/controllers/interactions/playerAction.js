@@ -45,7 +45,7 @@ exports.playerAction = payload => {
 
                 console.log('zoneCalled: ', JSON.stringify(zoneCalled));
 
-                var playerCharacter = resultsArray[0];
+                var playerCharacter = resultsArray[1];
                 var playerCharacterID = Object.keys(playerCharacter)[0];
                 var playerCharacterDetails = playerCharacter[playerCharacterID];
 
