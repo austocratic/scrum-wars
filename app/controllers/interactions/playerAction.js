@@ -48,12 +48,16 @@ exports.playerAction = payload => {
                 //Check if the zone ID where the command was called matches the zone ID of the user's character.  If mismatch, resolve with "move your character" option
                 if (zoneID !== playerCharacterDetails.zone_id) {
 
+                    console.log('ZoneID does not equal character zone');
+
                     var moveCharacterTemplate = moveCharacter(zoneID, zoneCalledDetails.name);
                     
                     console.log('Created a travel confirmation dialogue, template: ', JSON.stringify(template));
                     resolve(moveCharacterTemplate);
                     
                 }
+
+                console.log('Passed zone criteria check');
             });
 
 
@@ -63,6 +67,7 @@ exports.playerAction = payload => {
 
         //Set the availableActions property depending on the zone
         //TODO Should not hard code this.  Should use DB values here
+        /*
         switch(channelID) {
 
             //Zone = town
@@ -261,6 +266,6 @@ exports.playerAction = payload => {
 
                 //Resolve default template
                 resolve(template);
-        }
+        }*/
     })
 };
