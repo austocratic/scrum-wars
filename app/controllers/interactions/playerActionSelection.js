@@ -108,7 +108,8 @@ exports.playerActionSelection = payload => {
 
                         break;
 
-                    case 'shop':
+                    //Shop action ID
+                    case '-KkJVqtBIhpAKBfz9tcb':
 
                         //Return the default template
                         responseTemplate = shopCharacterSelection();
