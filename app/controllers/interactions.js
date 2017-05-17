@@ -27,8 +27,8 @@ exports.interactions = (interactionType, messagePayloadInput) => {
             case 'travelDialogueSelection':
 
                 interactions.travelDialogueSelection(messagePayloadInput)
-                    .then( () =>{
-                        resolve();
+                    .then( template =>{
+                        resolve(template);
 
                     })
                     .catch( () =>{
