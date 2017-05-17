@@ -24,6 +24,19 @@ exports.interactions = (interactionType, messagePayloadInput) => {
                 
                 break;
 
+            case 'travelDialogueSelection':
+
+                interactions.travelDialogueSelection(messagePayloadInput)
+                    .then( () =>{
+                        resolve();
+
+                    })
+                    .catch( () =>{
+                        reject();
+                    });
+
+                break;
+
             //Set the name property user's character
             case 'nameCharacter':
 

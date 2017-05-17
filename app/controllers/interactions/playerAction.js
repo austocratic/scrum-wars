@@ -2,6 +2,7 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var actionMenu = require('../../slackTemplates/actionMenu').actionMenu;
+var moveCharacter = require('../../components/zone/moveCharacter').moveCharacter;
 
 var firebase = new Firebase();
 
@@ -14,11 +15,51 @@ exports.playerAction = payload => {
         //Get the channel id
         var channelID = payload.channel_id;
 
+        var userID = payload.user_id;
+
         var availableActions;
 
         var template = actionMenu();
 
         console.log('Channel ID: ', channelID);
+
+        //TODO
+        //First compare the channel that /action was called to that player's character current zone
+        //If character zone & channel are not the same, give message saying "your character is not in this zone, would you like to move your character?"
+
+
+        //Lookup the details of the channelID that the action was called in
+        var zonePromise = firebase.get('zone', 'channel_id', channelID);
+
+        //Lookup the details of the character
+        var characterPromise = firebase.get('character', 'user_id', userID);
+
+        Promise.all([zonePromise, characterPromise])
+            .then( resultsArray =>{
+
+                var zoneCalled = resultsArray[0];
+                var zoneID = Object.keys(zoneCalled)[0];
+                var zoneCalledDetails = zoneCalled[zoneID];
+
+                var playerCharacter = resultsArray[0];
+                var playerCharacterID = Object.keys(playerCharacter)[0];
+                var playerCharacterDetails = playerCharacter[playerCharacterID];
+
+                //Check if the zone ID where the command was called matches the zone ID of the user's character.  If mismatch, resolve with "move your character" option
+                if (zoneID !== playerCharacterDetails.zone_id) {
+
+                    var moveCharacterTemplate = moveCharacter(zoneID, zoneCalledDetails.name);
+                    
+                    console.log('Created a travel confirmation dialogue, template: ', JSON.stringify(template));
+                    resolve(moveCharacterTemplate);
+                    
+                }
+            });
+
+
+
+        //Then use the zone ID - get rid of switch statement below.
+        //Make it so town zone functions the same way (divides action up based on type)
 
         //Set the availableActions property depending on the zone
         //TODO Should not hard code this.  Should use DB values here
@@ -42,6 +83,8 @@ exports.playerAction = payload => {
 
                 console.log('action in town zone template: ', JSON.stringify(template));
 
+                template.text = 'Choose an action';
+
                 resolve(template);
                 
                 break;
@@ -51,9 +94,7 @@ exports.playerAction = payload => {
 
                 console.log('Triggered arena zone action');
 
-                //Get the slack user ID who called the action
-                var userID = payload.user_id;
-
+                //TODO to delete the get character call here, duplicate from above
                 //Get the user's character
                 firebase.get('character', 'user_id', userID)
                     .then( userCharacter =>{

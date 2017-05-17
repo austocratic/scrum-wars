@@ -119,6 +119,14 @@ exports.interactiveMessages = (req, res, next) => {
                         });
                     break;
 
+                case 'travelDialogueSelection':
+
+                    interactions('travelDialogueSelection', messagePayloadInput)
+                        .then( interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+                    break;
+
                 default:
 
             }

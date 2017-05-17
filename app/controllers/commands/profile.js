@@ -1,6 +1,7 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 
+//TODO verify that this file can be deleted
 
 exports.profile = (req, res, next) => {
     
