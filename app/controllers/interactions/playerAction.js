@@ -188,11 +188,12 @@ exports.playerAction = payload => {
                                                         }
                                                     }
                                                 }
-
-                                                console.log('playerAction, resolving the template: ', JSON.stringify(template));
-
-                                                resolve(template);
                                             }
+
+                                            console.log('playerAction, resolving the template: ', JSON.stringify(template));
+
+                                            resolve(template);
+                                            
                                         });
                                 });
                             });
