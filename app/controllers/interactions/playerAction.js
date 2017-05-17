@@ -244,11 +244,16 @@ exports.playerAction = payload => {
                                     Promise.all(actionPromises)
                                         .then( finalTemplate =>{
 
-                                            finalTemplate.text = 'Choose an action';
+                                            //finalTemplate[0].text = 'Choose an action';
 
-                                            console.log('Final template resolved: ', JSON.stringify(finalTemplate));
+                                            //console.log('Final template resolved: ', JSON.stringify(finalTemplate));
 
-                                            resolve(finalTemplate);
+                                            template.text = 'Choose an action';
+
+                                            console.log('Final template resolved: ', JSON.stringify(template));
+
+                                            resolve(template);
+                                            //resolve(finalTemplate);
                                         })
                                 });
 
