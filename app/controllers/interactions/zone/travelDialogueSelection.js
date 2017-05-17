@@ -18,7 +18,9 @@ exports.travelDialogueSelection = payload => {
         if (payload.actions[0].value === "no"){
             console.log('travelDialogueSelection passed the === no check');
 
-            resolve("test")
+            resolve({
+                "text": "You remain in your current zone"
+            })
         } else {
 
             //Get the slack user ID who made the selection
