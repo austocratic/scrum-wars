@@ -21,15 +21,6 @@ exports.playerAction = payload => {
 
         var template = actionMenu();
 
-        console.log('Channel ID: ', channelID);
-
-        console.log('User ID: ', userID);
-
-        //TODO
-        //First compare the channel that /action was called to that player's character current zone
-        //If character zone & channel are not the same, give message saying "your character is not in this zone, would you like to move your character?"
-
-
         //Lookup the details of the channelID that the action was called in
         var zonePromise = firebase.get('zone', 'channel_id', channelID);
 
@@ -62,12 +53,11 @@ exports.playerAction = payload => {
                     console.log('Created a travel confirmation dialogue, template: ', JSON.stringify(template));
                     resolve(moveCharacterTemplate);
 
-
-                    
                 } else {
 
                     console.log('Hit else statement in playerAction');
 
+                    //Look at the zone to determine what actions are available
                     switch(channelID) {
 
                         //Zone = town
@@ -241,6 +231,8 @@ exports.playerAction = payload => {
                                                                 }
                                                             }
                                                         }
+
+                                                        console.log('playerAction, resolving the template: ', JSON.stringify(template));
 
                                                         resolve(template);
 
