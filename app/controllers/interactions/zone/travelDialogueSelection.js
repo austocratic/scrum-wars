@@ -17,7 +17,8 @@ exports.travelDialogueSelection = payload => {
         //If "no" dont move the player's character and return a blank resolution
         if (payload.actions[0].value === "no"){
             console.log('travelDialogueSelection passed the === no check');
-            resolve()
+
+            resolve("test")
         } else {
 
             //Get the slack user ID who made the selection
