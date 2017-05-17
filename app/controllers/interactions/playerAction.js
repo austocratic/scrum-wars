@@ -23,6 +23,8 @@ exports.playerAction = payload => {
 
         console.log('Channel ID: ', channelID);
 
+        console.log('User ID: ', userID);
+
         //TODO
         //First compare the channel that /action was called to that player's character current zone
         //If character zone & channel are not the same, give message saying "your character is not in this zone, would you like to move your character?"
@@ -40,6 +42,8 @@ exports.playerAction = payload => {
                 var zoneCalled = resultsArray[0];
                 var zoneID = Object.keys(zoneCalled)[0];
                 var zoneCalledDetails = zoneCalled[zoneID];
+
+                console.log('zoneCalled: ', JSON.stringify(zoneCalled));
 
                 var playerCharacter = resultsArray[0];
                 var playerCharacterID = Object.keys(playerCharacter)[0];
