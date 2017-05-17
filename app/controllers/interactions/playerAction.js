@@ -45,6 +45,9 @@ exports.playerAction = payload => {
                 var playerCharacterID = Object.keys(playerCharacter)[0];
                 var playerCharacterDetails = playerCharacter[playerCharacterID];
 
+                console.log('zoneID before check: ', zoneID);
+                console.log('player zone before check: ', playerCharacterDetails.zone_id);
+
                 //Check if the zone ID where the command was called matches the zone ID of the user's character.  If mismatch, resolve with "move your character" option
                 if (zoneID !== playerCharacterDetails.zone_id) {
 
