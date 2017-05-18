@@ -147,6 +147,9 @@ exports.playerAction = payload => {
                                                             template.attachments[i].actions = [];
                                                         }
 
+                                                        console.log('attachment name = ', template.attachments[i].name);
+                                                        console.log('action.type = ', action.type);
+                                                        
                                                         //If there is a match, push to that array
                                                         if (template.attachments[i].name === action.type) {
                                                             console.log('Found a match, pushing');
