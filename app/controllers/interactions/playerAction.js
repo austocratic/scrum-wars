@@ -77,20 +77,20 @@ exports.playerAction = payload => {
                                     firebase.get(('action/' + characterAction.action_id))
                                         .then(action => {
 
-                                            console.log('action.zone_id: ', action.zone_id);
+                                            //console.log('action.zone_id: ', action.zone_id);
 
-                                            console.log('characterZoneID: ', characterZoneID);
+                                            //console.log('characterZoneID: ', characterZoneID);
 
                                             //Check each action's zone_id to see if it matches the characters zone
                                             if (action.zone_id.indexOf(characterZoneID) > -1) {
 
-                                                console.log('Matching actions attributes: ', action);
+                                                //console.log('Matching actions attributes: ', action);
 
                                                 //TODO attachment array will
                                                 //If array is empty, build an attachment with the action
                                                 if (template.attachments.length === 0) {
 
-                                                    console.log('passed template.attachments.length === 0 check');
+                                                    //console.log('passed template.attachments.length === 0 check');
 
                                                     //Push action into an array of its own
                                                     var subArray = [];
@@ -114,21 +114,21 @@ exports.playerAction = payload => {
 
                                                     template.attachments.push(attachmentFormat);
 
-                                                    console.log("empty root array: ", JSON.stringify(template));
+                                                    //console.log("empty root array: ", JSON.stringify(template));
 
 
                                                 } else {
 
-                                                    console.log('failed template.length === 0 check, beginning to itterate');
+                                                    //console.log('failed template.length === 0 check, beginning to itterate');
 
-                                                    console.log('template.attachments.length: ', template.attachments.length);
+                                                    //console.log('template.attachments.length: ', template.attachments.length);
 
                                                     //template.attachments.length
                                                     for (var i = 0; i < 1; i++) {
 
-                                                        console.log('action array: ', JSON.stringify(template.attachments[i].actions));
+                                                        //console.log('action array: ', JSON.stringify(template.attachments[i].actions));
 
-                                                        console.log(i + ' action.type: ', action.type);
+                                                        //console.log(i + ' action.type: ', action.type);
 
                                                         //For each attachment, need to check to see if action property exists
                                                         if (template.attachments[i].actions) {
@@ -140,7 +140,7 @@ exports.playerAction = payload => {
                                                         }
                                                         //If attachment property does not exist, add as empty array
                                                         else {
-                                                            console.log('actions property does not exist, setting as array');
+                                                            //console.log('actions property does not exist, setting as array');
                                                             template.attachments[i].actions = [];
                                                         }
 
@@ -163,7 +163,7 @@ exports.playerAction = payload => {
                                                         }
                                                         //If no match was found, on last itteration push into array
                                                         else if (i === (template.attachments.length - 1)) {
-                                                            console.log('Did not find a match, pushing to root');
+                                                            //console.log('Did not find a match, pushing to root');
 
                                                             actionTemplate = {
                                                                 "title": action.type,
@@ -181,13 +181,13 @@ exports.playerAction = payload => {
                                                             };
 
                                                             template.attachments.push(actionTemplate);
-                                                            console.log("not match itteration: ", JSON.stringify(template));
+                                                            //console.log("not match itteration: ", JSON.stringify(template));
                                                         }
                                                     }
                                                 }
                                             }
 
-                                            console.log('playerAction, resolving the template: ', JSON.stringify(template));
+                                            //console.log('playerAction, resolving the template: ', JSON.stringify(template));
 
                                             resolve(template);
 
