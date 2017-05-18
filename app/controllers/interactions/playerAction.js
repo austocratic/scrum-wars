@@ -124,8 +124,10 @@ exports.playerAction = payload => {
 
                                                     //console.log('template.attachments.length: ', template.attachments.length);
 
-                                                    //template.attachments.length
-                                                    for (var i = 0; i < 1; i++) {
+                                                    console.log('template.attachments.length: ', template.attachments.length);
+
+                                                    //Itterate through the template being built
+                                                    for (var i = 0; i <= template.attachments.length; i++) {
 
                                                         //console.log('action array: ', JSON.stringify(template.attachments[i].actions));
 
