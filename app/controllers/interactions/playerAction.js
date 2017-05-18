@@ -112,9 +112,10 @@ exports.playerAction = payload => {
                                                             }]
                                                     };
 
+                                                    console.log('Character actions, character action: ', characterAction.action_id);
                                                     template.attachments.push(attachmentFormat);
 
-                                                    //console.log("empty root array: ", JSON.stringify(template));
+                                                    console.log("empty root array: ", JSON.stringify(template));
 
 
                                                 } else {
@@ -155,6 +156,7 @@ exports.playerAction = payload => {
                                                                 "value": characterAction.action_id
                                                             };
 
+                                                            console.log('Character actions, character action: ', characterAction.action_id);
                                                             template.attachments[i].push(actionTemplate);
                                                             //return i;
                                                             console.log("match itteration: ", JSON.stringify(template));
@@ -180,8 +182,9 @@ exports.playerAction = payload => {
                                                                 }]
                                                             };
 
+                                                            console.log('Character actions, character action: ', characterAction.action_id);
                                                             template.attachments.push(actionTemplate);
-                                                            //console.log("not match itteration: ", JSON.stringify(template));
+                                                            console.log("not match itteration: ", JSON.stringify(template));
                                                         }
                                                     }
                                                 }
