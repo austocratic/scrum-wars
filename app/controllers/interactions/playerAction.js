@@ -147,6 +147,7 @@ exports.playerAction = payload => {
                                                             template.attachments[i].actions = [];
                                                         }
 
+                                                        //If there is a match, push to that array
                                                         if (template.attachments[i].name === action.type) {
                                                             console.log('Found a match, pushing');
 
@@ -159,13 +160,13 @@ exports.playerAction = payload => {
                                                             };
 
                                                             console.log('Character actions, character action: ', characterAction.action_id);
-                                                            template.attachments[i].push(actionTemplate);
+                                                            template.attachments[i].actions.push(actionTemplate);
                                                             //return i;
                                                             console.log("match itteration: ", JSON.stringify(template));
 
                                                             break;
                                                         }
-                                                        //If no match was found, on last itteration push into array
+                                                        //If no match was found, on last itteration push into root array
                                                         else if (i === (template.attachments.length - 1)) {
                                                             //console.log('Did not find a match, pushing to root');
 
