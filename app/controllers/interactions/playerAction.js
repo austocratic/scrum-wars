@@ -111,13 +111,14 @@ exports.playerAction = payload => {
                                         //Iterate through the template being built
                                         for (var i = 0; i <= attachmentLength; i++) {
 
+                                            console.log('attachmentLength: ', attachmentLength);
+
                                             var actionTemplate;
 
                                             //First check if attachments property is empty
                                             if (template.attachments.length === 0) {
-
-                                                //Push action into an array of its own
-                                                var subArray = [];
+                                                
+                                                console.log('Attachments array is empty, creating attachment');
 
                                                 var attachmentFormat = {
                                                     "title": eachAction.type,
@@ -140,13 +141,11 @@ exports.playerAction = payload => {
                                                 template.attachments.push(attachmentFormat);
 
                                                 console.log("empty root array: ", JSON.stringify(template));
-
-
+                                                
                                             } else {
 
                                                 console.log('template.attachments.length: ', template.attachments.length);
-
-
+                                                
                                                 //For each attachment, need to check to see if action property exists
                                                 if (template.attachments[i].actions) {
                                                     //If property does exists, but is not an array, overwrite it as an empty array
