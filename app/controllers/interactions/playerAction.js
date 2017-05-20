@@ -173,7 +173,7 @@ exports.playerAction = payload => {
                                                             break;
                                                         }
                                                         //If no match was found, on last itteration push into root array
-                                                        else if (i === (template.attachments.length - 1)) {
+                                                        else if (i === (attachmentLength - 1)) {
                                                             console.log('Did not find a match, pushing to root');
 
                                                             actionTemplate = {
