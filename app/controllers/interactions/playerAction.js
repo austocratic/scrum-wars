@@ -82,6 +82,60 @@ exports.playerAction = payload => {
                                             //console.log('characterZoneID: ', characterZoneID);
 
                                             //Check each action's zone_id to see if it matches the characters zone
+
+
+                                            //console.log('playerAction, resolving the template: ', JSON.stringify(template));
+
+                                            resolve(template);
+
+                                        });
+                                });
+                            });
+
+                            //Wait for all action lookups to resolve, array of action objects
+                            Promise.all(actionPromises)
+                                .then(actionObjects => {
+
+                                    console.log('Actions available BEFORE filter: ', JSON.stringify(actionObjects));
+
+                                    //Filter action object array for only actions that can be used in player's zone
+                                    var availableActions = actionObjects.filter( singleAction =>{
+
+                                        //Zone_id is an array of zones that the action can be performed in.  Check if the character's
+                                        //current zone is contained in the array
+                                        return singleAction.zone_id.indexOf(characterZoneID) > -1
+
+                                    });
+
+                                    console.log('Actions available after filter: ', JSON.stringify(availableActions));
+
+                                    //resolve(template);
+                                    //resolve(finalTemplate);
+                                })
+                                .catch((err)=> {
+                                    console.log('Error when trying to resolve all promises: ', err);
+                                });
+
+
+
+                            /*
+                            //For each action the character can perform
+                            var actionPromises = characterActions.map(characterAction => {
+
+                                console.log('Character actions, character action: ', characterAction.action_id);
+
+                                var actionTemplate;
+
+                                return new Promise((resolve, reject) => {
+                                    //lookup that action Id's zones that can be performed in
+                                    firebase.get(('action/' + characterAction.action_id))
+                                        .then(action => {
+
+                                            //console.log('action.zone_id: ', action.zone_id);
+
+                                            //console.log('characterZoneID: ', characterZoneID);
+
+                                            //Check each action's zone_id to see if it matches the characters zone
                                             if (action.zone_id.indexOf(characterZoneID) > -1) {
 
                                                 //console.log('Matching actions attributes: ', action);
@@ -168,7 +222,7 @@ exports.playerAction = payload => {
                                                             console.log('Character actions, character action: ', characterAction.action_id);
                                                             template.attachments[i].actions.push(actionTemplate);
                                                             //return i;
-                                                            console.log("match itteration: ", JSON.stringify(template));
+                                                            console.log("match iteration: ", JSON.stringify(template));
 
                                                             break;
                                                         }
@@ -193,7 +247,7 @@ exports.playerAction = payload => {
 
                                                             console.log('Character actions, character action: ', characterAction.action_id);
                                                             template.attachments.push(actionTemplate);
-                                                            console.log("not match itteration: ", JSON.stringify(template));
+                                                            console.log("not match iteration: ", JSON.stringify(template));
                                                         }
                                                     }
                                                 }
@@ -225,7 +279,7 @@ exports.playerAction = payload => {
                                 })
                                 .catch((err)=> {
                                     console.log('Error when trying to resolve all promises: ', err);
-                                })
+                                })*/
                         });
                 }
             });
