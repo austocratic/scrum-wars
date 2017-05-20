@@ -113,6 +113,7 @@ exports.playerAction = payload => {
 
                                             var actionTemplate;
 
+                                            /*
                                             //For each attachment, need to check to see if action property exists
                                             if (template.attachments[i].actions) {
                                                 //If property does exists, but is not an array, overwrite it as an empty array
@@ -129,7 +130,7 @@ exports.playerAction = payload => {
 
                                             console.log('attachment title = ', template.attachments[i].title);
                                             console.log('template.attachments: ', JSON.stringify(template.attachments));
-                                            console.log('action.type = ', eachAction.type);
+                                            console.log('action.type = ', eachAction.type);*/
 
                                             //If there is a match, push to that array
                                             if (template.attachments[i].title === eachAction.type) {
@@ -175,7 +176,11 @@ exports.playerAction = payload => {
 
                                             }
                                         }
-                                    })
+                                    });
+                                    console.log('Final template to be resolved: ', JSON.stringify(template));
+
+                                    resolve(template);
+
                                 })
 
 
