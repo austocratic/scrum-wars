@@ -68,7 +68,7 @@ exports.playerAction = payload => {
                             //For each action the character can perform
                             var actionPromises = characterActions.map(characterAction => {
 
-                                console.log('Character actions, character action: ', characterAction.action_id);
+                                //console.log('Character actions, character action: ', characterAction.action_id);
 
                                 var actionTemplate;
 
@@ -90,7 +90,7 @@ exports.playerAction = payload => {
                             Promise.all(actionPromises)
                                 .then(actionObjects => {
 
-                                    console.log('Actions available BEFORE filter: ', JSON.stringify(actionObjects));
+                                    //console.log('Actions available BEFORE filter: ', JSON.stringify(actionObjects));
 
                                     //Filter action object array for only actions that can be used in player's zone
                                     var availableActions = actionObjects.filter(singleAction => {
@@ -101,7 +101,7 @@ exports.playerAction = payload => {
 
                                     });
 
-                                    console.log('Actions available after filter: ', JSON.stringify(availableActions));
+                                    //console.log('Actions available after filter: ', JSON.stringify(availableActions));
 
                                     //Now iterate through the available action object array and build the template
                                     availableActions.forEach(eachAction => {
@@ -111,14 +111,14 @@ exports.playerAction = payload => {
                                         //Iterate through the template being built
                                         for (var i = 0; i <= attachmentLength; i++) {
 
-                                            console.log('attachmentLength: ', attachmentLength);
+                                            //console.log('attachmentLength: ', attachmentLength);
 
                                             var actionTemplate;
 
                                             //First check if attachments property is empty
                                             if (template.attachments.length === 0) {
                                                 
-                                                console.log('Attachments array is empty, creating attachment');
+                                                //console.log('Attachments array is empty, creating attachment');
 
                                                 var attachmentFormat = {
                                                     "title": eachAction.type,
@@ -137,20 +137,20 @@ exports.playerAction = payload => {
                                                         }]
                                                 };
 
-                                                console.log('Character actions, character action: ', eachAction.action_id);
+                                                //console.log('Character actions, character action: ', eachAction.action_id);
                                                 template.attachments.push(attachmentFormat);
 
                                                 console.log("empty root array: ", JSON.stringify(template));
                                                 
                                             } else {
 
-                                                console.log('template.attachments.length: ', template.attachments.length);
+                                                //console.log('template.attachments.length: ', template.attachments.length);
                                                 
                                                 //For each attachment, need to check to see if action property exists
                                                 if (template.attachments[i].actions) {
                                                     //If property does exists, but is not an array, overwrite it as an empty array
                                                     if (!Array.isArray(template.attachments[i].actions)) {
-                                                        console.log('actions is not an array, setting as array');
+                                                        //console.log('actions is not an array, setting as array');
                                                         template.attachments[i].actions = []
                                                     }
                                                 }
@@ -160,13 +160,13 @@ exports.playerAction = payload => {
                                                     template.attachments[i].actions = [];
                                                 }
 
-                                                console.log('attachment title = ', template.attachments[i].title);
-                                                console.log('template.attachments: ', JSON.stringify(template.attachments));
-                                                console.log('action.type = ', eachAction.type);
+                                                //console.log('attachment title = ', template.attachments[i].title);
+                                                //console.log('template.attachments: ', JSON.stringify(template.attachments));
+                                                //console.log('action.type = ', eachAction.type);
 
                                                 //If there is a match, push to that array
                                                 if (template.attachments[i].title === eachAction.type) {
-                                                    console.log('Found a match, pushing');
+                                                    //console.log('Found a match, pushing');
 
                                                     actionTemplate = {
                                                         "name": eachAction.name,
@@ -176,16 +176,16 @@ exports.playerAction = payload => {
                                                         "value": eachAction.action_id
                                                     };
 
-                                                    console.log('Character actions, character action: ', eachAction.action_id);
+                                                    //console.log('Character actions, character action: ', eachAction.action_id);
                                                     template.attachments[i].actions.push(actionTemplate);
                                                     //return i;
-                                                    console.log("match iteration: ", JSON.stringify(template));
+                                                    console.log("FOUND a match iteration: ", JSON.stringify(template));
 
                                                     break;
                                                 }
                                                 //If no match was found, on last iteration push into root array
                                                 else if (i === (attachmentLength - 1)) {
-                                                    console.log('Did not find a match, pushing to root, attachmentLength: ', attachmentLength);
+                                                    //console.log('Did not find a match, pushing to root, attachmentLength: ', attachmentLength);
 
                                                     actionTemplate = {
                                                         "title": eachAction.type,
@@ -202,9 +202,9 @@ exports.playerAction = payload => {
                                                         }]
                                                     };
 
-                                                    console.log('Character actions, character action: ', eachAction.action_id);
+                                                    //console.log('Character actions, character action: ', eachAction.action_id);
                                                     template.attachments.push(actionTemplate);
-                                                    console.log("not match iteration: ", JSON.stringify(template));
+                                                    console.log("NO match iteration: ", JSON.stringify(template));
 
                                                 }
                                             }

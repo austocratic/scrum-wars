@@ -37,7 +37,7 @@ class Firebase {
 
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?' + localKey + localValue + '"&auth=' + CREDENTIAL;
 
-        console.log('Options: ', this.options.uri);
+        //console.log('Options: ', this.options.uri);
 
         //this.options.body = data;
 
@@ -86,7 +86,7 @@ class Firebase {
         
         this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
 
-        console.log('delete url: ', this.options.uri);
+        //console.log('delete url: ', this.options.uri);
 
         return new Promise( (resolve, reject) => {
             request.delete(this.options, (err, httpResponse, body) => {
