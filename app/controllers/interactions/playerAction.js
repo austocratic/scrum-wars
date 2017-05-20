@@ -108,9 +108,6 @@ exports.playerAction = payload => {
 
                                         var attachmentLength = template.attachments.length;
 
-                                        //Iterate through the template being built
-                                        for (var i = 0; i <= attachmentLength; i++) {
-
                                             //console.log('attachmentLength: ', attachmentLength);
 
                                             var actionTemplate;
@@ -141,8 +138,12 @@ exports.playerAction = payload => {
                                                 template.attachments.push(attachmentFormat);
 
                                                 console.log("empty root array: ", JSON.stringify(template));
-                                                
+
+                                                //Of attachments is not empty, iterate through it for sorting
                                             } else {
+
+                                                //Iterate through the template being built
+                                                for (var i = 0; i <= attachmentLength; i++) {
 
                                                 //console.log('template.attachments.length: ', template.attachments.length);
                                                 
