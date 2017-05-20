@@ -65,6 +65,7 @@ exports.playerAction = payload => {
                                 "attachments": []
                             };
 
+                            /*
                             //For each action the character can perform
                             var actionPromises = characterActions.map(characterAction => {
 
@@ -216,56 +217,13 @@ exports.playerAction = payload => {
                                     resolve(template);
 
                                 })
-
-
-                                    /*
-                                    //Check if template has no attachments
-                                    if (template.attachments.length === 0) {
-
-                                        //Push action into an array of its own
-                                        var subArray = [];
-
-                                        var attachmentFormat = {
-                                            "title": action.type,
-                                            "fallback": "You are unable to choose an action",
-                                            "callback_id": "actionMenu",
-                                            "color": "#3AA3E3", //TODO change to attack oriented color
-                                            "attachment_type": "default",
-                                            //TODO add tiny_url for attack symbol
-                                            "actions": [
-                                                {
-                                                    "name": action.name,
-                                                    "text": action.name,
-                                                    "style": "default",
-                                                    "type": "button",
-                                                    "value": characterAction.action_id //TODO is this the right property?
-                                                }]
-                                        };
-
-                                        console.log('Character actions, character action: ', characterAction.action_id);
-                                        template.attachments.push(attachmentFormat);
-
-                                        console.log("empty root array: ", JSON.stringify(template));
-
-
-                                    } else {
-
-                                        //console.log('failed template.length === 0 check, beginning to itterate');
-
-                                        //console.log('template.attachments.length: ', template.attachments.length);
-
-                                        console.log('template.attachments.length: ', template.attachments.length);
-
-                                        var attachmentLength = template.attachments.length;*/
-
-
                                 .catch((err)=> {
                                     console.log('Error when trying to resolve all promises: ', err);
-                                });
+                                });*/
 
 
 
-                            /*
+
                             //For each action the character can perform
                             var actionPromises = characterActions.map(characterAction => {
 
@@ -330,7 +288,7 @@ exports.playerAction = payload => {
                                                     var attachmentLength = template.attachments.length;
 
                                                     //Itterate through the template being built
-                                                    for (var i = 0; i <= attachmentLength; i++) {
+                                                    for (var i = 0; i < attachmentLength; i++) {
 
                                                         //console.log('action array: ', JSON.stringify(template.attachments[i].actions));
 
@@ -426,7 +384,7 @@ exports.playerAction = payload => {
                                 })
                                 .catch((err)=> {
                                     console.log('Error when trying to resolve all promises: ', err);
-                                })*/
+                                })
                         });
                 }
             });
