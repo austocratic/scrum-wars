@@ -8,7 +8,7 @@ var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelectio
 exports.playerActionSelection = payload => {
 
     console.log('playerActionSelection: ', JSON.stringify(payload));
-
+    
     return new Promise((resolve, reject) => {
 
         var firebase = new Firebase();
@@ -27,6 +27,23 @@ exports.playerActionSelection = payload => {
                 var playerCharacter = characterResponse[characterID];
 
                 //TODO likely need to add get current user zone here to compare it to actual zone the command was called in
+
+                //First, determine which character's action objects is the one
+
+                //Need to first determine if the action is available for use
+
+
+                var indexValue;
+
+                playerCharacter.actions.forEach( eachAction =>{
+                    if(eachAction.action_id === payload.actions[0].value){
+                        //return (payload.actions[0].value);
+                        indexValue = indexOf()
+
+
+
+                    }
+                });
 
                 switch(payload.actions[0].value) {
 

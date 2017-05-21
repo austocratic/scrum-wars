@@ -121,7 +121,6 @@ exports.playerAttack = payload => {
 
                 }
 
-
                 //Create a new slack alert object
                 var channelAlert = new Slack(alertDetails);
 

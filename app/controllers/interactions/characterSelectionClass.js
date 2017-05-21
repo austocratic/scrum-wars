@@ -59,8 +59,6 @@ exports.characterSelectionClass = payload => {
                             unequipped: [
                                 "-Kjk3sGUJy5Nu8GWsdff"
                             ]
-
-
                         },
                         is_defending: false
                     };

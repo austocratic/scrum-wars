@@ -52,8 +52,24 @@ exports.characterClassSelectionConfirmation = payload => {
 
                         console.log('Starting attributes: ', startingAttributes);
 
+                        //Create an array of all the actions a plyer should start with
+
+                        //Reference the character's class selection to determine starting actions
+                        var startingActionIDs = characterClass.action_id;
+
+                        var startingActionObjects = startingActionIDs.map( actionID =>{
+
+                            return {
+                                "action_id": actionID,
+                                "turn_used": 0,
+                                "turn_available": 0
+                            }
+                        });
+
+
                         //Define the properties to add to character
                         var updates = {
+                            "actions": startingActionObjects,
                             "class_id": classSelectionID,
                             "strength": startingAttributes.strength,
                             "toughness": startingAttributes.toughness,

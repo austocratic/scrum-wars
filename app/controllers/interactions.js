@@ -6,7 +6,7 @@ var Firebase = require('../libraries/firebase').Firebase;
 
 
 exports.interactions = (interactionType, messagePayloadInput) => {
-
+    
     return new Promise((resolve, reject) => {
 
         switch(interactionType){

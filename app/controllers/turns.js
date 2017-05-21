@@ -10,6 +10,7 @@ exports.newTurn = (req, res, next) => {
     return new Promise((resolve, reject) => {
 
         //Get the match ID from global_state
+        //match ID is overridden each day (whenever match is determined).  Match ID propoerty repres
         firebase.get('global_state/match_id')
             .then( matchID => {
 
@@ -30,6 +31,7 @@ exports.newTurn = (req, res, next) => {
                     };
 
                     console.log('Updated stats: ', updates);
+
 
                     //Increment the turn # & write it to DB
                     firebase.update('match/' + matchID, updates)
