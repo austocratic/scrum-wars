@@ -66,6 +66,7 @@ exports.characterClassSelectionConfirmation = payload => {
                             }
                         });
 
+                        console.log('startingActionObjects: ', JSON.stringify(startingActionObjects));
 
                         //Define the properties to add to character
                         var updates = {
