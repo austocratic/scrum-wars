@@ -2,6 +2,7 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var attackCharacterSelection = require('../../slackTemplates/attackCharacterSelection').attackCharacterSelection;
+var actionUnavailable = require('../../slackTemplates/actionUnavailable').actionUnavailable;
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
@@ -32,7 +33,29 @@ exports.playerActionSelection = payload => {
 
                 //Need to first determine if the action is available for use
 
+                //Determine if any actions are available this turn
+                function isActionAvailable(characterDetails){
+                    return new Promise((resolve, reject)=> {
+                        //Lookup the current match ID
+                        firebase.get('global_state/match_id')
+                            .then(matchID => {
 
+                                //Get the details of that match
+                                firebase.get('match/' + matchID)
+                                    .then(matchDetails => {
+
+                                        //Determine if the character used an action on the current turn
+                                        if (matchDetails.number_turns > characterDetails.turn_action_used) {
+                                            resolve(true)
+                                        } else {
+                                            resolve(false)
+                                        }
+                                    });
+                            });
+                    });
+                }
+
+                /*
                 var indexValue;
 
                 playerCharacter.actions.forEach( eachAction =>{
@@ -43,7 +66,7 @@ exports.playerActionSelection = payload => {
 
 
                     }
-                });
+                });*/
 
                 switch(payload.actions[0].value) {
 
@@ -51,44 +74,56 @@ exports.playerActionSelection = payload => {
                     //Attack action
                     case '-Kjpe29q_fDkJG-73AQO':
 
-                        //Return the default template
-                        responseTemplate = attackCharacterSelection();
+                        isActionAvailable( playerCharacter)
+                            .then( actionAvailable =>{
+                               
+                                //If actions are available build the attack template, otherwise build the unavailable template
+                                if (actionAvailable) {
 
-                        //Get an array of all players in that zone
-                        firebase.get('character', 'zone_id', playerCharacter.zone_id)
-                            .then(charactersInZone => {
+                                    //Return the default template
+                                    responseTemplate = attackCharacterSelection();
 
-                                //Get an array of all character IDs in the zone
-                                var charactersInZoneIDs = Object.keys(charactersInZone);
+                                    //Get an array of all players in that zone
+                                    firebase.get('character', 'zone_id', playerCharacter.zone_id)
+                                        .then(charactersInZone => {
 
-                                //Get the array position of the player's character:
-                                var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
+                                            //Get an array of all character IDs in the zone
+                                            var charactersInZoneIDs = Object.keys(charactersInZone);
 
-                                if (playerCharacterArrayPosition > -1) {
-                                    charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
+                                            //Get the array position of the player's character:
+                                            var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
+
+                                            if (playerCharacterArrayPosition > -1) {
+                                                charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
+                                            }
+
+                                            var namesInZone = charactersInZoneIDs.map(charID => {
+                                                return charactersInZone[charID].name;
+                                            });
+
+                                            var playerTemplate = namesInZone.map(playerName => {
+
+                                                return {
+                                                    "name": "playerName",
+                                                    "text": playerName,
+                                                    "style": "default",
+                                                    "type": "button",
+                                                    "value": playerName
+                                                }
+                                            });
+
+                                            responseTemplate.attachments[0].actions = playerTemplate;
+
+                                            resolve(responseTemplate);
+
+                                        });
+                                } else {
+
+                                    responseTemplate = actionUnavailable(); 
+                                    
                                 }
-
-                                var namesInZone = charactersInZoneIDs.map( charID =>{
-                                    return charactersInZone[charID].name;
-                                });
-
-                                var playerTemplate = namesInZone.map( playerName =>{
-
-                                    return {
-                                        "name": "playerName",
-                                        "text": playerName,
-                                        "style": "default",
-                                        "type": "button",
-                                        "value": playerName
-                                    }
-                                });
-
-                                responseTemplate.attachments[0].actions = playerTemplate;
-
-                                resolve(responseTemplate);
-
                             });
-
+                        
                         break;
 
                     //TODO: currently hard coding action ID, need to make these dynamic
