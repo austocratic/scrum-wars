@@ -118,9 +118,9 @@ exports.playerActionSelection = payload => {
 
                                         });
                                 } else {
+                                    responseTemplate = actionUnavailable();
 
-                                    responseTemplate = actionUnavailable(); 
-                                    
+                                    resolve(responseTemplate);
                                 }
                             });
                         
