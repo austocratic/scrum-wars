@@ -88,126 +88,137 @@ exports.playerAction = payload => {
                         Promise.all(actionPromises)
                             .then(actionObjects => {
 
-                                //Filter action object array for only actions that can be used in player's zone
-                                var availableActions = actionObjects.filter(singleAction => {
+                                //Determine if any actions are available this turn
+                                //Lookup the current match ID
+                                firebase.get('global_state/match_id')
+                                    .then(matchID => {
 
-                                    //Zone_id is an array of zones that the action can be performed in.  Check if the character's
-                                    //current zone is contained in the array
-                                    return singleAction.zone_id.indexOf(characterZoneID) > -1
+                                        //Get the details of that match
+                                        firebase.get('match/' + matchID)
+                                            .then(matchDetails => {
 
-                                });
-
-                                //console.log('Actions available after filter: ', JSON.stringify(availableActions));
-
-                                //Now iterate through the available action object array and build the template
-                                availableActions.forEach(eachAction => {
-
-                                    var attachmentLength = template.attachments.length;
-
-                                        //console.log('attachmentLength: ', attachmentLength);
-
-                                        var actionTemplate;
-
-                                        //First check if attachments property is empty
-                                        if (attachmentLength === 0) {
-
-                                            var attachmentFormat = {
-                                                "title": eachAction.type,
-                                                "fallback": "You are unable to choose an action",
-                                                "callback_id": "actionMenu",
-                                                "color": "#3AA3E3", //TODO change to attack oriented color
-                                                "attachment_type": "default",
-                                                //TODO add tiny_url for attack symbol
-                                                "actions": [
-                                                    {
-                                                        "name": eachAction.name,
-                                                        "text": eachAction.name,
-                                                        "style": "default",
-                                                        "type": "button",
-                                                        "value": eachAction.action_id
-                                                    }]
-                                            };
-
-                                            //console.log('Character actions, character action: ', eachAction.action_id);
-                                            template.attachments.push(attachmentFormat);
-
-                                            console.log("empty root array: ", JSON.stringify(template));
-
-                                            //Of attachments is not empty, iterate through it for sorting
-                                        } else {
-
-                                            //Iterate through the template's attachments
-                                            for (var i = 0; i < attachmentLength; i++) {
-
-                                            //For each attachment, need to check to see if action property exists
-                                            if (template.attachments[i].actions) {
-                                                //If property does exists, but is not an array, overwrite it as an empty array
-                                                if (!Array.isArray(template.attachments[i].actions)) {
-                                                    //console.log('actions is not an array, setting as array');
-                                                    template.attachments[i].actions = []
+                                                var buttonAvailable;
+                                                //Determine if the character used an action on the current turn
+                                                if (characterProperties.turn_action_used > matchDetails.number_turns) {
+                                                    buttonAvailable = "primary"
+                                                } else {
+                                                    buttonAvailable = "danger"
                                                 }
-                                            }
-                                            //If attachment property does not exist, add as empty array
-                                            else {
-                                                //console.log('actions property does not exist, setting as array');
-                                                template.attachments[i].actions = [];
-                                            }
 
-                                            //If there is a match, push to that array
-                                            if (template.attachments[i].title === eachAction.type) {
-                                                //console.log('Found a match, pushing');
+                                                //Filter action object array for only actions that can be used in player's zone
+                                                var availableActions = actionObjects.filter(singleAction => {
 
-                                                actionTemplate = {
-                                                    "name": eachAction.name,
-                                                    "text": eachAction.name,
-                                                    "style": "default",
-                                                    "type": "button",
-                                                    "value": eachAction.action_id
-                                                };
+                                                    //Zone_id is an array of zones that the action can be performed in.  Check if the character's
+                                                    //current zone is contained in the array
+                                                    return singleAction.zone_id.indexOf(characterZoneID) > -1
+                                                });
 
-                                                //console.log('Character actions, character action: ', eachAction.action_id);
-                                                template.attachments[i].actions.push(actionTemplate);
-                                                //return i;
-                                                console.log("FOUND a match iteration: ", JSON.stringify(template));
+                                                //Now iterate through the available action object array and build the template
+                                                availableActions.forEach(eachAction => {
 
-                                                break;
-                                            }
-                                            //If no match was found, on last iteration push into root array
-                                            else if (i === (attachmentLength - 1)) {
-                                                //console.log('Did not find a match, pushing to root, attachmentLength: ', attachmentLength);
+                                                    var attachmentLength = template.attachments.length;
 
-                                                actionTemplate = {
-                                                    "title": eachAction.type,
-                                                    "fallback": "You are unable to choose an action",
-                                                    "callback_id": "actionMenu",
-                                                    "color": "#3AA3E3",
-                                                    "attachment_type": "default",
-                                                    "actions": [{
-                                                        "name": eachAction.name,
-                                                        "text": eachAction.name,
-                                                        "style": "default",
-                                                        "type": "button",
-                                                        "value": eachAction.action_id
-                                                    }]
-                                                };
+                                                    var actionTemplate;
 
-                                                //console.log('Character actions, character action: ', eachAction.action_id);
-                                                template.attachments.push(actionTemplate);
-                                                console.log("NO match iteration: ", JSON.stringify(template));
+                                                    //First check if attachments property is empty
+                                                    if (attachmentLength === 0) {
 
-                                            }
-                                        }
-                                    }
-                                });
-                                console.log('Final template to be resolved: ', JSON.stringify(template));
+                                                        var attachmentFormat = {
+                                                            "title": eachAction.type,
+                                                            "fallback": "You are unable to choose an action",
+                                                            "callback_id": "actionMenu",
+                                                            "color": "#3AA3E3", //TODO change to attack oriented color
+                                                            "attachment_type": "default",
+                                                            //TODO add tiny_url for attack symbol
+                                                            "actions": [
+                                                                {
+                                                                    "name": eachAction.name,
+                                                                    "text": eachAction.name,
+                                                                    "style": buttonAvailable,
+                                                                    "type": "button",
+                                                                    "value": eachAction.action_id
+                                                                }]
+                                                        };
 
-                                resolve(template);
+                                                        //console.log('Character actions, character action: ', eachAction.action_id);
+                                                        template.attachments.push(attachmentFormat);
 
+                                                        console.log("empty root array: ", JSON.stringify(template));
+
+                                                        //If attachment is not empty, iterate through it for sorting
+                                                    } else {
+
+                                                        //Iterate through the template's attachments
+                                                        for (var i = 0; i < attachmentLength; i++) {
+
+                                                            //For each attachment, need to check to see if action property exists
+                                                            if (template.attachments[i].actions) {
+                                                                //If property does exists, but is not an array, overwrite it as an empty array
+                                                                if (!Array.isArray(template.attachments[i].actions)) {
+                                                                    //console.log('actions is not an array, setting as array');
+                                                                    template.attachments[i].actions = []
+                                                                }
+                                                            }
+                                                            //If attachment property does not exist, add as empty array
+                                                            else {
+                                                                //console.log('actions property does not exist, setting as array');
+                                                                template.attachments[i].actions = [];
+                                                            }
+
+                                                            //If there is a match, push to that array
+                                                            if (template.attachments[i].title === eachAction.type) {
+                                                                //console.log('Found a match, pushing');
+
+                                                                actionTemplate = {
+                                                                    "name": eachAction.name,
+                                                                    "text": eachAction.name,
+                                                                    "style": buttonAvailable,
+                                                                    "type": "button",
+                                                                    "value": eachAction.action_id
+                                                                };
+
+                                                                //console.log('Character actions, character action: ', eachAction.action_id);
+                                                                template.attachments[i].actions.push(actionTemplate);
+                                                                //return i;
+                                                                console.log("FOUND a match iteration: ", JSON.stringify(template));
+
+                                                                break;
+                                                            }
+                                                            //If no match was found, on last iteration push into root array
+                                                            else if (i === (attachmentLength - 1)) {
+                                                                //console.log('Did not find a match, pushing to root, attachmentLength: ', attachmentLength);
+
+                                                                actionTemplate = {
+                                                                    "title": eachAction.type,
+                                                                    "fallback": "You are unable to choose an action",
+                                                                    "callback_id": "actionMenu",
+                                                                    "color": "#3AA3E3",
+                                                                    "attachment_type": "default",
+                                                                    "actions": [{
+                                                                        "name": eachAction.name,
+                                                                        "text": eachAction.name,
+                                                                        "style": buttonAvailable,
+                                                                        "type": "button",
+                                                                        "value": eachAction.action_id
+                                                                    }]
+                                                                };
+
+                                                                template.attachments.push(actionTemplate);
+                                                                console.log("NO match iteration: ", JSON.stringify(template));
+
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                                console.log('Final template to be resolved: ', JSON.stringify(template));
+
+                                                resolve(template);
+                                            });
+                                    });
                             })
                             .catch((err)=> {
                                 console.log('Error when trying to resolve all promises: ', err);
                             });
-
                     });
                 }
             });
