@@ -98,6 +98,9 @@ exports.playerAction = payload => {
                                             .then(matchDetails => {
 
                                                 var buttonAvailable;
+                                                console.log('matchDetails.number_turns: ', matchDetails.number_turns);
+                                                console.log('characterProperties.turn_action_used: ', characterProperties.turn_action_used);
+
                                                 //Determine if the character used an action on the current turn
                                                 if (matchDetails.number_turns > characterProperties.turn_action_used) {
                                                     buttonAvailable = "primary"
