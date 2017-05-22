@@ -99,7 +99,7 @@ exports.playerAction = payload => {
 
                                                 var buttonAvailable;
                                                 //Determine if the character used an action on the current turn
-                                                if (characterProperties.turn_action_used > matchDetails.number_turns) {
+                                                if (matchDetails.number_turns > characterProperties.turn_action_used) {
                                                     buttonAvailable = "primary"
                                                 } else {
                                                     buttonAvailable = "danger"
