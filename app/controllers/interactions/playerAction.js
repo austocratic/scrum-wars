@@ -76,6 +76,7 @@ exports.playerAction = payload => {
                                     .then(action => {
 
                                         action.action_id = characterAction.action_id;
+                                        action.turn_used = characterAction.turn_used;
 
                                         //Resolve the action object
                                         resolve(action);
