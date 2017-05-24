@@ -119,6 +119,25 @@ exports.playerAction = payload => {
                                                 //Now iterate through the available action object array and build the template
                                                 availableActions.forEach(eachAction => {
 
+                                                    console.log('eachAction forEach: ', eachAction.action_id);
+
+
+                                                    //buttonAvailable was set before this loop.  However, if all actions are available, does not mean that individual actions are available
+                                                    //Look at each action and determine if it is available
+                                                    //character.action.turn_used action.cool_down <= current turn
+                                                    //349 + 1  <= 350
+                                                    /*
+                                                    function isActionAvailable(){
+
+                                                        if (matchDetails.number_turns >= eachAction.cool_down) {
+                                                            return true
+                                                        }
+                                                    }
+
+                                                    characterActions*/
+
+
+
                                                     var attachmentLength = template.attachments.length;
 
                                                     var actionTemplate;

@@ -34,7 +34,7 @@ exports.playerActionSelection = payload => {
                 //Need to first determine if the action is available for use
 
                 //Determine if any actions are available this turn
-                function isActionAvailable(characterDetails){
+                function areActionsAvailable(characterDetails){
                     return new Promise((resolve, reject)=> {
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
@@ -62,9 +62,6 @@ exports.playerActionSelection = payload => {
                     if(eachAction.action_id === payload.actions[0].value){
                         //return (payload.actions[0].value);
                         indexValue = indexOf()
-
-
-
                     }
                 });*/
 
@@ -74,7 +71,7 @@ exports.playerActionSelection = payload => {
                     //Attack action
                     case '-Kjpe29q_fDkJG-73AQO':
 
-                        isActionAvailable( playerCharacter)
+                        areActionsAvailable( playerCharacter)
                             .then( actionAvailable =>{
                                
                                 //If actions are available build the attack template, otherwise build the unavailable template
