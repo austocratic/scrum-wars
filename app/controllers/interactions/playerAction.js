@@ -153,7 +153,7 @@ exports.playerAction = payload => {
                                                         console.log('actionDetails.cool_down: ', eachAction.cool_down);
                                                         console.log('matchDetails.number_turns: ', matchDetails.number_turns);
 
-                                                        if (eachAction.turn_used + eachAction.cool_down >= matchDetails.number_turns) {
+                                                        if (eachAction.turn_used + eachAction.cool_down <= matchDetails.number_turns) {
                                                             return true
                                                         } else {
                                                             return false
