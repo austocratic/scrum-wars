@@ -122,11 +122,11 @@ exports.playerAction = payload => {
 
                                                     console.log('eachAction forEach: ', eachAction.action_id);
 
-
                                                     //buttonAvailable was set before this loop.  However, if all actions are available, does not mean that individual actions are available
                                                     //Look at each action and determine if it is available
                                                     //character.action.turn_used action.cool_down <= current turn
                                                     //349 + 1  <= 350
+                                                    /*
                                                     function isActionAvailable(){
 
                                                         return new Promise((resolve, reject)=>{
@@ -145,13 +145,26 @@ exports.playerAction = payload => {
                                                                     }
                                                                 });
                                                         })
+                                                    }*/
+
+                                                    function isActionAvailable(){
+
+                                                        console.log('eachAction.turn_used: ', eachAction.turn_used);
+                                                        console.log('actionDetails.cool_down: ', eachAction.cool_down);
+                                                        console.log('matchDetails.number_turns: ', matchDetails.number_turns);
+
+                                                        if (eachAction.turn_used + eachAction.cool_down >= matchDetails.number_turns) {
+                                                            return true
+                                                        } else {
+                                                            return false
+                                                        }
                                                     }
 
-                                                    isActionAvailable()
-                                                        .then( actionAvailable =>{
+                                                    //isActionAvailable()
+                                                    //   .then( actionAvailable =>{
 
                                                             //Check each action individualy based on last use and cooldown
-                                                            if (!buttonAvailable) {
+                                                            if (!isActionAvailable) {
                                                                 buttonAvailable = "danger"
                                                             }
 
@@ -248,7 +261,7 @@ exports.playerAction = payload => {
                                                                     }
                                                                 }
                                                             }
-                                                        });
+                                                        //});
                                                 });
                                                 console.log('Final template to be resolved: ', JSON.stringify(template));
 
