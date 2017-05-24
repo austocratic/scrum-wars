@@ -164,7 +164,7 @@ exports.playerAction = payload => {
                                                     //   .then( actionAvailable =>{
 
                                                             //Check each action individualy based on last use and cooldown
-                                                            if (!isActionAvailable) {
+                                                            if (!isActionAvailable()) {
                                                                 buttonAvailable = "danger"
                                                             }
 
