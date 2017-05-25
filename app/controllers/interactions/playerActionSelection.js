@@ -64,7 +64,7 @@ exports.playerActionSelection = payload => {
                 firebase.get('action/' + payload.actions[0].value)
                     .then(actionResponse => {
 
-                        var characterDetails = actionResponse[payload.actions[0].value];
+                        var actionDetails = actionResponse[payload.actions[0].value];
 
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
