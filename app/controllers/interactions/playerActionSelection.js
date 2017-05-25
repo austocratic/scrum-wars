@@ -24,7 +24,7 @@ exports.playerActionSelection = payload => {
         console.log('character in areActionsAvailable: ', JSON.stringify(character));
 
         //Determine if the character used an action on the current turn
-        if (match.number_turns > character.turn_action_used) {
+        if (character.turn_action_used <= match.number_turns) {
             return true
         } else {
             return false
