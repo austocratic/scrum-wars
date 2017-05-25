@@ -3,6 +3,7 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var attackCharacterSelection = require('../../slackTemplates/attackCharacterSelection').attackCharacterSelection;
 var actionUnavailable = require('../../slackTemplates/actionUnavailable').actionUnavailable;
+var actionCoolDown = require('../../slackTemplates/actionCoolDown').actionCoolDown;
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
@@ -63,10 +64,6 @@ exports.playerActionSelection = payload => {
                 //Get the details about the action called
                 firebase.get('action/' + payload.actions[0].value)
                     .then(actionDetails => {
-
-                        //console.log('actionResponse: ', JSON.stringify(actionResponse));
-
-                        //var actionDetails = actionResponse[payload.actions[0].value];
 
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
@@ -140,7 +137,15 @@ exports.playerActionSelection = payload => {
 
                                         });
                                 } else {
-                                    //TODO add response here
+
+                                    var characterAction = characterDetails.actions.find( singleAction =>{
+                                        return singleAction.action_id === payload.actions[0].value
+                                    });
+                                    
+                                    var turnsToCoolDown = characterAction.turn_used + actionDetails.cool_down - matchDetails.number_turns;
+                                    responseTemplate = actionCoolDown(turnsToCoolDown);
+
+                                    resolve(responseTemplate);
                                 }
                             } else {
                                 responseTemplate = actionUnavailable();
@@ -159,14 +164,7 @@ exports.playerActionSelection = payload => {
 
                         //Get the slack user ID who called the action
                         userID = payload.user.id;
-
-                        //Get your character
-                        //firebase.get('character', 'user_id', userID)
-                        //.then( character => {
-
-                        //Character's ID
-                        //var characterID = Object.keys(characterDetails)[0];
-
+                        
                         var updates = {
                             "is_defending": true
                         };
@@ -180,7 +178,6 @@ exports.playerActionSelection = payload => {
                                 //Then return the new template
                                 resolve(responseTemplate)
                             });
-                        //});
 
                         break;
 
