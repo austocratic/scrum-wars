@@ -74,7 +74,7 @@ exports.playerActionSelection = payload => {
                                 firebase.get('match/' + matchID)
                                     .then(matchDetails => {
 
-                                        initiateAction(characterID, characterDetails, matchDetails)
+                                        initiateAction(characterID, characterDetails, matchDetails, actionDetails)
                                             .then( responseTemplate =>{
                                                 resolve(responseTemplate)
                                             })
@@ -85,7 +85,7 @@ exports.playerActionSelection = payload => {
             });
     });
 
-        function initiateAction(characterID, characterDetails, matchDetails){
+        function initiateAction(characterID, characterDetails, matchDetails, actionDetails){
 
             return new Promise((resolve, reject) =>{
 
@@ -95,12 +95,10 @@ exports.playerActionSelection = payload => {
                     //Attack action
                     case '-Kjpe29q_fDkJG-73AQO':
 
-                        //areActionsAvailable(characterDetails, matchDetails)
-                           // .then(actionAvailable => {
+                            //If actions are available build the attack template, otherwise build the unavailable template
+                            if (areActionsAvailable(characterDetails, matchDetails)) {
 
-                                //If actions are available build the attack template, otherwise build the unavailable template
-                                if (areActionsAvailable(characterDetails, matchDetails)) {
-
+                                if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails)) {
 
                                     //Return the default template
                                     responseTemplate = attackCharacterSelection();
@@ -140,11 +138,13 @@ exports.playerActionSelection = payload => {
 
                                         });
                                 } else {
-                                    responseTemplate = actionUnavailable();
-
-                                    resolve(responseTemplate);
+                                    //TODO add response here
                                 }
-                            //});
+                            } else {
+                                responseTemplate = actionUnavailable();
+
+                                resolve(responseTemplate);
+                            }
 
                         break;
 
