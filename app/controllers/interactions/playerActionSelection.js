@@ -37,13 +37,9 @@ exports.playerActionSelection = payload => {
         console.log('actionID: ', actionID);
         console.log('action: ', action);
 
-        var characterActionArray = character.actions.find( singleAction =>{
+        var characterAction = character.actions.find( singleAction =>{
            return singleAction.action_id === actionID
         });
-
-        console.log('characterActionArray', JSON.stringify(characterActionArray));
-
-        var characterAction = characterActionArray[0];
 
         console.log('characterAction: ', characterAction);
 
