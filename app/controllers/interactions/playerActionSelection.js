@@ -20,6 +20,8 @@ exports.playerActionSelection = payload => {
     //Determine if any actions are available this turn
     function areActionsAvailable(character, match){
 
+        console.log('character in areActionsAvailable: ', JSON.stringify(character));
+
         //Determine if the character used an action on the current turn
         if (match.number_turns > character.turn_action_used) {
             resolve(true)
