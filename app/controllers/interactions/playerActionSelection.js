@@ -30,7 +30,7 @@ exports.playerActionSelection = payload => {
         }
     }
 
-    function isActionAvailable(charID, character, actionID, action){
+    function isActionAvailable(charID, character, actionID, action, match){
 
         console.log('charID: ', charID);
         console.log('character: ', character);
@@ -41,9 +41,13 @@ exports.playerActionSelection = payload => {
            return singleAction.action_id === actionID
         });
 
+        console.log('characterActionArray', JSON.stringify(characterActionArray));
+
         var characterAction = characterActionArray[0];
 
-        if (characterAction.turn_used + action.cool_down <= matchDetails.number_turns) {
+        console.log('characterAction: ', characterAction);
+
+        if (characterAction.turn_used + action.cool_down <= match.number_turns) {
             return true
         } else {
             return false
@@ -98,7 +102,7 @@ exports.playerActionSelection = payload => {
                             //If actions are available build the attack template, otherwise build the unavailable template
                             if (areActionsAvailable(characterDetails, matchDetails)) {
 
-                                if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails)) {
+                                if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
 
                                     //Return the default template
                                     responseTemplate = attackCharacterSelection();
