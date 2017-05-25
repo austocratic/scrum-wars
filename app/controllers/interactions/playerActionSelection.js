@@ -9,15 +9,46 @@ var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelectio
 exports.playerActionSelection = payload => {
 
     console.log('playerActionSelection: ', JSON.stringify(payload));
+
+    var firebase = new Firebase();
+
+    var responseTemplate, userID;
+
+    //Get the slack user ID who called the action
+    userID = payload.user.id;
+
+    //Determine if any actions are available this turn
+    function areActionsAvailable(character, match){
+
+        //Determine if the character used an action on the current turn
+        if (match.number_turns > character.turn_action_used) {
+            resolve(true)
+        } else {
+            resolve(false)
+        }
+    }
+
+    function isActionAvailable(charID, character, actionID, action){
+
+        console.log('charID: ', charID);
+        console.log('character: ', character);
+        console.log('actionID: ', actionID);
+        console.log('action: ', action);
+
+        var characterActionArray = character.actions.find( singleAction =>{
+           return singleAction.action_id === actionID
+        });
+
+        var characterAction = characterActionArray[0];
+
+        if (characterAction.turn_used + action.cool_down <= matchDetails.number_turns) {
+            return true
+        } else {
+            return false
+        }
+    }
     
     return new Promise((resolve, reject) => {
-
-        var firebase = new Firebase();
-        
-        var responseTemplate, userID;
-
-        //Get the slack user ID who called the action
-        userID = payload.user.id;
 
         firebase.get('character', 'user_id', userID)
             .then( characterResponse => {
@@ -25,17 +56,14 @@ exports.playerActionSelection = payload => {
                 //Character's ID
                 var characterID = Object.keys(characterResponse)[0];
 
-                var playerCharacter = characterResponse[characterID];
+                var characterDetails = characterResponse[characterID];
 
-                //TODO likely need to add get current user zone here to compare it to actual zone the command was called in
+                //Get the details about the action called
+                firebase.get('action/' + payload.actions[0].value)
+                    .then(actionResponse => {
 
-                //First, determine which character's action objects is the one
+                        var characterDetails = actionResponse[payload.actions[0].value];
 
-                //Need to first determine if the action is available for use
-
-                //Determine if any actions are available this turn
-                function areActionsAvailable(characterDetails){
-                    return new Promise((resolve, reject)=> {
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
                             .then(matchID => {
@@ -44,44 +72,36 @@ exports.playerActionSelection = payload => {
                                 firebase.get('match/' + matchID)
                                     .then(matchDetails => {
 
-                                        //Determine if the character used an action on the current turn
-                                        if (matchDetails.number_turns > characterDetails.turn_action_used) {
-                                            resolve(true)
-                                        } else {
-                                            resolve(false)
-                                        }
+                                        initiateAction(characterID, characterDetails, matchDetails)
+
                                     });
                             });
                     });
-                }
+            });
+    });
 
-                /*
-                var indexValue;
+        function initiateAction(characterID, characterDetails, matchDetails){
 
-                playerCharacter.actions.forEach( eachAction =>{
-                    if(eachAction.action_id === payload.actions[0].value){
-                        //return (payload.actions[0].value);
-                        indexValue = indexOf()
-                    }
-                });*/
+            return new Promise((resolve, reject) =>{
 
-                switch(payload.actions[0].value) {
+                switch (payload.actions[0].value) {
 
                     //TODO: currently hard coding action ID, need to make these dynamic
                     //Attack action
                     case '-Kjpe29q_fDkJG-73AQO':
 
-                        areActionsAvailable( playerCharacter)
-                            .then( actionAvailable =>{
-                               
+                        //areActionsAvailable(characterDetails, matchDetails)
+                           // .then(actionAvailable => {
+
                                 //If actions are available build the attack template, otherwise build the unavailable template
-                                if (actionAvailable) {
+                                if (areActionsAvailable(characterDetails, matchDetails)) {
+
 
                                     //Return the default template
                                     responseTemplate = attackCharacterSelection();
 
                                     //Get an array of all players in that zone
-                                    firebase.get('character', 'zone_id', playerCharacter.zone_id)
+                                    firebase.get('character', 'zone_id', characterDetails.zone_id)
                                         .then(charactersInZone => {
 
                                             //Get an array of all character IDs in the zone
@@ -119,8 +139,8 @@ exports.playerActionSelection = payload => {
 
                                     resolve(responseTemplate);
                                 }
-                            });
-                        
+                            //});
+
                         break;
 
                     //TODO: currently hard coding action ID, need to make these dynamic
@@ -134,26 +154,26 @@ exports.playerActionSelection = payload => {
                         userID = payload.user.id;
 
                         //Get your character
-                        firebase.get('character', 'user_id', userID)
-                            .then( character => {
+                        //firebase.get('character', 'user_id', userID)
+                        //.then( character => {
 
-                                //Character's ID
-                                var characterID = Object.keys(character)[0];
+                        //Character's ID
+                        //var characterID = Object.keys(characterDetails)[0];
 
-                                var updates = {
-                                    "is_defending": true
-                                };
+                        var updates = {
+                            "is_defending": true
+                        };
 
-                                //Create a table reference to be used for locating the character
-                                var tableRef = 'character/' + characterID;
+                        //Create a table reference to be used for locating the character
+                        var tableRef = 'character/' + characterID;
 
-                                //Set your is_defending property
-                                firebase.update(tableRef, updates)
-                                    .then( ()=> {
-                                        //Then return the new template
-                                        resolve(responseTemplate)
-                                    })
+                        //Set your is_defending property
+                        firebase.update(tableRef, updates)
+                            .then(()=> {
+                                //Then return the new template
+                                resolve(responseTemplate)
                             });
+                        //});
 
                         break;
 
@@ -164,7 +184,7 @@ exports.playerActionSelection = payload => {
                         responseTemplate = shopCharacterSelection();
 
                         //Get the merchant in the player's zone
-                        firebase.get('merchant', 'zone_id', playerCharacter.zone_id)
+                        firebase.get('merchant', 'zone_id', characterDetails.zone_id)
                             .then(merchantsInZone => {
 
                                 //Get the ID of the first merchant (should only be one per zone)
@@ -175,21 +195,21 @@ exports.playerActionSelection = payload => {
 
                                 //Iterate over active merchant's for_sale array and lookup the names return as an array
                                 //Return an array of objects in the format for Slack
-                                var itemNamePromises = activeMerchant.for_sale.map( itemID =>{
+                                var itemNamePromises = activeMerchant.for_sale.map(itemID => {
 
-                                    return new Promise((resolve, reject)=>{
+                                    return new Promise((resolve, reject)=> {
                                         firebase.get('item/' + itemID)
                                             .then(itemProfile => {
                                                 resolve({
                                                     "text": itemProfile.name,
                                                     "value": itemID
                                                 })
-                                        })
+                                            })
                                     })
                                 });
-                                
+
                                 Promise.all(itemNamePromises)
-                                    .then( itemSlackFormat =>{
+                                    .then(itemSlackFormat => {
 
                                         responseTemplate.attachments[0].actions[0].options = itemSlackFormat;
 
@@ -206,9 +226,7 @@ exports.playerActionSelection = payload => {
                                 "text": "That action is not supported"
                             }
                         );
-
-
-        }
-        });
-    });
+                }
+            })
+    }
 };
