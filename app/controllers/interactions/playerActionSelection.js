@@ -62,11 +62,11 @@ exports.playerActionSelection = payload => {
 
                 //Get the details about the action called
                 firebase.get('action/' + payload.actions[0].value)
-                    .then(actionResponse => {
+                    .then(actionDetails => {
 
-                        console.log('actionResponse: ', JSON.stringify(actionResponse));
+                        //console.log('actionResponse: ', JSON.stringify(actionResponse));
 
-                        var actionDetails = actionResponse[payload.actions[0].value];
+                        //var actionDetails = actionResponse[payload.actions[0].value];
 
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
