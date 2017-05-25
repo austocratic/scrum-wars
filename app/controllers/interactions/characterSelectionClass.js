@@ -52,6 +52,7 @@ exports.characterSelectionClass = payload => {
                         armor: 0,
                         hit_points: 100,
                         max_hit_points: 100,
+                        zone_id: '-Khu9Zazk5XdFX9fD2Y8',
                         inventory: {
                             equipped: {
                                 hand_1: "-Kjk3sGUJy5Nu8GWsdff"

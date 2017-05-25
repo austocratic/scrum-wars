@@ -76,7 +76,9 @@ exports.playerActionSelection = payload => {
                                         initiateAction(characterID, characterDetails, matchDetails, actionDetails)
                                             .then( responseTemplate =>{
                                                 resolve(responseTemplate)
-                                            })
+                                            });
+
+                                        checkForDeath(characterDetails.zone_id);
 
                                     });
                             });
@@ -84,153 +86,176 @@ exports.playerActionSelection = payload => {
             });
     });
 
-        function initiateAction(characterID, characterDetails, matchDetails, actionDetails){
+    //Call action specifics
+    function initiateAction(characterID, characterDetails, matchDetails, actionDetails){
 
-            return new Promise((resolve, reject) =>{
+        return new Promise((resolve, reject) =>{
 
-                switch (payload.actions[0].value) {
+            switch (payload.actions[0].value) {
 
-                    //TODO: currently hard coding action ID, need to make these dynamic
-                    //Attack action
-                    case '-Kjpe29q_fDkJG-73AQO':
+                //TODO: currently hard coding action ID, need to make these dynamic
+                //Attack action
+                case '-Kjpe29q_fDkJG-73AQO':
 
-                            //If actions are available build the attack template, otherwise build the unavailable template
-                            if (areActionsAvailable(characterDetails, matchDetails)) {
+                    //If actions are available build the attack template, otherwise build the unavailable template
+                    if (areActionsAvailable(characterDetails, matchDetails)) {
 
-                                if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
+                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
 
-                                    //Return the default template
-                                    responseTemplate = attackCharacterSelection();
+                            //Return the default template
+                            responseTemplate = attackCharacterSelection();
 
-                                    //Get an array of all players in that zone
-                                    firebase.get('character', 'zone_id', characterDetails.zone_id)
-                                        .then(charactersInZone => {
+                            //Get an array of all players in that zone
+                            firebase.get('character', 'zone_id', characterDetails.zone_id)
+                                .then(charactersInZone => {
 
-                                            //Get an array of all character IDs in the zone
-                                            var charactersInZoneIDs = Object.keys(charactersInZone);
+                                    //Get an array of all character IDs in the zone
+                                    var charactersInZoneIDs = Object.keys(charactersInZone);
 
-                                            //Get the array position of the player's character:
-                                            var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
+                                    //Get the array position of the player's character:
+                                    var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
 
-                                            if (playerCharacterArrayPosition > -1) {
-                                                charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
-                                            }
+                                    if (playerCharacterArrayPosition > -1) {
+                                        charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
+                                    }
 
-                                            var namesInZone = charactersInZoneIDs.map(charID => {
-                                                return charactersInZone[charID].name;
-                                            });
-
-                                            var playerTemplate = namesInZone.map(playerName => {
-
-                                                return {
-                                                    "name": "playerName",
-                                                    "text": playerName,
-                                                    "style": "default",
-                                                    "type": "button",
-                                                    "value": playerName
-                                                }
-                                            });
-
-                                            responseTemplate.attachments[0].actions = playerTemplate;
-
-                                            resolve(responseTemplate);
-
-                                        });
-                                } else {
-
-                                    var characterAction = characterDetails.actions.find( singleAction =>{
-                                        return singleAction.action_id === payload.actions[0].value
+                                    var namesInZone = charactersInZoneIDs.map(charID => {
+                                        return charactersInZone[charID].name;
                                     });
-                                    
-                                    var turnsToCoolDown = characterAction.turn_used + actionDetails.cool_down - matchDetails.number_turns;
-                                    responseTemplate = actionCoolDown(turnsToCoolDown);
+
+                                    var playerTemplate = namesInZone.map(playerName => {
+
+                                        return {
+                                            "name": "playerName",
+                                            "text": playerName,
+                                            "style": "default",
+                                            "type": "button",
+                                            "value": playerName
+                                        }
+                                    });
+
+                                    responseTemplate.attachments[0].actions = playerTemplate;
 
                                     resolve(responseTemplate);
-                                }
-                            } else {
-                                responseTemplate = actionUnavailable();
 
-                                resolve(responseTemplate);
-                            }
-
-                        break;
-
-                    //TODO: currently hard coding action ID, need to make these dynamic
-                    //Defend action
-                    case '-KjpeJT7Oct3ZCtLhENO':
-
-                        //Return the default template
-                        responseTemplate = defendCharacterSelection();
-
-                        //Get the slack user ID who called the action
-                        userID = payload.user.id;
-                        
-                        var updates = {
-                            "is_defending": true
-                        };
-
-                        //Create a table reference to be used for locating the character
-                        var tableRef = 'character/' + characterID;
-
-                        //Set your is_defending property
-                        firebase.update(tableRef, updates)
-                            .then(()=> {
-                                //Then return the new template
-                                resolve(responseTemplate)
-                            });
-
-                        break;
-
-                    //Shop action ID
-                    case '-KkJVqtBIhpAKBfz9tcb':
-
-                        //Return the default template
-                        responseTemplate = shopCharacterSelection();
-
-                        //Get the merchant in the player's zone
-                        firebase.get('merchant', 'zone_id', characterDetails.zone_id)
-                            .then(merchantsInZone => {
-
-                                //Get the ID of the first merchant (should only be one per zone)
-                                var merchantsInZoneID = Object.keys(merchantsInZone)[0];
-
-                                //Get merchants profile
-                                var activeMerchant = merchantsInZone[merchantsInZoneID];
-
-                                //Iterate over active merchant's for_sale array and lookup the names return as an array
-                                //Return an array of objects in the format for Slack
-                                var itemNamePromises = activeMerchant.for_sale.map(itemID => {
-
-                                    return new Promise((resolve, reject)=> {
-                                        firebase.get('item/' + itemID)
-                                            .then(itemProfile => {
-                                                resolve({
-                                                    "text": itemProfile.name,
-                                                    "value": itemID
-                                                })
-                                            })
-                                    })
                                 });
+                        } else {
 
-                                Promise.all(itemNamePromises)
-                                    .then(itemSlackFormat => {
-
-                                        responseTemplate.attachments[0].actions[0].options = itemSlackFormat;
-
-                                        resolve(responseTemplate);
-                                    });
+                            var characterAction = characterDetails.actions.find( singleAction =>{
+                                return singleAction.action_id === payload.actions[0].value
                             });
 
-                        break;
+                            var turnsToCoolDown = characterAction.turn_used + actionDetails.cool_down - matchDetails.number_turns;
+                            responseTemplate = actionCoolDown(turnsToCoolDown);
 
-                    default:
+                            resolve(responseTemplate);
+                        }
+                    } else {
+                        responseTemplate = actionUnavailable();
 
-                        resolve(
-                            {
-                                "text": "That action is not supported"
-                            }
-                        );
-                }
-            })
-    }
+                        resolve(responseTemplate);
+                    }
+
+                    break;
+
+                //TODO: currently hard coding action ID, need to make these dynamic
+                //Defend action
+                case '-KjpeJT7Oct3ZCtLhENO':
+
+                    //Return the default template
+                    responseTemplate = defendCharacterSelection();
+
+                    //Get the slack user ID who called the action
+                    userID = payload.user.id;
+
+                    var updates = {
+                        "is_defending": true
+                    };
+
+                    //Create a table reference to be used for locating the character
+                    var tableRef = 'character/' + characterID;
+
+                    //Set your is_defending property
+                    firebase.update(tableRef, updates)
+                        .then(()=> {
+                            //Then return the new template
+                            resolve(responseTemplate)
+                        });
+
+                    break;
+
+                //Shop action ID
+                case '-KkJVqtBIhpAKBfz9tcb':
+
+                    //Return the default template
+                    responseTemplate = shopCharacterSelection();
+
+                    //Get the merchant in the player's zone
+                    firebase.get('merchant', 'zone_id', characterDetails.zone_id)
+                        .then(merchantsInZone => {
+
+                            //Get the ID of the first merchant (should only be one per zone)
+                            var merchantsInZoneID = Object.keys(merchantsInZone)[0];
+
+                            //Get merchants profile
+                            var activeMerchant = merchantsInZone[merchantsInZoneID];
+
+                            //Iterate over active merchant's for_sale array and lookup the names return as an array
+                            //Return an array of objects in the format for Slack
+                            var itemNamePromises = activeMerchant.for_sale.map(itemID => {
+
+                                return new Promise((resolve, reject)=> {
+                                    firebase.get('item/' + itemID)
+                                        .then(itemProfile => {
+                                            resolve({
+                                                "text": itemProfile.name,
+                                                "value": itemID
+                                            })
+                                        })
+                                })
+                            });
+
+                            Promise.all(itemNamePromises)
+                                .then(itemSlackFormat => {
+
+                                    responseTemplate.attachments[0].actions[0].options = itemSlackFormat;
+
+                                    resolve(responseTemplate);
+                                });
+                        });
+
+                    break;
+
+                default:
+
+                    resolve(
+                        {
+                            "text": "That action is not supported"
+                        }
+                    );
+            }
+        })
+}
+
+    //Post action clean up (check for player defeated, ect)
+    //TODO in the future I should refactor this to refresh certain zones based on certain actions
+    function checkForDeath(zoneID){
+
+        console.log('Called checkForDeath, zoneID: ', zoneID);
+        //Determine if any player is now dead
+
+        //Get all the characters
+        firebase.get('character')
+            .then(allCharacters => {
+
+                //Filter list of characters to characters in the zone that are "dead"
+                var charactersInZone = allCharacters.filter( singleCharacter=>{
+                    return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
+                });
+
+                console.log('Dead characters in zone: ', JSON.stringify(charactersInZone))
+
+            });
+
+    };
 };
