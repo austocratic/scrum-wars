@@ -75,6 +75,9 @@ exports.playerActionSelection = payload => {
                                     .then(matchDetails => {
 
                                         initiateAction(characterID, characterDetails, matchDetails)
+                                            .then( responseTemplate =>{
+                                                resolve(responseTemplate)
+                                            })
 
                                     });
                             });
