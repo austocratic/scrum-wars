@@ -248,6 +248,8 @@ exports.playerActionSelection = payload => {
         firebase.get('character')
             .then(allCharacters => {
 
+                console.log('allCharacters: ', JSON.stringify(allCharacters));
+
                 //Filter list of characters to characters in the zone that are "dead"
                 var charactersInZone = allCharacters.filter( singleCharacter=>{
                     return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
