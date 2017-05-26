@@ -137,6 +137,7 @@ exports.playerAttack = payload => {
                 firebase.update(tableRef, updates)
                     .then( () => {
 
+                        /*
                         //Now that attacks have been updated in the DB, check for character deaths
                         checkForDeath(zoneID)
                             .then( deadCharacters =>{
@@ -144,7 +145,7 @@ exports.playerAttack = payload => {
                                     .then(()=>{
 
                                     })
-                            });
+                            });*/
 
                         //Then return the new template
                         resolve(template)
@@ -199,12 +200,16 @@ exports.playerAttack = payload => {
                         firebase.get('character/' + singleDeadCharacterID)
                             .then(characterDetails => {
 
-                                //Send a message to the channel saying that a new traveler has entered the zone
+                                //Update the character's zone
+
+
+
+                                //Send slack alert that player was defeated
                                 var alertDetails = {
                                     "username": "A mysterious voice",
                                     "icon_url": "https://s-media-cache-ak0.pinimg.com/736x/d8/59/10/d859102236d09cf470a41e4b6974b79a.jpg",
                                     "channel": ("#" + zoneDetails.channel),
-                                    "text": characterDetails + " has been defeated!"
+                                    "text": characterDetails.name + " has been defeated!"
                                 };
 
                                 //Create a new slack alert object

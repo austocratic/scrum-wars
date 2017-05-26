@@ -1,8 +1,10 @@
 "use strict";
 
-
+var Firebase = require('../../libraries/firebase').Firebase;
 var interactions = require('./interactions').interactions;
+var resolveActions = require('./interactions/resolveActions').resolveActions;
 
+var firebase = new Firebase();
 
 exports.interactiveMessages = (req, res, next) => {
 
@@ -21,6 +23,16 @@ exports.interactiveMessages = (req, res, next) => {
     //Get the interaction then write to DB then respond to client
     getInteraction(callback, messagePayload)
         .then( messageResponse =>{
+            //Determine the zone ID
+            firebase.get('zone', 'channel_id', messagePayload.channel.id)
+                .then( zoneDetails =>{
+
+                    var zoneID = Object.keys(zoneDetails)[0];
+                    //var characterZone = props[1][zoneID];
+                    
+                    resolveActions(zoneID);
+                });
+
             res.status(200).send(messageResponse);
         })
         .catch( err => {
