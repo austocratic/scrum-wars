@@ -1,6 +1,6 @@
 "use strict";
 
-var Firebase = require('../../libraries/firebase').Firebase;
+var Firebase = require('../libraries/firebase').Firebase;
 var interactions = require('./interactions').interactions;
 var resolveActions = require('./interactions/resolveActions').resolveActions;
 
@@ -23,13 +23,15 @@ exports.interactiveMessages = (req, res, next) => {
     //Get the interaction then write to DB then respond to client
     getInteraction(callback, messagePayload)
         .then( messageResponse =>{
+
+            //TODO I could move this down to the getInteraction function so that it only fires sometimes
             //Determine the zone ID
             firebase.get('zone', 'channel_id', messagePayload.channel.id)
                 .then( zoneDetails =>{
 
                     var zoneID = Object.keys(zoneDetails)[0];
                     //var characterZone = props[1][zoneID];
-                    
+
                     resolveActions(zoneID);
                 });
 
