@@ -235,50 +235,5 @@ exports.playerActionSelection = payload => {
                     );
             }
         })
-}
-
-    //Post action clean up (check for player defeated, ect)
-    //TODO in the future I should refactor this to refresh certain zones based on certain actions
-    function checkForDeath(zoneID){
-
-        console.log('Called checkForDeath, zoneID: ', zoneID);
-        //Determine if any player is now dead
-
-        //Get all the characters
-        firebase.get('character')
-            .then(allCharacters => {
-
-                console.log('allCharacters: ', JSON.stringify(allCharacters));
-
-                //Get an array of all character IDs in the zone
-                var characterIDArray = Object.keys(allCharacters);
-
-                var singleCharacter;
-                /*
-                var characterMap = characterIDArray.map( singleCharacterID =>{
-                    singleCharacter = allCharacters[singleCharacterID];
-
-                    if (singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0)
-                });*/
-
-                //Filter list of characters to characters in the zone that are "dead"
-                var charactersInZone = characterIDArray.filter( singleCharacterID=>{
-
-                    console.log('using .filter, characterID: ', singleCharacterID);
-
-                    singleCharacter = allCharacters[singleCharacterID];
-
-                    return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
-                });
-                /*
-                //Filter list of characters to characters in the zone that are "dead"
-                var charactersInZone = allCharacters.filter( singleCharacter=>{
-                    return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
-                });*/
-
-                console.log('Dead characters in zone: ', JSON.stringify(charactersInZone))
-
-            });
-
-    };
+    }
 };

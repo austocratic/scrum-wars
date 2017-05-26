@@ -6,6 +6,8 @@ var attackCharacterComplete = require('../../slackTemplates/attackCharacterCompl
 
 exports.playerAttack = payload => {
 
+    var firebase = new Firebase();
+
     return new Promise((resolve, reject) => {
         
         //Get the name of the player to attack
@@ -14,8 +16,6 @@ exports.playerAttack = payload => {
 
         //Return the default template
         var template = attackCharacterComplete();
-
-        var firebase = new Firebase();
 
         //Get the slack user ID who made the selection
         var userID = payload.user_id;
@@ -39,13 +39,10 @@ exports.playerAttack = payload => {
                 var targetCharacterID = Object.keys(props[2])[0];
 
                 var characterProperties = props[0][characterID];
-                console.log('Character stats: ', characterProperties);
 
                 var characterZone = props[1][zoneID];
-                console.log('Zone details: ', characterZone);
 
                 var targetCharacterProperties = props[2][targetCharacterID];
-                console.log('Target character stats: ', targetCharacterProperties);
 
                 //TODO need to move this function somewhere else
                 function getRandomIntInclusive(min, max) {
@@ -136,18 +133,49 @@ exports.playerAttack = payload => {
                 //Create a table reference to be used for locating the character
                 var tableRef = 'character/' + targetCharacterID;
 
-                console.log('Updates: ', updates);
-
-                console.log('Final attack template: ', template);
-
                 //Change target attributes
                 firebase.update(tableRef, updates)
                     .then( () => {
+
+                        //Now that attacks have been updated in the DB, check for character deaths
+                        checkForDeath(zoneID);
+                        
                         //Then return the new template
                         resolve(template)
                     })
             })
     });
+
+    //Post action clean up (check for player defeated, ect)
+    //TODO in the future I should refactor this to refresh certain zones based on certain actions
+    function checkForDeath(zoneID){
+
+        console.log('Called checkForDeath, zoneID: ', zoneID);
+        //Determine if any player is now dead
+
+        //Get all the characters
+        firebase.get('character')
+            .then(allCharacters => {
+
+                //Get an array of all character IDs in the zone
+                var characterIDArray = Object.keys(allCharacters);
+
+                var singleCharacter;
+
+                //Filter list: return array of character IDs in the zone, that are dead
+                var charactersInZone = characterIDArray.filter( singleCharacterID=>{
+
+                    singleCharacter = allCharacters[singleCharacterID];
+                    return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
+                });
+
+                console.log('Dead characters in zone: ', JSON.stringify(charactersInZone))
+
+            });
+
+    };
+
+
 };
 
 
