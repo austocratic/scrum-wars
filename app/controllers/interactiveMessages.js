@@ -32,7 +32,7 @@ exports.interactiveMessages = (req, res, next) => {
                     var zoneID = Object.keys(zoneDetails)[0];
                     //var characterZone = props[1][zoneID];
 
-                    resolveActions(zoneID, messagePayload.channel.id, messagePayload.user.id);
+                    resolveActions(zoneID);
                 });
 
             res.status(200).send(messageResponse);

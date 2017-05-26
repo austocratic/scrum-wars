@@ -3,6 +3,7 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
 
+//TODO need to make the travel function into a reusable function.  See moveCharacter function in resolveActions function
 exports.travel = payload => {
 
     return new Promise((resolve, reject) =>{

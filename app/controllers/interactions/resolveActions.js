@@ -2,15 +2,9 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
-var travel = require('./travel').travel;
 
 
-exports.resolveActions = (zoneID, channelID, userID) => {
-
-    console.log('Called resolveActions');
-    console.log('zoneID: ', zoneID);
-    console.log('channelID: ', channelID);
-    console.log('userID: ', userID);
+exports.resolveActions = (zoneID) => {
     
     var firebase = new Firebase();
     
@@ -55,7 +49,6 @@ exports.resolveActions = (zoneID, channelID, userID) => {
             });
         };
 
-
         //Parameter passed should be an array of character IDs that are "dead"
         //This function will notify the zone of the deaths, move the characters to the town, and set the defeated property in the DB
         function handleDeadCharacters(deadCharacters, zoneID){
@@ -71,14 +64,6 @@ exports.resolveActions = (zoneID, channelID, userID) => {
                             //Get the details of the dead character
                             firebase.get('character/' + singleDeadCharacterID)
                                 .then(characterDetails => {
-
-                                    //Update the character's zone by emitting a travel action
-                                    var payload = {
-                                        user_id: userID,
-                                        channel_id: channelID
-                                    };
-                                    
-                                    travel(payload);
                                     
                                     //Send slack alert that player was defeated
                                     var alertDetails = {
@@ -99,14 +84,55 @@ exports.resolveActions = (zoneID, channelID, userID) => {
                                         .catch(error =>{
                                             console.log('Error when sending to slack: ', error)
                                         });
+
+                                    //TODO hard coded the town ID
+                                    moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails);
+
+                                    resolve();
                                 });
                         });
                 });
             });
         }
 
+    function moveCharacter(characterID, characterDetails, destinationID, zoneDetails){
 
+        return new Promise((resolve, reject) => {
 
+            //Create a table reference to be used for locating the character
+            var tableRef = 'character/' + characterID;
 
+            //Define the properties to add to character
+            var updates = {
+                "zone_id": destinationID
+            };
+
+            //Now update the character with new properties
+            firebase.update(tableRef, updates)
+                .then( () => {
+                    resolve();
+                });
+
+            //Send slack alert that player was defeated
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + zoneDetails.channel),
+                "text": characterDetails.name + " has left the " + zoneDetails.name
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(channelAlert.params)
+                .then(() =>{
+                    console.log('Successfully posted to slack')
+                })
+                .catch(error =>{
+                    console.log('Error when sending to slack: ', error)
+                });
+        });
+    }
 
 };
