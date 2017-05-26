@@ -138,8 +138,14 @@ exports.playerAttack = payload => {
                     .then( () => {
 
                         //Now that attacks have been updated in the DB, check for character deaths
-                        checkForDeath(zoneID);
-                        
+                        checkForDeath(zoneID)
+                            .then( deadCharacters =>{
+                                handleDeadCharacters(deadCharacters, zoneID)
+                                    .then(()=>{
+
+                                    })
+                            });
+
                         //Then return the new template
                         resolve(template)
                     })
@@ -150,32 +156,73 @@ exports.playerAttack = payload => {
     //TODO in the future I should refactor this to refresh certain zones based on certain actions
     function checkForDeath(zoneID){
 
-        console.log('Called checkForDeath, zoneID: ', zoneID);
-        //Determine if any player is now dead
+        return new Promise((resolve, reject) => {
 
-        //Get all the characters
-        firebase.get('character')
-            .then(allCharacters => {
+            //Get all the characters
+            firebase.get('character')
+                .then(allCharacters => {
 
-                //Get an array of all character IDs in the zone
-                var characterIDArray = Object.keys(allCharacters);
+                    //Get an array of all character IDs in the zone
+                    var characterIDArray = Object.keys(allCharacters);
 
-                var singleCharacter;
+                    var singleCharacter;
 
-                //Filter list: return array of character IDs in the zone, that are dead
-                var charactersInZone = characterIDArray.filter( singleCharacterID=>{
+                    //Filter list: return array of character IDs in the zone, that are dead
+                    var charactersInZone = characterIDArray.filter(singleCharacterID=> {
 
-                    singleCharacter = allCharacters[singleCharacterID];
-                    return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
+                        singleCharacter = allCharacters[singleCharacterID];
+                        return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
+                    });
+
+                    console.log('Dead characters in zone: ', JSON.stringify(charactersInZone));
+
+                    resolve(charactersInZone);
+
                 });
-
-                console.log('Dead characters in zone: ', JSON.stringify(charactersInZone))
-
-            });
-
+        });
     };
 
 
+    //Parameter passed should be an array of character IDs that are "dead"
+    //This function will notify the zone of the deaths, move the characters to the town, and set the defeated property in the DB
+    function handleDeadCharacters(deadCharacters, zoneID){
+
+        return new Promise((resolve, reject) => {
+
+            deadCharacters.forEach( singleDeadCharacterID =>{
+
+                //Get the details of the zone
+                firebase.get('zone/' + zoneID)
+                    .then(zoneDetails => {
+
+                        //Get the details of the dead character
+                        firebase.get('character/' + singleDeadCharacterID)
+                            .then(characterDetails => {
+
+                                //Send a message to the channel saying that a new traveler has entered the zone
+                                var alertDetails = {
+                                    "username": "A mysterious voice",
+                                    "icon_url": "https://s-media-cache-ak0.pinimg.com/736x/d8/59/10/d859102236d09cf470a41e4b6974b79a.jpg",
+                                    "channel": ("#" + zoneDetails.channel),
+                                    "text": characterDetails + " has been defeated!"
+                                };
+
+                                //Create a new slack alert object
+                                var channelAlert = new Slack(alertDetails);
+
+                                //Send alert to slack
+                                channelAlert.sendToSlack(this.params)
+                                    .then(() =>{
+                                        console.log('Successfully posted to slack')
+                                    })
+                                    .catch(error =>{
+                                        console.log('Error when sending to slack: ', error)
+                                    });
+                            });
+                    });
+            });
+        });
+    }
 };
 
 
