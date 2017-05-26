@@ -211,7 +211,7 @@ exports.playerAttack = payload => {
                                 var channelAlert = new Slack(alertDetails);
 
                                 //Send alert to slack
-                                channelAlert.sendToSlack(this.params)
+                                channelAlert.sendToSlack(channelAlert.params)
                                     .then(() =>{
                                         console.log('Successfully posted to slack')
                                     })
