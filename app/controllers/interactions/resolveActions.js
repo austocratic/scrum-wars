@@ -2,11 +2,15 @@
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
+var travel = require('./travel').travel;
 
 
-exports.resolveActions = (zoneID) => {
+exports.resolveActions = (zoneID, channelID, userID) => {
 
     console.log('Called resolveActions');
+    console.log('zoneID: ', zoneID);
+    console.log('channelID: ', channelID);
+    console.log('userID: ', userID);
     
     var firebase = new Firebase();
     
@@ -68,10 +72,14 @@ exports.resolveActions = (zoneID) => {
                             firebase.get('character/' + singleDeadCharacterID)
                                 .then(characterDetails => {
 
-                                    //Update the character's zone
-
-
-
+                                    //Update the character's zone by emitting a travel action
+                                    var payload = {
+                                        user_id: userID,
+                                        channel_id: channelID
+                                    };
+                                    
+                                    travel(payload);
+                                    
                                     //Send slack alert that player was defeated
                                     var alertDetails = {
                                         "username": "A mysterious voice",
