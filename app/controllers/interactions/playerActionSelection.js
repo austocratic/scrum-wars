@@ -126,6 +126,9 @@ exports.playerActionSelection = payload => {
                                     var namesInZone = charactersInZoneIDs.map(charID => {
                                         return charactersInZone[charID].name;
                                     });*/
+
+                                    console.log('Imported playerCharacter function: ', JSON.stringify(getCharacters));
+
                                     var namesInZone = getCharacters.excludePlayerCharacter(characterDetails.zone_id, characterID);
                                     
 
