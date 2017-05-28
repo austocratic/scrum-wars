@@ -6,7 +6,7 @@ var firebase = new Firebase();
 
 exports.getCharacters = {
 
-    includePlayerCharacter: (zoneID) => {
+    includePlayerCharacter(zoneID) {
 
         return new Promise((resolve, reject) => {
 
@@ -29,7 +29,7 @@ exports.getCharacters = {
         });
     },
 
-    excludePlayerCharacter: (zoneID, characterID) => {
+    excludePlayerCharacter(zoneID, characterID) {
 
         return new Promise((resolve, reject) => {
 
