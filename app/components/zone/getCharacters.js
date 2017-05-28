@@ -4,7 +4,7 @@ var Firebase = require('../../libraries/firebase').Firebase;
 
 var firebase = new Firebase();
 
-exports.getCharacters = {
+var getCharacters = {
 
     includePlayerCharacter(zoneID) {
 
@@ -60,3 +60,5 @@ exports.getCharacters = {
         });
     }
 };
+
+exports.getCharacters = getCharacters;
