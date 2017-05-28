@@ -7,6 +7,8 @@ var actionCoolDown = require('../../slackTemplates/actionCoolDown').actionCoolDo
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
+var getCharacters = require('../../components/zone/moveCharacter').getCharacters;
+
 exports.playerActionSelection = payload => {
 
     console.log('playerActionSelection: ', JSON.stringify(payload));
@@ -78,7 +80,8 @@ exports.playerActionSelection = payload => {
                                                 resolve(responseTemplate)
                                             });
 
-                                        checkForDeath(characterDetails.zone_id);
+                                        //TODO I think this can be deleted, this check happens elsewhere
+                                        //checkForDeath(characterDetails.zone_id);
 
                                     });
                             });
@@ -106,6 +109,7 @@ exports.playerActionSelection = payload => {
                             responseTemplate = attackCharacterSelection();
 
                             //Get an array of all players in that zone
+                            /*
                             firebase.get('character', 'zone_id', characterDetails.zone_id)
                                 .then(charactersInZone => {
 
@@ -121,7 +125,9 @@ exports.playerActionSelection = payload => {
 
                                     var namesInZone = charactersInZoneIDs.map(charID => {
                                         return charactersInZone[charID].name;
-                                    });
+                                    });*/
+                                    var namesInZone = getCharacters.excludePlayerCharacter(characterDetails.zone_id, characterID);
+                                    
 
                                     var playerTemplate = namesInZone.map(playerName => {
 
@@ -138,7 +144,7 @@ exports.playerActionSelection = payload => {
 
                                     resolve(responseTemplate);
 
-                                });
+                                //});
                         } else {
 
                             var characterAction = characterDetails.actions.find( singleAction =>{
