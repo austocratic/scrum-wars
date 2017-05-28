@@ -4,9 +4,9 @@ var Firebase = require('../../libraries/firebase').Firebase;
 
 var firebase = new Firebase();
 
-var getCharacters = {
+exports.getCharacters = {
 
-    includePlayerCharacter: function(zoneID){
+    includePlayerCharacter: (zoneID) => {
 
         return new Promise((resolve, reject) => {
 
@@ -29,7 +29,7 @@ var getCharacters = {
         });
     },
 
-    excludePlayerCharacter: function(zoneID, characterID) => {
+    excludePlayerCharacter: (zoneID, characterID) => {
 
         return new Promise((resolve, reject) => {
 
@@ -60,5 +60,3 @@ var getCharacters = {
         });
     }
 };
-
-module.exports = getCharacters;
