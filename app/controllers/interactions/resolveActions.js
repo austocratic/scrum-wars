@@ -238,7 +238,9 @@ exports.resolveActions = (zoneID) => {
                                                         .then( () => {
 
                                                             //Next get that player's actions.  These need to be reset
-                                                            var characterActions = allCharacters[characterID];
+                                                            var characterActions = allCharacters[characterID].actions;
+
+                                                            console.log('characterActions: ', JSON.stringify(characterActions));
 
                                                             var singleActionUpdate = {
                                                                 "turn_used": 0
