@@ -319,8 +319,14 @@ exports.resolveActions = (zoneID) => {
                                                         "username": "A mysterious voice",
                                                         "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
                                                         "channel": ("#" + zoneDetails.channel),
-                                                        "text": "The crowd erupts in celebration.  A winner stands victorious!" +
-                                                        "/n Congratulations " + matchWinnerDetails.name
+                                                        "text": "*The crowd erupts in celebration.  A winner stands victorious!*" +
+                                                        "\n Congratulations " + matchWinnerDetails.name,
+                                                        "attachments": [
+                                                            {
+                                                                "fallback": "Required plain-text summary of the attachment.",
+                                                                "image_url": "http://dspncdn.com/a1/media/692x/cf/99/07/cf9907357589bf6e8af88ca3c1d7469c.jpg"
+                                                            }
+                                                        ]
                                                     };
 
                                                     //Create a new slack alert object
