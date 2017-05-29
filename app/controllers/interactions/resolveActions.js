@@ -177,6 +177,8 @@ exports.resolveActions = (zoneID) => {
                             //The current match will not have a start date == 0 the match officially starts - it will have a date time stamp
                             var matchStart = matchDetails.date_started;
 
+                            console.log('matchStart property from isMatchStarted(): ', matchStart);
+
                             //If match has not started, matchStart === 0
                             if (matchStart === 0){
                                 resolve(false)
