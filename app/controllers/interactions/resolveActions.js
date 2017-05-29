@@ -209,12 +209,75 @@ exports.resolveActions = (zoneID) => {
                     firebase.update(('match/' + currentMatchID), updates)
                         .then( () => {
 
+                            console.log('Updated current match');
+
                             //Get details of zone
                             firebase.get('zone/' + zoneID)
                                 .then(zoneDetails => {
 
+                                    //Get all players (regardless of zone)
+                                    firebase.get('character')
+                                        .then(allCharacters => {
+
+                                            console.log('allCharacters: ', JSON.stringify(allCharacters));
+
+                                            var characterIDs = Object.keys(allCharacters);
+
+                                            var turnActionUsedUpdate = {
+                                                "turn_action_used": 0
+                                            };
+
+                                            //Iterate through characterID array resetting turn_action_used
+                                            var characterUpdatePromises = characterIDs.map( characterID =>{
+
+                                                return new Promise((resolve, reject)=>{
+                                                    //Update that character
+                                                    firebase.update(('character/' + characterID), turnActionUsedUpdate)
+                                                        .then( () => {
+
+                                                            //Next get that player's actions.  These need to be reset
+                                                            var characterActions = allCharacters[characterID];
+
+                                                            var singleActionUpdate = {
+                                                                "turn_used": 0
+                                                            };
+
+                                                            var iterationIndex = 0;
+
+                                                            console.log('About to iterate characters actions: ', characterID);
+
+                                                            var characterActionUpdatePromises = characterActions.map( singleAction => {
+
+                                                                console.log('Iterating characters actions, singleAction: ', singleAction);
+
+                                                                iterationIndex++;
+
+                                                               return new Promise((resolve, reject)=>{
+                                                                   firebase.update(('character/' + characterID + '/' + iterationIndex), singleActionUpdate)
+                                                                       .then( () => {
+                                                                            resolve();
+                                                                       });
+                                                               })
+                                                            });
+
+                                                            Promise.all(characterActionUpdatePromises)
+                                                                .then(()=>{
+                                                                    resolve();
+                                                                });
+                                                        })
+                                                })
+                                            });
+
+                                            //After all characters have been updated
+                                            Promise.all(characterUpdatePromises)
+                                                .then(()=>{
+                                                    resolve();
+                                                })
+                                        });
+
+
                                     //Send a message to the channel announcing that the match has started
-                                    var travelAlertDetails = {
+                                    var alertDetails = {
                                         "username": "A mysterious voice",
                                         "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
                                         "channel": ("#" + zoneDetails.channel),
@@ -222,10 +285,10 @@ exports.resolveActions = (zoneID) => {
                                     };
 
                                     //Create a new slack alert object
-                                    var travelAlert = new Slack(travelAlertDetails);
+                                    var matchBeginsAlert = new Slack(alertDetails);
 
                                     //Send alert to slack
-                                    travelAlert.sendToSlack(travelAlert.params)
+                                    matchBeginsAlert.sendToSlack(matchBeginsAlert.params)
                                         .then(() =>{
                                             console.log('Successfully posted to slack')
                                         })
