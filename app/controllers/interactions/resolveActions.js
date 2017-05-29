@@ -241,129 +241,135 @@ exports.resolveActions = (zoneID) => {
         return new Promise((resolve, reject)=>{
 
             //Ensure that the current match has started
-            if (isMatchStarted()) {
+            isMatchStarted()
+                .then( isStarted =>{
 
-                //See what characters are currently in the zone.
-                getCharacters.getIDsIncludePlayerCharacter(zoneID)
-                    .then( livingCharacters =>{
+                    console.log('isMatchStarted? ', isStarted);
 
-                        console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(livingCharacters));
+                    if (isStarted) {
 
-                        //If there is only one character left, match is won by that character!
-                        if (livingCharacters.length === 1){
+                        //See what characters are currently in the zone.
+                        getCharacters.getIDsIncludePlayerCharacter(zoneID)
+                            .then( livingCharacters =>{
 
-                            var matchWinnerID = livingCharacters[0];
+                                console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(livingCharacters));
 
-                            //Update match winner to that character
-                            var tableRef = 'match/' + matchID;
+                                //If there is only one character left, match is won by that character!
+                                if (livingCharacters.length === 1){
 
-                            //Define the properties to add to character
-                            var updates = {
-                                "character_id_won": matchWinnerID,
-                                "date_ended": Date.now()
-                            };
+                                    var matchWinnerID = livingCharacters[0];
 
-                            //Now update the character with new properties
-                            firebase.update(tableRef, updates)
-                                .then( () => {
-                                    resolve();
-                                });
+                                    //Update match winner to that character
+                                    var tableRef = 'match/' + matchID;
 
-                            var newMatchDetails = {
-
-                                "character_id_won": 0,
-                                "date_ended": 0,
-                                "date_started": 0,
-                                "number_turns": 0,
-                                "starting_character_ids": 0,
-                                "zone_id": 0
-                            };
-
-                            //Create a new match
-                            firebase.create('match', newMatchDetails)
-                                .then( newMatchID =>{
-
-                                    //TODO: need to dynamically generate the next match start
-                                    var nextMatchStart = 1496098800;
-
-                                    //Update the global state to the new match ID
-                                    var matchUpdates = {
-                                        "match_id": newMatchID,
-                                        "next_match_start": nextMatchStart
+                                    //Define the properties to add to character
+                                    var updates = {
+                                        "character_id_won": matchWinnerID,
+                                        "date_ended": Date.now()
                                     };
 
                                     //Now update the character with new properties
-                                    firebase.update('global_state', matchUpdates)
+                                    firebase.update(tableRef, updates)
                                         .then( () => {
                                             resolve();
                                         });
-                                });
 
-                            //Get details of the zone
-                            firebase.get('zone/' + zoneID)
-                                .then(zoneDetails => {
+                                    var newMatchDetails = {
 
-                                    //Get details of the winning character
-                                    firebase.get('character/' + matchWinnerID)
-                                        .then(matchWinnerDetails => {
+                                        "character_id_won": 0,
+                                        "date_ended": 0,
+                                        "date_started": 0,
+                                        "number_turns": 0,
+                                        "starting_character_ids": 0,
+                                        "zone_id": 0
+                                    };
 
-                                            //Send slack alert abut the winner
-                                            var alertDetails = {
-                                                "username": "A mysterious voice",
-                                                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                                "channel": ("#" + zoneDetails.channel),
-                                                "text": "The crowd erupts in celebration.  A winner stands victorious!" +
-                                                "/n Congratulations " + matchWinnerDetails.name
+                                    //Create a new match
+                                    firebase.create('match', newMatchDetails)
+                                        .then( newMatchID =>{
+
+                                            //TODO: need to dynamically generate the next match start
+                                            var nextMatchStart = 1496098800;
+
+                                            //Update the global state to the new match ID
+                                            var matchUpdates = {
+                                                "match_id": newMatchID,
+                                                "next_match_start": nextMatchStart
                                             };
 
-                                            //Create a new slack alert object
-                                            var channelAlert = new Slack(alertDetails);
-
-                                            //Send alert to slack
-                                            channelAlert.sendToSlack(channelAlert.params)
-                                                .then(() =>{
-                                                    console.log('Successfully posted to slack')
-                                                })
-                                                .catch(error =>{
-                                                    console.log('Error when sending to slack: ', error)
+                                            //Now update the character with new properties
+                                            firebase.update('global_state', matchUpdates)
+                                                .then( () => {
+                                                    resolve();
                                                 });
                                         });
-                                });
-                        } else {
-                            //More characters are alive than 1, resolve
-                            resolve()
-                        }
-                    });
 
-            } else {
-                //Current match has not started, check to see if it should start
+                                    //Get details of the zone
+                                    firebase.get('zone/' + zoneID)
+                                        .then(zoneDetails => {
 
-                //Lookup the global state to get next match start date/time
-                firebase.get('global_state')
-                    .then(currentMatch => {
+                                            //Get details of the winning character
+                                            firebase.get('character/' + matchWinnerID)
+                                                .then(matchWinnerDetails => {
 
-                        console.log('Checking to see if next match should start.  Next match start: ', currentMatch.next_match_start);
+                                                    //Send slack alert abut the winner
+                                                    var alertDetails = {
+                                                        "username": "A mysterious voice",
+                                                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                                        "channel": ("#" + zoneDetails.channel),
+                                                        "text": "The crowd erupts in celebration.  A winner stands victorious!" +
+                                                        "/n Congratulations " + matchWinnerDetails.name
+                                                    };
 
-                        //TODO left off here, date.now is a different format than stored in the DB
-                        
-                        var unixTime = (Date.now() / 1000);
+                                                    //Create a new slack alert object
+                                                    var channelAlert = new Slack(alertDetails);
 
-                        console.log('Current time stamp: ', unixTime);
+                                                    //Send alert to slack
+                                                    channelAlert.sendToSlack(channelAlert.params)
+                                                        .then(() =>{
+                                                            console.log('Successfully posted to slack')
+                                                        })
+                                                        .catch(error =>{
+                                                            console.log('Error when sending to slack: ', error)
+                                                        });
+                                                });
+                                        });
+                                } else {
+                                    //More characters are alive than 1, resolve
+                                    resolve()
+                                }
+                            });
 
-                        //Compare the current time to the start time
-                        if (unixTime >= currentMatch.next_match_start) {
+                    } else {
+                        console.log('Hit else statement, current match has not started');
 
-                            console.log('Current time > next_match_start, start the match!');
-                            //Start the match!
-                            startMatch(currentMatch.match_id, unixTime)
-                                .then(()=>{
+                        //Lookup the global state to get next match start date/time
+                        firebase.get('global_state')
+                            .then(currentMatch => {
+
+                                console.log('Checking to see if next match should start.  Next match start: ', currentMatch.next_match_start);
+
+                                //TODO left off here, date.now is a different format than stored in the DB
+
+                                var unixTime = (Date.now() / 1000);
+
+                                console.log('Current time stamp: ', unixTime);
+
+                                //Compare the current time to the start time
+                                if (unixTime >= currentMatch.next_match_start) {
+
+                                    console.log('Current time > next_match_start, start the match!');
+                                    //Start the match!
+                                    startMatch(currentMatch.match_id, unixTime)
+                                        .then(()=>{
+                                            resolve();
+                                        })
+                                } else {
                                     resolve();
-                                })
-                        } else {
-                            resolve();
-                        }
-                    });
-            }
+                                }
+                            });
+                    }
+                });
         });
     }
 };
