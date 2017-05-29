@@ -340,16 +340,18 @@ exports.resolveActions = (zoneID) => {
 
                         console.log('Checking to see if next match should start.  Next match start: ', currentMatch.next_match_start);
 
-                        var timeInMs = Date.now();
+                        //TODO left off here, date.now is a different format than stored in the DB
+                        
+                        var unixTime = (Date.now() / 1000);
 
                         console.log('Current time stamp: ', timeInMs);
 
                         //Compare the current time to the start time
-                        if (timeInMs >= currentMatch.next_match_start) {
+                        if (unixTime >= currentMatch.next_match_start) {
 
                             console.log('Current time > next_match_start, start the match!');
                             //Start the match!
-                            startMatch(currentMatch.match_id, timeInMs)
+                            startMatch(currentMatch.match_id, unixTime)
                                 .then(()=>{
                                     resolve();
                                 })
