@@ -187,6 +187,8 @@ exports.resolveActions = (zoneID) => {
 
         return new Promise((resolve, reject)=>{
 
+            console.log('trying to startMatch, zone ID passed: ', zoneID);
+
             var charactersInZone = getCharacters.getIDsIncludePlayerCharacter(zoneID);
 
             console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
