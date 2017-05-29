@@ -108,49 +108,27 @@ exports.playerActionSelection = payload => {
                             //Return the default template
                             responseTemplate = attackCharacterSelection();
 
-                            //Get an array of all players in that zone
-                            /*
-                            firebase.get('character', 'zone_id', characterDetails.zone_id)
-                                .then(charactersInZone => {
+                            getCharacters.getNamesExcludePlayerCharacter(characterDetails.zone_id, characterID)
+                                .then( namesInZone =>{
 
-                                    //Get an array of all character IDs in the zone
-                                    var charactersInZoneIDs = Object.keys(charactersInZone);
+                                    console.log('namesInZones: ', JSON.stringify(namesInZone));
 
-                                    //Get the array position of the player's character:
-                                    var playerCharacterArrayPosition = charactersInZoneIDs.indexOf(characterID);
+                                    var playerTemplate = namesInZone.map(playerName => {
 
-                                    if (playerCharacterArrayPosition > -1) {
-                                        charactersInZoneIDs.splice(playerCharacterArrayPosition, 1);
-                                    }
+                                        return {
+                                            "name": "playerName",
+                                            "text": playerName,
+                                            "style": "default",
+                                            "type": "button",
+                                            "value": playerName
+                                        }
+                                    });
 
-                                    var namesInZone = charactersInZoneIDs.map(charID => {
-                                        return charactersInZone[charID].name;
-                                    });*/
+                                    responseTemplate.attachments[0].actions = playerTemplate;
 
-                                    console.log('Imported playerCharacter function: ', JSON.stringify(getCharacters));
+                                    resolve(responseTemplate);
 
-                                    getCharacters.excludePlayerCharacter(characterDetails.zone_id, characterID)
-                                        .then( namesInZone =>{
-
-                                            console.log('namesInZones: ', JSON.stringify(namesInZone));
-
-                                            var playerTemplate = namesInZone.map(playerName => {
-
-                                                return {
-                                                    "name": "playerName",
-                                                    "text": playerName,
-                                                    "style": "default",
-                                                    "type": "button",
-                                                    "value": playerName
-                                                }
-                                            });
-
-                                            responseTemplate.attachments[0].actions = playerTemplate;
-
-                                            resolve(responseTemplate);
-
-                                        });
-                                //});
+                                });
                         } else {
 
                             var characterAction = characterDetails.actions.find( singleAction =>{
