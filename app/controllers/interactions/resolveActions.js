@@ -257,7 +257,7 @@ exports.resolveActions = (zoneID) => {
                                                                 iterationIndex++;
 
                                                                return new Promise((resolve, reject)=>{
-                                                                   firebase.update(('character/' + characterID + '/' + iterationIndex), singleActionUpdate)
+                                                                   firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
                                                                        .then( () => {
                                                                             resolve();
                                                                        });
