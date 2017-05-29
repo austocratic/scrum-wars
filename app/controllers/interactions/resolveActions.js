@@ -290,6 +290,8 @@ exports.resolveActions = (zoneID) => {
                                     firebase.create('match', newMatchDetails)
                                         .then( newMatchID =>{
 
+                                            console.log('newMatchID: ', newMatchID);
+
                                             //TODO: need to dynamically generate the next match start
                                             var nextMatchStart = 1496098800;
 
