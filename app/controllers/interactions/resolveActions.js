@@ -253,13 +253,13 @@ exports.resolveActions = (zoneID) => {
                                                             var characterActionUpdatePromises = characterActions.map( singleAction => {
 
                                                                 console.log('Iterating characters actions, singleAction: ', singleAction);
-
-                                                                iterationIndex++;
-
+                                                                
                                                                return new Promise((resolve, reject)=>{
                                                                    firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
                                                                        .then( () => {
-                                                                            resolve();
+
+                                                                           iterationIndex++;
+                                                                           resolve();
                                                                        });
                                                                })
                                                             });
