@@ -217,7 +217,7 @@ exports.resolveActions = (zoneID) => {
                             var travelAlert = new Slack(travelAlertDetails);
 
                             //Send alert to slack
-                            travelAlert.sendToSlack(this.params)
+                            travelAlert.sendToSlack(travelAlert.params)
                                 .then(() =>{
                                     console.log('Successfully posted to slack')
                                 })
