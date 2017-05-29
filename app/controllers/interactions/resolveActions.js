@@ -344,7 +344,7 @@ exports.resolveActions = (zoneID) => {
                         
                         var unixTime = (Date.now() / 1000);
 
-                        console.log('Current time stamp: ', timeInMs);
+                        console.log('Current time stamp: ', unixTime);
 
                         //Compare the current time to the start time
                         if (unixTime >= currentMatch.next_match_start) {
