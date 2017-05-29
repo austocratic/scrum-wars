@@ -229,6 +229,7 @@ exports.resolveActions = (zoneID) => {
                                                 "turn_action_used": 0
                                             };
 
+                                            //TODO pull out the reset character's actions functionality into a stand alone actions class
                                             //Iterate through characterID array resetting turn_action_used
                                             var characterUpdatePromises = characterIDs.map( characterID =>{
 
@@ -253,15 +254,15 @@ exports.resolveActions = (zoneID) => {
                                                             var characterActionUpdatePromises = characterActions.map( singleAction => {
 
                                                                 console.log('Iterating characters actions, singleAction: ', singleAction);
-                                                                
-                                                               return new Promise((resolve, reject)=>{
+
+                                                                return new Promise((resolve, reject)=>{
                                                                    firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
                                                                        .then( () => {
-
+                                                                           console.log('Updated action: ', ('character/' + characterID + '/actions/' + iterationIndex));
                                                                            iterationIndex++;
                                                                            resolve();
                                                                        });
-                                                               })
+                                                                })
                                                             });
 
                                                             Promise.all(characterActionUpdatePromises)
