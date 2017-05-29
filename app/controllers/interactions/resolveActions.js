@@ -164,6 +164,9 @@ exports.resolveActions = (zoneID) => {
     }
 
     function isMatchStarted(){
+
+        console.log('called isMatchStarted');
+
         return new Promise((resolve, reject)=>{
             firebase.get('global_state/match_id')
                 .then(matchID => {
@@ -240,6 +243,8 @@ exports.resolveActions = (zoneID) => {
 
     function checkForMatchStartOrWin(matchID){
 
+        console.log('called checkForMatchStartOrWin');
+
         return new Promise((resolve, reject)=>{
 
             //Ensure that the current match has started
@@ -288,16 +293,16 @@ exports.resolveActions = (zoneID) => {
 
                                     //Create a new match
                                     firebase.create('match', newMatchDetails)
-                                        .then( newMatchID =>{
+                                        .then( newMatch =>{
 
-                                            console.log('newMatchID: ', newMatchID);
+                                            console.log('newMatchID: ', newMatch);
 
                                             //TODO: need to dynamically generate the next match start
                                             var nextMatchStart = 1496098800;
 
                                             //Update the global state to the new match ID
                                             var matchUpdates = {
-                                                "match_id": newMatchID,
+                                                "match_id": newMatch.name,
                                                 "next_match_start": nextMatchStart
                                             };
 
