@@ -7,7 +7,7 @@ var actionCoolDown = require('../../slackTemplates/actionCoolDown').actionCoolDo
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
-var getCharacters = require('../../components/zone/moveCharacter');
+var getCharacters = require('../../components/zone/moveCharacter').getCharacters;
 
 exports.playerActionSelection = payload => {
 
