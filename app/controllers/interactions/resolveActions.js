@@ -189,47 +189,49 @@ exports.resolveActions = (zoneID) => {
 
             console.log('trying to startMatch, zone ID passed: ', zoneID);
 
-            var charactersInZone = getCharacters.getIDsIncludePlayerCharacter(zoneID);
+            getCharacters.getIDsIncludePlayerCharacter(zoneID)
+                .then( charactersInZone =>{
 
-            console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
+                    console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
 
-            //Add a start date for the current match & charactersInZone array
-            var updates = {
-                "starting_character_ids": charactersInZone,
-                "date_started": startDate
-            };
+                    //Add a start date for the current match & charactersInZone array
+                    var updates = {
+                        "starting_character_ids": charactersInZone,
+                        "date_started": startDate
+                    };
 
-            //Update current matches properties
-            firebase.update(('match/' + currentMatchID), updates)
-                .then( () => {
+                    //Update current matches properties
+                    firebase.update(('match/' + currentMatchID), updates)
+                        .then( () => {
 
-                    //Get details of zone
-                    firebase.get('zone/' + zoneID)
-                        .then(zoneDetails => {
+                            //Get details of zone
+                            firebase.get('zone/' + zoneID)
+                                .then(zoneDetails => {
 
-                            //Send a message to the channel announcing that the match has started
-                            var travelAlertDetails = {
-                                "username": "A mysterious voice",
-                                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                "channel": ("#" + zoneDetails.channel),
-                                "text": "The crowd roars as the match begins!"
-                            };
+                                    //Send a message to the channel announcing that the match has started
+                                    var travelAlertDetails = {
+                                        "username": "A mysterious voice",
+                                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                        "channel": ("#" + zoneDetails.channel),
+                                        "text": "The crowd roars as the match begins!"
+                                    };
 
-                            //Create a new slack alert object
-                            var travelAlert = new Slack(travelAlertDetails);
+                                    //Create a new slack alert object
+                                    var travelAlert = new Slack(travelAlertDetails);
 
-                            //Send alert to slack
-                            travelAlert.sendToSlack(travelAlert.params)
-                                .then(() =>{
-                                    console.log('Successfully posted to slack')
-                                })
-                                .catch(error =>{
-                                    console.log('Error when sending to slack: ', error)
+                                    //Send alert to slack
+                                    travelAlert.sendToSlack(travelAlert.params)
+                                        .then(() =>{
+                                            console.log('Successfully posted to slack')
+                                        })
+                                        .catch(error =>{
+                                            console.log('Error when sending to slack: ', error)
+                                        });
                                 });
-                        });
 
-                    //Resolve the promise regardless if it posted to slack
-                    resolve();
+                            //Resolve the promise regardless if it posted to slack
+                            resolve();
+                        });
                 });
         })
     }
