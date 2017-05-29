@@ -129,24 +129,27 @@ exports.playerActionSelection = payload => {
 
                                     console.log('Imported playerCharacter function: ', JSON.stringify(getCharacters));
 
-                                    var namesInZone = getCharacters.excludePlayerCharacter(characterDetails.zone_id, characterID);
-                                    
+                                    getCharacters.excludePlayerCharacter(characterDetails.zone_id, characterID)
+                                        .then( namesInZone =>{
 
-                                    var playerTemplate = namesInZone.map(playerName => {
+                                            console.log('namesInZones: ', JSON.stringify(namesInZone));
 
-                                        return {
-                                            "name": "playerName",
-                                            "text": playerName,
-                                            "style": "default",
-                                            "type": "button",
-                                            "value": playerName
-                                        }
-                                    });
+                                            var playerTemplate = namesInZone.map(playerName => {
 
-                                    responseTemplate.attachments[0].actions = playerTemplate;
+                                                return {
+                                                    "name": "playerName",
+                                                    "text": playerName,
+                                                    "style": "default",
+                                                    "type": "button",
+                                                    "value": playerName
+                                                }
+                                            });
 
-                                    resolve(responseTemplate);
+                                            responseTemplate.attachments[0].actions = playerTemplate;
 
+                                            resolve(responseTemplate);
+
+                                        });
                                 //});
                         } else {
 
