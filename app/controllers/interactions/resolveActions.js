@@ -68,43 +68,58 @@ exports.resolveActions = (zoneID) => {
 
         return new Promise((resolve, reject) => {
 
-            deadCharacters.forEach( singleDeadCharacterID =>{
+            if (deadCharacters.length > 0){
 
-                //Get the details of the zone
-                firebase.get('zone/' + zoneID)
-                    .then(zoneDetails => {
+                var deadCharactersPromises = deadCharacters.map( singleDeadCharacterID =>{
 
-                        //Get the details of the dead character
-                        firebase.get('character/' + singleDeadCharacterID)
-                            .then(characterDetails => {
+                    //Get the details of the zone
+                    return new Promise((resolve, reject)=>{
+                        firebase.get('zone/' + zoneID)
+                            .then(zoneDetails => {
 
-                                //Send slack alert that player was defeated
-                                var alertDetails = {
-                                    "username": "A mysterious voice",
-                                    "icon_url": "https://s-media-cache-ak0.pinimg.com/736x/d8/59/10/d859102236d09cf470a41e4b6974b79a.jpg",
-                                    "channel": ("#" + zoneDetails.channel),
-                                    "text": characterDetails.name + " has been defeated!"
-                                };
+                                //Get the details of the dead character
+                                firebase.get('character/' + singleDeadCharacterID)
+                                    .then(characterDetails => {
 
-                                //Create a new slack alert object
-                                var channelAlert = new Slack(alertDetails);
+                                        //Send slack alert that player was defeated
+                                        var alertDetails = {
+                                            "username": "A mysterious voice",
+                                            "icon_url": "https://s-media-cache-ak0.pinimg.com/736x/d8/59/10/d859102236d09cf470a41e4b6974b79a.jpg",
+                                            "channel": ("#" + zoneDetails.channel),
+                                            "text": characterDetails.name + " has been defeated!"
+                                        };
 
-                                //Send alert to slack
-                                channelAlert.sendToSlack(channelAlert.params)
-                                    .then(() =>{
-                                        console.log('Successfully posted to slack')
-                                    })
-                                    .catch(error =>{
-                                        console.log('Error when sending to slack: ', error)
+                                        //Create a new slack alert object
+                                        var channelAlert = new Slack(alertDetails);
+
+                                        //Send alert to slack
+                                        channelAlert.sendToSlack(channelAlert.params)
+                                            .then(() =>{
+                                                console.log('Successfully posted to slack')
+                                            })
+                                            .catch(error =>{
+                                                console.log('Error when sending to slack: ', error)
+                                            });
+
+                                        //TODO hard coded the town ID
+                                        moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
+                                            .then(()=>{
+                                                resolve();
+                                            });
                                     });
-
-                                //TODO hard coded the town ID
-                                moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails);
-
-                                resolve();
                             });
-                    });
-            });
+                    })
+                });
+
+                Promise.all(deadCharactersPromises)
+                    .then(()=>{
+                        resolve();
+                })
+
+            } else {
+                //No dead characters, resolve
+                resolve()
+            }
         });
     }
 
@@ -228,6 +243,8 @@ exports.resolveActions = (zoneID) => {
                 getCharacters.getIDsIncludePlayerCharacter(zoneID)
                     .then( livingCharacters =>{
 
+                        console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(livingCharacters));
+
                         //If there is only one character left, match is won by that character!
                         if (livingCharacters.length === 1){
 
@@ -308,6 +325,9 @@ exports.resolveActions = (zoneID) => {
                                                 });
                                         });
                                 });
+                        } else {
+                            //More characters are alive than 1, resolve
+                            resolve()
                         }
                     });
 
