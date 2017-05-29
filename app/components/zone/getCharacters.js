@@ -61,4 +61,7 @@ var getCharacters = {
     }
 };
 
-exports.getCharacters = getCharacters;
+exports.getCharacters = {
+    includePlayerCharacter: getCharacters.includePlayerCharacter,
+    excludePlayerCharacter: getCharacters.excludePlayerCharacter
+};
