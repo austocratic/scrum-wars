@@ -255,6 +255,9 @@ exports.resolveActions = (zoneID) => {
 
                                                                 console.log('Iterating characters actions, singleAction: ', singleAction);
 
+                                                                //TODO for some reason this is not updating every action even though log shows it getting updated
+                                                                //Maybe the way that array values are returned (end up in a different order, so certain actions are getting updated twice
+
                                                                 return new Promise((resolve, reject)=>{
                                                                    firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
                                                                        .then( updateResponse => {
@@ -334,6 +337,23 @@ exports.resolveActions = (zoneID) => {
                                 if (livingCharacters.length === 1){
 
                                     var matchWinnerID = livingCharacters[0];
+
+                                    //Get details of the winning character
+                                    firebase.get('character/' + matchWinnerID)
+                                        .then(characterDetails => {
+
+                                            var matchWins = characterDetails.match_wins;
+
+                                            matchWins++;
+
+                                            //Define the properties to add to character
+                                            var characterUpdates = {
+                                                "match_wins": matchWins
+                                            };
+
+                                            //Now update the character with new properties
+                                            firebase.update('character/' + matchWinnerID, characterUpdates)
+                                        });
 
                                     //Update match winner to that character
                                     var tableRef = 'match/' + matchID;
