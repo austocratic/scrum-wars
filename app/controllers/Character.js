@@ -56,7 +56,3 @@ module.exports = {
 };*/
 
 //more changes
-
-exports.testFunctionCharacter = () => {
-    
-};
