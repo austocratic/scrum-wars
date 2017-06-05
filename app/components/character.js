@@ -4,6 +4,7 @@ var Firebase = require('../libraries/firebase').Firebase;
 
 var firebase = new Firebase();
 
+/*
 class Character{
     constructor(){}
 
@@ -46,10 +47,16 @@ class Character{
         })
     }*/
 
-}
+//}
 
 
-
+/*
 module.exports = {
     Character: Character
+};*/
+
+//more changes
+
+exports.testFunctionCharacter = () => {
+    
 };
