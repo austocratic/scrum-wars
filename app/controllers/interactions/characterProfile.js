@@ -3,7 +3,7 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var characterProfile = require('../../slackTemplates/characterProfile').characterProfile;
 
-var Character = require('../Character');
+var Character = require('../Character').Character;
 
 exports.characterProfile = payload => {
 
