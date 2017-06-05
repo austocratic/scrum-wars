@@ -41,11 +41,57 @@ exports.characterProfile = payload => {
                 console.log('error when calling setByProperty:', err);
             });
 
-        /*
         console.log('Set the properties');
         
         console.log('Set character, character name: ', localCharacter.name);
-        
+
+        //Array of stat keys
+        var statKeys = Object.keys(localCharacter);
+
+        template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localCharacter.class_id + ".jpg";
+
+        //Iterate through the stat keys
+        template.attachments[1].fields = statKeys.map( key =>{
+
+            return {
+                "title": key,
+                "value": localCharacter[key],
+                "short": true
+            };
+        });
+
+        //Interactive portion of profile menu
+        template.attachments[2] = {
+
+            "callback_id": "profileOptionSelection",
+            "fallback": "Unable to load inventory buttons",
+            "actions": [{
+                "name": "inventory",
+                "text": "Inventory",
+                "style": "default",
+                "type": "button",
+                "value": "inventory"
+            },
+                {
+                    "name": "equipment",
+                    "text": "Equipped Items",
+                    "style": "default",
+                    "type": "button",
+                    "value": "equipment"
+                }]
+        };
+
+        console.log('Final template: ', JSON.stringify(template));
+
+        resolve(template);
+
+    });
+
+
+
+
+
+        /*
         //Use Slack user ID to lookup the user's character
         firebase.get('character', 'user_id', userID)
             .then( character => {
@@ -96,6 +142,5 @@ exports.characterProfile = payload => {
                     resolve(template);
 
             });
-        */
-    })
+    })*/
 };
