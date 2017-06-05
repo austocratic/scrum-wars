@@ -36,8 +36,12 @@ exports.characterProfile = payload => {
 
         console.log('localCharacter: ', JSON.stringify(localCharacter));
         
-        localCharacter.setByProperty('user_id', userID);
+        localCharacter.setByProperty('user_id', userID)
+            .catch(err=>{
+                console.log('error when calling setByProperty:', err);
+            });
 
+        /*
         console.log('Set the properties');
         
         console.log('Set character, character name: ', localCharacter.name);
@@ -92,5 +96,6 @@ exports.characterProfile = payload => {
                     resolve(template);
 
             });
+        */
     })
 };
