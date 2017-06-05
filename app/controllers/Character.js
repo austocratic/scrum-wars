@@ -9,23 +9,29 @@ class Character{
     constructor(){}
 
     setByProperty(characterProperty, lookupID){
-        //Use Slack user ID to lookup the user's character
-        firebase.get('character', characterProperty, lookupID)
-            .then( character => {
+        return new Promise((resolve, reject)=> {
+            //Use Slack user ID to lookup the user's character
+            firebase.get('character', characterProperty, lookupID)
+                .then(character => {
 
-                //Convert the returned object into array of character IDs.  This works since the query only returns one result
-                var characterID = Object.keys(character)[0];
+                    console.log('character from setByProperty: ', character);
 
-                var characterStats = character[characterID];
+                    //Convert the returned object into array of character IDs.  This works since the query only returns one result
+                    var characterID = Object.keys(character)[0];
 
-                console.log('characterStats: ', JSON.stringify(characterStats));
+                    var characterStats = character[characterID];
 
-                //TODO see if this works
-                Object.assign(this, characterStats);
+                    console.log('characterStats: ', JSON.stringify(characterStats));
 
-                console.log('this properties: ', JSON.stringify(this));
+                    //TODO see if this works
+                    Object.assign(this, characterStats);
 
-            })
+                    console.log('this properties: ', JSON.stringify(this));
+
+                    resolve();
+
+                })
+        });
     }
 
 
