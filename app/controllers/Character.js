@@ -9,6 +9,9 @@ class Character{
     constructor(){}
 
     setByProperty(characterProperty, lookupID){
+        
+        console.log('Called setByProperty: ', characterProperty);
+        console.log('Called lookupID: ', lookupID);
         return new Promise((resolve, reject)=> {
             //Use Slack user ID to lookup the user's character
             firebase.get('character', characterProperty, lookupID)
