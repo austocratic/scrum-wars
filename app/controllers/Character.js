@@ -20,11 +20,7 @@ class Character{
                     //Convert the returned object into array of character IDs.  This works since the query only returns one result
                     var characterID = Object.keys(character)[0];
 
-                    var characterStats = character[characterID];
-                    
-                    //Object.assign(this.props, characterStats);
-
-                    this.props = characterStats;
+                    this.props = character[characterID];
 
                     resolve();
 

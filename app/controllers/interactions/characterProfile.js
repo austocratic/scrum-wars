@@ -47,7 +47,7 @@ exports.characterProfile = payload => {
                 template.attachments[1].fields = statKeys.map( key =>{
                     return {
                         "title": key,
-                        "value": localCharacter[key],
+                        "value": localCharacter.props[key],
                         "short": true
                     };
                 });
@@ -64,13 +64,13 @@ exports.characterProfile = payload => {
                         "type": "button",
                         "value": "inventory"
                     },
-                        {
-                            "name": "equipment",
-                            "text": "Equipped Items",
-                            "style": "default",
-                            "type": "button",
-                            "value": "equipment"
-                        }]
+                    {
+                        "name": "equipment",
+                        "text": "Equipped Items",
+                        "style": "default",
+                        "type": "button",
+                        "value": "equipment"
+                    }]
                 };
 
                 console.log('Final template: ', JSON.stringify(template));
@@ -82,11 +82,6 @@ exports.characterProfile = payload => {
             .catch(err=>{
                 console.log('error when calling setByProperty:', err);
             });
-
-
-
-
-
 
 
         /*
