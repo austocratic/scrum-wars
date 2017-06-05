@@ -18,11 +18,16 @@ class Character{
 
                 var characterStats = character[characterID];
 
+                console.log('characterStats: ', JSON.stringify(characterStats));
+
                 //TODO see if this works
-                Object.assign(this, characterStats)
+                Object.assign(this, characterStats);
+
+                console.log('this properties: ', JSON.stringify(this));
 
             })
     }
+
 
     /*
     setByID(){
