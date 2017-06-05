@@ -3,6 +3,8 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var characterProfile = require('../../slackTemplates/characterProfile').characterProfile;
 
+var Character = require('../../components/Character.js');
+
 exports.characterProfile = payload => {
 
     return new Promise( (resolve, reject) => {
@@ -30,6 +32,14 @@ exports.characterProfile = payload => {
 
         console.log('characterProfile userID: ', userID);
 
+        var localCharacter = new Character();
+        
+        localCharacter.setByProperty('user_id', userID);
+
+        console.log('Set the properties');
+        
+        console.log('Set character, character name: ', localCharacter.name);
+        
         //Use Slack user ID to lookup the user's character
         firebase.get('character', 'user_id', userID)
             .then( character => {
