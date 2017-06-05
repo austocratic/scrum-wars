@@ -33,6 +33,8 @@ exports.characterProfile = payload => {
         console.log('characterProfile userID: ', userID);
 
         var localCharacter = new Character();
+
+        console.log('localCharacter: ', JSON.stringify(localCharacter));
         
         localCharacter.setByProperty('user_id', userID);
 
