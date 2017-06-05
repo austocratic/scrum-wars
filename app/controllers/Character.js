@@ -22,7 +22,9 @@ class Character{
 
                     var characterStats = character[characterID];
                     
-                    Object.assign(this, characterStats);
+                    //Object.assign(this.props, characterStats);
+
+                    this.props = characterStats;
 
                     resolve();
 
