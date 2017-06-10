@@ -168,35 +168,7 @@ exports.resolveActions = (zoneID) => {
         });
     }
 
-    //Look up the matche's started property
     /*
-    function isMatchStarted(){
-
-        console.log('called isMatchStarted');
-
-        return new Promise((resolve, reject)=>{
-            firebase.get('global_state/match_id')
-                .then(matchID => {
-                    //Get the details of that match
-                    firebase.get('match/' + matchID)
-                        .then(matchDetails => {
-
-                            //The current match will not have a start date == 0 the match officially starts - it will have a date time stamp
-                            var matchStart = matchDetails.date_started;
-
-                            console.log('matchStart property from isMatchStarted(): ', matchStart);
-
-                            //If match has not started, matchStart === 0
-                            if (matchStart === 0){
-                                resolve(false)
-                            } else {
-                                resolve(true)
-                            }
-                        });
-                });
-        })
-    }*/
-
     function startMatch(currentMatchID, startDate){
 
         return new Promise((resolve, reject)=>{
@@ -318,7 +290,7 @@ exports.resolveActions = (zoneID) => {
                         });
                 });
         })
-    }
+    }*/
 
     function checkForMatchStartOrWin(matchID){
 
@@ -474,7 +446,11 @@ exports.resolveActions = (zoneID) => {
 
                                     console.log('Current time > next_match_start, start the match!');
                                     //Start the match!
-                                    startMatch(currentMatch.match_id, unixTime)
+                                    var localMatch = new Match();
+
+                                    localMatch.startCurrent(currentMatch.match_id, unixTime, zoneID)
+                                    
+                                    //startMatch(currentMatch.match_id, unixTime, zoneID)
                                         .then(()=>{
                                             resolve();
                                         })

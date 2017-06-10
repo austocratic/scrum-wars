@@ -27,17 +27,23 @@ class Character{
                 })
         });
     }
-
-
-    /*
-    setByID(){
-        //Get details of the winning character
-        firebase.get('character/' + this.id)
+    
+    setByID(characterID){
+        //Get details of the character
+        firebase.get('character/' + characterID)
             .then(characterDetails => {
                 //TODO see if this works
                 Object.assign(this, characterDetails)
             });
-    }*/
+    }
+
+    resetAllActions(){
+
+
+        
+    }
+
+
 
     /*
     resetHealth(){
@@ -51,7 +57,6 @@ class Character{
                 });
         })
     }*/
-
 }
 
 
