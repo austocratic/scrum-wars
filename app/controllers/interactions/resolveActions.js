@@ -3,11 +3,17 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
 
+//var Character = require('../../components/Character.js');
+
+var Match = require('../Match').Match;
+
 var getCharacters = require('../../components/zone/getCharacters').getCharacters;
 
 
 exports.resolveActions = (zoneID) => {
     
+    //var testCharacter = new Character;
+
     var firebase = new Firebase();
     
     return new Promise((resolve, reject) => {
@@ -26,7 +32,6 @@ exports.resolveActions = (zoneID) => {
                                     .then(()=>{
                                         resolve();
                                     })
-
                             });
                     })
             });
@@ -163,6 +168,8 @@ exports.resolveActions = (zoneID) => {
         });
     }
 
+    //Look up the matche's started property
+    /*
     function isMatchStarted(){
 
         console.log('called isMatchStarted');
@@ -188,7 +195,7 @@ exports.resolveActions = (zoneID) => {
                         });
                 });
         })
-    }
+    }*/
 
     function startMatch(currentMatchID, startDate){
 
@@ -319,8 +326,11 @@ exports.resolveActions = (zoneID) => {
 
         return new Promise((resolve, reject)=>{
 
+            var localMatch = new Match();
+            
+            localMatch.isStarted()
             //Ensure that the current match has started
-            isMatchStarted()
+            //isMatchStarted()
                 .then( isStarted =>{
 
                     console.log('isMatchStarted? ', isStarted);
