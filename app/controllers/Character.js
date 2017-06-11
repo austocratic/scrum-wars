@@ -66,16 +66,14 @@ class Character{
 
                         var iterationIndex = 0;
 
-                        console.log('About to iterate characters actions: ', this.characterID);
-
                         var characterActionUpdatePromises = this.props.actions.map( singleAction => {
 
                             console.log('Iterating characters actions, singleAction: ', singleAction);
 
-                            //TODO for some reason this is not updating every action even though log shows it getting updated
-                            //Maybe the way that array values are returned (end up in a different order, so certain actions are getting updated twice
-
                             return new Promise((resolve, reject)=>{
+
+                                console.log('Updating character: ', ('character/' + this.characterID + '/actions/' + iterationIndex));
+
                                 firebase.update(('character/' + this.characterID + '/actions/' + iterationIndex), singleActionUpdate)
                                     .then( updateResponse => {
                                         console.log('Updated action: ', ('character/' + this.characterID + '/actions/' + iterationIndex));
