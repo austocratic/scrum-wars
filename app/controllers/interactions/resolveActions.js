@@ -112,8 +112,6 @@ exports.resolveActions = (zoneID) => {
                                         localCharacter.setByID()
                                             .then(()=>{
                                                 localCharacter.moveZone("-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
-
-                                                //moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
                                                     .then(()=>{
                                                         resolve();
                                                     });
@@ -134,47 +132,6 @@ exports.resolveActions = (zoneID) => {
             }
         });
     }
-
-    /*
-    function moveCharacter(characterID, characterDetails, destinationID, zoneDetails){
-
-        return new Promise((resolve, reject) => {
-
-            //Create a table reference to be used for locating the character
-            var tableRef = 'character/' + characterID;
-
-            //Define the properties to add to character
-            var updates = {
-                "zone_id": destinationID
-            };
-
-            //Now update the character with new properties
-            firebase.update(tableRef, updates)
-                .then( () => {
-                    resolve();
-                });
-
-            //Send slack alert that player was defeated
-            var alertDetails = {
-                "username": "A mysterious voice",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                "channel": ("#" + zoneDetails.channel),
-                "text": characterDetails.name + " has left " + zoneDetails.name
-            };
-
-            //Create a new slack alert object
-            var channelAlert = new Slack(alertDetails);
-
-            //Send alert to slack
-            channelAlert.sendToSlack(channelAlert.params)
-                .then(() =>{
-                    console.log('Successfully posted to slack')
-                })
-                .catch(error =>{
-                    console.log('Error when sending to slack: ', error)
-                });
-        });
-    }*/
 
     function checkForMatchStartOrWin(matchID){
 

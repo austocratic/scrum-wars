@@ -14,10 +14,8 @@ class FirebaseBaseController {
 
         return new Promise((resolve, reject)=> {
             firebase.get(this.firebaseType, property, lookupID)
-            //firebase.get('character', characterProperty, lookupID)
                 .then(firebaseReturn => {
-
-                    console.log('Called setByProperty, value returned: ', firebaseReturn);
+                    
                     //Convert the returned object into array of IDs.  This works since the query only returns one result
                     //TODO need to add a way for it to verify only one result (could return multiple results)
                     var id = Object.keys(firebaseReturn)[0];
@@ -30,7 +28,6 @@ class FirebaseBaseController {
     setByID(id){
         return new Promise((resolve, reject)=>{
             firebase.get(this.firebaseType + '/' + id)
-            //firebase.get('character/' + this.characterID)
                 .then(firebaseReturn => {
 
                     this.props = firebaseReturn;
