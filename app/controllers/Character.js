@@ -66,6 +66,8 @@ class Character{
 
                         var iterationIndex = 0;
 
+                        console.log('About to iterate actions, props: ', this.props);
+
                         var characterActionUpdatePromises = this.props.actions.map( singleAction => {
 
                             console.log('Iterating characters actions, singleAction: ', singleAction);
