@@ -183,13 +183,11 @@ exports.resolveActions = (zoneID) => {
 
                     var localZone = new Zone();
 
-                        if (isStarted) {
+                        //Returns array of character IDs
+                        localZone.getCharacterIDsIncludePlayer(zoneID)
+                            .then( characterIDs =>{
 
-                            //Returns array of character IDs
-                            localZone.getCharacterIDsIncludePlayer(zoneID)
-                                .then( characterIDs =>{
-
-
+                            if (isStarted) {
                             console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(characterIDs));
 
                             //If there is only one character left, match is won by that character!
@@ -301,7 +299,7 @@ exports.resolveActions = (zoneID) => {
                                 //More characters are alive than 1, resolve
                                 resolve()
                             }
-                            })
+
 
                         } else {
                             console.log('Hit else statement, current match has not started');
@@ -336,16 +334,18 @@ exports.resolveActions = (zoneID) => {
 
                                                     console.log('Iterating through characterIDs, characterID: ', characterID);
 
-                                                    //Create a local character, set it's properties then reset its actions
-                                                    var localCharacter = new Character(characterID);
-                                                    localCharacter.setByID()
-                                                        .then(()=> {
-                                                            //Now that localCharacters properties are set, reset the actions
-                                                            localCharacter.resetActions()
-                                                                .then(()=> {
-                                                                    resolve();
-                                                                })
-                                                        })
+                                                    return new Promise((resolve, reject)=>{
+                                                        //Create a local character, set it's properties then reset its actions
+                                                        var localCharacter = new Character(characterID);
+                                                        localCharacter.setByID()
+                                                            .then(()=> {
+                                                                //Now that localCharacters properties are set, reset the actions
+                                                                localCharacter.resetActions()
+                                                                    .then(()=> {
+                                                                        resolve();
+                                                                    })
+                                                            })
+                                                    });
                                                 });
 
                                                 Promise.all(characterUpdatePromises)
@@ -367,6 +367,7 @@ exports.resolveActions = (zoneID) => {
                                     }
                                 });
                         }
+                    })
 
                 });
         });
