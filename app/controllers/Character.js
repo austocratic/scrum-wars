@@ -2,6 +2,7 @@
 
 var Firebase = require('../libraries/firebase').Firebase;
 var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
+var Slack = require('../libraries/slack').Alert;
 
 var firebase = new Firebase();
 
