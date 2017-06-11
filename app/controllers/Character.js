@@ -1,12 +1,12 @@
 'use strict';
 
 var Firebase = require('../libraries/firebase').Firebase;
-var FirebaseController = require('./FirebaseController').FirebaseController;
+var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
 var firebase = new Firebase();
 
 
-class Character extends FirebaseController{
+class Character extends FirebaseBaseController{
     constructor(){
         super();
         console.log('Called Character constructor');
