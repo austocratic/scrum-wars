@@ -13,10 +13,11 @@ class FirebaseBaseController {
     setByProperty(property, lookupID){
 
         return new Promise((resolve, reject)=> {
-            firebase.get(this.fbType, property, lookupID)
+            firebase.get(this.firebaseType, property, lookupID)
             //firebase.get('character', characterProperty, lookupID)
                 .then(firebaseReturn => {
 
+                    console.log('Called setByProperty, value returned: ', firebaseReturn);
                     //Convert the returned object into array of IDs.  This works since the query only returns one result
                     //TODO need to add a way for it to verify only one result (could return multiple results)
                     var id = Object.keys(firebaseReturn)[0];
@@ -25,11 +26,10 @@ class FirebaseBaseController {
                 })
         });
     }
-
-
+    
     setByID(id){
         return new Promise((resolve, reject)=>{
-            firebase.get(this.fbType + '/' + id)
+            firebase.get(this.firebaseType + '/' + id)
             //firebase.get('character/' + this.characterID)
                 .then(firebaseReturn => {
 
@@ -39,6 +39,26 @@ class FirebaseBaseController {
                 });
         })
     }
+    
+    updateProperty(propertyToUpdate, newValue){
+        return new Promise((resolve, reject)=>{
+            //Build a table reference to be used for query
+            var tableRef = this.firebaseType + '/' + this.props.id;
+
+            //Define the properties to add to character
+            var updates = {
+                [propertyToUpdate]: newValue
+            };
+
+            //Now update the character with new properties
+            firebase.update(tableRef, updates)
+                .then( () => {
+                    resolve();
+                });
+        })
+    }
+    
+    
 }
 
 module.exports = {
