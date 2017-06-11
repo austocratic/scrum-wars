@@ -107,9 +107,9 @@ exports.resolveActions = (zoneID) => {
                                             });
                                         
                                         //TODO hard coded the town ID
-                                        var localCharacter = new Character(singleDeadCharacterID);
+                                        var localCharacter = new Character();
                                         
-                                        localCharacter.setByID()
+                                        localCharacter.setByID(singleDeadCharacterID)
                                             .then(()=>{
                                                 localCharacter.moveZone("-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
                                                     .then(()=>{

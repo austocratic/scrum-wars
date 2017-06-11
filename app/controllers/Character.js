@@ -85,6 +85,8 @@ class Character extends FirebaseBaseController{
                         .catch(error =>{
                             console.log('Error when sending to slack: ', error)
                         });
+
+                    resolve();
                 });
 
 
