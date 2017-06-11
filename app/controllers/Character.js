@@ -31,9 +31,15 @@ class Character{
     }
     
     setByID(){
+
+        console.log('Called setbyID, this.characterID: ', this.characterID);
+
         //Get details of the character
         firebase.get('character/' + this.characterID)
             .then(characterDetails => {
+
+                console.log('Got character details: ', characterDetails);
+
                 this.props = characterDetails;
             });
     }
