@@ -105,12 +105,19 @@ exports.resolveActions = (zoneID) => {
                                             .catch(error =>{
                                                 console.log('Error when sending to slack: ', error)
                                             });
-
+                                        
                                         //TODO hard coded the town ID
-                                        moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
+                                        var localCharacter = new Character(singleDeadCharacterID);
+                                        
+                                        localCharacter.setByID()
                                             .then(()=>{
-                                                resolve();
-                                            });
+                                                localCharacter.moveZone("-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
+
+                                                //moveCharacter(singleDeadCharacterID, characterDetails, "-Khu9Zazk5XdFX9fD2Y8", zoneDetails)
+                                                    .then(()=>{
+                                                        resolve();
+                                                    });
+                                            })
                                     });
                             });
                     })
@@ -128,6 +135,7 @@ exports.resolveActions = (zoneID) => {
         });
     }
 
+    /*
     function moveCharacter(characterID, characterDetails, destinationID, zoneDetails){
 
         return new Promise((resolve, reject) => {
@@ -166,7 +174,7 @@ exports.resolveActions = (zoneID) => {
                     console.log('Error when sending to slack: ', error)
                 });
         });
-    }
+    }*/
 
     function checkForMatchStartOrWin(matchID){
 

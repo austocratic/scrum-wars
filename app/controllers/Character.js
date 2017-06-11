@@ -1,45 +1,17 @@
 'use strict';
 
 var Firebase = require('../libraries/firebase').Firebase;
+var FirebaseController = require('./FirebaseController').FirebaseController;
 
 var firebase = new Firebase();
 
 
-class Character{
-    constructor(characterID){
-        this.characterID = characterID
-    }
-
-    setByProperty(characterProperty, lookupID){
-        
-        console.log('Called setByProperty: ', characterProperty);
-        console.log('Called lookupID: ', lookupID);
-        return new Promise((resolve, reject)=> {
-            //Use Slack user ID to lookup the user's character
-            firebase.get('character', characterProperty, lookupID)
-                .then(character => {
-
-                    //Convert the returned object into array of character IDs.  This works since the query only returns one result
-                    var characterID = Object.keys(character)[0];
-
-                    this.props = character[characterID];
-
-                    resolve();
-
-                })
-        });
-    }
-    
-    setByID(){
-        console.log('Called setbyID, this.characterID: ', this.characterID);
-        return new Promise((resolve, reject)=>{
-            //Get details of the character
-            firebase.get('character/' + this.characterID)
-                .then(characterDetails => {
-                    this.props = characterDetails;
-                    resolve()
-                });
-        })
+class Character extends FirebaseController{
+    constructor(){
+        super();
+        console.log('Called Character constructor');
+        //this.characterID = characterID
+        this.fbType = 'character'
     }
 
     //Characters properties need to be set before calling this function.  Use setByProperty() or setByID() first
@@ -90,8 +62,45 @@ class Character{
                     })
             })
     }
+    
+    moveZone(destinationID, zoneDetails){
+        return new Promise((resolve, reject) => {
 
+            //Create a table reference to be used for locating the character
+            var tableRef = 'character/' + this.characterID;
 
+            //Define the properties to add to character
+            var updates = {
+                "zone_id": destinationID
+            };
+
+            //Now update the character with new properties
+            firebase.update(tableRef, updates)
+                .then( () => {
+                    resolve();
+                });
+
+            //Send slack alert that player was defeated
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + zoneDetails.channel),
+                "text": this.props.name + " has left " + zoneDetails.name
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(channelAlert.params)
+                .then(() =>{
+                    console.log('Successfully posted to slack')
+                })
+                .catch(error =>{
+                    console.log('Error when sending to slack: ', error)
+                });
+        });
+    }
 
     /*
     resetHealth(){
