@@ -3,9 +3,9 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
 
-//var Character = require('../../components/Character.js');
-
+var Character = require('../Character').Character;
 var Match = require('../Match').Match;
+var Zone = require('../Zone').Zone;
 
 var getCharacters = require('../../components/zone/getCharacters').getCharacters;
 
@@ -168,130 +168,6 @@ exports.resolveActions = (zoneID) => {
         });
     }
 
-    /*
-    function startMatch(currentMatchID, startDate){
-
-        return new Promise((resolve, reject)=>{
-
-            console.log('trying to startMatch, zone ID passed: ', zoneID);
-
-            getCharacters.getIDsIncludePlayerCharacter(zoneID)
-                .then( charactersInZone =>{
-
-                    console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
-
-                    //Add a start date for the current match & charactersInZone array
-                    var updates = {
-                        "starting_character_ids": charactersInZone,
-                        "date_started": startDate
-                    };
-
-                    //Update current matches properties
-                    firebase.update(('match/' + currentMatchID), updates)
-                        .then( () => {
-
-                            console.log('Updated current match');
-
-                            //Get details of zone
-                            firebase.get('zone/' + zoneID)
-                                .then(zoneDetails => {
-
-                                    //Get all players (regardless of zone)
-                                    firebase.get('character')
-                                        .then(allCharacters => {
-
-                                            console.log('allCharacters: ', JSON.stringify(allCharacters));
-
-                                            var characterIDs = Object.keys(allCharacters);
-
-                                            var turnActionUsedUpdate = {
-                                                "turn_action_used": 0
-                                            };
-
-                                            //TODO pull out the reset character's actions functionality into a stand alone actions class
-                                            //Iterate through characterID array resetting turn_action_used
-                                            var characterUpdatePromises = characterIDs.map( characterID =>{
-
-                                                return new Promise((resolve, reject)=>{
-                                                    //Update that character
-                                                    firebase.update(('character/' + characterID), turnActionUsedUpdate)
-                                                        .then( () => {
-
-                                                            //Next get that player's actions.  These need to be reset
-                                                            var characterActions = allCharacters[characterID].actions;
-
-                                                            console.log('characterActions: ', JSON.stringify(characterActions));
-
-                                                            var singleActionUpdate = {
-                                                                "turn_used": 0
-                                                            };
-
-                                                            var iterationIndex = 0;
-
-                                                            console.log('About to iterate characters actions: ', characterID);
-
-                                                            var characterActionUpdatePromises = characterActions.map( singleAction => {
-
-                                                                console.log('Iterating characters actions, singleAction: ', singleAction);
-
-                                                                //TODO for some reason this is not updating every action even though log shows it getting updated
-                                                                //Maybe the way that array values are returned (end up in a different order, so certain actions are getting updated twice
-
-                                                                return new Promise((resolve, reject)=>{
-                                                                   firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
-                                                                       .then( updateResponse => {
-                                                                           console.log('Updated action: ', ('character/' + characterID + '/actions/' + iterationIndex));
-                                                                           console.log('updatedResponse: ', updateResponse);
-                                                                           iterationIndex++;
-                                                                           resolve();
-                                                                       });
-                                                                })
-                                                            });
-
-                                                            Promise.all(characterActionUpdatePromises)
-                                                                .then(()=>{
-                                                                    resolve();
-                                                                });
-                                                        })
-                                                })
-                                            });
-
-                                            //After all characters have been updated
-                                            Promise.all(characterUpdatePromises)
-                                                .then(()=>{
-                                                    resolve();
-                                                })
-                                        });
-
-
-                                    //Send a message to the channel announcing that the match has started
-                                    var alertDetails = {
-                                        "username": "A mysterious voice",
-                                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                        "channel": ("#" + zoneDetails.channel),
-                                        "text": "The crowd roars as the match begins!"
-                                    };
-
-                                    //Create a new slack alert object
-                                    var matchBeginsAlert = new Slack(alertDetails);
-
-                                    //Send alert to slack
-                                    matchBeginsAlert.sendToSlack(matchBeginsAlert.params)
-                                        .then(() =>{
-                                            console.log('Successfully posted to slack')
-                                        })
-                                        .catch(error =>{
-                                            console.log('Error when sending to slack: ', error)
-                                        });
-                                });
-
-                            //Resolve the promise regardless if it posted to slack
-                            resolve();
-                        });
-                });
-        })
-    }*/
-
     function checkForMatchStartOrWin(matchID){
 
         console.log('called checkForMatchStartOrWin');
@@ -300,25 +176,25 @@ exports.resolveActions = (zoneID) => {
 
             var localMatch = new Match();
             
+            //Check if the current match has started
             localMatch.isStarted()
-            //Ensure that the current match has started
-            //isMatchStarted()
                 .then( isStarted =>{
-
                     console.log('isMatchStarted? ', isStarted);
 
-                    if (isStarted) {
+                    var localZone = new Zone();
 
-                        //See what characters are currently in the zone.
-                        getCharacters.getIDsIncludePlayerCharacter(zoneID)
-                            .then( livingCharacters =>{
+                    //Returns array of character IDs
+                    localZone.getCharacterIDsIncludePlayer(zoneID)
+                        .then( characterIDs =>{
 
-                                console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(livingCharacters));
+                            if (isStarted) {
+
+                                console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(characterIDs));
 
                                 //If there is only one character left, match is won by that character!
-                                if (livingCharacters.length === 1){
+                                if (characterIDs.length === 1){
 
-                                    var matchWinnerID = livingCharacters[0];
+                                    var matchWinnerID = characterIDs[0];
 
                                     //Get details of the winning character
                                     firebase.get('character/' + matchWinnerID)
@@ -424,41 +300,57 @@ exports.resolveActions = (zoneID) => {
                                     //More characters are alive than 1, resolve
                                     resolve()
                                 }
-                            });
 
-                    } else {
-                        console.log('Hit else statement, current match has not started');
+                            } else {
+                                console.log('Hit else statement, current match has not started');
 
-                        //Lookup the global state to get next match start date/time
-                        firebase.get('global_state')
-                            .then(currentMatch => {
+                                //Lookup the global state to get next match start date/time
+                                firebase.get('global_state')
+                                    .then(currentMatch => {
 
-                                console.log('Checking to see if next match should start.  Next match start: ', currentMatch.next_match_start);
+                                        console.log('Checking to see if next match should start.  Next match start: ', currentMatch.next_match_start);
 
-                                //TODO left off here, date.now is a different format than stored in the DB
+                                        var unixTime = (Date.now() / 1000);
 
-                                var unixTime = (Date.now() / 1000);
+                                        console.log('Current time stamp: ', unixTime);
 
-                                console.log('Current time stamp: ', unixTime);
+                                        //Compare the current time to the start time
+                                        if (unixTime >= currentMatch.next_match_start) {
 
-                                //Compare the current time to the start time
-                                if (unixTime >= currentMatch.next_match_start) {
+                                            console.log('Current time > next_match_start, start the match!');
+                                            //Start the match!
+                                            var localMatch = new Match();
 
-                                    console.log('Current time > next_match_start, start the match!');
-                                    //Start the match!
-                                    var localMatch = new Match();
+                                            //Iterate through those characters resetting their actions
+                                            var characterUpdatePromises = characterIDs.map( characterID =>{
 
-                                    localMatch.startCurrent(currentMatch.match_id, unixTime, zoneID)
-                                    
-                                    //startMatch(currentMatch.match_id, unixTime, zoneID)
-                                        .then(()=>{
+                                                console.log('Iterating through characterIDs, characterID: ', characterID);
+
+                                                //Create a local character, set it's properties then reset its actions
+                                                var localCharacter = new Character(characterID);
+                                                localCharacter.setByID();
+                                                localCharacter.resetActions()
+                                            });
+
+                                            Promise.all(characterUpdatePromises)
+                                                .then(()=>{
+                                                    console.log('Successfully updated characters actions!');
+
+                                                    //After character actions are updated, start the match
+                                                    localMatch.startCurrent(currentMatch.match_id, unixTime, zoneID, characterIDs)
+                                                        .then(()=>{
+                                                            console.log('Successfully started new match!');
+
+                                                            resolve();
+                                                        })
+                                                })
+
+                                        } else {
                                             resolve();
-                                        })
-                                } else {
-                                    resolve();
-                                }
-                            });
-                    }
+                                        }
+                                    });
+                            }
+                        })
                 });
         });
     }

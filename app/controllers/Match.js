@@ -11,31 +11,60 @@ var firebase = new Firebase();
 class Match {
     constructor() {}
 
-    startCurrent(currentMatchID, startDate, zoneID){
+    startCurrent(currentMatchID, startDate, zoneID, charactersInZone){
         return new Promise((resolve, reject)=>{
 
             console.log('trying to startMatch, zone ID passed: ', zoneID);
 
             var localZone = new Zone();
 
-            //Get the characters in zone
-            localZone.getCharacterIDsIncludePlayer(zoneID)
-                .then( charactersInZone =>{
+            console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
 
-                    console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
+            //Add a start date for the current match & charactersInZone array
+            var updates = {
+                "starting_character_ids": charactersInZone,
+                "date_started": startDate
+            };
 
-                    //Add a start date for the current match & charactersInZone array
-                    var updates = {
-                        "starting_character_ids": charactersInZone,
-                        "date_started": startDate
-                    };
+            firebase.get('zone/' + zoneID)
+                .then(zoneDetails => {
 
                     //Update current matches properties
                     firebase.update(('match/' + currentMatchID), updates)
-                        .then( () => {
+                        .then(() => {
 
                             console.log('Updated current match');
 
+                            //Send a message to the channel announcing that the match has started
+                            var alertDetails = {
+                                "username": "A mysterious voice",
+                                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                "channel": ("#" + zoneDetails.channel),
+                                "text": "The crowd roars as the match begins!"
+                            };
+
+                            //Create a new slack alert object
+                            var matchBeginsAlert = new Slack(alertDetails);
+
+                            //Send alert to slack
+                            matchBeginsAlert.sendToSlack(matchBeginsAlert.params)
+                                .then(() => {
+                                    console.log('Successfully posted to slack')
+                                })
+                                .catch(error => {
+                                    console.log('Error when sending to slack: ', error)
+                                });
+                        });
+
+                    //Resolve the promise regardless if it posted to slack
+                    resolve();
+                });
+
+
+
+
+
+                            /*
                             //Get details of zone
                             firebase.get('zone/' + zoneID)
                                 .then(zoneDetails => {
@@ -52,7 +81,8 @@ class Match {
                                                 "turn_action_used": 0
                                             };
 
-                                            //TODO pull out the reset character's actions functionality into a stand alone actions class
+
+
                                             //Iterate through characterID array resetting turn_action_used
                                             var characterUpdatePromises = characterIDs.map( characterID =>{
 
@@ -101,39 +131,18 @@ class Match {
                                             });
 
                                             //After all characters have been updated
+
                                             Promise.all(characterUpdatePromises)
                                                 .then(()=>{
                                                     resolve();
                                                 })
-                                        });
+
+                                        });*/
 
 
-                                    //Send a message to the channel announcing that the match has started
-                                    var alertDetails = {
-                                        "username": "A mysterious voice",
-                                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                        "channel": ("#" + zoneDetails.channel),
-                                        "text": "The crowd roars as the match begins!"
-                                    };
-
-                                    //Create a new slack alert object
-                                    var matchBeginsAlert = new Slack(alertDetails);
-
-                                    //Send alert to slack
-                                    matchBeginsAlert.sendToSlack(matchBeginsAlert.params)
-                                        .then(() =>{
-                                            console.log('Successfully posted to slack')
-                                        })
-                                        .catch(error =>{
-                                            console.log('Error when sending to slack: ', error)
-                                        });
-                                });
-
-                            //Resolve the promise regardless if it posted to slack
-                            resolve();
                         });
-                });
-        })
+                //});
+        //})
     }
 
     isStarted(){
