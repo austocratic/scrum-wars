@@ -39,7 +39,7 @@ exports.characterProfile = payload => {
         localCharacter.setByProperty('user_id', userID)
             .then(()=>{
 
-                console.log('set local character in characterProfile, props: '. JSON.stringify(localCharacter.props));
+                console.log('set local character in characterProfile, props: ', JSON.stringify(localCharacter.props));
 
                 //Array of stat keys
                 var statKeys = Object.keys(localCharacter.props);
