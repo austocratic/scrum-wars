@@ -321,6 +321,7 @@ exports.resolveActions = (zoneID) => {
                                             //Start the match!
                                             var localMatch = new Match();
 
+                                            //TODO this is currently using characterIDs which is only characters in zone.  Need to reset all characters actions globally
                                             //Iterate through those characters resetting their actions
                                             var characterUpdatePromises = characterIDs.map( characterID =>{
 
@@ -328,8 +329,12 @@ exports.resolveActions = (zoneID) => {
 
                                                 //Create a local character, set it's properties then reset its actions
                                                 var localCharacter = new Character(characterID);
-                                                localCharacter.setByID();
-                                                localCharacter.resetActions()
+                                                localCharacter.setByID()
+                                                    .then(()=>{
+                                                        //Now that localCharacters properties are set, reset the actions
+                                                        localCharacter.resetActions()
+                                                    })
+
                                             });
 
                                             Promise.all(characterUpdatePromises)
