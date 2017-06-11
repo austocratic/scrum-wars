@@ -78,9 +78,10 @@ class Character{
                                     .then( updateResponse => {
                                         console.log('Updated action: ', ('character/' + this.characterID + '/actions/' + iterationIndex));
                                         console.log('updatedResponse: ', updateResponse);
-                                        iterationIndex++;
                                         resolve();
                                     });
+
+                                iterationIndex++;
                             })
                         });
 
