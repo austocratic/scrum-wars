@@ -31,25 +31,20 @@ class Character{
     }
     
     setByID(){
-
         console.log('Called setbyID, this.characterID: ', this.characterID);
-
-        //Get details of the character
-        firebase.get('character/' + this.characterID)
-            .then(characterDetails => {
-
-                console.log('Got character details: ', characterDetails);
-
-                this.props = characterDetails;
-            });
+        return new Promise((resolve, reject)=>{
+            //Get details of the character
+            firebase.get('character/' + this.characterID)
+                .then(characterDetails => {
+                    this.props = characterDetails;
+                    resolve()
+                });
+        })
     }
 
     //Characters properties need to be set before calling this function.  Use setByProperty() or setByID() first
     resetActions(){
-
-        //TODO pull out the reset character's actions functionality into a stand alone actions class
-        //Iterate through characterID array resetting turn_action_used
-        //var characterUpdatePromises = characterIDs.map( characterID =>{
+        console.log('called resetActions');
 
             return new Promise((resolve, reject)=>{
 
@@ -60,11 +55,6 @@ class Character{
                 //Reset the character's primary action used property
                 firebase.update(('character/' + this.characterID), turnActionUsedUpdate)
                     .then( () => {
-
-                        //Next get that player's actions.  These need to be reset
-                        //var characterActions = allCharacters[this.characterID].actions;
-
-                        //console.log('characterActions: ', JSON.stringify(characterActions));
 
                         var singleActionUpdate = {
                             "turn_used": 0
@@ -99,15 +89,6 @@ class Character{
                             });
                     })
             })
-        //});
-
-        //After all characters have been updated
-        /*
-        Promise.all(characterUpdatePromises)
-            .then(()=>{
-                resolve();
-            })*/
-        
     }
 
 
