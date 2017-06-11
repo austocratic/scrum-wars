@@ -9,9 +9,7 @@ var firebase = new Firebase();
 class Character extends FirebaseBaseController{
     constructor(){
         super();
-        console.log('Called Character constructor');
-        //this.characterID = characterID
-        this.fbType = 'character'
+        this.firebaseType = 'character'
     }
 
     //Characters properties need to be set before calling this function.  Use setByProperty() or setByID() first
@@ -67,7 +65,7 @@ class Character extends FirebaseBaseController{
         return new Promise((resolve, reject) => {
 
             //Create a table reference to be used for locating the character
-            var tableRef = 'character/' + this.characterID;
+            var tableRef = 'character/' + this.props.id;
 
             //Define the properties to add to character
             var updates = {

@@ -2,14 +2,18 @@
 
 var Firebase = require('../libraries/firebase').Firebase;
 var Slack = require('../libraries/slack').Alert;
+var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
 var Zone = require('./Zone').Zone;
 
 var firebase = new Firebase();
 
 
-class Match {
-    constructor() {}
+class Match extends FirebaseBaseController{
+    constructor() {
+        super();
+        this.firebaseType = 'match'
+    }
 
     startCurrent(currentMatchID, startDate, zoneID, charactersInZone){
         return new Promise((resolve, reject)=>{
