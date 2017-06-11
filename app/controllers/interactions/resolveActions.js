@@ -333,8 +333,10 @@ exports.resolveActions = (zoneID) => {
                                                     .then(()=>{
                                                         //Now that localCharacters properties are set, reset the actions
                                                         localCharacter.resetActions()
+                                                            .then(()=>{
+                                                                resolve();
+                                                            })
                                                     })
-
                                             });
 
                                             Promise.all(characterUpdatePromises)
