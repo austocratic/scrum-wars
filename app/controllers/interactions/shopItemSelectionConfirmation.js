@@ -28,6 +28,8 @@ exports.shopItemSelectionConfirmation = payload => {
     playerCharacter.setByProperty('user_id', payload.user.id)
         .then(()=>{
 
+            console.log('playerCharacter: ', JSON.stringify(playerCharacter));
+
             //Character's ID
             /*
             var characterID = Object.keys(character)[0];
