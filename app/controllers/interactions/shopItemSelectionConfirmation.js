@@ -55,11 +55,11 @@ exports.shopItemSelectionConfirmation = payload => {
 
             } else {
 
-                purchaseSelection = new Item();
+                var purchasedItem = new Item();
 
                 console.log('purchaseSelection: ', purchaseSelection);
 
-                purchaseSelection.setByID(purchaseSelection)
+                purchasedItem.setByID(purchaseSelection)
                     .then(()=>{
 
                         var playerInventory;
@@ -74,7 +74,7 @@ exports.shopItemSelectionConfirmation = payload => {
                         }*/
 
                         //Compare the item's price to the character's gold
-                        if (purchaseSelection.props.cost > playerCharacter.props.gold) {
+                        if (purchasedItem.props.cost > playerCharacter.props.gold) {
 
                             responseTemplate = payload;
 
@@ -85,14 +85,14 @@ exports.shopItemSelectionConfirmation = payload => {
                             playerActionSelection(responseTemplate)
                                 .then(shopResponse=>{
 
-                                    shopResponse.text = "I'm sorry traveler, you don't have " + purchaseSelection.props.cost + " gold." +
+                                    shopResponse.text = "I'm sorry traveler, you don't have " + purchasedItem.props.cost + " gold." +
                                         "\nCan I interest you in something else?";
 
                                     resolve(shopResponse);
                                 });
                         } else {
 
-                            playerCharacter.purchaseItem(purchaseSelection.props.cost)
+                            playerCharacter.purchaseItem(purchasedItem.props.cost)
 
 
                             /*
@@ -116,7 +116,7 @@ exports.shopItemSelectionConfirmation = payload => {
                                 .then( ()=> {
 
                                     //Set the response template to successful purchase
-                                    responseTemplate.text = "_You hand the merchant " + purchaseSelection.props.cost + " in exchange for the " + purchaseSelection.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
+                                    responseTemplate.text = "_You hand the merchant " + purchasedItem.props.cost + " in exchange for the " + purchasedItem.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
 
                                     //Then return the new template
                                     resolve(responseTemplate)
