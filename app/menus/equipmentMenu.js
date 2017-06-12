@@ -71,8 +71,12 @@ exports.equipmentMenu = payload => {
                                 //Lookup that item's properties
                                 var singleEquipment = new Item();
 
+                                console.log('equipmentID: ', equipmentID);
+
                                 singleEquipment.setByID(equipmentID)
                                     .then(()=>{
+
+                                        console.log('singleEquipment id: ', singleEquipment.props.id);
 
                                         return new Promise((resolve, reject)=>{
 
