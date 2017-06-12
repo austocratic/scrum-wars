@@ -99,8 +99,12 @@ class Character extends FirebaseBaseController{
 
             console.log('Unequipped inventory: ', JSON.stringify(this.props.inventory.unequipped));
 
+            console.log('Character ID: ', this.props.id);
+
             //Add the purchased item to unequipped inventory array
             this.props.inventory.unequipped.push(this.props.id);
+
+            console.log('Unequipped inventory after update: ', JSON.stringify(this.props.inventory.unequipped));
 
             //Update the character
             this.updateProperty("gold", playerGold)
