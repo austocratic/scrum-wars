@@ -24,7 +24,7 @@ class Character extends FirebaseBaseController{
                 };
 
                 //Reset the character's primary action used property
-                firebase.update(('character/' + this.id), turnActionUsedUpdate)
+                firebase.update(('character/' + this.props.id), turnActionUsedUpdate)
                     .then( () => {
 
                         var singleActionUpdate = {
@@ -35,9 +35,11 @@ class Character extends FirebaseBaseController{
 
                         var characterActionUpdatePromises = this.props.actions.map( singleAction => {
 
+                            console.log('resetting actions for character ID: ', this.props.id);
+                            
                             return new Promise((resolve, reject)=>{
 
-                                firebase.update(('character/' + this.id + '/actions/' + iterationIndex), singleActionUpdate)
+                                firebase.update(('character/' + this.props.id + '/actions/' + iterationIndex), singleActionUpdate)
                                     .then( updateResponse => {
                                         resolve();
                                     });
