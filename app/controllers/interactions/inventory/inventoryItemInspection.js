@@ -25,20 +25,17 @@ exports.inventoryItemInspection = payload => {
 
                 //Get the standard itemDetail object
                 responseTemplate = itemDetail(localItem.props.id, localItem.props);
-
-                //Add in a "equip" button
+                
                 responseTemplate.attachments[0].actions = [
+                    //Add in a "equip" button
                     {
                         "name": "equip_item",
                         "text": "Equip Item",
                         "style": "default",
                         "type": "button",
                         "value": localItem.props.id
-                    }
-                ];
-
-                //Add in a back button
-                responseTemplate.attachments[0].actions = [
+                    },
+                    //Add in a back button
                     {
                         "name": "inventory",
                         "text": "Back to Inventory",
