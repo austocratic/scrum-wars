@@ -96,7 +96,7 @@ exports.shopItemSelectionConfirmation = payload => {
                                 });
                         } else {
 
-                            playerCharacter.purchaseItem(purchasedItem.props.cost)
+                            playerCharacter.purchaseItem(purchasedItem)
 
 
                             /*

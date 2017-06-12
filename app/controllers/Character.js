@@ -86,25 +86,15 @@ class Character extends FirebaseBaseController{
         });
     }
 
-    purchaseItem(itemCost){
+    purchaseItem(purchasedItem){
 
         return new Promise((resolve, reject)=>{
 
             //Decrement the player's gold locally
-            var playerGold = this.props.gold - itemCost;
-
-            console.log('itemCost: ', itemCost);
-
-            console.log('Gold: ', this.props.gold);
-
-            console.log('Unequipped inventory: ', JSON.stringify(this.props.inventory.unequipped));
-
-            console.log('Character ID: ', this.props.id);
+            var playerGold = this.props.gold - purchasedItem.props.cost;
 
             //Add the purchased item to unequipped inventory array
-            this.props.inventory.unequipped.push(this.props.id);
-
-            console.log('Unequipped inventory after update: ', JSON.stringify(this.props.inventory.unequipped));
+            this.props.inventory.unequipped.push(purchasedItem.props.id);
 
             //Update the character
             this.updateProperty("gold", playerGold)
