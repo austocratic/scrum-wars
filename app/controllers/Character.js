@@ -94,14 +94,14 @@ class Character extends FirebaseBaseController{
             playerGold = playerGold - itemCost;
 
             //Add the purchased item to unequipped inventory array
-            this.inventory.unequipped.push(this.props.id);
+            this.props.inventory.unequipped.push(this.props.id);
 
             //Update the character
             this.updateProperty("gold", playerGold)
             //firebase.update(tableRef, updates)
                 .then(()=>{
                     //TODO need to modify the updateProperty to allow multiple updates in one call
-                    this.updateProperty("inventory/unequipped", this.inventory.unequipped)
+                    this.updateProperty("inventory/unequipped", this.props.inventory.unequipped)
                         .then(()=>{
                             resolve()
                         })
