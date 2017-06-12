@@ -80,33 +80,37 @@ exports.equipmentMenu = payload => {
 
                                         return new Promise((resolve, reject)=>{
 
-                                        //Grab the title from the equipmentSlots object
-                                        var equipmentSlotTitle = equipmentSlots[singleEquipment.props.id].name;
-                                            
+                                        //Iterate through that item's equipment_slots
+                                        singleEquipment.props.equipment_slots.forEach( eachSlot =>{
+
+                                            //Grab the title from the equipmentSlots object
+                                            var equipmentSlotTitle = equipmentSlots[eachSlot].name;
+
                                             console.log('equipmentSlotTitle: ', equipmentSlotTitle);
 
-                                        //Iterate through each equipment's equipment slots.  Push each slot into the template
-                                        baseSlackEquipmentTemplate.attachments.push({
-                                            "title": equipmentSlotTitle,
-                                            "callback_id": "equipmentMenu",
-                                            "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + singleEquipment.props.id + ".jpg",
-                                            "fields": [
-                                                {
-                                                    "title": "Equipment name",
-                                                    "value": singleEquipment.props.name,
-                                                    "short": false
-                                                }
-                                            ],
-                                            "actions": [{
-                                                "name": "inspect",
-                                                "text": "Inspect item",
-                                                "style": "default",
-                                                "type": "button",
-                                                "value": singleEquipment.props.id
-                                            }]
-                                        });
+                                            //Iterate through each equipment's equipment slots.  Push each slot into the template
+                                            baseSlackEquipmentTemplate.attachments.push({
+                                                "title": equipmentSlotTitle,
+                                                "callback_id": "equipmentMenu",
+                                                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + singleEquipment.props.id + ".jpg",
+                                                "fields": [
+                                                    {
+                                                        "title": "Equipment name",
+                                                        "value": singleEquipment.props.name,
+                                                        "short": false
+                                                    }
+                                                ],
+                                                "actions": [{
+                                                    "name": "inspect",
+                                                    "text": "Inspect item",
+                                                    "style": "default",
+                                                    "type": "button",
+                                                    "value": singleEquipment.props.id
+                                                }]
+                                            });
 
-                                        resolve();
+                                            resolve();
+                                        })
                                     })
                                 })
                                 .then(()=>{
