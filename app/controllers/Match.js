@@ -20,7 +20,7 @@ class Match extends FirebaseBaseController{
 
             console.log('trying to startMatch, zone ID passed: ', zoneID);
 
-            var localZone = new Zone();
+            //var localZone = new Zone();
 
             console.log('Called getCharacters which returned: ', JSON.stringify(charactersInZone));
 
@@ -32,7 +32,7 @@ class Match extends FirebaseBaseController{
 
             firebase.get('zone/' + zoneID)
                 .then(zoneDetails => {
-
+                    
                     //Update current matches properties
                     firebase.update(('match/' + currentMatchID), updates)
                         .then(() => {
@@ -63,90 +63,7 @@ class Match extends FirebaseBaseController{
                     //Resolve the promise regardless if it posted to slack
                     resolve();
                 });
-
-
-
-
-
-                            /*
-                            //Get details of zone
-                            firebase.get('zone/' + zoneID)
-                                .then(zoneDetails => {
-
-                                    //Get all players (regardless of zone)
-                                    firebase.get('character')
-                                        .then(allCharacters => {
-
-                                            console.log('allCharacters: ', JSON.stringify(allCharacters));
-
-                                            var characterIDs = Object.keys(allCharacters);
-
-                                            var turnActionUsedUpdate = {
-                                                "turn_action_used": 0
-                                            };
-
-
-
-                                            //Iterate through characterID array resetting turn_action_used
-                                            var characterUpdatePromises = characterIDs.map( characterID =>{
-
-                                                return new Promise((resolve, reject)=>{
-                                                    //Update that character
-                                                    firebase.update(('character/' + characterID), turnActionUsedUpdate)
-                                                        .then( () => {
-
-                                                            //Next get that player's actions.  These need to be reset
-                                                            var characterActions = allCharacters[characterID].actions;
-
-                                                            console.log('characterActions: ', JSON.stringify(characterActions));
-
-                                                            var singleActionUpdate = {
-                                                                "turn_used": 0
-                                                            };
-
-                                                            var iterationIndex = 0;
-
-                                                            console.log('About to iterate characters actions: ', characterID);
-
-                                                            var characterActionUpdatePromises = characterActions.map( singleAction => {
-
-                                                                console.log('Iterating characters actions, singleAction: ', singleAction);
-
-                                                                //TODO for some reason this is not updating every action even though log shows it getting updated
-                                                                //Maybe the way that array values are returned (end up in a different order, so certain actions are getting updated twice
-
-                                                                return new Promise((resolve, reject)=>{
-                                                                    firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
-                                                                        .then( updateResponse => {
-                                                                            console.log('Updated action: ', ('character/' + characterID + '/actions/' + iterationIndex));
-                                                                            console.log('updatedResponse: ', updateResponse);
-                                                                            iterationIndex++;
-                                                                            resolve();
-                                                                        });
-                                                                })
-                                                            });
-
-                                                            Promise.all(characterActionUpdatePromises)
-                                                                .then(()=>{
-                                                                    resolve();
-                                                                });
-                                                        })
-                                                })
-                                            });
-
-                                            //After all characters have been updated
-
-                                            Promise.all(characterUpdatePromises)
-                                                .then(()=>{
-                                                    resolve();
-                                                })
-
-                                        });*/
-
-
-                        });
-                //});
-        //})
+            });
     }
 
     isStarted(){
@@ -174,6 +91,124 @@ class Match extends FirebaseBaseController{
                 });
         })
     }
+
+    determineWinner(characterIDs, zoneID, matchID){
+        
+        return new Promise((resolve, reject)=>{
+            
+        //If there is only one character left, match is won by that character!
+        if (characterIDs.length === 1){
+
+            var matchWinnerID = characterIDs[0];
+
+            //Get details of the winning character
+            firebase.get('character/' + matchWinnerID)
+                .then(characterDetails => {
+
+                    var matchWins = characterDetails.match_wins;
+
+                    matchWins++;
+
+                    //Define the properties to add to character
+                    var characterUpdates = {
+                        "match_wins": matchWins
+                    };
+
+                    //Now update the character with new properties
+                    firebase.update('character/' + matchWinnerID, characterUpdates)
+                });
+
+            //Update match winner to that character
+            var tableRef = 'match/' + matchID;
+
+            //Define the properties to add to character
+            var updates = {
+                "character_id_won": matchWinnerID,
+                "date_ended": Date.now()
+            };
+
+            //Now update the character with new properties
+            firebase.update(tableRef, updates)
+                .then( () => {
+                    resolve();
+                });
+
+            var newMatchDetails = {
+
+                "character_id_won": 0,
+                "date_ended": 0,
+                "date_started": 0,
+                "number_turns": 0,
+                "starting_character_ids": 0,
+                "zone_id": 0
+            };
+
+            //Create a new match
+            firebase.create('match', newMatchDetails)
+                .then( newMatch =>{
+
+                    console.log('newMatchID: ', newMatch);
+
+                    //TODO: need to dynamically generate the next match start
+                    var nextMatchStart = 1496098800;
+
+                    //Update the global state to the new match ID
+                    var matchUpdates = {
+                        "match_id": newMatch.name,
+                        "next_match_start": nextMatchStart
+                    };
+
+                    //Now update the character with new properties
+                    firebase.update('global_state', matchUpdates)
+                        .then( () => {
+                            resolve();
+                        });
+                });
+
+            //Get details of the zone
+            firebase.get('zone/' + zoneID)
+                .then(zoneDetails => {
+
+                    //Get details of the winning character
+                    firebase.get('character/' + matchWinnerID)
+                        .then(matchWinnerDetails => {
+
+                            //Send slack alert abut the winner
+                            var alertDetails = {
+                                "username": "A mysterious voice",
+                                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                "channel": ("#" + zoneDetails.channel),
+                                "text": "*The crowd erupts in celebration.  A winner stands victorious!*" +
+                                "\n Congratulations " + matchWinnerDetails.name,
+                                "attachments": [
+                                    {
+                                        "fallback": "Required plain-text summary of the attachment.",
+                                        "image_url": "http://dspncdn.com/a1/media/692x/cf/99/07/cf9907357589bf6e8af88ca3c1d7469c.jpg"
+                                    }
+                                ]
+                            };
+
+                            //Create a new slack alert object
+                            var channelAlert = new Slack(alertDetails);
+
+                            //Send alert to slack
+                            channelAlert.sendToSlack(channelAlert.params)
+                                .then(() =>{
+                                    console.log('Successfully posted to slack')
+                                })
+                                .catch(error =>{
+                                    console.log('Error when sending to slack: ', error)
+                                });
+                        });
+                });
+        } else {
+            //More characters are alive than 1, resolve
+            resolve()
+        }
+    })
+    }
+    
+
 }
 
 
