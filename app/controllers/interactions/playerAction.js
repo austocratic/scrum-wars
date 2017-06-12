@@ -128,10 +128,15 @@ exports.playerAction = payload => {
                                                         console.log('actionDetails.cool_down: ', eachAction.cool_down);
                                                         console.log('matchDetails.number_turns: ', matchDetails.number_turns);
 
-                                                        if (eachAction.turn_used + eachAction.cool_down <= matchDetails.number_turns) {
+                                                        //If turn one, all actions are available
+                                                        if (matchDetails.number_turns === 1) {
                                                             return true
                                                         } else {
-                                                            return false
+                                                            if (eachAction.turn_used + eachAction.cool_down <= matchDetails.number_turns) {
+                                                                return true
+                                                            } else {
+                                                                return false
+                                                            }
                                                         }
                                                     }
 

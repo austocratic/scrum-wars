@@ -46,11 +46,18 @@ exports.playerActionSelection = payload => {
 
         console.log('characterAction: ', characterAction);
 
-        if (characterAction.turn_used + action.cool_down <= match.number_turns) {
+        //If turn one, all actions are available
+        if (match.number_turns === 1) {
             return true
         } else {
-            return false
+            if (characterAction.turn_used + action.cool_down <= match.number_turns) {
+                return true
+            } else {
+                return false
+            }
         }
+        
+       
     }
     
     return new Promise((resolve, reject) => {
