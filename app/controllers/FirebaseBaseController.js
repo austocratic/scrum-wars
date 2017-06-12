@@ -20,6 +20,7 @@ class FirebaseBaseController {
                     //TODO need to add a way for it to verify only one result (could return multiple results)
                     var id = Object.keys(firebaseReturn)[0];
                     this.props = firebaseReturn[id];
+                    this.props.id = id;
                     resolve();
                 })
         });
