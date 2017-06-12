@@ -149,6 +149,16 @@ class Match extends FirebaseBaseController{
 
                     console.log('newMatchID: ', newMatch);
 
+                    var today = new Date();
+
+                    console.log('today: ', today);
+                    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+
+                    console.log('tomorrow: ', tomorrow);
+                    var startDate = tomorrow + (11 * 60 * 60 * 1000);
+
+                    console.log('startDate: ', startDate);
+
                     //TODO: need to dynamically generate the next match start
                     var nextMatchStart = 1496098800;
 
