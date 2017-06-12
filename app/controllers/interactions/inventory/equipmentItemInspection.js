@@ -1,13 +1,12 @@
 "use strict";
 
 var Firebase = require('../../../libraries/firebase').Firebase;
+var Item = require('../../Item').Item;
 var itemDetail = require('../../../components/item/itemDetail').itemDetail;
 
-//var characterProfile = require('../characterProfile').characterProfile;
+var firebase = new Firebase();
 
 exports.equipmentItemInspection = payload => {
-
-    var firebase = new Firebase();
 
     var responseTemplate;
 
@@ -32,6 +31,9 @@ exports.equipmentItemInspection = payload => {
                 //Get the standard itemDetail object
                 responseTemplate = itemDetail(itemID, itemProps);
 
+                
+                
+                //Add in a back button
                 responseTemplate.attachments[0].actions = [
                     {
                         "name": "equipment",

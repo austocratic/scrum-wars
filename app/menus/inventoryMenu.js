@@ -37,6 +37,9 @@ exports.inventoryMenu = payload => {
                     return new Promise((resolve, reject)=> {
                         firebase.get('item/' + singleUnequippedItemID)
                             .then(singleUnequippedItem => {
+
+                                console.log('singleUnequippedItem: ', JSON.stringify(singleUnequippedItem));
+
                                 resolve({
                                     "text": singleUnequippedItem.name,
                                     "value": singleUnequippedItemID

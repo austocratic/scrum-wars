@@ -109,11 +109,59 @@ class Character extends FirebaseBaseController{
         })
     }
 
-    equipItem(itemID){
-
-        //Fetch the details of the itemID. Use this to determine effects
+    equipItem(equippedItem){
         
-        //Add item to equipped list
+        //Add item to equipped array
+        this.props.inventory.equipped.push(equippedItem.props.id);
+
+        //Remove item from unequipped list
+        var index = this.props.inventory.unequipped.indexOf(equippedItem.props.id);
+
+        //Remove that array element
+        if (index > -1) {
+            this.props.inventory.unequipped.splice(index, 1);
+        }
+
+        //Look at item's "effects" object and set an array of those keys
+        var effectsKeys = Object.keys(equippedItem.props.effects);
+
+        //Iterate through the keys array
+        var characterUpdatePromises = effectsKeys.map(effectKey=>{
+
+            return new Promise((resolve, reject)=>{
+                var effectValue = equippedItem.props.effects[effectKey];
+
+                var newValue = this.props[effectKey] + effectValue;
+
+                this.updateProperty(effectKey, newValue)
+                    .then(()=>{
+                        resolve()
+                    })
+            })
+        });
+
+        //Create a promise for updating unequipped inventory
+        characterUpdatePromises.push(this.updateProperty("inventory/unequipped", this.props.inventory.unequipped));
+
+        //Create a promise for updating equipped inventory
+        characterUpdatePromises.push(this.updateProperty("inventory/equipped", this.props.inventory.equipped));
+
+        //When all character property updates are done, resolve equipItem
+        Promise.all(characterUpdatePromises)
+            .then(()=>{
+                resolve();
+            });
+
+
+        /*
+        //TODO need to modify the updateProperty to allow multiple updates in one call
+        this.updateProperty("inventory/unequipped", this.props.inventory.unequipped)
+            .then(()=>{
+                this.updateProperty("inventory/equipped", this.props.inventory.equipped)
+                    .then(()=> {
+                        resolve()
+                    });
+            });*/
 
         //Modify "modified" properties based on item's effects
 

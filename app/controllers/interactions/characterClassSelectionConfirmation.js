@@ -75,7 +75,11 @@ exports.characterClassSelectionConfirmation = payload => {
                             "strength": startingAttributes.strength,
                             "toughness": startingAttributes.toughness,
                             "dexterity": startingAttributes.dexterity,
-                            "intelligence": startingAttributes.intelligence
+                            "intelligence": startingAttributes.intelligence,
+                            "modified_strength": startingAttributes.strength,
+                            "modified_toughness": startingAttributes.toughness,
+                            "modified_dexterity": startingAttributes.dexterity,
+                            "modified_intelligence": startingAttributes.intelligence
                         };
 
                         console.log('Updated stats: ', updates);

@@ -1,40 +1,70 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
+var Character = require('../Character').Character;
+var Item = require('../Item').Item;
 var inventoryMenu = require('../../menus/inventoryMenu').inventoryMenu;
 var equipmentMenu = require('../../menus/equipmentMenu').equipmentMenu;
 
 
 exports.profileOptionSelection = payload => {
 
-    var profileOption = payload.actions[0].value;
-    
     return new Promise((resolve, reject) => {
 
-        //Read the selection to determine response
-        switch(profileOption){
-            
-            case 'inventory':
+    switch(payload.actions[0].name){
+        case 'equip_item':
 
-                inventoryMenu(payload)
-                    .then( interactionResponse => {
-                        resolve(interactionResponse)
-                    });
-                
-                break;
-            
-            case 'equipment':
+            var equippedItem = new Item();
+            equippedItem.setByID(payload.actions[0].value)
+                .then(()=>{
 
-                equipmentMenu(payload)
-                    .then( interactionResponse => {
-                        resolve(interactionResponse)
-                    });
-                
-                break;
-            
-            default:
-            
-        }
+                    var playerCharacter = new Character();
+                    playerCharacter.setByProperty('user_id', payload.user.id)
+                        .then(()=>{
+                            
+                            playerCharacter.equipItem(equippedItem)
+                                .then(()=>{
+                                    
+                                    var slackResponseText = {
+                                        'text': 'You equip ' + equippedItem.props.name
+                                    };
+                                    
+                                    resolve();
+                                })
+                        })
+                });
+
+            break;
+
+        //TODO remove this as default, make the other name responses more robust
+        default:
+
+            //Read the selection to determine response
+            switch(payload.actions[0].value) {
+
+                case 'inventory':
+
+                    inventoryMenu(payload)
+                        .then(interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+
+                    break;
+
+                case 'equipment':
+
+                    equipmentMenu(payload)
+                        .then(interactionResponse => {
+                            resolve(interactionResponse)
+                        });
+
+                    break;
+            }
+            break;
+    }
+
+
+
         
     })
 };
