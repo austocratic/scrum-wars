@@ -90,7 +90,7 @@ exports.shopItemSelectionConfirmation = payload => {
                                 });
                         } else {
 
-                            playerCharacter.purchaseItem(purchaseSelection)
+                            playerCharacter.purchaseItem(purchaseSelection.props.cost)
 
 
                             /*
