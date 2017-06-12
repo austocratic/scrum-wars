@@ -88,7 +88,7 @@ class Character extends FirebaseBaseController{
 
     purchaseItem(playerGold, itemCost){
 
-        return new Promise(()=>{
+        return new Promise((resolve, reject)=>{
 
             //Decrement the player's gold locally
             playerGold = playerGold - itemCost;
@@ -111,11 +111,11 @@ class Character extends FirebaseBaseController{
 
     equipItem(itemID){
 
-        //Fetch the details of the itemID
+        //Fetch the details of the itemID. Use this to determine effects
         
         //Add item to equipped list
 
-        //Modify properties
+        //Modify "modified" properties based on item's effects
 
     }
 
