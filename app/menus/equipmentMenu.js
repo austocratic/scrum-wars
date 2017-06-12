@@ -61,6 +61,8 @@ exports.equipmentMenu = payload => {
 
                         console.log('Got equipment slots object: ', equipmentSlots);
 
+                        console.log('Got equipment slots object - test: ', equipmentSlots['-KmTV24FelP7T8rdKLEx']);
+
                         //Iterate through the character's equipped items. (Array of item IDs)
                         var equippedInventoryPromises = playerCharacter.props.inventory.equipped.map( equipmentID =>{
 
