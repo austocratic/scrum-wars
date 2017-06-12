@@ -1,7 +1,8 @@
 "use strict";
 
 var Firebase = require('../libraries/firebase').Firebase;
-//var characterProfile = require('../../slackTemplates/characterProfile').characterProfile;
+var Character = require('../controllers/Character').Character;
+var Item = require('../controllers/Item').Item;
 
 exports.equipmentMenu = payload => {
 
@@ -15,20 +16,22 @@ exports.equipmentMenu = payload => {
         //var userID = payload.user_id;
         var userID = payload.user.id;
 
+        var playerCharacter = new Character();
+
+        playerCharacter.setByProperty('user_id', userID)
+
         //Use Slack user ID to lookup the user's character
-        firebase.get('character', 'user_id', userID)
-            .then(character => {
-
-                console.log('character inventoryMenu:', character);
-
+        //firebase.get('character', 'user_id', userID)
+            .then( () => {
+                
                 //Character's ID
-                var characterID = Object.keys(character)[0];
+                //var characterID = Object.keys(character)[0];
 
                 //Set the player's character locally
-                var playerCharacter = character[characterID];
+                //var playerCharacter = character[characterID];
 
                 //Get the character's unequipped inventory
-                var equippedInventory = playerCharacter.inventory.equipped;
+                //var equippedInventory = playerCharacter.props.inventory.equipped;
 
                 //For each item in unequipped inventory, look up it's name and add to options list
                 /*
@@ -46,6 +49,94 @@ exports.equipmentMenu = payload => {
                     });
                 });*/
 
+                //Base template to be added onto
+                var baseSlackEquipmentTemplate = {
+                    "text": "Equipped Gear",
+                    "attachments": []
+                };
+
+                //Get an object of all equipment slots (there will never be many, so make one api call instead of individual calls)
+                firebase.get('equipment_slot')
+                    .then( equipmentSlots =>{
+
+                        console.log('Got equipment slots object: ', equipmentSlots);
+
+                        //Iterate through the character's equipped items. (Array of item IDs)
+                        var equippedInventoryPromises = playerCharacter.props.inventory.equipped.map( equipmentID =>{
+
+                            return new Promise((resolve, reject)=>{
+
+                                //Lookup that item's properties
+                                var singleEquipment = new Item();
+
+                                singleEquipment.setByID(equipmentID)
+                                    .then(()=>{
+
+                                        return new Promise((resolve, reject)=>{
+
+                                        //Grab the title from the equipmentSlots object
+                                        var equipmentSlotTitle = equipmentSlots[singleEquipment.props.id].name;
+                                            
+                                            console.log('equipmentSlotTitle: ', equipmentSlotTitle);
+
+                                        //Iterate through each equipment's equipment slots.  Push each slot into the template
+                                        baseSlackEquipmentTemplate.attachments.push({
+                                            "title": equipmentSlotTitle,
+                                            "callback_id": "equipmentMenu",
+                                            "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + singleEquipment.props.id + ".jpg",
+                                            "fields": [
+                                                {
+                                                    "title": "Equipment name",
+                                                    "value": singleEquipment.props.name,
+                                                    "short": false
+                                                }
+                                            ],
+                                            "actions": [{
+                                                "name": "inspect",
+                                                "text": "Inspect item",
+                                                "style": "default",
+                                                "type": "button",
+                                                "value": singleEquipment.props.id
+                                            }]
+                                        });
+
+                                        resolve();
+                                    })
+                                })
+                                .then(()=>{
+                                    resolve()
+                                })
+                            })
+                        });
+                        
+                        
+                        Promise.all(equippedInventoryPromises)
+                            .then(()=>{
+                                var backButton = {
+                                    "fallback": "Unable to return to previous menu",
+                                    "callback_id": "characterProfile",
+                                    "actions": [{
+                                        "name": "back",
+                                        "text": "Back to profile",
+                                        "style": "default",
+                                        "type": "button",
+                                        "value": "back"
+                                    }]
+                                };
+
+                                baseSlackEquipmentTemplate.attachments.push(backButton);
+                                
+                                console.log('baseSlackEquipmentTemplate: ', JSON.stringify(baseSlackEquipmentTemplate));
+                                
+                                resolve(baseSlackEquipmentTemplate)
+                            })
+                        
+                    });
+
+
+
+
+                /*
                 var singleHandID = equippedInventory.hand_1;
 
                 firebase.get('item/' + singleHandID)
@@ -107,23 +198,12 @@ exports.equipmentMenu = payload => {
                             ]
                         };
                         
-                        var backButton = {
-                        "fallback": "Unable to return to previous menu",
-                        "callback_id": "characterProfile",
-                        "actions": [{
-                            "name": "back",
-                            "text": "Back to profile",
-                            "style": "default",
-                            "type": "button",
-                            "value": "back"
-                            }]
-                        };
-
-                        slackTemplate.attachments.push(backButton);
+               
 
                         console.log('equipment slack template: ', JSON.stringify(slackTemplate));
                         
                         resolve(slackTemplate);
+                        */
                         
                     });
 
@@ -141,5 +221,4 @@ exports.equipmentMenu = payload => {
 
                     });*/
             });
-    });
 };
