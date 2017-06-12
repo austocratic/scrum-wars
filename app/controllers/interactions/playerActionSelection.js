@@ -56,8 +56,6 @@ exports.playerActionSelection = payload => {
                 return false
             }
         }
-        
-       
     }
     
     return new Promise((resolve, reject) => {
@@ -159,6 +157,11 @@ exports.playerActionSelection = payload => {
                 //Defend action
                 case '-KjpeJT7Oct3ZCtLhENO':
 
+                    //If actions are available build the attack template, otherwise build the unavailable template
+                    if (areActionsAvailable(characterDetails, matchDetails)) {
+
+                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
+
                     //Return the default template
                     responseTemplate = defendCharacterSelection();
 
@@ -178,6 +181,52 @@ exports.playerActionSelection = payload => {
                             //Then return the new template
                             resolve(responseTemplate)
                         });
+
+                        } else {
+
+                            var characterAction = characterDetails.actions.find( singleAction =>{
+                                return singleAction.action_id === payload.actions[0].value
+                            });
+
+                            var turnsToCoolDown = characterAction.turn_used + actionDetails.cool_down - matchDetails.number_turns;
+                            responseTemplate = actionCoolDown(turnsToCoolDown);
+
+                            resolve(responseTemplate);
+                        }
+                    } else {
+                        responseTemplate = actionUnavailable();
+
+                        resolve(responseTemplate);
+                    }
+
+                    break;
+
+                //Action "Into Shadow"
+                case '-Kkdk_CD5vx8vRGQD268':
+
+                    //If actions are available build the attack template, otherwise build the unavailable template
+                    if (areActionsAvailable(characterDetails, matchDetails)) {
+
+                        //Check to see if action is still cooling down
+                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
+                            
+
+                        } else {
+
+                            var characterAction = characterDetails.actions.find( singleAction =>{
+                                return singleAction.action_id === payload.actions[0].value
+                            });
+
+                            var turnsToCoolDown = characterAction.turn_used + actionDetails.cool_down - matchDetails.number_turns;
+                            responseTemplate = actionCoolDown(turnsToCoolDown);
+
+                            resolve(responseTemplate);
+                        }
+                    } else {
+                        responseTemplate = actionUnavailable();
+
+                        resolve(responseTemplate);
+                    }
 
                     break;
 

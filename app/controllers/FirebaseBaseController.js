@@ -37,6 +37,7 @@ class FirebaseBaseController {
         })
     }
     
+    //TODO need to make this able to update multiple properties in one call
     updateProperty(propertyToUpdate, newValue){
         return new Promise((resolve, reject)=>{
             //Build a table reference to be used for query

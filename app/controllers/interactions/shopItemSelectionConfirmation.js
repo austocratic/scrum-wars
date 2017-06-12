@@ -1,8 +1,12 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-//var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
+var Character = require('../Character').Character;
+var Item = require('../Item').Item;
+
 var playerActionSelection = require('./playerActionSelection').playerActionSelection;
+
+
 
 
 exports.shopItemSelectionConfirmation = payload => {
@@ -11,24 +15,23 @@ exports.shopItemSelectionConfirmation = payload => {
     //How do we get the item ID from the previous screen?
     var firebase = new Firebase();
 
-    var responseTemplate = {
-
-    };
-
-    //Get the slack user ID who called the action
-    var userID = payload.user.id;
+    //Setup blank response (to be populated)
+    var responseTemplate = {};
 
     return new Promise((resolve, reject) => {
 
-    //Get your character
-    firebase.get('character', 'user_id', userID)
-        .then( character => {
+    var playerCharacter = new Character();
+
+    //Create a character reference locally
+    playerCharacter.setByProperty('user_id', payload.user.id)
+        .then(()=>{
 
             //Character's ID
+            /*
             var characterID = Object.keys(character)[0];
 
             //Set the player's character locally
-            var playerCharacter = character[characterID];
+            var playerCharacter = character[characterID];*/
 
             //get the value of the item selected
             var purchaseSelection = payload.actions[0].value;
@@ -52,26 +55,24 @@ exports.shopItemSelectionConfirmation = payload => {
 
             } else {
 
-                //Now that we have determined that the player wants to buy the item, lookup the item's price
-                firebase.get(('item/' + purchaseSelection))
-                    .then( itemProps => {
+                purchaseSelection = new Item();
 
-                        var playerGold = playerCharacter.gold;
+                purchaseSelection.setByID(purchaseSelection)
+                    .then(()=>{
 
                         var playerInventory;
 
+                        /*
                         //Get the player's inventory array so it can be adjusted locally
                         //Check that the player has inventory set
-                        if (playerCharacter.inventory) {
-                            playerInventory = playerCharacter.inventory;
+                        if (playerCharacter.props.inventory) {
+                            playerInventory = playerCharacter.props.inventory;
                         } else {
                             playerInventory = [];
-                        }
-
-                        var itemCost = itemProps.cost;
+                        }*/
 
                         //Compare the item's price to the character's gold
-                        if (itemCost > playerGold) {
+                        if (purchaseSelection.props.cost > playerCharacter.props.gold) {
 
                             responseTemplate = payload;
 
@@ -82,13 +83,17 @@ exports.shopItemSelectionConfirmation = payload => {
                             playerActionSelection(responseTemplate)
                                 .then(shopResponse=>{
 
-                                    shopResponse.text = "I'm sorry traveler, you don't have " + itemCost + " gold." +
+                                    shopResponse.text = "I'm sorry traveler, you don't have " + purchaseSelection.props.cost + " gold." +
                                         "\nCan I interest you in something else?";
 
                                     resolve(shopResponse);
                                 });
                         } else {
 
+                            playerCharacter.purchaseItem(purchaseSelection)
+
+
+                            /*
                             //Decrement the player's gold locally
                             playerGold = playerGold - itemCost;
 
@@ -102,14 +107,14 @@ exports.shopItemSelectionConfirmation = payload => {
                             };
 
                             //Create a table reference to be used for locating the character
-                            var tableRef = 'character/' + characterID;
+                            var tableRef = 'character/' + playerCharacter.props.id;
 
                             //Update the character
-                            firebase.update(tableRef, updates)
+                            firebase.update(tableRef, updates)*/
                                 .then( ()=> {
 
                                     //Set the response template to successful purchase
-                                    responseTemplate.text = "_You hand the merchant " +itemCost + " in exchange for the " + itemProps.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
+                                    responseTemplate.text = "_You hand the merchant " + purchaseSelection.props.cost + " in exchange for the " + purchaseSelection.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
 
                                     //Then return the new template
                                     resolve(responseTemplate)
