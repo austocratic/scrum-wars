@@ -22,6 +22,8 @@ exports.shopItemSelectionConfirmation = payload => {
 
     var playerCharacter = new Character();
 
+    console.log('payload: ', JSON.stringify(payload));
+
     //Create a character reference locally
     playerCharacter.setByProperty('user_id', payload.user.id)
         .then(()=>{
