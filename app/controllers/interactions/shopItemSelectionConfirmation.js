@@ -57,6 +57,8 @@ exports.shopItemSelectionConfirmation = payload => {
 
                 purchaseSelection = new Item();
 
+                console.log('purchaseSelection: ', purchaseSelection);
+
                 purchaseSelection.setByID(purchaseSelection)
                     .then(()=>{
 
