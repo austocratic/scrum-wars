@@ -140,10 +140,7 @@ class Character extends FirebaseBaseController{
                                     })
                                 });
 
-
-
                                 resolve();
-
                             })
                     })
                 });
@@ -164,7 +161,8 @@ class Character extends FirebaseBaseController{
                                 console.log('slotID: ', slotID);
                                 console.log('eachItem: ', eachItem);
 
-                                if (slotID == eachItem.slot_id){
+                                //If there is a match, add to the array of item IDs to unequip unless it already exists
+                                if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
                                     itemIDsToUnequip.push(eachItem.item_id);
                                 }
                             })
