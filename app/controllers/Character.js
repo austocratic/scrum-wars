@@ -132,11 +132,17 @@ class Character extends FirebaseBaseController{
                                 //Iterate over that item's equipment_slots property adding to equippedSlots
                                 singleEquipment.props.equipment_slots.forEach( equippedItemSlotID => {
 
+                                    console.log('equippedItemSlotID: ', equippedItemSlotID);
+
                                     equippedItems.push({
                                         "slot_id": equippedItemSlotID,
                                         "item_id": singleEquipment.props.id
                                     })
-                                })
+                                });
+
+
+                                
+                                resolve();
 
                             })
                     })
