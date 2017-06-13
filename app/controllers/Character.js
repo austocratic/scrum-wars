@@ -154,8 +154,10 @@ class Character extends FirebaseBaseController{
                         console.log('equippedItems array of objects: ', JSON.stringify(equippedItems));
                         //Now I have an array of objects
 
+                        var itemIDsToUnequip = [];
+
                         //Iterate through the equipped item's slots and find any matches
-                        var itemIDsToUnequip = equippedItem.props.equipment_slots.filter( slotID =>{
+                        equippedItem.props.equipment_slots.filter( slotID =>{
                             //Iterate through equippedItems
                             equippedItems.forEach( eachItem =>{
 
@@ -163,10 +165,9 @@ class Character extends FirebaseBaseController{
                                 console.log('eachItem: ', eachItem);
 
                                 if (slotID == eachItem.slot_id){
-                                    return eachItem.item_id
+                                    itemIDsToUnequip.push(eachItem.item_id);
                                 }
                             })
-
                         });
 
                         console.log('itemIDsToUnequip: ', JSON.stringify(itemIDsToUnequip));
