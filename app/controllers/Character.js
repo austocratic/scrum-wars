@@ -117,7 +117,7 @@ class Character extends FirebaseBaseController{
 
         return new Promise((resolve, reject)=>{
 
-            var equippedItems;
+            var equippedItems = [];
 
                 //Iterate through the character's equipped items. (Array of item IDs)
                 var equippedInventoryPromises = this.props.inventory.equipped.map( equipmentID => {
