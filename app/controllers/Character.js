@@ -141,7 +141,7 @@ class Character extends FirebaseBaseController{
                                 });
 
 
-                                
+
                                 resolve();
 
                             })
@@ -158,6 +158,10 @@ class Character extends FirebaseBaseController{
                         var itemIDsToUnequip = equippedItem.props.equipment_slots.filter( slotID =>{
                             //Iterate through equippedItems
                             equippedItems.forEach( eachItem =>{
+
+                                console.log('slotID: ', slotID);
+                                console.log('eachItem: ', eachItem);
+
                                 if (slotID == eachItem.slot_id){
                                     return eachItem.item_id
                                 }
