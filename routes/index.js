@@ -10,6 +10,8 @@ var commands = require('../app/controllers/commands').commands;
 var interactiveMessages = require('../app/controllers/interactiveMessages').interactiveMessages;
 var turns = require('../app/controllers/turns');
 
+var controllerTest = require('../app/controllers/controllerTest').controllerTest;
+
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -61,6 +63,10 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
+});
+
+router.get('/api/test', (req, res, next) => {
+    controllerTest(req, res, next);
 });
 
 router.post('/api/commands', (req, res, next) => {

@@ -17,10 +17,6 @@ exports.inventoryItemInspection = payload => {
 
         var localItem = new Item();
         localItem.setByID(itemID)
-        
-        
-        //Use previous selection ID to lookup the item properties
-        //firebase.get(('item/' + itemID))
             .then( () => {
 
                 //Get the standard itemDetail object

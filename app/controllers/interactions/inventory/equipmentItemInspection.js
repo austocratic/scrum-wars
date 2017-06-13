@@ -15,23 +15,12 @@ exports.equipmentItemInspection = payload => {
         //get the value of the item selected or "back" if the user selected to go back
         var itemID = payload.actions[0].value;
 
-        /*
-        //If the player chose "back" return the profile template
-        if (itemID === "back"){
-            characterProfile(payload)
-                .then( charProfile =>{
-                    resolve(charProfile)
-                })
-        }*/
-
         //Use previous selection ID to lookup the item properties
         firebase.get(('item/' + itemID))
             .then( itemProps => {
 
                 //Get the standard itemDetail object
                 responseTemplate = itemDetail(itemID, itemProps);
-
-                
                 
                 //Add in a back button
                 responseTemplate.attachments[0].actions = [

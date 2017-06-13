@@ -138,7 +138,7 @@ class Match extends FirebaseBaseController{
                 "character_id_won": 0,
                 "date_ended": 0,
                 "date_started": 0,
-                "number_turns": 0,
+                "number_turns": 1,
                 "starting_character_ids": 0,
                 "zone_id": 0
             };
@@ -147,19 +147,25 @@ class Match extends FirebaseBaseController{
             firebase.create('match', newMatchDetails)
                 .then( newMatch =>{
 
-                    console.log('newMatchID: ', newMatch);
+                    //Get current date
+                    var todayDate = new Date();
 
-                    var today = new Date();
+                    //"Round" the date to remove time
+                    todayDate.setHours(0);
+                    todayDate.setMinutes(0);
+                    todayDate.setSeconds(0);
 
-                    console.log('today: ', today);
-                    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+                    //Create unix timestamp
+                    var now = (todayDate.getTime() / 1000);
 
-                    console.log('tomorrow: ', tomorrow);
-                    var startDate = tomorrow + (11 * 60 * 60 * 1000);
+                    //Increment today's date to tomorrow
+                    var tomorrow = now + (24 * 60 * 60);
 
-                    console.log('startDate: ', startDate);
+                    //Increment tomorrow to include time
+                    //TODO: start time is hardcoded here need to add to config
+                    //var nextMatchStart = tomorrow + (11 * 60 * 60);
 
-                    //TODO: need to dynamically generate the next match start
+                    //TODO: for testing, hard coded start date that has passed, replace with above
                     var nextMatchStart = 1496098800;
 
                     //Update the global state to the new match ID
