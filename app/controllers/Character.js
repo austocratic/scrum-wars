@@ -113,7 +113,7 @@ class Character extends FirebaseBaseController{
 
     equipItem(equippedItem){
 
-        console.log('called equipItem')
+        console.log('called equipItem');
 
         return new Promise((resolve, reject)=>{
 
