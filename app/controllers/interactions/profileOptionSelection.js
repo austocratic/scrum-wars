@@ -14,6 +14,8 @@ exports.profileOptionSelection = payload => {
     switch(payload.actions[0].name){
         case 'equip_item':
 
+            console.log('hit equip_item condition in profileOptionSelection');
+
             var equippedItem = new Item();
             equippedItem.setByID(payload.actions[0].value)
                 .then(()=>{

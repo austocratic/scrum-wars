@@ -168,6 +168,8 @@ class Character extends FirebaseBaseController{
                                     //If there is a match, add to the array of item IDs to unequip unless it already exists
                                     if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
 
+                                        console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
+
                                         itemIDsToUnequip.push(eachItem.item_id);
                                         
                                         //Now that we have an array of item IDs that need to be unequipped, Iterate through them unequipping them.
@@ -176,6 +178,8 @@ class Character extends FirebaseBaseController{
                                             .then(()=>{
                                                 resolve()
                                             });
+                                    } else {
+
                                     }
                                 })
                             })
@@ -186,7 +190,7 @@ class Character extends FirebaseBaseController{
                             .then(()=>{
 
                                 //Create a local array for mutation
-                                var updatedEquipped = this.props.inventory.unequipped;
+                                var updatedEquipped = this.props.inventory.equipped;
 
                                 //Add the unequipped item
                                 updatedEquipped.push(equippedItem);
