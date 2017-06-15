@@ -14,6 +14,8 @@ exports.inventoryItemInspection = payload => {
 
         //get the value of the item selected
         var itemID = payload.actions[0].selected_options[0].value;
+        
+        console.log('itemID of inventoryItemInspection: ', itemID);
 
         var localItem = new Item();
         localItem.setByID(itemID)

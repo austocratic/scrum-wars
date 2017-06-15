@@ -16,6 +16,8 @@ exports.equipmentItemInspection = payload => {
         //TODO verify that this is right payload reference - file inventoryItemInspection has a different property ref here
         var itemID = payload.actions[0].value;
 
+        console.log('itemID of equipmentItemInspection: ', itemID);
+
         var localItem = new Item();
         localItem.setByID(itemID)
         //firebase.get(('item/' + itemID))
@@ -29,7 +31,7 @@ exports.equipmentItemInspection = payload => {
                     //Add in a "unequip" button
                     {
                         "name": "unequip_item",
-                        "text": "Equip Item",
+                        "text": "Unequip Item",
                         "style": "default",
                         "type": "button",
                         "value": localItem.props.id
