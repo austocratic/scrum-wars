@@ -79,7 +79,7 @@ exports.characterProfile = payload => {
 
 
 //TODO: testing async version - I may not be able to do it at this level currently causing crash
-/*
+
 exports.characterProfile = async payload => {
 
     //Get the template for character profile
@@ -142,4 +142,4 @@ exports.characterProfile = async payload => {
 
     return(template);
     
-};*/
+};
