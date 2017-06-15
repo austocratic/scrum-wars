@@ -26,8 +26,9 @@ class FirebaseBaseController {
         });
     }*/
 
+    
     //TODO: verify that this works!
-    var setByProperty = async (property, lookupID) => {
+    async setByProperty(property, lookupID) {
 
         var firebaseReturn = await firebase.get(this.firebaseType, property, lookupID);
 
@@ -42,7 +43,7 @@ class FirebaseBaseController {
     
     
     /*
-    setByID(id){
+    var setByID = (id) => {
         return new Promise((resolve, reject)=>{
             firebase.get(this.firebaseType + '/' + id)
                 .then(firebaseReturn => {
@@ -55,7 +56,8 @@ class FirebaseBaseController {
     }*/
     
     //TODO: verify that this works!
-    var setByID = async (id) => {
+
+    async setByID(id) {
         
         var firebaseReturn = await firebase.get(this.firebaseType + '/' + id);
 
