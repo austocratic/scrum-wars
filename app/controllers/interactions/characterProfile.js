@@ -4,7 +4,7 @@ var characterProfile = require('../../slackTemplates/characterProfile').characte
 
 var Character = require('../Character').Character;
 
-/*
+
 exports.characterProfile = payload => {
 
     return new Promise( (resolve, reject) => {
@@ -75,11 +75,11 @@ exports.characterProfile = payload => {
             .catch(err=>{
                 console.log('error when calling setByProperty:', err);
             });
-};*/
+};
 
 
 //TODO: testing async version - I may not be able to do it at this level currently causing crash
-
+/*
 exports.characterProfile = async payload => {
 
     //Get the template for character profile
@@ -142,4 +142,4 @@ exports.characterProfile = async payload => {
 
     return(template);
     
-};
+};*/
