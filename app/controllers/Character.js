@@ -179,6 +179,7 @@ class Character extends FirebaseBaseController{
                                                 resolve()
                                             });
                                     } else {
+                                        resolve()
 
                                     }
                                 })
