@@ -199,8 +199,8 @@ class Character extends FirebaseBaseController{
                                 
                                 //Build a new inventory object where equipped item has been moved to unequipped array
                                 var updatedInventory = {
-                                    updatedEquipped,
-                                    updatedUnequipped
+                                    equipped: updatedEquipped,
+                                    unequipped: updatedUnequipped
                                 };
 
                                 //Update the character's inventory on the server
@@ -260,25 +260,27 @@ class Character extends FirebaseBaseController{
                 console.log('Unequipping, current inventory: ', JSON.stringify(this.props.inventory.equipped));
 
                 //Create a local array for mutation
-                var updatedEquipped = this.props.inventory.equipped;
+                //var updatedEquipped = this.props.inventory.equipped;
 
                 console.log('array element to splice: ', this.props.inventory.equipped.indexOf(itemToUnequip));
 
                 //Remove the element passed as argument
-                updatedEquipped.splice(this.props.inventory.equipped.indexOf(itemToUnequip), 1);
+                this.props.inventory.equipped.splice(this.props.inventory.equipped.indexOf(itemToUnequip), 1);
 
                 console.log('Updated equipped after splice: ', JSON.stringify(this.props.inventory.equipped));
 
                 //Create a local array for mutation
-                var updatedUnequipped = this.props.inventory.unequipped;
+                //var updatedUnequipped = this.props.inventory.unequipped;
 
                 //Add the unequipped item
-                updatedUnequipped.push(itemToUnequip);
+                this.props.inventory.unequipped.push(itemToUnequip);
+
+                console.log('Updated unequipped after push: ', JSON.stringify(this.props.inventory.unequipped));
 
                 //Build a new inventory object where equipped item has been moved to unequipped array
                 var updatedInventory = {
-                    updatedEquipped,
-                    updatedUnequipped
+                    equipped: this.props.inventory.equipped,
+                    unequipped: this.props.inventory.unequipped
                 };
                 
                 console.log('updatedInventory to be updated: ', JSON.stringify(updatedInventory));
