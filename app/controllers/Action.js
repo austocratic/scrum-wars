@@ -6,15 +6,15 @@ var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseCon
 var firebase = new Firebase();
 
 
-class Item extends FirebaseBaseController {
+class Action extends FirebaseBaseController {
     constructor() {
         super();
-        this.firebaseType = 'item'
+        this.firebaseType = 'action'
     }
 
 }
 
 
 module.exports = {
-    Item: Item
+    Action: Action
 };

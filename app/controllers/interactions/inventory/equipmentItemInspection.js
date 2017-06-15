@@ -13,17 +13,27 @@ exports.equipmentItemInspection = payload => {
     return new Promise((resolve, reject)=>{
 
         //get the value of the item selected or "back" if the user selected to go back
+        //TODO verify that this is right payload reference - file inventoryItemInspection has a different property ref here
         var itemID = payload.actions[0].value;
 
-        //Use previous selection ID to lookup the item properties
-        firebase.get(('item/' + itemID))
-            .then( itemProps => {
+        var localItem = new Item();
+        localItem.setByID(itemID)
+        //firebase.get(('item/' + itemID))
+            .then( () => {
 
                 //Get the standard itemDetail object
-                responseTemplate = itemDetail(itemID, itemProps);
+                responseTemplate = itemDetail(localItem.props.id, localItem.props);
                 
                 //Add in a back button
                 responseTemplate.attachments[0].actions = [
+                    //Add in a "unequip" button
+                    {
+                        "name": "unequip_item",
+                        "text": "Equip Item",
+                        "style": "default",
+                        "type": "button",
+                        "value": localItem.props.id
+                    },
                     {
                         "name": "equipment",
                         "text": "Back to equipment",

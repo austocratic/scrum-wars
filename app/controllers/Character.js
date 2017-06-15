@@ -145,6 +145,8 @@ class Character extends FirebaseBaseController{
                     })
                 });
 
+                //Now that we have an array of equipment objects in the format [ { slot_id: " ", item_id: ""  }, { slot_id: " ", item_id: ""  } ],
+                // we can determine what items need to be unequipped
                 Promise.all(equippedInventoryPromises)
                     .then(()=>{
 
@@ -153,49 +155,61 @@ class Character extends FirebaseBaseController{
 
                         var itemIDsToUnequip = [];
 
-                        //Iterate through the equipped item's slots and find any matches
-                        equippedItem.props.equipment_slots.filter( slotID =>{
-                            //Iterate through equippedItems
-                            equippedItems.forEach( eachItem =>{
+                        //Iterate through the equipped item's slots and find any matches and unequip them
+                        var unequippedInventoryPromises = equippedItem.props.equipment_slots.map( slotID =>{
 
-                                console.log('slotID: ', slotID);
-                                console.log('eachItem: ', eachItem);
+                            return new Promise((resolve, reject)=>{
+                                //Iterate through equippedItems
+                                equippedItems.forEach( eachItem =>{
 
-                                //If there is a match, add to the array of item IDs to unequip unless it already exists
-                                if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
-                                    itemIDsToUnequip.push(eachItem.item_id);
-                                }
+                                    console.log('slotID: ', slotID);
+                                    console.log('eachItem: ', eachItem);
+
+                                    //If there is a match, add to the array of item IDs to unequip unless it already exists
+                                    if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
+
+                                        itemIDsToUnequip.push(eachItem.item_id);
+                                        
+                                        //Now that we have an array of item IDs that need to be unequipped, Iterate through them unequipping them.
+                                        //This will update the server and .this character object
+                                        this.unequipItem(eachItem.item_id)
+                                            .then(()=>{
+                                                resolve()
+                                            });
+                                    }
+                                })
                             })
                         });
+                        
+                        //Wait until all equipment in inventory slots has been unequipped
+                        Promise.all(unequippedInventoryPromises)
+                            .then(()=>{
 
-                        console.log('itemIDsToUnequip: ', JSON.stringify(itemIDsToUnequip));
-                        //resolve(equippedItems)
+                                //Create a local array for mutation
+                                var updatedEquipped = this.props.inventory.unequipped;
+
+                                //Add the unequipped item
+                                updatedEquipped.push(equippedItem);
+
+                                var updatedUnequipped = this.props.inventory.unequipped;
+                                
+                                //Build a new inventory object where equipped item has been moved to unequipped array
+                                var updatedInventory = {
+                                    updatedEquipped,
+                                    updatedUnequipped
+                                };
+
+                                //Update the character's inventory on the server
+                                this.updateProperty('inventory', updatedInventory)
+                                    .then( () => {
+                                        resolve();
+                                    });
+                            })
                     });
-
-
+            
+            //TODO need to add functionality to remove effects from character's modified stats
 
             /*
-
-            //Array of equipment slots (some items take multiple slots)
-            var equipmentSlotIDs = equippedItem.props.equipment_slots;
-
-            //For each slot the equipment takes up, unequip the item already in that slot
-            equipmentSlotIDs.forEach( eachSlotID =>{
-
-                //Search through equipped inventory to find the piece that uses that slot
-                //var
-
-                this.unequipItem(this.props.inventory.equipped[eachSlotID]);
-
-                /*
-                //Remove previous item from that slot
-                this.unequipItem(this.props.inventory.equipped[eachSlot]);
-
-                //Update that slot to the equipped item's id
-                this.props.inventory.equipped[eachSlot] = equippedItem.props.id;*/
-        /*
-            });
-
             //Remove item from unequipped list
             var index = this.props.inventory.unequipped.indexOf(equippedItem.props.id);
 
@@ -220,24 +234,52 @@ class Character extends FirebaseBaseController{
                             resolve()
                         })
                 })
-            });
-
-            //Create a promise for updating unequipped inventory
-            characterUpdatePromises.push(this.updateProperty("inventory/unequipped", this.props.inventory.unequipped));
-
-            //Create a promise for updating equipped inventory
-            characterUpdatePromises.push(this.updateProperty("inventory/equipped", this.props.inventory.equipped));
-
-            //When all character property updates are done, resolve equipItem
-            Promise.all(characterUpdatePromises)
-                .then(()=>{
-                    resolve();
-                });*/
+            });*/
+            
         })
     }
 
-    unequipItem(unequippedItem){
-        
+    //Argument passed is an item ID that should be currently equipped.
+    //1.) Check that item ID passed is actually equipped
+    //2.) Remove from equipped array & add to unequipped array in one DB call
+    unequipItem(itemToUnequip){
+
+        console.log('called unequipItem');
+
+        return new Promise((resolve, reject)=>{
+
+            //Verify that the item ID passed in is in the equipped array
+            if (this.props.inventory.equipped.indexOf(itemToUnequip) === -1) {
+                reject('ERROR - itemID is not equipped by this character')
+            } else {
+
+                //Create a local array for mutation
+                var updatedEquipped = this.props.inventory.equipped;
+
+                //Remove the element passed as argument
+                updatedEquipped.slice(this.props.inventory.equipped.indexOf(itemToUnequip));
+
+                //Create a local array for mutation
+                var updatedUnequipped = this.props.inventory.unequipped;
+
+                //Add the unequipped item
+                updatedUnequipped.push(itemToUnequip);
+
+                //Build a new inventory object where equipped item has been moved to unequipped array
+                var updatedInventory = {
+                    updatedEquipped,
+                    updatedUnequipped
+                };
+
+                //TODO need to add functionality to remove effects from character's modified stats
+                
+                //Update the character's inventory on the server & locally
+                this.updateProperty('inventory', updatedInventory)
+                    .then( () => {
+                        resolve();
+                    });
+            }
+        })
     }
 
     /*

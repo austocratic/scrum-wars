@@ -29,11 +29,35 @@ exports.profileOptionSelection = payload => {
                                         'text': 'You equip ' + equippedItem.props.name
                                     };
                                     
-                                    resolve();
+                                    resolve(slackResponseText);
                                 })
                         })
                 });
 
+            break;
+        
+        case 'unequip_item':
+
+            var unequippedItem = new Item();
+            unequippedItem.setByID(payload.actions[0].value)
+                .then(()=>{
+
+                    var playerCharacter = new Character();
+                    playerCharacter.setByProperty('user_id', payload.user.id)
+                        .then(()=>{
+
+                            playerCharacter.unequipItem(unequippedItem)
+                                .then(()=>{
+
+                                    var slackResponseText = {
+                                        'text': 'You unequip ' + unequippedItem.props.name
+                                    };
+
+                                    resolve(slackResponseText);
+                                })
+                        })
+                });
+            
             break;
 
         //TODO remove this as default, make the other name responses more robust

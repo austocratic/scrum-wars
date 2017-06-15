@@ -7,6 +7,10 @@ var actionCoolDown = require('../../slackTemplates/actionCoolDown').actionCoolDo
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
+var Action = require('../Action').Action;
+var Character = require('../Character').Character;
+var Match = require('../Match').Match;
+
 var getCharacters = require('../../components/zone/getCharacters').getCharacters;
 
 exports.playerActionSelection = payload => {
@@ -26,7 +30,7 @@ exports.playerActionSelection = payload => {
         console.log('character in areActionsAvailable: ', JSON.stringify(character));
 
         //Determine if the character used an action on the current turn
-        if (character.turn_action_used <= match.number_turns) {
+        if (character.props.turn_action_used <= match.number_turns) {
             return true
         } else {
             return false
@@ -40,7 +44,7 @@ exports.playerActionSelection = payload => {
         console.log('actionID: ', actionID);
         console.log('action: ', action);
 
-        var characterAction = character.actions.find( singleAction =>{
+        var characterAction = character.props.actions.find( singleAction =>{
            return singleAction.action_id === actionID
         });
 
@@ -60,34 +64,27 @@ exports.playerActionSelection = payload => {
     
     return new Promise((resolve, reject) => {
 
-        firebase.get('character', 'user_id', userID)
-            .then( characterResponse => {
+        var playerCharacter = new Character();
+        playerCharacter.setByProperty('user_id', userID)
+            .then( () => {
 
-                //Character's ID
-                var characterID = Object.keys(characterResponse)[0];
-
-                var characterDetails = characterResponse[characterID];
-
-                //Get the details about the action called
-                firebase.get('action/' + payload.actions[0].value)
-                    .then(actionDetails => {
+                var actionCalled = new Action();
+                actionCalled.setByID(payload.actions[0].value)
+                    .then( () => {
 
                         //Lookup the current match ID
                         firebase.get('global_state/match_id')
                             .then(matchID => {
 
                                 //Get the details of that match
-                                firebase.get('match/' + matchID)
-                                    .then(matchDetails => {
+                                var currentMatch = new Match();
+                                currentMatch.setByID(matchID)
+                                    .then( () => {
 
-                                        initiateAction(characterID, characterDetails, matchDetails, actionDetails)
+                                        initiateAction(playerCharacter, currentMatch.props, actionCalled.props)
                                             .then( responseTemplate =>{
                                                 resolve(responseTemplate)
                                             });
-
-                                        //TODO I think this can be deleted, this check happens elsewhere
-                                        //checkForDeath(characterDetails.zone_id);
-
                                     });
                             });
                     });
@@ -95,7 +92,7 @@ exports.playerActionSelection = payload => {
     });
 
     //Call action specifics
-    function initiateAction(characterID, characterDetails, matchDetails, actionDetails){
+    function initiateAction(playerCharacter, matchDetails, actionDetails){
 
         return new Promise((resolve, reject) =>{
 
@@ -106,14 +103,14 @@ exports.playerActionSelection = payload => {
                 case '-Kjpe29q_fDkJG-73AQO':
 
                     //If actions are available build the attack template, otherwise build the unavailable template
-                    if (areActionsAvailable(characterDetails, matchDetails)) {
+                    if (areActionsAvailable(playerCharacter, matchDetails)) {
 
-                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
+                        if (isActionAvailable(playerCharacter.props.id, playerCharacter, payload.actions[0].value, actionDetails, matchDetails)) {
 
                             //Return the default template
                             responseTemplate = attackCharacterSelection();
 
-                            getCharacters.getNamesExcludePlayerCharacter(characterDetails.zone_id, characterID)
+                            getCharacters.getNamesExcludePlayerCharacter(playerCharacter.props.zone_id, playerCharacter.props.id)
                                 .then( namesInZone =>{
 
                                     console.log('namesInZones: ', JSON.stringify(namesInZone));
@@ -136,7 +133,7 @@ exports.playerActionSelection = payload => {
                                 });
                         } else {
 
-                            var characterAction = characterDetails.actions.find( singleAction =>{
+                            var characterAction = playerCharacter.props.actions.find( singleAction =>{
                                 return singleAction.action_id === payload.actions[0].value
                             });
 
@@ -158,25 +155,18 @@ exports.playerActionSelection = payload => {
                 case '-KjpeJT7Oct3ZCtLhENO':
 
                     //If actions are available build the attack template, otherwise build the unavailable template
-                    if (areActionsAvailable(characterDetails, matchDetails)) {
+                    if (areActionsAvailable(playerCharacter, matchDetails)) {
 
-                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
+                        if (isActionAvailable(playerCharacter.props.id, playerCharacter, payload.actions[0].value, actionDetails, matchDetails)) {
 
                     //Return the default template
                     responseTemplate = defendCharacterSelection();
 
                     //Get the slack user ID who called the action
-                    userID = payload.user.id;
-
-                    var updates = {
-                        "is_defending": true
-                    };
-
-                    //Create a table reference to be used for locating the character
-                    var tableRef = 'character/' + characterID;
+                    //userID = payload.user.id;
 
                     //Set your is_defending property
-                    firebase.update(tableRef, updates)
+                    playerCharacter.updateProperty('is_defending', true)
                         .then(()=> {
                             //Then return the new template
                             resolve(responseTemplate)
@@ -184,7 +174,7 @@ exports.playerActionSelection = payload => {
 
                         } else {
 
-                            var characterAction = characterDetails.actions.find( singleAction =>{
+                            var characterAction = playerCharacter.props.actions.find( singleAction =>{
                                 return singleAction.action_id === payload.actions[0].value
                             });
 
@@ -205,15 +195,14 @@ exports.playerActionSelection = payload => {
                 case '-Kkdk_CD5vx8vRGQD268':
 
                     //If actions are available build the attack template, otherwise build the unavailable template
-                    if (areActionsAvailable(characterDetails, matchDetails)) {
+                    if (areActionsAvailable(playerCharacter, matchDetails)) {
 
-                        //Check to see if action is still cooling down
-                        if (isActionAvailable(characterID, characterDetails, payload.actions[0].value, actionDetails, matchDetails)) {
-                            
+                        if (isActionAvailable(playerCharacter.props.id, playerCharacter, payload.actions[0].value, actionDetails, matchDetails)) {
+
 
                         } else {
 
-                            var characterAction = characterDetails.actions.find( singleAction =>{
+                            var characterAction = playerCharacter.props.actions.find( singleAction =>{
                                 return singleAction.action_id === payload.actions[0].value
                             });
 
@@ -237,7 +226,7 @@ exports.playerActionSelection = payload => {
                     responseTemplate = shopCharacterSelection();
 
                     //Get the merchant in the player's zone
-                    firebase.get('merchant', 'zone_id', characterDetails.zone_id)
+                    firebase.get('merchant', 'zone_id', playerCharacter.props.zone_id)
                         .then(merchantsInZone => {
 
                             //Get the ID of the first merchant (should only be one per zone)
