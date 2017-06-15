@@ -280,6 +280,8 @@ class Character extends FirebaseBaseController{
                     updatedEquipped,
                     updatedUnequipped
                 };
+                
+                console.log('updatedInventory to be updated: ', JSON.stringify(updatedInventory));
 
                 //TODO need to add functionality to remove effects from character's modified stats
                 

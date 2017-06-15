@@ -87,6 +87,9 @@ class FirebaseBaseController {
                     //If successfully updated property on the server, update locally
                     //TODO this will likely have issues as I sometimes pass a REST reference in as "propertyToUpdate"  I should parse this into object reference
                     //TODO propertyToUpdate = find and replace "/" with "."
+
+                    console.log('called firebasecontroller updateProperty, updating property: ', this.props[propertyToUpdate]);
+                    console.log('called firebasecontroller updateProperty, updated to: ', newValue);
                     this.props[propertyToUpdate] = newValue;
                     
                     resolve();
