@@ -257,11 +257,17 @@ class Character extends FirebaseBaseController{
                 reject('ERROR - itemID is not equipped by this character')
             } else {
 
+                console.log('Unequipping, current inventory: ', JSON.stringify(this.props.inventory.equipped));
+
                 //Create a local array for mutation
                 var updatedEquipped = this.props.inventory.equipped;
 
+                console.log('array element to splice: ', this.props.inventory.equipped.indexOf(itemToUnequip));
+
                 //Remove the element passed as argument
-                updatedEquipped.slice(this.props.inventory.equipped.indexOf(itemToUnequip));
+                updatedEquipped.splice(this.props.inventory.equipped.indexOf(itemToUnequip), 1);
+
+                console.log('Updated equipped after splice: ', JSON.stringify(this.props.inventory.equipped));
 
                 //Create a local array for mutation
                 var updatedUnequipped = this.props.inventory.unequipped;
