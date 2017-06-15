@@ -162,8 +162,8 @@ class Character extends FirebaseBaseController{
                                 //Iterate through equippedItems
                                 equippedItems.forEach( eachItem =>{
 
-                                    console.log('slotID: ', slotID);
-                                    console.log('eachItem: ', eachItem);
+                                   // console.log('slotID: ', slotID);
+                                   // console.log('eachItem: ', eachItem);
 
                                     //If there is a match, add to the array of item IDs to unequip unless it already exists
                                     if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
@@ -185,7 +185,8 @@ class Character extends FirebaseBaseController{
                                 })
                             })
                         });
-                        
+
+                        /*
                         //Wait until all equipment in inventory slots has been unequipped
                         Promise.all(unequippedInventoryPromises)
                             .then(()=>{
@@ -209,7 +210,7 @@ class Character extends FirebaseBaseController{
                                     .then( () => {
                                         resolve();
                                     });
-                            })
+                            })*/
                     });
             
             //TODO need to add functionality to remove effects from character's modified stats
