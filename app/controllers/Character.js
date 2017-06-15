@@ -132,7 +132,7 @@ class Character extends FirebaseBaseController{
                                 //Iterate over that item's equipment_slots property adding to equippedSlots
                                 singleEquipment.props.equipment_slots.forEach( equippedItemSlotID => {
 
-                                    console.log('equippedItemSlotID: ', equippedItemSlotID);
+                                    //console.log('equippedItemSlotID: ', equippedItemSlotID);
 
                                     equippedItems.push({
                                         "slot_id": equippedItemSlotID,
@@ -150,7 +150,7 @@ class Character extends FirebaseBaseController{
                 Promise.all(equippedInventoryPromises)
                     .then(()=>{
 
-                        console.log('equippedItems array of objects: ', JSON.stringify(equippedItems));
+                        //console.log('equippedItems array of objects: ', JSON.stringify(equippedItems));
                         //Now I have an array of objects
 
                         var itemIDsToUnequip = [];
@@ -168,7 +168,7 @@ class Character extends FirebaseBaseController{
                                     //If there is a match, add to the array of item IDs to unequip unless it already exists
                                     if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
 
-                                        console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
+                                        //console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
 
                                         itemIDsToUnequip.push(eachItem.item_id);
                                         
@@ -176,6 +176,7 @@ class Character extends FirebaseBaseController{
                                         //This will update the server and .this character object
                                         this.unequipItem(eachItem.item_id)
                                             .then(()=>{
+                                                console.log('Local inventory after item was unequipped: ', JSON.stringify(this.props.inventory));
                                                 resolve()
                                             });
                                     } else {
@@ -186,8 +187,10 @@ class Character extends FirebaseBaseController{
                             })
                         });
 
-                        /*
+                        
                         //Wait until all equipment in inventory slots has been unequipped
+                        //Then add the originally equipped item
+                        /*
                         Promise.all(unequippedInventoryPromises)
                             .then(()=>{
 
@@ -208,6 +211,9 @@ class Character extends FirebaseBaseController{
                                 //Update the character's inventory on the server
                                 this.updateProperty('inventory', updatedInventory)
                                     .then( () => {
+
+                                        console.log('Local inventory property after ')
+
                                         resolve();
                                     });
                             })*/

@@ -13,7 +13,6 @@ exports.equipmentItemInspection = payload => {
     return new Promise((resolve, reject)=>{
 
         //get the value of the item selected or "back" if the user selected to go back
-        //TODO verify that this is right payload reference - file inventoryItemInspection has a different property ref here
         var itemID = payload.actions[0].value;
 
         console.log('itemID of equipmentItemInspection: ', itemID);
