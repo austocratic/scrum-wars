@@ -168,7 +168,7 @@ class Character extends FirebaseBaseController{
                                     //If there is a match, add to the array of item IDs to unequip unless it already exists
                                     if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1){
 
-                                        //console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
+                                        console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
 
                                         itemIDsToUnequip.push(eachItem.item_id);
                                         
@@ -265,17 +265,17 @@ class Character extends FirebaseBaseController{
                 reject('ERROR - itemID is not equipped by this character')
             } else {
 
-                console.log('Unequipping, current inventory: ', JSON.stringify(this.props.inventory.equipped));
+                //console.log('Unequipping, current inventory: ', JSON.stringify(this.props.inventory.equipped));
 
                 //Create a local array for mutation
                 //var updatedEquipped = this.props.inventory.equipped;
 
-                console.log('array element to splice: ', this.props.inventory.equipped.indexOf(itemToUnequip));
+                //console.log('array element to splice: ', this.props.inventory.equipped.indexOf(itemToUnequip));
 
                 //Remove the element passed as argument
                 this.props.inventory.equipped.splice(this.props.inventory.equipped.indexOf(itemToUnequip), 1);
 
-                console.log('Updated equipped after splice: ', JSON.stringify(this.props.inventory.equipped));
+                //console.log('Updated equipped after splice: ', JSON.stringify(this.props.inventory.equipped));
 
                 //Create a local array for mutation
                 //var updatedUnequipped = this.props.inventory.unequipped;
@@ -283,7 +283,7 @@ class Character extends FirebaseBaseController{
                 //Add the unequipped item
                 this.props.inventory.unequipped.push(itemToUnequip);
 
-                console.log('Updated unequipped after push: ', JSON.stringify(this.props.inventory.unequipped));
+                //console.log('Updated unequipped after push: ', JSON.stringify(this.props.inventory.unequipped));
 
                 //Build a new inventory object where equipped item has been moved to unequipped array
                 var updatedInventory = {
@@ -291,7 +291,7 @@ class Character extends FirebaseBaseController{
                     unequipped: this.props.inventory.unequipped
                 };
                 
-                console.log('updatedInventory to be updated: ', JSON.stringify(updatedInventory));
+                //console.log('updatedInventory to be updated: ', JSON.stringify(updatedInventory));
 
                 //TODO need to add functionality to remove effects from character's modified stats
                 
