@@ -215,6 +215,9 @@ class Character extends FirebaseBaseController{
                         Promise.all(unequippedInventoryPromises)
                             .then(()=>{
 
+                                console.log('Finished unequipping items, current inventory: ', JSON.stringify(this.props.inventory));
+
+                                /*
                                 //Create a local array for mutation
                                 //var updatedEquipped = this.props.inventory.equipped;
 
@@ -228,8 +231,6 @@ class Character extends FirebaseBaseController{
                                 //Remove the unequipped item from unequipped
                                 this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem), 1);
 
-
-                                
                                 //Build a new inventory object where equipped item has been moved to unequipped array
                                 var updatedInventory = {
                                     equipped: this.props.inventory.equipped,
@@ -240,7 +241,7 @@ class Character extends FirebaseBaseController{
                                 this.updateProperty('inventory', updatedInventory)
                                     .then( () => {
                                         resolve();
-                                    });
+                                    });*/
                             })
                     });
             
