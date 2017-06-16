@@ -150,15 +150,12 @@ class Character extends FirebaseBaseController{
                 Promise.all(equippedInventoryPromises)
                     .then(()=>{
 
-                        //console.log('equippedItems array of objects: ', JSON.stringify(equippedItems));
-                        //Now I have an array of objects
-
                         var itemIDsToUnequip = [];
 
                         //Iterate through the equipped item objects to find all the slots that need to be unequipped
                         equippedItems.forEach( eachItem =>{
 
-                            //Filter the list of equipped items for ones that match the slots of the item character is trying to equip
+                            //Push item Ids to itemIDsToUnequip if they match the slot of an item attempting to equip
                             equippedItem.props.equipment_slots.forEach( slotID =>{
 
                                 if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1) {
@@ -166,14 +163,18 @@ class Character extends FirebaseBaseController{
                                     itemIDsToUnequip.push(eachItem.item_id)
                                 }
                             });
-
-                            //For each equipped item, look through the slots of the item character is equipping
-                            //equippedItem.props.equipment_slots.forEach( slotID =>{
-
-                            //})
                         });
 
-                        console.log('FInal list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
+                        console.log('Final list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
+
+                        //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
+                        var unequippedInventoryPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
+                            this.unequipItem(itemIDtoUnequip)
+                                .then(()=>{
+                                    console.log('Local inventory after item was unequipped: ', JSON.stringify(this.props.inventory));
+                                    resolve()
+                                });
+                        });
 
 
                         /*
