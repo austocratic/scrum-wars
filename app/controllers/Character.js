@@ -165,6 +165,7 @@ class Character extends FirebaseBaseController{
                             });
                         });
 
+                        /*
                         console.log('Final list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
 
                         //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
@@ -175,7 +176,26 @@ class Character extends FirebaseBaseController{
                                         resolve()
                                     });
                             })
-                        });
+                        });*/
+
+                        function serialAsyncMap(collection, fn) {
+
+                            let results = [];
+                            let promise = Promise.resolve();
+
+                            for (let item of collection) {
+                                promise = promise.then(() => fn(item))
+                                    .then(result => {
+                                        console.log('resolved first item. inventory: ', JSON.stringify(this.props.inventory));
+                                        results.push(result)
+                                    });
+                            }
+
+                            console.log('performed all iterations.  Inventory: ', JSON.stringify(this.props.inventory));
+                            return promise.then(() => results);
+                        }
+
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem);
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
@@ -209,6 +229,7 @@ class Character extends FirebaseBaseController{
                                 })
                             })
                         });*/
+
 
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
