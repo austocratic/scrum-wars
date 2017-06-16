@@ -186,12 +186,14 @@ class Character extends FirebaseBaseController{
                             for (let item of collection) {
                                 promise = promise.then(() => fn(item))
                                     .then(result => {
-                                        console.log('resolved first item. inventory: ', JSON.stringify(this.props.inventory));
+                                        console.log('resolved first item.');
+                                        //console.log('resolved first item. inventory: ', JSON.stringify(this.props.inventory));
                                         results.push(result)
                                     });
                             }
 
-                            console.log('performed all iterations.  Inventory: ', JSON.stringify(this.props.inventory));
+                            console.log('performed all iterations.');
+                            //console.log('performed all iterations.  Inventory: ', JSON.stringify(this.props.inventory));
                             return promise.then(() => results);
                         }
 
