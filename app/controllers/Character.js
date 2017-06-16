@@ -230,7 +230,7 @@ class Character extends FirebaseBaseController{
                             })
                         });*/
 
-
+                        /*
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
                         Promise.all(unequippedInventoryPromises)
@@ -238,7 +238,7 @@ class Character extends FirebaseBaseController{
 
                                 console.log('Finished unequipping items, current inventory: ', JSON.stringify(this.props.inventory));
 
-                                /*
+
                                 //Create a local array for mutation
                                 //var updatedEquipped = this.props.inventory.equipped;
 
@@ -262,8 +262,8 @@ class Character extends FirebaseBaseController{
                                 this.updateProperty('inventory', updatedInventory)
                                     .then( () => {
                                         resolve();
-                                    });*/
-                            })
+                                    });
+                            })*/
                     });
             
             //TODO need to add functionality to remove effects from character's modified stats
