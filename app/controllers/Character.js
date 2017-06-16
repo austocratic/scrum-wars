@@ -169,13 +169,13 @@ class Character extends FirebaseBaseController{
 
                         //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
                         var unequippedInventoryPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
-                            this.unequipItem(itemIDtoUnequip)
-                                .then(()=>{
-                                    //console.log('Local inventory after item was unequipped: ', JSON.stringify(this.props.inventory));
-                                    resolve()
-                                });
+                            return new Promise(()=>{
+                                this.unequipItem(itemIDtoUnequip)
+                                    .then(()=>{
+                                        resolve()
+                                    });
+                            })
                         });
-
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
@@ -210,36 +210,38 @@ class Character extends FirebaseBaseController{
                             })
                         });*/
 
-                        
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
-                        /*
                         Promise.all(unequippedInventoryPromises)
                             .then(()=>{
 
                                 //Create a local array for mutation
-                                var updatedEquipped = this.props.inventory.equipped;
+                                //var updatedEquipped = this.props.inventory.equipped;
 
                                 //Add the unequipped item
-                                updatedEquipped.push(equippedItem);
+                                //updatedEquipped.push(equippedItem);
 
-                                var updatedUnequipped = this.props.inventory.unequipped;
+                                this.props.inventory.equipped.push(equippedItem);
+
+                                //var updatedUnequipped = this.props.inventory.unequipped;
+
+                                //Remove the unequipped item from unequipped
+                                this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem), 1);
+
+
                                 
                                 //Build a new inventory object where equipped item has been moved to unequipped array
                                 var updatedInventory = {
-                                    equipped: updatedEquipped,
-                                    unequipped: updatedUnequipped
+                                    equipped: this.props.inventory.equipped,
+                                    unequipped: this.props.inventory.unequipped
                                 };
 
                                 //Update the character's inventory on the server
                                 this.updateProperty('inventory', updatedInventory)
                                     .then( () => {
-
-                                        console.log('Local inventory property after ')
-
                                         resolve();
                                     });
-                            })*/
+                            })
                     });
             
             //TODO need to add functionality to remove effects from character's modified stats
@@ -279,7 +281,7 @@ class Character extends FirebaseBaseController{
     //2.) Remove from equipped array & add to unequipped array in one DB call
     unequipItem(itemToUnequip){
 
-        console.log('called unequipItem');
+        console.log('called unequipItem, item to unequip: ', itemToUnequip);
 
         return new Promise((resolve, reject)=>{
 
