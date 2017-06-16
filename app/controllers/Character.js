@@ -155,6 +155,28 @@ class Character extends FirebaseBaseController{
 
                         var itemIDsToUnequip = [];
 
+                        //Iterate through the equipped item objects to find all the slots that need to be unequipped
+                        equippedItems.forEach( eachItem =>{
+
+                            //Filter the list of equipped items for ones that match the slots of the item character is trying to equip
+                            equippedItem.props.equipment_slots.forEach( slotID =>{
+
+                                if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1) {
+                                    console.log('Found an item id to unequip: ', eachItem.item_id);
+                                    itemIDsToUnequip.push(eachItem.item_id)
+                                }
+                            });
+
+                            //For each equipped item, look through the slots of the item character is equipping
+                            //equippedItem.props.equipment_slots.forEach( slotID =>{
+
+                            //})
+                        });
+
+                        console.log('FInal list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
+
+
+                        /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
                         var unequippedInventoryPromises = equippedItem.props.equipment_slots.map( slotID =>{
 
@@ -170,7 +192,7 @@ class Character extends FirebaseBaseController{
 
                                         console.log('Found an item that is currently equipped and should be unequipped: ', eachItem.item_id);
 
-                                        itemIDsToUnequip.push(eachItem.item_id);
+                                        //itemIDsToUnequip.push(eachItem.item_id);
                                         
                                         //Now that we have an array of item IDs that need to be unequipped, Iterate through them unequipping them.
                                         //This will update the server and .this character object
@@ -185,7 +207,7 @@ class Character extends FirebaseBaseController{
                                     }
                                 })
                             })
-                        });
+                        });*/
 
                         
                         //Wait until all equipment in inventory slots has been unequipped
@@ -272,7 +294,7 @@ class Character extends FirebaseBaseController{
 
                 //console.log('array element to splice: ', this.props.inventory.equipped.indexOf(itemToUnequip));
 
-                //Remove the element passed as argument
+                //Remove the item from local equipped array
                 this.props.inventory.equipped.splice(this.props.inventory.equipped.indexOf(itemToUnequip), 1);
 
                 //console.log('Updated equipped after splice: ', JSON.stringify(this.props.inventory.equipped));
@@ -280,7 +302,7 @@ class Character extends FirebaseBaseController{
                 //Create a local array for mutation
                 //var updatedUnequipped = this.props.inventory.unequipped;
 
-                //Add the unequipped item
+                //Add the unequipped item to the local unequipped array
                 this.props.inventory.unequipped.push(itemToUnequip);
 
                 //console.log('Updated unequipped after push: ', JSON.stringify(this.props.inventory.unequipped));
