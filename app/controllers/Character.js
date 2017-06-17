@@ -170,7 +170,7 @@ class Character extends FirebaseBaseController{
 
                         //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
                         var unequippedInventoryPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
-                            return new Promise(()=>{
+                            return new Promise((resolve, reject)=>{
                                 this.unequipItem(itemIDtoUnequip)
                                     .then(()=>{
                                         resolve()
@@ -264,7 +264,7 @@ class Character extends FirebaseBaseController{
                             })
                         });*/
 
-                        
+
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
                         Promise.all(unequippedInventoryPromises)
@@ -340,8 +340,6 @@ class Character extends FirebaseBaseController{
         console.log('called unequipItem, item to unequip: ', itemToUnequip);
 
         return new Promise((resolve, reject)=>{
-
-            resolve()
 
             //Verify that the item ID passed in is in the equipped array
             if (this.props.inventory.equipped.indexOf(itemToUnequip) === -1) {
