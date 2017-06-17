@@ -311,11 +311,8 @@ class Character extends FirebaseBaseController{
 
         return new Promise((resolve, reject)=>{
 
-            console.log('this.props test: ', JSON.stringify(this.props));
-
-            console.log('resolving test unequipItem');
             resolve()
-            /*
+
             //Verify that the item ID passed in is in the equipped array
             if (this.props.inventory.equipped.indexOf(itemToUnequip) === -1) {
                 reject('ERROR - itemID is not equipped by this character')
@@ -356,7 +353,7 @@ class Character extends FirebaseBaseController{
                     .then( () => {
                         resolve();
                     });
-            }*/
+            }
         })
     }
 
