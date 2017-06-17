@@ -165,8 +165,8 @@ class Character extends FirebaseBaseController{
                             });
                         });
 
-                        /*
-                        console.log('Final list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
+
+                        //console.log('Final list of item Ids to unequip: ', JSON.stringify(itemIDsToUnequip));
 
                         //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
                         var unequippedInventoryPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
@@ -176,29 +176,28 @@ class Character extends FirebaseBaseController{
                                         resolve()
                                     });
                             })
-                        });*/
-
+                        });
+/*
                         function serialAsyncMap(collection, fn) {
 
-                            return new Promise((resolve, reject)=>{
+                            let results = [];
+                            let promise = Promise.resolve();
 
-                                let results = [];
-                                let promise = Promise.resolve();
-
-                                for (let item of collection) {
-                                    promise = promise.then(() => fn(item))
-                                        .then(result => {
-                                            results.push(result)
-                                        });
-                                }
-                                return promise.then(() => {
-                                    resolve();
-                                    return results
-                                });
+                            for (let item of collection) {
+                                promise = promise.then(() => fn(item))
+                                    .then(result => {
+                                        results.push(result)
+                                    });
+                            }
+                            return promise.then(() => {
+                                return results
                             });
                         }
 
-                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this))
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));*/
+
+
+                            /*
                             .then(()=>{
                                 console.log('finished unequipping items already equipped');
 
@@ -230,7 +229,7 @@ class Character extends FirebaseBaseController{
                                     .then( () => {
                                         resolve();
                                     });
-                            });
+                            });*/
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
@@ -265,7 +264,7 @@ class Character extends FirebaseBaseController{
                             })
                         });*/
 
-                        /*
+                        
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
                         Promise.all(unequippedInventoryPromises)
@@ -298,7 +297,7 @@ class Character extends FirebaseBaseController{
                                     .then( () => {
                                         resolve();
                                     });
-                            })*/
+                            })
                     });
             
             //TODO need to add functionality to remove effects from character's modified stats
