@@ -197,7 +197,7 @@ class Character extends FirebaseBaseController{
                             return promise.then(() => results);
                         }
 
-                        //serialAsyncMap(itemIDsToUnequip, this.unequipItem);
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem);
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
@@ -309,6 +309,9 @@ class Character extends FirebaseBaseController{
 
         return new Promise((resolve, reject)=>{
 
+            console.log('resolving test unequipItem');
+            resolve()
+            /*
             //Verify that the item ID passed in is in the equipped array
             if (this.props.inventory.equipped.indexOf(itemToUnequip) === -1) {
                 reject('ERROR - itemID is not equipped by this character')
@@ -349,7 +352,7 @@ class Character extends FirebaseBaseController{
                     .then( () => {
                         resolve();
                     });
-            }
+            }*/
         })
     }
 
