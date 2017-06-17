@@ -279,18 +279,20 @@ class Character extends FirebaseBaseController{
                                 //Add the unequipped item
                                 //updatedEquipped.push(equippedItem);
 
-                                this.props.inventory.equipped.push(equippedItem);
+                                this.props.inventory.equipped.push(equippedItem.props.id);
 
                                 //var updatedUnequipped = this.props.inventory.unequipped;
 
                                 //Remove the unequipped item from unequipped
-                                this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem), 1);
+                                this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem.props.id), 1);
 
                                 //Build a new inventory object where equipped item has been moved to unequipped array
                                 var updatedInventory = {
                                     equipped: this.props.inventory.equipped,
                                     unequipped: this.props.inventory.unequipped
                                 };
+                                
+                                console.log('Adding updatedInventory: ', JSON.stringify(updatedInventory));
 
                                 //Update the character's inventory on the server
                                 this.updateProperty('inventory', updatedInventory)
