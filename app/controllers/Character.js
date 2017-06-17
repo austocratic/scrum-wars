@@ -197,7 +197,35 @@ class Character extends FirebaseBaseController{
                             return promise.then(() => results);
                         }
 
-                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this))
+                            .then(()=>{
+                                console.log('finished unequipping items already equipped')
+
+                                //Create a local array for mutation
+                                //var updatedEquipped = this.props.inventory.equipped;
+
+                                //Add the unequipped item
+                                //updatedEquipped.push(equippedItem);
+
+                                this.props.inventory.equipped.push(equippedItem);
+
+                                //var updatedUnequipped = this.props.inventory.unequipped;
+
+                                //Remove the unequipped item from unequipped
+                                this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem), 1);
+
+                                //Build a new inventory object where equipped item has been moved to unequipped array
+                                var updatedInventory = {
+                                    equipped: this.props.inventory.equipped,
+                                    unequipped: this.props.inventory.unequipped
+                                };
+
+                                //Update the character's inventory on the server
+                                this.updateProperty('inventory', updatedInventory)
+                                    .then( () => {
+                                        resolve();
+                                    });
+                            });
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
