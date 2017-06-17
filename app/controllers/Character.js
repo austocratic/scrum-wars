@@ -37,7 +37,7 @@ class Character extends FirebaseBaseController{
 
                         var characterActionUpdatePromises = this.props.actions.map( singleAction => {
 
-                            console.log('resetting actions for character ID: ', this.props.id);
+                            //console.log('resetting actions for character ID: ', this.props.id);
                             
                             return new Promise((resolve, reject)=>{
 
@@ -183,8 +183,6 @@ class Character extends FirebaseBaseController{
                             let results = [];
                             let promise = Promise.resolve();
 
-                            //var boundUnequipItem =
-
                             for (let item of collection) {
                                 promise = promise.then(() => fn(item))
                                     .then(result => {
@@ -194,7 +192,7 @@ class Character extends FirebaseBaseController{
                                     });
                             }
 
-                            console.log('performed all iterations.');
+                            //console.log('performed all iterations.');
                             //console.log('performed all iterations.  Inventory: ', JSON.stringify(this.props.inventory));
                             return promise.then(() => results);
                         }

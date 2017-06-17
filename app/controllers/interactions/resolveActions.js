@@ -52,7 +52,7 @@ exports.resolveActions = (zoneID) => {
                         return singleCharacter.zone_id === zoneID && singleCharacter.hit_points <= 0
                     });
 
-                    console.log('Dead characters in zone: ', JSON.stringify(charactersInZone));
+                    //console.log('Dead characters in zone: ', JSON.stringify(charactersInZone));
 
                     resolve(charactersInZone);
                 });
@@ -148,37 +148,37 @@ exports.resolveActions = (zoneID) => {
                             .then( characterIDs =>{
 
                             if (isStarted) {
-                            console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(characterIDs));
+                            //console.log('resolveActions / checkForMatchStartOrWin livingCharacters: ', JSON.stringify(characterIDs));
 
                                 localMatch.determineWinner(characterIDs, zoneID, matchID);
 
                             } else {
 
-                                console.log('Checking to see if next match should start.  Next match start: ', globalState.next_match_start);
+                                //console.log('Checking to see if next match should start.  Next match start: ', globalState.next_match_start);
 
                                 var unixTime = (Date.now() / 1000);
 
-                                console.log('Current time stamp: ', unixTime);
+                                //console.log('Current time stamp: ', unixTime);
 
                                 //Compare the current time to the start time
                                 if (unixTime >= globalState.next_match_start) {
 
                                     //Reset the match
 
-                                    console.log('Current time > next_match_start, start the match!');
+                                    //console.log('Current time > next_match_start, start the match!');
 
                                     //Get all characters (regardless of zone)
                                     firebase.get('character')
                                         .then(allCharacters => {
 
-                                            console.log('allCharacters: ', JSON.stringify(allCharacters));
+                                            //console.log('allCharacters: ', JSON.stringify(allCharacters));
 
                                             var allCharacterIDs = Object.keys(allCharacters);
 
                                             //Iterate through those characters resetting their actions
                                             var characterUpdatePromises = allCharacterIDs.map(characterID => {
 
-                                                console.log('Iterating through characterIDs, characterID: ', characterID);
+                                                //console.log('Iterating through characterIDs, characterID: ', characterID);
 
                                                 return new Promise((resolve, reject)=>{
                                                     //Create a local character, set it's properties then reset its actions
