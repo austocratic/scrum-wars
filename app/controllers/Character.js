@@ -197,7 +197,7 @@ class Character extends FirebaseBaseController{
                             return promise.then(() => results);
                         }
 
-                        serialAsyncMap(itemIDsToUnequip, this.unequipItem);
+                        //serialAsyncMap(itemIDsToUnequip, this.unequipItem);
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
