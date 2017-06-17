@@ -180,35 +180,27 @@ class Character extends FirebaseBaseController{
 
                         function serialAsyncMap(collection, fn) {
 
-                            let results = [];
-                            let promise = Promise.resolve();
+                            return new Promise((resolve, reject)=>{
 
-                            for (let item of collection) {
-                                promise = promise.then(() => fn(item))
-                                    .then(result => {
-                                        console.log('resolved first item.');
-                                        //console.log('resolved first item. inventory: ', JSON.stringify(this.props.inventory));
-                                        results.push(result)
-                                    });
-                            }
+                                let results = [];
+                                let promise = Promise.resolve();
 
-                            //console.log('performed all iterations.');
-                            //console.log('performed all iterations.  Inventory: ', JSON.stringify(this.props.inventory));
-                            return promise.then(() => results);
+                                for (let item of collection) {
+                                    promise = promise.then(() => fn(item))
+                                        .then(result => {
+                                            results.push(result)
+                                        });
+                                }
+                                return promise.then(() => {
+                                    resolve();
+                                    return results
+                                });
+                            });
                         }
 
-                        var serialResults = serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this))
-
-                        console.log('serial results: ', JSON.stringify(serialResults));
-
-                        Promise.all(serialResults)
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this))
                             .then(()=>{
-                                console.log('promise.all serialResults resolved')
-                            })
-
-                            /*
-                            .then(()=>{
-                                console.log('finished unequipping items already equipped')
+                                console.log('finished unequipping items already equipped');
 
                                 //Create a local array for mutation
                                 //var updatedEquipped = this.props.inventory.equipped;
@@ -238,7 +230,7 @@ class Character extends FirebaseBaseController{
                                     .then( () => {
                                         resolve();
                                     });
-                            });*/
+                            });
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
