@@ -309,6 +309,8 @@ class Character extends FirebaseBaseController{
 
         return new Promise((resolve, reject)=>{
 
+            console.log('this.props test: ', JSON.stringify(this.props));
+
             console.log('resolving test unequipItem');
             resolve()
             /*
