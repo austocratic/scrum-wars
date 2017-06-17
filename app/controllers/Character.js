@@ -183,6 +183,8 @@ class Character extends FirebaseBaseController{
                             let results = [];
                             let promise = Promise.resolve();
 
+                            //var boundUnequipItem =
+
                             for (let item of collection) {
                                 promise = promise.then(() => fn(item))
                                     .then(result => {
@@ -197,7 +199,7 @@ class Character extends FirebaseBaseController{
                             return promise.then(() => results);
                         }
 
-                        serialAsyncMap(itemIDsToUnequip, this.unequipItem);
+                        serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));
 
                         /*
                         //Iterate through the equipped item's slots and find any matches and unequip them
