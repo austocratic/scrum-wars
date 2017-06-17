@@ -75,17 +75,6 @@ class Firebase {
                     console.log('firebase.js update method failed: ', err)
                 });
         });
-
-
-        /*
-        return new Promise( (resolve, reject) => {
-            request.patch(this.options, (err, httpResponse, body) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(body);
-            })
-        })*/
     }
 
     create(table, data) {
