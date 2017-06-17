@@ -9,7 +9,7 @@ exports.inventoryMenu = payload => {
 
     return new Promise((resolve, reject) => {
 
-        console.log('inventoryMenu payload: ', JSON.stringify(payload));
+        //console.log('inventoryMenu payload: ', JSON.stringify(payload));
 
         //Get the slack user ID who made the selection
         //var userID = payload.user_id;
@@ -19,7 +19,7 @@ exports.inventoryMenu = payload => {
         firebase.get('character', 'user_id', userID)
             .then(character => {
 
-                console.log('character inventoryMenu:', character);
+                //console.log('character inventoryMenu:', character);
 
                 //Character's ID
                 var characterID = Object.keys(character)[0];
@@ -38,7 +38,7 @@ exports.inventoryMenu = payload => {
                         firebase.get('item/' + singleUnequippedItemID)
                             .then(singleUnequippedItem => {
 
-                                console.log('singleUnequippedItem: ', JSON.stringify(singleUnequippedItem));
+                                //console.log('singleUnequippedItem: ', JSON.stringify(singleUnequippedItem));
 
                                 resolve({
                                     "text": singleUnequippedItem.name,
@@ -84,7 +84,7 @@ exports.inventoryMenu = payload => {
 
                         resolve(slackTemplate);
 
-                        console.log('slackTemplate inventoryMenu: ', JSON.stringify(slackTemplate));
+                        //console.log('slackTemplate inventoryMenu: ', JSON.stringify(slackTemplate));
 
                     });
             });
