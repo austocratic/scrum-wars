@@ -1,5 +1,6 @@
 
 var request = require('request');
+var rp = require('request-promise');
 
 var CREDENTIAL = process.env.FIREBASE_KEY;
 
@@ -54,9 +55,29 @@ class Firebase {
     
     update(table, data) {
 
-        this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
-        this.options.body = data;
+        //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+        //this.options.body = data;
 
+        var options = {
+            method: 'PATCH',
+            uri: 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL,
+            body: data,
+            json: true // Automatically stringifies the body to JSON
+        };
+
+        return new Promise( (resolve, reject) => {
+            rp(options)
+                .then( response => {
+                    console.log('firebase.js updates response: ', response);
+                    resolve(response)
+                })
+                .catch( err => {
+                    console.log('firebase.js update method failed: ', err)
+                });
+        });
+
+
+        /*
         return new Promise( (resolve, reject) => {
             request.patch(this.options, (err, httpResponse, body) => {
                 if (err) {
@@ -64,7 +85,7 @@ class Firebase {
                 }
                 resolve(body);
             })
-        })
+        })*/
     }
 
     create(table, data) {
