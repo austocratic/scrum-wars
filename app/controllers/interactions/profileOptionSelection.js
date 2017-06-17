@@ -48,7 +48,7 @@ exports.profileOptionSelection = payload => {
                     playerCharacter.setByProperty('user_id', payload.user.id)
                         .then(()=>{
 
-                            playerCharacter.unequipItem(unequippedItem)
+                            playerCharacter.unequipItem(unequippedItem.props.id)
                                 .then(()=>{
 
                                     var slackResponseText = {
