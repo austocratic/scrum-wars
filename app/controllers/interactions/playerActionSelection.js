@@ -7,9 +7,9 @@ var actionCoolDown = require('../../slackTemplates/actionCoolDown').actionCoolDo
 var defendCharacterSelection = require('../../slackTemplates/defendCharacterSelection').defendCharacterSelection;
 var shopCharacterSelection = require('../../slackTemplates/shopCharacterSelection').shopCharacterSelection;
 
-var Action = require('../Action').Action;
-var Character = require('../Character').Character;
-var Match = require('../Match').Match;
+var Action = require('../../models/Action').Action;
+var Character = require('../../models/Character').Character;
+var Match = require('../../models/Match').Match;
 
 var getCharacters = require('../../components/zone/getCharacters').getCharacters;
 

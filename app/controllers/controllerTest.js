@@ -1,6 +1,6 @@
 "use strict";
 
-var Character = require('./Character').Character;
+var Character = require('../models/Character').Character;
 
 
 exports.controllerTest = () => {

@@ -1,14 +1,34 @@
 'use strict';
 
-var Firebase = require('../libraries/firebase').Firebase;
-var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
-var Slack = require('../libraries/slack').Alert;
+//var Firebase = require('../libraries/firebase').Firebase;
+//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
+//var Slack = require('../libraries/slack').Alert;
+//var Item = require('./Item').Item;
+//var firebase = new Firebase();
 
-var Item = require('./Item').Item;
-
-var firebase = new Firebase();
+var BaseModel = require('./BaseModel').BaseModel;
 
 
+class Character extends BaseModel{
+    constructor(gameState, characterID){
+        super();
+        
+        var characters = gameState.character;
+        
+        //Set the character's props
+        this.props = characters[characterID];
+        this.id = characterID
+        
+    }
+    
+}
+
+
+
+
+
+//OLD VERSION
+/*
 class Character extends FirebaseBaseController{
     constructor(){
         super();
@@ -111,12 +131,165 @@ class Character extends FirebaseBaseController{
         })
     }
 
+
+    //Creating new version 6/18/17 - this version is does not write to DB.  It will rely on updating the Character object locally before
+    //a single UPDATE refreshes the entire object's state on the DB
     equipItem(equippedItem){
 
         console.log('called equipItem');
 
         return new Promise((resolve, reject)=>{
 
+            var modifiedEquippedItems = [];
+            var equippedItems = [];
+
+            //Iterate through the character's equipped items. (Array of item IDs)
+            var equippedInventoryPromises = this.props.inventory.equipped.map( equipmentID => {
+
+                return new Promise((resolve, reject)=> {
+
+                    //Lookup each item's properties
+                    var singleEquipment = new Item();
+                    singleEquipment.setByID(equipmentID)
+                        .then(()=> {
+
+                            //Build an array of item objects
+                            equippedItems.push(singleEquipment);
+
+                            //Iterate over that item's equipment_slots property adding to equippedSlots
+                            singleEquipment.props.equipment_slots.forEach( equippedItemSlotID => {
+
+                                //console.log('equippedItemSlotID: ', equippedItemSlotID);
+
+                                modifiedEquippedItems.push({
+                                    "slot_id": equippedItemSlotID,
+                                    "item_id": singleEquipment.props.id
+                                })
+                            });
+
+                            resolve();
+                        })
+                })
+            });
+
+            //Now that we have an array of equipment objects in the format [ { slot_id: " ", item_id: ""  }, { slot_id: " ", item_id: ""  } ],
+            // we can determine what items need to be unequipped
+            Promise.all(equippedInventoryPromises)
+                .then(()=>{
+
+                    var itemIDsToUnequip = [];
+
+                    //Iterate through the equipped item objects to find all the slots that need to be unequipped
+                    modifiedEquippedItems.forEach( eachItem =>{
+
+                        //Push item Ids to itemIDsToUnequip if they match the slot of an item attempting to equip
+                        equippedItem.props.equipment_slots.forEach( slotID =>{
+
+                            if (slotID == eachItem.slot_id && itemIDsToUnequip.indexOf(eachItem.item_id) === -1) {
+                                itemIDsToUnequip.push(eachItem.item_id)
+                            }
+                        });
+                    });
+
+                    //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
+                    var itemIDsToUnequipPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
+                        return new Promise((resolve, reject)=>{
+
+                            //equippedItems array contains item objects.  Each item object has a .props.id property.  Need to find the object who's id property matches itemIDtoUnequip
+                            //TODO replace with a function that can find the sup property .props.id
+                            equippedItems.find()
+
+                            //Pass the whole item object into the unequip function
+                            this.unequipItem(this.props.inventory.equipped[itemIDtoUnequip])
+                                .then(()=>{
+                                    resolve()
+                                });
+                        })
+                    });*/
+                    /*
+                     function serialAsyncMap(collection, fn) {
+
+                     let results = [];
+                     let promise = Promise.resolve();
+
+                     for (let item of collection) {
+                     promise = promise.then(() => fn(item))
+                     .then(result => {
+                     results.push(result)
+                     });
+                     }
+                     return promise.then(() => {
+                     return results
+                     });
+                     }
+
+                     serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));*/
+
+                    /*
+                    //Wait until all equipment in inventory slots has been unequipped
+                    //Then add the originally equipped item
+                    Promise.all(itemIDsToUnequipPromises)
+                        .then(()=>{
+
+                            this.props.inventory.equipped.push(equippedItem.props.id);
+
+                            //Remove the unequipped item from unequipped
+                            this.props.inventory.unequipped.splice(this.props.inventory.unequipped.indexOf(equippedItem.props.id), 1);
+
+                            //Build a new inventory object where equipped item has been moved to unequipped array
+                            var updatedInventory = {
+                                equipped: this.props.inventory.equipped,
+                                unequipped: this.props.inventory.unequipped
+                            };
+
+                            //Update the character's inventory on the server
+                            this.updateProperty('inventory', updatedInventory)
+                                .then( () => {
+                                    resolve();
+                                });
+                        })
+                });*/
+
+            //TODO need to add functionality to remove effects from character's modified stats
+
+            /*
+             //Remove item from unequipped list
+             var index = this.props.inventory.unequipped.indexOf(equippedItem.props.id);
+
+             //Remove that array element
+             if (index > -1) {
+             this.props.inventory.unequipped.splice(index, 1);
+             }
+
+             //Look at item's "effects" object and set an array of those keys
+             var effectsKeys = Object.keys(equippedItem.props.effects);
+
+             //Iterate through the keys array
+             var characterUpdatePromises = effectsKeys.map(effectKey=>{
+
+             return new Promise((resolve, reject)=>{
+             var effectValue = equippedItem.props.effects[effectKey];
+
+             var newValue = this.props[effectKey] + effectValue;
+
+             this.updateProperty(effectKey, newValue)
+             .then(()=>{
+             resolve()
+             })
+             })
+             });*/
+
+      //  })
+    //}
+
+    /*
+    equipItem(equippedItem){
+
+        console.log('called equipItem');
+
+        return new Promise((resolve, reject)=>{
+
+            var modifiedEquippedItems = [];
             var equippedItems = [];
 
                 //Iterate through the character's equipped items. (Array of item IDs)
@@ -129,12 +302,15 @@ class Character extends FirebaseBaseController{
                         singleEquipment.setByID(equipmentID)
                             .then(()=> {
 
+                                //Build an array of item objects
+                                equippedItems.push(singleEquipment);
+
                                 //Iterate over that item's equipment_slots property adding to equippedSlots
                                 singleEquipment.props.equipment_slots.forEach( equippedItemSlotID => {
 
                                     //console.log('equippedItemSlotID: ', equippedItemSlotID);
 
-                                    equippedItems.push({
+                                    modifiedEquippedItems.push({
                                         "slot_id": equippedItemSlotID,
                                         "item_id": singleEquipment.props.id
                                     })
@@ -153,7 +329,7 @@ class Character extends FirebaseBaseController{
                         var itemIDsToUnequip = [];
 
                         //Iterate through the equipped item objects to find all the slots that need to be unequipped
-                        equippedItems.forEach( eachItem =>{
+                        modifiedEquippedItems.forEach( eachItem =>{
 
                             //Push item Ids to itemIDsToUnequip if they match the slot of an item attempting to equip
                             equippedItem.props.equipment_slots.forEach( slotID =>{
@@ -165,9 +341,15 @@ class Character extends FirebaseBaseController{
                         });
 
                         //Now that we have an array of item IDs that need to be unequipped, iterate through them unequipping them
-                        var unequippedInventoryPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
+                        var itemIDsToUnequipPromises = itemIDsToUnequip.map( itemIDtoUnequip =>{
                             return new Promise((resolve, reject)=>{
-                                this.unequipItem(itemIDtoUnequip)
+
+                                //equippedItems array contains item objects.  Each item object has a .props.id property.  Need to find the object who's id property matches itemIDtoUnequip
+                                //TODO replace with a function that can find the sup property .props.id
+                                equippedItems.find()
+
+                                //Pass the whole item object into the unequip function
+                                this.unequipItem(this.props.inventory.equipped[itemIDtoUnequip])
                                     .then(()=>{
                                         resolve()
                                     });
@@ -191,11 +373,11 @@ class Character extends FirebaseBaseController{
                         }
 
                         serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));*/
-                        
+                        /*
 
                         //Wait until all equipment in inventory slots has been unequipped
                         //Then add the originally equipped item
-                        Promise.all(unequippedInventoryPromises)
+                        Promise.all(itemIDsToUnequipPromises)
                             .then(()=>{
 
                                 this.props.inventory.equipped.push(equippedItem.props.id);
@@ -215,7 +397,7 @@ class Character extends FirebaseBaseController{
                                         resolve();
                                     });
                             })
-                    });
+                    });*/
             
             //TODO need to add functionality to remove effects from character's modified stats
 
@@ -246,12 +428,13 @@ class Character extends FirebaseBaseController{
                 })
             });*/
             
-        })
-    }
+    //    })
+    //}
 
     //Argument passed is an item ID that should be currently equipped.
     //1.) Check that item ID passed is actually equipped
     //2.) Remove from equipped array & add to unequipped array in one DB call
+    /*
     unequipItem(itemIDtoUnequip){
 
         return new Promise((resolve, reject)=>{
@@ -284,7 +467,25 @@ class Character extends FirebaseBaseController{
         })
     }
 
-    /*
+    //I should have a refresh function insted of individual references to this.updateProperty.
+
+    //This way I make all the updated locally, then call this.refresh to push all of the corresponding changes to the server
+    //This will prevent many frequent server calls and keep everything syncronous until one final async call
+
+
+    async incrementLocalProperty(propertyReference, value){
+
+        this.props[propertyReference] = this.props[propertyReference] + value;
+
+
+        //Update the character's inventory on the server & locally
+        this.updateProperty('inventory', updatedInventory)
+            .then( () => {
+
+            });
+    }
+
+    
     resetHealth(){
         return new Promise((resolve, reject)=>{
             firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
@@ -295,8 +496,8 @@ class Character extends FirebaseBaseController{
                     resolve();
                 });
         })
-    }*/
-}
+    }
+}*/
 
 
 module.exports = {

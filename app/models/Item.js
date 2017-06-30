@@ -11,7 +11,7 @@ class Item extends FirebaseBaseController {
         super();
         this.firebaseType = 'item'
     }
-
+    
 }
 
 
