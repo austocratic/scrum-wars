@@ -197,6 +197,9 @@ class Game {
 
         var localZone = new Zone(this.state, requestSlackChannelID);
 
+        console.log('character zone id: ', localCharacter.props.zone_id);
+        console.log('local zone: ', localZone.id);
+
         //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
         if (localCharacter.props.zone_id !== localZone.id) {
             console.log('Called /action in the wrong zone');
