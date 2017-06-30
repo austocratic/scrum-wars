@@ -37,14 +37,6 @@ exports.slackSlashCommand = async (req, res, next) => {
     slackChannelID = slackPayload.channel_id;
     
     slackTextInput = slackPayload.text;
-
-    /*
-    try {
-        userID = slackPayload.user.id;
-    } catch(err){
-        //Slash commands are formatted in this way
-        userID = slackPayload.user_id;
-    }*/
     
     //Get the command property
     var command = slackPayload.command;
@@ -62,9 +54,7 @@ exports.slackSlashCommand = async (req, res, next) => {
     await game.updateState();
 
     //Send success response
-    res.status(200).send();
-
-    return responseTemplate;
+    res.status(200).send(responseTemplate);
 
     //Lookup the command and return a response
     async function processRequest(requestCommand, requestSlackUserID, requestSlackChannelID) {
@@ -138,66 +128,5 @@ exports.slackSlashCommand = async (req, res, next) => {
         }
     }
 
-
-
-    /*
-    //Read the command and call the corresponding interaction
-    getInteraction(command, messagePayload)
-        .then( messageResponse =>{
-            res.status(200).send(messageResponse);
-        })
-        .catch( err => {
-            res.status(200).send('Uh oh! Server error: ', err);
-        });
-    
-    async function getInteraction(commandInput, messagePayloadInput){
-
-
-            switch(commandInput) {
-
-                case '/action':
-
-                    interactions('playerAction', messagePayloadInput)
-                        .then( interactionResponse => {
-                            resolve(interactionResponse)
-                        });
-                    break;
-                
-                case '/generate':
-
-                    interactions('characterSelectionNew', messagePayloadInput)
-                        .then( interactionResponse => {
-                            resolve(interactionResponse)
-                        });
-                    break;
-
-                case '/profile':
-
-                    interactions('characterProfile', messagePayloadInput)
-                        .then( interactionResponse => {
-                            resolve(interactionResponse)
-                        });
-                    break;
-                
-                case '/travel':
-
-                    interactions('travel', messagePayloadInput)
-                        .then( interactionResponse => {
-                            resolve(interactionResponse)
-                        });
-                    break;
-                
-                case '/name':
-
-                    interactions('nameCharacter', messagePayloadInput)
-                        .then( interactionResponse => {
-                            resolve(interactionResponse)
-                        });
-                    break;
-                    
-
-                default:
-            }
-    }*/
 };
 
