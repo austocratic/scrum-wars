@@ -55,17 +55,16 @@ exports.slackSlashCommand = async (req, res, next) => {
     //Set the game state locally
     await game.getState();
 
-    await processRequest(command, slackUserID, slackChannelID);
+    var responseTemplate = await processRequest(command, slackUserID, slackChannelID);
 
     //Overwrites with updated local stats
     //TODO add the update state call back in for real updates
     await game.updateState();
 
-    console.log('Made it past updateState call');
-
     //Send success response
-    return res.status(200).send();
+    res.status(200).send();
 
+    return responseTemplate;
 
     //Lookup the command and return a response
     async function processRequest(requestCommand, requestSlackUserID, requestSlackChannelID) {
