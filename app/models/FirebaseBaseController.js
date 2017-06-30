@@ -97,6 +97,17 @@ class FirebaseBaseController {
         })
     }
     
+    async updateDBProps(){
+
+        //Build a table reference to be used for query
+        let tableRef = this.firebaseType + '/' + this.props.id;
+        
+        //Return response after update
+        //TODO this will add the local id veriable into the DB object. This may be a good thing in which I should refactor so all db objects contain it 
+        return await firebase.update(tableRef, this.props)
+        
+    }
+    
     
 }
 

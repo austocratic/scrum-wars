@@ -1,7 +1,7 @@
 "use strict";
 
 var Firebase = require('../../../libraries/firebase').Firebase;
-var Item = require('../../Item').Item;
+var Item = require('../../../models/Item').Item;
 var itemDetail = require('../../../components/item/itemDetail').itemDetail;
 
 var firebase = new Firebase();

@@ -19,6 +19,45 @@ class Firebase {
         }
     }
 
+    async get(table = '', key = '', value = '') {
+
+        //Default of key and or value not defined
+        var localKey, localValue;
+
+
+        if (key){
+            localKey = 'orderBy="' + key;
+        } else {
+            localKey = '';
+        }
+
+        if (value){
+            localValue = '"&equalTo="' + value
+        } else {
+            localValue = '';
+        }
+
+        var options = {
+            method: 'GET',
+            uri: 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?' + localKey + localValue + '"&auth=' + CREDENTIAL,
+            json: true // Automatically stringifies the body to JSON
+        };
+
+        return await rp(options);
+
+        /*
+        rp(options)
+            .then( response => {
+                console.log('firebase.js updates response: ', response);
+                return(response)
+            })
+            .catch( err => {
+                console.log('firebase.js update method failed: ', err)
+            });*/
+    }
+
+
+    /*
     get(table, key, value) {
 
         //Default of key and or value not defined
@@ -51,8 +90,9 @@ class Firebase {
                 resolve(body);
             })
         })
-    }
+    }*/
     
+    /*
     update(table, data) {
 
         //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
@@ -75,6 +115,28 @@ class Firebase {
                     console.log('firebase.js update method failed: ', err)
                 });
         });
+    }*/
+
+    async update(table, data) {
+
+        //this.options.uri = 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL;
+        //this.options.body = data;
+
+        var options = {
+            method: 'PATCH',
+            uri: 'https://' + firebaseName + '.firebaseio.com/' + table + '.json?auth=' + CREDENTIAL,
+            body: data,
+            json: true // Automatically stringifies the body to JSON
+        };
+        
+        rp(options)
+            .then( response => {
+                //console.log('firebase.js updates response: ', response);
+                return(response)
+            })
+            .catch( err => {
+                console.log('firebase.js update method failed: ', err)
+            });
     }
 
     create(table, data) {

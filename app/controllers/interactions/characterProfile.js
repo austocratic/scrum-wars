@@ -2,7 +2,7 @@
 
 var characterProfile = require('../../slackTemplates/characterProfile').characterProfile;
 
-var Character = require('../Character').Character;
+var Character = require('../../models/Character').Character;
 
 /*
 exports.characterProfile = payload => {
@@ -77,8 +77,6 @@ exports.characterProfile = payload => {
             });
 };*/
 
-
-//TODO: testing async version - I may not be able to do it at this level currently causing crash
 
 exports.characterProfile = async payload => {
 

@@ -2,8 +2,8 @@
 
 var Slack = require('../../libraries/slack').Alert;
 
-var Character = require('../Character').Character;
-var Zone = require('../Zone').Zone;
+var Character = require('../../models/Character').Character;
+var Zone = require('../../models/Zone').Zone;
 
 //TODO need to make the travel function into a reusable function.  See moveCharacter function in resolveActions function
 exports.travel = payload => {

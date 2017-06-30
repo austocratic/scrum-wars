@@ -6,9 +6,11 @@ var profile = require('../app/controllers/commands/profile');
 
 //var stockImage = require('../app/assets/wizardImage.jpg');
 
-var commands = require('../app/controllers/commands').commands;
+var slackSlashCommand = require('../app/controllers/slackSlashCommand').slackSlashCommand;
 var interactiveMessages = require('../app/controllers/interactiveMessages').interactiveMessages;
 var turns = require('../app/controllers/turns');
+
+var slackInteractiveMessage = require('../app/controllers/slackInteractiveMessage').slackInteractiveMessage;
 
 var controllerTest = require('../app/controllers/controllerTest').controllerTest;
 
@@ -69,13 +71,16 @@ router.get('/api/test', (req, res, next) => {
     controllerTest(req, res, next);
 });
 
+
+//All client commands pass through this route
 router.post('/api/commands', (req, res, next) => {
-    commands(req, res, next);
+    slackSlashCommand(req, res, next);
 });
 
 //All client interactive-message responses pass through this route
 router.post('/api/interactive-messages', (req, res, next) => {
-    interactiveMessages(req, res, next);
+    //interactiveMessages(req, res, next);
+    slackInteractiveMessage(req, res, next);
 });
 
 //All client interactive-message responses pass through this route

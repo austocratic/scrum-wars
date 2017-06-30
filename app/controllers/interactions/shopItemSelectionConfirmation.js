@@ -1,8 +1,8 @@
 "use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
-var Character = require('../Character').Character;
-var Item = require('../Item').Item;
+var Character = require('../../models/Character').Character;
+var Item = require('../../models/Item').Item;
 
 var playerActionSelection = require('./playerActionSelection').playerActionSelection;
 

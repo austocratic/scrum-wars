@@ -3,9 +3,9 @@
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
 
-var Character = require('../Character').Character;
-var Match = require('../Match').Match;
-var Zone = require('../Zone').Zone;
+var Character = require('../../models/Character').Character;
+var Match = require('../../models/Match').Match;
+var Zone = require('../..//models/Zone').Zone;
 
 //var getCharacters = require('../../components/zone/getCharacters').getCharacters;
 

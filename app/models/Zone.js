@@ -1,12 +1,36 @@
 'use strict';
 
-var Firebase = require('../libraries/firebase').Firebase;
-var Slack = require('../libraries/slack').Alert;
-var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
+//var Firebase = require('../libraries/firebase').Firebase;
+//var Slack = require('../libraries/slack').Alert;
+//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
-var firebase = new Firebase();
+//var firebase = new Firebase();
 
 
+var _ = require('lodash');
+var BaseModel = require('./BaseModel').BaseModel;
+
+
+class Zone extends BaseModel{
+    constructor(gameState, slackChannelID){
+        super();
+
+        var zones = gameState.zone;
+
+        var zoneID = _.findKey(zones, {'channel_id': slackChannelID});
+
+        //Set the character's props
+        this.props = zones[zoneID];
+        this.id = zoneID
+
+    }
+
+}
+
+
+
+
+/*
 class Zone extends FirebaseBaseController{
     constructor() {
         super();
@@ -31,7 +55,7 @@ class Zone extends FirebaseBaseController{
                 });
         });
     }
-}
+}*/
 
 module.exports = {
     Zone: Zone
