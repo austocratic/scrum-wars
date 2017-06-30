@@ -30,8 +30,7 @@ exports.nameCharacter = payload => {
 
                     resolve(characterNameTaken());
                 }
-
-
+                
                 template = characterNameAccepted();
 
                 //Concatenate character name into template
