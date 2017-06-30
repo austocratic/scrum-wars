@@ -61,8 +61,10 @@ exports.slackSlashCommand = async (req, res, next) => {
     //TODO add the update state call back in for real updates
     await game.updateState();
 
+    console.log('Made it past updateState call');
+
     //Send success response
-    res.status(200).send();
+    return res.status(200).send();
 
 
     //Lookup the command and return a response
@@ -107,7 +109,7 @@ exports.slackSlashCommand = async (req, res, next) => {
                     ]
                 }
             ]
-            }
+            };
 
                 break;
 
