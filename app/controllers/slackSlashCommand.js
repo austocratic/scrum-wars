@@ -5,6 +5,8 @@ var interactions = require('./interactions').interactions;
 
 var Game = require('../models/Game').Game;
 
+var slackTemplates = require ('../slackTemplates');
+
 
 //Incoming commands have a command property defining which command was called
 exports.slackSlashCommand = async (req, res, next) => {
@@ -63,7 +65,7 @@ exports.slackSlashCommand = async (req, res, next) => {
             case '/action':
 
                 console.log('Called /action');
-                //game
+                return game.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
                 break;
 
@@ -71,34 +73,7 @@ exports.slackSlashCommand = async (req, res, next) => {
 
                 console.log('Called /generate');
                 //Return the new character confirmation template
-            return {
-                "attachments": [
-                {
-                    "text": "Hail traveler, are you ready to embark on a NEW faithful journey to lands uncharted and depths unknown?  All your previous progress will be lost",
-                    "fallback": "You are unable to choose an action",
-                    "callback_id": "characterSelectionNew",
-                    "color": "#3AA3E3",
-                    "attachment_type": "default",
-                    "actions": [
-                        {
-                            "name": "yes",
-                            "text": "I head the call",
-                            "style": "primary",
-                            "type": "button",
-                            "value": "yes"
-
-                        },
-                        {
-                            "name": "no",
-                            "text": "Nay, I shall continue on my current path",
-                            "style": "danger",
-                            "type": "button",
-                            "value": "no"
-                        }
-                    ]
-                }
-            ]
-            };
+            return slackTemplates.generateCharacterConfirmation;
 
                 break;
 

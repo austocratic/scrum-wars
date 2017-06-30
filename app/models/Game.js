@@ -8,7 +8,9 @@ var firebase = new Firebase();
 var User = require('./User').User;
 var Character = require('./Character').Character;
 var Zone = require('./Zone').Zone;
-var slackTemplates = require ('../slackTemplates');
+var slackTemplates = require('../slackTemplates');
+
+var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
 
@@ -181,6 +183,34 @@ class Game {
             return characterNameAcceptedTemplate
 
         }
+    }
+
+    getAvailableActions(requestSlackUserID, requestSlackChannelID){
+
+        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
+        var localUser = new User(this.state, requestSlackUserID);
+
+        //Get the local character's id
+        var characterID = localUser.getCharacterID();
+
+        var localCharacter = new Character(this.state, characterID);
+
+        var localZone = new Zone(this.state, requestSlackChannelID);
+
+        //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
+        if (localCharacter.props.zone_id !== localZone.id) {
+            console.log('Called /action in the wrong zone');
+
+            //Return mismatch template
+            var moveCharacterTemplate = moveCharacter(localCharacter.props.zone_id, localZone.props.name);
+
+            return(moveCharacterTemplate);
+        }
+
+        //If there is a mismatch, return the travel template
+
+
+
     }
     
     //Push local state to the DB
