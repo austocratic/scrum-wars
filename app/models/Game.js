@@ -8,6 +8,8 @@ var firebase = new Firebase();
 var User = require('./User').User;
 var Character = require('./Character').Character;
 var Zone = require('./Zone').Zone;
+var Match = require('./Match').Match;
+var Action = require('./Action').Action;
 var slackTemplates = require('../slackTemplates');
 
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
@@ -23,7 +25,8 @@ class Game {
 
         //this.state = await this.getState()
     }
-    
+
+    //Get state of the game from DB
     async getState(){
         
         //Get the current state of the game
@@ -38,9 +41,19 @@ class Game {
         //var id = Object.keys(firebaseReturn)[0];
         //this.state = firebaseReturn[id];
     }
+
+    //Push local state to the DB
+    //DONT MODIFY THIS
+    async updateState(){
+        return await firebase.update('', this.state)
+    }
     
-    
-    
+    getCurrentMatchID(){
+
+        return this.state.global_state.match_id
+
+    }
+
     characterTravel(requestSlackUserID, requestSlackChannelID) {
         
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
@@ -197,30 +210,141 @@ class Game {
 
         var localZone = new Zone(this.state, requestSlackChannelID);
 
-        console.log('character zone id: ', localCharacter.props.zone_id);
-        console.log('local zone: ', localZone.id);
-
         //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
         if (localCharacter.props.zone_id !== localZone.id) {
-            console.log('Called /action in the wrong zone');
 
-            //Return mismatch template
-            var moveCharacterTemplate = moveCharacter(localCharacter.props.zone_id, localZone.props.name);
-
-            return(moveCharacterTemplate);
+            //Return mismatch template by passing in zone ids
+            return moveCharacter(localZone.id, localZone.props.name);
         }
 
-        //If there is a mismatch, return the travel template
+        //Create match locally for reference
+        var match = new Match(this.state, this.getCurrentMatchID());
 
+        //Look through all player's actions and determine if any were used in the current turn.
+        //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
+        if(_.find(localCharacter.props.actions, {'turn_used': match.props.number_turns})) {
+            console.log('game turn is less than or equal to turn the character last took an action');
 
+            return slackTemplates.actionAlreadyTaken;
+        }
+
+        var characterActionsAvailableInCurrentZone = [];
+
+        //Take an array of the character's actions and filter it for actions that can be used in the current zone
+        localCharacter.props.actions.forEach( characterAction =>{
+
+            var localAction = new Action(this.state, characterAction.action_id);
+
+            if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
+                characterActionsAvailableInCurrentZone.push(localAction)
+            }
+        });
+
+        var groupedActions = _(characterActionsAvailableInCurrentZone).groupBy((singleAction) => {
+
+            return singleAction.props.type;
+        });
+
+        //Iterate through the grouped actions
+        var templateAttachments = groupedActions.map( actionCategory =>{
+
+            var actionType = actionCategory[0].props.type;
+
+            //Build the major template
+            var majorTemplate = {
+                "title": actionType,
+                "fallback": "You are unable to choose an action",
+                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
+                "callback_id": "/action",
+                "color": "#3AA3E3", //TODO change to attack oriented color
+                "attachment_type": "default",
+                //TODO add tiny_url for attack symbol
+                "actions": []
+            };
+
+            actionCategory.forEach( actionDetails =>{
+
+                var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
+
+                var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
+
+                //Default button color to red ("danger").  If available, it will be overwritten
+                var actionAvailableButtonColor = "danger";
+
+                //If the button is available based on the match turn, overwrite the color to green
+                if (actionAvailability) {
+                    actionAvailableButtonColor = "primary"
+                }
+
+                //Push each action into the actions array portion of the template
+                majorTemplate.actions.push({
+                    "name": actionDetails.props.name,
+                    "text": actionDetails.props.name,
+                    "style": actionAvailableButtonColor,
+                    "type": "button",
+                    "value": actionDetails.props.name
+                })
+            });
+
+            return majorTemplate;
+        });
+
+        //for each grouped actions iterate through its element
+
+        /*
+        //Iterate through the available actions adding each to the attachment array.  If it is cooling down show in red
+        var templateAttachments = characterActionsAvailableInCurrentZone.map( eachActionAvailable =>{
+
+            console.log('eachActionAvailable: ', eachActionAvailable);
+
+            //console.log('localCharacter.props: ', JSON.stringify(localCharacter.props.actions));
+
+            var singleAction = _.find(localCharacter.props.actions, {'action_id': eachActionAvailable.id});
+
+            console.log('singleAction: ', JSON.stringify(singleAction));
+
+            //console.log('called foreach, ', localCharacter.props.actions[singleAction.action_id]);
+
+            //Determine if each action is still in cooldown
+            //console.log('is action available: ', eachActionAvailable.getActionAvailability(localCharacter.props.actions[eachActionAvailable.id].turn_available, match.props.number_turns));
+
+            //Default button color to red ("danger").  If available, it will be overwritten
+            var actionAvailableButtonColor = "danger";
+
+            //If the button is available based on the match turn, overwrite the color to green
+            if (singleAction.turn_available >= match.props.number_turns) {
+                actionAvailableButtonColor = "primary"
+            }
+
+            return {
+                "title": eachActionAvailable.props.name,
+                "fallback": "You are unable to choose an action",
+                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
+                "callback_id": "/action",
+                "color": "#3AA3E3", //TODO change to attack oriented color
+                "attachment_type": "default",
+                //TODO add tiny_url for attack symbol
+                "actions": [
+                    {
+                        "name": eachActionAvailable.props.name,
+                        "text": eachActionAvailable.props.name,
+                        "style": actionAvailableButtonColor,
+                        "type": "button",
+                        "value": eachActionAvailable.id
+                    }]
+            };
+        });*/
+
+        var finalTemplate = slackTemplates.actionMenu;
+        
+        finalTemplate.attachments = templateAttachments;
+
+        console.log('final attachment templates: ', JSON.stringify(finalTemplate));
+
+        //return slackTemplates.attachments = templateAttachments;
 
     }
-    
-    //Push local state to the DB
-    //DONT MODIFY THIS
-    async updateState(){
-        return await firebase.update('', this.state)
-    }
+
 }
 
 

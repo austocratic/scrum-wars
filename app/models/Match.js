@@ -1,14 +1,39 @@
 'use strict';
 
-var Firebase = require('../libraries/firebase').Firebase;
-var Slack = require('../libraries/slack').Alert;
-var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
+//var Firebase = require('../libraries/firebase').Firebase;
+//var Slack = require('../libraries/slack').Alert;
+//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
-var Zone = require('./Zone').Zone;
+//var Zone = require('./Zone').Zone;
 
-var firebase = new Firebase();
+//var firebase = new Firebase();
 
 
+var _ = require('lodash');
+var BaseModel = require('./BaseModel').BaseModel;
+
+
+class Match extends BaseModel{
+    constructor(gameState, matchID){
+        super();
+
+        var matches = gameState.match;
+
+        //Set the character's props
+        this.props = matches[matchID];
+        this.id = matchID
+
+    }
+}
+
+
+
+
+
+
+
+
+/*
 class Match extends FirebaseBaseController{
     constructor() {
         super();
@@ -223,9 +248,7 @@ class Match extends FirebaseBaseController{
         }
     })
     }
-    
-
-}
+}*/
 
 
 module.exports = {

@@ -15,5 +15,4 @@ exports.actionMenu = payload => {
             }
         ]
     };
-
 };

@@ -48,6 +48,30 @@
       ]
     }
   ]
+},
+"actionAlreadyTaken": {
+  "text": "You have no more actions available this turn",
+  "attachments": [
+    {
+      "fallback": "You are unable to choose an action",
+      "callback_id": "actionMenu",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": []
+    }
+  ]
+},
+"actionMenu": {
+  "text": "No actions available in this zone",
+  "attachments": [
+    {
+      "fallback": "You are unable to choose an action",
+      "callback_id": "actionMenu",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": []
+    }
+  ]
 }
 
 
