@@ -341,7 +341,7 @@ class Game {
 
         console.log('final attachment templates: ', JSON.stringify(finalTemplate));
 
-        //return slackTemplates.attachments = templateAttachments;
+        return finalTemplate;
 
     }
 
