@@ -173,9 +173,11 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         var itemID = valueSelection[valueSelection.length - 1];
 
-                        console.log('itemSelection: ', itemSelection);
+                        console.log('itemID: ', itemID);
 
-                        localCharacter.purchaseItem(itemID);
+                        var localItem = new Item(game.state, itemID);
+
+                        localCharacter.purchaseItem(localItem);
                         
                         break;
                     
