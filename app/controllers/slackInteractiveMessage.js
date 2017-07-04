@@ -158,13 +158,13 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         console.log('called itemDetail/yes');
 
                         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-                        var localUser = new User(this.state, requestSlackUserID);
+                        var localUser = new User(game.state, requestSlackUserID);
 
                         //Get the local character's id
                         var characterID = localUser.getCharacterID();
 
                         //Create a local character object
-                        var localCharacter = new Character(this.state, characterID);
+                        var localCharacter = new Character(game.state, characterID);
 
                         //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
                         var itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
