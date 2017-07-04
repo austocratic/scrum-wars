@@ -17,7 +17,14 @@ var Game = require('../models/Game').Game;
 */
 exports.slackInteractiveMessage = async (req, res, next) => {
 
-    var slackPayload = req.body.payload;
+    //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
+    //Parse the payload of the message
+    var slackPayload;
+    try {
+        slackPayload = JSON.parse(req.body.payload);
+    } catch(err){
+        slackPayload = req.body.payload;
+    }
 
     /*
      Format of API calls coming from slack:
@@ -30,15 +37,6 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     console.log('Not stringified: ', slackPayload);
 
-    //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
-    //Parse the payload of the message
-    /*
-     var messagePayload, userID;
-     try {
-     messagePayload = JSON.parse(req.body.payload);
-     } catch(err){
-     messagePayload = req.body.payload;
-     }*/
 
     var slackUserID, slackChannelID;
 
