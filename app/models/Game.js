@@ -224,7 +224,6 @@ class Game {
         //Look through all player's actions and determine if any were used in the current turn.
         //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
         if(_.find(localCharacter.props.actions, {'turn_used': match.props.number_turns})) {
-            console.log('game turn is less than or equal to turn the character last took an action');
 
             return slackTemplates.actionAlreadyTaken;
         }
@@ -246,52 +245,60 @@ class Game {
             return singleAction.props.type;
         });
 
-        //Iterate through the grouped actions
-        var templateAttachments = groupedActions.map( actionCategory =>{
+        try {
 
-            var actionType = actionCategory[0].props.type;
+            //Iterate through the grouped actions
+            var templateAttachments = groupedActions.map(actionCategory => {
 
-            //Build the major template
-            var attachmentTemplate = {
-                "title": actionType,
-                "fallback": "You are unable to choose an action",
-                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
-                //"callback_id": "/action",
-                "color": "#3AA3E3", //TODO change to attack oriented color
-                "attachment_type": "default",
-                //TODO add tiny_url for attack symbol
-                "actions": []
-            };
+                var actionType = actionCategory[0].props.type;
 
-            actionCategory.forEach( actionDetails =>{
+                //Build the major template
+                var attachmentTemplate = {
+                    "title": actionType,
+                    "fallback": "You are unable to choose an action",
+                    //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
+                    //"callback_id": "/action",
+                    "color": "#3AA3E3", //TODO change to attack oriented color
+                    "attachment_type": "default",
+                    //TODO add tiny_url for attack symbol
+                    "actions": []
+                };
 
-                var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
+                actionCategory.forEach(actionDetails => {
 
-                var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
+                    var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
 
-                //Default button color to red ("danger").  If available, it will be overwritten
-                var actionAvailableButtonColor = "danger";
+                    var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
-                //If the button is available based on the match turn, overwrite the color to green
-                if (actionAvailability) {
-                    actionAvailableButtonColor = "primary"
-                }
+                    //Default button color to red ("danger").  If available, it will be overwritten
+                    var actionAvailableButtonColor = "danger";
 
-                //Push each action into the actions array portion of the template
-                attachmentTemplate.actions.push({
-                    "name": actionDetails.props.name,
-                    "text": actionDetails.props.name,
-                    "style": actionAvailableButtonColor,
-                    "type": "button",
-                    "value": actionDetails.props.name
-                })
+                    //If the button is available based on the match turn, overwrite the color to green
+                    if (actionAvailability) {
+                        actionAvailableButtonColor = "primary"
+                    }
+
+                    //Push each action into the actions array portion of the template
+                    attachmentTemplate.actions.push({
+                        "name": actionDetails.props.name,
+                        "text": actionDetails.props.name,
+                        "style": actionAvailableButtonColor,
+                        "type": "button",
+                        "value": actionDetails.props.name
+                    })
+                });
+
+                return attachmentTemplate;
             });
 
-            return attachmentTemplate;
-        });
+        } catch(err){
+            console.log('Error when mapping template attachments: ', err)
+        }
 
         //Get the basic action template from the JSON file
         var finalTemplate = slackTemplates.actionMenu;
+
+        console.log('templateAttachments: ', templateAttachments);
 
         console.log('array length: ', templateAttachments.length);
 
