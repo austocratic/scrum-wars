@@ -126,6 +126,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                 //Create an item detail view template
                 slackTemplate = localItem.getDetailView();
 
+                console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
+
                 //Previous callback includes the menu selection was made from, now add the selection & the next menu
                 slackTemplate.attachments[0].callback_id = slackCallback + ':' + localItem.id + '/itemDetail';
 

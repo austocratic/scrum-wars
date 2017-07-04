@@ -23,6 +23,8 @@ class Item extends BaseModel {
 
     getDetailView(){
 
+        console.log('Item props: ', this.props);
+
             var template = {
                 "attachments": [
                     {
