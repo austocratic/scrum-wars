@@ -316,7 +316,7 @@ class Game {
 
             return {
                 "text": localItem.name,
-                "value": localItem.id
+                "value": itemID
             }
         });
 
