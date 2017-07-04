@@ -18,7 +18,6 @@ class Item extends BaseModel {
         //Set the character's props
         this.props = items[itemID];
         this.id = itemID
-
     }
 
     getDetailView(){

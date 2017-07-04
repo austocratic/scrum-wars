@@ -91,6 +91,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
         console.log('called getResponseTemplate, requestView: ', requestView);
         console.log('called getResponseTemplate, requestActionName: ', requestActionName);
+        console.log('called getResponseTemplate, requestActionValue: ', requestActionValue);
 
         var slackTemplate;
 
