@@ -59,8 +59,6 @@ class Game {
         
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
         var localUser = new User(this.state, requestSlackUserID);
-        
-        //console.log('Created local user object: ', localUser.props);
 
         //Get the local character's id
         var characterID = localUser.getCharacterID();

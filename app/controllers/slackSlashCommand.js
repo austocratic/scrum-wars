@@ -111,22 +111,17 @@ exports.slackSlashCommand = async (req, res, next) => {
 
                 console.log('Called /travel');
 
-                slackTemplate = game.characterTravel(requestSlackUserID, requestSlackChannelID);
-
-                slackTemplate.attachments[0].callback_id = '/travel';
-
-                return slackTemplate;
+                //Dont set callback ID here, no interactive message to return
+                return game.characterTravel(requestSlackUserID, requestSlackChannelID);
 
                 break;
 
             case '/name':
 
                 console.log('Called /name');
-                slackTemplate = game.characterName(requestSlackUserID, slackTextInput);
 
-                slackTemplate.attachments[0].callback_id = '/name';
-
-                return slackTemplate;
+                //Dont set callback ID here, no interactive message to return
+                return game.characterName(requestSlackUserID, slackTextInput);
 
                 break;
 
