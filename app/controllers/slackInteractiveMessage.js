@@ -80,7 +80,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     //Lookup the callback & name take an action and returns result
     function getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
 
-        console.log('called getResponseTemplate, requestView: ', requestView);
+        console.log('called getResponseTemplate, requestCallback: ', requestCallback);
         console.log('called getResponseTemplate, requestActionName: ', requestActionName);
         console.log('called getResponseTemplate, requestActionValue: ', requestActionValue);
 
