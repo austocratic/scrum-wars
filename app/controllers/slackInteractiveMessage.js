@@ -124,12 +124,45 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                 console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
 
+                //Add purchase buttons to the bottom of the template
+                slackTemplate.attachments[0].actions = [{
+                    "name": "yes",
+                    "text": "Yes, I'll take it!",
+                    "type": "button",
+                    "value": "yes"
+                },
+                {
+                    "name": "no",
+                    "text": "No thanks",
+                    "type": "button",
+                    "value": "no"
+                }];
+
                 //Previous callback includes the menu selection was made from, now add the selection & the next menu
                 slackTemplate.attachments[0].callback_id = slackCallback + ':' + localItem.id + '/itemDetail';
 
                 return slackTemplate;
+
+                break;
+
+            case 'itemDetail':
+
+                console.log('called itemDetail');
                 
-                //Add purchase buttons to the bottom
+                switch (requestActionName){
+                    
+                    case 'yes':
+
+                        console.log('called itemDetail/yes');
+                        
+                        break;
+                    
+                    case 'no':
+
+                        console.log('called itemDetail/no');
+                        
+                        break;
+                }
 
                 break;
 

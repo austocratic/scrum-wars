@@ -327,6 +327,7 @@ class Game {
         return slackTemplate
         
     }
+    
 }
 
 

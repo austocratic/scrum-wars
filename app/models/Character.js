@@ -7,6 +7,7 @@
 //var firebase = new Firebase();
 
 var BaseModel = require('./BaseModel').BaseModel;
+var slackTemplates = require('../slackTemplates');
 
 
 class Character extends BaseModel{
@@ -20,6 +21,30 @@ class Character extends BaseModel{
         this.id = characterID
         
     }
+
+    purchaseItem(itemObject){
+
+        //Check if the player has sufficient gold
+        if (this.props.gold < itemObject.props.cost) {
+            //If insufficient gold: return template
+            var responseTemplate = slackTemplates.insufficientFunds;
+
+            responseTemplate.text = "I'm sorry traveler, you don't have " + itemObject.props.cost + " gold." +
+                "\nCan I interest you in something else?";
+        }
+
+        //If sufficient gold:
+        //Add item ID to player's inventory
+        //Update the characters name property locally
+        this.updateProperty('name', 'testedNewName');
+
+        //Reduce character's gold by item cost
+        //Return purchase confirmation template
+
+    }
+
+
+ 
     
 }
 
