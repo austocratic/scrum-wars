@@ -42,6 +42,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     var slackUserID, slackChannelID;
 
+    console.log('slack user: ', slackPayload.user);
+
     //TODO: I think that all user ids come in this format when calling interactive messages
     slackUserID = slackPayload.user.id;
 
