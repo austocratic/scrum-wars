@@ -36,7 +36,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
     
-    var slackUserID, slackChannelID;
+    var slackUserID, slackChannelID, actionValue;
 
     //TODO: I think that all user ids come in this format when calling interactive messages
     slackUserID = slackPayload.user.id;
@@ -47,20 +47,15 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     console.log('slackChannelID: ', slackChannelID);
 
-    //Get the user ID property (formatted differently based on /command or callback)
-    /*
-     try {
-     userID = slackPayload.user.id;
-     } catch(err){
-     //Slash commands are formatted in this way
-     userID = slackPayload.user_id;
-     }*/
-
     //Action name dictates which button was pressed
     var actionName = slackPayload.actions[0].name;
 
-    //Action value dicates the specific selection from drop down menus
-    var actionValue = slackPayload.actions[0].value;
+    if (slackPayload.actions[0].selected_options[0].value){
+        //Action value dicates the specific selection from drop down menus
+        actionValue = slackPayload.actions[0].selected_options[0].value;
+    } else {
+        actionValue = slackPayload.actions[0].value
+    }
 
     var slackCallback = slackPayload.callback_id;
 
