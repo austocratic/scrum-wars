@@ -58,12 +58,20 @@ exports.slackSlashCommand = async (req, res, next) => {
 
     //Lookup the command and return a response
     function getResponseTemplate(requestCommand, requestSlackUserID, requestSlackChannelID) {
+
+        var slackTemplate;
+
         switch (requestCommand) {
 
             case '/action':
 
                 console.log('Called /action');
-                return game.getAvailableActions(requestSlackUserID, requestSlackChannelID);
+
+                slackTemplate = game.getAvailableActions(requestSlackUserID, requestSlackChannelID);
+
+                slackTemplate.attachments[0].callback_id = '/action';
+
+                return slackTemplate;
 
                 break;
 
@@ -71,31 +79,47 @@ exports.slackSlashCommand = async (req, res, next) => {
 
                 console.log('Called /generate');
                 //Return the new character confirmation template
-            return slackTemplates.generateCharacterConfirmation;
+                slackTemplate = slackTemplates.generateCharacterConfirmation;
+
+                slackTemplate.attachments[0].callback_id = '/generate';
+
+                return slackTemplate;
 
                 break;
 
             case '/profile':
 
                 console.log('Called /profile');
-                return game.characterProfile(requestSlackUserID, requestSlackChannelID);
+                slackTemplate = game.characterProfile(requestSlackUserID, requestSlackChannelID);
+
+                slackTemplate.attachments[0].callback_id = '/profile';
+
+                return slackTemplate;
 
                 break;
 
             case '/travel':
 
                 console.log('Called /travel');
-                return game.characterTravel(requestSlackUserID, requestSlackChannelID);
-                
+
+                slackTemplate = game.characterTravel(requestSlackUserID, requestSlackChannelID);
+
+                slackTemplate.attachments[0].callback_id = '/travel';
+
+                return slackTemplate;
+
                 break;
 
             case '/name':
 
                 console.log('Called /name');
-                return game.characterName(requestSlackUserID, slackTextInput);
+                slackTemplate = game.characterName(requestSlackUserID, slackTextInput);
+
+                slackTemplate.attachments[0].callback_id = '/name';
+
+                return slackTemplate;
 
                 break;
-
 
             default:
         }
