@@ -17,72 +17,78 @@ var Game = require('../models/Game').Game;
 */
 exports.slackInteractiveMessage = async (req, res, next) => {
 
-    var slackPayload = req.body.payload;
-
-    /*
-    Format of API calls coming from slack:
-        callback: what view the interaction was made from
-        name:     button clicked on from that view
-        value:    optional specific selection made
-    */
-    
-    console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
-
-    //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
-    //Parse the payload of the message
-    /*
-    var messagePayload, userID;
     try {
-        messagePayload = JSON.parse(req.body.payload);
-    } catch(err){
-        messagePayload = req.body.payload;
-    }*/
 
-    var slackUserID, slackChannelID;
+        var slackPayload = req.body.payload;
 
-    //TODO: I think that all user ids come in this format when calling interactive messages
-    slackUserID = slackPayload.user.id;
+        /*
+         Format of API calls coming from slack:
+         callback: what view the interaction was made from
+         name:     button clicked on from that view
+         value:    optional specific selection made
+         */
 
-    slackChannelID = slackPayload.channel.id;
-    
-    //Get the user ID property (formatted differently based on /command or callback)
-    /*
-    try {
-        userID = slackPayload.user.id;
-    } catch(err){
-        //Slash commands are formatted in this way
-        userID = slackPayload.user_id;
-    }*/
+        console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
 
-    //Action name dictates which button was pressed
-    var actionName = slackPayload.actions[0].name;
+        //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
+        //Parse the payload of the message
+        /*
+         var messagePayload, userID;
+         try {
+         messagePayload = JSON.parse(req.body.payload);
+         } catch(err){
+         messagePayload = req.body.payload;
+         }*/
 
-    //Action value dicates the specific selection from drop down menus
-    var actionValue = slackPayload.actions[0].value;
+        var slackUserID, slackChannelID;
 
-    var slackCallback = slackPayload.callback_id;
+        //TODO: I think that all user ids come in this format when calling interactive messages
+        slackUserID = slackPayload.user.id;
 
-    //parse the callback string.  Look at the last element in the callback to determine response
-    var slackCallbackElements = slackCallback.split("/");
+        slackChannelID = slackPayload.channel.id;
 
-    //Get the last element of the callback
-    var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
-    
-    //Get game's current state
-    var game = new Game();
-    
-    //Set the game state locally
-    await game.getState();
+        //Get the user ID property (formatted differently based on /command or callback)
+        /*
+         try {
+         userID = slackPayload.user.id;
+         } catch(err){
+         //Slash commands are formatted in this way
+         userID = slackPayload.user_id;
+         }*/
 
-    var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, slackUserID, slackChannelID);
+        //Action name dictates which button was pressed
+        var actionName = slackPayload.actions[0].name;
 
-    console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
+        //Action value dicates the specific selection from drop down menus
+        var actionValue = slackPayload.actions[0].value;
 
-    //Overwrites with updated local props
-    await game.updateState();
+        var slackCallback = slackPayload.callback_id;
 
-    //Send success response
-    res.status(200).send(responseTemplate);
+        //parse the callback string.  Look at the last element in the callback to determine response
+        var slackCallbackElements = slackCallback.split("/");
+
+        //Get the last element of the callback
+        var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
+
+        //Get game's current state
+        var game = new Game();
+
+        //Set the game state locally
+        await game.getState();
+
+        var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, slackUserID, slackChannelID);
+
+        console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
+
+        //Overwrites with updated local props
+        await game.updateState();
+
+        //Send success response
+        res.status(200).send(responseTemplate);
+
+    } catch (err) {
+        console.log('Error: ', err);
+    }
     
     //Lookup the callback & name take an action and returns result
     function getResponseTemplate(requestView, requestActionName, requestSlackUserID, requestSlackChannelID) {
