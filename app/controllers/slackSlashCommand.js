@@ -1,8 +1,5 @@
 "use strict";
 
-
-var interactions = require('./interactions').interactions;
-
 var Game = require('../models/Game').Game;
 
 var slackTemplates = require ('../slackTemplates');
@@ -49,17 +46,18 @@ exports.slackSlashCommand = async (req, res, next) => {
     //Set the game state locally
     await game.getState();
 
-    var responseTemplate = await processRequest(command, slackUserID, slackChannelID);
+    var responseTemplate = getResponseTemplate(command, slackUserID, slackChannelID);
 
-    //Overwrites with updated local stats
-    //TODO add the update state call back in for real updates
+    console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
+
+    //Overwrites with updated local props
     await game.updateState();
 
     //Send success response
     res.status(200).send(responseTemplate);
 
     //Lookup the command and return a response
-    async function processRequest(requestCommand, requestSlackUserID, requestSlackChannelID) {
+    function getResponseTemplate(requestCommand, requestSlackUserID, requestSlackChannelID) {
         switch (requestCommand) {
 
             case '/action':

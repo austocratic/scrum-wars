@@ -9,6 +9,7 @@ var User = require('./User').User;
 var Character = require('./Character').Character;
 var Zone = require('./Zone').Zone;
 var Match = require('./Match').Match;
+var Merchant = require('./Merchant').Merchant;
 var Action = require('./Action').Action;
 var slackTemplates = require('../slackTemplates');
 
@@ -251,7 +252,7 @@ class Game {
             var actionType = actionCategory[0].props.type;
 
             //Build the major template
-            var majorTemplate = {
+            var attachmentTemplate = {
                 "title": actionType,
                 "fallback": "You are unable to choose an action",
                 //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
@@ -277,7 +278,7 @@ class Game {
                 }
 
                 //Push each action into the actions array portion of the template
-                majorTemplate.actions.push({
+                attachmentTemplate.actions.push({
                     "name": actionDetails.props.name,
                     "text": actionDetails.props.name,
                     "style": actionAvailableButtonColor,
@@ -286,65 +287,54 @@ class Game {
                 })
             });
 
-            return majorTemplate;
+            return attachmentTemplate;
         });
 
-        //for each grouped actions iterate through its element
-
-        /*
-        //Iterate through the available actions adding each to the attachment array.  If it is cooling down show in red
-        var templateAttachments = characterActionsAvailableInCurrentZone.map( eachActionAvailable =>{
-
-            console.log('eachActionAvailable: ', eachActionAvailable);
-
-            //console.log('localCharacter.props: ', JSON.stringify(localCharacter.props.actions));
-
-            var singleAction = _.find(localCharacter.props.actions, {'action_id': eachActionAvailable.id});
-
-            console.log('singleAction: ', JSON.stringify(singleAction));
-
-            //console.log('called foreach, ', localCharacter.props.actions[singleAction.action_id]);
-
-            //Determine if each action is still in cooldown
-            //console.log('is action available: ', eachActionAvailable.getActionAvailability(localCharacter.props.actions[eachActionAvailable.id].turn_available, match.props.number_turns));
-
-            //Default button color to red ("danger").  If available, it will be overwritten
-            var actionAvailableButtonColor = "danger";
-
-            //If the button is available based on the match turn, overwrite the color to green
-            if (singleAction.turn_available >= match.props.number_turns) {
-                actionAvailableButtonColor = "primary"
-            }
-
-            return {
-                "title": eachActionAvailable.props.name,
-                "fallback": "You are unable to choose an action",
-                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
-                "callback_id": "/action",
-                "color": "#3AA3E3", //TODO change to attack oriented color
-                "attachment_type": "default",
-                //TODO add tiny_url for attack symbol
-                "actions": [
-                    {
-                        "name": eachActionAvailable.props.name,
-                        "text": eachActionAvailable.props.name,
-                        "style": actionAvailableButtonColor,
-                        "type": "button",
-                        "value": eachActionAvailable.id
-                    }]
-            };
-        });*/
-
+        //Get the basic action template from the JSON file
         var finalTemplate = slackTemplates.actionMenu;
-        
+
+        //Add the actions template into the slack template to return
         finalTemplate.attachments = templateAttachments;
 
-        console.log('final attachment templates: ', JSON.stringify(finalTemplate));
-
         return finalTemplate;
-
     }
+    
+    shopList(requestSlackChannelID){
 
+        console.log('called shopList, ', requestSlackChannelID);
+
+        //Use the channel to create a local zone
+        var localZone = new Zone(this.state, requestSlackChannelID);
+
+        console.log('merchants: ', this.state.merchant);
+
+        //Look at state and determine which merchant is in the zone
+        var merchantID = _.findKey(this.state.merchant, singleMerchant => {
+            {return singleMerchant['zone_id'] === localZone.id}
+        });
+
+        console.log('shopList merchant id: ', merchantID);
+
+        var localMerchant = new Merchant(this.state, merchantID);
+
+        var itemsForSaleArray = localMerchant.getItemsForSale();
+
+        var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
+            var localItem = this.state.item[itemID];
+
+            return {
+                "text": localItem.name,
+                "value": localItem.name
+            }
+        });
+
+        var slackTemplate = slackTemplates.shopMenu;
+
+        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown;
+
+        return slackTemplate
+        
+    }
 }
 
 

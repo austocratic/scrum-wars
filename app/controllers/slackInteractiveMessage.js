@@ -38,14 +38,12 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         messagePayload = req.body.payload;
     }*/
 
-
-    //Get the callback property
-    var view = slackPayload.callback_id;
-
-    var userID;
+    var slackUserID, slackChannelID;
 
     //TODO: I think that all user ids come in this format when calling interactive messages
-    userID = slackPayload.user.id;
+    slackUserID = slackPayload.user.id;
+
+    slackChannelID = slackPayload.channel.id;
     
     //Get the user ID property (formatted differently based on /command or callback)
     /*
@@ -56,29 +54,60 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         userID = slackPayload.user_id;
     }*/
 
+    //Action name dictates which button was pressed
     var actionName = slackPayload.actions[0].name;
 
+    //Action value dicates the specific selection from drop down menus
     var actionValue = slackPayload.actions[0].value;
 
-    console.log('actionName: ', actionName);
+    var slackCallback = slackPayload.callback_id;
 
+    //parse the callback string.  Look at the last element in the callback to determine response
+    var slackCallbackElements = slackCallback.split("/");
+
+    //Get the last element of the callback
+    var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
+    
     //Get game's current state
     var game = new Game();
     
     //Set the game state locally
     await game.getState();
-    
-    await processRequest(view, actionName, actionValue, userID);
-    
-    //Overwrites with updated local stats
+
+    var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, slackUserID, slackChannelID);
+
+    console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
+
+    //Overwrites with updated local props
     await game.updateState();
 
     //Send success response
-    res.status(200).send();
+    res.status(200).send(responseTemplate);
     
     //Lookup the callback & name take an action and returns result
-    async function processRequest(requestView, requestActionName, requestActionValue, requestUserID) {
+    function getResponseTemplate(requestView, requestActionName, requestSlackUserID, requestSlackChannelID) {
+
+        var slackTemplate;
+
         switch (requestView) {
+
+            case 'actionList':
+
+                switch (requestActionName){
+
+                    case 'shop':
+                        
+                        slackTemplate = game.shopList(requestSlackChannelID);
+
+                        slackTemplate.attachments[0].callback_id = slackCallback + '/shop';
+
+                        return slackTemplate;
+                        
+                    break;
+
+                }
+
+                break;
 
             case 'characterProfile':
 
@@ -95,7 +124,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                     case 'equipment-button':
 
                         //return the equipment view
-                        return await
+                        
                         equipmentMenu(requestUserID);
 
                         break;
