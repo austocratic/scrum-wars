@@ -293,6 +293,8 @@ class Game {
         //Get the basic action template from the JSON file
         var finalTemplate = slackTemplates.actionMenu;
 
+        console.log('array length: ', templateAttachments.length);
+
         console.log('templateAttachments is array? : ', Array.isArray(templateAttachments));
 
         //Add the actions template into the slack template to return
