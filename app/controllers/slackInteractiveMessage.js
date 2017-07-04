@@ -121,7 +121,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                 console.log('called shopList');
 
                 //Create a local item
-                var localItem = new Item(this.state, requestActionValue);
+                var localItem = new Item(game.state, requestActionValue);
                 
                 //Create an item detail view template
                 slackTemplate = localItem.getDetailView();
