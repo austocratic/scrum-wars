@@ -68,17 +68,8 @@ exports.slackSlashCommand = async (req, res, next) => {
                 console.log('Called /action');
 
                 slackTemplate = game.getAvailableActions(requestSlackUserID, requestSlackChannelID);
-                
-                console.log('action slack template: ', JSON.stringify(slackTemplate));
 
-                //console.log('slackTemplate: ', slackTemplate);
-                console.log('slackTemplate.attachments: ', slackTemplate.attachments);
-                //console.log('slackTemplate.attachments[0]: ', slackTemplate.attachments[0]);
-                //console.log('slackTemplate.attachments[0].callback_id: ', slackTemplate.attachments[0].callback_id);
-
-                console.log('isarray: ', Array.isArray(slackTemplate.attachments));
-
-                //slackTemplate.attachments[0]['callback_id'] = '/action';
+                slackTemplate.attachments[0].callback_id = '/action';
 
                 return slackTemplate;
 

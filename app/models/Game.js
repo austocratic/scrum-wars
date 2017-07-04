@@ -243,69 +243,56 @@ class Game {
             return singleAction.props.type;
         });
 
-        try {
+        //Iterate through the grouped actions
+        var templateAttachments = groupedActions.map(actionCategory => {
 
-            //Iterate through the grouped actions
-            var templateAttachments = groupedActions.map(actionCategory => {
+            var actionType = actionCategory[0].props.type;
 
-                var actionType = actionCategory[0].props.type;
+            //Build the major template
+            var attachmentTemplate = {
+                "title": actionType,
+                "fallback": "You are unable to choose an action",
+                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
+                //"callback_id": "/action",
+                "color": "#3AA3E3", //TODO change to attack oriented color
+                "attachment_type": "default",
+                //TODO add tiny_url for attack symbol
+                "actions": []
+            };
 
-                //Build the major template
-                var attachmentTemplate = {
-                    "title": actionType,
-                    "fallback": "You are unable to choose an action",
-                    //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
-                    //"callback_id": "/action",
-                    "color": "#3AA3E3", //TODO change to attack oriented color
-                    "attachment_type": "default",
-                    //TODO add tiny_url for attack symbol
-                    "actions": []
-                };
+            actionCategory.forEach(actionDetails => {
 
-                actionCategory.forEach(actionDetails => {
+                var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
 
-                    var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
+                var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
-                    var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
+                //Default button color to red ("danger").  If available, it will be overwritten
+                var actionAvailableButtonColor = "danger";
 
-                    //Default button color to red ("danger").  If available, it will be overwritten
-                    var actionAvailableButtonColor = "danger";
+                //If the button is available based on the match turn, overwrite the color to green
+                if (actionAvailability) {
+                    actionAvailableButtonColor = "primary"
+                }
 
-                    //If the button is available based on the match turn, overwrite the color to green
-                    if (actionAvailability) {
-                        actionAvailableButtonColor = "primary"
-                    }
-
-                    //Push each action into the actions array portion of the template
-                    attachmentTemplate.actions.push({
-                        "name": actionDetails.props.name,
-                        "text": actionDetails.props.name,
-                        "style": actionAvailableButtonColor,
-                        "type": "button",
-                        "value": actionDetails.props.name
-                    })
-                });
-
-                return attachmentTemplate;
+                //Push each action into the actions array portion of the template
+                attachmentTemplate.actions.push({
+                    "name": actionDetails.props.name,
+                    "text": actionDetails.props.name,
+                    "style": actionAvailableButtonColor,
+                    "type": "button",
+                    "value": actionDetails.props.name
+                })
             });
 
-        } catch(err){
-            console.log('Error when mapping template attachments: ', err)
-        }
+            return attachmentTemplate;
+        });
 
         //Get the basic action template from the JSON file
         var finalTemplate = slackTemplates.actionMenu;
 
-        console.log('templateAttachments: ', templateAttachments);
-
-        console.log('array length: ', templateAttachments.length);
-
-        console.log('templateAttachments is array? : ', Array.isArray(templateAttachments));
-
         //Add the actions template into the slack template to return
-        finalTemplate.attachments = templateAttachments;
-
-        console.log('finalTemplate.attachments is array? : ', Array.isArray(finalTemplate.attachments));
+        //Use .value() to unwrap the lodash wrapper
+        finalTemplate.attachments = templateAttachments.value();
 
         return finalTemplate;
     }
@@ -341,7 +328,7 @@ class Game {
 
         var slackTemplate = slackTemplates.shopMenu;
 
-        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown;
+        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown.value();
 
         return slackTemplate
         

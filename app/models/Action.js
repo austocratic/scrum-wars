@@ -22,11 +22,7 @@ class Action extends BaseModel{
     
     getActionAvailability(turnActionavailable, matchTurn){
 
-        console.log('called getActionAvailability, turnActionavailable: ', turnActionavailable);
-
-        console.log('called getActionAvailability, matchTurn: ', matchTurn);
-
-
+   
         //TODO need to reference the turn the player used the action, this is stored in the character
 
 
