@@ -76,7 +76,7 @@ exports.slackSlashCommand = async (req, res, next) => {
                 //console.log('slackTemplate.attachments[0]: ', slackTemplate.attachments[0]);
                 //console.log('slackTemplate.attachments[0].callback_id: ', slackTemplate.attachments[0].callback_id);
 
-                console.log('isarray: ', Array.isArray(slackTemplate.attachments[0]));
+                console.log('isarray: ', Array.isArray(slackTemplate.attachments));
 
                 //slackTemplate.attachments[0]['callback_id'] = '/action';
 
