@@ -328,7 +328,7 @@ class Game {
 
         var slackTemplate = slackTemplates.shopMenu;
 
-        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown.value();
+        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown;
 
         return slackTemplate
         
