@@ -50,11 +50,11 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     //Action name dictates which button was pressed
     var actionName = slackPayload.actions[0].name;
 
-    if (slackPayload.actions[0].selected_options[0].value){
+    if (slackPayload.actions[0].value) {
+        actionValue = slackPayload.actions[0].value
+    } else {
         //Action value dicates the specific selection from drop down menus
         actionValue = slackPayload.actions[0].selected_options[0].value;
-    } else {
-        actionValue = slackPayload.actions[0].value
     }
 
     var slackCallback = slackPayload.callback_id;
