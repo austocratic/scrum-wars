@@ -299,19 +299,13 @@ class Game {
     
     shopList(requestSlackChannelID){
 
-        console.log('called shopList, ', requestSlackChannelID);
-
         //Use the channel to create a local zone
         var localZone = new Zone(this.state, requestSlackChannelID);
-
-        console.log('merchants: ', this.state.merchant);
 
         //Look at state and determine which merchant is in the zone
         var merchantID = _.findKey(this.state.merchant, singleMerchant => {
             {return singleMerchant['zone_id'] === localZone.id}
         });
-
-        console.log('shopList merchant id: ', merchantID);
 
         var localMerchant = new Merchant(this.state, merchantID);
 
@@ -322,7 +316,7 @@ class Game {
 
             return {
                 "text": localItem.name,
-                "value": localItem.name
+                "value": localItem.id
             }
         });
 

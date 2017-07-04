@@ -6,6 +6,7 @@ var inventoryMenu = require('../menus/inventoryMenu').inventoryMenu;
 var equipmentMenu = require('../menus/equipmentMenu').equipmentMenu;
 
 var Game = require('../models/Game').Game;
+var Item = require('../models/Item').Item;
 
 /*
 
@@ -75,7 +76,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     //Set the game state locally
     await game.getState();
 
-    var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, slackUserID, slackChannelID);
+    var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, actionValue, slackUserID, slackChannelID);
 
     console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
 
@@ -86,7 +87,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     res.status(200).send(responseTemplate);
 
     //Lookup the callback & name take an action and returns result
-    function getResponseTemplate(requestView, requestActionName, requestSlackUserID, requestSlackChannelID) {
+    function getResponseTemplate(requestView, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
 
         console.log('called getResponseTemplate, requestView: ', requestView);
         console.log('called getResponseTemplate, requestActionName: ', requestActionName);
@@ -105,13 +106,32 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         
                         slackTemplate = game.shopList(requestSlackChannelID);
 
-                        slackTemplate.attachments[0].callback_id = slackCallback + '/shop';
+                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                        slackTemplate.attachments[0].callback_id = slackCallback + ':Shop/shopList';
 
                         return slackTemplate;
                         
                     break;
-
                 }
+
+                break;
+
+            case 'shopList':
+
+                console.log('called shopList');
+
+                //Create a local item
+                var localItem = new Item(this.state, requestActionValue);
+                
+                //Create an item detail view template
+                slackTemplate = localItem.getDetailView();
+
+                //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                slackTemplate.attachments[0].callback_id = slackCallback + ':' + localItem.id + '/itemDetail';
+
+                return slackTemplate;
+                
+                //Add purchase buttons to the bottom
 
                 break;
 
