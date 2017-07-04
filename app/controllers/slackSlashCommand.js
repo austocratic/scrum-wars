@@ -69,7 +69,7 @@ exports.slackSlashCommand = async (req, res, next) => {
 
                 slackTemplate = game.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
-                slackTemplate.attachments[0].callback_id = '/action';
+                slackTemplate.attachments[0].callback_id = 'actionList';
 
                 return slackTemplate;
 
@@ -81,7 +81,7 @@ exports.slackSlashCommand = async (req, res, next) => {
                 //Return the new character confirmation template
                 slackTemplate = slackTemplates.generateCharacterConfirmation;
 
-                slackTemplate.attachments[0].callback_id = '/generate';
+                slackTemplate.attachments[0].callback_id = 'characterConfirmation';
 
                 return slackTemplate;
 
@@ -92,7 +92,7 @@ exports.slackSlashCommand = async (req, res, next) => {
                 console.log('Called /profile');
                 slackTemplate = game.characterProfile(requestSlackUserID, requestSlackChannelID);
 
-                slackTemplate.attachments[0].callback_id = '/profile';
+                slackTemplate.attachments[0].callback_id = 'profileView';
 
                 return slackTemplate;
 

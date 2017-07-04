@@ -34,16 +34,11 @@ exports.slackInteractiveMessage = async (req, res, next) => {
      */
 
     console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
-
-    console.log('Not stringified: ', slackPayload);
-
-
+    
     var slackUserID, slackChannelID;
 
-    console.log('slack user: ', slackPayload['user']);
-
     //TODO: I think that all user ids come in this format when calling interactive messages
-    slackUserID = slackPayload.user['id'];
+    slackUserID = slackPayload.user.id;
 
     console.log('slackUserID: ', slackUserID);
 
@@ -93,6 +88,9 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     //Lookup the callback & name take an action and returns result
     function getResponseTemplate(requestView, requestActionName, requestSlackUserID, requestSlackChannelID) {
 
+        console.log('called getResponseTemplate, requestView: ', requestView);
+        console.log('called getResponseTemplate, requestActionName: ', requestActionName);
+
         var slackTemplate;
 
         switch (requestView) {
@@ -102,6 +100,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                 switch (requestActionName){
 
                     case 'shop':
+                        
+                        console.log('called actionList/shop');
                         
                         slackTemplate = game.shopList(requestSlackChannelID);
 
@@ -182,7 +182,11 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         break;
                 }
 
+                break;
+
             default:
+
+                console.log('callback not supported: ', requestView);
 
                 break;
         }
