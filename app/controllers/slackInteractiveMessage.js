@@ -7,6 +7,8 @@ var equipmentMenu = require('../menus/equipmentMenu').equipmentMenu;
 
 var Game = require('../models/Game').Game;
 var Item = require('../models/Item').Item;
+var Character = require('../models/Character').Character;
+var User = require('../models/User').User;
 
 /*
 
@@ -59,19 +61,13 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     var slackCallback = slackPayload.callback_id;
 
-    //parse the callback string.  Look at the last element in the callback to determine response
-    var slackCallbackElements = slackCallback.split("/");
-
-    //Get the last element of the callback
-    var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
-
     //Get game's current state
     var game = new Game();
 
     //Set the game state locally
     await game.getState();
 
-    var responseTemplate = getResponseTemplate(lastCallbackElement, actionName, actionValue, slackUserID, slackChannelID);
+    var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID);
 
     console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
 
@@ -82,7 +78,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     res.status(200).send(responseTemplate);
 
     //Lookup the callback & name take an action and returns result
-    function getResponseTemplate(requestView, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
+    function getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
 
         console.log('called getResponseTemplate, requestView: ', requestView);
         console.log('called getResponseTemplate, requestActionName: ', requestActionName);
@@ -90,7 +86,13 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
         var slackTemplate;
 
-        switch (requestView) {
+        //parse the callback string into an array.
+        var slackCallbackElements = requestCallback.split("/");
+
+        //Get the last element of the callback
+        var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
+
+        switch (lastCallbackElement) {
 
             case 'actionList':
 
@@ -154,6 +156,26 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                     case 'yes':
 
                         console.log('called itemDetail/yes');
+
+                        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
+                        var localUser = new User(this.state, requestSlackUserID);
+
+                        //Get the local character's id
+                        var characterID = localUser.getCharacterID();
+
+                        //Create a local character object
+                        var localCharacter = new Character(this.state, characterID);
+
+                        //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
+                        var itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
+
+                        var valueSelection = itemSelection.split(":");
+
+                        var itemID = valueSelection[valueSelection.length - 1];
+
+                        console.log('itemSelection: ', itemSelection);
+
+                        localCharacter.purchaseItem(itemID);
                         
                         break;
                     
