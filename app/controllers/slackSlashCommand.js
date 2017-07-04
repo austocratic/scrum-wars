@@ -71,7 +71,7 @@ exports.slackSlashCommand = async (req, res, next) => {
                 
                 console.log('action slack template: ', JSON.stringify(slackTemplate));
 
-                slackTemplate.attachments[0].callback_id = '/action';
+                slackTemplate.attachments[0]['callback_id'] = '/action';
 
                 return slackTemplate;
 

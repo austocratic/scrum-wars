@@ -256,7 +256,7 @@ class Game {
                 "title": actionType,
                 "fallback": "You are unable to choose an action",
                 //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
-                "callback_id": "/action",
+                //"callback_id": "/action",
                 "color": "#3AA3E3", //TODO change to attack oriented color
                 "attachment_type": "default",
                 //TODO add tiny_url for attack symbol
