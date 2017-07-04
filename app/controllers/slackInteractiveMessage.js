@@ -28,6 +28,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
 
+    console.log('Not stringified: ', slackPayload);
+
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
     //Parse the payload of the message
     /*
