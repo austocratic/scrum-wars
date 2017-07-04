@@ -99,7 +99,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                 switch (requestActionName){
 
-                    case 'shop':
+                    case 'Shop':
                         
                         console.log('called actionList/shop');
                         
