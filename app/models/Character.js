@@ -24,22 +24,35 @@ class Character extends BaseModel{
 
     purchaseItem(itemObject){
 
+        var responseTemplate;
+
         //Check if the player has sufficient gold
         if (this.props.gold < itemObject.props.cost) {
             //If insufficient gold: return template
-            var responseTemplate = slackTemplates.insufficientFunds;
+            responseTemplate = slackTemplates.insufficientFunds;
 
             responseTemplate.text = "I'm sorry traveler, you don't have " + itemObject.props.cost + " gold." +
                 "\nCan I interest you in something else?";
+
+            return responseTemplate;
         }
 
         //If sufficient gold:
         //Add item ID to player's inventory
-        //Update the characters name property locally
-        this.updateProperty('name', 'testedNewName');
+        this.props.inventory.unequipped.push(itemObject.id);
+        this.updateProperty('inventory', this.props.inventory);
 
-        //Reduce character's gold by item cost
+        //Calculate the player's updated gold
+        //Update the characters name property locally
+        var updatedPlayerGold = this.props.gold - itemObject.props.cost;
+        this.updateProperty('gold', updatedPlayerGold);
+
+        responseTemplate = slackTemplates.purchaseSuccess;
+
+        responseTemplate.text = "_You hand the merchant " + itemObject.props.cost + " in exchange for the " + itemObject.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
+
         //Return purchase confirmation template
+        return responseTemplate;
 
     }
 

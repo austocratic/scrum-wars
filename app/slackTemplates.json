@@ -91,8 +91,11 @@
     ]
   },
   "insufficientFunds": {
-    "text": ""
+    "text": "You have insufficient funds to purchase that"
 
+  },
+  "purchaseSuccess": {
+    "text": "You successfully purchase the item"
   }
 
 
