@@ -360,8 +360,12 @@ class Game {
 
         console.log('equipmentSlots: ', JSON.stringify(equipmentSlots));
 
+        var slotKeys = Object.keys(equipmentSlots);
+
         //For each equipment slot determine what item the player has in that slot and return
-        return equipmentSlots.map( eachEquipmentSlot=>{
+        return slotKeys.map( eachEquipmentSlotID=>{
+
+            var eachEquipmentSlot = equipmentSlots[eachEquipmentSlotID];
 
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, Object.keys(eachEquipmentSlot));
@@ -403,7 +407,6 @@ class Game {
             }]
             }
         });
-        
     }
     
 }
