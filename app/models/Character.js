@@ -60,8 +60,7 @@ class Character extends BaseModel{
         return responseTemplate;
 
     }
-
-
+    
  
     
 }

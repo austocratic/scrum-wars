@@ -103,6 +103,20 @@
   },
   "purchaseSuccess": {
     "text": "You successfully purchase the item"
+  },
+  "itemList": {
+
+    "attachments": [
+      {
+        "text": "",
+        "callback_id": "itemList",
+        "actions": [
+          {
+            "name": "itemList",
+            "type": "select",
+            "options": []
+          }]
+      }]
   }
 
 

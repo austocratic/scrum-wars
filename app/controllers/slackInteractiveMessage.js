@@ -2,13 +2,13 @@
 
 var characterProfile = require('../menus/characterProfile').characterProfile;
 
-var inventoryMenu = require('../menus/inventoryMenu').inventoryMenu;
-var equipmentMenu = require('../menus/equipmentMenu').equipmentMenu;
 
 var Game = require('../models/Game').Game;
 var Item = require('../models/Item').Item;
 var Character = require('../models/Character').Character;
 var User = require('../models/User').User;
+
+var slackTemplates = require('../slackTemplates');
 
 /*
 
@@ -200,15 +200,24 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                 switch (requestActionName) {
 
-                    case 'inventory-button':
+                    case 'Inventory':
 
-                        //return the inventory view
-                        //return await
-                        inventoryMenu(requestUserID);
+                        console.log('called characterProfile/inventory');
+
+                        slackTemplate = slackTemplates.itemList;
+
+                        slackTemplate.attachments[0].actions[0].options = game.getItemList(requestSlackChannelID);
+
+                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                        slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/inventoryList';
+
+                        console.log('Inventory template: ', slackTemplate);
+
+                        return slackTemplate;
 
                         break;
 
-                    case 'equipment-button':
+                    case 'Equipment':
 
                         //return the equipment view
                         
@@ -216,6 +225,13 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         break;
                 }
+
+                break;
+
+            case 'inventoryList':
+
+                //Return an item detail with the selection from the inventory list
+
 
                 break;
 

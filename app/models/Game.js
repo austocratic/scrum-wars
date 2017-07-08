@@ -11,6 +11,7 @@ var Zone = require('./Zone').Zone;
 var Match = require('./Match').Match;
 var Merchant = require('./Merchant').Merchant;
 var Action = require('./Action').Action;
+var Item = require('./Item').Item;
 var slackTemplates = require('../slackTemplates');
 
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
@@ -137,18 +138,18 @@ class Game {
             "callback_id": "profileOptionSelection",
             "fallback": "Unable to load inventory buttons",
             "actions": [{
-                "name": "inventory",
+                "name": "Inventory",
                 "text": "Inventory",
                 "style": "default",
                 "type": "button",
-                "value": "inventory"
+                "value": "Inventory"
             },
             {
-                "name": "equipment",
+                "name": "Equipment",
                 "text": "Equipped Items",
                 "style": "default",
                 "type": "button",
-                "value": "equipment"
+                "value": "Equipment"
             }]
         };
 
@@ -329,6 +330,26 @@ class Game {
 
         return slackTemplate
         
+    }
+    
+    //Arguments: array of item IDs
+    getItemList(itemArray){
+
+        //Validate that array was passed
+        //if (typeof(itemArray) === array)
+        
+        //var responseTemplate = slackTemplates.itemList;
+
+        return itemArray.map( eachInventoryItemID =>{
+
+            //Create a local item
+            var localItem = new Item(this.state, eachInventoryItemID);
+            
+            return {
+                "text": localItem.props.name,
+                "value": localItem.id
+            }
+        })
     }
     
 }
