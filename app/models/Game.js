@@ -386,15 +386,18 @@ class Game {
 
                 console.log('localItem props: ', localItem.props);
 
+                console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
+
                 //Find the item that has matching equipment slot:
                 var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
 
                 console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
                 //If no item in slot (undefined), set the item to the "empty" item
-                if (!itemInSlotSearchResult) {
+                if (typeof itemInSlotSearchResult == 'undefined') {
+                    console.log('undefined so setting as empty');
                     itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
-                }
+                };
 
                 return itemInSlotSearchResult
             });
