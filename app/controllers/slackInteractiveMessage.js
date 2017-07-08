@@ -173,17 +173,23 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         var itemID = valueSelection[valueSelection.length - 1];
 
-                        console.log('itemID: ', itemID);
-
-                        var localItem = new Item(game.state, itemID);
-
-                        return localCharacter.purchaseItem(localItem);
+                        return localCharacter.purchaseItem(new Item(game.state, itemID));
                         
                         break;
                     
                     case 'no':
 
                         console.log('called itemDetail/no');
+
+                        //Return the player to item selection menu
+                        slackTemplate = game.shopList(requestSlackChannelID);
+
+                        console.log('callback string: ', JSON.stringify(slackCallbackElements));
+
+                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                        //slackTemplate.attachments[0].callback_id = slackCallback + ':Shop/shopList';
+
+                        return slackTemplate;
                         
                         break;
                 }
