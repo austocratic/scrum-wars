@@ -103,7 +103,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         console.log('called actionList/shop');
                         
                         slackTemplate = game.shopList(requestSlackChannelID);
-
+                        
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = slackCallback + ':Shop/shopList';
 
@@ -186,8 +186,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         console.log('callback string: ', JSON.stringify(slackCallbackElements));
 
-                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        //slackTemplate.attachments[0].callback_id = slackCallback + ':Shop/shopList';
+                        //Overwrite the callback to "backtrack" and get rid of the previous selection path
+                        slackTemplate.attachments[0].callback_id = 'actionList:Shop/shopList';
 
                         return slackTemplate;
                         

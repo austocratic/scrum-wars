@@ -322,7 +322,10 @@ class Game {
 
         var slackTemplate = slackTemplates.shopMenu;
 
-        slackTemplate.attachments[0].actions[0].options = slackTemplateDropdown;
+        //Add the corresponding merchant's image
+        slackTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localMerchant.id + ".jpg";
+        
+        slackTemplate.attachments[1].actions[0].options = slackTemplateDropdown;
 
         return slackTemplate
         
