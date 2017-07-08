@@ -367,8 +367,12 @@ class Game {
 
             var eachEquipmentSlot = equipmentSlots[eachEquipmentSlotID];
 
+            console.log('eachEquipmentSlot: ', eachEquipmentSlot);
+
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, Object.keys(eachEquipmentSlot));
+
+            console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
             var itemInSlot = equipmentList.forEach( eachEquipmentID =>{
