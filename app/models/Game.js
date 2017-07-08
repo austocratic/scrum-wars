@@ -356,7 +356,7 @@ class Game {
     getEquipmentList(equipmentList){
 
         //DB has an equipment_slots array
-        var equipmentSlots = this.props.equipment_slot;
+        var equipmentSlots = this.state.equipment_slot;
 
         //For each equipment slot determine what item the player has in that slot and return
         return equipmentSlots.map( eachEquipmentSlot=>{
