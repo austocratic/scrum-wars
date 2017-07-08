@@ -92,6 +92,15 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         //Get the last element of the callback
         var lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
 
+        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
+        var localUser = new User(game.state, requestSlackUserID);
+
+        //Get the local character's id
+        var characterID = localUser.getCharacterID();
+
+        //Create a local character object
+        var localCharacter = new Character(game.state, characterID);
+
         switch (lastCallbackElement) {
 
             case 'actionList':
@@ -157,14 +166,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         console.log('called itemDetail/yes');
 
-                        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-                        var localUser = new User(game.state, requestSlackUserID);
 
-                        //Get the local character's id
-                        var characterID = localUser.getCharacterID();
-
-                        //Create a local character object
-                        var localCharacter = new Character(game.state, characterID);
 
                         //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
                         var itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
@@ -206,7 +208,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         slackTemplate = slackTemplates.itemList;
 
-                        slackTemplate.attachments[0].actions[0].options = game.getItemList(requestSlackChannelID);
+                        //Pass in the character's unequipped inventory array
+                        slackTemplate.attachments[0].actions[0].options = game.getItemList(localCharacter.props.inventory.unequipped);
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/inventoryList';
