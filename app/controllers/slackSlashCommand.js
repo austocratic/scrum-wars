@@ -92,7 +92,9 @@ exports.slackSlashCommand = async (req, res, next) => {
                 console.log('Called /profile');
                 slackTemplate = game.characterProfile(requestSlackUserID, requestSlackChannelID);
 
-                slackTemplate.attachments[0].callback_id = 'profileView';
+                //attachment 0 = character image
+                //attachment 1 = character stats
+                slackTemplate.attachments[2].callback_id = 'characterProfile';
 
                 return slackTemplate;
 
