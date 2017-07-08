@@ -370,7 +370,7 @@ class Game {
             console.log('eachEquipmentSlot: ', eachEquipmentSlot);
 
             //Declare a local equipment slot
-            var localEquipmentSlot = new EquipmentSlot(this.state, Object.keys(eachEquipmentSlotID));
+            var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
 
             console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
