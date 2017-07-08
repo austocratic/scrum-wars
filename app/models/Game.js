@@ -353,7 +353,7 @@ class Game {
         })
     }
 
-    getEquipmentList(equipmentList){
+    getEquipmentList(equipmentIDArray){
 
         //DB has an equipment_slots array
         var equipmentSlots = this.state.equipment_slot;
@@ -375,10 +375,14 @@ class Game {
             console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
-            var itemInSlot = equipmentList.forEach( eachEquipmentID =>{
+            var itemInSlot = equipmentIDArray.forEach( eachEquipmentID =>{
+
+                console.log('eachEquipmentID: ', eachEquipmentID);
 
                 //Create a local item
                 var localItem = new Item(this.state, eachEquipmentID);
+
+                console.log('localItem: ', localItem);
 
                 //Find the item that has matching equipment slot:
                 var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
