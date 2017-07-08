@@ -267,7 +267,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
             default:
 
-                console.log('callback not supported: ', requestView);
+                console.log('callback not supported: ', lastCallbackElement);
 
                 break;
         }

@@ -74,7 +74,7 @@
   ]
 },
   "shopMenu": {
-    "text": "_You enter the general store and the merchant greets you warmly_",
+    "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
     "attachments": [
       {
         "fallback": "You are unable to choose an action",
