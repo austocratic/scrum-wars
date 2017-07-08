@@ -105,7 +105,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         slackTemplate = game.shopList(requestSlackChannelID);
                         
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        slackTemplate.attachments[0].callback_id = slackCallback + ':Shop/shopList';
+                        slackTemplate.attachments[1].callback_id = slackCallback + ':Shop/shopList';
 
                         return slackTemplate;
                         
