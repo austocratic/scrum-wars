@@ -204,7 +204,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                     case 'Inventory':
 
-                        console.log('called characterProfile/inventory');
+                        console.log('called characterProfile/Inventory');
 
                         slackTemplate = slackTemplates.itemList;
 
@@ -212,9 +212,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         slackTemplate.attachments[0].actions[0].options = game.getItemList(localCharacter.props.inventory.unequipped);
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/inventoryList';
-
-                        console.log('Inventory template: ', slackTemplate);
+                        slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/itemDetail';
 
                         return slackTemplate;
 
@@ -222,7 +220,19 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                     case 'Equipment':
 
-                        //return the equipment view
+                        console.log('called characterProfile/Equipment');
+
+                        slackTemplate = slackTemplates.itemList;
+
+                        //Pass in the character's unequipped inventory array
+                        slackTemplate.attachments = game.getEquipmentList(localCharacter.props.inventory.equipped);
+                        
+                        console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
+                        
+                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                        slackTemplate.attachments[0].callback_id = slackCallback + ':Equipment/itemDetail';
+
+                        return slackTemplate;
                         
                         equipmentMenu(requestUserID);
 

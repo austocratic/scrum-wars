@@ -12,6 +12,7 @@ var Match = require('./Match').Match;
 var Merchant = require('./Merchant').Merchant;
 var Action = require('./Action').Action;
 var Item = require('./Item').Item;
+var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 var slackTemplates = require('../slackTemplates');
 
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
@@ -350,6 +351,57 @@ class Game {
                 "value": localItem.id
             }
         })
+    }
+
+    getEquipmentList(equipmentList){
+
+        //DB has an equipment_slots array
+        var equipmentSlots = this.props.equipment_slot;
+
+        //For each equipment slot determine what item the player has in that slot and return
+        return equipmentSlots.map( eachEquipmentSlot=>{
+
+            //Declare a local equipment slot
+            var localEquipmentSlot = new EquipmentSlot(this.state, Object.keys(eachEquipmentSlot));
+
+            //Iterate through equipmentList to determine if there is an equipped item in that slot
+            var itemInSlot = equipmentList.forEach( eachEquipmentID =>{
+
+                //Create a local item
+                var localItem = new Item(this.state, eachEquipmentID);
+
+                //Find the item that has matching equipment slot:
+                var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
+
+                //If no item in slot (undefined), set the item to the "empty" item
+                if (!itemInSlotSearchResult) {
+                    itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
+                }
+
+                return itemInSlotSearchResult
+            });
+            
+            return {
+                "title": eachEquipmentSlot.name,
+                "callback_id": "equipmentMenu",
+                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.props.id + ".jpg",
+                "fields": [
+                {
+                    "title": "Equipment name",
+                    "value": itemInSlot.props.name,
+                    "short": false
+                }
+            ],
+                "actions": [{
+                "name": "inspect",
+                "text": "Inspect item",
+                "style": "default",
+                "type": "button",
+                "value": itemInSlot.id
+            }]
+            }
+        });
+        
     }
     
 }
