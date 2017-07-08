@@ -358,6 +358,8 @@ class Game {
         //DB has an equipment_slots array
         var equipmentSlots = this.state.equipment_slot;
 
+        console.log('equipmentSlots: ', JSON.stringify(equipmentSlots));
+
         //For each equipment slot determine what item the player has in that slot and return
         return equipmentSlots.map( eachEquipmentSlot=>{
 
