@@ -24,6 +24,11 @@ class Character extends BaseModel{
 
     purchaseItem(itemObject){
 
+        console.log('Called purchaseItem');
+
+        console.log('character gold: ', this.props.gold);
+        console.log('item cost: ', itemObject.props.cost);
+
         var responseTemplate;
 
         //Check if the player has sufficient gold
