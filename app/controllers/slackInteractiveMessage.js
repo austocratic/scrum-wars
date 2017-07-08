@@ -177,7 +177,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         var localItem = new Item(game.state, itemID);
 
-                        localCharacter.purchaseItem(localItem);
+                        return localCharacter.purchaseItem(localItem);
                         
                         break;
                     
