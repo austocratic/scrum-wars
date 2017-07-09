@@ -367,33 +367,33 @@ class Game {
 
             var eachEquipmentSlot = equipmentSlots[eachEquipmentSlotID];
 
-            console.log('eachEquipmentSlot: ', eachEquipmentSlot);
+            //console.log('eachEquipmentSlot: ', eachEquipmentSlot);
 
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
 
-            console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
+            //console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
             var itemInSlot;
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
              equipmentIDArray.forEach( eachEquipmentID =>{
 
-                console.log('eachEquipmentID: ', eachEquipmentID);
+                //console.log('eachEquipmentID: ', eachEquipmentID);
 
                 //Create a local item
                 var localItem = new Item(this.state, eachEquipmentID);
 
-                console.log('localItem: ', localItem);
+                //console.log('localItem: ', localItem);
 
-                console.log('localItem props: ', localItem.props);
+                //console.log('localItem props: ', localItem.props);
 
-                console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
+                //console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
                 //Find the item that has matching equipment slot:
                 var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
 
-                console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
+                //console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
                 //If no item in slot (undefined), set the item to the "empty" item
                 if (typeof itemInSlotSearchResult == 'undefined') {
