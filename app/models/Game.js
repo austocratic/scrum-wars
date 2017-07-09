@@ -374,8 +374,6 @@ class Game {
 
             //console.log('localEquipmentSlot id: ', localEquipmentSlot.id);
 
-            //console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
-
             var itemInSlot;
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
@@ -388,9 +386,9 @@ class Game {
 
                 //console.log('localItem: ', localItem);
 
-                //console.log('localItem props: ', localItem.props.equipment_slots);
+                console.log('localItem props: ', localItem.props.equipment_slots);
 
-                //console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
+                console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
                 //Find the item that has matching equipment slot:
                 var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
@@ -410,7 +408,7 @@ class Game {
             //console.log('itemInSlot: ', itemInSlot);
             
             return {
-                "title": eachEquipmentSlot.name,
+                "title": localEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.props.id + ".jpg",
                 "fields": [
