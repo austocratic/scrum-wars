@@ -233,8 +233,6 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         slackTemplate.attachments[0].callback_id = slackCallback + ':Equipment/itemDetail';
 
                         return slackTemplate;
-                        
-                        equipmentMenu(requestUserID);
 
                         break;
                 }

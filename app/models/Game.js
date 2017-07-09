@@ -372,6 +372,8 @@ class Game {
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
 
+            //console.log('localEquipmentSlot id: ', localEquipmentSlot.id);
+
             //console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
             var itemInSlot;
@@ -379,16 +381,16 @@ class Game {
             //Iterate through equipmentList to determine if there is an equipped item in that slot
              equipmentIDArray.forEach( eachEquipmentID =>{
 
-                console.log('eachEquipmentID: ', eachEquipmentID);
+                //console.log('eachEquipmentID: ', eachEquipmentID);
 
                 //Create a local item
                 var localItem = new Item(this.state, eachEquipmentID);
 
                 //console.log('localItem: ', localItem);
 
-                console.log('localItem props: ', localItem.props.equipment_slots);
+                //console.log('localItem props: ', localItem.props.equipment_slots);
 
-                console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
+                //console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
                 //Find the item that has matching equipment slot:
                 var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
