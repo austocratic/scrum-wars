@@ -405,7 +405,7 @@ class Game {
                 itemInSlot = itemInSlotSearchResult;
             });
 
-            console.log('itemInSlot: ', itemInSlot);
+            //console.log('itemInSlot: ', itemInSlot);
             
             return {
                 "title": eachEquipmentSlot.name,
