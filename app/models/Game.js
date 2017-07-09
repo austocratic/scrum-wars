@@ -367,7 +367,7 @@ class Game {
 
             var eachEquipmentSlot = equipmentSlots[eachEquipmentSlotID];
 
-            //console.log('eachEquipmentSlot: ', eachEquipmentSlot);
+            console.log('eachEquipmentSlot: ', eachEquipmentSlot);
 
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
