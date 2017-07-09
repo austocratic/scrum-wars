@@ -375,7 +375,7 @@ class Game {
             console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
-            var itemInSlot = equipmentIDArray.forEach( eachEquipmentID =>{
+            var itemInSlot = equipmentIDArray.map( eachEquipmentID =>{
 
                 console.log('eachEquipmentID: ', eachEquipmentID);
 
@@ -401,6 +401,8 @@ class Game {
 
                 return itemInSlotSearchResult
             });
+
+            console.log('itemInSlot: ', itemInSlot);
             
             return {
                 "title": eachEquipmentSlot.name,
