@@ -374,8 +374,10 @@ class Game {
 
             console.log('localEquipmentSlot name: ', localEquipmentSlot.props.name);
 
+            var itemInSlot;
+
             //Iterate through equipmentList to determine if there is an equipped item in that slot
-            var itemInSlot = equipmentIDArray.map( eachEquipmentID =>{
+             equipmentIDArray.forEach( eachEquipmentID =>{
 
                 console.log('eachEquipmentID: ', eachEquipmentID);
 
@@ -397,9 +399,10 @@ class Game {
                 if (typeof itemInSlotSearchResult == 'undefined') {
                     console.log('undefined so setting as empty');
                     itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
-                };
+                }
 
-                return itemInSlotSearchResult
+                //Set the item to be used in template generation
+                itemInSlot = itemInSlotSearchResult;
             });
 
             console.log('itemInSlot: ', itemInSlot);
