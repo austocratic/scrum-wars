@@ -391,9 +391,11 @@ class Game {
                 console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
                 //Find the item that has matching equipment slot:
-                var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
+                //var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
 
-                //console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
+                var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
+
+                console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
                 //If no item in slot (undefined), set the item to the "empty" item
                 if (typeof itemInSlotSearchResult == 'undefined') {
