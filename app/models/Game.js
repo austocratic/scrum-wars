@@ -395,15 +395,26 @@ class Game {
 
                 //var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
 
-                 var itemInSlotSearchResult = localItem.props.equipment_slots[localItem.props.equipment_slots.indexOf(localEquipmentSlot.id)];
+                 var itemIndex = localItem.props.equipment_slots.indexOf(localEquipmentSlot.id);
+
+                 var itemInSlotSearchResult;
+
+                 if (itemIndex < 0) {
+                     itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
+                 } else {
+                     itemInSlotSearchResult = new Item(this.state, localItem.props.equipment_slots[itemIndex]);
+                 }
+
+                 //var itemInSlotSearchResult = localItem.props.equipment_slots[itemIndex];
 
                 console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
                 //If no item in slot (undefined), set the item to the "empty" item
+                 /*
                 if (typeof itemInSlotSearchResult == 'undefined') {
                     console.log('undefined so setting as empty');
                     itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
-                }
+                }*/
 
                 //Set the item to be used in template generation
                 itemInSlot = itemInSlotSearchResult;
