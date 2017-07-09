@@ -393,7 +393,9 @@ class Game {
                 //Find the item that has matching equipment slot:
                 //var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
 
-                var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
+                //var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
+
+                 var itemInSlotSearchResult = localItem.props.equipment_slots[Array.indexOf(localEquipmentSlot.id)];
 
                 console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
