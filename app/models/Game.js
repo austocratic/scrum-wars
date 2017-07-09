@@ -395,7 +395,7 @@ class Game {
 
                 //var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
 
-                 var itemInSlotSearchResult = localItem.props.equipment_slots[Array.indexOf(localEquipmentSlot.id)];
+                 var itemInSlotSearchResult = localItem.props.equipment_slots[localItem.props.equipment_slots.indexOf(localEquipmentSlot.id)];
 
                 console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
