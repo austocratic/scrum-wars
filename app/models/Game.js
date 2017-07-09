@@ -373,8 +373,8 @@ class Game {
             var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
 
             //console.log('localEquipmentSlot id: ', localEquipmentSlot.id);
-
-            var itemInSlot;
+            //default, will get overwritten
+            var itemInSlot = undefined;
 
             //Iterate through equipmentList to determine if there is an equipped item in that slot
              equipmentIDArray.forEach( eachEquipmentID =>{
@@ -397,17 +397,22 @@ class Game {
 
                  var itemIndex = localItem.props.equipment_slots.indexOf(localEquipmentSlot.id);
 
+                 if (itemIndex >= 0) {
+                     itemInSlot = localItem
+                 }
+
+                 /*
                  var itemInSlotSearchResult;
 
                  if (itemIndex < 0) {
                      itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
                  } else {
                      itemInSlotSearchResult = new Item(this.state, localItem.props.equipment_slots[itemIndex]);
-                 }
+                 }*/
 
                  //var itemInSlotSearchResult = localItem.props.equipment_slots[itemIndex];
 
-                console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
+                //console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
 
                 //If no item in slot (undefined), set the item to the "empty" item
                  /*
@@ -417,10 +422,15 @@ class Game {
                 }*/
 
                 //Set the item to be used in template generation
-                itemInSlot = itemInSlotSearchResult;
+                //itemInSlot = itemInSlotSearchResult;
             });
 
-            //console.log('itemInSlot: ', itemInSlot);
+            //If no item in slot (undefined), set the item to the "empty" item
+            if (typeof itemInSlot == 'undefined') {
+                itemInSlot = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
+            }
+
+            console.log('itemInSlot: ', itemInSlot);
             
             return {
                 "title": localEquipmentSlot.props.name,
