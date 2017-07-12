@@ -115,6 +115,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
             //var priorView = priorCallbackSplit[priorCallbackSplit.length - 2];
 
             lastCallbackElement = priorCallbackSplit[priorCallbackSplit.length - 2];
+            requestActionName = priorCallbackSplit[priorCallbackSplit.length - 1];
 
             //return responseTemplateSwitch(priorView, requestActionName);
         }
