@@ -132,7 +132,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
             console.log('slackCallbackElements after pop: ', slackCallbackElements);
 
-            slackCallbackElements.push(requestActionName);
+            slackCallbackElements.push(lastSelection[lastSelection.length -1]);
 
             //Overwrite the last callback element
             lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
