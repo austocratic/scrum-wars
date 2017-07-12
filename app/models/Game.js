@@ -359,7 +359,7 @@ class Game {
         //DB has an equipment_slots array
         var equipmentSlots = this.state.equipment_slot;
 
-        console.log('equipmentSlots: ', JSON.stringify(equipmentSlots));
+        //console.log('equipmentSlots: ', JSON.stringify(equipmentSlots));
 
         var slotKeys = Object.keys(equipmentSlots);
 
@@ -368,7 +368,7 @@ class Game {
 
             var eachEquipmentSlot = equipmentSlots[eachEquipmentSlotID];
 
-            console.log('eachEquipmentSlot: ', eachEquipmentSlot);
+            //console.log('eachEquipmentSlot: ', eachEquipmentSlot);
 
             //Declare a local equipment slot
             var localEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlotID);
@@ -387,9 +387,9 @@ class Game {
 
                 //console.log('localItem: ', localItem);
 
-                console.log('localItem props: ', localItem.props.equipment_slots);
+                //console.log('localItem props: ', localItem.props.equipment_slots);
 
-                console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
+                //console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
 
                  var itemIndex = localItem.props.equipment_slots.indexOf(localEquipmentSlot.id);
@@ -404,19 +404,17 @@ class Game {
                 itemInSlot = new Item(this.state, emptyItemID);
             }
 
-            console.log('itemInSlot: ', itemInSlot);
+            //console.log('itemInSlot: ', itemInSlot);
             
             var baseTemplate = {
                 "title": localEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.props.id + ".jpg",
-                "fields": [
-                {
+                "fields": [{
                     "title": "Equipment name",
                     "value": itemInSlot.props.name,
                     "short": false
-                }
-            ],
+                }],
                 "actions": []
             };
 
@@ -425,6 +423,9 @@ class Game {
 
             //If the item is any ID other than the "empty" item, add an inspect button
             if (itemInSlot.id != emptyItemID) {
+
+                console.log('Passed conditional pushing to baseTemplate.action: ', JSON.stringify(baseTemplate.actions));
+
                 baseTemplate.actions.push({
                     "name": "inspect",
                     "text": "Inspect item",
