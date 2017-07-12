@@ -102,25 +102,52 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         var localCharacter = new Character(game.state, characterID);
 
 
-        //Could check for "back" selection & regardless of callback context, it will trigger the below condition
+        //Check for back button selection.  If back, overwrite the
 
         if (requestActionName == 'back'){
 
+
+            //remove the last two elements from the callback elements array
+            slackCallbackElements.splice( slackCallbackElements.length - 2, 2);
+
+            //take the last element & split it into view:selection
+            var lastSelection = slackCallbackElements[slackCallbackElements.length - 1].split(":");
+
+            //Remove the selection from the last view:selection combo
+            lastSelection.pop();
+
+            console.log('lastSelection: ', lastSelection);
+
+            slackCallbackElements.join("/");
+
+            console.log('rejoined slackCallbackElements: ', slackCallbackElements);
+
+
+            /*
             //If back was selected, parse out the prior view in the callback
             var priorCallback = slackCallbackElements[slackCallbackElements.length - 3];
 
             //Parse the priorView from view & selection
             var priorCallbackSplit = priorCallback.split(":");
 
+
+
+
+
+
             //var priorView = priorCallbackSplit[priorCallbackSplit.length - 2];
 
             lastCallbackElement = priorCallbackSplit[priorCallbackSplit.length - 2];
-            requestActionName = priorCallbackSplit[priorCallbackSplit.length - 1];
+            requestActionName = priorCallbackSplit[priorCallbackSplit.length - 1];*/
+
+
 
             //return responseTemplateSwitch(priorView, requestActionName);
         }
 
         console.log('Modified lastCallbackElement: ', lastCallbackElement);
+
+        console.log('requestCallback after modification: ', requestCallback);
 
         //Switch logic looks at the view & the button selected to return a template
         return responseTemplateSwitch(lastCallbackElement, requestActionName);
@@ -141,7 +168,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                             slackTemplate = game.shopList(requestSlackChannelID);
 
                             //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                            slackTemplate.attachments[1].callback_id = slackCallback + ':Shop/shopList';
+                            slackTemplate.attachments[1].callback_id = requestCallback + ':Shop/shopList';
 
                             return slackTemplate;
 
@@ -177,7 +204,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                     }];
 
                     //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                    slackTemplate.attachments[0].callback_id = slackCallback + ':' + localItem.id + '/itemDetail';
+                    slackTemplate.attachments[0].callback_id = requestCallback + ':' + localItem.id + '/itemDetail';
 
                     return slackTemplate;
 
@@ -238,7 +265,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                             slackTemplate.attachments[0].actions[0].options = game.getItemList(localCharacter.props.inventory.unequipped);
 
                             //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                            slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/itemDetail';
+                            slackTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
 
                             return slackTemplate;
 
@@ -256,7 +283,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                             console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
 
                             //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                            slackTemplate.attachments[0].callback_id = slackCallback + ':Equipment/itemDetail';
+                            slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
 
                             return slackTemplate;
 
