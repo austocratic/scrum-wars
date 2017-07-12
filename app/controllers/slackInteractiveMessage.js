@@ -122,7 +122,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
             var lastSelection = slackCallbackElements[slackCallbackElements.length - 1].split(":");
 
-            lastSelection.pop();
+            //Overwrite the requestActionName to the last selection (this will control the responseTemplateSwitch flow)
+            requestActionName = lastSelection.pop();
 
             console.log('lastSelection: ', lastSelection);
 
@@ -133,15 +134,23 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
             slackCallbackElements.push(lastSelection);
 
+            //Overwrite the last callback element
+            lastCallbackElement = slackCallbackElements[slackCallbackElements.length - 1];
+
             console.log('slackCallbackElements after push: ', slackCallbackElements);
 
-            var joinedElements = slackCallbackElements.join("/");
+            //var joinedElements = slackCallbackElements.join("/");
 
+            //Overwrite the callback
+            requestCallback = slackCallbackElements.join("/");
+
+            /*
             if (slackCallbackElements.length == 1) {
                 joinedElements = joinedElements + "/"
-            }
+            }*/
 
-            console.log('rejoined joinedElements: ', joinedElements);
+            console.log('new requestCallback: ', requestCallback);
+            
 
 
             /*
