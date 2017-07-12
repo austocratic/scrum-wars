@@ -111,19 +111,35 @@ exports.slackInteractiveMessage = async (req, res, next) => {
             slackCallbackElements.splice( slackCallbackElements.length - 2, 2);
 
             //take the last element & split it into view:selection
-            var lastSelection = slackCallbackElements[slackCallbackElements.length - 1].split(":");
+            //var lastSelection = slackCallbackElements[slackCallbackElements.length - 1].split(":");
 
             //Remove the selection from the last view:selection combo
+            //lastSelection.pop();
+
+            //console.log('lastSelection: ', lastSelection);
+
+            //var joinedElements = slackCallbackElements.join("/");
+
+            var lastSelection = slackCallbackElements[slackCallbackElements.length - 1].split(":");
+
             lastSelection.pop();
 
             console.log('lastSelection: ', lastSelection);
 
+            //Remove the last element this could leave an empty array
+            slackCallbackElements.pop();
+
+            console.log('slackCallbackElements after pop: ', slackCallbackElements);
+
+            slackCallbackElements.push(lastSelection);
+
+            console.log('slackCallbackElements after push: ', slackCallbackElements);
+
             var joinedElements = slackCallbackElements.join("/");
 
-            /*
             if (slackCallbackElements.length == 1) {
-
-            }*/
+                joinedElements = joinedElements + "/"
+            }
 
             console.log('rejoined joinedElements: ', joinedElements);
 
@@ -135,17 +151,10 @@ exports.slackInteractiveMessage = async (req, res, next) => {
             //Parse the priorView from view & selection
             var priorCallbackSplit = priorCallback.split(":");
 
-
-
-
-
-
             //var priorView = priorCallbackSplit[priorCallbackSplit.length - 2];
 
             lastCallbackElement = priorCallbackSplit[priorCallbackSplit.length - 2];
             requestActionName = priorCallbackSplit[priorCallbackSplit.length - 1];*/
-
-
 
             //return responseTemplateSwitch(priorView, requestActionName);
         }
