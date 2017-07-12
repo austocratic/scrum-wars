@@ -346,8 +346,6 @@ class Game {
 
             //Create a local item
             var localItem = new Item(this.state, eachInventoryItemID);
-
-            console.log('getItemList iteratting item name: ', localItem.props.name);
             
             return {
                 "text": localItem.props.name,
@@ -411,7 +409,7 @@ class Game {
             var baseTemplate = {
                 "title": localEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
-                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.props.id + ".jpg",
+                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.id + ".jpg",
                 "fields": [{
                     "title": "Equipment name",
                     "value": itemInSlot.props.name,
