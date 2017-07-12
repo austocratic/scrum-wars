@@ -118,9 +118,14 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
             console.log('lastSelection: ', lastSelection);
 
-            slackCallbackElements.join("/");
+            var joinedElements = slackCallbackElements.join("/");
 
-            console.log('rejoined slackCallbackElements: ', slackCallbackElements);
+            /*
+            if (slackCallbackElements.length == 1) {
+
+            }*/
+
+            console.log('rejoined joinedElements: ', joinedElements);
 
 
             /*
