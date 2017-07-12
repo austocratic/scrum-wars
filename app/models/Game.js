@@ -18,7 +18,8 @@ var slackTemplates = require('../slackTemplates');
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
-
+//TODO - move this to a config file
+var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 
 
@@ -390,49 +391,22 @@ class Game {
 
                 console.log('localEquipmentSlotid: ', localEquipmentSlot.id);
 
-                //Find the item that has matching equipment slot:
-                //var itemInSlotSearchResult = _.find(localItem.props.equipment_slots, localEquipmentSlot.id);
-
-                //var itemInSlotSearchResult = localItem.props.equipment_slots[localEquipmentSlot.id];
 
                  var itemIndex = localItem.props.equipment_slots.indexOf(localEquipmentSlot.id);
 
                  if (itemIndex >= 0) {
                      itemInSlot = localItem
                  }
-
-                 /*
-                 var itemInSlotSearchResult;
-
-                 if (itemIndex < 0) {
-                     itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
-                 } else {
-                     itemInSlotSearchResult = new Item(this.state, localItem.props.equipment_slots[itemIndex]);
-                 }*/
-
-                 //var itemInSlotSearchResult = localItem.props.equipment_slots[itemIndex];
-
-                //console.log('itemInSlotSearchResult: ', itemInSlotSearchResult);
-
-                //If no item in slot (undefined), set the item to the "empty" item
-                 /*
-                if (typeof itemInSlotSearchResult == 'undefined') {
-                    console.log('undefined so setting as empty');
-                    itemInSlotSearchResult = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
-                }*/
-
-                //Set the item to be used in template generation
-                //itemInSlot = itemInSlotSearchResult;
             });
 
             //If no item in slot (undefined), set the item to the "empty" item
             if (typeof itemInSlot == 'undefined') {
-                itemInSlot = new Item(this.state, '-Kjk3sGUJy5Nu8GWsdff');
+                itemInSlot = new Item(this.state, emptyItemID);
             }
 
             console.log('itemInSlot: ', itemInSlot);
             
-            return {
+            var baseTemplate = {
                 "title": localEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + itemInSlot.props.id + ".jpg",
@@ -443,13 +417,18 @@ class Game {
                     "short": false
                 }
             ],
-                "actions": [{
-                "name": "inspect",
-                "text": "Inspect item",
-                "style": "default",
-                "type": "button",
-                "value": itemInSlot.id
-            }]
+                "actions": []
+            };
+
+            //If the item is any ID other than the "empty" item, add an inspect button
+            if (itemInSlot.id != emptyItemID) {
+                baseTemplate.actions.push({
+                    "name": "inspect",
+                    "text": "Inspect item",
+                    "style": "default",
+                    "type": "button",
+                    "value": itemInSlot.id
+                })
             }
         });
     }
