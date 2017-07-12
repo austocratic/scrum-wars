@@ -420,6 +420,9 @@ class Game {
                 "actions": []
             };
 
+            console.log('itemInSlot.id: ', itemInSlot.id);
+            console.log('emptyItemID: ', emptyItemID);
+
             //If the item is any ID other than the "empty" item, add an inspect button
             if (itemInSlot.id != emptyItemID) {
                 baseTemplate.actions.push({
