@@ -434,6 +434,8 @@ class Game {
                     "value": itemInSlot.id
                 })
             }
+
+            return baseTemplate
         });
     }
     
