@@ -107,7 +107,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         if (requestActionName == 'back'){
 
             //If back was selected, parse out the prior view in the callback
-            var priorCallback = slackCallbackElements[slackCallbackElements.length - 2];
+            var priorCallback = slackCallbackElements[slackCallbackElements.length - 3];
 
             //Parse the priorView from view & selection
             var priorCallbackSplit = priorCallback.split(":");
@@ -168,12 +168,12 @@ exports.slackInteractiveMessage = async (req, res, next) => {
                         "type": "button",
                         "value": "yes"
                     },
-                        {
-                            "name": "back",
-                            "text": "No thanks",
-                            "type": "button",
-                            "value": "no"
-                        }];
+                    {
+                        "name": "back",
+                        "text": "No thanks",
+                        "type": "button",
+                        "value": "no"
+                    }];
 
                     //Previous callback includes the menu selection was made from, now add the selection & the next menu
                     slackTemplate.attachments[0].callback_id = slackCallback + ':' + localItem.id + '/itemDetail';
