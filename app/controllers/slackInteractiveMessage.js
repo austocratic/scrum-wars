@@ -213,6 +213,8 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = slackCallback + ':Inventory/itemDetail';
+                        
+                        console.log('characterProfile slack template: ', JSON.stringify(slackTemplate));
 
                         return slackTemplate;
 

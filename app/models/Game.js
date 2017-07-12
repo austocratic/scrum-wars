@@ -346,6 +346,8 @@ class Game {
 
             //Create a local item
             var localItem = new Item(this.state, eachInventoryItemID);
+
+            console.log('getItemList iteratting item name: ', localItem.props.name);
             
             return {
                 "text": localItem.props.name,
