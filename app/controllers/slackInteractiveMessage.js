@@ -150,22 +150,6 @@ exports.slackInteractiveMessage = async (req, res, next) => {
             }*/
 
             console.log('new requestCallback: ', requestCallback);
-
-
-
-            /*
-            //If back was selected, parse out the prior view in the callback
-            var priorCallback = slackCallbackElements[slackCallbackElements.length - 3];
-
-            //Parse the priorView from view & selection
-            var priorCallbackSplit = priorCallback.split(":");
-
-            //var priorView = priorCallbackSplit[priorCallbackSplit.length - 2];
-
-            lastCallbackElement = priorCallbackSplit[priorCallbackSplit.length - 2];
-            requestActionName = priorCallbackSplit[priorCallbackSplit.length - 1];*/
-
-            //return responseTemplateSwitch(priorView, requestActionName);
         }
 
         console.log('Modified lastCallbackElement: ', lastCallbackElement);
@@ -179,6 +163,15 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         function responseTemplateSwitch(viewSelection, buttonSelection){
 
             switch (viewSelection) {
+                
+                //Testing moving /command functionality into this function
+                
+                case 'action':
+                    
+                    
+                    break;
+                
+                
 
                 case 'actionList':
 
@@ -204,7 +197,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                     console.log('called shopList');
 
-                    //Create a local item
+                    //Create a local itemc
                     var localItem = new Item(game.state, requestActionValue);
 
                     //Create an item detail view template
