@@ -414,6 +414,24 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Pass in the character's unequipped inventory array
                         slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
 
+                        //getEquipmentList above overwrites attachments on template.  Add a back button here
+                        slackTemplate.attachments.push({
+                            "text": "",
+                            "fallback": "You are unable to go back",
+                            "callback_id": "itemList",
+                            "color": "#3AA3E3",
+                            "attachment_type": "default",
+                            "actions": [
+                                {
+                                    "name": "back",
+                                    "text": "Back",
+                                    "style": "",
+                                    "type": "button",
+                                    "value": "back"
+                                }
+                            ]
+                        })
+
                         console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
