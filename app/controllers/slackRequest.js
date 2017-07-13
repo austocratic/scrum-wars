@@ -394,12 +394,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate = slackTemplates.itemList;
 
+                        console.log('slackTemplate before options set: ', JSON.stringify(slackTemplate));
+
                         //Pass in the character's unequipped inventory array
                         slackTemplate.attachments[0].actions[0].options = gameContext.getItemList(localCharacter.props.inventory.unequipped);
+
+                        console.log('slackTemplate after options set: ', JSON.stringify(slackTemplate));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
                         slackTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
+
+                        console.log('slackTemplate after callbacks set: ', JSON.stringify(slackTemplate));
 
                         return slackTemplate;
 
