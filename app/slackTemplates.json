@@ -93,7 +93,7 @@
           "text": "Choose an item to purchase",
           "type": "select",
           "options": []
-        }],
+        }]
       },
       {
         "text": "",
