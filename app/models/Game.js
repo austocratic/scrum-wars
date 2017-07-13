@@ -155,8 +155,6 @@ class Game {
             }]
         };
 
-        console.log('Final template: ', JSON.stringify(template));
-
         return(template);
     }
 
