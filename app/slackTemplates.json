@@ -132,6 +132,22 @@
             "type": "select",
             "options": []
           }]
+      },
+      {
+        "text": "",
+        "fallback": "You are unable to go back",
+        "callback_id": "itemList",
+        "color": "#3AA3E3",
+        "attachment_type": "default",
+        "actions": [
+          {
+            "name": "back",
+            "text": "Back",
+            "style": "",
+            "type": "button",
+            "value": "back"
+          }
+        ]
       }]
   }
 

@@ -399,6 +399,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
+                        slackTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
 
                         return slackTemplate;
 
@@ -417,6 +418,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
+                        slackTemplate.attachments[1].callback_id = requestCallback + ':Equipment/itemDetail';
 
                         return slackTemplate;
 
