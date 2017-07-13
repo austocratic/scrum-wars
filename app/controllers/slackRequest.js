@@ -247,7 +247,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Return the new character confirmation template
                         slackTemplate = slackTemplates.generateCharacterConfirmation;
 
-                        slackTemplate.attachments[0].callback_id = 'command:action/characterConfirmation';
+                        slackTemplate.attachments[0].callback_id = 'command:generate/characterConfirmation';
 
                         return slackTemplate;
 
@@ -260,7 +260,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //attachment 0 = character image
                         //attachment 1 = character stats
-                        slackTemplate.attachments[2].callback_id = 'command:action/characterProfile';
+                        slackTemplate.attachments[2].callback_id = 'command:profile/characterProfile';
 
                         return slackTemplate;
 
