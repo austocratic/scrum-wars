@@ -435,7 +435,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var updatedAttachments = slackTemplateAttachments.map( singleAttachment =>{
 
-                            return singleAttachment.callback_id = requestCallback + ':Equipment/itemDetail'
+                            singleAttachment.callback_id = requestCallback + ':Equipment/itemDetail';
+
+                            return singleAttachment
 
                         });
 
