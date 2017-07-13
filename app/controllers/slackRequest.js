@@ -256,7 +256,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'profile':
 
                         console.log('Called command/profile');
-                        slackTemplate = game.characterProfile(requestSlackUserID, requestSlackChannelID);
+                        slackTemplate = gameContext.characterProfile(requestSlackUserID, requestSlackChannelID);
 
                         //attachment 0 = character image
                         //attachment 1 = character stats
@@ -271,7 +271,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('Called command/travel');
 
                         //Dont set callback ID here, no interactive message to return
-                        return game.characterTravel(requestSlackUserID, requestSlackChannelID);
+                        return gameContext.characterTravel(requestSlackUserID, requestSlackChannelID);
 
                         break;
 
@@ -280,7 +280,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('Called command/name');
 
                         //Dont set callback ID here, no interactive message to return
-                        return game.characterName(requestSlackUserID, slackTextInput);
+                        return gameContext.characterName(requestSlackUserID, slackTextInput);
 
                         break;
                 }
