@@ -412,10 +412,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         slackTemplate = slackTemplates.itemList;
 
                         //Pass in the character's unequipped inventory array
-                        slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
+                        //slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
+                        var slackTemplateAttachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
 
                         //getEquipmentList above overwrites attachments on template.  Add a back button here
-                        slackTemplate.attachments.push({
+                        slackTemplateAttachments.push({
                             "text": "",
                             "fallback": "You are unable to go back",
                             "callback_id": "itemList",
@@ -430,13 +431,21 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     "value": "back"
                                 }
                             ]
-                        })
+                        });
+
+                        var updatedAttachments = slackTemplateAttachments.map( singleAttachment =>{
+
+                            return singleAttachment.callback_id = requestCallback + ':Equipment/itemDetail'
+
+                        });
+
+                        slackTemplate.attachments = updatedAttachments;
 
                         console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
-                        slackTemplate.attachments[1].callback_id = requestCallback + ':Equipment/itemDetail';
+                        //slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
+                        //slackTemplate.attachments[1].callback_id = requestCallback + ':Equipment/itemDetail';
 
                         return slackTemplate;
 
