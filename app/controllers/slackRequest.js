@@ -347,15 +347,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
             case 'generateCharacterClassList':
                 console.log('Called generateCharacterClassList');
 
-                //Does not need sub case statement.  Selection will be used to look up properties
-                
-                //character.addStartingStats(classID)
-                
-                //generate a class object
-
                 var localCharacterClass = new Class(gameContext.state, userSelection);
-
-                console.log('localCharacterClass props: ', localCharacterClass.props);
 
                 var updates = {
                     "actions": localCharacterClass.props.action_id,
@@ -372,6 +364,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
+
+                return slackTemplates.generateCharacterSuccess;
 
                 break;
 

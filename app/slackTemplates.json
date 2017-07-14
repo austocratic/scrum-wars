@@ -57,6 +57,11 @@
   "text": "Choose a class to begin your journey. \n _Classes define you as a hero.  Where did you come from and who do you fight for?_",
   "attachments": []
 },
+"generateCharacterSuccess": {
+  "title": "You have now set your character's class.  Welcome to the adventure",
+  "text": "You have set your class, but what name should we call you oh mysterious traveler?  Type /name ____ (for example: /name Montaigne) to set your character's name!",
+  "attachments": []
+},
 "actionAlreadyTaken": {
   "text": "You have no more actions available this turn",
   "attachments": [
