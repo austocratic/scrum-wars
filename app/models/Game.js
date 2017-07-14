@@ -361,7 +361,7 @@ class Game {
                 "attachment_type": "default",
                 "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + singleClassID + ".jpg",
                 "actions": [{
-                    "name": className,
+                    "name": singleClassID,
                     "text": className,
                     "style": "default",
                     "type": "button",
