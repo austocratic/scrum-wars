@@ -19,7 +19,6 @@ class Character extends BaseModel{
         //Set the character's props
         this.props = characters[characterID];
         this.id = characterID
-        
     }
 
     purchaseItem(itemObject){
@@ -59,6 +58,10 @@ class Character extends BaseModel{
         //Return purchase confirmation template
         return responseTemplate;
 
+    }
+
+    inactivate(){
+        this.updateProperty('active', 0);
     }
     
  

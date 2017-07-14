@@ -52,7 +52,7 @@ exports.characterClassSelectionConfirmation = payload => {
 
                         console.log('Starting attributes: ', startingAttributes);
 
-                        //Create an array of all the actions a plyer should start with
+                        //Create an array of all the actions a player should start with
 
                         //Reference the character's class selection to determine starting actions
                         var startingActionIDs = characterClass.action_id;

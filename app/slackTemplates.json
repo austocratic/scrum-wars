@@ -3,15 +3,15 @@
 
 
 
-  "characterNameTaken": {
-    "user_name": "A mysterious voice",
+"characterNameTaken": {
+  "user_name": "A mysterious voice",
 
-    "attachments": [
-      {
-        "text": "I fear that there is another who goes by this name, what should we call you instead?"
-      }
-    ]
-  },
+  "attachments": [
+    {
+      "text": "I fear that there is another who goes by this name, what should we call you instead?"
+    }
+  ]
+},
 "characterNameAccepted": {
   "user_name": "A mysterious voice",
 
@@ -49,6 +49,14 @@
     }
   ]
 },
+"generateCharacterConfirmationDecline": {
+  "text": "You decide to continue your journey with your current character"
+},
+"generateCharacterClassList": {
+  "username": "A Mysterious Voice",
+  "text": "Choose a class to begin your journey. \n _Classes define you as a hero.  Where did you come from and who do you fight for?_",
+  "attachments": []
+},
 "actionAlreadyTaken": {
   "text": "You have no more actions available this turn",
   "attachments": [
@@ -73,87 +81,83 @@
     }
   ]
 },
-  "shopMenu": {
-    "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
-    "attachments": [
-      {
-        "fallback": "You are unable to choose an action",
-        "callback_id": "shopCharacterSelection",
-        "color": "#3AA3E3",
-        "attachment_type": "default",
-        "actions": []
-      },
-      {
-        "fallback": "You are unable to choose an action",
-        "callback_id": "shopCharacterSelection",
-        "color": "#3AA3E3",
-        "attachment_type": "default",
-        "actions": [{
-          "name": "item_list",
-          "text": "Choose an item to purchase",
+"shopMenu": {
+  "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
+  "attachments": [
+    {
+      "fallback": "You are unable to choose an action",
+      "callback_id": "shopCharacterSelection",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": []
+    },
+    {
+      "fallback": "You are unable to choose an action",
+      "callback_id": "shopCharacterSelection",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": [{
+        "name": "item_list",
+        "text": "Choose an item to purchase",
+        "type": "select",
+        "options": []
+      }]
+    },
+    {
+      "text": "",
+      "fallback": "You are unable to go back",
+      "callback_id": "shopCharacterSelection",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": [
+        {
+          "name": "back",
+          "text": "Exit shop",
+          "style": "",
+          "type": "button",
+          "value": "back"
+        }
+      ]
+    }
+  ]
+},
+"insufficientFunds": {
+  "text": "You have insufficient funds to purchase that"
+
+},
+"purchaseSuccess": {
+  "text": "You successfully purchase the item"
+},
+"itemList": {
+
+  "attachments": [
+    {
+      "text": "",
+      "callback_id": "itemList",
+      "actions": [
+        {
+          "name": "itemList",
           "type": "select",
           "options": []
         }]
-      },
-      {
-        "text": "",
-        "fallback": "You are unable to go back",
-        "callback_id": "shopCharacterSelection",
-        "color": "#3AA3E3",
-        "attachment_type": "default",
-        "actions": [
-          {
-            "name": "back",
-            "text": "Exit shop",
-            "style": "",
-            "type": "button",
-            "value": "back"
-          }
-        ]
-      }
-    ]
-  },
-  "insufficientFunds": {
-    "text": "You have insufficient funds to purchase that"
-
-  },
-  "purchaseSuccess": {
-    "text": "You successfully purchase the item"
-  },
-  "itemList": {
-
-    "attachments": [
-      {
-        "text": "",
-        "callback_id": "itemList",
-        "actions": [
-          {
-            "name": "itemList",
-            "type": "select",
-            "options": []
-          }]
-      },
-      {
-        "text": "",
-        "fallback": "You are unable to go back",
-        "callback_id": "itemList",
-        "color": "#3AA3E3",
-        "attachment_type": "default",
-        "actions": [
-          {
-            "name": "back",
-            "text": "Back",
-            "style": "",
-            "type": "button",
-            "value": "back"
-          }
-        ]
-      }]
-  }
-
-
-
-
+    },
+    {
+      "text": "",
+      "fallback": "You are unable to go back",
+      "callback_id": "itemList",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": [
+        {
+          "name": "back",
+          "text": "Back",
+          "style": "",
+          "type": "button",
+          "value": "back"
+        }
+      ]
+    }]
+}
 
 
 }

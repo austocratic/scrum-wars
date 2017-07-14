@@ -7,6 +7,7 @@ var Game = require('../models/Game').Game;
 var Item = require('../models/Item').Item;
 var Character = require('../models/Character').Character;
 var User = require('../models/User').User;
+var Class = require('../models/Class').Class;
 
 var slackTemplates = require('../slackTemplates');
 
@@ -219,6 +220,15 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     //Switch logic looks at the view & the button selected to return a template
     return responseTemplateSwitch(lastCallbackElement, requestActionName);
 
+    function getAttachmentWithCallbacks(attachmentsArray, callbackString){
+
+        return attachmentsArray.map( eachAttachment =>{
+            eachAttachment.callback_id = callbackString;
+
+            return eachAttachment
+        })
+    }
+
     //Switch logic to determine action
     function responseTemplateSwitch(selectionContext, userSelection){
 
@@ -247,7 +257,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Return the new character confirmation template
                         slackTemplate = slackTemplates.generateCharacterConfirmation;
 
-                        slackTemplate.attachments[0].callback_id = 'command:generate/characterConfirmation';
+                        slackTemplate.attachments[0].callback_id = 'command:generate/generateCharacterConfirmation';
 
                         return slackTemplate;
 
@@ -284,6 +294,83 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         break;
                 }
+
+                break;
+            
+            case 'generateCharacterConfirmation':
+                
+                switch (userSelection) {
+                    
+                    case 'yes':
+                        console.log('Called generateCharacterConfirmation/yes');
+                        
+                        //Archive the player's current character
+                        //character.archive - this function should change the character's active property to 0
+                        localCharacter.inactivate();
+                        
+                        //Create new character record
+                        var newLocalCharacterID = gameContext.createCharacter(localUser.id);
+
+                        //Update the user to new character
+                        localUser.updateProperty('character_id', newLocalCharacterID);
+                        
+                        //var newLocalCharacter = new Character(gameContext.state, newLocalCharacterID);
+                        
+                        //console.log('newLocalCharacter props: ', JSON.stringify(newLocalCharacter.props));
+                        
+                        //Return a class selection template with all available classes from the DB
+
+                        slackTemplate = gameContext.getCharacterClasses();
+
+                        console.log('character class template: ', JSON.stringify(slackTemplate));
+
+                        var updatedCallback = requestCallback + ':yes/generateCharacterClassList';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                        return slackTemplate;
+                        
+                    break;
+
+                    case 'no':
+                        console.log('Called generateCharacterConfirmation/no');
+                        slackTemplate = slackTemplates.generateCharacterConfirmationDecline;
+
+                        return slackTemplate;
+                        
+                    break;
+                    
+                }
+                
+                break;
+
+            case 'generateCharacterClassList':
+
+                //Does not need sub case statement.  Selection will be used to look up properties
+                
+                //character.addStartingStats(classID)
+                
+                //generate a class object
+
+                var localCharacterClass = new Class(this.state, userSelection);
+
+                console.log('localCharacterClass props: ', localCharacterClass.props);
+
+                var updates = {
+                    "actions": localCharacterClass.props.action_id,
+                    "class_id": localCharacterClass.id,
+                    "strength": localCharacterClass.props.startingAttributes.strength,
+                    "toughness": localCharacterClass.props.startingAttributes.toughness,
+                    "dexterity": localCharacterClass.props.startingAttributes.dexterity,
+                    "intelligence": localCharacterClass.props.startingAttributes.intelligence,
+                    "modified_strength": localCharacterClass.props.startingAttributes.strength,
+                    "modified_toughness": localCharacterClass.props.startingAttributes.toughness,
+                    "modified_dexterity": localCharacterClass.props.startingAttributes.dexterity,
+                    "modified_intelligence": localCharacterClass.props.startingAttributes.intelligence
+                };
+
+                //Mutate the object
+                Object.assign(localCharacter.props, updates);
 
                 break;
 
@@ -394,18 +481,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var slackInventoryTemplate = slackTemplates.itemList;
 
-                        console.log('slackTemplate before options set: ', JSON.stringify(slackInventoryTemplate));
+                        //console.log('slackTemplate before options set: ', JSON.stringify(slackInventoryTemplate));
 
                         //Pass in the character's unequipped inventory array
                         slackInventoryTemplate.attachments[0].actions[0].options = gameContext.getItemList(localCharacter.props.inventory.unequipped);
 
-                        console.log('slackTemplate after options set: ', JSON.stringify(slackInventoryTemplate));
+                        //console.log('slackTemplate after options set: ', JSON.stringify(slackInventoryTemplate));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         slackInventoryTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
                         slackInventoryTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
 
-                        console.log('slackTemplate after callbacks set: ', JSON.stringify(slackInventoryTemplate));
+                        //console.log('slackTemplate after callbacks set: ', JSON.stringify(slackInventoryTemplate));
 
                         return slackInventoryTemplate;
 

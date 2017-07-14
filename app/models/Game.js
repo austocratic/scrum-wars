@@ -52,6 +52,44 @@ class Game {
         return await firebase.update('', this.state)
     }
     
+    createCharacter(userID){
+        
+        function randomGenerator() {
+            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        }
+        
+        var localRandomID = (randomGenerator() + randomGenerator() + randomGenerator() + randomGenerator() + randomGenerator()).toLowerCase();
+
+        var currentCharacters = this.state.character;
+
+        var newChar = {
+            [localRandomID]: {
+                active: 1,
+                name: 'Unknown Traveler',
+                user_id: userID,
+                gold: 100,
+                armor: 0,
+                hit_points: 100,
+                max_hit_points: 100,
+                match_wins: 0,
+                zone_id: '-Khu9Zazk5XdFX9fD2Y8',
+                inventory: {
+                    equipped: {
+                        hand_1: "-Kjk3sGUJy5Nu8GWsdff"
+                    },
+                    unequipped: [
+                        "-Kjk3sGUJy5Nu8GWsdff"
+                    ]
+                }
+            }
+        };
+
+        //Mutate the object
+        Object.assign(currentCharacters, newChar);
+        
+        return localRandomID;
+    }
+    
     getCurrentMatchID(){
 
         return this.state.global_state.match_id
@@ -296,6 +334,44 @@ class Game {
         finalTemplate.attachments = templateAttachments.value();
 
         return finalTemplate;
+    }
+
+    getCharacterClasses() {
+
+        var characterClassesTemplate = slackTemplates.generateCharacterClassList;
+        
+        //Get all available classes from local
+        var localCharacterClasses = this.state.class;
+
+        //Get an array of all class IDs
+        var classIDs = Object.keys(localCharacterClasses);
+
+        //template.attachments = classNames.map( className =>{
+        characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
+
+            //Get the name for the class ID
+            var className = localCharacterClasses[singleClassID].name;
+
+            return {
+
+                "title": className,
+                "fallback": "You are unable to choose an action",
+                "callback_id": "characterSelectionClass",
+                "color": "#3AA3E3",
+                "attachment_type": "default",
+                "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + singleClassID + ".jpg",
+                "actions": [{
+                    "name": className,
+                    "text": className,
+                    "style": "default",
+                    "type": "button",
+                    "value": singleClassID
+                }]
+            }
+        });
+
+        return characterClassesTemplate;
+
     }
     
     shopList(requestSlackChannelID){
