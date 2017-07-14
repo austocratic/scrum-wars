@@ -345,6 +345,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 break;
 
             case 'generateCharacterClassList':
+                console.log('Called generateCharacterClassList');
 
                 //Does not need sub case statement.  Selection will be used to look up properties
                 
@@ -359,14 +360,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 var updates = {
                     "actions": localCharacterClass.props.action_id,
                     "class_id": localCharacterClass.id,
-                    "strength": localCharacterClass.props.startingAttributes.strength,
-                    "toughness": localCharacterClass.props.startingAttributes.toughness,
-                    "dexterity": localCharacterClass.props.startingAttributes.dexterity,
-                    "intelligence": localCharacterClass.props.startingAttributes.intelligence,
-                    "modified_strength": localCharacterClass.props.startingAttributes.strength,
-                    "modified_toughness": localCharacterClass.props.startingAttributes.toughness,
-                    "modified_dexterity": localCharacterClass.props.startingAttributes.dexterity,
-                    "modified_intelligence": localCharacterClass.props.startingAttributes.intelligence
+                    "strength": localCharacterClass.props.starting_attributes.strength,
+                    "toughness": localCharacterClass.props.starting_attributes.toughness,
+                    "dexterity": localCharacterClass.props.starting_attributes.dexterity,
+                    "intelligence": localCharacterClass.props.starting_attributes.intelligence,
+                    "modified_strength": localCharacterClass.props.starting_attributes.strength,
+                    "modified_toughness": localCharacterClass.props.starting_attributes.toughness,
+                    "modified_dexterity": localCharacterClass.props.starting_attributes.dexterity,
+                    "modified_intelligence": localCharacterClass.props.starting_attributes.intelligence
                 };
 
                 //Mutate the object
