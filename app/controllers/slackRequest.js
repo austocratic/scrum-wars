@@ -352,7 +352,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 
                 //generate a class object
 
-                var localCharacterClass = new Class(this.state, userSelection);
+                var localCharacterClass = new Class(gameContext.state, userSelection);
 
                 console.log('localCharacterClass props: ', localCharacterClass.props);
 
