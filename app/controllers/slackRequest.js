@@ -67,7 +67,7 @@ exports.slackSlashCommand = async (req, res, next) => {
     //requestActionValue
     //requestSlackUserID
     //requestSlackChannelID
-    var responseTemplate = getResponseTemplate('command', modifiedSlashCommand, 'requestActionValue not used', slackUserID, slackChannelID, game);
+    var responseTemplate = getResponseTemplate('command', modifiedSlashCommand, 'requestActionValue not used', slackUserID, slackChannelID, game, slackTextInput);
 
     console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
 
@@ -77,9 +77,6 @@ exports.slackSlashCommand = async (req, res, next) => {
     //Send success response
     res.status(200).send(responseTemplate);
 };
-
-
-
 
 exports.slackInteractiveMessage = async (req, res, next) => {
 
@@ -130,7 +127,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     //Set the game state locally
     await game.getState();
 
-    var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID, game);
+    var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID, game, undefined);
 
     console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
 
@@ -142,7 +139,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 };
 
 //Lookup the callback & name take an action and returns result
-function getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext) {
+function getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext, requestTextInput) {
 
     console.log('called getResponseTemplate, requestCallback: ', requestCallback);
     console.log('called getResponseTemplate, requestActionName: ', requestActionName);
@@ -290,7 +287,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('Called command/name');
 
                         //Dont set callback ID here, no interactive message to return
-                        return gameContext.characterName(requestSlackUserID, slackTextInput);
+                        return gameContext.characterName(requestSlackUserID, requestTextInput);
 
                         break;
                 }
@@ -362,12 +359,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     "modified_intelligence": localCharacterClass.props.starting_attributes.intelligence
                 };
 
-                console.log('Class stats to update: ', JSON.stringify(updates));
-
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
-
-                console.log('local character new props: ', JSON.stringify(localCharacter.props));
 
                 return slackTemplates.generateCharacterSuccess;
 
