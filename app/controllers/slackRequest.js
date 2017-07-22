@@ -362,8 +362,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     "modified_intelligence": localCharacterClass.props.starting_attributes.intelligence
                 };
 
+                console.log('Class stats to update: ', JSON.stringify(updates));
+
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
+
+                console.log('local character new props: ', JSON.stringify(localCharacter.props));
 
                 return slackTemplates.generateCharacterSuccess;
 
