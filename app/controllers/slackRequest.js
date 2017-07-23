@@ -252,6 +252,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('localZone.id: ', localZone.id);
 
                         //Is the character's current zone not equal to the requested zone?
+                        /*
                         if (localCharacter.props.zone_id !== localZone.id) {
 
                             console.log('hit zone id mismatch condition');
@@ -262,7 +263,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             slackTemplate.attachments[0].callback_id = 'command:action/travelConfirmation';
 
                             return slackTemplate;
-                        }
+                        }*/
 
                         console.log('Skipped the mismatch condition');
 
