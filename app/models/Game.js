@@ -277,7 +277,7 @@ class Game {
 
             var localAction = new Action(this.state, characterAction);
 
-            console.log('localAction.props.zone_id: ', localAction.props);
+            //console.log('localAction.props: ', localAction.props);
 
             if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
                 characterActionsAvailableInCurrentZone.push(localAction)
@@ -288,6 +288,8 @@ class Game {
 
             return singleAction.props.type;
         });
+
+        console.log('groupedActions: ', groupedActions);
 
         //Iterate through the grouped actions
         var templateAttachments = groupedActions.map(actionCategory => {
