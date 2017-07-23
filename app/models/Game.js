@@ -306,6 +306,8 @@ class Game {
                 "actions": []
             };
 
+            console.log('actionCategory: ', JSON.stringify(actionCategory));
+
             actionCategory.forEach(actionDetails => {
 
                 console.log('each actionDetails: ', actionDetails);
