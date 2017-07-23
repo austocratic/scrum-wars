@@ -279,13 +279,16 @@ class Game {
 
             //console.log('localAction.props: ', localAction.props);
 
+            console.log('localZone.id: ', localZone.id);
+            console.log('localZone.props: ', localZone.props);
+
             if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
                 characterActionsAvailableInCurrentZone.push(localAction)
             }
         });
 
         console.log('characterActionsAvailableInCurrentZone: ', characterActionsAvailableInCurrentZone);
-        
+
         var groupedActions = _(characterActionsAvailableInCurrentZone).groupBy((singleAction) => {
 
             console.log('singleAction: ', singleAction);
