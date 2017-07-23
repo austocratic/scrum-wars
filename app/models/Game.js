@@ -275,7 +275,7 @@ class Game {
 
             var localAction = new Action(this.state, characterAction.action_id);
 
-            console.log('localAction.props.zone_id: ', localAction.props.zone_id);
+            console.log('localAction.props.zone_id: ', localAction.props);
 
             if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
                 characterActionsAvailableInCurrentZone.push(localAction)
