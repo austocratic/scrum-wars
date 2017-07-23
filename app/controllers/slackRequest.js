@@ -269,6 +269,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
+                        console.log('slackTemplate so far: ', JSON.stringify(slackTemplate));
+
                         slackTemplate.attachments[0].callback_id = 'command:action/actionList';
 
                         return slackTemplate;
