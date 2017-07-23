@@ -224,6 +224,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
     function getAttachmentWithCallbacks(attachmentsArray, callbackString){
 
+        //Check if attachmentsArray is empty.  If it is, create a single attachment
+        /*
+        if (attachmentsArray.length === 0){
+            attachmentsArray.push()
+        }*/
+
         return attachmentsArray.map( eachAttachment =>{
             eachAttachment.callback_id = callbackString;
 
@@ -233,6 +239,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
     //Switch logic to determine action
     function responseTemplateSwitch(selectionContext, userSelection){
+
+        var updatedCallback;
 
         switch (selectionContext) {
 
@@ -271,7 +279,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('slackTemplate so far: ', JSON.stringify(slackTemplate));
 
-                        slackTemplate.attachments[0].callback_id = 'command:action/actionList';
+                        updatedCallback = 'command:action/actionList';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                        //slackTemplate.attachments[0].callback_id = 'command:action/actionList';
 
                         return slackTemplate;
 
@@ -350,7 +362,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('character class template: ', JSON.stringify(slackTemplate));
 
-                        var updatedCallback = requestCallback + ':yes/generateCharacterClassList';
+                        updatedCallback = requestCallback + ':yes/generateCharacterClassList';
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
