@@ -238,6 +238,8 @@ class Game {
 
     getAvailableActions(requestSlackUserID, requestSlackChannelID){
 
+        console.log('called getAvailableActions');
+
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
         var localUser = new User(this.state, requestSlackUserID);
 
@@ -267,6 +269,8 @@ class Game {
         }
 
         var characterActionsAvailableInCurrentZone = [];
+
+        console.log('localAction.props.zone_id: ', localAction.props.zone_id);
 
         //Take an array of the character's actions and filter it for actions that can be used in the current zone
         localCharacter.props.actions.forEach( characterAction =>{

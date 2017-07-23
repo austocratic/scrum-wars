@@ -253,7 +253,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Is the character's current zone not equal to the requested zone?
                         if (localCharacter.props.zone_id !== localZone.id) {
-                            
+
                             console.log('hit zone id mismatch condition');
 
                             //Return mismatch template by passing in zone ids
@@ -263,6 +263,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                             return slackTemplate;
                         }
+
+                        console.log('Skipped the mismatch condition');
 
                         slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
