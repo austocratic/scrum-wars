@@ -165,7 +165,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     //Create a local character object
     var localCharacter = new Character(gameContext.state, characterID);
 
-    var localZone = new Zone(this.state, requestSlackChannelID);
+    var localZone = new Zone(gameContext.state, requestSlackChannelID);
 
     //Check for back button selection.  If back, overwrite the
     if (requestActionName == 'back'){
