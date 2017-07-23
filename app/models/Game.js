@@ -308,6 +308,8 @@ class Game {
 
             actionCategory.forEach(actionDetails => {
 
+                console.log('each actionDetails: ', actionDetails);
+
                 var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
 
                 var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
