@@ -280,9 +280,10 @@ class Game {
             //console.log('localAction.props: ', localAction.props);
 
             console.log('localZone.id: ', localZone.id);
-            console.log('localZone.props: ', localZone.props);
+            console.log('localAction.props.zone_id: ', localAction.props.zone_id);
 
             if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
+                console.log('passed indexOf condition check');
                 characterActionsAvailableInCurrentZone.push(localAction)
             }
         });
@@ -296,7 +297,7 @@ class Game {
             return singleAction.props.type;
         });
 
-        console.log('groupedActions: ', groupedActions);
+        //console.log('groupedActions: ', groupedActions);
 
         //Iterate through the grouped actions
         var templateAttachments = groupedActions.map(actionCategory => {
