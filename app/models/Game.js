@@ -284,7 +284,11 @@ class Game {
             }
         });
 
+        console.log('characterActionsAvailableInCurrentZone: ', characterActionsAvailableInCurrentZone);
+        
         var groupedActions = _(characterActionsAvailableInCurrentZone).groupBy((singleAction) => {
+
+            console.log('singleAction: ', singleAction);
 
             return singleAction.props.type;
         });
