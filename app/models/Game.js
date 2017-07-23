@@ -270,8 +270,12 @@ class Game {
 
         var characterActionsAvailableInCurrentZone = [];
 
+        console.log('localCharacter.props: ', localCharacter.props);
+
         //Take an array of the character's actions and filter it for actions that can be used in the current zone
         localCharacter.props.actions.forEach( characterAction =>{
+
+            console.log('characterAction: ', characterAction);
 
             var localAction = new Action(this.state, characterAction.action_id);
 
