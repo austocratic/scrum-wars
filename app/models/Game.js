@@ -277,7 +277,7 @@ class Game {
 
             console.log('characterAction: ', characterAction);
 
-            var localAction = new Action(this.state, characterAction.action_id);
+            var localAction = new Action(this.state, characterAction);
 
             console.log('localAction.props.zone_id: ', localAction.props);
 
