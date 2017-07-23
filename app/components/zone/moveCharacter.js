@@ -23,13 +23,13 @@ exports.moveCharacter = (zoneID, zoneName) => {
     //Create the fields to show
     template.attachments[0].actions = [
         {
-            "name": "travelSelection",
+            "name": "yes",
             "text": "Yes",
             "type": "button",
             "value": "yes"
         },
         {
-            "name": "travelSelection",
+            "name": "no",
             "text": "No",
             "type": "button",
             "value": "no"

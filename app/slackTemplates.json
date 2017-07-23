@@ -62,6 +62,10 @@
   "text": "You have set your class, but what name should we call you oh mysterious traveler?  Type /name ____ (for example: /name Montaigne) to set your character's name!",
   "attachments": []
 },
+"travelDialogueDecline": {
+  "text": "You remain in your current zone",
+  "attachments": []
+},
 "actionAlreadyTaken": {
   "text": "You have no more actions available this turn",
   "attachments": [

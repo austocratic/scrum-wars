@@ -8,8 +8,11 @@ var Item = require('../models/Item').Item;
 var Character = require('../models/Character').Character;
 var User = require('../models/User').User;
 var Class = require('../models/Class').Class;
+var Zone = require('../models/Zone').Zone;
 
 var slackTemplates = require('../slackTemplates');
+
+var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 
 /*
  1. Get game's current state
@@ -162,6 +165,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     //Create a local character object
     var localCharacter = new Character(gameContext.state, characterID);
 
+    var localZone = new Zone(this.state, requestSlackChannelID);
+
     //Check for back button selection.  If back, overwrite the
     if (requestActionName == 'back'){
         
@@ -239,6 +244,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'action':
 
                         console.log('Called command/action');
+
+                        //move the logic to check if the character is in the zone to here (so that a different callback can be set depending on the outcome
+                        //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
+                        if (localCharacter.props.zone_id !== requestSlackChannelID) {
+
+                            //Return mismatch template by passing in zone ids
+                            slackTemplate = moveCharacter(localZone.id, localZone.props.name);
+
+                            slackTemplate.attachments[0].callback_id = 'command:action/travelConfirmation';
+
+                            return slackTemplate;
+                        }
 
                         slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
@@ -363,6 +380,27 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 Object.assign(localCharacter.props, updates);
 
                 return slackTemplates.generateCharacterSuccess;
+
+                break;
+
+            case 'travelConfirmation':
+
+                switch (userSelection){
+
+                    case 'yes':
+                        console.log('called travelConfirmation/yes');
+
+                        return gameContext.characterTravel(requestSlackUserID, requestSlackChannelID);
+
+                        break;
+
+                    case 'no':
+                        console.log('called travelConfirmation/no');
+
+                        return slackTemplates.travelDialogueDecline;
+
+                        break;
+                }
 
                 break;
 

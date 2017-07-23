@@ -249,11 +249,12 @@ class Game {
         var localZone = new Zone(this.state, requestSlackChannelID);
 
         //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
+        /* Moved this logic to slackRequest
         if (localCharacter.props.zone_id !== localZone.id) {
 
             //Return mismatch template by passing in zone ids
             return moveCharacter(localZone.id, localZone.props.name);
-        }
+        }*/
 
         //Create match locally for reference
         var match = new Match(this.state, this.getCurrentMatchID());
