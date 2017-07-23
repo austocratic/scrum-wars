@@ -247,7 +247,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //move the logic to check if the character is in the zone to here (so that a different callback can be set depending on the outcome
                         //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
-                        if (localCharacter.props.zone_id !== requestSlackChannelID) {
+                        console.log('checking if character is in the zone that was called');
+                        console.log('localCharacter.props.zone_id: ', localCharacter.props.zone_id);
+                        console.log('localZone.id: ', localZone.id);
+
+                        //Is the character's current zone not equal to the requested zone?
+                        if (localCharacter.props.zone_id !== localZone.id) {
+                            
+                            console.log('hit zone id mismatch condition');
 
                             //Return mismatch template by passing in zone ids
                             slackTemplate = moveCharacter(localZone.id, localZone.props.name);
