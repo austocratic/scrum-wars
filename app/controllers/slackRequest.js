@@ -295,7 +295,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Return the new character confirmation template
                         slackTemplate = slackTemplates.generateCharacterConfirmation;
 
-                        slackTemplate.attachments[0].callback_id = 'command:generate/generateCharacterConfirmation';
+                        updatedCallback = 'command:generate/generateCharacterConfirmation';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                        //slackTemplate.attachments[0].callback_id = 'command:generate/generateCharacterConfirmation';
 
                         return slackTemplate;
 

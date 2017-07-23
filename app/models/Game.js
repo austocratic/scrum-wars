@@ -324,7 +324,9 @@ class Game {
 
                 var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
 
-                var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
+                //TODO need to determine where to store turn_available.  Im trying to move it out of character.action array.  Currently a place holder
+                var actionAvailability = actionDetails.getActionAvailability(match.props.number_turns, match.props.number_turns);
+                //var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
                 //Default button color to red ("danger").  If available, it will be overwritten
                 var actionAvailableButtonColor = "danger";
