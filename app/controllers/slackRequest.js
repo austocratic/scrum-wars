@@ -394,8 +394,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 var localCharacterClass = new Class(gameContext.state, userSelection);
 
+                //Array of action IDs
+                var characterActions = localCharacterClass.props.action_id.map( eachActionID =>{
+                    return {
+                        action_id: eachActionID,
+                        turn_available: 0
+                    }
+                });
+
                 var updates = {
-                    "actions": localCharacterClass.props.action_id,
+                    "actions": characterActions,
                     "class_id": localCharacterClass.id,
                     "strength": localCharacterClass.props.starting_attributes.strength,
                     "toughness": localCharacterClass.props.starting_attributes.toughness,
