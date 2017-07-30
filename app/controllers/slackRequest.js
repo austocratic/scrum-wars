@@ -522,16 +522,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'actionList':
 
-                        //console.log('gameContext.state.action: ', gameContext.state.action);
-                        //console.log('gameContext.state.action[priorSelection]: ', gameContext.state.action[priorSelection]);
-
-                        //console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect_id);
-
                         //Envoke the action's effects
-
                         var effectArray = gameContext.state.action[priorSelection].effect_id;
-
-                        console.log('effectArray: ', effectArray);
 
                         if (effectArray.length > 0){
 
@@ -542,23 +534,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             effectArray.forEach( eachEffectID =>{
 
                                 localEffect = new Effect(gameContext.state, eachEffectID);
-                                //Create a new localEffect object
 
                                 switch(localEffect.id){
 
                                     //Damage target
                                     case '-KqKLddOaYcWnOvVIAYe':
 
-                                        console.log('Called effect.activate');
+                                        var currentHP = gameContext.state.character[userSelection].hit_points;
 
-                                        var currentHP = gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points;
+                                        gameContext.state.character[userSelection].hit_points = currentHP - 2;
 
-                                        console.log('currentHP: ', currentHP);
-
-                                        gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points = currentHP - 2;
-
-                                        console.log('Updated currentHP: ', gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points);
-
+                                        return {
+                                            "text": "You make an attack!"
+                                        };
 
                                         break;
 

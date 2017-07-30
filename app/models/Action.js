@@ -18,6 +18,10 @@ class Action extends BaseModel{
         this.props = actions[actionID];
         this.id = actionID
     }
+    
+    announceActionActivation(){
+        
+    }
 
 }
 
