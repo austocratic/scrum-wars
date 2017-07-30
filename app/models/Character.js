@@ -112,7 +112,7 @@ class Character extends BaseModel{
 
             console.log('getActionsUsedOnTurn eachActionID: ', eachActionID);
 
-            var foundAction = _.find(this.props.actions, {'action_id': eachActionID}).value();
+            var foundAction = _.find(this.props.actions, {'action_id': eachActionID});
 
             console.log('foundAction: ', foundAction);
 
