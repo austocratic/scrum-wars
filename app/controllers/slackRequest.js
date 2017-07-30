@@ -518,10 +518,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 //Look up what effect IDs
 
-
                 switch(priorView){
 
                     case 'actionList':
+
+                        console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect);
 
                         //Envoke the action's effects
                         if (gameContext.state.action[priorSelection].effect){
@@ -565,6 +566,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 })
                             }
                         }
+
+                        console.log('skipped if statement in slackRequest / actionList');
 
                         break;
                 }
