@@ -241,7 +241,6 @@ class Game {
         console.log('called getAvailableActions');
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-
         var localUser = new User(this.state, requestSlackUserID);
 
         var characterID = localUser.getCharacterID();
@@ -250,23 +249,8 @@ class Game {
         var localZone = new Zone(this.state, requestSlackChannelID);
         var localMatch = new Match(this.state, this.getCurrentMatchID());
 
-
-        //Get the local character's id
-
-
-        //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
-        /* Moved this logic to slackRequest
-        if (localCharacter.props.zone_id !== localZone.id) {
-
-            //Return mismatch template by passing in zone ids
-            return moveCharacter(localZone.id, localZone.props.name);
-        }*/
-
-
         //Returns an array of all the character's action IDs
         var actionIDsAvailable = localCharacter.getActionIDs();
-
-        console.log('actionIDsAvailable: ', actionIDsAvailable);
 
         //Determine if any action was already taken this turn, if so return the action taken template
         var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
@@ -281,68 +265,23 @@ class Game {
             return new Action(this.state, eachActionID);
         });
 
-        console.log('actionObjectsAvailable: ', actionObjectsAvailable);
-
         //Filter the action object array for actions available in the current zone
         var actionsAvailableInZone = actionObjectsAvailable.filter( eachActionObject =>{
             return _.indexOf(eachActionObject.props.zone_id, localZone.id) > -1;
         });
 
-        console.log('actionsAvailableInZone: ', actionsAvailableInZone);
-
         //Group the actions for slack
         var groupedActions = _(actionsAvailableInZone).groupBy((singleAction) => {
-
-            console.log('singleAction: ', singleAction);
-
             return singleAction.props.type;
         });
 
-        console.log('groupedActions: ', groupedActions);
-
-
-
-        //Look through all player's actions and determine if any were used in the current turn.
-        //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
-
-
-        /*if(_.find(localCharacter.props.actions, {'turn_used': localMatch.props.number_turns})) {
-
-            return slackTemplates.actionAlreadyTaken;
-        }
-
-        var characterActionsAvailableInCurrentZone = [];*/
-        /*
-        //Take an array of the character's actions and filter it for actions that can be used in the current zone
-        localCharacter.props.actions.forEach( characterAction =>{
-
-            console.log('characterAction: ', characterAction);
-
-            var localAction = new Action(this.state, characterAction);
-
-            //console.log('localAction.props: ', localAction.props);
-
-            console.log('localZone.id: ', localZone.id);
-            console.log('localAction.props.zone_id: ', localAction.props.zone_id);
-
-            if (_.indexOf(localAction.props.zone_id, localZone.id) > -1) {
-                console.log('passed indexOf condition check');
-                characterActionsAvailableInCurrentZone.push(localAction)
-            }
-        });*/
-
-        //console.log('actionsAvailableInZone: ', actionsAvailableInZone);
-
-
-
-        //console.log('groupedActions: ', groupedActions);
 
         //Iterate through the grouped actions
         var templateAttachments = groupedActions.map(actionCategory => {
 
             var actionType = actionCategory[0].props.type;
 
-            //Build the major template
+            //Build the template
             var attachmentTemplate = {
                 "title": actionType,
                 "fallback": "You are unable to choose an action",
@@ -354,11 +293,7 @@ class Game {
                 "actions": []
             };
 
-            console.log('actionCategory: ', JSON.stringify(actionCategory));
-
             actionCategory.forEach(actionDetails => {
-
-                console.log('each actionDetails: ', actionDetails);
 
                 var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
                 

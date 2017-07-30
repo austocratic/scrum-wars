@@ -116,6 +116,10 @@ class Character extends BaseModel{
     //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
     isActionAvailable(actionID, turnNumber){
 
+        console.log('called isActionAvailable');
+        console.log('actionID: ', actionID);
+        console.log('turnNumber: ', turnNumber);
+
         var foundAction = _.find(this.props.actions, {'action_id': actionID});
 
         if (foundAction.turn_available <= turnNumber) {
