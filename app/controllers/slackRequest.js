@@ -522,6 +522,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'actionList':
 
+                        console.log('gameContext.state.action: ', gameContext.state.action);
+                        console.log('gameContext.state.action[priorSelection]: ', gameContext.state.action[priorSelection]);
+
                         console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect);
 
                         //Envoke the action's effects
