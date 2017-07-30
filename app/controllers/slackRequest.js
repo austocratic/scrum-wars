@@ -10,6 +10,7 @@ var User = require('../models/User').User;
 var Class = require('../models/Class').Class;
 var Zone = require('../models/Zone').Zone;
 var Effect = require('../models/Effect').Effect;
+var Action = require('../models/Action').Action;
 
 var slackTemplates = require('../slackTemplates');
 
@@ -522,8 +523,20 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'actionList':
 
+                        var localAction = new Action(gameContext.state, priorSelection);
+
+                        console.log('action_taken_text: ', localAction.action_taken_text);
+
+                        //Notify that action was taken
+                        //Actions could have an action take text that can have certain words that get replaced using a function
+
+
+                        //Invoke effects
+
+                        //Respond
+
                         //Envoke the action's effects
-                        var effectArray = gameContext.state.action[priorSelection].effect_id;
+                        var effectArray = localAction.props.effect_id;
 
                         if (effectArray.length > 0){
 
@@ -540,13 +553,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     //Damage target
                                     case '-KqKLddOaYcWnOvVIAYe':
 
-                                        //var currentHP = gameContext.state.character[requestActionValue].hit_points;
+                                        //Use a string reference to invoke a Game method
+                                        gameContext['characterName']();
 
-                                        //gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
+                                        //var targetCharacter = new Character(gameContext.state, requestActionValue);
 
-                                        var targetCharacter = new Character(gameContext.state, requestActionValue);
-
-                                        targetCharacter.incrementProperty('hit_points', -3);
+                                        //targetCharacter.incrementProperty('hit_points', -3);
 
                                         break;
 

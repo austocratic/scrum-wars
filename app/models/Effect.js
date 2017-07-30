@@ -14,7 +14,7 @@ class Effect extends BaseModel{
         this.props = effects[effectID];
         this.id = effectID
     }
-
+    
     /*
     changeAttribute(targetID, value){
         console.log('Called effect.activate');
