@@ -9,6 +9,7 @@ var Character = require('../models/Character').Character;
 var User = require('../models/User').User;
 var Class = require('../models/Class').Class;
 var Zone = require('../models/Zone').Zone;
+var Effect = require('../models/Effect').Effect;
 
 var slackTemplates = require('../slackTemplates');
 
@@ -515,19 +516,54 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('priorView: ', priorView);
                 console.log('priorSelection: ', priorSelection);
 
+                //Look up what effect IDs
+
+
                 switch(priorView){
 
-                    case 'action':
+                    case 'actionList':
 
-                        switch(priorSelection){
+                        //Envoke the action's effects
+                        if (gameContext.state.action[priorSelection].effect){
 
-                            //Attack
-                            case '-Kjpe29q_fDkJG-73AQO':
+                            var effectArray = gameContext.state.action[priorSelection].effect_id;
 
-                                console.log('Character was successfully selected from characterList with a previous Attack context')
+                            if (effectArray > 0){
 
-                                break;
+                                var localEffect;
+                                
+                                effectArray.forEach( eachEffectID =>{
 
+                                    localEffect = new Effect(gameContext.state, eachEffectID);
+                                    //Create a new localEffect object
+
+                                    switch(localEffect.id){
+
+                                        //Damage target
+                                        case '-KqKLddOaYcWnOvVIAYe':
+
+                                            console.log('Called effect.activate');
+
+                                            var currentHP = gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points;
+
+                                            console.log('currentHP: ', currentHP);
+
+                                            gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points = currentHP - 2;
+
+                                            console.log('Updated currentHP: ', gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points);
+
+
+                                            break;
+
+                                        default:
+                                            console.log('Error: this effect ID is not supported.  Add the ID to Effect class / activate method');
+
+                                            return 'Error: this effect ID is not supported.  Add the ID to Effect class / activate method';
+
+                                            break;
+                                    }
+                                })
+                            }
                         }
 
                         break;

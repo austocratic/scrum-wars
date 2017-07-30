@@ -17,23 +17,33 @@ class Action extends BaseModel{
         //Set the character's props
         this.props = actions[actionID];
         this.id = actionID
+    }
 
+    changeTargetAttribute(characterID, ){
+
+    }
+
+
+    effect(){
+
+        switch(dbType){
+
+            case 'damage':
+
+                this.changeTargetAttribute();
+
+                break;
+
+            case 'heal':
+
+                break;
+        }
     }
 
 }
 
 
 
-
-
-/*
-class Action extends FirebaseBaseController {
-    constructor() {
-        super();
-        this.firebaseType = 'action'
-    }
-
-}*/
 
 
 module.exports = {
