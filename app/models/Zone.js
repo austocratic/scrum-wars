@@ -22,8 +22,10 @@ class Zone extends BaseModel{
         //Set the character's props
         this.props = zones[zoneID];
         this.id = zoneID
-
     }
+
+
+  
 
 }
 

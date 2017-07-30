@@ -274,8 +274,7 @@ class Game {
         var groupedActions = _(actionsAvailableInZone).groupBy((singleAction) => {
             return singleAction.props.type;
         });
-
-
+        
         //Iterate through the grouped actions
         var templateAttachments = groupedActions.map(actionCategory => {
 
@@ -285,20 +284,12 @@ class Game {
             var attachmentTemplate = {
                 "title": actionType,
                 "fallback": "You are unable to choose an action",
-                //TODO need to determine format of callback_id, this will likely need to be passed into the Game method call
-                //"callback_id": "/action",
-                "color": "#3AA3E3", //TODO change to attack oriented color
+                "color": "#3AA3E3",
                 "attachment_type": "default",
-                //TODO add tiny_url for attack symbol
                 "actions": []
             };
 
             actionCategory.forEach(actionDetails => {
-
-                //var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
-                
-                //var actionAvailability = actionDetails.getActionAvailability(localMatch.props.number_turns, localMatch.props.number_turns);
-                //var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
                 //Default button color to red ("danger").  If available, it will be overwritten
                 var actionAvailableButtonColor = "danger";
@@ -340,8 +331,7 @@ class Game {
 
         //Get an array of all class IDs
         var classIDs = Object.keys(localCharacterClasses);
-
-        //template.attachments = classNames.map( className =>{
+        
         characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
 
             //Get the name for the class ID
@@ -367,6 +357,34 @@ class Game {
 
         return characterClassesTemplate;
 
+    }
+
+    getCharactersInZone(zoneID){
+
+        console.log('called getCharactersInZone');
+
+        var slackTemplate = slackTemplates.characterList;
+        
+        //Set a variable for all character IDs in zone (active & inactive & all zones)
+        var characterIDsInZone = Object.keys(this.state.character);
+
+        //Filter for Active characters && current zone (returns character IDs)
+        var filteredCharacterIDs = characterIDsInZone.filter( singleCharacterID =>{
+            return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID)
+        });
+
+        //Iterate through the grouped actions
+        filteredCharacterIDs.forEach(singleCharacterID => {
+            slackTemplate.attachments[0].actions[0].options.push({
+                //"name": singleCharacterID,
+                "text": this.state.character[singleCharacterID].name,
+                //"style": "primary",
+                //"type": "button",
+                "value": singleCharacterID
+            });
+        });
+
+        return slackTemplate;
     }
     
     shopList(requestSlackChannelID){
@@ -408,8 +426,6 @@ class Game {
 
         //Validate that array was passed
         //if (typeof(itemArray) === array)
-        
-        //var responseTemplate = slackTemplates.itemList;
 
         return itemArray.map( eachInventoryItemID =>{
 

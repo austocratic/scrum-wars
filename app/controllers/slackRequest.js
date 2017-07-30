@@ -253,12 +253,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('Called command/action');
 
-                        //move the logic to check if the character is in the zone to here (so that a different callback can be set depending on the outcome
-                        //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
-                        console.log('checking if character is in the zone that was called');
-                        console.log('localCharacter.props.zone_id: ', localCharacter.props.zone_id);
-                        console.log('localZone.id: ', localZone.id);
-
                         //Is the character's current zone not equal to the requested zone?
                         if (localCharacter.props.zone_id !== localZone.id) {
 
@@ -271,8 +265,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                             slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
-                            //slackTemplate.attachments[0].callback_id = 'command:action/travelConfirmation';
-
                             return slackTemplate;
                         }
 
@@ -280,13 +272,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
-                        console.log('slackTemplate so far: ', JSON.stringify(slackTemplate));
-
                         updatedCallback = 'command:action/actionList';
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-
-                        //slackTemplate.attachments[0].callback_id = 'command:action/actionList';
 
                         return slackTemplate;
 
@@ -454,13 +442,50 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate = gameContext.shopList(requestSlackChannelID);
 
-                        //TODO need to iterate through all attachments adding the same callback to all
+                        updatedCallback = ':Shop/shopList';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        slackTemplate.attachments[1].callback_id = requestCallback + ':Shop/shopList';
-                        slackTemplate.attachments[2].callback_id = requestCallback + ':Shop/shopList';
+                        //slackTemplate.attachments[1].callback_id = requestCallback + ':Shop/shopList';
+                        //slackTemplate.attachments[2].callback_id = requestCallback + ':Shop/shopList';
 
                         return slackTemplate;
+
+                        break;
+
+                    //Attack
+                    case '-Kjpe29q_fDkJG-73AQO':
+                        console.log('called actionList/Attack');
+
+                        var charactersInZone = gameContext.getCharactersInZone('-Khu9Ti4cn9PQ2Q1TSBT');
+
+                        updatedCallback = (':' + userSelection + '/shopList');
+
+                        charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
+
+                        return charactersInZone;
+
+                        break;
+
+                    //Defend
+                    case '-KjpeJT7Oct3ZCtLhENO':
+                        console.log('called actionList/-KjpeJT7Oct3ZCtLhENO');
+
+                        break;
+                    //Life Tap
+                    case '-KkOq-y2_zgEgdhY-6_U':
+                        console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
+
+                        break;
+                    //Forked Lightning
+                    case '-KkdduB9XuB46EsxqwIX':
+                        console.log('called actionList/-KkdduB9XuB46EsxqwIX');
+
+                        break;
+                    //Into Shadow
+                    case '-Kkdk_CD5vx8vRGQD268':
+                        console.log('called actionList/-Kkdk_CD5vx8vRGQD268');
 
                         break;
                 }
@@ -549,22 +574,22 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Inventory');
 
-                        var slackInventoryTemplate = slackTemplates.itemList;
-
-                        //console.log('slackTemplate before options set: ', JSON.stringify(slackInventoryTemplate));
+                        slackTemplate = slackTemplates.itemList;
 
                         //Pass in the character's unequipped inventory array
-                        slackInventoryTemplate.attachments[0].actions[0].options = gameContext.getItemList(localCharacter.props.inventory.unequipped);
+                        slackTemplate.attachments[0].actions[0].options = gameContext.getItemList(localCharacter.props.inventory.unequipped);
 
-                        //console.log('slackTemplate after options set: ', JSON.stringify(slackInventoryTemplate));
+                        updatedCallback = ':Inventory/itemDetail';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        slackInventoryTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
-                        slackInventoryTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
+                        //slackInventoryTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
+                        //slackInventoryTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
 
                         //console.log('slackTemplate after callbacks set: ', JSON.stringify(slackInventoryTemplate));
 
-                        return slackInventoryTemplate;
+                        return slackTemplate;
 
                         break;
 
@@ -572,7 +597,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Equipment');
 
-                        var slackEquipmentTemplate = slackTemplates.itemList;
+                        slackTemplate = slackTemplates.itemList;
 
                         //Pass in the character's unequipped inventory array
                         //slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
@@ -596,23 +621,28 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             ]
                         });
 
+                        updatedCallback = ':Equipment/itemDetail';
+
+                        var updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
+
+                        /*
                         var updatedAttachments = slackTemplateAttachments.map( singleAttachment =>{
 
                             singleAttachment.callback_id = requestCallback + ':Equipment/itemDetail';
 
                             return singleAttachment
 
-                        });
+                        });*/
 
-                        slackEquipmentTemplate.attachments = updatedAttachments;
+                        slackTemplate.attachments = updatedAttachments;
 
-                        console.log('Equipment template: ', JSON.stringify(slackEquipmentTemplate.attachments));
+                        console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
 
                         //Previous callback includes the menu selection was made from, now add the selection & the next menu
                         //slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
                         //slackTemplate.attachments[1].callback_id = requestCallback + ':Equipment/itemDetail';
 
-                        return slackEquipmentTemplate;
+                        return slackTemplate;
 
                         break;
                 }

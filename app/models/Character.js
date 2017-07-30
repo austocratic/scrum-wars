@@ -69,36 +69,6 @@ class Character extends BaseModel{
         });
     }
     
-    //Take an array of action IDs & return action IDs if it is available on the turn passed as an argument
-    filterActionIDsForAvailability(actionIDs, turnNumber){
-        var characterActionsAvailableInCurrentZone = [];
-
-        //Look through all player's actions and determine if any were used in the current turn.
-        //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
-        if(_.find(this.props.actions, {'turn_used': turnNumber})) {
-
-            //Return an empty array
-            return characterActionsAvailableInCurrentZone;
-            //return slackTemplates.actionAlreadyTaken;
-        }
-        
-        return actionIDs.filter( singleActionID =>{
-            
-        })
-    }
-    
-    //Returns True if this action was taken on the turn passed in
-    checkForActionUsedOnTurn(actionID, turnNumber){
-        
-        if (this.props.actions[actionID].turn_used === turnNumber) {
-            return true;
-        }
-
-        //Else return false
-        return false;
-        
-    }
-    
     //Return an array of actionIDs that were used on the turnNumber argument
     getActionsUsedOnTurn(turnNumber){
 
@@ -116,20 +86,11 @@ class Character extends BaseModel{
     //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
     isActionAvailable(actionID, turnNumber){
 
-        console.log('called isActionAvailable');
-        console.log('actionID: ', actionID);
-        console.log('turnNumber: ', turnNumber);
-
         var foundAction = _.find(this.props.actions, {'action_id': actionID});
 
         if (foundAction.turn_available <= turnNumber) {
             return true;
         }
-
-        /*
-        if (this.props.actions[actionID].turn_available <= turnNumber) {
-            return true;
-        }*/
         
         //Else return false
         return false;
