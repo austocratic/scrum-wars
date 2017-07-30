@@ -295,7 +295,7 @@ class Game {
 
             actionCategory.forEach(actionDetails => {
 
-                var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
+                //var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
                 
                 //var actionAvailability = actionDetails.getActionAvailability(localMatch.props.number_turns, localMatch.props.number_turns);
                 //var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
@@ -304,7 +304,7 @@ class Game {
                 var actionAvailableButtonColor = "danger";
 
                 //If the button is available based on the match turn, overwrite the color to green
-                if (localCharacter.isActionAvailable(singleAction.action_id, localMatch.props.number_turns)) {
+                if (localCharacter.isActionAvailable(actionDetails.id, localMatch.props.number_turns)) {
                     actionAvailableButtonColor = "primary"
                 }
 
