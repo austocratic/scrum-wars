@@ -523,17 +523,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'actionList':
 
                         console.log('gameContext.state.action: ', gameContext.state.action);
-                        console.log('gameContext.state.action[-Kjpe29q_fDkJG-73AQO]: ', gameContext.state.action['-Kjpe29q_fDkJG-73AQO']);
                         console.log('gameContext.state.action[priorSelection]: ', gameContext.state.action[priorSelection]);
 
                         console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect_id);
 
                         //Envoke the action's effects
-                        if (gameContext.state.action[priorSelection].effect){
+                        if (gameContext.state.action[priorSelection].effect_id){
 
                             var effectArray = gameContext.state.action[priorSelection].effect_id;
 
                             if (effectArray > 0){
+
+                                console.log('passed if statement')
 
                                 var localEffect;
                                 
