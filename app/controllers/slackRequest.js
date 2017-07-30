@@ -544,10 +544,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                                         gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
 
-                                        return {
-                                            "text": "You make an attack!"
-                                        };
-
                                         break;
 
                                     default:
@@ -560,7 +556,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             })
                         }
 
-                        console.log('skipped if statement in slackRequest / actionList');
+                        return {
+                            "text": 'actions complete'
+                        }
 
                         break;
                 }
