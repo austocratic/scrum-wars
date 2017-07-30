@@ -105,16 +105,18 @@ class Character extends BaseModel{
         console.log('called getActionsUsedOnTurn, turnNumber: ', turnNumber);
 
         var actionIDs = this.getActionIDs();
-        
+
         console.log('actionIDs: ', actionIDs);
         
         return actionIDs.filter( eachActionID =>{
 
             console.log('getActionsUsedOnTurn eachActionID: ', eachActionID);
 
-            console.log('this.props.actions[eachActionID].turn_used: ', this.props.actions[eachActionID].turn_used);
+            var foundAction = _.find(this.props.actions, {'action_id': eachActionID}).value();
 
-            return this.props.actions[eachActionID].turn_used === turnNumber
+            console.log('foundAction: ', foundAction);
+
+            return foundAction.turn_used === turnNumber
         })
         
     }
