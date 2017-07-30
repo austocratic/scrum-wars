@@ -9,6 +9,8 @@
 var BaseModel = require('./BaseModel').BaseModel;
 var slackTemplates = require('../slackTemplates');
 
+var _ = require('lodash');
+
 
 class Character extends BaseModel{
     constructor(gameState, characterID){
@@ -58,6 +60,24 @@ class Character extends BaseModel{
         //Return purchase confirmation template
         return responseTemplate;
 
+    }
+    
+    //Return an array of action IDs that are available this turn (regardless of what zone)
+    getActionIDsAvailable(currentTurnNumber){
+
+        var characterActionsAvailableInCurrentZone = [];
+        
+        //Look through all player's actions and determine if any were used in the current turn.
+        //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
+        if(_.find(this.props.actions, {'turn_used': currentTurnNumber})) {
+
+            //Return an empty array
+            return characterActionsAvailableInCurrentZone;
+            //return slackTemplates.actionAlreadyTaken;
+        }
+
+        
+        
     }
 
     inactivate(){

@@ -241,14 +241,18 @@ class Game {
         console.log('called getAvailableActions');
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
+
         var localUser = new User(this.state, requestSlackUserID);
 
-        //Get the local character's id
         var characterID = localUser.getCharacterID();
 
         var localCharacter = new Character(this.state, characterID);
-
         var localZone = new Zone(this.state, requestSlackChannelID);
+        var localMatch = new Match(this.state, this.getCurrentMatchID());
+
+
+        //Get the local character's id
+
 
         //Determine if the zone where /action was called matches the character's location - if mismatch, return travel template
         /* Moved this logic to slackRequest
@@ -258,18 +262,54 @@ class Game {
             return moveCharacter(localZone.id, localZone.props.name);
         }*/
 
-        //Create match locally for reference
-        var match = new Match(this.state, this.getCurrentMatchID());
+
+        //Returns an array of action IDs available this turn & in this zone
+        var actionIDsAvailable = localCharacter.getActionIDsAvailable(localMatch.props.number_turns);
+
+        console.log('actionIDsAvailable: ', actionIDsAvailable);
+
+        //If character already took an action this turn return the no action available template
+        if (actionIDsAvailable.length === 0) {
+            return slackTemplates.actionAlreadyTaken;
+        }
+
+        //Use action IDs to make an array of action objects
+        var actionObjectsAvailable = actionIDsAvailable.map( eachActionID =>{
+            return new Action(this.state, eachActionID);
+        });
+
+        console.log('actionObjectsAvailable: ', actionObjectsAvailable);
+
+        //Filter the action object array for actions available in the current zone
+        var actionsAvailableInZone = actionObjectsAvailable.filter( eachActionObject =>{
+            return _.indexOf(eachActionObject.props.zone_id, localZone.id) > -1;
+        });
+
+        console.log('actionsAvailableInZone: ', actionsAvailableInZone);
+
+        //Group the actions for slack
+        var groupedActions = _(actionsAvailableInZone).groupBy((singleAction) => {
+
+            console.log('singleAction: ', singleAction);
+
+            return singleAction.props.type;
+        });
+
+        console.log('groupedActions: ', groupedActions);
+
+
 
         //Look through all player's actions and determine if any were used in the current turn.
         //Use lodash .find which returns the first occurance of the search parameter.  If it returns any actions that were used on the current turn, then player has no actions available
-        if(_.find(localCharacter.props.actions, {'turn_used': match.props.number_turns})) {
+
+
+        /*if(_.find(localCharacter.props.actions, {'turn_used': localMatch.props.number_turns})) {
 
             return slackTemplates.actionAlreadyTaken;
         }
 
-        var characterActionsAvailableInCurrentZone = [];
-
+        var characterActionsAvailableInCurrentZone = [];*/
+        /*
         //Take an array of the character's actions and filter it for actions that can be used in the current zone
         localCharacter.props.actions.forEach( characterAction =>{
 
@@ -286,16 +326,11 @@ class Game {
                 console.log('passed indexOf condition check');
                 characterActionsAvailableInCurrentZone.push(localAction)
             }
-        });
+        });*/
 
-        console.log('characterActionsAvailableInCurrentZone: ', characterActionsAvailableInCurrentZone);
+        console.log('actionsAvailableInZone: ', actionsAvailableInZone);
 
-        var groupedActions = _(characterActionsAvailableInCurrentZone).groupBy((singleAction) => {
 
-            console.log('singleAction: ', singleAction);
-
-            return singleAction.props.type;
-        });
 
         //console.log('groupedActions: ', groupedActions);
 
@@ -325,7 +360,7 @@ class Game {
                 var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
 
                 //TODO need to determine where to store turn_available.  Im trying to move it out of character.action array.  Currently a place holder
-                var actionAvailability = actionDetails.getActionAvailability(match.props.number_turns, match.props.number_turns);
+                var actionAvailability = actionDetails.getActionAvailability(localMatch.props.number_turns, localMatch.props.number_turns);
                 //var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
                 //Default button color to red ("danger").  If available, it will be overwritten
