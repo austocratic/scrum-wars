@@ -219,9 +219,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
     console.log('requestCallback after modification: ', requestCallback);
 
-    //Switch logic looks at the view & the button selected to return a template
-    return responseTemplateSwitch(lastCallbackElement, requestActionName);
-
     function getAttachmentWithCallbacks(attachmentsArray, callbackString){
 
         //Check if attachmentsArray is empty.  If it is, create a single attachment
@@ -236,6 +233,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
             return eachAttachment
         })
     }
+
+    //Switch logic looks at the view & the button selected to return a template
+    return responseTemplateSwitch(lastCallbackElement, requestActionName);
 
     //Switch logic to determine action
     function responseTemplateSwitch(selectionContext, userSelection){
@@ -461,7 +461,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var charactersInZone = gameContext.getCharactersInZone(localZone.id);
 
-                        updatedCallback = (':' + userSelection + '/shopList');
+                        updatedCallback = (':' + userSelection + '/characterList');
 
                         charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
 
@@ -489,15 +489,56 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('called actionList/-Kkdk_CD5vx8vRGQD268');
 
                         break;
+
+                    default:
+                        console.log('called actionList & hit default statement');
+
+                        return {
+                            "user_name": "System",
+                            "text": "Error, that action is not supported"
+                        };
+
+                        break;
+                }
+
+                break;
+
+            case 'characterList':
+                console.log('called characterList');
+
+                //Characterlist can be called from several contexts.  Parse the prior screen to determine the context that it was called from
+                var priorViewSelection = slackCallbackElements[slackCallbackElements.length - 2].split(":");
+
+                var priorView = priorViewSelection[0];
+                var priorSelection = priorViewSelection[1];
+
+                console.log('priorView: ', priorView);
+                console.log('priorSelection: ', priorSelection);
+
+                switch(priorView){
+
+                    case 'action':
+
+                        switch(priorSelection){
+
+                            //Attack
+                            case '-Kjpe29q_fDkJG-73AQO':
+
+                                console.log('Character was successfully selected from characterList with a previous Attack context')
+
+                                break;
+
+                        }
+
+                        break;
                 }
 
                 break;
 
             case 'shopList':
-
                 console.log('called shopList');
 
-                //Create a local itemc
+                //Create a local item
                 var localItem = new Item(gameContext.state, requestActionValue);
 
                 //Create an item detail view template
