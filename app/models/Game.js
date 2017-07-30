@@ -361,16 +361,15 @@ class Game {
                 console.log('each actionDetails: ', actionDetails);
 
                 var singleAction = _.find(localCharacter.props.actions, {'action_id': actionDetails.id});
-
-                //TODO need to determine where to store turn_available.  Im trying to move it out of character.action array.  Currently a place holder
-                var actionAvailability = actionDetails.getActionAvailability(localMatch.props.number_turns, localMatch.props.number_turns);
+                
+                //var actionAvailability = actionDetails.getActionAvailability(localMatch.props.number_turns, localMatch.props.number_turns);
                 //var actionAvailability = actionDetails.getActionAvailability(singleAction.turn_available, match.props.number_turns);
 
                 //Default button color to red ("danger").  If available, it will be overwritten
                 var actionAvailableButtonColor = "danger";
 
                 //If the button is available based on the match turn, overwrite the color to green
-                if (actionAvailability) {
+                if (localCharacter.isActionAvailable(singleAction.action_id, localMatch.props.number_turns)) {
                     actionAvailableButtonColor = "primary"
                 }
 

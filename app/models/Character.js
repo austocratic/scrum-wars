@@ -102,19 +102,11 @@ class Character extends BaseModel{
     //Return an array of actionIDs that were used on the turnNumber argument
     getActionsUsedOnTurn(turnNumber){
 
-        console.log('called getActionsUsedOnTurn, turnNumber: ', turnNumber);
-
         var actionIDs = this.getActionIDs();
-
-        console.log('actionIDs: ', actionIDs);
         
         return actionIDs.filter( eachActionID =>{
 
-            console.log('getActionsUsedOnTurn eachActionID: ', eachActionID);
-
             var foundAction = _.find(this.props.actions, {'action_id': eachActionID});
-
-            console.log('foundAction: ', foundAction);
 
             return foundAction.turn_used === turnNumber
         })
@@ -122,11 +114,18 @@ class Character extends BaseModel{
     }
 
     //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
-    checkForActionAvailability(actionID, turnNumber){
-        
-        if (this.props.actions[actionID].turn_used <= turnNumber) {
+    isActionAvailable(actionID, turnNumber){
+
+        var foundAction = _.find(this.props.actions, {'action_id': actionID});
+
+        if (foundAction.turn_available <= turnNumber) {
             return true;
         }
+
+        /*
+        if (this.props.actions[actionID].turn_available <= turnNumber) {
+            return true;
+        }*/
         
         //Else return false
         return false;
