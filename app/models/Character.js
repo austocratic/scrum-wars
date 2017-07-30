@@ -63,7 +63,7 @@ class Character extends BaseModel{
     }
     
     //Return an array of action IDs that are available this turn (regardless of what zone)
-    getActionIDsAvailable(currentTurnNumber){
+    getActionIDsAvailableThisTurn(currentTurnNumber){
 
         var characterActionsAvailableInCurrentZone = [];
         
@@ -76,8 +76,7 @@ class Character extends BaseModel{
             //return slackTemplates.actionAlreadyTaken;
         }
 
-        
-        
+        return Object.keys(this.props.actions);
     }
 
     inactivate(){

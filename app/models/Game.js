@@ -264,7 +264,7 @@ class Game {
 
 
         //Returns an array of action IDs available this turn & in this zone
-        var actionIDsAvailable = localCharacter.getActionIDsAvailable(localMatch.props.number_turns);
+        var actionIDsAvailable = localCharacter.getActionIDsAvailableThisTurn(localMatch.props.number_turns);
 
         console.log('actionIDsAvailable: ', actionIDsAvailable);
 
