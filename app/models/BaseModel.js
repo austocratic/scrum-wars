@@ -7,7 +7,13 @@ class BaseModel {
     updateProperty(propertyToUpdate, newValue){
 
         this.props[propertyToUpdate] = newValue
-        
+    }
+
+    incrementProperty(propertyName, value){
+
+        var currentProperty = this.props[propertyName];
+
+        this.props[propertyName] = currentProperty + value;
     }
     
 }

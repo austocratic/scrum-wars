@@ -540,9 +540,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     //Damage target
                                     case '-KqKLddOaYcWnOvVIAYe':
 
-                                        var currentHP = gameContext.state.character[requestActionValue].hit_points;
+                                        //var currentHP = gameContext.state.character[requestActionValue].hit_points;
 
-                                        gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
+                                        //gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
+
+                                        var targetCharacter = new Character();
+
+                                        targetCharacter.incrementProperty('hit_points', -3);
 
                                         break;
 
