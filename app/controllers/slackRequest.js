@@ -522,54 +522,54 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'actionList':
 
-                        console.log('gameContext.state.action: ', gameContext.state.action);
-                        console.log('gameContext.state.action[priorSelection]: ', gameContext.state.action[priorSelection]);
+                        //console.log('gameContext.state.action: ', gameContext.state.action);
+                        //console.log('gameContext.state.action[priorSelection]: ', gameContext.state.action[priorSelection]);
 
-                        console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect_id);
+                        //console.log('gameContext effect: ', gameContext.state.action[priorSelection].effect_id);
 
                         //Envoke the action's effects
-                        if (gameContext.state.action[priorSelection].effect_id){
 
-                            var effectArray = gameContext.state.action[priorSelection].effect_id;
+                        var effectArray = gameContext.state.action[priorSelection].effect_id;
 
-                            if (effectArray > 0){
+                        console.log('effectArray: ', effectArray);
 
-                                console.log('passed if statement')
+                        if (effectArray > 0){
 
-                                var localEffect;
-                                
-                                effectArray.forEach( eachEffectID =>{
+                            console.log('passed if statement');
 
-                                    localEffect = new Effect(gameContext.state, eachEffectID);
-                                    //Create a new localEffect object
+                            var localEffect;
 
-                                    switch(localEffect.id){
+                            effectArray.forEach( eachEffectID =>{
 
-                                        //Damage target
-                                        case '-KqKLddOaYcWnOvVIAYe':
+                                localEffect = new Effect(gameContext.state, eachEffectID);
+                                //Create a new localEffect object
 
-                                            console.log('Called effect.activate');
+                                switch(localEffect.id){
 
-                                            var currentHP = gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points;
+                                    //Damage target
+                                    case '-KqKLddOaYcWnOvVIAYe':
 
-                                            console.log('currentHP: ', currentHP);
+                                        console.log('Called effect.activate');
 
-                                            gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points = currentHP - 2;
+                                        var currentHP = gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points;
 
-                                            console.log('Updated currentHP: ', gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points);
+                                        console.log('currentHP: ', currentHP);
+
+                                        gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points = currentHP - 2;
+
+                                        console.log('Updated currentHP: ', gameContext.state.character['-Kkxf1ukVSF9VV6mIPlG'].hit_points);
 
 
-                                            break;
+                                        break;
 
-                                        default:
-                                            console.log('Error: this effect ID is not supported.  Add the ID to Effect class / activate method');
+                                    default:
+                                        console.log('Error: this effect ID is not supported.  Add the ID to Effect class / activate method');
 
-                                            return 'Error: this effect ID is not supported.  Add the ID to Effect class / activate method';
+                                        return 'Error: this effect ID is not supported.  Add the ID to Effect class / activate method';
 
-                                            break;
-                                    }
-                                })
-                            }
+                                        break;
+                                }
+                            })
                         }
 
                         console.log('skipped if statement in slackRequest / actionList');
