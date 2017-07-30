@@ -301,11 +301,11 @@ class Game {
 
                 //Push each action into the actions array portion of the template
                 attachmentTemplate.actions.push({
-                    "name": actionDetails.props.name,
+                    "name": actionDetails.id,
                     "text": actionDetails.props.name,
                     "style": actionAvailableButtonColor,
                     "type": "button",
-                    "value": actionDetails.props.name
+                    "value": actionDetails.id
                 })
             });
 

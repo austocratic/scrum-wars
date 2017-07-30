@@ -436,9 +436,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 switch (userSelection){
 
-                    case 'Shop':
+                    //Shop
+                    case '-KkJVqtBIhpAKBfz9tcb':
 
-                        console.log('called actionList/shop');
+                        console.log('called actionList/-KkJVqtBIhpAKBfz9tcb');
 
                         slackTemplate = gameContext.shopList(requestSlackChannelID);
 
