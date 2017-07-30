@@ -19,27 +19,6 @@ class Action extends BaseModel{
         this.id = actionID
     }
 
-    changeTargetAttribute(characterID, ){
-
-    }
-
-
-    effect(){
-
-        switch(dbType){
-
-            case 'damage':
-
-                this.changeTargetAttribute();
-
-                break;
-
-            case 'heal':
-
-                break;
-        }
-    }
-
 }
 
 
