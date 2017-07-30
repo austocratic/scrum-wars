@@ -540,9 +540,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     //Damage target
                                     case '-KqKLddOaYcWnOvVIAYe':
 
-                                        var currentHP = gameContext.state.character[userSelection].hit_points;
+                                        var currentHP = gameContext.state.character[requestActionValue].hit_points;
 
-                                        gameContext.state.character[userSelection].hit_points = currentHP - 2;
+                                        gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
 
                                         return {
                                             "text": "You make an attack!"
