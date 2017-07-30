@@ -19,26 +19,6 @@ class Action extends BaseModel{
         this.id = actionID
 
     }
-    
-    getActionAvailability(turnActionavailable, matchTurn){
-
-   
-        //TODO need to reference the turn the player used the action, this is stored in the character
-
-
-        //If turn one, all actions are available
-        if (matchTurn === 1) {
-            return true
-        } else {
-            if (turnActionavailable <= matchTurn) {
-            //if (this.props.turn_used + this.props.cool_down <= matchTurn) {
-                return true
-            } else {
-                return false
-            }
-        }
-        
-    }
 
 }
 

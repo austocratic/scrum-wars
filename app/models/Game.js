@@ -263,13 +263,16 @@ class Game {
         }*/
 
 
-        //Returns an array of action IDs available this turn & in this zone
-        var actionIDsAvailable = localCharacter.getActionIDsAvailableThisTurn(localMatch.props.number_turns);
+        //Returns an array of all the character's action IDs
+        var actionIDsAvailable = localCharacter.getActionIDs();
 
         console.log('actionIDsAvailable: ', actionIDsAvailable);
 
+        //Determine if any action was already taken this turn, if so return the action taken template
+        var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
+
         //If character already took an action this turn return the no action available template
-        if (actionIDsAvailable.length === 0) {
+        if (actionsUsedThisTurn.length === 0) {
             return slackTemplates.actionAlreadyTaken;
         }
 
@@ -328,7 +331,7 @@ class Game {
             }
         });*/
 
-        console.log('actionsAvailableInZone: ', actionsAvailableInZone);
+        //console.log('actionsAvailableInZone: ', actionsAvailableInZone);
 
 
 

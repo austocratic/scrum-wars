@@ -397,13 +397,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Array of action IDs
                 var characterActions = localCharacterClass.props.action_id.map( eachActionID =>{
                     return {
-                        [eachActionID]: {
-                            turn_used: 0,
-                            turn_available: 0
-                        }
+                        action_id: eachActionID,
+                        turn_used: 0,
+                        turn_available: 0
                     }
                 });
-
 
                 var updates = {
                     "actions": characterActions,
