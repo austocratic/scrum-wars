@@ -533,7 +533,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('effectArray: ', effectArray);
 
-                        if (effectArray > 0){
+                        if (effectArray.length > 0){
 
                             console.log('passed if statement');
 
