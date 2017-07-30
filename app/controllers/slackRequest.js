@@ -458,7 +458,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case '-Kjpe29q_fDkJG-73AQO':
                         console.log('called actionList/Attack');
 
-                        var charactersInZone = gameContext.getCharactersInZone('-Khu9Ti4cn9PQ2Q1TSBT');
+                        var charactersInZone = gameContext.getCharactersInZone(localZone.id);
 
                         updatedCallback = (':' + userSelection + '/shopList');
 
