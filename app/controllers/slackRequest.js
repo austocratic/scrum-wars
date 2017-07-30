@@ -527,6 +527,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('action_taken_text: ', localAction.action_taken_text);
 
+                        var str = localAction.action_taken_text;
+                        var res = str.replace("myCharacterName", localCharacter.props.name);
+
                         //Notify that action was taken
                         //Actions could have an action take text that can have certain words that get replaced using a function
 
