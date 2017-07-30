@@ -544,7 +544,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                                         //gameContext.state.character[requestActionValue].hit_points = currentHP - 2;
 
-                                        var targetCharacter = new Character();
+                                        var targetCharacter = new Character(gameContext.state, requestActionValue);
 
                                         targetCharacter.incrementProperty('hit_points', -3);
 
