@@ -2,7 +2,10 @@
 
 var characterProfile = require('../menus/characterProfile').characterProfile;
 
+//Controllers
+var actionController = require('./actionController');
 
+//Models
 var Game = require('../models/Game').Game;
 var Item = require('../models/Item').Item;
 var Character = require('../models/Character').Character;
@@ -506,7 +509,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 break;
 
             case 'characterList':
-                console.log('called characterList');
+                console.log('called characterList')
 
                 //Characterlist can be called from several contexts.  Parse the prior screen to determine the context that it was called from
                 var priorViewSelection = slackCallbackElements[slackCallbackElements.length - 2].split(":");
@@ -517,20 +520,43 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('priorView: ', priorView);
                 console.log('priorSelection: ', priorSelection);
 
+                var targetCharacter = new Character(gameContext.state, requestActionValue);
+
                 //Look up what effect IDs
 
                 switch(priorView){
 
                     case 'actionList':
 
+                        switch(priorSelection){
+
+                            //Attack
+                            case '-Kjpe29q_fDkJG-73AQO':
+
+                                return actionController.attack(localCharacter, targetCharacter, localZone);
+                                
+
+                                break;
+
+
+                            default:
+
+                                return {
+                                    "text": "ERROR: Prior action is not supported, check slackRequest.js"
+                                };
+
+                                break;
+                        }
+
+                        /*
                         var localAction = new Action(gameContext.state, priorSelection);
 
-                        console.log('action_taken_text: ', localAction.action_taken_text);
+                        console.log('action_taken_text: ', localAction.props.action_taken_text);
 
-                        var str = localAction.action_taken_text;
+                        var str = localAction.props.action_taken_text;
                         var res = str.replace("myCharacterName", localCharacter.props.name);
 
-                        console.log('new action_take_text: ', res);
+                        console.log('new action_take_text: ', res);*/
 
                         //Notify that action was taken
                         //Actions could have an action take text that can have certain words that get replaced using a function
@@ -540,6 +566,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Respond
 
+                        
+                        
+                        /*
                         //Envoke the action's effects
                         var effectArray = localAction.props.effect_id;
 
@@ -575,7 +604,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                         break;
                                 }
                             })
-                        }
+                        }*/
 
                         return {
                             "text": 'actions complete'

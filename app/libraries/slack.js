@@ -13,6 +13,13 @@ class Slack {
     //TODO: need to add validation to ensure that this.options are set before calling
     sendToSlack(){
 
+        request.post(this.options, (err, httpResponse, body) => {
+            if (err) {
+                console.log('ERROR when sending message to slack: ' + err);
+            }
+        });
+        
+        /*
         return new Promise( (resolve, reject) => {
             request.post(this.options, (err, httpResponse, body) => {
                 if (err) {
@@ -20,7 +27,7 @@ class Slack {
                 }
                 resolve(body);
             })
-        })
+        })*/
     }
 }
 
@@ -34,6 +41,8 @@ class Alert extends Slack {
 
         //Set options in format for passing to Slack
         this._setOptions();
+        
+        this.sendToSlack();
     }
 
     _setOptions() {
