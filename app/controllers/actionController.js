@@ -18,10 +18,14 @@ exports.attack = (actionCharacter, targetCharacter, actionZone) => {
 
     //Calculate the strength of the attack
     var baseDamage = actionCharacter.props.level;
+    
+    console.log('baseDamage: ', baseDamage);
 
     //TODO for phase 1 simplicity: damage will be a random # up to strength value
     //Generate a random number based on character strength
     var randomDamage = getRandomIntInclusive(1, actionCharacter.props.strength);
+
+    console.log('randomDamage: ', randomDamage);
 
     var totalDamage = baseDamage + randomDamage;
 
@@ -31,12 +35,14 @@ exports.attack = (actionCharacter, targetCharacter, actionZone) => {
     var evasionChance = .1;
 
     //Armor + toughness
-    var damageReduction = 10;
+    var damageReduction = 2;
 
     //Check if attack was evaded
 
     //Reduce the totalDamage by damageReduction (up to maximum of 90% reduction)
     var netDamage = totalDamage - damageReduction;
+
+    console.log('netDamage: ', netDamage);
 
     //reduce target ID.hit_points
     targetCharacter.incrementProperty('hit_points', (-1 * netDamage));
