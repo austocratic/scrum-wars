@@ -45,7 +45,7 @@ exports.attack = (actionCharacter, targetCharacter, actionZone) => {
     console.log('netDamage: ', netDamage);
 
     //reduce target ID.hit_points
-    targetCharacter.incrementProperty('hit_points', (-1 * netDamage));
+    //targetCharacter.incrementProperty('hit_points', (-1 * netDamage));
 
     var alertDetails = {
         "username": "A mysterious voice",
