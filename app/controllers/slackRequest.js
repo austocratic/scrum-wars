@@ -172,6 +172,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
     var localZone = new Zone(gameContext.state, requestSlackChannelID);
 
+    var localMatch = new Match(gameContext.state, gameContext.getCurrentMatchID());
+
     //Check for back button selection.  If back, overwrite the
     if (requestActionName == 'back'){
         
@@ -272,8 +274,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                             return slackTemplate;
                         }
-
-                        console.log('Skipped the mismatch condition');
 
                         slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
@@ -439,6 +439,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
             case 'actionList':
 
+                //First check that the selected action is available this turn
+
+                if (localCharacter.isActionAvailable(userSelection, localMatch.props.number_turns)) {
+                    return {
+                        "text": "That action is not available this turn!"
+                    }
+                }
+                
                 switch (userSelection){
 
                     //Shop
@@ -460,7 +468,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         break;
 
-                    //Attack
+                    //Quick Strike
                     case '-Kjpe29q_fDkJG-73AQO':
                         console.log('called actionList/Attack');
 
@@ -509,7 +517,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 break;
 
             case 'characterList':
-                console.log('called characterList')
+                console.log('called characterList');
 
                 //Characterlist can be called from several contexts.  Parse the prior screen to determine the context that it was called from
                 var priorViewSelection = slackCallbackElements[slackCallbackElements.length - 2].split(":");
@@ -533,7 +541,20 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             //Attack
                             case '-Kjpe29q_fDkJG-73AQO':
 
-                                return actionController.attack(localCharacter, targetCharacter, localZone);
+                                console.log('called attack');
+
+                                var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter);
+
+                                console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                                /*
+                                var alertDetails = {
+                                    "username": "A mysterious voice",
+                                    "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                                    "channel": ("#" + actionZone.props.channel),
+                                    "text": (actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + targetCharacter.props.name + " for " + netDamage + " points of damage!")
+                                };*/
+                                
                                 
 
                                 break;

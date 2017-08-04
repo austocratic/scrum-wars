@@ -66,6 +66,7 @@ class Game {
             [localRandomID]: {
                 active: 1,
                 name: 'Unknown Traveler',
+                level: 1,
                 user_id: userID,
                 gold: 100,
                 armor: 0,

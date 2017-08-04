@@ -10,101 +10,201 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Action controllers
+//Basic attack
+//1. skill check
+//2. calculate skill power
+//3. avoidance check
+//4. calculate mitigation
+//5. compute results
+class BaseAttack {
+    constructor(actionCharacter, targetCharacter) {
 
+        this.actionCharacter = actionCharacter;
+        this.targetCharacter = targetCharacter;
+        
+    }
 
+    _isSuccess(successChance){
+        if ((getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
+            return(true)
+        }
 
-exports.attack = (actionCharacter, targetCharacter, actionZone) => {
+        return(false);
+    }
 
-    //Calculate the strength of the attack
-    var baseDamage = actionCharacter.props.level;
+    _calculatePower(basePower, variableMin, variableMax){
+        return basePower + getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
+    }
+
+    _isAvoided(avoidChance){
+        console.log('called isAvoided');
+
+        var diceRoll = (getRandomIntInclusive(0, 100));
+
+        console.log('diceRoll: ', diceRoll);
+
+        var targetResult = (avoidChance * 100);
+
+        console.log('targetResult: ', targetResult);
+
+        if (diceRoll <= targetResult) {
+            return(true)
+        }
+
+        return(false);
+    }
+
+    _calculateDamage(damage, mitigation){
+
+        var totalDamage = damage - mitigation;
+        
+        if (totalDamage < 0) {
+            return 0;
+        }
+        
+        return totalDamage;
+    }
+}
+
+//QuickStrike is a melee strength based attack
+//Static success chance
+class QuickStrike extends BaseAttack {
+    constructor(actionCharacter, targetCharacter) {
+        super(actionCharacter, targetCharacter);
+
+        //Static base attributes based on the skill
+        this.basePower = 5;
+        this.baseSuccessChance = .9;
+        this.baseMin = 1;
+        this.baseMax = 5;
+        this.baseChanceToAvoid = .05;
+
+        this.evasionMessage = "Your target turns your blade!";
+    }
+
+    setValues(){
+        //Variable attributes
+        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        this.variableMin = this.variablePower + this.baseMin;
+        this.variableMax = this.variablePower + this.baseMax;
+    }
     
-    console.log('baseDamage: ', baseDamage);
+    initiate(){
 
-    //TODO for phase 1 simplicity: damage will be a random # up to strength value
-    //Generate a random number based on character strength
-    var randomDamage = getRandomIntInclusive(1, actionCharacter.props.strength);
+        this.setValues();
 
-    console.log('randomDamage: ', randomDamage);
+        //1.) Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+            return("Your action FAILS")
+        }
 
-    var totalDamage = baseDamage + randomDamage;
+        //Process all the other effects of the action
+        var resultText = this.damageEffect();
+        
+        return resultText;
+    }
 
-    //Compare damage to defender's defense
+    damageEffect(){
 
-    //Dexterity
-    var evasionChance = .1;
+        this.totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
 
-    //Armor + toughness
-    var damageReduction = 2;
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
 
-    //Check if attack was evaded
+        //3.) Evasion check
+        if (this._isAvoided(this.chanceToAvoid) === true){
+            console.log('Target evaded!');
+            return (this.evasionMessage)
+        }
 
-    //Reduce the totalDamage by damageReduction (up to maximum of 90% reduction)
-    var netDamage = totalDamage - damageReduction;
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
 
-    console.log('netDamage: ', netDamage);
+        console.log('totalPower: ', this.totalPower);
+        console.log('damageMitigation: ', this.damageMitigation);
 
-    //reduce target ID.hit_points
-    //targetCharacter.incrementProperty('hit_points', (-1 * netDamage));
+        //4.) Calculate the results
+        var totalDamage = this._calculateDamage(this.totalPower, this.damageMitigation);
 
-    var alertDetails = {
-        "username": "A mysterious voice",
-        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-        "channel": ("#" + actionZone.props.channel),
-        "text": (actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + targetCharacter.props.name + " for " + netDamage + " points of damage!")
-    };
+        //reduce target ID.hit_points
+        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
 
-    //Create a new slack alert object
-    var channelAlert = new Slack(alertDetails);
+        return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
+    }
+}
 
-    //Send out channel update of the action
-    channelAlert.sendToSlack(this.params);
+//QuickStrike is a melee strength based attack
+//Static success chance
+class BrutalStrike extends BaseAttack {
+    constructor(actionCharacter, targetCharacter) {
+        super(actionCharacter, targetCharacter);
 
-    //Complete the action by returning a message
-    return {
-        "text": "You attack a character"
-    };
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = .9;
+        this.baseMin = 3;
+        this.baseMax = 7;
+        this.baseChanceToAvoid = .15;
+
+        this.evasionMessage = "Your target dodges your brutal strike!";
+    }
+
+    setValues(){
+        //Variable attributes
+        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        this.variableMin = this.variablePower + this.baseMin;
+        this.variableMax = this.variablePower + this.baseMax;
+    }
+
+    initiate(){
+
+        this.setValues();
+
+        //1.) Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+            return("Your action FAILS")
+        }
+
+        //Process all the other effects of the action
+        var resultText = this.damageEffect();
+
+        return resultText;
+    }
+
+    damageEffect(){
+
+        this.totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
+
+        //3.) Evasion check
+        if (this._isAvoided(this.chanceToAvoid) === true){
+            console.log('Target evaded!');
+            return (this.evasionMessage)
+        }
+
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
+
+        console.log('totalPower: ', this.totalPower);
+        console.log('damageMitigation: ', this.damageMitigation);
+
+        //4.) Calculate the results
+        var totalDamage = this._calculateDamage(this.totalPower, this.damageMitigation);
+
+        //reduce target ID.hit_points
+        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
+
+        return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
+    }
+}
 
 
 
-    //Old code below
 
-
-
-
-
-    /*
-    //Target's current health
-    var targetHealth = targetCharacterProperties.hit_points;
-
-    var newHealth = (targetHealth - randomDamage);
-
-    //Send a message to the channel saying that a new traveler has entered the zone
-    alertDetails = {
-        "username": "A mysterious voice",
-        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-        "channel": ("#" + characterZone.channel),
-        "text": (attackerName + " lunges forward with a powerful strike and lands a crushing blow on " + defenderName + " for " + randomDamage + " points of damage!")
-    };
-
-     //Create a new slack alert object
-     var channelAlert = new Slack(alertDetails);
-
-     //Send alert to slack
-     channelAlert.sendToSlack(this.params)
-     .then(() =>{
-     console.log('Successfully posted to slack')
-     })
-     .catch(error =>{
-     console.log('Error when sending to slack: ', error)
-     });
-
-    //Set the response template to display to all players in channel
-    template.response_type = "in_channel";
-
-    template.text = (attackerName + " lunges forward with a powerful strike and lands a crushing blow on " + defenderName + " for " + randomDamage + " points of damage!");
-    //template.attachments[0].text = (attackerName + " lunges forward with a powerful strike and lands a crushing blow on " + defenderName + " for " + randomDamage + " points of damage!");
-    */
-
+module.exports = {
+    QuickStrike: QuickStrike
 };
-
