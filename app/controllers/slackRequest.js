@@ -14,6 +14,7 @@ var Class = require('../models/Class').Class;
 var Zone = require('../models/Zone').Zone;
 var Effect = require('../models/Effect').Effect;
 var Action = require('../models/Action').Action;
+var Match = require('../models/Match').Match;
 
 var slackTemplates = require('../slackTemplates');
 
@@ -446,7 +447,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         "text": "That action is not available this turn!"
                     }
                 }
-                
+
                 switch (userSelection){
 
                     //Shop
