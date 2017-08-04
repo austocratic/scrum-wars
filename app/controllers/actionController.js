@@ -1,6 +1,7 @@
 'use strict';
 
 var Slack = require('../libraries/slack').Alert;
+var _ = require('lodash');
 
 //Utility functions
 
@@ -17,11 +18,13 @@ function getRandomIntInclusive(min, max) {
 //4. calculate mitigation
 //5. compute results
 class BaseAttack {
-    constructor(actionCharacter, targetCharacter, currentZone) {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
 
         this.actionCharacter = actionCharacter;
         this.targetCharacter = targetCharacter;
         this.currentZone = currentZone;
+        this.currentMatch = currentMatch;
+        this.actionTaken = actionTaken;
         
     }
 
@@ -65,13 +68,46 @@ class BaseAttack {
         
         return totalDamage;
     }
+    
+    updateAction(actionID){
+        
+        //Take the current actions
+        var currentActions = this.actionCharacter.props.actions;
+        
+        //find that array element of the action to update
+        /*
+        var actionKey = _.findKey(currentActions, eachAction => {
+            {return eachAction['action_id'] === actionID}
+        });*/
+
+        var actionKey = _.findKey(currentActions, {'action_id': actionID});
+
+        console.log('actionKey: ', actionKey);
+
+        var oldTurnAvailable = currentActions[actionKey].turn_available;
+        var oldTurnUsed = currentActions[actionKey].turn_used;
+
+        console.log('oldTurnAvailable: ', oldTurnAvailable);
+        console.log('oldTurnUsed: ', oldTurnUsed);
+
+        var newTurnAvailable = this.currentMatch.props.number_turns + this.actionTaken.props.cool_down;
+        var newTurnUsed = this.currentMatch.props.number_turns;
+
+        console.log('newTurnAvailable: ', newTurnAvailable);
+        console.log('newTurnUsed: ', newTurnUsed);
+
+        //actionsToUpdate[actionKey].turn_available = actionsToUpdate;
+
+
+
+    }
 }
 
 //QuickStrike is a melee strength based attack
 //Static success chance
 class QuickStrike extends BaseAttack {
-    constructor(actionCharacter, targetCharacter) {
-        super(actionCharacter, targetCharacter);
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
         //Static base attributes based on the skill
         this.basePower = 5;
@@ -133,6 +169,11 @@ class QuickStrike extends BaseAttack {
 
         //return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
 
+        //Update the action's available turn
+
+
+
+        //Alert the channel of the action
         var alertDetails = {
             "username": "A mysterious voice",
             "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
@@ -152,8 +193,8 @@ class QuickStrike extends BaseAttack {
 //QuickStrike is a melee strength based attack
 //Static success chance
 class BrutalStrike extends BaseAttack {
-    constructor(actionCharacter, targetCharacter) {
-        super(actionCharacter, targetCharacter);
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
         //Static base attributes based on the skill
         this.basePower = 8;

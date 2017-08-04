@@ -530,6 +530,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('priorSelection: ', priorSelection);
 
                 var targetCharacter = new Character(gameContext.state, requestActionValue);
+                
+                var localAction = new Action(gameContext.state, priorSelection);
 
                 //Look up what effect IDs
 
@@ -544,23 +546,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                                 console.log('called attack');
 
-                                var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter, localZone);
+                                var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter, localZone, localMatch, localAction);
 
                                 console.log('calling initiateAction, result: ', attack_action.initiate());
-
-                                /*
-                                var alertDetails = {
-                                    "username": "A mysterious voice",
-                                    "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                    "channel": ("#" + localZone.props.channel),
-                                    "text": (localCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + targetCharacter.props.name + " for " + netDamage + " points of damage!")
-                                };*/
                                 
+                                //Resolve action (mark it as used)
+                                attack_action.updateAction(localAction.id);
                                 
 
                                 break;
-
-
+                            
                             default:
 
                                 return {
@@ -570,67 +565,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 break;
                         }
 
-                        /*
-                        var localAction = new Action(gameContext.state, priorSelection);
-
-                        console.log('action_taken_text: ', localAction.props.action_taken_text);
-
-                        var str = localAction.props.action_taken_text;
-                        var res = str.replace("myCharacterName", localCharacter.props.name);
-
-                        console.log('new action_take_text: ', res);*/
-
-                        //Notify that action was taken
-                        //Actions could have an action take text that can have certain words that get replaced using a function
-
-
-                        //Invoke effects
-
-                        //Respond
-
-                        
-                        
-                        /*
-                        //Envoke the action's effects
-                        var effectArray = localAction.props.effect_id;
-
-                        if (effectArray.length > 0){
-
-                            console.log('passed if statement');
-
-                            var localEffect;
-
-                            effectArray.forEach( eachEffectID =>{
-
-                                localEffect = new Effect(gameContext.state, eachEffectID);
-
-                                switch(localEffect.id){
-
-                                    //Damage target
-                                    case '-KqKLddOaYcWnOvVIAYe':
-
-                                        //Use a string reference to invoke a Game method
-                                        gameContext['characterName']();
-
-                                        //var targetCharacter = new Character(gameContext.state, requestActionValue);
-
-                                        //targetCharacter.incrementProperty('hit_points', -3);
-
-                                        break;
-
-                                    default:
-                                        console.log('Error: this effect ID is not supported.  Add the ID to Effect class / activate method');
-
-                                        return 'Error: this effect ID is not supported.  Add the ID to Effect class / activate method';
-
-                                        break;
-                                }
-                            })
-                        }*/
-
                         return {
                             "text": 'actions complete'
-                        }
+                        };
 
                         break;
                 }
