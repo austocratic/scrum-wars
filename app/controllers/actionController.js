@@ -69,7 +69,7 @@ class BaseAttack {
         return totalDamage;
     }
     
-    updateAction(actionID){
+    updateAction(){
         
         //Take the current actions
         var currentActions = this.actionCharacter.props.actions;
@@ -80,7 +80,11 @@ class BaseAttack {
             {return eachAction['action_id'] === actionID}
         });*/
 
-        var actionKey = _.findKey(currentActions, {'action_id': actionID});
+        console.log('action taken: ', this.actionTaken);
+
+        var actionKey = _.findKey(currentActions, {'action_id': this.actionTaken.id});
+
+        var actionID = this.actionCharacter.props.actions[actionKey].action_id;
 
         console.log('actionKey: ', actionKey);
 
@@ -97,7 +101,11 @@ class BaseAttack {
         console.log('newTurnUsed: ', newTurnUsed);
 
         //actionsToUpdate[actionKey].turn_available = actionsToUpdate;
-
+        this.actionCharacter.props.actions[actionKey] = {
+            action_id: actionID,
+            turn_available: newTurnAvailable,
+            turn_used: newTurnUsed
+        }
 
 
     }

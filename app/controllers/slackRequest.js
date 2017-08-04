@@ -551,7 +551,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 console.log('calling initiateAction, result: ', attack_action.initiate());
                                 
                                 //Resolve action (mark it as used)
-                                attack_action.updateAction(localAction.id);
+                                attack_action.updateAction();
                                 
 
                                 break;
