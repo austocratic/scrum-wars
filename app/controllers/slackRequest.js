@@ -442,7 +442,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 //First check that the selected action is available this turn
 
-                if (localCharacter.isActionAvailable(userSelection, localMatch.props.number_turns)) {
+                if (!localCharacter.isActionAvailable(userSelection, localMatch.props.number_turns)) {
                     return {
                         "text": "That action is not available this turn!"
                     }
