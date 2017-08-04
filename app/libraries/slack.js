@@ -42,7 +42,7 @@ class Alert extends Slack {
         //Set options in format for passing to Slack
         this._setOptions();
         
-        this.sendToSlack();
+        //this.sendToSlack();
     }
 
     _setOptions() {

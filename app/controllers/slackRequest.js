@@ -539,12 +539,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         switch(priorSelection){
 
-                            //Attack
+                            //Quick Strike
                             case '-Kjpe29q_fDkJG-73AQO':
 
                                 console.log('called attack');
 
-                                var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter);
+                                var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter, localZone);
 
                                 console.log('calling initiateAction, result: ', attack_action.initiate());
 
@@ -552,8 +552,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 var alertDetails = {
                                     "username": "A mysterious voice",
                                     "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                                    "channel": ("#" + actionZone.props.channel),
-                                    "text": (actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + targetCharacter.props.name + " for " + netDamage + " points of damage!")
+                                    "channel": ("#" + localZone.props.channel),
+                                    "text": (localCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + targetCharacter.props.name + " for " + netDamage + " points of damage!")
                                 };*/
                                 
                                 

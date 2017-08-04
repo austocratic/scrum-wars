@@ -17,10 +17,11 @@ function getRandomIntInclusive(min, max) {
 //4. calculate mitigation
 //5. compute results
 class BaseAttack {
-    constructor(actionCharacter, targetCharacter) {
+    constructor(actionCharacter, targetCharacter, currentZone) {
 
         this.actionCharacter = actionCharacter;
         this.targetCharacter = targetCharacter;
+        this.currentZone = currentZone;
         
     }
 
@@ -130,7 +131,21 @@ class QuickStrike extends BaseAttack {
         //reduce target ID.hit_points
         this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
 
-        return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
+        //return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
+
+        var alertDetails = {
+            "username": "A mysterious voice",
+            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params)
+
     }
 }
 
