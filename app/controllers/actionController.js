@@ -30,6 +30,10 @@ class BaseAttack {
 
     _setValues(){
 
+        console.log('setvalues called');
+        console.log('this.actionCharacter.props.level called: ', this.actionCharacter.props.level);
+        console.log('this.actionCharacter.props.level strength: ', this.actionCharacter.props.strength);
+
         //Variable attributes
         this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
         this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
