@@ -443,7 +443,9 @@ class Game {
         console.log('getCharactersInZone characterIDs: ', characterIDs);
 
         //Filter out the player's character
-        var filteredCharacterIDs = _.remove(characterIDs, characterID);
+        var filteredCharacterIDs = _.remove(characterIDs, eachCharacterID =>{
+            return eachCharacterID === localCharacter.id
+        });
 
         console.log('getCharactersInZone filteredCharacterIDs: ', filteredCharacterIDs);
 
