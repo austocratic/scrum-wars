@@ -500,6 +500,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Resolve action (mark it as used)
                         attack_action.updateAction();
+
+                        return {
+                            "text": "You enter a defensive stance!"
+                        }
                         
                         break;
                     //Life Tap
