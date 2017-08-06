@@ -412,21 +412,42 @@ class Game {
 
     }
 
-    getCharactersInZone(zoneID){
+    getCharacterIDsInZone(zoneID){
+        console.log('called getCharacterIDsInZone');
 
-        console.log('called getCharactersInZone');
 
-        var slackTemplate = slackTemplates.characterList;
-        
         //Set a variable for all character IDs in zone (active & inactive & all zones)
         var characterIDsInZone = Object.keys(this.state.character);
 
         //Filter for Active characters && current zone (returns character IDs)
-        var filteredCharacterIDs = characterIDsInZone.filter( singleCharacterID =>{
+        return characterIDsInZone.filter( singleCharacterID =>{
             return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID)
         });
+    }
 
-        //Iterate through the grouped actions
+    getCharactersInZone(zoneID, requestSlackUserID){
+        console.log('called getCharactersInZone');
+
+        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
+        var localUser = new User(this.state, requestSlackUserID);
+
+        //Get the local character's id
+        var characterID = localUser.getCharacterID();
+
+        var localCharacter = new Character(this.state, characterID);
+
+        var slackTemplate = slackTemplates.characterList;
+        
+        var characterIDs = this.getCharacterIDsInZone(zoneID);
+
+        console.log('getCharactersInZone characterIDs: ', characterIDs);
+
+        //Filter out the player's character
+        var filteredCharacterIDs = _.remove(characterIDs, characterID);
+
+        console.log('getCharactersInZone filteredCharacterIDs: ', filteredCharacterIDs);
+
+        //Iterate through the character Ids formatting into slack format
         filteredCharacterIDs.forEach(singleCharacterID => {
             slackTemplate.attachments[0].actions[0].options.push({
                 //"name": singleCharacterID,

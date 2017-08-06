@@ -477,7 +477,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case '-Kjpe29q_fDkJG-73AQO':
                         console.log('called actionList/Attack');
 
-                        actionResponse = gameContext.getCharactersInZone(localZone.id);
+                        actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
+                        
+                        //Filter out player's character
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
@@ -497,7 +499,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case '-KkOq-y2_zgEgdhY-6_U':
                         console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
 
-                        actionResponse = gameContext.getCharactersInZone(localZone.id);
+                        actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
