@@ -112,11 +112,14 @@ class BaseAttack extends BaseAction{
                 console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
                 
                 console.log('characterToModify: ', characterToModify);
-                console.log('this.characterToModify: ', this.characterToModify);
                 
-                this.characterToModify = characterToModify;
+                //this.characterToModify = characterToModify;
 
-                this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
+                //console.log('this.characterToModify: ', this.characterToModify);
+                console.log('this[characterToModify]: ', this[characterToModify]);
+
+                //this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
+                //this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
             })
         }
     }
