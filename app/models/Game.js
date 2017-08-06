@@ -160,18 +160,43 @@ class Game {
         };
 
         //Array of stat keys
-        var statKeys = Object.keys(localCharacter.props);
+        //var statKeys = Object.keys(localCharacter.props);
 
         template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localCharacter.props.class_id + ".jpg";
 
         //Iterate through the stat keys
+        /* Instead of iterating through all stats, I will make the list explicitly defined here
         template.attachments[1].fields = statKeys.map( key =>{
             return {
                 "title": key,
                 "value": localCharacter.props[key],
                 "short": true
             };
-        });
+        });*/
+
+        template.attachments[1].fields = [
+            {
+            "title": "Character Name",
+            "value": localCharacter.props.name,
+            "short": false
+            },
+            {
+            "title": "Class",
+            "value": localCharacter.props.class,
+            "short": false
+            },
+            {
+            "title": "Current Health",
+            "value": localCharacter.props.hit_points,
+            "short": true
+            },
+            {
+            "title": "Max Health",
+            "value": localCharacter.props.max_hit_points,
+            "short": true
+            }
+
+        ];
 
         //Interactive portion of profile menu
         template.attachments[2] = {

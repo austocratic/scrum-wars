@@ -307,9 +307,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('Called command/profile');
                         slackTemplate = gameContext.characterProfile(requestSlackUserID, requestSlackChannelID);
 
+                        updatedCallback = 'command:profile/characterProfile';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
                         //attachment 0 = character image
                         //attachment 1 = character stats
-                        slackTemplate.attachments[2].callback_id = 'command:profile/characterProfile';
+                        //slackTemplate.attachments[2].callback_id = 'command:profile/characterProfile';
 
                         return slackTemplate;
 
