@@ -448,6 +448,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     }
                 }
 
+                var actionResponse;
+
                 //Switch between different actions IDs
                 switch (userSelection){
 
@@ -462,7 +464,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
-                        return slackTemplate;
+                        actionResponse = slackTemplate;
+
+                        //return slackTemplate;
 
                         break;
 
@@ -470,14 +474,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case '-Kjpe29q_fDkJG-73AQO':
                         console.log('called actionList/Attack');
 
-                        var charactersInZone = gameContext.getCharactersInZone(localZone.id);
+                        actionResponse = gameContext.getCharactersInZone(localZone.id);
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
                         //charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
 
-                        return charactersInZone;
+                        //return charactersInZone;
 
                         break;
 
@@ -490,12 +494,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case '-KkOq-y2_zgEgdhY-6_U':
                         console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
 
-                        var charactersInZone = gameContext.getCharactersInZone(localZone.id);
+                        actionResponse = gameContext.getCharactersInZone(localZone.id);
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
-                        return charactersInZone;
+                        //return charactersInZone;
 
                         break;
                     //Forked Lightning
@@ -521,7 +525,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 }
 
                 //Set the callback for all actions
-                charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
+                actionResponse.attachments = getAttachmentWithCallbacks(actionResponse.attachments, (requestCallback + updatedCallback));
+
+                return actionResponse;
 
                 break;
 
@@ -572,7 +578,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                                 //Resolve action (mark it as used)
                                 attack_action.updateAction();
-                                
+
                                 break;
                             
                             default:
