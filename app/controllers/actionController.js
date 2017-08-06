@@ -56,7 +56,15 @@ class BaseAction {
 
     _calculatePower(basePower, variableMin, variableMax){
 
-        return basePower + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
+        console.log('called _calculatePower');
+        console.log('_calculatePower, basePower: ', basePower);
+        console.log('_calculatePower, variableMin: ', variableMin);
+        console.log('_calculatePower, variableMax: ', variableMax);
+
+        var calculatedPower = basePower + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
+
+        console.log('calculatedPower: ', calculatedPower);
+        return calculatedPower;
     }
 }
 
@@ -224,61 +232,6 @@ class QuickStrike extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-    /*
-    damageEffect(){
-
-        this.totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
-
-        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
-
-        //3.) Evasion check
-        if (this._isAvoided(this.chanceToAvoid) === true){
-            console.log('Target evaded!');
-
-            //Alert the channel of the action
-            var alertDetails = {
-                "username": "A mysterious voice",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                "channel": ("#" + this.currentZone.props.channel),
-                "text": (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!")
-            };
-
-            //Create a new slack alert object
-            var channelAlert = new Slack(alertDetails);
-
-            //Send alert to slack
-            channelAlert.sendToSlack(this.params);
-
-            return (this.evasionMessage)
-        }
-
-        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-
-        //4.) Calculate the results
-        var totalDamage = this._calculateDamage(this.totalPower, this.damageMitigation);
-
-        //reduce target ID.hit_points
-        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
-
-        //return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
-
-        //Update the action's available turn
-
-        //Alert the channel of the action
-        var alertDetails = {
-            "username": "A mysterious voice",
-            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-            "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
-        };
-
-        //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params)
-
-    }*/
 }
 
 //LifeTap is a spell
