@@ -28,6 +28,15 @@ class BaseAttack {
         
     }
 
+    _setValues(){
+
+        //Variable attributes
+        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        this.variableMin = this.variablePower + this.baseMin;
+        this.variableMax = this.variablePower + this.baseMax;
+    }
+
     _isSuccess(successChance){
         if ((getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
             return(true)
@@ -37,10 +46,6 @@ class BaseAttack {
     }
 
     _calculatePower(basePower, variableMin, variableMax){
-
-        console.log('calculatePower, basePower: ', basePower);
-        console.log('calculatePower, variableMin: ', variableMin);
-        console.log('calculatePower, variableMax: ', variableMax);
 
         return basePower + getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
     }
@@ -73,6 +78,21 @@ class BaseAttack {
         
         return totalDamage;
     }
+
+    //Increment damage and return the amount damaged
+    _damageEffect(totalDamage){
+
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
+
+        //reduce target ID.hit_points
+        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
+    }
+
+    _healingEffect(totalHealing){
+        this.targetCharacter.incrementProperty('hit_points', (1 * totalHealing));
+    }
+    
     
     updateAction(){
         
@@ -107,21 +127,6 @@ class QuickStrike extends BaseAttack {
 
         this.evasionMessage = "Your target turns your blade!";
     }
-
-    setValues(){
-
-        console.log('called setValues');
-        console.log('called this.actionCharacter: ', this.actionCharacter);
-        
-        console.log('actionCharacter.props.strength: ', this.actionCharacter.props.strength);
-        console.log('actionCharacter.props.level: ', this.actionCharacter.props.level);
-
-        //Variable attributes
-        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        this.variableMin = this.variablePower + this.baseMin;
-        this.variableMax = this.variablePower + this.baseMax;
-    }
     
     initiate(){
 
@@ -131,6 +136,21 @@ class QuickStrike extends BaseAttack {
         //If failure, return a failure message and end
         if (this._isSuccess(this.baseSuccessChance) === false) {
             console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
             return("Your action FAILS")
         }
 
@@ -149,13 +169,25 @@ class QuickStrike extends BaseAttack {
         //3.) Evasion check
         if (this._isAvoided(this.chanceToAvoid) === true){
             console.log('Target evaded!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
             return (this.evasionMessage)
         }
 
         this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-
-        console.log('totalPower: ', this.totalPower);
-        console.log('damageMitigation: ', this.damageMitigation);
 
         //4.) Calculate the results
         var totalDamage = this._calculateDamage(this.totalPower, this.damageMitigation);
@@ -166,8 +198,6 @@ class QuickStrike extends BaseAttack {
         //return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
 
         //Update the action's available turn
-
-
 
         //Alert the channel of the action
         var alertDetails = {
@@ -186,9 +216,96 @@ class QuickStrike extends BaseAttack {
     }
 }
 
+//QuickStrike is a melee strength based attack
+//Static success chance
+class LipeTap extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        //Static base attributes based on the skill
+        this.basePower = 4;
+        this.baseSuccessChance = .8;
+        this.baseMin = 1;
+        this.baseMax = 5;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";
+    }
+
+    initiate(){
+
+        this.setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts to cast Life Tap, but fails to conjure the spell!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return("Your action FAILS")
+        }
+
+        //Evasion check
+        if (this._isAvoided(this.chanceToAvoid) === true){
+            console.log('Target evaded!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": "A mysterious voice",
+                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " conjures a life tapping effect but " + this.targetCharacter.props.name + " resists the attack!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return (this.evasionMessage)
+        }
+
+        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+
+        var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
+
+        //Process all the other effects of the action
+        this._damageEffect(totalDamage);
+        this._healingEffect(totalDamage);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": "A mysterious voice",
+            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " conjures a life tapping effect and drains " + this.targetCharacter.props.name + " for " + totalDamage + " health!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
 
 
 
 module.exports = {
-    QuickStrike: QuickStrike
+    QuickStrike: QuickStrike,
+    LipeTap: LipeTap
 };

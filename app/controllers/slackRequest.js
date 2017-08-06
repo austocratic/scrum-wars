@@ -448,6 +448,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     }
                 }
 
+                //Switch between different actions IDs
                 switch (userSelection){
 
                     //Shop
@@ -461,10 +462,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
-                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        //slackTemplate.attachments[1].callback_id = requestCallback + ':Shop/shopList';
-                        //slackTemplate.attachments[2].callback_id = requestCallback + ':Shop/shopList';
-
                         return slackTemplate;
 
                         break;
@@ -475,9 +472,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var charactersInZone = gameContext.getCharactersInZone(localZone.id);
 
+                        //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
-                        charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
+                        //charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
 
                         return charactersInZone;
 
@@ -491,6 +489,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     //Life Tap
                     case '-KkOq-y2_zgEgdhY-6_U':
                         console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
+
+                        var charactersInZone = gameContext.getCharactersInZone(localZone.id);
+
+                        //Set the callback, will be assigned at end of switch
+                        updatedCallback = (':' + userSelection + '/characterList');
+
+                        return charactersInZone;
 
                         break;
                     //Forked Lightning
@@ -514,6 +519,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         break;
                 }
+
+                //Set the callback for all actions
+                charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
 
                 break;
 
@@ -543,8 +551,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                             //Quick Strike
                             case '-Kjpe29q_fDkJG-73AQO':
-
-                                console.log('called attack');
+                                console.log('called actionList/-Kjpe29q_fDkJG-73AQO');
 
                                 var attack_action = new actionController.QuickStrike(localCharacter, targetCharacter, localZone, localMatch, localAction);
 
@@ -552,8 +559,20 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 
                                 //Resolve action (mark it as used)
                                 attack_action.updateAction();
-                                
 
+                                break;
+
+                            //Life tap
+                            case '-KkOq-y2_zgEgdhY-6_U':
+                                console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
+
+                                var attack_action = new actionController.LipeTap(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                                console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                                //Resolve action (mark it as used)
+                                attack_action.updateAction();
+                                
                                 break;
                             
                             default:
