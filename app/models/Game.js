@@ -141,13 +141,12 @@ class Game {
         var template = {
             "attachments": [
             {
-
+                "title": localCharacter.props.name + "'s Profile",
                 "image_url": "https://scrum-wars.herokuapp.com/file/unknown_character.jpg",
                 "fields": [
                 ]
             },
             {
-                "title": "Character Stats",
                 "fields": [
                 ]
             },
@@ -175,11 +174,6 @@ class Game {
         });*/
 
         template.attachments[1].fields = [
-            {
-            "title": "Character Name",
-            "value": localCharacter.props.name,
-            "short": false
-            },
             {
             "title": "Class",
             "value": localCharacter.props.class,
