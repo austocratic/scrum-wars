@@ -412,8 +412,8 @@ class DefensiveStance extends BaseAttack {
         //Process all the other effects of the action
 
         var statsToModify = {
-            toughness: totalPower,
-            strength: -totalPower
+            modified_toughness: totalPower,
+            modified_strength: -totalPower
         };
 
         this._modifierEffect(statsToModify);
