@@ -309,9 +309,10 @@ class Game {
         var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
 
         //If character already took an action this turn return the no action available template
+        /* TODO commented out check for if action is already taken to make testing easier
         if (actionsUsedThisTurn.length > 0) {
             return slackTemplates.actionAlreadyTaken;
-        }
+        }*/
 
         //Use action IDs to make an array of action objects
         var actionObjectsAvailable = actionIDsAvailable.map( eachActionID =>{
