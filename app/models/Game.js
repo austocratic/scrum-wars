@@ -139,7 +139,7 @@ class Game {
 
         var localCharacter = new Character(this.state, characterID);
 
-        var localClass = new Class(this.state, localCharacter.props.class);
+        var localClass = new Class(this.state, localCharacter.props.class_id);
 
         var template = {
             "attachments": [
@@ -180,6 +180,11 @@ class Game {
             {
                 "title": "Class",
                 "value": localClass.props.name,
+                "short": false
+            },
+            {
+                "title": "Gold",
+                "value": localCharacter.props.gold,
                 "short": false
             },
             {
