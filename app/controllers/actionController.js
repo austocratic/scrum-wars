@@ -34,7 +34,8 @@ class BaseAttack {
         console.log('this.actionCharacter.props.level called: ', this.actionCharacter.props.level);
         console.log('this.actionCharacter.props.level strength: ', this.actionCharacter.props.strength);
 
-        //Variable attributes
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
         this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
         this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
         this.variableMin = this.variablePower + this.baseMin;
@@ -85,9 +86,6 @@ class BaseAttack {
 
     //Increment damage and return the amount damaged
     _damageEffect(totalDamage){
-
-        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
-        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
 
         //reduce target ID.hit_points
         this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
