@@ -11,35 +11,53 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Basic attack
-//1. skill check
-//2. calculate skill power
-//3. avoidance check
-//4. calculate mitigation
-//5. compute results
-class BaseAttack {
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+class BaseAction {
+    constructor(actionCharacter, currentZone, currentMatch, actionTaken){
 
         this.actionCharacter = actionCharacter;
-        this.targetCharacter = targetCharacter;
         this.currentZone = currentZone;
         this.currentMatch = currentMatch;
         this.actionTaken = actionTaken;
-        
+    }
+
+    _setValues(){
+        console.log('BaseAction setvalues called');
+
+        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        this.variableMin = this.variablePower + this.baseMin;
+        this.variableMax = this.variablePower + this.baseMax
+    }
+
+}
+
+
+class BaseAttack extends BaseAction{
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, currentZone, currentMatch, actionTaken);
+
+        //this.actionCharacter = actionCharacter;
+        this.targetCharacter = targetCharacter;
+        //this.currentZone = currentZone;
+        //this.currentMatch = currentMatch;
+        //this.actionTaken = actionTaken;
     }
 
     _setValues(){
 
-        console.log('setvalues called');
+        console.log('BaseAttack setvalues called');
         console.log('this.actionCharacter.props.level called: ', this.actionCharacter.props.level);
         console.log('this.actionCharacter.props.level strength: ', this.actionCharacter.props.strength);
 
         this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
         this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        this.variableMin = this.variablePower + this.baseMin;
-        this.variableMax = this.variablePower + this.baseMax;
+
+        super._setValues();
+
+        //this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        //this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        //this.variableMin = this.variablePower + this.baseMin;
+        //this.variableMax = this.variablePower + this.baseMax;
     }
 
     _isSuccess(successChance){
