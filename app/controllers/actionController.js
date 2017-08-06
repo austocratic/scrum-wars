@@ -95,7 +95,6 @@ class BaseAttack {
         this.actionCharacter.incrementProperty('hit_points', (1 * totalHealing));
     }
     
-    
     updateAction(){
         
         //Take the current actions
@@ -128,21 +127,23 @@ class QuickStrike extends BaseAttack {
         this.baseChanceToAvoid = .05;
 
         this.evasionMessage = "Your target turns your blade!";
+        this.slackIcon = "http://dthumb.phinf.naver.net/?src=%22http%3A%2F%2Fupload.inven.co.kr%2Fupload%2F2012%2F07%2F25%2Fbbs%2Fi3616206427.gif%22&type=w2";
+        this.slackUserName = "A mysterious voice";
     }
-    
-    initiate(){
+
+    initiate() {
 
         this._setValues();
 
-        //1.) Action success check
+        //Action success check
         //If failure, return a failure message and end
         if (this._isSuccess(this.baseSuccessChance) === false) {
             console.log('Skill FAILED!');
 
             //Alert the channel of the action
             var alertDetails = {
-                "username": "A mysterious voice",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
                 "channel": ("#" + this.currentZone.props.channel),
                 "text": (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!")
             };
@@ -153,15 +154,52 @@ class QuickStrike extends BaseAttack {
             //Send alert to slack
             channelAlert.sendToSlack(this.params);
 
-            return("Your action FAILS")
+            return ("Your action FAILS")
         }
 
-        //Process all the other effects of the action
-        var resultText = this.damageEffect();
-        
-        return resultText;
-    }
+        //Evasion check
+        if (this._isAvoided(this.chanceToAvoid) === true) {
+            console.log('Target evaded!');
 
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return (this.evasionMessage)
+        }
+
+        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+
+        var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
+
+        //Process all the other effects of the action
+        this._damageEffect(totalDamage);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+    /*
     damageEffect(){
 
         this.totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
@@ -215,7 +253,7 @@ class QuickStrike extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params)
 
-    }
+    }*/
 }
 
 //QuickStrike is a melee strength based attack
@@ -232,6 +270,8 @@ class LipeTap extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
+        this.slackIcon = "http://dthumb.phinf.naver.net/?src=%22http%3A%2F%2Fupload.inven.co.kr%2Fupload%2F2012%2F07%2F25%2Fbbs%2Fi3616206427.gif%22&type=w2";
+        this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -245,8 +285,8 @@ class LipeTap extends BaseAttack {
 
             //Alert the channel of the action
             var alertDetails = {
-                "username": "A mysterious voice",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
                 "channel": ("#" + this.currentZone.props.channel),
                 "text": (this.actionCharacter.props.name + " attempts to cast Life Tap, but fails to conjure the spell!")
             };
@@ -266,8 +306,8 @@ class LipeTap extends BaseAttack {
 
             //Alert the channel of the action
             var alertDetails = {
-                "username": "A mysterious voice",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
                 "channel": ("#" + this.currentZone.props.channel),
                 "text": (this.actionCharacter.props.name + " conjures a life tapping effect but " + this.targetCharacter.props.name + " resists the attack!")
             };
@@ -291,8 +331,8 @@ class LipeTap extends BaseAttack {
 
         //Alert the channel of the action
         var alertDetails = {
-            "username": "A mysterious voice",
-            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
             "channel": ("#" + this.currentZone.props.channel),
             "text": (this.actionCharacter.props.name + " conjures a life tapping effect and drains " + this.targetCharacter.props.name + " for " + totalDamage + " health!")
         };
