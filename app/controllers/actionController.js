@@ -92,7 +92,7 @@ class BaseAttack {
     }
 
     _healingEffect(totalHealing){
-        this.targetCharacter.incrementProperty('hit_points', (1 * totalHealing));
+        this.actionCharacter.incrementProperty('hit_points', (1 * totalHealing));
     }
     
     
