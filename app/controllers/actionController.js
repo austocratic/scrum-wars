@@ -3,13 +3,6 @@
 var Slack = require('../libraries/slack').Alert;
 var _ = require('lodash');
 
-//Utility functions
-
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 class BaseAction {
     constructor(actionCharacter, currentZone, currentMatch, actionTaken){
@@ -29,54 +22,24 @@ class BaseAction {
         this.variableMax = this.variablePower + this.baseMax
     }
 
-}
-
-
-class BaseAttack extends BaseAction{
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-        super(actionCharacter, currentZone, currentMatch, actionTaken);
-
-        //this.actionCharacter = actionCharacter;
-        this.targetCharacter = targetCharacter;
-        //this.currentZone = currentZone;
-        //this.currentMatch = currentMatch;
-        //this.actionTaken = actionTaken;
-    }
-
-    _setValues(){
-
-        console.log('BaseAttack setvalues called');
-        console.log('this.actionCharacter.props.level called: ', this.actionCharacter.props.level);
-        console.log('this.actionCharacter.props.level strength: ', this.actionCharacter.props.strength);
-
-        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
-        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-
-        super._setValues();
-
-        //this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        //this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        //this.variableMin = this.variablePower + this.baseMin;
-        //this.variableMax = this.variablePower + this.baseMax;
+    _getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     _isSuccess(successChance){
-        if ((getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
+        if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
             return(true)
         }
 
         return(false);
     }
 
-    _calculatePower(basePower, variableMin, variableMax){
-
-        return basePower + getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
-    }
-
     _isAvoided(avoidChance){
         console.log('called isAvoided');
 
-        var diceRoll = (getRandomIntInclusive(0, 100));
+        var diceRoll = (this._getRandomIntInclusive(0, 100));
 
         console.log('diceRoll: ', diceRoll);
 
@@ -89,6 +52,32 @@ class BaseAttack extends BaseAction{
         }
 
         return(false);
+    }
+
+    _calculatePower(basePower, variableMin, variableMax){
+
+        return basePower + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
+    }
+}
+
+
+class BaseAttack extends BaseAction{
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, currentZone, currentMatch, actionTaken);
+        
+        this.targetCharacter = targetCharacter;
+    }
+
+    _setValues(){
+
+        console.log('BaseAttack setvalues called');
+        console.log('this.actionCharacter.props.level called: ', this.actionCharacter.props.level);
+        console.log('this.actionCharacter.props.level strength: ', this.actionCharacter.props.strength);
+
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
+
+        super._setValues();
     }
 
     _calculateDamage(damage, mitigation){
@@ -112,7 +101,7 @@ class BaseAttack extends BaseAction{
     }
 
     //Object of stat/modifier key/value pairs
-    _modifierEffect(modifier){
+    _modifierEffect(characterToModify, modifier){
 
         //Convert all keys into array
         var modifierKeys = Object.keys(modifier);
@@ -122,7 +111,9 @@ class BaseAttack extends BaseAction{
 
                 console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
 
-                this.actionCharacter.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
+                this.characterToModify = characterToModify;
+
+                this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
             })
         }
     }
@@ -434,7 +425,7 @@ class DefensiveStance extends BaseAttack {
             modified_strength: -totalPower
         };
 
-        this._modifierEffect(statsToModify);
+        this._modifierEffect(this.targetCharacter, statsToModify);
         //this._damageEffect(totalDamage);
         //this._healingEffect(totalDamage);
 

@@ -492,6 +492,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var localAction = new Action(gameContext.state, userSelection);
 
+                        targetCharacter = localCharacter;
+
                         var attack_action = new actionController.DefensiveStance(localCharacter, targetCharacter, localZone, localMatch, localAction);
 
                         console.log('calling initiateAction, result: ', attack_action.initiate());
