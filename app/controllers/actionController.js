@@ -110,7 +110,10 @@ class BaseAttack extends BaseAction{
             modifierKeys.forEach( eachModifierKey =>{
 
                 console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
-
+                
+                console.log('characterToModify: ', characterToModify);
+                console.log('this.characterToModify: ', this.characterToModify);
+                
                 this.characterToModify = characterToModify;
 
                 this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
