@@ -130,7 +130,7 @@ class QuickStrike extends BaseAttack {
     
     initiate(){
 
-        this.setValues();
+        this._setValues();
 
         //1.) Action success check
         //If failure, return a failure message and end
@@ -234,7 +234,7 @@ class LipeTap extends BaseAttack {
 
     initiate(){
 
-        this.setValues();
+        this._setValues();
 
         //Action success check
         //If failure, return a failure message and end
