@@ -175,19 +175,44 @@ class Game {
 
         template.attachments[1].fields = [
             {
-            "title": "Class",
-            "value": localCharacter.props.class,
-            "short": false
+                "title": "Class",
+                "value": localCharacter.props.class,
+                "short": false
             },
             {
-            "title": "Current Health",
-            "value": localCharacter.props.hit_points,
-            "short": true
+                "title": "Current Health",
+                "value": localCharacter.props.hit_points,
+                "short": true
             },
             {
-            "title": "Max Health",
-            "value": localCharacter.props.max_hit_points,
-            "short": true
+                "title": "Max Health",
+                "value": localCharacter.props.max_hit_points,
+                "short": true
+            },
+            {
+                "title": "Strength",
+                "value": localCharacter.props.strength,
+                "short": true
+            },
+            {
+                "title": "Intelligence",
+                "value": localCharacter.props.intelligence,
+                "short": true
+            },
+            {
+                "title": "Dexterity",
+                "value": localCharacter.props.dexterity,
+                "short": true
+            },
+            {
+                "title": "Toughness",
+                "value": localCharacter.props.toughness,
+                "short": true
+            },
+            {
+                "title": "Armor",
+                "value": localCharacter.props.armor,
+                "short": true
             }
 
         ];
