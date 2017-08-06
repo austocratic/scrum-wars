@@ -92,13 +92,14 @@ class BaseAttack extends BaseAction{
     }
 
     //Increment damage and return the amount damaged
+    /* TO DELETE
     _damageEffect(totalDamage){
         this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
     }
 
     _healingEffect(totalHealing){
         this.actionCharacter.incrementProperty('hit_points', (1 * totalHealing));
-    }
+    }*/
 
     //Object of stat/modifier key/value pairs
     _modifierEffect(characterToModify, modifier){
@@ -351,8 +352,9 @@ class LipeTap extends BaseAttack {
         var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
 
         //Process all the other effects of the action
-        this._damageEffect(totalDamage);
-        this._healingEffect(totalDamage);
+        //this._damageEffect(totalDamage);
+        this._modifierEffect(this.targetCharacter, {hit_points: -totalDamage});
+        this._modifierEffect(this.actionCharacter, {hit_points: totalDamage});
 
         //Alert the channel of the action
         var alertDetails = {
