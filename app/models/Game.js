@@ -7,6 +7,7 @@ var firebase = new Firebase();
 
 var User = require('./User').User;
 var Character = require('./Character').Character;
+var Class = require('./Class').Class;
 var Zone = require('./Zone').Zone;
 var Match = require('./Match').Match;
 var Merchant = require('./Merchant').Merchant;
@@ -138,6 +139,8 @@ class Game {
 
         var localCharacter = new Character(this.state, characterID);
 
+        var localClass = new Class(this.state, localCharacter.props.class);
+
         var template = {
             "attachments": [
             {
@@ -176,7 +179,7 @@ class Game {
         template.attachments[1].fields = [
             {
                 "title": "Class",
-                "value": localCharacter.props.class,
+                "value": localClass.props.name,
                 "short": false
             },
             {
