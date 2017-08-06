@@ -127,7 +127,7 @@ class QuickStrike extends BaseAttack {
         this.baseChanceToAvoid = .05;
 
         this.evasionMessage = "Your target turns your blade!";
-        this.slackIcon = "http://dthumb.phinf.naver.net/?src=%22http%3A%2F%2Fupload.inven.co.kr%2Fupload%2F2012%2F07%2F25%2Fbbs%2Fi3616206427.gif%22&type=w2";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         this.slackUserName = "A mysterious voice";
     }
 
@@ -256,7 +256,7 @@ class QuickStrike extends BaseAttack {
     }*/
 }
 
-//QuickStrike is a melee strength based attack
+//LifeTap is a spell
 //Static success chance
 class LipeTap extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
@@ -270,7 +270,8 @@ class LipeTap extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "http://dthumb.phinf.naver.net/?src=%22http%3A%2F%2Fupload.inven.co.kr%2Fupload%2F2012%2F07%2F25%2Fbbs%2Fi3616206427.gif%22&type=w2";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
         this.slackUserName = "A mysterious voice";
     }
 
