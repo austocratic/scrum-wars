@@ -109,6 +109,13 @@ class QuickStrike extends BaseAttack {
     }
 
     setValues(){
+
+        console.log('called setValues');
+        console.log('called this.actionCharacter: ', this.actionCharacter);
+        
+        console.log('actionCharacter.props.strength: ', this.actionCharacter.props.strength);
+        console.log('actionCharacter.props.level: ', this.actionCharacter.props.level);
+
         //Variable attributes
         this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
         this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
