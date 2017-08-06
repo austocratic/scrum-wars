@@ -112,14 +112,7 @@ class BaseAttack extends BaseAction{
                 console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
                 
                 console.log('characterToModify: ', characterToModify);
-                
-                //this.characterToModify = characterToModify;
 
-                //console.log('this.characterToModify: ', this.characterToModify);
-                //console.log('this[characterToModify]: ', this[characterToModify]);
-
-                //this[characterToModify].incrementProperty(eachModifierKey, modifier[eachModifierKey]);
-                //this.characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
                 characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
             })
         }
@@ -213,7 +206,8 @@ class QuickStrike extends BaseAttack {
         var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
 
         //Process all the other effects of the action
-        this._damageEffect(totalDamage);
+        //this._damageEffect(totalDamage);
+        this._modifierEffect(this.targetCharacter, {hit_points: -totalDamage});
 
         //Alert the channel of the action
         var alertDetails = {
