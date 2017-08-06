@@ -37,6 +37,11 @@ class BaseAttack {
     }
 
     _calculatePower(basePower, variableMin, variableMax){
+
+        console.log('calculatePower, basePower: ', basePower);
+        console.log('calculatePower, variableMin: ', variableMin);
+        console.log('calculatePower, variableMax: ', variableMax);
+
         return basePower + getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
     }
 
@@ -72,42 +77,18 @@ class BaseAttack {
     updateAction(){
         
         //Take the current actions
-        var currentActions = this.actionCharacter.props.actions;
-        
-        //find that array element of the action to update
-        /*
-        var actionKey = _.findKey(currentActions, eachAction => {
-            {return eachAction['action_id'] === actionID}
-        });*/
+        //var currentActions = this.actionCharacter.props.actions;
 
-        console.log('action taken: ', this.actionTaken);
-
-        var actionKey = _.findKey(currentActions, {'action_id': this.actionTaken.id});
+        var actionKey = _.findKey(this.actionCharacter.props.actions, {'action_id': this.actionTaken.id});
 
         var actionID = this.actionCharacter.props.actions[actionKey].action_id;
-
-        console.log('actionKey: ', actionKey);
-
-        var oldTurnAvailable = currentActions[actionKey].turn_available;
-        var oldTurnUsed = currentActions[actionKey].turn_used;
-
-        console.log('oldTurnAvailable: ', oldTurnAvailable);
-        console.log('oldTurnUsed: ', oldTurnUsed);
 
         var newTurnAvailable = this.currentMatch.props.number_turns + this.actionTaken.props.cool_down;
         var newTurnUsed = this.currentMatch.props.number_turns;
 
-        console.log('newTurnAvailable: ', newTurnAvailable);
-        console.log('newTurnUsed: ', newTurnUsed);
-
         //actionsToUpdate[actionKey].turn_available = actionsToUpdate;
-        this.actionCharacter.props.actions[actionKey] = {
-            action_id: actionID,
-            turn_available: newTurnAvailable,
-            turn_used: newTurnUsed
-        }
-
-
+        this.actionCharacter.props.actions[actionKey].turn_available = newTurnAvailable;
+        this.actionCharacter.props.actions[actionKey].turn_used = newTurnUsed;
     }
 }
 
@@ -195,74 +176,6 @@ class QuickStrike extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params)
 
-    }
-}
-
-//QuickStrike is a melee strength based attack
-//Static success chance
-class BrutalStrike extends BaseAttack {
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
-
-        //Static base attributes based on the skill
-        this.basePower = 8;
-        this.baseSuccessChance = .9;
-        this.baseMin = 3;
-        this.baseMax = 7;
-        this.baseChanceToAvoid = .15;
-
-        this.evasionMessage = "Your target dodges your brutal strike!";
-    }
-
-    setValues(){
-        //Variable attributes
-        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        this.variableMin = this.variablePower + this.baseMin;
-        this.variableMax = this.variablePower + this.baseMax;
-    }
-
-    initiate(){
-
-        this.setValues();
-
-        //1.) Action success check
-        //If failure, return a failure message and end
-        if (this._isSuccess(this.baseSuccessChance) === false) {
-            console.log('Skill FAILED!');
-            return("Your action FAILS")
-        }
-
-        //Process all the other effects of the action
-        var resultText = this.damageEffect();
-
-        return resultText;
-    }
-
-    damageEffect(){
-
-        this.totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
-
-        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
-
-        //3.) Evasion check
-        if (this._isAvoided(this.chanceToAvoid) === true){
-            console.log('Target evaded!');
-            return (this.evasionMessage)
-        }
-
-        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-
-        console.log('totalPower: ', this.totalPower);
-        console.log('damageMitigation: ', this.damageMitigation);
-
-        //4.) Calculate the results
-        var totalDamage = this._calculateDamage(this.totalPower, this.damageMitigation);
-
-        //reduce target ID.hit_points
-        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
-
-        return this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!"
     }
 }
 
