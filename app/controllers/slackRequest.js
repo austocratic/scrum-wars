@@ -445,11 +445,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 //First check that the selected action is available this turn
 
+                /* Temporarily removing availability check (to make testing easier)
                 if (!localCharacter.isActionAvailable(userSelection, localMatch.props.number_turns)) {
                     return {
                         "text": "That action is not available this turn!"
                     }
-                }
+                }*/
 
                 var actionResponse;
 
@@ -469,31 +470,33 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         actionResponse = slackTemplate;
 
-                        //return slackTemplate;
-
                         break;
 
                     //Quick Strike
+                    //Return a target menu
                     case '-Kjpe29q_fDkJG-73AQO':
                         console.log('called actionList/Attack');
 
                         actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
-                        
-                        //Filter out player's character
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
-                        //charactersInZone.attachments = getAttachmentWithCallbacks(charactersInZone.attachments, (requestCallback + updatedCallback));
-
-                        //return charactersInZone;
 
                         break;
 
-                    //Defend
+                    //Defensive Stance
+                    //Up your AC, lower your attack
                     case '-KjpeJT7Oct3ZCtLhENO':
                         console.log('called actionList/-KjpeJT7Oct3ZCtLhENO');
 
+                        var attack_action = new actionController.DefensiveStance(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                        console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                        //Resolve action (mark it as used)
+                        attack_action.updateAction();
+                        
                         break;
                     //Life Tap
                     case '-KkOq-y2_zgEgdhY-6_U':

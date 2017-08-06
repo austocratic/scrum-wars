@@ -86,13 +86,27 @@ class BaseAttack {
 
     //Increment damage and return the amount damaged
     _damageEffect(totalDamage){
-
-        //reduce target ID.hit_points
         this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
     }
 
     _healingEffect(totalHealing){
         this.actionCharacter.incrementProperty('hit_points', (1 * totalHealing));
+    }
+
+    //Object of stat/modifier key/value pairs
+    _modifierEffect(modifier){
+
+        //Convert all keys into array
+        var modifierKeys = Object.keys(modifier);
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
+
+                console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
+
+                this.actionCharacter.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
+            })
+        }
     }
     
     updateAction(){
@@ -346,9 +360,86 @@ class LipeTap extends BaseAttack {
     }
 }
 
+//Defensive Stance is a stance that increases AC & lowers attack
+//Static success chance
+class DefensiveStance extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = 1;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+
+        this._setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts to enter a defensive stance, but stumbles!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return("Your action FAILS")
+        }
+
+        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+
+        //var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
+
+        //Process all the other effects of the action
+
+        var statsToModify = {
+            toughness: totalPower,
+            strength: -totalPower
+        };
+
+        this._modifierEffect(statsToModify);
+        //this._damageEffect(totalDamage);
+        //this._healingEffect(totalDamage);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + totalPower + " while lowering strength by " + totalPower + " !")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
 
 
 module.exports = {
     QuickStrike: QuickStrike,
-    LipeTap: LipeTap
+    LipeTap: LipeTap,
+    DefensiveStance: DefensiveStance
 };
