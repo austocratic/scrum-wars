@@ -165,11 +165,15 @@ class BaseAttack extends BaseAction{
 
         var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
 
+        var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
+
         console.log('Array Index to remove: ', arrayIndex);
 
         characterToModify.props.effects.splice(arrayIndex, 1);
 
         console.log('effects after splice: ', characterToModify.props.effects);
+
+        this._changeProperty(characterToModify, effectsToRemove)
 
     }
     
@@ -495,7 +499,7 @@ class BalancedStance extends BaseAttack {
 
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
-        this._reverseEffect(this.targetCharacter, '-KqtOcn7MapqMfnGIZvo');
+        this._reverseEffect(this.targetCharacter, '-KkJVqtBIhpAKBfz9tcb');
 
         /*
         var statsToModify = {
