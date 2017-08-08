@@ -160,20 +160,23 @@ class BaseAttack extends BaseAction{
 
     _reverseEffect(characterToModify, actionID){
 
-        console.log('actionID to remove: ', actionID);
-        //_.remove(characterToModify.effects, {'action_id': actionID});
-
         var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
 
         var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
 
-        console.log('Array Index to remove: ', arrayIndex);
+        //Functionality from _changeProperty but with negative values
+        var modifierKeys = Object.keys(effectsToRemove);
 
-        characterToModify.props.effects.splice(arrayIndex, 1);
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
 
-        console.log('effects after splice: ', characterToModify.props.effects);
+                characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
+            })
+        }
 
-        this._changeProperty(characterToModify, effectsToRemove)
+        //characterToModify.props.effects.splice(arrayIndex, 1);
+
+        //this._changeProperty(characterToModify, effectsToRemove)
 
     }
     
@@ -499,7 +502,7 @@ class BalancedStance extends BaseAttack {
 
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
-        this._reverseEffect(this.targetCharacter, '-KkJVqtBIhpAKBfz9tcb');
+        this._reverseEffect(this.targetCharacter, '55c706877041647cad36');
 
         /*
         var statsToModify = {
