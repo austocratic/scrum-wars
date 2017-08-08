@@ -512,9 +512,13 @@ class BalancedStance extends BaseAttack {
 
         //Lookup all actions that have the same type as the actionTaken
         //TODO how will I get the full details of each action?  Character only has action IDs associated, how do I get each action's type?
-        var actionsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
+        var effectsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
 
-        console.log('actionsOfSameType: ', actionsOfSameType);
+        console.log('effectsOfSameType: ', effectsOfSameType);
+
+        effectsOfSameType.forEach( eachEffect =>{
+            this._reverseEffect(this.targetCharacter, eachEffect.action_id);
+        });
 
         //this._reverseEffect(this.targetCharacter, 'mumbojumbo');
 
