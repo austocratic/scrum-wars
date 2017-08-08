@@ -67,6 +67,10 @@ class BaseAction {
         console.log('calculatedPower: ', calculatedPower);
         return calculatedPower;
     }
+
+    _addEffect(characterToModify, modifier){
+
+    }
 }
 
 
@@ -111,21 +115,34 @@ class BaseAttack extends BaseAction{
     }*/
 
     //Object of stat/modifier key/value pairs
-    _modifierEffect(characterToModify, modifier){
+    _changeProperty(characterToModify, modifiers){
 
         //Convert all keys into array
-        var modifierKeys = Object.keys(modifier);
+        var modifierKeys = Object.keys(modifiers);
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
 
-                console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
+                //console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
                 
-                console.log('characterToModify: ', characterToModify);
+                //console.log('characterToModify: ', characterToModify);
 
-                characterToModify.incrementProperty(eachModifierKey, modifier[eachModifierKey]);
+                characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
         }
+    }
+
+    _applyEffect(characterToModify, modifiers, actionTaken){
+
+        //If character has a effects array, add the action ID to it, else create an effects array and add to it
+        if (characterToModify.props.effects){
+            characterToModify.props.effects.push(actionTaken.id);
+        } else {
+            characterToModify.props.effects = [actionTaken.id]
+        }
+
+        //Update the character's properties
+        this._changeProperty(characterToModify, modifiers)
     }
     
     updateAction(){
@@ -217,7 +234,7 @@ class QuickStrike extends BaseAttack {
 
         //Process all the other effects of the action
         //this._damageEffect(totalDamage);
-        this._modifierEffect(this.targetCharacter, {hit_points: -totalDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
         //Alert the channel of the action
         var alertDetails = {
@@ -307,8 +324,8 @@ class LipeTap extends BaseAttack {
 
         //Process all the other effects of the action
         //this._damageEffect(totalDamage);
-        this._modifierEffect(this.targetCharacter, {hit_points: -totalDamage});
-        this._modifierEffect(this.actionCharacter, {hit_points: totalDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+        this._changeProperty(this.actionCharacter, {hit_points: totalDamage});
 
         //Alert the channel of the action
         var alertDetails = {
@@ -382,7 +399,8 @@ class DefensiveStance extends BaseAttack {
             modified_strength: -totalPower
         };
 
-        this._modifierEffect(this.targetCharacter, statsToModify);
+        this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
+        //this._changeProperty(this.targetCharacter, statsToModify);
         //this._damageEffect(totalDamage);
         //this._healingEffect(totalDamage);
 
