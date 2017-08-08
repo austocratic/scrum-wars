@@ -160,7 +160,7 @@ class BaseAttack extends BaseAction{
 
     _reverseEffect(characterToModify, actionID){
 
-        _.remove(characterToModify, {'action_id': actionID});
+        _.remove(characterToModify.effects, {'action_id': actionID});
 
         //var arrayIndex = _.findIndex(characterToModify, {'action_id': actionID});
 
