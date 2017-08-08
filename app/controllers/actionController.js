@@ -152,7 +152,12 @@ class BaseAttack extends BaseAction{
                 modifiers: modifierObject
         });
         } else {
-            characterToModify.props.effects = [actionTaken.id]
+            characterToModify.props.effects = [{
+                action_id: actionTaken.id,
+                end_turn: endingTurn,
+                type: actionTaken.props.type,
+                modifiers: modifierObject
+            }]
         }
 
         //Update the character's properties
