@@ -148,6 +148,7 @@ class BaseAttack extends BaseAction{
             characterToModify.props.effects.push({
                 action_id: actionTaken.id,
                 end_turn: endingTurn,
+                type: actionTaken.props.type,
                 modifiers: modifierObject
         });
         } else {
@@ -161,6 +162,11 @@ class BaseAttack extends BaseAction{
     _reverseEffect(characterToModify, actionID){
 
         var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
+
+        if (arrayIndex === -1){
+            console.log('"Attempted to reverse actionID that does not exist on the target"');
+            return "Attempted to reverse actionID that does not exist on the target"
+        }
 
         console.log('arrayIndex: ', arrayIndex);
 
@@ -504,9 +510,13 @@ class BalancedStance extends BaseAttack {
 
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
-        //lookup any stances currently applied to effects
+        //Lookup all actions that have the same type as the actionTaken
+        //TODO how will I get the full details of each action?  Character only has action IDs associated, how do I get each action's type?
+        var actionsOfSameType = _.filter(this.targetCharacter.props.actions, {type: this.actionTaken.props.type});
 
-        this._reverseEffect(this.targetCharacter, 'mumbojumbo');
+        console.log('actionsOfSameType: ', actionsOfSameType);
+
+        //this._reverseEffect(this.targetCharacter, 'mumbojumbo');
 
         /*
         var statsToModify = {
