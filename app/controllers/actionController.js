@@ -122,7 +122,7 @@ class BaseAttack extends BaseAction{
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
-                
+
                 characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
         }
@@ -137,14 +137,7 @@ class BaseAttack extends BaseAction{
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
-
-                console.log('Old modifierObject: ', modifierObject);
-
                 modifierObject = Object.assign(modifierObject, {[eachModifierKey]: modifiers[eachModifierKey]});
-
-                console.log('New modifierObject: ', modifierObject);
-
-                //characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
         }
 
@@ -163,6 +156,16 @@ class BaseAttack extends BaseAction{
 
         //Update the character's properties
         this._changeProperty(characterToModify, modifiers)
+    }
+
+    _reverseEffect(characterToModify, actionID){
+
+        _.remove(characterToModify, {'action_id': actionID});
+
+        //var arrayIndex = _.findIndex(characterToModify, {'action_id': actionID});
+
+        //console.log('Array Index to remove: ', arrayIndex);
+
     }
     
     updateAction(){
@@ -440,10 +443,86 @@ class DefensiveStance extends BaseAttack {
     }
 }
 
+//Balanced Stance reverses the effects of any other stance
+//Static success chance
+class BalancedStance extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = 1;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+
+        this._setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts to enter a defensive stance, but stumbles!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return("Your action FAILS")
+        }
+
+        //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+
+        this._reverseEffect(this.targetCharacter, '-KqtOcn7MapqMfnGIZvo');
+
+        /*
+        var statsToModify = {
+            modified_toughness: totalPower,
+            modified_strength: -totalPower
+        };
+
+        this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
+        //this._changeProperty(this.targetCharacter, statsToModify);
+        //this._damageEffect(totalDamage);
+        //this._healingEffect(totalDamage);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + totalPower + " while lowering strength by " + totalPower + " !")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);*/
+    }
+}
 
 
 module.exports = {
     QuickStrike: QuickStrike,
     LipeTap: LipeTap,
-    DefensiveStance: DefensiveStance
+    DefensiveStance: DefensiveStance,
+    BalancedStance: BalancedStance
 };

@@ -496,15 +496,41 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var attack_action = new actionController.DefensiveStance(localCharacter, targetCharacter, localZone, localMatch, localAction);
 
-                        console.log('calling initiateAction, result: ', attack_action.initiate());
+                        attack_action.initiate();
+
+                        //console.log('calling initiateAction, result: ', attack_action.initiate());
 
                         //Resolve action (mark it as used)
                         attack_action.updateAction();
 
                         return {
                             "text": "You enter a defensive stance!"
-                        }
+                        };
                         
+                        break;
+
+                    //Balanced Stance
+                    //Reverse any other stances
+                    case '-KqtOcn7MapqMfnGIZvo':
+                        console.log('called actionList/-KqtOcn7MapqMfnGIZvo');
+
+                        var localAction = new Action(gameContext.state, userSelection);
+
+                        targetCharacter = localCharacter;
+
+                        var attack_action = new actionController.BalancedStance(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                        attack_action.initiate();
+
+                        //console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                        //Resolve action (mark it as used)
+                        attack_action.updateAction();
+
+                        return {
+                            "text": "You enter a balanced stance!"
+                        };
+
                         break;
                     //Life Tap
                     case '-KkOq-y2_zgEgdhY-6_U':
