@@ -17,9 +17,9 @@ class BaseAction {
         console.log('BaseAction setvalues called');
 
         this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        this.variableMin = this.variablePower + this.baseMin;
-        this.variableMax = this.variablePower + this.baseMax
+        //this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        //this.variableMin = this.variablePower + this.baseMin;
+        //this.variableMax = this.variablePower + this.baseMax
     }
 
     _getRandomIntInclusive(min, max) {
@@ -54,14 +54,15 @@ class BaseAction {
         return(false);
     }
 
-    _calculatePower(basePower, variableMin, variableMax){
+    _calculatePower(basePower, variableMin, variableMax, multiplier){
 
         console.log('called _calculatePower');
         console.log('_calculatePower, basePower: ', basePower);
         console.log('_calculatePower, variableMin: ', variableMin);
         console.log('_calculatePower, variableMax: ', variableMax);
+        console.log('_calculatePower, multiplier: ', multiplier);
 
-        var calculatedPower = basePower + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))
+        var calculatedPower = (basePower + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax))) * multiplier
 
         console.log('calculatedPower: ', calculatedPower);
         return calculatedPower;
@@ -210,7 +211,7 @@ class QuickStrike extends BaseAttack {
             return (this.evasionMessage)
         }
 
-        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+        var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
         var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
 
@@ -300,7 +301,7 @@ class LipeTap extends BaseAttack {
             return (this.evasionMessage)
         }
 
-        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+        var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
         var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
 
@@ -370,7 +371,7 @@ class DefensiveStance extends BaseAttack {
             return("Your action FAILS")
         }
 
-        var totalPower = this._calculatePower(this.basePower, this.variableMin, this.variableMax);
+        var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
         //var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
 
