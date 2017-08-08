@@ -162,6 +162,8 @@ class BaseAttack extends BaseAction{
 
         var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
 
+        console.log('arrayIndex: ', arrayIndex);
+
         var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
 
         //Functionality from _changeProperty but with negative values
