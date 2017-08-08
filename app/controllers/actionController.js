@@ -163,13 +163,13 @@ class BaseAttack extends BaseAction{
         console.log('actionID to remove: ', actionID);
         //_.remove(characterToModify.effects, {'action_id': actionID});
 
-        var arrayIndex = _.findIndex(characterToModify.effects, {'action_id': actionID});
+        var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
 
         console.log('Array Index to remove: ', arrayIndex);
 
-        characterToModify.effects.splice(arrayIndex, 1);
+        characterToModify.props.effects.splice(arrayIndex, 1);
 
-        console.log('effects after splice: ', characterToModify.effects);
+        console.log('effects after splice: ', characterToModify.props.effects);
 
     }
     
