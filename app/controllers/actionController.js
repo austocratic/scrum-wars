@@ -122,11 +122,7 @@ class BaseAttack extends BaseAction{
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
-
-                //console.log('Modifying ' + eachModifierKey + ' by ', modifier[eachModifierKey]);
                 
-                //console.log('characterToModify: ', characterToModify);
-
                 characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
         }
@@ -151,14 +147,15 @@ class BaseAttack extends BaseAction{
                 //characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
         }
-        
+
+        var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
+
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
-                action_id: actionTaken.id
-               // modifiers: {
-
-             //   }
+                action_id: actionTaken.id,
+                end_turn: endingTurn,
+                modifiers: modifierObject
         });
         } else {
             characterToModify.props.effects = [actionTaken.id]
