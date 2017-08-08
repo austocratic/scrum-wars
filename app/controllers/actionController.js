@@ -174,9 +174,9 @@ class BaseAttack extends BaseAction{
             })
         }
 
-        //characterToModify.props.effects.splice(arrayIndex, 1);
+        characterToModify.props.effects.splice(arrayIndex, 1);
 
-        //this._changeProperty(characterToModify, effectsToRemove)
+        this._changeProperty(characterToModify, effectsToRemove)
 
     }
     
@@ -502,7 +502,9 @@ class BalancedStance extends BaseAttack {
 
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
-        this._reverseEffect(this.targetCharacter, '55c706877041647cad36');
+        //lookup any stances currently applied to effects
+
+        this._reverseEffect(this.targetCharacter, 'mumbojumbo');
 
         /*
         var statsToModify = {
