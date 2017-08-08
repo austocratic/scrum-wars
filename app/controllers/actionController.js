@@ -177,11 +177,16 @@ class BaseAttack extends BaseAction{
 
         var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
 
+        console.log('effectsToRemove: ', effectsToRemove);
+
         //Functionality from _changeProperty but with negative values
         var modifierKeys = Object.keys(effectsToRemove);
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
+
+                console.log('eachModifierKey: ', eachModifierKey);
+                console.log('-(effectsToRemove[eachModifierKey]): ', -(effectsToRemove[eachModifierKey]));
 
                 characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
             })
@@ -189,7 +194,7 @@ class BaseAttack extends BaseAction{
 
         characterToModify.props.effects.splice(arrayIndex, 1);
 
-        this._changeProperty(characterToModify, effectsToRemove)
+        //this._changeProperty(characterToModify, effectsToRemove)
 
     }
     
