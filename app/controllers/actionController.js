@@ -134,9 +134,32 @@ class BaseAttack extends BaseAction{
 
     _applyEffect(characterToModify, modifiers, actionTaken){
 
+        //Convert all keys into array
+        var modifierKeys = Object.keys(modifiers);
+
+        var modifierObject = {};
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
+
+                console.log('Old modifierObject: ', modifierObject);
+
+                modifierObject = Object.assign(modifierObject, {[eachModifierKey]: modifiers[eachModifierKey]});
+
+                console.log('New modifierObject: ', modifierObject);
+
+                //characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
+            })
+        }
+        
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
-            characterToModify.props.effects.push(actionTaken.id);
+            characterToModify.props.effects.push({
+                action_id: actionTaken.id
+               // modifiers: {
+
+             //   }
+        });
         } else {
             characterToModify.props.effects = [actionTaken.id]
         }
