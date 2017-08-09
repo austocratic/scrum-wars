@@ -654,8 +654,12 @@ class Backstab extends BaseAttack {
 
         //Lookup all actions that have the same type as the actionTaken
         //var effectsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
+        
+        var characterEffects = this.targetCharacter.props.effects;
 
-        var hidingEffects = this.targetCharacter.props.effects.filter( eachEffect =>{
+        console.log('characterEffects: ', characterEffects);
+
+        var hidingEffects = characterEffects.filter( eachEffect =>{
             return eachEffect.modifiers.is_hidden === 1
         });
 
