@@ -535,8 +535,7 @@ class BalancedStance extends BaseAttack {
     }
 }
 
-//Balanced Stance reverses the effects of any other stance
-//Static success chance
+//IntoShadow sets the character's is_visible property to zero.  This makes them unable to be targeted directly (can still be affected by area damage)
 class IntoShadow extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -607,11 +606,86 @@ class IntoShadow extends BaseAttack {
     }
 }
 
+//Backstab does significant damage, but is only available if the character is hidden.  Using breaks hiding
+class Backstab extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = 1;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+
+        this._setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts to enter a defensive stance, but stumbles!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return("Your action FAILS")
+        }
+
+        //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+
+        //Lookup all actions that have the same type as the actionTaken
+        //var effectsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
+
+        var hidingEffects = this.targetCharacter.props.effects.filter( eachEffect =>{
+            return eachEffect.modifiers.is_hidden === 1
+        });
+
+        console.log('effectsOfSameType: ', hidingEffects);
+
+        hidingEffects.forEach( eachEffect =>{
+            this._reverseEffect(this.targetCharacter, eachEffect.action_id);
+        });
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " emerges from the shadows!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
 
 module.exports = {
     QuickStrike: QuickStrike,
     LipeTap: LipeTap,
     DefensiveStance: DefensiveStance,
     BalancedStance: BalancedStance,
-    IntoShadow: IntoShadow
+    IntoShadow: IntoShadow,
+    Backstab: Backstab
 };

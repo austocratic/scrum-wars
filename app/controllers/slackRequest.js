@@ -482,7 +482,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
-
                         break;
 
                     //Defensive Stance
@@ -572,6 +571,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         
                         break;
 
+                    //Backstab
+                    //Return a target menu
+                    case '-Kr3hnITyH9ZKx3VuZah':
+                        console.log('called actionList/-Kr3hnITyH9ZKx3VuZah');
+
+                        actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
+
+                        //Set the callback, will be assigned at end of switch
+                        updatedCallback = (':' + userSelection + '/characterList');
+
+                        break;
+                    
                     default:
                         console.log('called actionList & hit default statement');
 
@@ -638,6 +649,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 //Resolve action (mark it as used)
                                 attack_action.updateAction();
 
+                                break;
+                            
+                            //Backstab
+                            case '-Kr3hnITyH9ZKx3VuZah':
+                                console.log('called actionList/-Kr3hnITyH9ZKx3VuZah');
+
+                                var attack_action = new actionController.Backstab(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                                console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                                //Resolve action (mark it as used)
+                                attack_action.updateAction();
+                                
                                 break;
                             
                             default:
