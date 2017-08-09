@@ -173,11 +173,7 @@ class BaseAttack extends BaseAction{
             return "Attempted to reverse actionID that does not exist on the target"
         }
 
-        console.log('arrayIndex: ', arrayIndex);
-
         var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
-
-        console.log('effectsToRemove: ', effectsToRemove);
 
         //Functionality from _changeProperty but with negative values
         var modifierKeys = Object.keys(effectsToRemove);
@@ -185,17 +181,11 @@ class BaseAttack extends BaseAction{
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
 
-                console.log('eachModifierKey: ', eachModifierKey);
-                console.log('-(effectsToRemove[eachModifierKey]): ', -(effectsToRemove[eachModifierKey]));
-
                 characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
             })
         }
 
         characterToModify.props.effects.splice(arrayIndex, 1);
-
-        //this._changeProperty(characterToModify, effectsToRemove)
-
     }
     
     updateAction(){
@@ -521,7 +511,6 @@ class BalancedStance extends BaseAttack {
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
         //Lookup all actions that have the same type as the actionTaken
-        //TODO how will I get the full details of each action?  Character only has action IDs associated, how do I get each action's type?
         var effectsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
 
         console.log('effectsOfSameType: ', effectsOfSameType);
@@ -530,12 +519,71 @@ class BalancedStance extends BaseAttack {
             this._reverseEffect(this.targetCharacter, eachEffect.action_id);
         });
 
-        //this._reverseEffect(this.targetCharacter, 'mumbojumbo');
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " enters a balanced combat stance!")
+        };
 
-        /*
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+//Balanced Stance reverses the effects of any other stance
+//Static success chance
+class IntoShadow extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = .8;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+
+        this._setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._isSuccess(this.baseSuccessChance) === false) {
+            console.log('Skill FAILED!');
+
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " attempts to fade into the shadows but is noticed, action failed!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return("Your action FAILS")
+        }
+
+        //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+
         var statsToModify = {
-            modified_toughness: totalPower,
-            modified_strength: -totalPower
+            is_hidden: 1
         };
 
         this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
@@ -548,14 +596,14 @@ class BalancedStance extends BaseAttack {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + totalPower + " while lowering strength by " + totalPower + " !")
+            "text": (this.actionCharacter.props.name + " fades into the shadows!")
         };
 
         //Create a new slack alert object
         var channelAlert = new Slack(alertDetails);
 
         //Send alert to slack
-        channelAlert.sendToSlack(this.params);*/
+        channelAlert.sendToSlack(this.params);
     }
 }
 
@@ -564,5 +612,6 @@ module.exports = {
     QuickStrike: QuickStrike,
     LipeTap: LipeTap,
     DefensiveStance: DefensiveStance,
-    BalancedStance: BalancedStance
+    BalancedStance: BalancedStance,
+    IntoShadow: IntoShadow
 };

@@ -547,12 +547,29 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     //Forked Lightning
                     case '-KkdduB9XuB46EsxqwIX':
                         console.log('called actionList/-KkdduB9XuB46EsxqwIX');
-
+                        
                         break;
                     //Into Shadow
                     case '-Kkdk_CD5vx8vRGQD268':
                         console.log('called actionList/-Kkdk_CD5vx8vRGQD268');
 
+                        var localAction = new Action(gameContext.state, userSelection);
+
+                        targetCharacter = localCharacter;
+
+                        var attack_action = new actionController.IntoShadow(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                        attack_action.initiate();
+
+                        //console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                        //Resolve action (mark it as used)
+                        attack_action.updateAction();
+
+                        return {
+                            "text": "You fade into the shadows...."
+                        };
+                        
                         break;
 
                     default:

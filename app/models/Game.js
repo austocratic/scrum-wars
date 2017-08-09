@@ -71,6 +71,7 @@ class Game {
                 user_id: userID,
                 gold: 100,
                 armor: 0,
+                is_hidden: 0,
                 hit_points: 100,
                 max_hit_points: 100,
                 match_wins: 0,
@@ -420,9 +421,9 @@ class Game {
         //Set a variable for all character IDs in zone (active & inactive & all zones)
         var characterIDsInZone = Object.keys(this.state.character);
 
-        //Filter for Active characters && current zone (returns character IDs)
+        //Filter for Active characters && current zone (returns character IDs) && not hidden
         return characterIDsInZone.filter( singleCharacterID =>{
-            return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID)
+            return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID && this.state.character[singleCharacterID].is_hidden === 0)
         });
     }
 
