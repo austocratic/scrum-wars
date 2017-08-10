@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Game = require('../models/Game').Game;
 
@@ -12,14 +12,7 @@ exports.slackSlashCommand = async (req, res, next) => {
 
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
     //Parse the payload of the message
-    /*
-    var messagePayload;
-    try {
-        messagePayload = JSON.parse(req.body);
-    } catch(err){
-        messagePayload = req.body;
-    }*/
-    
+
     console.log('called slackSlashCommand');
 
     var slackPayload = req.body;
@@ -123,4 +116,4 @@ exports.slackSlashCommand = async (req, res, next) => {
     }
 
 };
-
+*/

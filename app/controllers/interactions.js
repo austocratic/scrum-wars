@@ -1,3 +1,5 @@
+/*
+
 "use strict";
 
 //This index file contains references to all the interaction files
@@ -212,4 +214,4 @@ exports.interactions = (interactionType, messagePayloadInput) => {
                 //return "ERROR: template not supported"
         }
     });
-};
+};*/

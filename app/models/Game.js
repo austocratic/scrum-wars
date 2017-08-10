@@ -8,7 +8,6 @@ var Character = require('./Character').Character;
 var Class = require('./Class').Class;
 var Zone = require('./Zone').Zone;
 var Match = require('./Match').Match;
-var Merchant = require('./Merchant').Merchant;
 var NPC = require('./NPC').NPC;
 var Action = require('./Action').Action;
 var Item = require('./Item').Item;

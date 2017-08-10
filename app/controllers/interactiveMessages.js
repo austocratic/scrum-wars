@@ -1,3 +1,5 @@
+
+/*
 "use strict";
 
 var Firebase = require('../libraries/firebase').Firebase;
@@ -148,4 +150,4 @@ exports.interactiveMessages = (req, res, next) => {
     }
     
     
-};
+};*/

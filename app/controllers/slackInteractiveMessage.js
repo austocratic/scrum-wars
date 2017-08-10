@@ -1,3 +1,5 @@
+/*
+
 "use strict";
 
 var characterProfile = require('../menus/characterProfile').characterProfile;
@@ -10,14 +12,6 @@ var User = require('../models/User').User;
 
 var slackTemplates = require('../slackTemplates');
 
-/*
-
-1. Get game's current state
-2. Validate request
-3. Extract properties from request payload locally
-4. 
-
-*/
 exports.slackInteractiveMessage = async (req, res, next) => {
 
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
@@ -29,12 +23,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
         slackPayload = req.body.payload;
     }
 
-    /*
-     Format of API calls coming from slack:
-     callback: what view the interaction was made from
-     name:     button clicked on from that view
-     value:    optional specific selection made
-     */
+
 
     console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
     
@@ -144,10 +133,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
             //Overwrite the callback
             requestCallback = slackCallbackElements.join("/");
 
-            /*
-            if (slackCallbackElements.length == 1) {
-                joinedElements = joinedElements + "/"
-            }*/
+       
 
             console.log('new requestCallback: ', requestCallback);
         }
@@ -262,7 +248,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
                             return slackTemplate;
 
-                            break;*/
+                            break;
                     }
 
                     break;
@@ -371,4 +357,4 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
 
     }
-};
+};*/

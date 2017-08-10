@@ -1,3 +1,5 @@
+
+/*
 var _ = require('lodash');
 var BaseModel = require('./BaseModel').BaseModel;
 
@@ -22,4 +24,4 @@ class Merchant extends BaseModel{
 
 module.exports = {
     Merchant: Merchant
-};
+};*/
