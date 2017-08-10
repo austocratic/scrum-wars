@@ -30,17 +30,7 @@ var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 exports.slackSlashCommand = async (req, res, next) => {
 
     //TODO need validation to ensure request came from slack and is structured correctly
-
-    //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
-    //Parse the payload of the message
-    /*
-     var messagePayload;
-     try {
-     messagePayload = JSON.parse(req.body);
-     } catch(err){
-     messagePayload = req.body;
-     }*/
-
+    
     console.log('called slackSlashCommand');
 
     var slackPayload = req.body;
@@ -50,8 +40,7 @@ exports.slackSlashCommand = async (req, res, next) => {
     console.log('slackPayload: ', slackPayload);
 
     //Get the user ID property (formatted differently based on /command or callback)
-
-    //TODO: I think that all user ids come in this format in slash commands
+    
     slackUserID = slackPayload.user_id;
 
     slackChannelID = slackPayload.channel_id;
@@ -71,7 +60,7 @@ exports.slackSlashCommand = async (req, res, next) => {
     await game.getState();
 
     //Function format: getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
-    //requestCallback = "command" could hard code
+    //requestCallback = "command" hard coded
     //requestActionName =
     //requestActionValue
     //requestSlackUserID
@@ -469,6 +458,21 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
                         actionResponse = slackTemplate;
+
+                        break;
+
+                    //Tavern
+                    case '-Kr9TRwZS7C9JHm1VzE3':
+
+                        console.log('called actionList/-Kr9TRwZS7C9JHm1VzE3');
+
+                        //slackTemplate = gameContext.shopList(requestSlackChannelID);
+
+                        //updatedCallback = ':Shop/shopList';
+
+                        //slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
+
+                        //actionResponse = slackTemplate;
 
                         break;
 

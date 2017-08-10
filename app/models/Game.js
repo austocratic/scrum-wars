@@ -3,14 +3,13 @@
 var Firebase = require('../libraries/firebase').Firebase;
 var firebase = new Firebase();
 
-
-
 var User = require('./User').User;
 var Character = require('./Character').Character;
 var Class = require('./Class').Class;
 var Zone = require('./Zone').Zone;
 var Match = require('./Match').Match;
 var Merchant = require('./Merchant').Merchant;
+var NPC = require('./NPC').NPC;
 var Action = require('./Action').Action;
 var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
@@ -26,31 +25,36 @@ var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 class Game {
     //TODO see if async works for constructor here
-    constructor() {
-
-        //this.state = await this.getState()
-    }
+    constructor() {}
 
     //Get state of the game from DB
     async getState(){
-        
-        //Get the current state of the game
         this.state = await firebase.get();
-
-        //console.log('Got the value from firebase: ', firebaseReturn);
-
-        //Convert the returned object into array of IDs.  This works since the query only returns one result
-        //TODO need to add a way for it to verify only one result (could return multiple results)
-
-
-        //var id = Object.keys(firebaseReturn)[0];
-        //this.state = firebaseReturn[id];
     }
 
     //Push local state to the DB
-    //DONT MODIFY THIS
     async updateState(){
         return await firebase.update('', this.state)
+    }
+    
+    //Refresh function checks the game's state looking for certain conditions (player deaths, ect.)
+    //It is invoked periodically by cron
+    //It is always invoked after a player action
+    //TODO I should probably make a gameController file and move this (and other functions) into it
+    refresh(){
+
+        //Check for match start
+            //Announce that match has begun
+
+        //Check for dead characters
+            //If dead character, remove them from the arena
+
+       //Check for only a single character in the arena after it has begun
+            //Announce character as the winner
+            //Increment that character's win total
+            //Heal
+        
+
     }
     
     createCharacter(userID){
@@ -307,7 +311,7 @@ class Game {
         var actionIDsAvailable = localCharacter.getActionIDs();
 
         //Determine if any action was already taken this turn, if so return the action taken template
-        var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
+        //var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
 
         //If character already took an action this turn return the no action available template
         /* TODO commented out check for if action is already taken to make testing easier
@@ -471,6 +475,15 @@ class Game {
         //Use the channel to create a local zone
         var localZone = new Zone(this.state, requestSlackChannelID);
 
+        var npcID = _.findKey(this.state.npc, singleNPC => {
+            {return singleNPC['zone_id'] === localZone.id}
+        });
+
+        var localNPC = new NPC(this.state, npcID);
+
+        var itemsForSaleArray = localNPC.getItemsForSale();
+
+        /*
         //Look at state and determine which merchant is in the zone
         var merchantID = _.findKey(this.state.merchant, singleMerchant => {
             {return singleMerchant['zone_id'] === localZone.id}
@@ -478,7 +491,7 @@ class Game {
 
         var localMerchant = new Merchant(this.state, merchantID);
 
-        var itemsForSaleArray = localMerchant.getItemsForSale();
+        var itemsForSaleArray = localMerchant.getItemsForSale();*/
 
         var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
             var localItem = this.state.item[itemID];
@@ -492,7 +505,7 @@ class Game {
         var slackTemplate = slackTemplates.shopMenu;
 
         //Add the corresponding merchant's image
-        slackTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localMerchant.id + ".jpg";
+        slackTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localNPC.id + ".jpg";
         
         slackTemplate.attachments[1].actions[0].options = slackTemplateDropdown;
 

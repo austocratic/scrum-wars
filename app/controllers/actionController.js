@@ -612,10 +612,10 @@ class Backstab extends BaseAttack {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
         //Static base attributes based on the skill
-        this.basePower = 8;
+        this.basePower = 15;
         this.baseSuccessChance = 1;
-        this.baseMin = 0;
-        this.baseMax = 0;
+        this.baseMin = 5;
+        this.baseMax = 10;
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
@@ -650,10 +650,32 @@ class Backstab extends BaseAttack {
             return("Your action FAILS")
         }
 
-        //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+        //Evasion check
+        if (this._isAvoided(this.chanceToAvoid) === true) {
+            console.log('Target evaded!');
 
-        //Lookup all actions that have the same type as the actionTaken
-        //var effectsOfSameType = _.filter(this.targetCharacter.props.effects, {type: this.actionTaken.props.type});
+            //Alert the channel of the action
+            var alertDetails = {
+                "username": this.slackUserName,
+                "icon_url": this.slackIcon,
+                "channel": ("#" + this.currentZone.props.channel),
+                "text": (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!")
+            };
+
+            //Create a new slack alert object
+            var channelAlert = new Slack(alertDetails);
+
+            //Send alert to slack
+            channelAlert.sendToSlack(this.params);
+
+            return (this.evasionMessage)
+        }
+
+        var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+
+        var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
+        
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
         var characterEffects = this.actionCharacter.props.effects;
 

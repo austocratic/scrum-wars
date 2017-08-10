@@ -13,8 +13,6 @@ var turns = require('../app/controllers/turns');
 
 var slackInteractiveMessage = require('../app/controllers/slackInteractiveMessage').slackInteractiveMessage;
 
-var controllerTest = require('../app/controllers/controllerTest').controllerTest;
-
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -66,10 +64,6 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
-});
-
-router.get('/api/test', (req, res, next) => {
-    controllerTest(req, res, next);
 });
 
 
