@@ -272,6 +272,20 @@ class BaseModify extends BaseAction{
         this.targetCharacter = targetCharacter;
     }
 
+    _reverseEffectsOfType(character, effectType){
+
+        var characterEffects = character.props.effects;
+
+        //Lookup all actions that have the same type as the actionTaken
+        var effectsOfSameType = _.filter(characterEffects, {type: effectType});
+
+        console.log('effectsOfSameType: ', effectsOfSameType);
+
+        effectsOfSameType.forEach( eachEffect =>{
+            this._reverseEffect(this.targetCharacter, eachEffect.action_id);
+        });
+    }
+
     _avoidCheck(accuracyModifier, avoidModifier){
 
         var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
@@ -502,28 +516,10 @@ class DefensiveStance extends BaseModify {
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
-
-
-        //Static base attributes based on the skill
-        /*
-        this.basePower = 8;
-        this.baseSuccessChance = 1;
-        this.baseMin = 0;
-        this.baseMax = 0;
-        this.baseChanceToAvoid = .01;
-
-        this.evasionMessage = "Your target resists your spell!";*/
-        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
-        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
-        //this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
-
-
-        //this._setValues();
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a defensive stance, but stumbles!");
 
         //Action success check
         //If failure, return a failure message and end
@@ -533,10 +529,6 @@ class DefensiveStance extends BaseModify {
         }
 
         var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        //var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
-
-        //Process all the other effects of the action
 
         var statsToModify = {
             modified_toughness: power,
@@ -551,6 +543,50 @@ class DefensiveStance extends BaseModify {
             "icon_url": this.slackIcon,
             "channel": ("#" + this.currentZone.props.channel),
             "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + power + " while lowering strength by " + power + " !")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+class BalancedStance extends BaseModify {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+    }
+
+    initiate(){
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a balance stance, but stumbles!");
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " enters a balanced combat stance!")
         };
 
         //Create a new slack alert object
@@ -1024,6 +1060,7 @@ class DefensiveStance extends BaseAttack {
 
 //Balanced Stance reverses the effects of any other stance
 //Static success chance
+/*
 class BalancedStance extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -1092,7 +1129,7 @@ class BalancedStance extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 //IntoShadow sets the character's is_visible property to zero.  This makes them unable to be targeted directly (can still be affected by area damage)
 class IntoShadow extends BaseAttack {
