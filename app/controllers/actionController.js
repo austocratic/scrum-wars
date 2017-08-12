@@ -4,6 +4,8 @@ var Slack = require('../libraries/slack').Alert;
 var _ = require('lodash');
 
 
+
+
 class BaseAction {
     constructor(actionCharacter, currentZone, currentMatch, actionTaken){
 
@@ -11,6 +13,338 @@ class BaseAction {
         this.currentZone = currentZone;
         this.currentMatch = currentMatch;
         this.actionTaken = actionTaken;
+
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        this.slackUserName = "A mysterious voice";
+        this.slackChannel = ("#" + this.currentZone.props.channel);
+    }
+
+    _setValues(){
+        console.log('BaseAction setvalues called');
+
+        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
+        //this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
+        //this.variableMin = this.variablePower + this.baseMin;
+        //this.variableMax = this.variablePower + this.baseMax
+    }
+
+    _getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    _successCheck(modifier){
+
+        var successChance = this.baseSuccessChance + modifier;
+
+        if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
+
+            return true
+        }
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": this.channelActionFailMessage
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+
+        return false;
+    }
+
+    /*
+    _successCheck(modifier){
+
+        var successChance = this.baseSuccessChance + modifier;
+
+        if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
+            return(true)
+        }
+
+        return(false);
+    }*/
+
+    _compareScores(){
+
+    }
+
+    /*
+    _isAvoided(avoidChance){
+        console.log('called isAvoided');
+
+        var diceRoll = (this._getRandomIntInclusive(0, 100));
+
+        console.log('diceRoll: ', diceRoll);
+
+        var targetResult = (avoidChance * 100);
+
+        console.log('targetResult: ', targetResult);
+
+        if (diceRoll <= targetResult) {
+            return(true)
+        }
+
+        return(false);
+    }*/
+
+    /*
+    _calculatePower(basePower, modifier, variableMin, variableMax){
+
+        console.log('called _calculatePower');
+        console.log('_calculatePower, basePower: ', basePower);
+        console.log('_calculatePower, modifier: ', modifier);
+        console.log('_calculatePower, variableMin: ', variableMin);
+        console.log('_calculatePower, variableMax: ', variableMax);
+
+        var calculatedPower = basePower + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
+
+        console.log('calculatedPower: ', calculatedPower);
+        return calculatedPower;
+    }*/
+
+    _calculateStrength(base, modifier, variableMin, variableMax){
+
+        var calculatedStrength = base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
+
+        console.log('calculatedStrength: ', calculatedStrength);
+        return calculatedStrength;
+    }
+
+    //Object of stat/modifier key/value pairs
+    _changeProperty(characterToModify, modifiers){
+
+        //Convert all keys into array
+        var modifierKeys = Object.keys(modifiers);
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
+
+                characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
+            })
+        }
+    }
+
+    _applyEffect(characterToModify, modifiers, actionTaken){
+
+        //Convert all keys into array
+        var modifierKeys = Object.keys(modifiers);
+
+        var modifierObject = {};
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
+                modifierObject = Object.assign(modifierObject, {[eachModifierKey]: modifiers[eachModifierKey]});
+            })
+        }
+
+        var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
+
+        //If character has a effects array, add the action ID to it, else create an effects array and add to it
+        if (characterToModify.props.effects){
+            characterToModify.props.effects.push({
+                action_id: actionTaken.id,
+                end_turn: endingTurn,
+                type: actionTaken.props.type,
+                modifiers: modifierObject
+            });
+        } else {
+            characterToModify.props.effects = [{
+                action_id: actionTaken.id,
+                end_turn: endingTurn,
+                type: actionTaken.props.type,
+                modifiers: modifierObject
+            }]
+        }
+
+        //Update the character's properties
+        this._changeProperty(characterToModify, modifiers)
+    }
+
+    _reverseEffect(characterToModify, actionID){
+
+        var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
+
+        if (arrayIndex === -1){
+            console.log('"Attempted to reverse actionID that does not exist on the target"');
+            return "Attempted to reverse actionID that does not exist on the target"
+        }
+
+        var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
+
+        //Functionality from _changeProperty but with negative values
+        var modifierKeys = Object.keys(effectsToRemove);
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey =>{
+
+                characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
+            })
+        }
+
+        characterToModify.props.effects.splice(arrayIndex, 1);
+    }
+
+    updateAction(){
+
+        //Take the current actions
+        //var currentActions = this.actionCharacter.props.actions;
+
+        var actionKey = _.findKey(this.actionCharacter.props.actions, {'action_id': this.actionTaken.id});
+
+        var actionID = this.actionCharacter.props.actions[actionKey].action_id;
+
+        var newTurnAvailable = this.currentMatch.props.number_turns + this.actionTaken.props.cool_down;
+        var newTurnUsed = this.currentMatch.props.number_turns;
+
+        //actionsToUpdate[actionKey].turn_available = actionsToUpdate;
+        this.actionCharacter.props.actions[actionKey].turn_available = newTurnAvailable;
+        this.actionCharacter.props.actions[actionKey].turn_used = newTurnUsed;
+    }
+}
+
+class BaseAttack extends BaseAction{
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, currentZone, currentMatch, actionTaken);
+
+        this.targetCharacter = targetCharacter;
+    }
+
+    _avoidCheck(accuracyModifier, avoidModifier){
+
+        var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
+        var avoidScore = this.baseAvoidScore + avoidModifier + this._getRandomIntInclusive(1, 10);
+        console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
+
+        if(accuracyScore >= avoidScore){
+            return true
+        }
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": this.channelActionAvoidedMessage
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+
+        return false
+    }
+
+    /*
+    _setValues(){
+
+        this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
+        this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
+
+        super._setValues();
+    }*/
+
+    _calculateDamage(damage, mitigation){
+
+        var totalDamage = damage - mitigation;
+
+        if (totalDamage < 0) {
+            return 0;
+        }
+
+        return totalDamage;
+    }
+
+
+}
+
+
+//AranceBolt is a spell that deals damage to a single target
+
+class ArcaneBolt extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.evasionMessage = "Your target turns your blade!";
+    }
+
+    initiate() {
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to conjure an Arcane Bolt, but the spell fizzles away!");
+        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " bolts of arcane energy streak from  " + this.actionCharacter.props.name + "'s fingers, but " + this.targetCharacter.props.name + " resists the bolt's harm");
+
+        //BaseAction
+        //skill check: this.baseSuccessChance + modifier
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return ("Your action FAILS")
+        }
+
+        //Evasion check
+        //Arguments: accuracyModifier, avoidModifier
+        if (this._avoidCheck(0, 0) === true) {
+            console.log('Target evaded!');
+            return this.evasionMessage
+        }
+
+        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+
+        var totalDamage = this._calculateDamage(power, mitigation);
+
+        //Process all the other effects of the action
+        //this._damageEffect(totalDamage);
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": (this.actionCharacter.props.name + " launches bolts of arcane energy which strike " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+
+
+/*
+class BaseAction {
+    constructor(actionCharacter, currentZone, currentMatch, actionTaken){
+
+        this.actionCharacter = actionCharacter;
+        this.currentZone = currentZone;
+        this.currentMatch = currentMatch;
+        this.actionTaken = actionTaken;
+
+        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        this.slackUserName = "A mysterious voice";
+        this.slackChannel = ("#" + this.currentZone.props.channel);
     }
 
     _setValues(){
@@ -77,7 +411,7 @@ class BaseAction {
 class BaseAttack extends BaseAction{
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, currentZone, currentMatch, actionTaken);
-        
+
         this.targetCharacter = targetCharacter;
     }
 
@@ -96,23 +430,13 @@ class BaseAttack extends BaseAction{
     _calculateDamage(damage, mitigation){
 
         var totalDamage = damage - mitigation;
-        
+
         if (totalDamage < 0) {
             return 0;
         }
-        
+
         return totalDamage;
     }
-
-    //Increment damage and return the amount damaged
-    /* TO DELETE
-    _damageEffect(totalDamage){
-        this.targetCharacter.incrementProperty('hit_points', (-1 * totalDamage));
-    }
-
-    _healingEffect(totalHealing){
-        this.actionCharacter.incrementProperty('hit_points', (1 * totalHealing));
-    }*/
 
     //Object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
@@ -150,7 +474,7 @@ class BaseAttack extends BaseAction{
                 end_turn: endingTurn,
                 type: actionTaken.props.type,
                 modifiers: modifierObject
-        });
+            });
         } else {
             characterToModify.props.effects = [{
                 action_id: actionTaken.id,
@@ -187,9 +511,9 @@ class BaseAttack extends BaseAction{
 
         characterToModify.props.effects.splice(arrayIndex, 1);
     }
-    
+
     updateAction(){
-        
+
         //Take the current actions
         //var currentActions = this.actionCharacter.props.actions;
 
@@ -205,6 +529,10 @@ class BaseAttack extends BaseAction{
         this.actionCharacter.props.actions[actionKey].turn_used = newTurnUsed;
     }
 }
+*/
+
+
+
 
 //QuickStrike is a melee strength based attack
 //Static success chance
@@ -220,8 +548,8 @@ class QuickStrike extends BaseAttack {
         this.baseChanceToAvoid = .05;
 
         this.evasionMessage = "Your target turns your blade!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
-        this.slackUserName = "A mysterious voice";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate() {
@@ -309,9 +637,9 @@ class LipeTap extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        this.slackUserName = "A mysterious voice";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -400,9 +728,9 @@ class DefensiveStance extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        this.slackUserName = "A mysterious voice";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -477,9 +805,9 @@ class BalancedStance extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        this.slackUserName = "A mysterious voice";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -548,9 +876,9 @@ class IntoShadow extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        this.slackUserName = "A mysterious voice";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -619,9 +947,9 @@ class Backstab extends BaseAttack {
         this.baseChanceToAvoid = .01;
 
         this.evasionMessage = "Your target resists your spell!";
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        this.slackUserName = "A mysterious voice";
+        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
@@ -696,7 +1024,7 @@ class Backstab extends BaseAttack {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " emerges from the shadows!")
+            "text": (this.actionCharacter.props.name + " emerges from the shadows and backstabs " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
         };
 
         //Create a new slack alert object
@@ -713,5 +1041,6 @@ module.exports = {
     DefensiveStance: DefensiveStance,
     BalancedStance: BalancedStance,
     IntoShadow: IntoShadow,
-    Backstab: Backstab
+    Backstab: Backstab,
+    ArcaneBolt: ArcaneBolt
 };

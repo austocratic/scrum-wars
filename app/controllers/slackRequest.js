@@ -479,13 +479,23 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     //Quick Strike
                     //Return a target menu
                     case '-Kjpe29q_fDkJG-73AQO':
-                        console.log('called actionList/Attack');
+                        console.log('called actionList/-Kjpe29q_fDkJG-73AQO');
 
                         actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
 
                         //Set the callback, will be assigned at end of switch
                         updatedCallback = (':' + userSelection + '/characterList');
 
+                        break;
+
+                    case '-KrJaBvyYDGrNVfcaAd0':
+                        console.log('called actionList/-KrJaBvyYDGrNVfcaAd0');
+
+                        actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
+
+                        //Set the callback, will be assigned at end of switch
+                        updatedCallback = (':' + userSelection + '/characterList');
+                        
                         break;
 
                     //Defensive Stance
@@ -640,6 +650,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 //Resolve action (mark it as used)
                                 attack_action.updateAction();
 
+                                break;
+                            
+                            //Arcane Bolt
+                            case '-KrJaBvyYDGrNVfcaAd0':
+                                console.log('called actionList/-Kjpe29q_fDkJG-73AQO');
+
+                                var attack_action = new actionController.ArcaneBolt(localCharacter, targetCharacter, localZone, localMatch, localAction);
+
+                                console.log('calling initiateAction, result: ', attack_action.initiate());
+
+                                //Resolve action (mark it as used)
+                                attack_action.updateAction();
+                                
                                 break;
 
                             //Life tap
