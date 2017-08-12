@@ -550,7 +550,7 @@ class DefensiveStance extends BaseModify {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + totalPower + " while lowering strength by " + totalPower + " !")
+            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + power + " while lowering strength by " + power + " !")
         };
 
         //Create a new slack alert object
