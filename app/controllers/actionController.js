@@ -300,7 +300,7 @@ class ArcaneBolt extends BaseAttack {
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
-        if (this._avoidCheck(0, 0) === true) {
+        if (this._avoidCheck(0, 0) === false) {
             console.log('Target evaded!');
             return this.evasionMessage
         }
