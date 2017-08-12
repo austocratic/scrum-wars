@@ -263,10 +263,42 @@ class BaseAttack extends BaseAction{
 
         return totalDamage;
     }
-
-
 }
 
+class BaseModify extends BaseAction{
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, currentZone, currentMatch, actionTaken);
+
+        this.targetCharacter = targetCharacter;
+    }
+
+    _avoidCheck(accuracyModifier, avoidModifier){
+
+        var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
+        var avoidScore = this.baseAvoidScore + avoidModifier + this._getRandomIntInclusive(1, 10);
+        console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
+
+        if(accuracyScore >= avoidScore){
+            return true
+        }
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": this.channelActionAvoidedMessage
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+
+        return false
+    }
+}
 
 //AranceBolt is a spell that deals damage to a single target
 
@@ -279,11 +311,11 @@ class ArcaneBolt extends BaseAttack {
         this.baseAvoidScore = 5;
         this.basePower = 5;
         this.baseMitigation = 1;
-
         this.baseMin = 1;
         this.baseMax = 5;
 
-        this.evasionMessage = "Your target turns your blade!";
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
     }
 
     initiate() {
@@ -295,14 +327,14 @@ class ArcaneBolt extends BaseAttack {
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
             console.log('Skill FAILED!');
-            return ("Your action FAILS")
+            return this.playerActionFailedMessage
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
             console.log('Target evaded!');
-            return this.evasionMessage
+            return this.playerActionAvoidedMessage
         }
 
         var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
@@ -331,7 +363,203 @@ class ArcaneBolt extends BaseAttack {
     }
 }
 
+class QuickStrike extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+    }
+
+    initiate() {
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
+        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
+
+        //BaseAction
+        //skill check: this.baseSuccessChance + modifier
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        //Evasion check
+        //Arguments: accuracyModifier, avoidModifier
+        if (this._avoidCheck(0, 0) === false) {
+            console.log('Target evaded!');
+            return this.playerActionAvoidedMessage
+        }
+
+        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+
+        var totalDamage = this._calculateDamage(power, mitigation);
+
+        //Process all the other effects of the action
+        //this._damageEffect(totalDamage);
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": (this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+class LifeTap extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.playerActionFailedMessage = "Your target resists your spell!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+    }
+
+    initiate() {
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to case Life Tap, but the spell fizzles away!");
+        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " conjures a life tapping effect but " + this.targetCharacter.props.name + " resists the attack!")
+
+        //BaseAction
+        //skill check: this.baseSuccessChance + modifier
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        //Evasion check
+        //Arguments: accuracyModifier, avoidModifier
+        if (this._avoidCheck(0, 0) === false) {
+            console.log('Target evaded!');
+            return this.playerActionAvoidedMessage
+        }
+
+        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+
+        var totalDamage = this._calculateDamage(power, mitigation);
+
+        //Process all the other effects of the action
+        //this._damageEffect(totalDamage);
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+        this._changeProperty(this.actionCharacter, {hit_points: totalDamage});
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": (this.actionCharacter.props.name + " conjures a life tapping effect and drains " + this.targetCharacter.props.name + " for " + totalDamage + " health!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+//Defensive Stance is a stance that increases AC & lowers attack
+//Static success chance
+class DefensiveStance extends BaseModify {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
+
+        //Static base attributes based on the skill
+        /*
+        this.basePower = 8;
+        this.baseSuccessChance = 1;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";*/
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        //this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
+        //this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
+
+
+        //this._setValues();
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        //var totalDamage = this._calculateDamage(totalPower, this.damageMitigation);
+
+        //Process all the other effects of the action
+
+        var statsToModify = {
+            modified_toughness: power,
+            modified_strength: -power
+        };
+
+        this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " crouches and enters a defensive stance, increasing toughness by " + totalPower + " while lowering strength by " + totalPower + " !")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
 
 /*
 class BaseAction {
@@ -536,6 +764,7 @@ class BaseAttack extends BaseAction{
 
 //QuickStrike is a melee strength based attack
 //Static success chance
+/*
 class QuickStrike extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -621,10 +850,11 @@ class QuickStrike extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 //LifeTap is a spell
 //Static success chance
+/*
 class LipeTap extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -712,10 +942,11 @@ class LipeTap extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 //Defensive Stance is a stance that increases AC & lowers attack
 //Static success chance
+/*
 class DefensiveStance extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -789,7 +1020,7 @@ class DefensiveStance extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 //Balanced Stance reverses the effects of any other stance
 //Static success chance
@@ -1037,7 +1268,7 @@ class Backstab extends BaseAttack {
 
 module.exports = {
     QuickStrike: QuickStrike,
-    LipeTap: LipeTap,
+    LifeTap: LifeTap,
     DefensiveStance: DefensiveStance,
     BalancedStance: BalancedStance,
     IntoShadow: IntoShadow,

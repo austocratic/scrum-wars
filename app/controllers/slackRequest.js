@@ -669,7 +669,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             case '-KkOq-y2_zgEgdhY-6_U':
                                 console.log('called actionList/-KkOq-y2_zgEgdhY-6_U');
 
-                                var attack_action = new actionController.LipeTap(localCharacter, targetCharacter, localZone, localMatch, localAction);
+                                var attack_action = new actionController.LifeTap(localCharacter, targetCharacter, localZone, localMatch, localAction);
 
                                 console.log('calling initiateAction, result: ', attack_action.initiate());
 
