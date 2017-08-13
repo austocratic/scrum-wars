@@ -761,6 +761,8 @@ class Backstab extends BaseAttack {
 
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
+        console.log('actionCharacter.props: ', this.actionCharacter.props);
+
         var characterEffects = this.actionCharacter.props.effects;
 
         console.log('characterEffects: ', characterEffects);
