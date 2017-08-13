@@ -445,10 +445,10 @@ class LifeTap extends BaseAttack {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 5;
+        this.basePower = 4;
         this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
+        this.baseMin = 0;
+        this.baseMax = 4;
 
         this.playerActionFailedMessage = "Your target resists your spell!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
@@ -506,13 +506,13 @@ class DefensiveStance extends BaseModify {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
-        this.baseSuccessChance = .9;
+        this.baseSuccessChance = 1; //% change of success
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 5;
+        this.basePower = 4;
         this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
+        this.baseMin = 0;
+        this.baseMax = 0;
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
@@ -528,7 +528,7 @@ class DefensiveStance extends BaseModify {
             return this.playerActionFailedMessage
         }
 
-        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        var power = this._calculateStrength(this.basePower, this.actionCharacter.props.level, this.baseMin, this.baseMax);
 
         var statsToModify = {
             modified_toughness: power,
@@ -553,6 +553,8 @@ class DefensiveStance extends BaseModify {
     }
 }
 
+//Balanced Stance is a stance that removes other stances (reverses the effects of stances)
+//Static success chance
 class BalancedStance extends BaseModify {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -597,6 +599,148 @@ class BalancedStance extends BaseModify {
     }
 }
 
+//IntoShadow sets the character's is_visible property to zero.  This makes them unable to be targeted directly (can still be affected by area damage)
+class IntoShadow extends BaseModify {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .9;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 5;
+        this.basePower = 5;
+        this.baseMitigation = 1;
+        this.baseMin = 1;
+        this.baseMax = 5;
+
+        this.playerActionFailedMessage = "You fail to enter the shadows!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
+
+        /*
+        //Static base attributes based on the skill
+        this.basePower = 8;
+        this.baseSuccessChance = .8;
+        this.baseMin = 0;
+        this.baseMax = 0;
+        this.baseChanceToAvoid = .01;
+
+        this.evasionMessage = "Your target resists your spell!";*/
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
+        //this.slackUserName = "A mysterious voice";
+    }
+
+    initiate(){
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to fade into the shadows but is noticed, action failed!")
+
+        //Action success check
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
+
+        var statsToModify = {
+            is_hidden: 1
+        };
+
+        this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " fades into the shadows!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
+
+//Backstab does significant damage, but is only available if the character is hidden.  Using breaks hiding
+class Backstab extends BaseAttack {
+    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+
+        this.baseSuccessChance = .8;
+        this.baseAccuracyScore = 10;
+        this.baseAvoidScore = 2;
+        this.basePower = 10;
+        this.baseMitigation = 1;
+        this.baseMin = 3;
+        this.baseMax = 8;
+
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
+    }
+
+    initiate(){
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
+        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
+
+
+        //BaseAction
+        //skill check: this.baseSuccessChance + modifier
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('Skill FAILED!');
+            return this.playerActionFailedMessage
+        }
+
+        //Evasion check
+        //Arguments: accuracyModifier, avoidModifier
+        if (this._avoidCheck(0, 0) === false) {
+            console.log('Target evaded!');
+            return this.playerActionAvoidedMessage
+        }
+
+        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+
+        var totalDamage = this._calculateDamage(power, mitigation);
+
+        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+
+        var characterEffects = this.actionCharacter.props.effects;
+
+        console.log('characterEffects: ', characterEffects);
+
+        //Find all currently applied effects that change the targets is_hidden property
+        var hidingEffects = this.actionCharacter.props.effects.filter( eachEffect =>{
+            return eachEffect.modifiers.is_hidden === 1
+        });
+
+        console.log('effectsOfSameType: ', hidingEffects);
+
+        //Reverse all effects that change is_hidden property
+        hidingEffects.forEach( eachEffect =>{
+            this._reverseEffect(this.actionCharacter, eachEffect.action_id);
+        });
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": ("#" + this.currentZone.props.channel),
+            "text": (this.actionCharacter.props.name + " emerges from the shadows and backstabs " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+    }
+}
 /*
 class BaseAction {
     constructor(actionCharacter, currentZone, currentMatch, actionTaken){
@@ -1132,6 +1276,7 @@ class BalancedStance extends BaseAttack {
 }*/
 
 //IntoShadow sets the character's is_visible property to zero.  This makes them unable to be targeted directly (can still be affected by area damage)
+/*
 class IntoShadow extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -1200,9 +1345,10 @@ class IntoShadow extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 //Backstab does significant damage, but is only available if the character is hidden.  Using breaks hiding
+/*
 class Backstab extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
@@ -1301,7 +1447,7 @@ class Backstab extends BaseAttack {
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
     }
-}
+}*/
 
 module.exports = {
     QuickStrike: QuickStrike,
