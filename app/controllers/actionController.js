@@ -121,7 +121,7 @@ class BaseAction {
     //Object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
 
-        console.log('called _changeProperty, modifiers: ', modifiers);
+        //console.log('called _changeProperty, modifiers: ', modifiers);
 
         //var mergedProperty = Object.assign(characterToModify.props, modifiers);
 
@@ -131,7 +131,7 @@ class BaseAction {
 
         var mergedProperty = _.merge(characterToModify.props, modifiers);
 
-        console.log('mergedProperties, using lodash: ', mergedProperty);
+        //console.log('mergedProperties, using lodash: ', mergedProperty);
 
         characterToModify.props = mergedProperty;
 
@@ -226,7 +226,11 @@ class BaseAction {
             modifierKeys.forEach( eachModifierKey => {
                 console.log('eachModifierKey: ', eachModifierKey);
 
-                var nestedKeys = Object.keys(eachModifierKey);
+                var nestedProperty = modifiersToRemove[eachModifierKey];
+
+                console.log('eachModifierKeyObject: ', nestedProperty);
+
+                var nestedKeys = Object.keys(nestedProperty);
 
                 console.log('nestedKeys: ', nestedKeys);
 
