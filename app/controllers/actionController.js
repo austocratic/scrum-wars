@@ -121,11 +121,17 @@ class BaseAction {
     //Object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
 
+        console.log('called _changeProperty, modifiers: ', modifiers);
+
         //Convert all keys into array
         var modifierKeys = Object.keys(modifiers);
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey =>{
+
+                console.log('each modifier key: ', eachModifierKey);
+
+                console.log('character with reference: ', characterToModify[eachModifierKey]);
 
                 characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
