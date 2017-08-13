@@ -123,11 +123,22 @@ class BaseAction {
 
         console.log('called _changeProperty, modifiers: ', modifiers);
 
-        var mergedProperty = Object.assign(characterToModify.props, modifiers);
+        //var mergedProperty = Object.assign(characterToModify.props, modifiers);
 
-        console.log('mergedProperties: ', mergedProperty);
+        //console.log('mergedProperties: ', mergedProperty);
+
+        //characterToModify.props = mergedProperty;
+
+        var mergedProperty = _.merge(characterToModify.props, modifiers);
+
+        console.log('mergedProperties, using lodash: ', mergedProperty);
 
         characterToModify.props = mergedProperty;
+
+        //{is_available: 1, nested: {prop1:1, prop2:2}}
+
+        //{nested:{ prop1:1, prop2: 1}, nested:{prop2:2}} --> {nested:{ prop1:1, prop2: 2} }
+
         /*
         //Convert all keys into array
         var modifierKeys = Object.keys(modifiers);
