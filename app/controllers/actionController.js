@@ -131,7 +131,7 @@ class BaseAction {
 
                 console.log('each modifier key: ', eachModifierKey);
 
-                console.log('character with reference: ', characterToModify[eachModifierKey]);
+                console.log('character with reference: ', characterToModify.props[eachModifierKey]);
 
                 characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
