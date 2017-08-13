@@ -123,6 +123,12 @@ class BaseAction {
 
         console.log('called _changeProperty, modifiers: ', modifiers);
 
+        var mergedProperty = Object.assign(characterToModify.props, modifiers);
+
+        console.log('mergedProperties: ', mergedProperty);
+
+        characterToModify.props = mergedProperty;
+        /*
         //Convert all keys into array
         var modifierKeys = Object.keys(modifiers);
 
@@ -137,7 +143,7 @@ class BaseAction {
 
                 //characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
             })
-        }
+        }*/
     }
 
     //modifiers = {is_active: -1}
