@@ -385,7 +385,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     return {
                         action_id: eachActionID,
                         turn_used: 0,
-                        turn_available: 0
+                        turn_available: 0,
+                        is_available: 1
                     }
                 });
 

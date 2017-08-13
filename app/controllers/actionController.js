@@ -137,6 +137,7 @@ class BaseAction {
     _applyEffect(characterToModify, modifiers, actionTaken){
 
         //Convert all keys into array
+        /*
         var modifierKeys = Object.keys(modifiers);
 
         var modifierObject = {};
@@ -145,13 +146,17 @@ class BaseAction {
             modifierKeys.forEach( eachModifierKey =>{
                 modifierObject = Object.assign(modifierObject, {[eachModifierKey]: modifiers[eachModifierKey]});
             })
-        }
+        }*/
+
+        //var modifierObject = {};
+
+        //modifierObject = Object.assign(modifierObject, modifiers);
 
         var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
 
-        console.log('Modifier object: ', modifierObject);
+        //console.log('Modifier object: ', modifierObject);
 
-        console.log('modifiers passed in: ', modifiers);
+        //console.log('modifiers passed in: ', modifiers);
 
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
@@ -159,14 +164,16 @@ class BaseAction {
                 action_id: actionTaken.id,
                 end_turn: endingTurn,
                 type: actionTaken.props.type,
-                modifiers: modifierObject
+                modifiers: modifiers
+                //modifiers: modifierObject
             });
         } else {
             characterToModify.props.effects = [{
                 action_id: actionTaken.id,
                 end_turn: endingTurn,
                 type: actionTaken.props.type,
-                modifiers: modifierObject
+                modifiers: modifiers
+                //modifiers: modifierObject
             }]
         }
 
