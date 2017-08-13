@@ -641,7 +641,12 @@ class IntoShadow extends BaseModify {
         //var totalPower = this._calculatePower(this.basePower, this.baseMin, this.baseMax, this.levelMultiplier);
 
         var statsToModify = {
-            is_hidden: 1
+            is_hidden: 1,
+            actionsTest: {
+                "-Kr3hnITyH9ZKx3VuZah": {
+                    is_available: 1
+                }
+            }
         };
 
         this._applyEffect(this.targetCharacter, statsToModify, this.actionTaken);
