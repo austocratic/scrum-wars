@@ -306,7 +306,7 @@ class Game {
         var localZone = new Zone(this.state, requestSlackChannelID);
         var localMatch = new Match(this.state, this.getCurrentMatchID());
 
-        //Returns an array of all the character's action IDs
+        //Returns an array of all the character's action IDs with is_active = 1
         var actionIDsAvailable = localCharacter.getActionIDs();
 
         //Determine if any action was already taken this turn, if so return the action taken template

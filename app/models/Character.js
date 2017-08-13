@@ -61,10 +61,25 @@ class Character extends BaseModel{
         return responseTemplate;
 
     }
-    
+
+    /*
     //Return an array of action IDs that are available this turn (regardless of what zone)
     getActionIDs(){
         return this.props.actions.map( eachAction =>{
+            if (eachAction.is_available === 1){
+
+            }
+            return eachAction.action_id;
+        });
+    }*/
+
+    getActionIDs(){
+
+        var filteredActions = this.props.actions.filter( eachAction =>{
+            return eachAction.is_available === 1
+        });
+
+        return filteredActions.map( eachAction =>{
             return eachAction.action_id;
         });
     }
