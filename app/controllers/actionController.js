@@ -132,6 +132,8 @@ class BaseAction {
         }
     }
 
+    //modifiers = {is_active: -1}
+
     _applyEffect(characterToModify, modifiers, actionTaken){
 
         //Convert all keys into array
@@ -146,6 +148,10 @@ class BaseAction {
         }
 
         var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
+
+        console.log('Modifier object: ', modifierObject);
+
+        console.log('modifiers passed in: ', modifiers);
 
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
@@ -613,20 +619,6 @@ class IntoShadow extends BaseModify {
 
         this.playerActionFailedMessage = "You fail to enter the shadows!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
-
-
-        /*
-        //Static base attributes based on the skill
-        this.basePower = 8;
-        this.baseSuccessChance = .8;
-        this.baseMin = 0;
-        this.baseMax = 0;
-        this.baseChanceToAvoid = .01;
-
-        this.evasionMessage = "Your target resists your spell!";*/
-        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
-        //this.slackIcon = "https://www.heroesfire.com/images/wikibase/icon/abilities/drain-life.png";
-        //this.slackUserName = "A mysterious voice";
     }
 
     initiate(){
