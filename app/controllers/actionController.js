@@ -215,9 +215,27 @@ class BaseAction {
             return "Attempted to reverse actionID that does not exist on the target"
         }
 
-        var effectsToRemove = characterToModify.props.effects[arrayIndex].modifiers;
+        var modifiersToRemove = characterToModify.props.effects[arrayIndex].modifiers;
+
+        console.log('modifiersToRemove: ', modifiersToRemove);
+
+        //Look at modifiers to determine if there are any nested properties:
+        var modifierKeys = Object.keys(modifiersToRemove);
+
+        if (modifierKeys.length > 0) {
+            modifierKeys.forEach( eachModifierKey => {
+                console.log('eachModifierKey: ', eachModifierKey);
+
+                var nestedKeys = Object.keys(eachModifierKey);
+
+                console.log('nestedKeys: ', nestedKeys);
+
+            })
+        }
+
 
         //Functionality from _changeProperty but with negative values
+        /*
         var modifierKeys = Object.keys(effectsToRemove);
 
         if (modifierKeys.length > 0) {
@@ -225,8 +243,9 @@ class BaseAction {
 
                 characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
             })
-        }
+        }*/
 
+        //Remove effect
         characterToModify.props.effects.splice(arrayIndex, 1);
     }
 
