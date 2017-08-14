@@ -760,7 +760,6 @@ class Backstab extends BaseAttack {
 
         console.log('actionCharacter.props: ', this.actionCharacter.props);
 
-        /*
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
         console.log('actionCharacter.props: ', this.actionCharacter.props);
@@ -794,7 +793,6 @@ class Backstab extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
-        */
     }
 }
 
