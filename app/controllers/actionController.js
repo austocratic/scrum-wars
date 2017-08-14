@@ -737,7 +737,6 @@ class Backstab extends BaseAttack {
         this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
         this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
 
-
         //BaseAction
         //skill check: this.baseSuccessChance + modifier
         //If failure, return a failure message and end
@@ -759,6 +758,9 @@ class Backstab extends BaseAttack {
 
         var totalDamage = this._calculateDamage(power, mitigation);
 
+        console.log('actionCharacter.props: ', this.actionCharacter.props);
+
+        /*
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
         console.log('actionCharacter.props: ', this.actionCharacter.props);
@@ -792,6 +794,7 @@ class Backstab extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+        */
     }
 }
 
