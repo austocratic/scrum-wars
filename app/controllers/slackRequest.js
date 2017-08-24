@@ -148,10 +148,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     console.log('called getResponseTemplate, requestCallback: ', requestCallback);
     console.log('called getResponseTemplate, requestActionName: ', requestActionName);
     console.log('called getResponseTemplate, requestActionValue: ', requestActionValue);
-    console.log('called getResponseTemplate, requestSlackUserID: ', requestSlackUserID);
-    console.log('called getResponseTemplate, requestSlackChannelID: ', requestSlackChannelID);
-    console.log('called getResponseTemplate, gameContext: ', gameContext);
-    console.log('called getResponseTemplate, requestTextInput: ', requestTextInput);
+    //console.log('called getResponseTemplate, requestSlackUserID: ', requestSlackUserID);
+    //console.log('called getResponseTemplate, requestSlackChannelID: ', requestSlackChannelID);
+    //console.log('called getResponseTemplate, gameContext: ', gameContext);
+    //console.log('called getResponseTemplate, requestTextInput: ', requestTextInput);
 
     var slackTemplate;
 
@@ -734,7 +734,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     "text": "Yes, I'll take it!",
                     "type": "button",
                     "value": "yes"
-                },
+                    },
                     {
                         "name": "back",
                         "text": "No thanks",
@@ -862,6 +862,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 break;
 
             case 'inventoryList':
+
+                console.log('called inventoryList');
 
                 //Return an item detail with the selection from the inventory list
 
