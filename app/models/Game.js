@@ -565,8 +565,72 @@ class Game {
                 "value": localItem.id
             }
         })
+    }*/
+
+    getEquippedItemView(localCharacter){
+
+        //get array of all available equipment slot keys (IDs)
+        var equipmentSlotKeys = Object.keys(this.state.equipment_slot);
+
+        var singleEquipmentSlot;
+
+        //Returns array of equipped item objects
+        var equippedItems = localCharacter.getEquippedItems();
+
+        return equipmentSlotKeys.map( eachEquipmentSlot =>{
+            
+            singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
+
+            //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
+            //If no equipped item, equippedSlotItem will be undefined
+            var equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+
+            var slotEmpty = 0;
+            
+            //If character has no equipped item in that slot (undefined), overwrite the properties to be used in the template
+            if (equippedSlotItem === undefined){
+                slotEmpty = 1;
+            }
+            
+            if (slotEmpty === 1){
+                //TODO need to define "empty" item id in a config
+                equippedSlotItem = {
+                    item_id: '-Kjk3sGUJy5Nu8GWsdff',
+                    name: 'Empty'
+                };
+            }
+
+            var baseTemplate = {
+                "title": singleEquipmentSlot.props.name,
+                "callback_id": "equipmentMenu",
+                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + equippedSlotItem.item_id + ".jpg",
+                "fields": [{
+                    "title": "Equipment name",
+                    "value": equippedSlotItem.name,
+                    "short": false
+                }],
+                "actions": []
+            };
+            
+            //If the item is any ID other than the "empty" item, add an inspect button
+            if (slotEmpty === 1){
+
+                console.log('Passed conditional pushing to baseTemplate.action: ', JSON.stringify(baseTemplate.actions));
+
+                baseTemplate.actions.push({
+                    "name": "inspect",
+                    "text": "Inspect item",
+                    "style": "default",
+                    "type": "button",
+                    "value": equippedSlotItem.item_id
+                })
+            }
+            
+            return baseTemplate;
+        });
     }
 
+    /*
     getEquipmentList(equipmentIDArray){
 
         //DB has an equipment_slots array

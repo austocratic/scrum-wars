@@ -829,7 +829,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //Pass in the character's unequipped inventory array
                         //slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
-                        var slackTemplateAttachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
+                        //var slackTemplateAttachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
+
+                        var slackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
+
+                        console.log('equipment slackTemplateAttachments: ', slackTemplateAttachments);
 
                         //getEquipmentList above overwrites attachments on template.  Add a back button here
                         slackTemplateAttachments.push({

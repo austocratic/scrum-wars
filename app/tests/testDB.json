@@ -239,7 +239,7 @@
         },
         "type" : "combat stance"
       } ],
-      "gold" : 100,
+      "gold" : 80,
       "hit_points" : 100,
       "intelligence" : 8,
       "inventory" : [ {
@@ -249,15 +249,24 @@
         "modifiers" : {
           "modified_intelligence" : 2,
           "modified_strength" : 2
-        }
+        },
+        "name" : "rusty longsword"
+      }, {
+        "is_equipped" : 0,
+        "item_id" : "-KjGQPbo-96j_Uikhjqh",
+        "modifiers" : {
+          "modified_dexterity" : 2,
+          "modified_strength" : 2
+        },
+        "name" : "rusty dagger"
       } ],
       "is_hidden" : 1,
       "level" : 1,
       "match_wins" : 0,
       "max_hit_points" : 100,
-      "modified_dexterity" : 18,
+      "modified_dexterity" : 20,
       "modified_intelligence" : 10,
-      "modified_strength" : 7,
+      "modified_strength" : 9,
       "modified_toughness" : 13,
       "name" : "rouge test 3",
       "strength" : 10,
