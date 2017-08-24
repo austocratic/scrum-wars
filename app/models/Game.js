@@ -14,8 +14,6 @@ var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 var slackTemplates = require('../slackTemplates');
 
-var testDB = require('../testDB');
-
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
@@ -30,23 +28,11 @@ class Game {
 
     //Get state of the game from DB
     async getState(){
-        
-        //If dev environment set the game state based on local file
-        if (process.env.USE_LOCAL_ENV){
-            this.state = testDB
-        }
-        
         this.state = await firebase.get();
     }
 
     //Push local state to the DB
     async updateState(){
-
-        //If dev environment dont write to firebase
-        if (process.env.USE_LOCAL_ENV){
-            return 'ok!'
-        }
-
         return await firebase.update('', this.state)
     }
     
@@ -68,28 +54,6 @@ class Game {
             //Heal
         
 
-    }
-
-    
-    accumulateProperties(obj1, obj2){
-        
-        console.log('obj1: ', obj1);
-        console.log('obj2: ', obj2);
-        
-        //Look at modifiers property
-        var modifierKeys = Object.keys(obj2);
-        
-        var cumulative = {};
-
-        modifierKeys.forEach( eachModifierKey =>{
-
-            //If the property exists, increment it, otherwise set it
-            if (obj1.eachModifierKey) {
-                cumulative = Object.assign(cumulative, {[eachModifierKey]: obj2.eachModifierKey + obj1[eachModifierKey]})
-            } else {
-                cumulative = Object.assign(cumulative, {[eachModifierKey]: obj1[eachModifierKey]})
-            }
-        });
     }
     
     //Set properties in memory

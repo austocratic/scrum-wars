@@ -183,8 +183,8 @@
       "match_wins" : 3,
       "max_hit_points" : 100,
       "modified_dexterity" : 12,
-      "modified_intelligence" : 18,
-      "modified_strength" : 4,
+      "modified_intelligence" : 22,
+      "modified_strength" : 3,
       "modified_toughness" : 6,
       "name" : "Freddy",
       "profile_image" : "unknown_character.jpg",
@@ -256,14 +256,14 @@
       "match_wins" : 0,
       "max_hit_points" : 100,
       "modified_dexterity" : 18,
-      "modified_intelligence" : 8,
-      "modified_strength" : -5,
-      "modified_toughness" : 5,
+      "modified_intelligence" : 10,
+      "modified_strength" : 7,
+      "modified_toughness" : 13,
       "name" : "rouge test 3",
       "strength" : 10,
       "toughness" : 8,
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
   "class" : {
@@ -368,11 +368,18 @@
     "-KjGQ1IPuwE24t4LPPNd" : {
       "cost" : 10,
       "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "modifiers" : {
+        "modified_strength" : 5
+      },
       "name" : "rusty longsword"
     },
     "-KjGQEzVbaxRlWFawSqI" : {
       "cost" : 10,
       "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "modifiers" : {
+        "modified_intelligence" : 2,
+        "modified_strength" : 2
+      },
       "name" : "cracked walking stick"
     },
     "-KjGQMKZOUclKWQFER1O" : {
@@ -382,11 +389,18 @@
         "modified_strength" : 2
       },
       "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "modifiers" : {
+        "modified_dexterity" : 5
+      },
       "name" : "simple bow"
     },
     "-KjGQPbo-96j_Uikhjqh" : {
       "cost" : 10,
       "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "modifiers" : {
+        "modified_dexterity" : 2,
+        "modified_strength" : 2
+      },
       "name" : "rusty dagger"
     },
     "-Kjk3sGUJy5Nu8GWsdff" : {

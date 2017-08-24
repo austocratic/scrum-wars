@@ -73,11 +73,6 @@ class Character extends BaseModel{
 
     purchaseItem(itemObject){
 
-        console.log('Called purchaseItem');
-
-        console.log('character gold: ', this.props.gold);
-        console.log('item cost: ', itemObject.props.cost);
-
         var responseTemplate;
 
         //Check if the player has sufficient gold
@@ -91,10 +86,25 @@ class Character extends BaseModel{
             return responseTemplate;
         }
 
+        //Properties of an item that will be pushed to the character's inventory
+        var item = {
+            //Equipment slot will be set at time of equipped
+            //equipment_slot_id: itemObject.props.slot,
+            name: itemObject.props.name,
+            is_equipped: 0,
+            item_id: itemObject.id,
+            modifiers: itemObject.props.modifiers
+        };
+
         //If sufficient gold:
         //Add item ID to player's inventory
-        this.props.inventory.unequipped.push(itemObject.id);
-        this.updateProperty('inventory', this.props.inventory);
+        if (this.props.inventory){
+            this.props.inventory.push(item);
+        } else {
+            this.props.inventory = [item]
+        }
+
+        //this.updateProperty('inventory', this.props.inventory);
 
         //Calculate the player's updated gold
         //Update the characters name property locally
