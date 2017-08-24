@@ -549,6 +549,7 @@ class Game {
     }
     
     //Arguments: array of item IDs
+    /*
     getItemList(itemArray){
 
         //Validate that array was passed
@@ -649,7 +650,7 @@ class Game {
 
             return baseTemplate
         });
-    }
+    }*/
     
 }
 

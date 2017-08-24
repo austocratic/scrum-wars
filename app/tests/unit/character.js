@@ -25,12 +25,8 @@ describe("character.purchaseItem() ", function() {
     var testItem = new Item(testGame.state, '-KjGQ1IPuwE24t4LPPNd');
 
     var inventoryArrayLengthBeforePurchase = testCharacter.props.inventory.length;
-
-    console.log('Inv before purchase: ', testCharacter.props.inventory);
     
     testCharacter.purchaseItem(testItem);
-    
-    console.log('Inv after purchase: ', testCharacter.props.inventory);
 
     it("should increase the character's inventory property (array) length by 1", function(done) {
 
@@ -46,6 +42,29 @@ describe("character.purchaseItem() ", function() {
         var testPass = 0;
 
         if (_.findIndex(testCharacter.props.inventory, {item_id: testItem.id}) >= 0){
+            testPass = 1;
+        }
+
+        assert.equal(testPass, 1);
+
+        done();
+
+    });
+});
+
+describe("character.getUnequippedItems() ", function() {
+
+    var testCharacter = new Character(testGame.state, testCharacterID);
+    
+    var unequippedItems = testCharacter.getUnequippedItems();
+    
+    console.log('unequippedItems: ', unequippedItems);
+
+    it("should return an array of length >= 0", function(done) {
+
+        var testPass = 0;
+
+        if (unequippedItems.length >= 0){
             testPass = 1;
         }
 

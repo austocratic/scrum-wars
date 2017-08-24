@@ -800,17 +800,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         slackTemplate = slackTemplates.itemList;
 
                         //Pass in the character's unequipped inventory array
-                        slackTemplate.attachments[0].actions[0].options = gameContext.getItemList(localCharacter.props.inventory.unequipped);
+                        slackTemplate.attachments[0].actions[0].options = localCharacter.getUnequippedItems();
 
                         updatedCallback = ':Inventory/itemDetail';
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
-
-                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        //slackInventoryTemplate.attachments[0].callback_id = requestCallback + ':Inventory/itemDetail';
-                        //slackInventoryTemplate.attachments[1].callback_id = requestCallback + ':Inventory/itemDetail';
-
-                        //console.log('slackTemplate after callbacks set: ', JSON.stringify(slackInventoryTemplate));
 
                         return slackTemplate;
 
@@ -848,22 +842,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         var updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
 
-                        /*
-                        var updatedAttachments = slackTemplateAttachments.map( singleAttachment =>{
-
-                            singleAttachment.callback_id = requestCallback + ':Equipment/itemDetail';
-
-                            return singleAttachment
-
-                        });*/
-
                         slackTemplate.attachments = updatedAttachments;
 
                         console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
-
-                        //Previous callback includes the menu selection was made from, now add the selection & the next menu
-                        //slackTemplate.attachments[0].callback_id = requestCallback + ':Equipment/itemDetail';
-                        //slackTemplate.attachments[1].callback_id = requestCallback + ':Equipment/itemDetail';
 
                         return slackTemplate;
 
