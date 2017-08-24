@@ -925,8 +925,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
 }
 
-
+/*
 module.exports = {
     getResponseTemplate: getResponseTemplate
 };
-
+*/

@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 var request = require('request');
 var assert = require('assert');
 
@@ -17,29 +17,32 @@ var testCharacter = new Character(testGame.state, testCharacterID);
 
 
 describe("slackRequest.getResponseTemplate()", function() {
+
+    describe("inventory request ", function() {
     
-    var requestCallback 
-    var requestActionName 
-    var requestActionValue
-    var requestSlackUserID
-    var requestSlackChannelID
-    var gameContext
-    var requestTextInput
-    
-    it(".initiate() should return 5", function(done) {
+        var requestCallback
+        var requestActionName
+        var requestActionValue
+        var requestSlackUserID
+        var requestSlackChannelID
+        var gameContext
+        var requestTextInput
+
+        it(".initiate() should return 5", function(done) {
 
 
-        var slackResponse = slackRequest.getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext, requestTextInput);
+            var slackResponse = slackRequest.getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext, requestTextInput);
 
-        console.log('unit test slackResponse: ', slackResponse);
-        
-        //var gameResult = testGame.inititate(5);
+            console.log('unit test slackResponse: ', slackResponse);
 
-        //console.log('gameResult: ', gameResult);
+            //var gameResult = testGame.inititate(5);
 
-        //assert.equal(gameResult, 5);
+            //console.log('gameResult: ', gameResult);
 
-        done();
+            //assert.equal(gameResult, 5);
 
+            done();
+
+        });
     });
-});
+});*/
