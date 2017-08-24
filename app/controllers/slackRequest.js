@@ -59,6 +59,9 @@ exports.slackSlashCommand = async (req, res, next) => {
     //Set the game state locally
     await game.getState();
 
+    //Calculate properties in memory
+    game.inititate();
+
     //Function format: getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
     //requestCallback = "command" hard coded
     //requestActionName =
@@ -126,7 +129,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     await game.getState();
     
     //Calculate properties in memory
-    
+    game.inititate()
 
     var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID, game, undefined);
 
