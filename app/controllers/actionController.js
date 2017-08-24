@@ -234,7 +234,36 @@ class BaseAction {
 
                 console.log('nestedKeys: ', nestedKeys);
 
+                //If key is nested
+                if (nestedKeys.length > 0) {
+                    getNestedKeys(nestedProperty);
+                }
             })
+        }
+
+        function getNestedKeys(nestedProperty){
+            console.log('nestedProperty: ', nestedProperty);
+
+            var nestedKeys = Object.keys(nestedProperty);
+
+            console.log('nestedKeys: ', nestedKeys);
+
+            nestedKeys.forEach( eachNestedKey =>{
+                var nestedValue = nestedProperty[eachNestedKey];
+
+                console.log('A nested value: ', nestedValue)
+            });
+
+
+            /*
+
+            var nestedProperty = modifiersToRemove[eachModifierKey];
+
+            console.log('eachModifierKeyObject: ', nestedProperty);
+
+            var nestedKeys = Object.keys(nestedProperty);
+
+            */
         }
 
 
@@ -769,16 +798,18 @@ class Backstab extends BaseAttack {
         console.log('characterEffects: ', characterEffects);
 
         //Find all currently applied effects that change the targets is_hidden property
-        var hidingEffects = this.actionCharacter.props.effects.filter( eachEffect =>{
-            return eachEffect.modifiers.is_hidden === 1
-        });
+        if (this.actionCharacter.props.effects) {
+            var hidingEffects = this.actionCharacter.props.effects.filter(eachEffect => {
+                return eachEffect.modifiers.is_hidden === 1
+            });
 
-        console.log('effectsOfSameType: ', hidingEffects);
+            console.log('effectsOfSameType: ', hidingEffects);
 
-        //Reverse all effects that change is_hidden property
-        hidingEffects.forEach( eachEffect =>{
-            this._reverseEffect(this.actionCharacter, eachEffect.action_id);
-        });
+            //Reverse all effects that change is_hidden property
+            hidingEffects.forEach(eachEffect => {
+                this._reverseEffect(this.actionCharacter, eachEffect.action_id);
+            });
+        }
 
         //Alert the channel of the action
         var alertDetails = {

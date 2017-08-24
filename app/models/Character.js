@@ -23,6 +23,54 @@ class Character extends BaseModel{
         this.id = characterID
     }
 
+    //Get an object with an accumulation of modifiers based on the propertyReference passed in
+    getCumulativeModifiers(propertyReference, matchTurn){
+        console.log('called getCumulativeModifiers');
+
+        console.log('propertyReference: ', propertyReference);
+
+        var cumulativeUpdates = {};
+        
+        this.props[propertyReference].forEach( eachEffect =>{
+
+            console.log('cumulativeUpdates: ', cumulativeUpdates);
+
+            //If the effect has an end turn, verify that it is not expired before adding
+            if (eachEffect.end_turn){
+                if (eachEffect.end_turn > matchTurn) {
+                    this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
+                }
+            //If effect does not have an end turn, add it
+            } else {
+                this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
+            }
+        });
+        
+        console.log('cumulative updates: ', cumulativeUpdates);
+        return cumulativeUpdates;
+    }
+
+    setModifiedStats(modifiers){
+
+        //Get the keys of the update object
+        var updateKeys = Object.keys(modifiers);
+
+        var baseAttribute, modifiedAttribute;
+        
+        //For each key, update the local character by adding that value plus the base attribute
+        updateKeys.forEach( eachUpdateKey =>{
+
+            //Parse the update key into two parts to get the base (I.E: modified_strength --> strength)
+            baseAttribute = eachUpdateKey.split("_")[1];
+
+            //Add base attribute to modified attribute
+            modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
+            
+            this.updateProperty(eachUpdateKey, modifiedAttribute);
+
+        });
+    }
+
     purchaseItem(itemObject){
 
         console.log('Called purchaseItem');
@@ -61,17 +109,6 @@ class Character extends BaseModel{
         return responseTemplate;
 
     }
-
-    /*
-    //Return an array of action IDs that are available this turn (regardless of what zone)
-    getActionIDs(){
-        return this.props.actions.map( eachAction =>{
-            if (eachAction.is_available === 1){
-
-            }
-            return eachAction.action_id;
-        });
-    }*/
 
     getActionIDs(){
 

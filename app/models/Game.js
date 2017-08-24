@@ -14,6 +14,8 @@ var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 var slackTemplates = require('../slackTemplates');
 
+var testDB = require('../tests/testDB');
+
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
@@ -28,11 +30,23 @@ class Game {
 
     //Get state of the game from DB
     async getState(){
+        
+        //If dev environment set the game state based on local file
+        if (process.env.USE_LOCAL_ENV){
+            this.state = testDB
+        }
+        
         this.state = await firebase.get();
     }
 
     //Push local state to the DB
     async updateState(){
+
+        //If dev environment dont write to firebase
+        if (process.env.USE_LOCAL_ENV){
+            return 'ok!'
+        }
+
         return await firebase.update('', this.state)
     }
     
@@ -53,6 +67,77 @@ class Game {
             //Increment that character's win total
             //Heal
         
+
+    }
+
+    
+    accumulateProperties(obj1, obj2){
+        
+        console.log('obj1: ', obj1);
+        console.log('obj2: ', obj2);
+        
+        //Look at modifiers property
+        var modifierKeys = Object.keys(obj2);
+        
+        var cumulative = {};
+
+        modifierKeys.forEach( eachModifierKey =>{
+
+            //If the property exists, increment it, otherwise set it
+            if (obj1.eachModifierKey) {
+                cumulative = Object.assign(cumulative, {[eachModifierKey]: obj2.eachModifierKey + obj1[eachModifierKey]})
+            } else {
+                cumulative = Object.assign(cumulative, {[eachModifierKey]: obj1[eachModifierKey]})
+            }
+        });
+    }
+    
+    //Set properties in memory
+    inititate(){
+        
+        try {
+            var characterKeys = Object.keys(this.state.character);
+
+            console.log('characterKeys: ', characterKeys);
+
+            var localCharacter;
+            
+            //Iterate through each character's effects setting the modified properties
+            characterKeys.forEach(eachCharacterKey => {
+                console.log('eachCharacter.active: ', this.state.character[eachCharacterKey].active);
+
+                //Character must be active to set modified properties
+                if (this.state.character[eachCharacterKey].active === 1) {
+                    localCharacter = new Character(this.state, eachCharacterKey);
+
+                    var cumulativeModifiers = {};
+                    
+                    //TODO hard coded 5 for matchTurn for unit test dev
+                    
+                    if (localCharacter.props.effects){
+                        var cumulativeEffects = localCharacter.getCumulativeModifiers('effects', 5);
+
+                        localCharacter.accumulateProperties(cumulativeModifiers, cumulativeEffects);
+                    }
+
+                    if (localCharacter.props.inventory){
+                        var cumulativeInventory = localCharacter.getCumulativeModifiers('inventory', 5);
+
+                        localCharacter.accumulateProperties(cumulativeModifiers, cumulativeInventory);
+                    }
+
+                    //Take modifiers object and set modified stats.  setModifiedStats takes the character's base stat and adds the modifier before updating
+                    localCharacter.setModifiedStats(cumulativeModifiers);
+                }
+            });
+            //for each character iterate through each
+
+            return 5;
+        } catch(err){
+    
+        console.log('error in initiate(): ', err);
+    }
+
 
     }
     

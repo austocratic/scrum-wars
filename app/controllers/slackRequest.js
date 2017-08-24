@@ -124,6 +124,9 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     //Set the game state locally
     await game.getState();
+    
+    //Calculate properties in memory
+    
 
     var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID, game, undefined);
 
