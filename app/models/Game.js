@@ -250,20 +250,7 @@ class Game {
         ]
         };
 
-        //Array of stat keys
-        //var statKeys = Object.keys(localCharacter.props);
-
         template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localCharacter.props.class_id + ".jpg";
-
-        //Iterate through the stat keys
-        /* Instead of iterating through all stats, I will make the list explicitly defined here
-        template.attachments[1].fields = statKeys.map( key =>{
-            return {
-                "title": key,
-                "value": localCharacter.props[key],
-                "short": true
-            };
-        });*/
 
         template.attachments[1].fields = [
             {
@@ -288,22 +275,22 @@ class Game {
             },
             {
                 "title": "Strength",
-                "value": localCharacter.props.strength,
+                "value": localCharacter.props.modified_strength,
                 "short": true
             },
             {
                 "title": "Intelligence",
-                "value": localCharacter.props.intelligence,
+                "value": localCharacter.props.modified_intelligence,
                 "short": true
             },
             {
                 "title": "Dexterity",
-                "value": localCharacter.props.dexterity,
+                "value": localCharacter.props.modified_dexterity,
                 "short": true
             },
             {
                 "title": "Toughness",
-                "value": localCharacter.props.toughness,
+                "value": localCharacter.props.modified_toughness,
                 "short": true
             },
             {
