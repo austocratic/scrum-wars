@@ -157,21 +157,7 @@ class Character extends BaseModel{
         //Else return false
         return false;
     }
-
-    getItems(){
-
-
-        var items = this.props.inventory;
-
-        return items.map( eachItem =>{
-
-            return {
-                "text": localItem.props.name,
-                "value": localItem.id
-            }
-        })
-    }
-
+    
     getUnequippedItems(){
 
         var items = this.props.inventory;
@@ -180,12 +166,18 @@ class Character extends BaseModel{
             .filter( eachItem =>{
                 return eachItem.is_equipped === 0;
             })
-            .map(eachItem => {
-                return {
-                    "text": eachItem.name,
-                    "value": eachItem.item_id
-                }
-            })
+    }
+
+    getEquippedItems(){
+        
+        var items = this.props.inventory;
+
+        return items
+            .filter( eachItem =>{
+                return eachItem.is_equipped === 1;
+            });
+        
+        //Get the equipment slots from the DB - we will display an equipment slot
     }
 
     getEquipmentList(equipmentIDArray){

@@ -800,7 +800,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         slackTemplate = slackTemplates.itemList;
 
                         //Pass in the character's unequipped inventory array
-                        slackTemplate.attachments[0].actions[0].options = localCharacter.getUnequippedItems();
+                        //slackTemplate.attachments[0].actions[0].options = localCharacter.getUnequippedItems();
+
+                        slackTemplate.attachments[0].actions[0].options =
+
+                            //Get the unequipped items then map into slack format
+                            localCharacter.getUnequippedItems()
+                                .map(eachItem => {
+                                    return {
+                                        "text": eachItem.name,
+                                        "value": eachItem.item_id
+                                    }
+                                });
 
                         updatedCallback = ':Inventory/itemDetail';
 
