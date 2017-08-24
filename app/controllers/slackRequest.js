@@ -770,6 +770,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         break;
 
+                    case 'equip':
+                        console.log('called itemDetail/equip');
+
+                        break;
+
                     /*
                      case 'no':
 
@@ -814,7 +819,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     }
                                 });
 
-                        updatedCallback = ':Inventory/itemDetail';
+                        updatedCallback = ':Inventory/inventoryList';
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
@@ -848,7 +853,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             ]
                         });
 
-                        updatedCallback = ':Equipment/itemDetail';
+                        updatedCallback = ':Equipment/equipmentList';
 
                         var updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
 
@@ -865,54 +870,42 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 console.log('called inventoryList');
 
+                //Create a local item
+                var localItem = new Item(gameContext.state, requestActionValue);
+
+                //Create an item detail view template
+                slackTemplate = localItem.getDetailView();
+
+                console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
+
+                //Add purchase buttons to the bottom of the template
+                slackTemplate.attachments[0].actions = [
+                    {
+                        "name": "equip",
+                        "text": "Equip Item",
+                        "type": "button",
+                        "value": "equip"
+                    },
+                    {
+                        "name": "back",
+                        "text": "Back",
+                        "type": "button",
+                        "value": "no"
+                    }];
+
+                //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                slackTemplate.attachments[0].callback_id = requestCallback + ':' + localItem.id + '/itemDetail';
+
+                return slackTemplate;
+
+                break;
+
+            case 'equipmentList':
+
+                console.log('called equipmentList');
+
                 //Return an item detail with the selection from the inventory list
 
-
-                break;
-
-            case 'inventory':
-
-                //Inventory view has 2 elements:
-                //1. Inventory list drop down
-                //2. Back button
-
-                switch (userSelection) {
-
-                    case 'inventory-list':
-
-                        //Load the item profile view
-
-                        break;
-
-                    case 'back-button':
-
-                        //Load the character profile view
-
-                        break;
-                }
-
-                break;
-
-            case 'equipment':
-
-                //Equipment view has 2 elements:
-                //1. Equipment list drop down
-                //2. Back button
-
-                switch (userSelection) {
-
-                    case 'equipment-list':
-
-                        //Load the item profile view
-
-                        break;
-
-                    case 'back-button':
-
-                        //Load the character profile view
-
-                        break;
-                }
 
                 break;
 
