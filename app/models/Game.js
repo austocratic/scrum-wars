@@ -14,7 +14,7 @@ var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 var slackTemplates = require('../slackTemplates');
 
-var testDB = require('../tests/testDB');
+var testDB = require('../testDB');
 
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');

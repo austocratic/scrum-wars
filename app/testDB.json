@@ -1,0 +1,685 @@
+{
+  "action" : {
+    "-Kjpe29q_fDkJG-73AQO" : {
+      "cool_down" : 1,
+      "delay" : 0,
+      "minimum_level" : 1,
+      "name" : "Quick Strike",
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KjpeJT7Oct3ZCtLhENO" : {
+      "cool_down" : 1,
+      "delay" : 0,
+      "effect_duration" : 100,
+      "minimum_level" : 1,
+      "name" : "Defensive",
+      "type" : "combat stance",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KkJVqtBIhpAKBfz9tcb" : {
+      "cool_down" : 1,
+      "minimum_level" : 1,
+      "name" : "Shop",
+      "type" : "explore",
+      "zone_id" : [ "-Khu9Zazk5XdFX9fD2Y8" ]
+    },
+    "-KkOq-y2_zgEgdhY-6_U" : {
+      "cool_down" : 2,
+      "delay" : 0,
+      "minimum_level" : 1,
+      "name" : "Life Tap",
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KkdduB9XuB46EsxqwIX" : {
+      "cool_down" : 2,
+      "delay" : 1,
+      "minimum_level" : 1,
+      "name" : "Forked Lightning",
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Kkdk_CD5vx8vRGQD268" : {
+      "cool_down" : 2,
+      "delay" : 1,
+      "minimum_level" : 1,
+      "name" : "Into Shadow",
+      "type" : "special",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Kqem2qns2gX4YBQGt4m" : {
+      "cool_down" : 2,
+      "delay" : 1,
+      "minimum_level" : 1,
+      "name" : "Savage Strike",
+      "strength" : 0,
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KqtOcn7MapqMfnGIZvo" : {
+      "cool_down" : 1,
+      "delay" : 0,
+      "minimum_level" : 1,
+      "name" : "Balanced",
+      "type" : "combat stance",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Kr3hnITyH9ZKx3VuZah" : {
+      "cool_down" : 1,
+      "delay" : 0,
+      "minimum_level" : 1,
+      "name" : "Backstab",
+      "type" : "shadow",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Kr9TRwZS7C9JHm1VzE3" : {
+      "cool_down" : 1,
+      "minimum_level" : 1,
+      "name" : "Tavern",
+      "type" : "explore",
+      "zone_id" : [ "-Khu9Zazk5XdFX9fD2Y8" ]
+    },
+    "-KrJaBvyYDGrNVfcaAd0" : {
+      "cool_down" : 1,
+      "delay" : 0,
+      "minimum_level" : 1,
+      "name" : "Arcane Bolt",
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    }
+  },
+  "character" : {
+    "-KkdlJPN_PdJCUydditm" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kkdk_CD5vx8vRGQD268",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkdduB9XuB46EsxqwIX",
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-Kird8_Vef-8Ej2aShaO",
+      "dexterity" : 18,
+      "gold" : 5,
+      "hit_points" : 10,
+      "id" : "-KkdlJPN_PdJCUydditm",
+      "intelligence" : 8,
+      "inventory" : {
+        "equipped" : [ "-KjGQ1IPuwE24t4LPPNd" ],
+        "unequipped" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQMKZOUclKWQFER1O", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQ1IPuwE24t4LPPNd" ]
+      },
+      "is_defending" : true,
+      "match_wins" : 27,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 21,
+      "modified_intelligence" : 8,
+      "modified_strength" : 12,
+      "modified_toughness" : 8,
+      "name" : "Monty",
+      "profile_image" : "unknown_character.jpg",
+      "strength" : 10,
+      "toughness" : 8,
+      "turn_action_used" : 0,
+      "user_id" : "U4ZA6CCBG",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "-Kkxf1ukVSF9VV6mIPlG" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkdduB9XuB46EsxqwIX",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kr9TRwZS7C9JHm1VzE3",
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 1,
+      "armor" : 0,
+      "class_id" : "-KircnK2x1_31EQiAYlk",
+      "dexterity" : 12,
+      "gold" : 100,
+      "hit_points" : -17,
+      "intelligence" : 18,
+      "inventory" : [ {
+        "equipment_slot_id" : "hand",
+        "is_equipped" : 1,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "modified_intelligence" : 4,
+          "modified_strength" : -1
+        }
+      } ],
+      "is_defending" : false,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 3,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 12,
+      "modified_intelligence" : 18,
+      "modified_strength" : 4,
+      "modified_toughness" : 6,
+      "name" : "Freddy",
+      "profile_image" : "unknown_character.jpg",
+      "strength" : 4,
+      "toughness" : 6,
+      "turn_action_used" : 0,
+      "user_id" : "U55U8F5B7",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "a7ad15dd1052e7e7ef8a" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 2,
+        "turn_used" : 1
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kkdk_CD5vx8vRGQD268",
+        "is_available" : 1,
+        "turn_available" : 3,
+        "turn_used" : 1
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kr3hnITyH9ZKx3VuZah",
+        "is_available" : 1,
+        "turn_available" : 2,
+        "turn_used" : 1
+      } ],
+      "active" : 1,
+      "armor" : 0,
+      "class_id" : "-Kird8_Vef-8Ej2aShaO",
+      "dexterity" : 18,
+      "effects" : [ {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "end_turn" : 101,
+        "modifiers" : {
+          "modified_strength" : -5,
+          "modified_toughness" : 5
+        },
+        "type" : "combat stance"
+      } ],
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "inventory" : [ {
+        "equipment_slot_id" : "hand",
+        "is_equipped" : 1,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "modified_intelligence" : 2,
+          "modified_strength" : 2
+        }
+      } ],
+      "is_hidden" : 1,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 18,
+      "modified_intelligence" : 8,
+      "modified_strength" : -5,
+      "modified_toughness" : 5,
+      "name" : "rouge test 3",
+      "strength" : 10,
+      "toughness" : 8,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    }
+  },
+  "class" : {
+    "-KircSgAkPTavnfob8F5" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkOq-y2_zgEgdhY-6_U", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "name" : "Shadow Knight",
+      "starting_attributes" : {
+        "dexterity" : 10,
+        "intelligence" : 10,
+        "strength" : 15,
+        "toughness" : 10
+      }
+    },
+    "-KircgtGZhoRrHnKryS5" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "name" : "Warrior",
+      "starting_attributes" : {
+        "dexterity" : 10,
+        "intelligence" : 5,
+        "strength" : 18,
+        "toughness" : 15
+      }
+    },
+    "-KircnK2x1_31EQiAYlk" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkdduB9XuB46EsxqwIX", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo", "-KrJaBvyYDGrNVfcaAd0" ],
+      "name" : "Wizard",
+      "starting_attributes" : {
+        "dexterity" : 12,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 6
+      }
+    },
+    "-KircwaX4eX6rAVoGYJm" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "name" : "Paladin",
+      "starting_attributes" : {
+        "dexterity" : 10,
+        "intelligence" : 10,
+        "strength" : 15,
+        "toughness" : 10
+      }
+    },
+    "-Kird8_Vef-8Ej2aShaO" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kkdk_CD5vx8vRGQD268", "-KqtOcn7MapqMfnGIZvo", "-Kr3hnITyH9ZKx3VuZah" ],
+      "name" : "Rogue",
+      "starting_attributes" : {
+        "dexterity" : 18,
+        "intelligence" : 8,
+        "strength" : 10,
+        "toughness" : 8
+      }
+    },
+    "-KirdGNRIajLmQ_CRRjW" : {
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo" ],
+      "name" : "Ranger",
+      "starting_attributes" : {
+        "dexterity" : 15,
+        "intelligence" : 8,
+        "strength" : 10,
+        "toughness" : 10
+      }
+    }
+  },
+  "effect" : {
+    "-KqKLddOaYcWnOvVIAYe" : {
+      "name" : "damage_target",
+      "strength" : 0
+    }
+  },
+  "equipment_slot" : {
+    "-KmTV24FelP7T8rdKLEx" : {
+      "name" : "Primary hand"
+    },
+    "-KmTVOX1hzSD2llNT0Pk" : {
+      "name" : "Chest"
+    },
+    "-KmTVQX2nCD8-AQrzHCN" : {
+      "name" : "Head"
+    },
+    "-KmTVRv_WT0zSC5tZ-rn" : {
+      "name" : "Arms"
+    },
+    "-KmTVTTNGywT45mkais0" : {
+      "name" : "Legs"
+    },
+    "-KmTVUqVKXWRDr4VCb3k" : {
+      "name" : "Feet"
+    },
+    "-KmTVXPr_KQ1an1N2Ih1" : {
+      "name" : "Secondary hand"
+    }
+  },
+  "global_state" : {
+    "-Kjkkd-WF6OZAa9tCOt0" : {
+      "number_turns" : 1
+    },
+    "match_id" : "-KmTOFWVJav3v7j1hYLA",
+    "next_match_start" : 5000000000
+  },
+  "item" : {
+    "-KjGQ1IPuwE24t4LPPNd" : {
+      "cost" : 10,
+      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "name" : "rusty longsword"
+    },
+    "-KjGQEzVbaxRlWFawSqI" : {
+      "cost" : 10,
+      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "name" : "cracked walking stick"
+    },
+    "-KjGQMKZOUclKWQFER1O" : {
+      "cost" : 10,
+      "effects" : {
+        "modified_dexterity" : 3,
+        "modified_strength" : 2
+      },
+      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "name" : "simple bow"
+    },
+    "-KjGQPbo-96j_Uikhjqh" : {
+      "cost" : 10,
+      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "name" : "rusty dagger"
+    },
+    "-Kjk3sGUJy5Nu8GWsdff" : {
+      "cost" : 0,
+      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVOX1hzSD2llNT0Pk", "-KmTVQX2nCD8-AQrzHCN", "-KmTVRv_WT0zSC5tZ-rn", "-KmTVTTNGywT45mkais0", "-KmTVUqVKXWRDr4VCb3k", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "name" : "empty"
+    }
+  },
+  "match" : {
+    "-Kjkkd-WF6OZAa9tCOt0" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1496119710572,
+      "date_started" : 1.496074304976E9,
+      "number_turns" : 397,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : "ph"
+    },
+    "-KlMflE7J-zwdJBJmNY_" : {
+      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
+      "date_ended" : 1496553539359,
+      "date_started" : 1.496553534675E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KllXgT1-KB18m8SNwAr" : {
+      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
+      "date_ended" : 1496553630138,
+      "date_started" : 1.496553612384E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KllY1cFIXaYWyuYc0-g" : {
+      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
+      "date_ended" : 1496622436863,
+      "date_started" : 1.496598313244E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KlpdW8Ia8b7xskjbxtc" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497135786695,
+      "date_started" : 1.497135641641E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJEmgVsA_-sUixx47E" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497135833602,
+      "date_started" : 1.497135811717E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJEy8J90m3mD8SewpC" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497136015550,
+      "date_started" : 1.497135911108E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJFeZKlNAMdzwPV3t0" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497138621120,
+      "date_started" : 1.497136041051E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KmJPagOhYPdiGXJzxvI" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497141392279,
+      "date_started" : 1.497138673404E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJ_AEqQc5lGaOjU6mp" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497141991090,
+      "date_started" : 1.497141510799E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJbSRFVQjVniM6Qw49" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497142231807,
+      "date_started" : 1.497142018469E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJcNCuDYCRxrM3U9s8" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497142547438,
+      "date_started" : 1.497142242868E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJd_G9P_nLGFR05mG7" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497142943492,
+      "date_started" : 1.497142556254E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJf4xXCQDW3CJQFYZW" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497143178516,
+      "date_started" : 1.497142949667E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJfzLAIkUizFa78orF" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497144409624,
+      "date_started" : 1.497144047858E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmJkftdlQ_OjSI-0kPV" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497226479348,
+      "date_started" : 1.497145075672E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmOdkS_mlSczVmmgj4h" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497290339154,
+      "date_started" : 1.497288528156E9,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KmSSMDhxjLRlprKuNUW" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497290751650,
+      "date_started" : 1.497290357657E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmSTvyaogjtcKpNY_jL" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497298911293,
+      "date_started" : 1.497290818814E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
+      "zone_id" : 0
+    },
+    "-KmSy32-7n9fVV1lans8" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497298946073,
+      "date_started" : 1.497298935021E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmSyBX-6Arw54WUeNSN" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497299142791,
+      "date_started" : 1.497299137592E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmSywYO7yXIl92vLGiA" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497301163568,
+      "date_started" : 1.497301158677E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmT5dul7gX8Akk1Cdwe" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497301678106,
+      "date_started" : 1.497301671887E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmT7bWeApJ4mFiEe1FL" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497301691839,
+      "date_started" : 1.497301685213E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmT7esIBtGZA1epSm5m" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497301883873,
+      "date_started" : 1.497301869989E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmT8Ol-sPsqrZ4rmcZE" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497302448700,
+      "date_started" : 1.497302444992E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmTAYeHgCK2WM2_DtJr" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497302465490,
+      "date_started" : 1.497302454921E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmTAbkcYvb9HLD9wynf" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497302815742,
+      "date_started" : 1.497302476931E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmTBxH0tkNaSo0rdT61" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497305895619,
+      "date_started" : 1.497305889452E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmTNhBPwoTvwPXclkli" : {
+      "character_id_won" : "-KkdlJPN_PdJCUydditm",
+      "date_ended" : 1497306040326,
+      "date_started" : 1.497306035781E9,
+      "number_turns" : 0,
+      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
+      "zone_id" : 0
+    },
+    "-KmTOFWVJav3v7j1hYLA" : {
+      "character_id_won" : 0,
+      "date_ended" : 0,
+      "date_started" : 0,
+      "number_turns" : 1,
+      "starting_character_ids" : 0,
+      "zone_id" : 0
+    }
+  },
+  "merchant" : {
+    "-KjGPSzj3HGaBbAitsvL" : {
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh" ],
+      "name" : "Winston",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    }
+  },
+  "npc" : {
+    "-Kr9WiJ3rRP-OuNPkpMQ" : {
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh" ],
+      "name" : "Winston",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "test" : 1
+  },
+  "user" : {
+    "-Kp1Y_uOmv_EwNc8mTj4" : {
+      "character_id" : "a7ad15dd1052e7e7ef8a",
+      "slack_user_id" : "U4ZA6CCBG"
+    },
+    "-Kp1YomnSvJC_eFbFmNk" : {
+      "character_id" : "-Kkxf1ukVSF9VV6mIPlG",
+      "slack_user_id" : "U55U8F5B7"
+    }
+  },
+  "zone" : {
+    "-Khu9Ti4cn9PQ2Q1TSBT" : {
+      "channel" : "arena",
+      "channel_id" : "C4Z7F8XMW",
+      "name" : "The Arena"
+    },
+    "-Khu9Zazk5XdFX9fD2Y8" : {
+      "channel" : "town-square",
+      "channel_id" : "C4Z4P1BUH",
+      "name" : "The Town Square"
+    }
+  }
+}
