@@ -148,6 +148,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     console.log('called getResponseTemplate, requestCallback: ', requestCallback);
     console.log('called getResponseTemplate, requestActionName: ', requestActionName);
     console.log('called getResponseTemplate, requestActionValue: ', requestActionValue);
+    console.log('called getResponseTemplate, requestSlackUserID: ', requestSlackUserID);
+    console.log('called getResponseTemplate, requestSlackChannelID: ', requestSlackChannelID);
+    console.log('called getResponseTemplate, gameContext: ', gameContext);
+    console.log('called getResponseTemplate, requestTextInput: ', requestTextInput);
 
     var slackTemplate;
 
@@ -631,9 +635,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 var priorView = priorViewSelection[0];
                 var priorSelection = priorViewSelection[1];
 
-                console.log('priorView: ', priorView);
-                console.log('priorSelection: ', priorSelection);
-
                 var targetCharacter = new Character(gameContext.state, requestActionValue);
                 
                 var localAction = new Action(gameContext.state, priorSelection);
@@ -827,13 +828,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate = slackTemplates.itemList;
 
-                        //Pass in the character's unequipped inventory array
-                        //slackTemplate.attachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
-                        //var slackTemplateAttachments = gameContext.getEquipmentList(localCharacter.props.inventory.equipped);
-
                         var slackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
-
-                        console.log('equipment slackTemplateAttachments: ', slackTemplateAttachments);
 
                         //getEquipmentList above overwrites attachments on template.  Add a back button here
                         slackTemplateAttachments.push({
@@ -858,8 +853,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         var updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
 
                         slackTemplate.attachments = updatedAttachments;
-
-                        console.log('Equipment template: ', JSON.stringify(slackTemplate.attachments));
 
                         return slackTemplate;
 
@@ -931,3 +924,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
 
 }
+
+
+module.exports = {
+    getResponseTemplate: getResponseTemplate
+};
+
