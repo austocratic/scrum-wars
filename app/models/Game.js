@@ -65,7 +65,6 @@ class Game {
 
 
         //Compare current time with start time & if there is a current match started today
-        var localMatch = new Match(this.state, )
 
 
 
