@@ -110,23 +110,27 @@ class Game {
                     if (localCharacter.props.effects){
                         var cumulativeEffects = localCharacter.getCumulativeModifiers('effects', 5);
 
+                        console.log('Game, cumulativeEffects: ', cumulativeEffects);
+
                         localCharacter.accumulateProperties(cumulativeModifiers, cumulativeEffects);
                     }
 
                     if (localCharacter.props.inventory){
                         var cumulativeInventory = localCharacter.getCumulativeModifiers('inventory', 5);
 
+                        console.log('Game, cumulativeInventory: ', cumulativeInventory);
+
                         localCharacter.accumulateProperties(cumulativeModifiers, cumulativeInventory);
                     }
 
                     console.log('Adjusting character by cumulativeModifers: ', cumulativeModifiers);
 
-                    console.log('Character before modifications: ', localCharacter.props);
+                    console.log('modified_strength before modifications: ', localCharacter.props.modified_strength);
 
                     //Take modifiers object and set modified stats.  setModifiedStats takes the character's base stat and adds the modifier before updating
                     localCharacter.setModifiedStats(cumulativeModifiers);
 
-                    console.log('Character after modifications: ', localCharacter.props);
+                    console.log('modified_strength after modifications: ', localCharacter.props.modified_strength);
                 }
             });
             //for each character iterate through each

@@ -27,13 +27,13 @@ class Character extends BaseModel{
     getCumulativeModifiers(propertyReference, matchTurn){
         console.log('called getCumulativeModifiers');
 
-        console.log('propertyReference: ', propertyReference);
+        //console.log('propertyReference: ', propertyReference);
 
         var cumulativeUpdates = {};
         
         this.props[propertyReference].forEach( eachEffect =>{
 
-            console.log('cumulativeUpdates: ', cumulativeUpdates);
+            //console.log('cumulativeUpdates: ', cumulativeUpdates);
 
             //If the effect has an end turn, verify that it is not expired before adding
             if (eachEffect.end_turn){
@@ -46,7 +46,7 @@ class Character extends BaseModel{
             }
         });
         
-        console.log('cumulative updates: ', cumulativeUpdates);
+        //console.log('cumulative updates: ', cumulativeUpdates);
         return cumulativeUpdates;
     }
 
