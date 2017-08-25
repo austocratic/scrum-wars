@@ -119,8 +119,14 @@ class Game {
                         localCharacter.accumulateProperties(cumulativeModifiers, cumulativeInventory);
                     }
 
+                    console.log('Adjusting character by cumulativeModifers: ', cumulativeModifiers);
+
+                    console.log('Character before modifications: ', localCharacter.props);
+
                     //Take modifiers object and set modified stats.  setModifiedStats takes the character's base stat and adds the modifier before updating
                     localCharacter.setModifiedStats(cumulativeModifiers);
+
+                    console.log('Character after modifications: ', localCharacter.props);
                 }
             });
             //for each character iterate through each

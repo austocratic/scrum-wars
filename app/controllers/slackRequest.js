@@ -955,7 +955,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 slackTemplate.attachments[0].actions = [
                     {
                         "name": 'unequip',
-                        "text": "Equip Item",
+                        "text": "Unequip Item",
                         "type": "button",
                         "value": localItem.id
                     },
