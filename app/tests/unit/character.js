@@ -19,6 +19,7 @@ testGame.inititate();
 
 var testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
 
+/*
 describe("character.purchaseItem() ", function() {
 
     var testCharacter = new Character(testGame.state, testCharacterID);
@@ -55,7 +56,7 @@ describe("character.purchaseItem() ", function() {
 describe("character.getUnequippedItems() ", function() {
 
     var testCharacter = new Character(testGame.state, testCharacterID);
-    
+
     var unequippedItems = testCharacter.getUnequippedItems();
     
     console.log('unequippedItems: ', unequippedItems);
@@ -73,4 +74,29 @@ describe("character.getUnequippedItems() ", function() {
         done();
 
     });
+});
+*/
+describe("character.equipItem() ", () => {
+
+    var testCharacter = new Character(testGame.state, testCharacterID);
+
+    var itemID = '-KjGQEzVbaxRlWFawSqI';
+
+    var unequippedItem = _.find(testCharacter.props.inventory, {'item_id': itemID});
+
+    testCharacter.equipItem(itemID);
+
+    it("", function(done) {
+        
+        var testPass = 0;
+
+        if (unequippedItem.is_equipped === 1){
+            testPass = 1;
+        }
+
+        assert.equal(testPass, 1);
+
+        done();
+    });
+    
 });

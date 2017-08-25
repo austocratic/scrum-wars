@@ -176,7 +176,16 @@
           "modified_intelligence" : 4,
           "modified_strength" : -1
         }
-      } ],
+      },
+        {
+          "equipment_slot_id" : "hand",
+          "is_equipped" : 0,
+          "item_id" : "-KjGQEzVbaxRlWFawSqI",
+          "modifiers" : {
+            "modified_intelligence" : 4,
+            "modified_strength" : -1
+          }
+        }],
       "is_defending" : false,
       "is_hidden" : 0,
       "level" : 1,

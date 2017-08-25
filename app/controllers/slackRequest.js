@@ -730,10 +730,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 //Add purchase buttons to the bottom of the template
                 slackTemplate.attachments[0].actions = [{
-                    "name": "yes",
-                    "text": "Yes, I'll take it!",
-                    "type": "button",
-                    "value": "yes"
+                        "name": "yes",
+                        "text": "Yes, I'll take it!",
+                        "type": "button",
+                        "value": "yes"
                     },
                     {
                         "name": "back",
@@ -753,6 +753,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 console.log('called itemDetail');
 
+                var itemSelection, valueSelection, itemID;
+                
                 switch (userSelection){
 
                     case 'yes':
@@ -760,11 +762,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('called itemDetail/yes');
 
                         //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
-                        var itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
+                        itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
 
-                        var valueSelection = itemSelection.split(":");
+                        valueSelection = itemSelection.split(":");
 
-                        var itemID = valueSelection[valueSelection.length - 1];
+                        itemID = valueSelection[valueSelection.length - 1];
 
                         return localCharacter.purchaseItem(new Item(gameContext.state, itemID));
 
@@ -772,6 +774,41 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'equip':
                         console.log('called itemDetail/equip');
+
+                        //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
+                        itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
+
+                        valueSelection = itemSelection.split(":");
+
+                        itemID = valueSelection[valueSelection.length - 1];
+
+                        localItem = new Item(gameContext.state, itemID);
+                        
+                        localCharacter.equipItem(itemID);
+
+                        return {
+                            text: 'You equip ' + localItem.props.name
+                        };
+                        
+                        break;
+                    
+                    case 'unequip':
+                        console.log('called itemDetail/unequip');
+
+                        //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
+                        itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
+
+                        valueSelection = itemSelection.split(":");
+
+                        itemID = valueSelection[valueSelection.length - 1];
+                        
+                        localItem = new Item(gameContext.state, itemID);
+
+                        localCharacter.unequipItem(itemID);
+                        
+                        return {
+                            text: 'You unequip ' + localItem.props.name
+                        };
 
                         break;
 
@@ -797,6 +834,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
             case 'characterProfile':
 
+                var localItem;
+                
                 switch (userSelection) {
 
                     case 'Inventory':
@@ -871,7 +910,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('called inventoryList');
 
                 //Create a local item
-                var localItem = new Item(gameContext.state, requestActionValue);
+                localItem = new Item(gameContext.state, requestActionValue);
 
                 //Create an item detail view template
                 slackTemplate = localItem.getDetailView();
@@ -881,10 +920,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Add purchase buttons to the bottom of the template
                 slackTemplate.attachments[0].actions = [
                     {
-                        "name": "equip",
+                        "name": 'equip',
                         "text": "Equip Item",
                         "type": "button",
-                        "value": "equip"
+                        "value": localItem.id
                     },
                     {
                         "name": "back",
@@ -903,9 +942,34 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
             case 'equipmentList':
 
                 console.log('called equipmentList');
+                
+                //Create a local item
+                localItem = new Item(gameContext.state, requestActionValue);
 
-                //Return an item detail with the selection from the inventory list
+                //Create an item detail view template
+                slackTemplate = localItem.getDetailView();
 
+                console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
+
+                //Add purchase buttons to the bottom of the template
+                slackTemplate.attachments[0].actions = [
+                    {
+                        "name": 'unequip',
+                        "text": "Equip Item",
+                        "type": "button",
+                        "value": localItem.id
+                    },
+                    {
+                        "name": "back",
+                        "text": "Back",
+                        "type": "button",
+                        "value": "no"
+                    }];
+
+                //Previous callback includes the menu selection was made from, now add the selection & the next menu
+                slackTemplate.attachments[0].callback_id = requestCallback + ':' + localItem.id + '/itemDetail';
+
+                return slackTemplate;
 
                 break;
 

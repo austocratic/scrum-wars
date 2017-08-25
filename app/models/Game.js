@@ -35,6 +35,11 @@ class Game {
     async updateState(){
         return await firebase.update('', this.state)
     }
+
+    //TODO should probably move this to a game helper file
+    randomGenerator() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
     
     //Refresh function checks the game's state looking for certain conditions (player deaths, ect.)
     //It is invoked periodically by cron
@@ -42,8 +47,33 @@ class Game {
     //TODO I should probably make a gameController file and move this (and other functions) into it
     refresh(){
 
+        //check if there is an active match
+        var activeMatch = _.find(this.state.match, {'active': 1});
+
+        var activeMatchID;
+        
+        if (activeMatch === undefined){
+            //No active match, create one
+            activeMatchID = this.createMatch();
+        }
+        
+        if (activeMatchID === undefined){
+            //find the active match ID
+            
+            
+        }
+
+
+        //Compare current time with start time & if there is a current match started today
+        var localMatch = new Match(this.state, )
+
+
+
         //Check for match start
             //Announce that match has begun
+
+
+
 
         //Check for dead characters
             //If dead character, remove them from the arena
@@ -104,14 +134,36 @@ class Game {
 
 
     }
-    
+
+    createMatch(zoneID){
+
+        var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
+
+        var currentMatches = this.state.match;
+
+        var newMatch = {
+            [localRandomID]: {
+                active: 0,
+                turn: 0,
+                starting_character_ids : [],
+                zone_id : ''
+            }
+        };
+
+        //Mutate the object
+        Object.assign(currentMatches, newMatch);
+
+        return localRandomID;
+    }
+
     createCharacter(userID){
-        
+
+        /*
         function randomGenerator() {
             return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-        }
+        }*/
         
-        var localRandomID = (randomGenerator() + randomGenerator() + randomGenerator() + randomGenerator() + randomGenerator()).toLowerCase();
+        var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
         var currentCharacters = this.state.character;
 
@@ -547,25 +599,6 @@ class Game {
         return slackTemplate
         
     }
-    
-    //Arguments: array of item IDs
-    /*
-    getItemList(itemArray){
-
-        //Validate that array was passed
-        //if (typeof(itemArray) === array)
-
-        return itemArray.map( eachInventoryItemID =>{
-
-            //Create a local item
-            var localItem = new Item(this.state, eachInventoryItemID);
-            
-            return {
-                "text": localItem.props.name,
-                "value": localItem.id
-            }
-        })
-    }*/
 
     getEquippedItemView(localCharacter){
 

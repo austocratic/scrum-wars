@@ -99,6 +99,7 @@ class Character extends BaseModel{
         //If sufficient gold:
         //Add item ID to player's inventory
         if (this.props.inventory){
+
             this.props.inventory.push(item);
         } else {
             this.props.inventory = [item]
@@ -176,6 +177,54 @@ class Character extends BaseModel{
             .filter( eachItem =>{
                 return eachItem.is_equipped === 1;
             });
+    }
+
+    equipItem(itemID){
+
+        //find the item in inventory
+        var unequippedItem = _.find(this.props.inventory, {'item_id': itemID});
+
+        //Item does not exist
+        if (unequippedItem === undefined){
+
+            console.log('ERROR: attempted to equip an item ID that does not exist on that character');
+
+            return {
+                text: 'ERROR: attempted to equip an item ID that does not exist on that character'
+            }
+        }
+        
+        if (unequippedItem.is_equipped === 1){
+            return {
+                test: 'That Item is already equipped!'
+            }
+        }
+
+        unequippedItem.is_equipped = 1;
+    }
+
+    unequipItem(itemID){
+
+        //find the item in inventory
+        var equippedItem = _.find(this.props.inventory, {'item_id': itemID});
+
+        //Item does not exist
+        if (equippedItem === undefined){
+
+            console.log('ERROR: attempted to unequip an item ID that does not exist on that character');
+
+            return {
+                text: 'ERROR: attempted to unequip an item ID that does not exist on that character'
+            }
+        }
+
+        if (equippedItem.is_equipped === 0){
+            return {
+                test: 'That Item is already unequipped!'
+            }
+        }
+
+        equippedItem.is_equipped = 0;
     }
 
     inactivate(){

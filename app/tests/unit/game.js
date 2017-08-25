@@ -14,7 +14,6 @@ var testCharacterID = 'a7ad15dd1052e7e7ef8a';
 
 var testCharacter = new Character(testGame.state, testCharacterID);
 
-
 describe("Game model", function() {
 
     it(".initiate() should return 5", function(done) {

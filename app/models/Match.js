@@ -24,6 +24,13 @@ class Match extends BaseModel{
         this.id = matchID
 
     }
+    
+    start(){
+        
+        
+        //Create a new match
+        
+    }
 }
 
 
