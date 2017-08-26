@@ -19,6 +19,67 @@ testGame.inititate();
 
 var testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
 
+var testCharacterID2 ='a7ad15dd1052e7e7ef8a';
+
+
+//describe("character.getCumulativeModifiers() ", () => {
+
+    //var testCharacter = new Character(testGame.state, testCharacterID2);
+
+    /*
+    describe("called getCumulativeModifiers('lasagna', 5) ", () => {
+
+        var modifiers = testCharacter.getCumulativeModifiers('lasagna', 5);
+
+        it("should return an empty object, because lasagna is not a property of the character", done => {
+
+            console.log('getCumulativeModifiers, modifiers: ', modifiers);
+
+            let modifiersKeys = Object.keys(modifiers);
+
+            assert.strictEqual(modifiersKeys.length, 0);
+
+            done();
+        });
+    });*/
+    /*
+    describe("called getCumulativeModifiers('effects', 5) ", () => {
+
+        var modifiers = testCharacter.getCumulativeModifiers('inventory', 5);
+
+        it("", done => {
+
+            console.log('getCumulativeModifiers, modifiers: ', modifiers);
+
+            let modifiersKeys = Object.keys(modifiers);
+
+            assert.strictEqual(modifiersKeys.length, 0);
+
+            done();
+        });
+    });*/
+    /*
+    describe("called getCumulativeModifiers('inventory', filterFunction) ", () => {
+
+        let filterFunction = eachEffect => {
+            return eachEffect.is_equipped === 1
+        };
+        
+        let modifiers = testCharacter.getCumulativeModifiers('inventory', filterFunction);
+
+        it("", done => {
+
+            console.log('getCumulativeModifiers, modifiers: ', modifiers);
+
+            let modifiersKeys = Object.keys(modifiers);
+
+            assert.strictEqual(modifiersKeys.length, 0);
+
+            done();
+        });
+    });
+});
+*/
 /*
 describe("character.purchaseItem() ", function() {
 
@@ -76,6 +137,7 @@ describe("character.getUnequippedItems() ", function() {
     });
 });
 */
+/*
 describe("character.equipItem() ", () => {
 
     var testCharacter = new Character(testGame.state, testCharacterID);
@@ -99,4 +161,4 @@ describe("character.equipItem() ", () => {
         done();
     });
     
-});
+});*/

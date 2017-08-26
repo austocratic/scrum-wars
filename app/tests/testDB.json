@@ -161,7 +161,7 @@
         "turn_available" : 0,
         "turn_used" : 0
       } ],
-      "active" : 1,
+      "active" : 0,
       "armor" : 0,
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "dexterity" : 12,
@@ -193,7 +193,7 @@
       "max_hit_points" : 100,
       "modified_dexterity" : 12,
       "modified_intelligence" : 22,
-      "modified_strength" : 3,
+      "modified_strength" : 10,
       "modified_toughness" : 6,
       "name" : "Freddy",
       "profile_image" : "unknown_character.jpg",

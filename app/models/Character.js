@@ -24,16 +24,65 @@ class Character extends BaseModel{
     }
 
     //Get an object with an accumulation of modifiers based on the propertyReference passed in
+    getCumulativeModifiers(propertyReference, filterFunction){
+        console.log('called getCumulativeModifiers');
+
+        var cumulativeUpdates = {};
+
+        let characterPropertyReference = this.props[propertyReference];
+
+        //If property reference does not exist on character, return an empty object
+        if (characterPropertyReference === undefined) {
+            console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
+            return cumulativeUpdates
+        }
+
+        let filteredModifiers = characterPropertyReference.filter(filterFunction);
+        
+        console.log('filteredModifiers: ', filteredModifiers);
+
+        filteredModifiers.forEach( eachFilteredModifier=>{
+
+            console.log('eachFilteredModifier: ', eachFilteredModifier);
+            this.accumulateProperties(cumulativeUpdates, eachFilteredModifier.modifiers);
+        });
+
+        return cumulativeUpdates;
+
+        /*
+        characterPropertyReference.forEach( eachEffect =>{
+
+            //If the effect has an end turn, verify that it is not expired before adding
+            if (eachEffect.end_turn){
+                if (eachEffect.end_turn > matchTurn) {
+                    this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
+                }
+                //If effect does not have an end turn, add it
+            } else {
+                this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
+            }
+        });*/
+
+        //console.log('cumulative updates: ', cumulativeUpdates);
+        //return cumulativeUpdates;
+    }
+
+    /*
+    //Get an object with an accumulation of modifiers based on the propertyReference passed in
     getCumulativeModifiers(propertyReference, matchTurn){
         console.log('called getCumulativeModifiers');
 
-        //console.log('propertyReference: ', propertyReference);
-
         var cumulativeUpdates = {};
-        
-        this.props[propertyReference].forEach( eachEffect =>{
 
-            //console.log('cumulativeUpdates: ', cumulativeUpdates);
+        let characterPropertyReference = this.props[propertyReference];
+
+        //If property reference does not exist on character, return an empty object
+        if (characterPropertyReference === undefined) {
+            console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
+            return cumulativeUpdates
+        }
+
+        characterPropertyReference.forEach( eachEffect =>{
 
             //If the effect has an end turn, verify that it is not expired before adding
             if (eachEffect.end_turn){
@@ -48,7 +97,7 @@ class Character extends BaseModel{
         
         //console.log('cumulative updates: ', cumulativeUpdates);
         return cumulativeUpdates;
-    }
+    }*/
 
     setModifiedStats(modifiers){
 

@@ -104,33 +104,53 @@ class Game {
                     localCharacter = new Character(this.state, eachCharacterKey);
 
                     var cumulativeModifiers = {};
-                    
-                    //TODO hard coded 5 for matchTurn for unit test dev
-                    
-                    if (localCharacter.props.effects){
-                        var cumulativeEffects = localCharacter.getCumulativeModifiers('effects', 5);
 
-                        console.log('Game, cumulativeEffects: ', cumulativeEffects);
+                    //console.log('localCharacter.props: ', localCharacter.props);
+
+                    //TODO hard coded 5 for matchTurn for unit test dev
+                    if (localCharacter.props.effects){
+
+                        //console.log('passed localCharacter.props.effects check')
+
+                        let filterFunction = eachEffect => {
+                            //return eachEffect.is_equipped === 1
+                            return eachEffect.end_turn > 5; //Match turn
+                        };
+
+                        let cumulativeEffects = localCharacter.getCumulativeModifiers('effects', filterFunction);
+
+                        //console.log('Game, cumulativeEffects: ', cumulativeEffects);
 
                         localCharacter.accumulateProperties(cumulativeModifiers, cumulativeEffects);
+
+                        //console.log('Game, cumulativeModifiers after effects: ', cumulativeModifiers);
                     }
+
+                    //console.log('First cumulativeModifers: ', cumulativeModifiers);
 
                     if (localCharacter.props.inventory){
-                        var cumulativeInventory = localCharacter.getCumulativeModifiers('inventory', 5);
 
-                        console.log('Game, cumulativeInventory: ', cumulativeInventory);
+                        let filterFunction = eachEffect => {
+                            return eachEffect.is_equipped === 1
+                        };
+
+                        let cumulativeInventory = localCharacter.getCumulativeModifiers('inventory', filterFunction);
+
+                        //console.log('Game, cumulativeInventory: ', cumulativeInventory);
 
                         localCharacter.accumulateProperties(cumulativeModifiers, cumulativeInventory);
+
+                        //console.log('Game, cumulativeModifiers after inventory: ', cumulativeModifiers);
                     }
 
-                    console.log('Adjusting character by cumulativeModifers: ', cumulativeModifiers);
+                    //console.log('Second cumulativeModifers: ', cumulativeModifiers);
 
-                    console.log('modified_strength before modifications: ', localCharacter.props.modified_strength);
+                    //console.log('modified_strength before modifications: ', localCharacter.props.modified_strength);
 
                     //Take modifiers object and set modified stats.  setModifiedStats takes the character's base stat and adds the modifier before updating
                     localCharacter.setModifiedStats(cumulativeModifiers);
 
-                    console.log('modified_strength after modifications: ', localCharacter.props.modified_strength);
+                    //console.log('modified_strength after modifications: ', localCharacter.props.modified_strength);
                 }
             });
             //for each character iterate through each
