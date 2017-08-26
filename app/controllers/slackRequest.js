@@ -784,7 +784,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         localItem = new Item(gameContext.state, itemID);
                         
-                        localCharacter.equipItem(itemID);
+                        localCharacter.equipItem(localItem);
 
                         return {
                             text: 'You equip ' + localItem.props.name

@@ -48,56 +48,7 @@ class Character extends BaseModel{
         });
 
         return cumulativeUpdates;
-
-        /*
-        characterPropertyReference.forEach( eachEffect =>{
-
-            //If the effect has an end turn, verify that it is not expired before adding
-            if (eachEffect.end_turn){
-                if (eachEffect.end_turn > matchTurn) {
-                    this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
-                }
-                //If effect does not have an end turn, add it
-            } else {
-                this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
-            }
-        });*/
-
-        //console.log('cumulative updates: ', cumulativeUpdates);
-        //return cumulativeUpdates;
     }
-
-    /*
-    //Get an object with an accumulation of modifiers based on the propertyReference passed in
-    getCumulativeModifiers(propertyReference, matchTurn){
-        console.log('called getCumulativeModifiers');
-
-        var cumulativeUpdates = {};
-
-        let characterPropertyReference = this.props[propertyReference];
-
-        //If property reference does not exist on character, return an empty object
-        if (characterPropertyReference === undefined) {
-            console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
-            return cumulativeUpdates
-        }
-
-        characterPropertyReference.forEach( eachEffect =>{
-
-            //If the effect has an end turn, verify that it is not expired before adding
-            if (eachEffect.end_turn){
-                if (eachEffect.end_turn > matchTurn) {
-                    this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
-                }
-            //If effect does not have an end turn, add it
-            } else {
-                this.accumulateProperties(cumulativeUpdates, eachEffect.modifiers);
-            }
-        });
-        
-        //console.log('cumulative updates: ', cumulativeUpdates);
-        return cumulativeUpdates;
-    }*/
 
     setModifiedStats(modifiers){
 
@@ -228,16 +179,14 @@ class Character extends BaseModel{
             });
     }
 
-    equipItem(itemID){
+    equipItem(itemObject){
 
         //find the item in inventory
-        var unequippedItem = _.find(this.props.inventory, {'item_id': itemID});
+        var unequippedItem = _.find(this.props.inventory, {'item_id': itemObject.id});
 
         //Item does not exist
         if (unequippedItem === undefined){
-
             console.log('ERROR: attempted to equip an item ID that does not exist on that character');
-
             return {
                 text: 'ERROR: attempted to equip an item ID that does not exist on that character'
             }
@@ -248,8 +197,8 @@ class Character extends BaseModel{
                 test: 'That Item is already equipped!'
             }
         }
-
         unequippedItem.is_equipped = 1;
+        unequippedItem.equipment_slots = itemObject.props.equipment_slots
     }
 
     unequipItem(itemID){
@@ -259,9 +208,7 @@ class Character extends BaseModel{
 
         //Item does not exist
         if (equippedItem === undefined){
-
             console.log('ERROR: attempted to unequip an item ID that does not exist on that character');
-
             return {
                 text: 'ERROR: attempted to unequip an item ID that does not exist on that character'
             }
