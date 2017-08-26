@@ -842,13 +842,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Inventory');
 
-                        slackTemplate = slackTemplates.itemList;
+                        let inventorySlackTemplate = slackTemplates.itemList;
 
-                        console.log('slackTemplate: ', slackTemplate);
-                        console.log('slackTemplate.attachments[0]: ', slackTemplate.attachments[0]);
-                        console.log('slackTemplate.attachments[0].actions[0]:  ', slackTemplate.attachments[0].actions[0]);
+                        console.log('slackTemplate: ', inventorySlackTemplate);
+                        console.log('slackTemplate.attachments[0]: ', inventorySlackTemplate.attachments[0]);
+                        console.log('slackTemplate.attachments[0].actions[0]:  ', inventorySlackTemplate.attachments[0].actions[0]);
 
-                        slackTemplate.attachments[0].actions[0].options =
+                        inventorySlackTemplate.attachments[0].actions[0].options =
 
                             //Get the unequipped items then map into slack format
                             localCharacter.getUnequippedItems()
@@ -861,9 +861,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         updatedCallback = ':Inventory/inventoryList';
 
-                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
+                        inventorySlackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, (requestCallback + updatedCallback));
 
-                        return slackTemplate;
+                        return inventorySlackTemplate;
 
                         break;
 
@@ -871,12 +871,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Equipment');
 
-                        slackTemplate = slackTemplates.itemList;
+                        let equipmentSlackTemplate = slackTemplates.itemList;
 
-                        var slackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
+                        let equipmentSlackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
 
                         //getEquipmentList above overwrites attachments on template.  Add a back button here
-                        slackTemplateAttachments.push({
+                        equipmentSlackTemplateAttachments.push({
                             "text": "",
                             "fallback": "You are unable to go back",
                             "callback_id": "itemList",
@@ -895,9 +895,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         updatedCallback = ':Equipment/equipmentList';
 
-                        let updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
+                        let updatedAttachments = getAttachmentWithCallbacks(equipmentSlackTemplateAttachments, (requestCallback + updatedCallback));
 
-                        slackTemplate.attachments = updatedAttachments;
+                        equipmentSlackTemplate.attachments = updatedAttachments;
 
                         return slackTemplate;
 
