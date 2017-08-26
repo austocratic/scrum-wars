@@ -138,7 +138,6 @@
   "text": "You successfully purchase the item"
 },
 "itemList": {
-
   "attachments": [
     {
       "text": "",
@@ -167,6 +166,35 @@
       ]
     }]
 },
+"equipmentList": {
+  "attachments": [
+    {
+      "text": "",
+      "callback_id": "equipmentList",
+      "actions": [
+        {
+          "name": "equipmentList",
+          "type": "select",
+          "options": []
+        }]
+    },
+    {
+      "text": "",
+      "fallback": "You are unable to go back",
+      "callback_id": "equipmentList",
+      "color": "#3AA3E3",
+      "attachment_type": "default",
+      "actions": [
+        {
+          "name": "back",
+          "text": "Back",
+          "style": "",
+          "type": "button",
+          "value": "back"
+        }
+      ]
+    }]
+}
 "characterList": {
 
   "attachments": [

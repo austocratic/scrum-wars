@@ -873,7 +873,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Equipment');
 
-                        let equipmentSlackTemplate = slackTemplates.itemList;
+                        let equipmentSlackTemplate = slackTemplates.equipmentList;
 
                         let equipmentSlackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
 
