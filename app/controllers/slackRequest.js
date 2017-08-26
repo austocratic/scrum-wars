@@ -845,7 +845,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         let inventorySlackTemplate = slackTemplates.itemList;
 
                         //console.log('slackTemplate: ', inventorySlackTemplate);
-                        //console.log('slackTemplate.attachments[0]: ', inventorySlackTemplate.attachments[0]);
+                        console.log('slackTemplate.attachments[0]: ', inventorySlackTemplate.attachments[0]);
                         //console.log('slackTemplate.attachments[0].actions[0]:  ', inventorySlackTemplate.attachments[0].actions[0]);
 
                         inventorySlackTemplate.attachments[0].actions[0].options =
