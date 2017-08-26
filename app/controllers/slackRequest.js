@@ -901,7 +901,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         equipmentSlackTemplate.attachments = updatedAttachments;
 
-                        return slackTemplate;
+                        return equipmentSlackTemplate;
 
                         break;
                 }
