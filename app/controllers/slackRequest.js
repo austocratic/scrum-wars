@@ -844,9 +844,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         let inventorySlackTemplate = slackTemplates.itemList;
 
-                        console.log('slackTemplate: ', inventorySlackTemplate);
+                        //console.log('slackTemplate: ', inventorySlackTemplate);
                         console.log('slackTemplate.attachments[0]: ', inventorySlackTemplate.attachments[0]);
-                        console.log('slackTemplate.attachments[0].actions[0]:  ', inventorySlackTemplate.attachments[0].actions[0]);
+                        //console.log('slackTemplate.attachments[0].actions[0]:  ', inventorySlackTemplate.attachments[0].actions[0]);
 
                         inventorySlackTemplate.attachments[0].actions[0].options =
 
@@ -858,6 +858,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                         "value": eachItem.item_id
                                     }
                                 });
+
+                        console.log('inventorySlackTemplate.attachments[0].actions[0].options: ', inventorySlackTemplate.attachments[0].actions[0].options);
 
                         updatedCallback = ':Inventory/inventoryList';
 
