@@ -153,7 +153,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     //console.log('called getResponseTemplate, gameContext: ', gameContext);
     //console.log('called getResponseTemplate, requestTextInput: ', requestTextInput);
 
-    var slackTemplate;
+    //var slackTemplate;
 
     //parse the callback string into an array.
     var slackCallbackElements = requestCallback.split("/");
@@ -266,7 +266,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             console.log('hit zone id mismatch condition');
 
                             //Return mismatch template by passing in zone ids
-                            slackTemplate = moveCharacter(localZone.id, localZone.props.name);
+                            let slackTemplate = moveCharacter(localZone.id, localZone.props.name);
 
                             updatedCallback = 'command:action/travelConfirmation';
 
@@ -275,7 +275,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             return slackTemplate;
                         }
 
-                        slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
+                        let slackTemplate = gameContext.getAvailableActions(requestSlackUserID, requestSlackChannelID);
 
                         updatedCallback = 'command:action/actionList';
 
@@ -289,7 +289,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('Called command/generate');
                         //Return the new character confirmation template
-                        slackTemplate = slackTemplates.generateCharacterConfirmation;
+                        let slackTemplate = slackTemplates.generateCharacterConfirmation;
 
                         updatedCallback = 'command:generate/generateCharacterConfirmation';
 
@@ -304,7 +304,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'profile':
 
                         console.log('Called command/profile');
-                        slackTemplate = gameContext.characterProfile(requestSlackUserID, requestSlackChannelID);
+                        let slackTemplate = gameContext.characterProfile(requestSlackUserID, requestSlackChannelID);
 
                         updatedCallback = 'command:profile/characterProfile';
 
@@ -361,7 +361,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         
                         //Return a class selection template with all available classes from the DB
 
-                        slackTemplate = gameContext.getCharacterClasses();
+                        let slackTemplate = gameContext.getCharacterClasses();
 
                         console.log('character class template: ', JSON.stringify(slackTemplate));
 
@@ -375,7 +375,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                     case 'no':
                         console.log('Called generateCharacterConfirmation/no');
-                        slackTemplate = slackTemplates.generateCharacterConfirmationDecline;
+                        let slackTemplate = slackTemplates.generateCharacterConfirmationDecline;
 
                         return slackTemplate;
                         
@@ -462,7 +462,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called actionList/-KkJVqtBIhpAKBfz9tcb');
 
-                        slackTemplate = gameContext.shopList(requestSlackChannelID);
+                        let slackTemplate = gameContext.shopList(requestSlackChannelID);
 
                         updatedCallback = ':Shop/shopList';
 
@@ -721,10 +721,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('called shopList');
 
                 //Create a local item
-                var localItem = new Item(gameContext.state, requestActionValue);
+                let localItem = new Item(gameContext.state, requestActionValue);
 
                 //Create an item detail view template
-                slackTemplate = localItem.getDetailView();
+                let slackTemplate = localItem.getDetailView();
 
                 console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
 
@@ -782,7 +782,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         itemID = valueSelection[valueSelection.length - 1];
 
-                        localItem = new Item(gameContext.state, itemID);
+                        let localItem = new Item(gameContext.state, itemID);
                         
                         localCharacter.equipItem(localItem);
 
@@ -802,7 +802,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         itemID = valueSelection[valueSelection.length - 1];
                         
-                        localItem = new Item(gameContext.state, itemID);
+                        let localItem = new Item(gameContext.state, itemID);
 
                         localCharacter.unequipItem(itemID);
                         
@@ -834,7 +834,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
             case 'characterProfile':
 
-                var localItem;
+                //var localItem;
                 
                 switch (userSelection) {
 
@@ -842,10 +842,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Inventory');
 
-                        slackTemplate = slackTemplates.itemList;
+                        let slackTemplate = slackTemplates.itemList;
 
-                        //Pass in the character's unequipped inventory array
-                        //slackTemplate.attachments[0].actions[0].options = localCharacter.getUnequippedItems();
+                        console.log('slackTemplate options: ', slackTemplate.attachments[0].actions[0]);
 
                         slackTemplate.attachments[0].actions[0].options =
 
@@ -870,7 +869,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         console.log('called characterProfile/Equipment');
 
-                        slackTemplate = slackTemplates.itemList;
+                        let slackTemplate = slackTemplates.itemList;
 
                         var slackTemplateAttachments = gameContext.getEquippedItemView(localCharacter);
 
@@ -894,7 +893,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         updatedCallback = ':Equipment/equipmentList';
 
-                        var updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
+                        let updatedAttachments = getAttachmentWithCallbacks(slackTemplateAttachments, (requestCallback + updatedCallback));
 
                         slackTemplate.attachments = updatedAttachments;
 
@@ -910,10 +909,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('called inventoryList');
 
                 //Create a local item
-                localItem = new Item(gameContext.state, requestActionValue);
+                let localItem = new Item(gameContext.state, requestActionValue);
 
                 //Create an item detail view template
-                slackTemplate = localItem.getDetailView();
+                let slackTemplate = localItem.getDetailView();
 
                 console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
 
@@ -944,10 +943,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 console.log('called equipmentList');
                 
                 //Create a local item
-                localItem = new Item(gameContext.state, requestActionValue);
+                let localItem = new Item(gameContext.state, requestActionValue);
 
                 //Create an item detail view template
-                slackTemplate = localItem.getDetailView();
+                let slackTemplate = localItem.getDetailView();
 
                 console.log('shopList slackTemplate: ', JSON.stringify(slackTemplate));
 
