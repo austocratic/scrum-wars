@@ -457,11 +457,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //TODO add code for setting the profile
 
                 //Maybe generate a UI with their profile picture and store?
-
                 return {
-                    "You prepare to set out on your journey, but what name should we call you?  (use /name to set your name)"
+                    'text': 'You prepare to set out on your journey, but what name should we call you?  (use /name to set your name)'
                 };
-
+                
                 break;
 
             case 'travelConfirmation':
