@@ -295,8 +295,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
-                        //slackTemplate.attachments[0].callback_id = 'command:generate/generateCharacterConfirmation';
-
                         return slackTemplate;
 
                         break;
@@ -403,7 +401,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Return a class selection template with all available classes from the DB
                 slackTemplate = gameContext.getCharacterClasses();
 
-                updatedCallback = requestCallback + ':' + userSelection + '/generateCharacterClassList';
+                updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
 
                 slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
@@ -411,13 +409,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 break;
 
-            case 'generateCharacterClassList':
-                console.log('Called generateCharacterClassList');
+            case 'characterClassList':
+                console.log('Called characterClassList');
 
-                var localCharacterClass = new Class(gameContext.state, userSelection);
+                let localCharacterClass = new Class(gameContext.state, userSelection);
 
                 //Array of action IDs
-                var characterActions = localCharacterClass.props.action_id.map( eachActionID =>{
+                let characterActions = localCharacterClass.props.action_id.map( eachActionID =>{
                     return {
                         action_id: eachActionID,
                         turn_used: 0,
@@ -426,7 +424,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     }
                 });
 
-                var updates = {
+                let updates = {
                     "actions": characterActions,
                     "class_id": localCharacterClass.id,
                     "strength": localCharacterClass.props.starting_attributes.strength,
@@ -442,12 +440,26 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
 
-                updatedCallback = requestCallback + ':' + userSelection + '/generateCharacterClassList';
+                updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
+
+                console.log('characterClassList slackTemplate attachments:', slackTemplate);
 
                 slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
                 return {
                     'text': 'Choose a character profile'
+                };
+
+                break;
+            
+            case 'avatarList':
+
+                //TODO add code for setting the profile
+
+                //Maybe generate a UI with their profile picture and store?
+
+                return {
+                    "You prepare to set out on your journey, but what name should we call you?  (use /name to set your name)"
                 };
 
                 break;
