@@ -195,6 +195,33 @@
       ]
     }]
 },
+  "genderList": {
+
+    "attachments": [
+      {
+        "text": "",
+        "fallback": "You are unable to go back",
+        "callback_id": "genderList",
+        "color": "#3AA3E3",
+        "attachment_type": "default",
+        "actions": [
+          {
+            "name": "male",
+            "text": "Male",
+            "style": "",
+            "type": "button",
+            "value": "male"
+          },
+          {
+            "name": "female",
+            "text": "Female",
+            "style": "",
+            "type": "button",
+            "value": "female"
+          }
+        ]
+      }]
+  },
 "characterList": {
 
   "attachments": [

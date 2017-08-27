@@ -617,12 +617,12 @@ class Game {
     getEquippedItemView(localCharacter){
 
         //get array of all available equipment slot keys (IDs)
-        var equipmentSlotKeys = Object.keys(this.state.equipment_slot);
+        let equipmentSlotKeys = Object.keys(this.state.equipment_slot);
 
-        var singleEquipmentSlot;
+        let singleEquipmentSlot;
 
         //Returns array of equipped item objects
-        var equippedItems = localCharacter.getEquippedItems();
+        let equippedItems = localCharacter.getEquippedItems();
 
         return equipmentSlotKeys.map( eachEquipmentSlot =>{
             
@@ -630,9 +630,9 @@ class Game {
 
             //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
             //If no equipped item, equippedSlotItem will be undefined
-            var equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+            let equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
 
-            var slotEmpty = 0;
+            let slotEmpty = 0;
             
             //If character has no equipped item in that slot (undefined), overwrite the properties to be used in the template
             if (equippedSlotItem === undefined){
@@ -647,13 +647,13 @@ class Game {
                 };
             }
 
-            var baseTemplate = {
+            let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + equippedSlotItem.item_id + ".jpg",
                 "fields": [{
-                    "title": "Equipment name",
-                    "value": equippedSlotItem.name,
+                    "title": "equippedSlotItem.name",
+                    "value": "",
                     "short": false
                 }],
                 "actions": []

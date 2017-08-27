@@ -309,9 +309,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         updatedCallback = 'command:profile/characterProfile';
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-                        //attachment 0 = character image
-                        //attachment 1 = character stats
-                        //slackTemplate.attachments[2].callback_id = 'command:profile/characterProfile';
 
                         return slackTemplate;
 
@@ -344,7 +341,26 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     
                     case 'yes':
                         console.log('Called generateCharacterConfirmation/yes');
-                        
+
+                        //Archive the player's current character
+                        //character.archive - this function should change the character's active property to 0
+                        localCharacter.inactivate();
+
+                        //Create new character record
+                        var newLocalCharacterID = gameContext.createCharacter(localUser.id);
+
+                        //Update the user to new character
+                        localUser.updateProperty('character_id', newLocalCharacterID);
+
+                        slackTemplate = slackTemplates.genderList;
+
+                        updatedCallback = requestCallback + ':yes/selectGender';
+
+                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                        return slackTemplate;
+
+                        /*
                         //Archive the player's current character
                         //character.archive - this function should change the character's active property to 0
                         localCharacter.inactivate();
@@ -355,12 +371,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Update the user to new character
                         localUser.updateProperty('character_id', newLocalCharacterID);
                         
-                        //var newLocalCharacter = new Character(gameContext.state, newLocalCharacterID);
-                        
-                        //console.log('newLocalCharacter props: ', JSON.stringify(newLocalCharacter.props));
-                        
                         //Return a class selection template with all available classes from the DB
-
                         slackTemplate = gameContext.getCharacterClasses();
 
                         console.log('character class template: ', JSON.stringify(slackTemplate));
@@ -369,20 +380,35 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
-                        return slackTemplate;
+                        return slackTemplate;*/
                         
                     break;
 
                     case 'no':
                         console.log('Called generateCharacterConfirmation/no');
-                        slackTemplate = slackTemplates.generateCharacterConfirmationDecline;
-
-                        return slackTemplate;
+                        return slackTemplates.generateCharacterConfirmationDecline;
                         
                     break;
                     
                 }
                 
+                break;
+            
+            //Choose male or female
+            case 'selectGender':
+
+                //Mutate the object
+                localCharacter.updateProperty('gender', userSelection);
+
+                //Return a class selection template with all available classes from the DB
+                slackTemplate = gameContext.getCharacterClasses();
+
+                updatedCallback = requestCallback + ':' + userSelection + '/generateCharacterClassList';
+
+                slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                return slackTemplate;
+
                 break;
 
             case 'generateCharacterClassList':
@@ -416,7 +442,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
 
-                return slackTemplates.generateCharacterSuccess;
+                updatedCallback = requestCallback + ':' + userSelection + '/generateCharacterClassList';
+
+                slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                return {
+                    'text': 'Choose a character profile'
+                };
 
                 break;
 
