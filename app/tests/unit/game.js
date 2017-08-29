@@ -43,7 +43,7 @@ describe("game.getEquippedItemView()", () => {
 
     });
 });*/
-
+/*
 describe("game.initiate()", () => {
 
     it("should return an array", done => {
@@ -55,6 +55,36 @@ describe("game.initiate()", () => {
         console.log('modified_strength after initiate(): ', testGame.state.character[testCharacterID].modified_strength);
 
         //assert.equal(gameResult, 5);
+
+        done();
+
+    });
+});*/
+/*
+describe("game.getFiles()", () => {
+
+    it("should return an array", done => {
+
+        let fileList = [];
+
+        console.log(testGame.getFiles("app/assets/fullSize/character_avatar", fileList));
+
+        //console.log('fileList: ', fileList);
+
+        done();
+
+    });
+});*/
+
+describe("game.paginateCharacters()", () => {
+
+    it("should return an array", done => {
+
+        let fileList = [];
+
+        console.log(testGame.paginateCharacters());
+
+        //console.log('fileList: ', fileList);
 
         done();
 

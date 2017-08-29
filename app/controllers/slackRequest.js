@@ -20,6 +20,11 @@ var slackTemplates = require('../slackTemplates');
 
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 
+//TODO this seems weird to have in the slackRequest file, maybe move when I refactor this file
+var game = new Game();
+
+
+
 /*
  1. Get game's current state
  2. Validate request
@@ -52,15 +57,14 @@ exports.slackSlashCommand = async (req, res, next) => {
 
     //Modify slachCommand text to remove proceeding '/'
     var modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
-    
-    //Get game's current state
-    var game = new Game();
+
+    //var game = new Game();
 
     //Set the game state locally
     await game.getState();
 
     //Calculate properties in memory
-    game.inititate();
+    game.inititateRequest();
 
     //Function format: getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
     //requestCallback = "command" hard coded
@@ -129,7 +133,7 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     await game.getState();
     
     //Calculate properties in memory
-    game.inititate()
+    game.inititateRequest()
 
     var responseTemplate = getResponseTemplate(slackCallback, actionName, actionValue, slackUserID, slackChannelID, game, undefined);
 
@@ -440,27 +444,141 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
 
+                let avatarList = {
+                    'text': 'What does your character look like?',
+                    'attachments': [
+                    ]
+                };
+
+                //TODO hard coded first page length with .slice(1, 6), need to move to config
+                let truncFileList
+                if (localCharacter.props.gender === 'male'){
+                    truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
+                }
+                if (localCharacter.props.gender === 'female'){
+                    truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
+                }
+
+                let firstAvatarPageAttachment = truncFileList.map( eachFilePath =>{
+                    console.log('eachFilePath: ', eachFilePath);
+                    return {
+                        "text": "",
+                        "image_url": eachFilePath,
+                        "actions":[{
+                            "name": "selection",
+                            "text": "Select",
+                            "style": "default",
+                            "type": "button",
+                            "value": eachFilePath
+                        }]
+                    }
+                });
+
+                //Add a more button to the attachment array
+                firstAvatarPageAttachment.push({
+                    "text": "",
+                    "image_url": '',
+                    "actions": [
+                        {
+                            "name": "more",
+                            "text": "More",
+                            "style": "default",
+                            "type": "button",
+                            "value": 6
+                        }
+                    ]
+                });
+
                 updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
-                console.log('characterClassList slackTemplate attachments:', slackTemplate);
+                getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
-                slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-
-                return {
-                    'text': 'Choose a character profile'
-                };
+                return avatarList;
 
                 break;
             
             case 'avatarList':
-
-                //TODO add code for setting the profile
-
-                //Maybe generate a UI with their profile picture and store?
-                return {
-                    'text': 'You prepare to set out on your journey, but what name should we call you?  (use /name to set your name)'
-                };
                 
+                switch (userSelection){
+                    
+                    case 'more':
+                        console.log('Called avatarList/more');
+
+                        //TODO hard coded +6 into pagination calculation.  Need to set via config variable
+                        let paginationEnd = requestActionValue + 6;
+
+                        let avatarList = {
+                            'text': 'What does your character look like?',
+                            'attachments': []
+                        };
+
+                        //TODO hard coded first page length with .slice(1, 6), need to move to config
+                        let truncFileList;
+                        if (localCharacter.props.gender === 'male'){
+                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
+                        }
+                        if (localCharacter.props.gender === 'female'){
+                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
+                        }
+
+                        let firstAvatarPageAttachment = truncFileList.map( eachFilePath =>{
+                            console.log('eachFilePath: ', eachFilePath);
+                            return {
+                                "text": "",
+                                "image_url": eachFilePath,
+                                "actions":[{
+                                    "name": "selection",
+                                    "text": "Select",
+                                    "style": "default",
+                                    "type": "button",
+                                    "value": eachFilePath
+                                }]
+                            }
+                        });
+
+                        //Add a more button to the attachment array
+                        firstAvatarPageAttachment.push({
+                            "text": "",
+                            "image_url": '',
+                            "actions": [
+                                {
+                                    "name": "more",
+                                    "text": "Previous",
+                                    "style": "default",
+                                    "type": "button",
+                                    "value": requestActionValue //Pagination beginning
+                                },
+                                {
+                                    "name": "more",
+                                    "text": "More",
+                                    "style": "default",
+                                    "type": "button",
+                                    "value": paginationEnd
+                                }
+                            ]
+                        });
+
+                        updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
+
+                        getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
+
+                        return avatarList;
+
+                        break;
+
+                    case 'selection':
+                        console.log('Called avatarList/selection');
+
+                        //store the file path in the character's profile
+                        localCharacter.updateProperty('avatar', requestActionValue);
+
+                        return {
+                            "text": "You prepare to set out on your journey, but first, what is your name? (type /name ___ to set your name)"
+                        };
+
+                        break;
+                }
+
                 break;
 
             case 'travelConfirmation':

@@ -17,15 +17,23 @@ var slackTemplates = require('../slackTemplates');
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
+var helpers = require('../helpers');
+
 //TODO - move this to a config file
 var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 
 
 class Game {
-    //TODO see if async works for constructor here
-    constructor() {}
+    constructor() {
+        
+        this.maleAvatarPaths = [];
+        this.femaleAvatarPaths = [];
 
+        helpers.getFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
+        helpers.getFilePaths("app/assets/fullSize/character_avatar/female", this.femaleAvatarPaths);
+    }
+    
     //Get state of the game from DB
     async getState(){
         this.state = await firebase.get();
@@ -86,7 +94,7 @@ class Game {
     }
     
     //Set properties in memory
-    inititate(){
+    inititateRequest(){
         
         try {
             var characterKeys = Object.keys(this.state.character);
@@ -672,6 +680,19 @@ class Game {
             }
             
             return baseTemplate;
+        });
+    }
+
+    getPaginatedAttachment(listToPaginate, firstKey, lastKey){
+        
+        let truncFileList = listToPaginate.slice(firstKey, lastKey);
+
+        return truncFileList.map( eachFilePath =>{
+            console.log('eachFilePath: ', eachFilePath);
+            return {
+                "text": "",
+                "image_url": eachFilePath
+            }
         });
     }
 }

@@ -65,55 +65,7 @@ router.get('/jimp', function(req, res, next) {
             });
         });
 
-
-
-    /*
-    Jimp.read("./app/assets/unknown_character.jpg", (err, file) => {
-
-        console.log('ERROR getting jimp: ', err);
-
-        res.sendFile(file);
-
-        var options = {
-            dotfiles: 'deny',
-            headers: {
-                'x-timestamp': Date.now(),
-                'x-sent': true
-            }
-        };
-
-        res.sendFile(file, options, function (err) {
-            if (err) {
-                console.log('Error when sending file: ', err);
-                next(err);
-            } else {
-                console.log('Sent:');
-            }
-        });*/
-
     //});
-
-
-
-
-    /*
-    var options = {
-        root: process.cwd() + '/app/assets/',
-        dotfiles: 'deny',
-        headers: {
-            'x-timestamp': Date.now(),
-            'x-sent': true
-        }
-    };
-
-    //var fileName = req.params.id;
-    res.sendFile('unknown_character.jpg', options, function (err) {
-        if (err) {
-            next(err);
-        } else {
-            console.log('Sent:');
-        }
-    });*/
 });
 
 //TODO To delete
@@ -157,6 +109,32 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             next(err);
         } else {
             console.log('Sent:', fileName);
+        }
+    });
+});
+
+let characterAvatarTest = 'app/assets/fullSize/character_avatar/male/m_38.png';
+
+//Routes for getting character avatar
+router.all('*', function (req, res, next) {
+
+    console.log('Called .all router, req.params: ', req.params['0']);
+
+    //console.log('folder: ', req.params.folder);
+
+    let options = {
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+    
+    res.sendFile(process.cwd() + req.params['0'], options, function (err) {
+        if (err) {
+            next(err);
+        } else {
+            console.log('Sent:');
         }
     });
 });
