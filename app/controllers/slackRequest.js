@@ -474,8 +474,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     }
                 });
 
+                console.log('firstAvatarPageAttachment: ', firstAvatarPageAttachment);
+
+                avatarList.attachments.push(firstAvatarPageAttachment);
+
                 //Add a more button to the attachment array
-                firstAvatarPageAttachment.push({
+                avatarList.attachments.push({
                     "text": "",
                     "image_url": '',
                     "actions": [
@@ -488,6 +492,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         }
                     ]
                 });
+
+                console.log('avatarList.attachments: ', avatarList.attachments);
 
                 updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
