@@ -6,6 +6,7 @@ var assert = require('assert');
 var testDB = require('../testDB');
 var Game = require('../../models/Game').Game;
 var Character = require('../../models/Character').Character;
+var helpers = require('../../helpers');
 
 var testGame = new Game();
 testGame.state = testDB;
@@ -82,7 +83,7 @@ describe("game.getImageFilePaths()", () => {
 
         let fileList = [];
 
-        console.log(testGame.getImageFilePaths("app/assets/fullSize/character_avatar", fileList));
+        console.log(helpers.getImageFilePaths("app/assets/fullSize/character_avatar", fileList));
 
         //console.log('fileList: ', fileList);
 

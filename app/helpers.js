@@ -1,11 +1,11 @@
 "use strict";
 
-let baseURL = 'https://scrum-wars.herokuapp.com/';
+var baseURL = 'https://scrum-wars.herokuapp.com/';
 
 
 var getImageFilePaths = (dir, filelist) => {
 
-    console.log('called getImageFilePaths()');
+    console.log('called getImageFilePaths(), filelist: ', filelist);
 
     getFilePaths(dir, filelist);
 

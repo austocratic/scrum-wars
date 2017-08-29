@@ -33,19 +33,19 @@ class Character extends BaseModel{
 
         //If property reference does not exist on character, return an empty object
         if (characterPropertyReference === undefined) {
-            console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
+            //console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
             return cumulativeUpdates
         }
         
-        console.log('getCumulativeModifiers() characterPropertyReference: ', characterPropertyReference);
+        //console.log('getCumulativeModifiers() characterPropertyReference: ', characterPropertyReference);
 
         let filteredModifiers = characterPropertyReference.filter(filterFunction);
         
-        console.log('filteredModifiers: ', filteredModifiers);
+        //console.log('filteredModifiers: ', filteredModifiers);
 
         filteredModifiers.forEach( eachFilteredModifier=>{
 
-            console.log('eachFilteredModifier: ', eachFilteredModifier);
+            //console.log('eachFilteredModifier: ', eachFilteredModifier);
             this.accumulateProperties(cumulativeUpdates, eachFilteredModifier.modifiers);
         });
 

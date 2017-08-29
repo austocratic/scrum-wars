@@ -34,6 +34,7 @@ class Game {
         //helpers.getFilePaths("app/assets/fullSize/character_avatar/female", this.femaleAvatarPaths);
 
         helpers.getImageFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
+        
         helpers.getImageFilePaths("app/assets/fullSize/character_avatar/female", this.femaleAvatarPaths);
     }
     
