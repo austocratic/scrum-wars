@@ -75,7 +75,7 @@ describe("game.getFiles()", () => {
 
     });
 });*/
-
+/*
 describe("game.paginateCharacters()", () => {
 
     it("should return an array", done => {
@@ -89,4 +89,4 @@ describe("game.paginateCharacters()", () => {
         done();
 
     });
-});
+});*/

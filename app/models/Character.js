@@ -36,6 +36,8 @@ class Character extends BaseModel{
             console.log('Character.getCumulativeModifiers() called with a property reference that does not exist on that character: ', characterPropertyReference)
             return cumulativeUpdates
         }
+        
+        console.log('getCumulativeModifiers() characterPropertyReference: ', characterPropertyReference);
 
         let filteredModifiers = characterPropertyReference.filter(filterFunction);
         
