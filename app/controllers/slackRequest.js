@@ -461,7 +461,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     console.log('eachFilePath: ', eachFilePath);
                     return {
                         "text": "",
-                        "image_url": eachFilePath,
+                        "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
                         "actions":[{
                             "name": "selection",
                             "text": "Select",
@@ -525,7 +525,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             console.log('eachFilePath: ', eachFilePath);
                             return {
                                 "text": "",
-                                "image_url": eachFilePath,
+                                "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
                                 "actions":[{
                                     "name": "selection",
                                     "text": "Select",
