@@ -449,12 +449,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 };
 
                 //TODO hard coded first page length with .slice(1, 6), need to move to config
-                let truncFileList
+                let truncFileList;
                 if (localCharacter.props.gender === 'male'){
                     truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
                 }
                 if (localCharacter.props.gender === 'female'){
-                    truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
+                    truncFileList = gameContext.femaleAvatarPaths.slice(1, 6);
                 }
 
                 avatarList.attachments = truncFileList.map( eachFilePath =>{

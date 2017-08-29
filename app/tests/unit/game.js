@@ -75,6 +75,21 @@ describe("game.getFiles()", () => {
 
     });
 });*/
+
+describe("game.getImageFilePaths()", () => {
+
+    it("should return an array", done => {
+
+        let fileList = [];
+
+        console.log(testGame.getImageFilePaths("app/assets/fullSize/character_avatar", fileList));
+
+        //console.log('fileList: ', fileList);
+
+        done();
+
+    });
+});
 /*
 describe("game.paginateCharacters()", () => {
 

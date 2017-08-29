@@ -1,5 +1,18 @@
+"use strict";
+
+let baseURL = 'https://scrum-wars.herokuapp.com/';
 
 
+var getImageFilePaths = (dir, filelist) => {
+
+    console.log('called getImageFilePaths()');
+
+    getFilePaths(dir, filelist);
+
+    return filelist.map( eachFilePath =>{
+        return baseURL + eachFilePath
+    })
+};
 
 
 //Populates an array of file path references based on dir parameter
@@ -21,6 +34,7 @@ var getFilePaths = (dir, filelist) => {
 };
 
 module.exports = {
+    getImageFilePaths: getImageFilePaths,
     getFilePaths: getFilePaths
 };
 
