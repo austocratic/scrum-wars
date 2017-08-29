@@ -445,9 +445,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 Object.assign(localCharacter.props, updates);
 
                 let avatarList = {
-                    'text': 'What does your character look like?',
-                    'attachments': [
-                    ]
+                    'text': 'What does your character look like?'
                 };
 
                 //TODO hard coded first page length with .slice(1, 6), need to move to config
@@ -459,7 +457,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
                 }
 
-                let firstAvatarPageAttachment = truncFileList.map( eachFilePath =>{
+                avatarList.attachments = truncFileList.map( eachFilePath =>{
                     console.log('eachFilePath: ', eachFilePath);
                     return {
                         "text": "",
@@ -473,10 +471,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         }]
                     }
                 });
-
-                console.log('firstAvatarPageAttachment: ', firstAvatarPageAttachment);
-
-                avatarList.attachments.push(firstAvatarPageAttachment);
 
                 //Add a more button to the attachment array
                 avatarList.attachments.push({
