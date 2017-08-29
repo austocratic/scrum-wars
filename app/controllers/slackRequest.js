@@ -521,7 +521,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
                         }
 
-                        let firstAvatarPageAttachment = truncFileList.map( eachFilePath =>{
+                        avatarList.attachments = truncFileList.map( eachFilePath =>{
                             console.log('eachFilePath: ', eachFilePath);
                             return {
                                 "text": "",
@@ -537,7 +537,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         });
 
                         //Add a more button to the attachment array
-                        firstAvatarPageAttachment.push({
+                        avatarList.attachments.push({
                             "text": "",
                             "image_url": '',
                             "actions": [
@@ -557,6 +557,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                 }
                             ]
                         });
+
+                        console.log('avatarList.attachments: ', avatarList.attachments);
 
                         updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
