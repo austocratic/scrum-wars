@@ -113,33 +113,6 @@ router.get('/assets/:folder/:id', function (req, res, next) {
     });
 });
 
-let characterAvatarTest = 'app/assets/fullSize/character_avatar/male/m_38.png';
-
-//Routes for getting character avatar
-router.all('*', function (req, res, next) {
-
-    console.log('Called .all router, req.params: ', req.params['0']);
-
-    //console.log('folder: ', req.params.folder);
-
-    let options = {
-        dotfiles: 'deny',
-        headers: {
-            'x-timestamp': Date.now(),
-            'x-sent': true
-        }
-    };
-    
-    res.sendFile(process.cwd() + req.params['0'], options, function (err) {
-        if (err) {
-            next(err);
-        } else {
-            console.log('Sent:');
-        }
-    });
-});
-
-
 //All client commands pass through this route
 router.post('/api/commands', (req, res, next) => {
     //slackSlashCommand(req, res, next);
@@ -156,6 +129,29 @@ router.post('/api/interactive-messages', (req, res, next) => {
 //All client interactive-message responses pass through this route
 router.post('/api/turn/new', (req, res, next) => {
     turns.newTurn(req, res, next);
+});
+
+//Routes for getting character avatar
+//TODO should not rely on the catch all for getting images
+router.all('*', function (req, res, next) {
+
+    console.log('Called .all router, req.params: ', req.params['0']);
+
+    let options = {
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+
+    res.sendFile(process.cwd() + req.params['0'], options, function (err) {
+        if (err) {
+            next(err);
+        } else {
+            console.log('Sent:');
+        }
+    });
 });
 
 
