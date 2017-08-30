@@ -514,9 +514,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             'attachments': []
                         };
 
+                        console.log('localCharacter.props.gender: ', localCharacter.props.gender);
+
                         //TODO hard coded first page length with .slice(1, 6), need to move to config
                         let truncFileList;
+                        console.log('truncFileList before being set should be empty: ', truncFileList);
                         if (localCharacter.props.gender === 'male'){
+
+                            console.log('character is male, requestActionValue: ', requestActionValue);
+                            console.log('character is male, paginationEnd: ', paginationEnd);
+
                             truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
                         }
                         if (localCharacter.props.gender === 'female'){
