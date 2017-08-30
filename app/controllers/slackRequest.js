@@ -505,34 +505,38 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('Called avatarList/more');
 
                         //TODO hard coded +6 into pagination calculation.  Need to set via config variable
+                        let attachmentsPerPage = 6;
 
                         let numericRequestActionValue = parseFloat(requestActionValue);
 
-                        //TODO need to use parseFloat to ensure requestActionValue is a number 
-                        let paginationEnd = numericRequestActionValue + 6;
+                        //Determine the end of the current page (if more is selected, pass that as the next value
+                        let nextPaginationEnd = numericRequestActionValue + attachmentsPerPage;
+
+                        //Determine the beginning of the previous page (this will be used to determine starting point of previous page selection)
+                        let previousPaginationBegin = numericRequestActionValue - attachmentsPerPage;
 
                         let avatarList = {
                             'text': 'What does your character look like?',
                             'attachments': []
                         };
 
-                        console.log('localCharacter.props.gender: ', localCharacter.props.gender);
+                        //console.log('localCharacter.props.gender: ', localCharacter.props.gender);
 
                         //TODO hard coded first page length with .slice(1, 6), need to move to config
                         let truncFileList;
-                        console.log('truncFileList before being set should be empty: ', truncFileList);
+                        //console.log('truncFileList before being set should be empty: ', truncFileList);
                         if (localCharacter.props.gender === 'male'){
 
                             console.log('character is male, requestActionValue: ', requestActionValue);
-                            console.log('character is male, paginationEnd: ', paginationEnd);
+                            console.log('character is male, paginationEnd: ', nextPaginationEnd);
 
-                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
+                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, nextPaginationEnd);
                         }
                         if (localCharacter.props.gender === 'female'){
-                            truncFileList = gameContext.femaleAvatarPaths.slice(requestActionValue, paginationEnd);
+                            truncFileList = gameContext.femaleAvatarPaths.slice(requestActionValue, nextPaginationEnd);
                         }
 
-                        console.log('avatarList/more truncFileList: ', truncFileList);
+                        //console.log('avatarList/more truncFileList: ', truncFileList);
 
                         avatarList.attachments = truncFileList.map( eachFilePath =>{
                             console.log('eachFilePath: ', eachFilePath);
@@ -549,7 +553,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             }
                         });
 
-                        //Add a more button to the attachment array
+                        //Add more & previous buttons to the attachment array
                         avatarList.attachments.push({
                             "text": "",
                             "image_url": '',
@@ -559,19 +563,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     "text": "Previous",
                                     "style": "default",
                                     "type": "button",
-                                    "value": requestActionValue //Pagination beginning
+                                    "value": previousPaginationBegin //Calculated reference of prior page
                                 },
                                 {
                                     "name": "more",
                                     "text": "More",
                                     "style": "default",
                                     "type": "button",
-                                    "value": paginationEnd
+                                    "value": nextPaginationEnd
                                 }
                             ]
                         });
 
-                        //console.log('avatarList.attachments: ', avatarList.attachments);
+                        //console.log('avatarList.attachments created: ', avatarList.attachments);
 
                         updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 

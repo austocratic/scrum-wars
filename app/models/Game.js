@@ -109,7 +109,7 @@ class Game {
             
             //Iterate through each character's effects setting the modified properties
             characterKeys.forEach(eachCharacterKey => {
-                console.log('eachCharacter.active: ', this.state.character[eachCharacterKey].active);
+                //console.log('eachCharacter.active: ', this.state.character[eachCharacterKey].active);
 
                 //Character must be active to set modified properties
                 if (this.state.character[eachCharacterKey].active === 1) {
