@@ -523,17 +523,22 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //console.log('localCharacter.props.gender: ', localCharacter.props.gender);
 
                         //TODO hard coded first page length with .slice(1, 6), need to move to config
-                        let truncFileList;
+                        let avatarPathArray, truncFileList;
                         //console.log('truncFileList before being set should be empty: ', truncFileList);
                         if (localCharacter.props.gender === 'male'){
 
                             console.log('character is male, requestActionValue: ', requestActionValue);
                             console.log('character is male, paginationEnd: ', nextPaginationEnd);
 
-                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, nextPaginationEnd);
+                            //Path array is reference later to determine whether or not to display paginate button
+                            avatarPathArray = gameContext.maleAvatarPaths;
+                            truncFileList = avatarPathArray.slice(requestActionValue, nextPaginationEnd);
                         }
                         if (localCharacter.props.gender === 'female'){
-                            truncFileList = gameContext.femaleAvatarPaths.slice(requestActionValue, nextPaginationEnd);
+
+                            //Path array is reference later to determine whether or not to display paginate button
+                            avatarPathArray = gameContext.femaleAvatarPaths;
+                            truncFileList = avatarPathArray.slice(requestActionValue, nextPaginationEnd);
                         }
 
                         //console.log('avatarList/more truncFileList: ', truncFileList);
@@ -553,18 +558,37 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             }
                         });
 
-                        //Add more & previous buttons to the attachment array
                         avatarList.attachments.push({
                             "text": "",
                             "image_url": '',
-                            "actions": [
+                            "actions": []
+                        });
+
+                        console.log('DEBUG: numericRequestActionValue: ', numericRequestActionValue);
+
+                        //If there is at least one value between 0 and current page beginning, add a previous button
+                        //Add 'previous' button to the attachment array
+                        if (numericRequestActionValue > 0) {
+                            console.log('DEBUG: passed numericRequestActionValue check');
+                            avatarList.attachments.actions.push(
                                 {
                                     "name": "more",
                                     "text": "Previous",
                                     "style": "default",
                                     "type": "button",
-                                    "value": previousPaginationBegin //Calculated reference of prior page
-                                },
+                                    "value": previousPaginationBegin
+                                }
+                            );
+                        }
+
+                        console.log('DEBUG: nextPaginationEnd: ', nextPaginationEnd);
+                        console.log('DEBUG: avatarPathArray.length: ', avatarPathArray.length);
+
+                        //If there is at least one value after the current page end, add a next button
+                        //Add 'more' button to the attachment array
+                        if (nextPaginationEnd < avatarPathArray.length) {
+                            console.log('DEBUG: passed avatarPathArray.length check');
+                            avatarList.attachments.actions.push(
                                 {
                                     "name": "more",
                                     "text": "More",
@@ -572,8 +596,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     "type": "button",
                                     "value": nextPaginationEnd
                                 }
-                            ]
-                        });
+                            );
+                        }
 
                         //REMOVING callback update.
                         updatedCallback = requestCallback;
