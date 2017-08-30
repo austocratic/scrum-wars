@@ -523,7 +523,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             truncFileList = gameContext.femaleAvatarPaths.slice(requestActionValue, paginationEnd);
                         }
 
-                        console.log('avatarList/more truncFileList: ', truncFileList)
+                        console.log('avatarList/more truncFileList: ', truncFileList);
 
                         avatarList.attachments = truncFileList.map( eachFilePath =>{
                             console.log('eachFilePath: ', eachFilePath);

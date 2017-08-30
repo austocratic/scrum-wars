@@ -135,7 +135,7 @@ router.post('/api/turn/new', (req, res, next) => {
 //TODO should not rely on the catch all for getting images
 router.all('*', function (req, res, next) {
 
-    console.log('Called .all router, req.params: ', req.params['0']);
+    //console.log('Called .all router, req.params: ', req.params['0']);
 
     let options = {
         dotfiles: 'deny',
@@ -149,7 +149,7 @@ router.all('*', function (req, res, next) {
         if (err) {
             next(err);
         } else {
-            console.log('Sent:');
+            //console.log('Sent:');
         }
     });
 });
