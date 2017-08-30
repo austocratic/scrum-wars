@@ -504,8 +504,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'more':
                         console.log('Called avatarList/more');
 
-                        console.log('avatarList/more requestActionValue: ', requestActionValue);
-
                         //TODO hard coded +6 into pagination calculation.  Need to set via config variable
 
                         let numericRequestActionValue = parseFloat(requestActionValue);
@@ -579,7 +577,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
-                        //return avatarList;
+                        return avatarList;
 
                         break;
 
