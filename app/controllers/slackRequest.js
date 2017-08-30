@@ -507,7 +507,11 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('avatarList/more requestActionValue: ', requestActionValue);
 
                         //TODO hard coded +6 into pagination calculation.  Need to set via config variable
-                        let paginationEnd = requestActionValue + 6;
+
+                        let numericRequestActionValue = parseFloat(requestActionValue);
+
+                        //TODO need to use parseFloat to ensure requestActionValue is a number 
+                        let paginationEnd = numericRequestActionValue + 6;
 
                         let avatarList = {
                             'text': 'What does your character look like?',
