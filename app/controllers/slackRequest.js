@@ -562,13 +562,13 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             ]
                         });
 
-                        console.log('avatarList.attachments: ', avatarList.attachments);
+                        //console.log('avatarList.attachments: ', avatarList.attachments);
 
                         updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
                         getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
-                        return avatarList;
+                        //return avatarList;
 
                         break;
 
