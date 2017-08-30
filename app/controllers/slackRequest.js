@@ -504,6 +504,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'more':
                         console.log('Called avatarList/more');
 
+                        console.log('avatarList/more requestActionValue: ', requestActionValue);
+
                         //TODO hard coded +6 into pagination calculation.  Need to set via config variable
                         let paginationEnd = requestActionValue + 6;
 
@@ -518,8 +520,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
                         }
                         if (localCharacter.props.gender === 'female'){
-                            truncFileList = gameContext.maleAvatarPaths.slice(requestActionValue, paginationEnd);
+                            truncFileList = gameContext.femaleAvatarPaths.slice(requestActionValue, paginationEnd);
                         }
+
+                        console.log('avatarList/more truncFileList: ', truncFileList)
 
                         avatarList.attachments = truncFileList.map( eachFilePath =>{
                             console.log('eachFilePath: ', eachFilePath);
