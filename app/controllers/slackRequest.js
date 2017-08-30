@@ -575,11 +575,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             ]
                         });
 
-                        //console.log('avatarList.attachments created: ', avatarList.attachments);
+                        //REMOVING callback update.
+                        //updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
-                        updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
-
-                        getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
+                        //getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
                         return avatarList;
 
