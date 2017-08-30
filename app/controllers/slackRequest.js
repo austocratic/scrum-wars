@@ -576,9 +576,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         });
 
                         //REMOVING callback update.
-                        //updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
+                        updatedCallback = requestCallback;
 
-                        //getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
+                        getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
                         return avatarList;
 
