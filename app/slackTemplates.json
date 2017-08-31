@@ -142,12 +142,7 @@
     {
       "text": "",
       "callback_id": "itemList",
-      "actions": [
-        {
-          "name": "itemList",
-          "type": "select",
-          "options": []
-        }]
+      "actions": []
     },
     {
       "text": "",

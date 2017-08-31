@@ -161,9 +161,15 @@ class Character extends BaseModel{
         return false;
     }
     
+    //Return an array of items owned by character not equipped
     getUnequippedItems(){
 
-        var items = this.props.inventory;
+        //If character does not have an inventory property, character does not have any inventory yet.  Return empty array
+        if (this.props.inventory) {
+            return [];
+        }
+        
+        let items = this.props.inventory;
 
         return items
             .filter( eachItem =>{
@@ -171,9 +177,15 @@ class Character extends BaseModel{
             })
     }
 
+    //Return an array of items owned by character that are equipped
     getEquippedItems(){
+
+        //If character does not have an inventory property, character does not have any inventory yet.  Return empty array
+        if (this.props.inventory) {
+            return [];
+        }
         
-        var items = this.props.inventory;
+        let items = this.props.inventory;
 
         return items
             .filter( eachItem =>{

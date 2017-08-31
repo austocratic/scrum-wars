@@ -261,7 +261,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 switch (userSelection){
 
                     case 'action':
-
                         console.log('Called command/action');
 
                         //Is the character's current zone not equal to the requested zone?
@@ -304,8 +303,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         break;
 
                     case 'profile':
-
                         console.log('Called command/profile');
+                        
                         slackTemplate = gameContext.characterProfile(requestSlackUserID, requestSlackChannelID);
 
                         updatedCallback = 'command:profile/characterProfile';
@@ -317,7 +316,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         break;
 
                     case 'travel':
-
                         console.log('Called command/travel');
 
                         //Dont set callback ID here, no interactive message to return
@@ -326,7 +324,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         break;
 
                     case 'name':
-
                         console.log('Called command/name');
 
                         //Dont set callback ID here, no interactive message to return
@@ -1027,11 +1024,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         let inventorySlackTemplate = slackTemplates.itemList;
 
-                        //console.log('slackTemplate: ', inventorySlackTemplate);
-                        console.log('slackTemplate.attachments[0]: ', inventorySlackTemplate.attachments[0]);
-                        //console.log('slackTemplate.attachments[0].actions[0]:  ', inventorySlackTemplate.attachments[0].actions[0]);
-
-                        inventorySlackTemplate.attachments[0].actions[0].options =
+                        let unequippedItemOptions =
 
                             //Get the unequipped items then map into slack format
                             localCharacter.getUnequippedItems()
@@ -1042,7 +1035,20 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                                     }
                                 });
 
-                        //console.log('inventorySlackTemplate.attachments[0].actions[0].options: ', inventorySlackTemplate.attachments[0].actions[0].options);
+                        //If the character has unequipped items return a drop down, else return "no items"
+                        if (unequippedItemOptions.length > 0){
+                            inventorySlackTemplate.attachments[0].actions[0].options =
+                                {
+                                    "name": "itemList",
+                                    "type": "select",
+                                    "options": unequippedItemOptions
+                                }
+                        } else {
+                            inventorySlackTemplate.attachments[0] =
+                                {
+                                    "text": "Your backpack is empty!"
+                                }
+                        }
 
                         updatedCallback = ':Inventory/inventoryList';
 
