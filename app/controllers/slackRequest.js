@@ -440,7 +440,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
 
-                slackTemplate.attachments = getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
+                avatarList.attachments = getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
 
                 return avatarList;
 
