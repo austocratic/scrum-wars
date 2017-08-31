@@ -653,7 +653,7 @@ class Game {
                 "callback_id": "equipmentMenu",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + equippedSlotItem.item_id + ".jpg",
                 "fields": [{
-                    "title": "equippedSlotItem.name",
+                    "title": equippedSlotItem.name,
                     "value": "",
                     "short": false
                 }],
