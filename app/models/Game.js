@@ -625,6 +625,8 @@ class Game {
         //Returns array of equipped item objects
         let equippedItems = localCharacter.getEquippedItems();
 
+        console.log('DEBUG: equippedItems: ', equippedItems);
+
         //Iterate through all the standard inventory slots to create a template with an attachment for each slot
         return equipmentSlotKeys.map( eachEquipmentSlot =>{
             
