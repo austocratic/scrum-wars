@@ -625,6 +625,7 @@ class Game {
         //Returns array of equipped item objects
         let equippedItems = localCharacter.getEquippedItems();
 
+        //Iterate through all the standard inventory slots to create a template with an attachment for each slot
         return equipmentSlotKeys.map( eachEquipmentSlot =>{
             
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
@@ -633,7 +634,7 @@ class Game {
 
             //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
             //If no equipped item, equippedSlotItem will be undefined
-            let equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+            let equippedSlotItem = _.find(equippedItems, {"equipment_slot_id": singleEquipmentSlot.id});
 
             let modifiedQquippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
 
