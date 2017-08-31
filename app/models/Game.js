@@ -279,7 +279,7 @@ class Game {
         ]
         };
 
-        template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localCharacter.props.class_id + ".jpg";
+        template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/" + localCharacter.props.avatar;
 
         template.attachments[1].fields = [
             {

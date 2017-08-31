@@ -32,7 +32,8 @@ class Item extends BaseModel {
                 ]
             };
 
-            template.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.id + ".jpg";
+            template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + this.id + ".jpg";
+            //template.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.id + ".jpg";
 
             //Create the fields to show
             template.attachments[0].fields = [
