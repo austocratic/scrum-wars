@@ -964,6 +964,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         localItem = new Item(gameContext.state, itemID);
                         
+                        let responseText = {
+                            text: 'You equip ' + localItem.props.name
+                        };
+                        
                         //Verify that the character does not have an item equipped in any of the new item's slots
                         localItem.props.equipment_slot_id.forEach( eachEquipmentSlotID =>{
 
@@ -971,13 +975,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                             if (equipmentInSlot.length === 0){
                                 localCharacter.equipItem(localItem);
+                                
+                                responseText = 'You can not equip that item because you already have an item equipped in that slot!'
                             }
                         });
 
-
-                        return {
-                            text: 'You equip ' + localItem.props.name
-                        };
+                        return responseText;
                         
                         break;
                     
@@ -1046,6 +1049,12 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         //If the character has unequipped items return a drop down, else return "no items"
                         if (unequippedItemOptions.length > 0){
+
+                            inventorySlackTemplate.attachments[0] =
+                            {
+                                "text": ""
+                            };
+
                             inventorySlackTemplate.attachments[0].actions =
                                 [{
                                     "name": "itemList",

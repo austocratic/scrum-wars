@@ -232,7 +232,7 @@ class Character extends BaseModel{
             }
         }
         unequippedItem.is_equipped = 1;
-        unequippedItem.equipment_slots = itemObject.props.equipment_slots
+        //unequippedItem.equipment_slots = itemObject.props.equipment_slots
     }
 
     unequipItem(itemID){

@@ -622,23 +622,10 @@ class Game {
 
         let singleEquipmentSlot;
 
-        //Returns array of equipped item objects
-        //let equippedItems = localCharacter.getEquippedItems();
-
-        //console.log('DEBUG: equippedItems: ', equippedItems);
-
         //Iterate through all the standard inventory slots to create a template with an attachment for each slot
         return equipmentSlotKeys.map( eachEquipmentSlot =>{
             
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
-
-            console.log('DEBUG: searching equipment slot: ', singleEquipmentSlot.id);
-            
-            /*
-            //Find the equipped item in that slot
-            let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
-                return eachEquippedItem.equipment_slot_id.indexOf(singleEquipmentSlot.id) >= 0
-            });*/
 
             let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
             
