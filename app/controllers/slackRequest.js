@@ -1050,19 +1050,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //If the character has unequipped items return a drop down, else return "no items"
                         if (unequippedItemOptions.length > 0){
 
-                            inventorySlackTemplate.attachments[0] =
+                            inventorySlackTemplate.attachments[1] =
                             {
                                 "text": ""
                             };
 
-                            inventorySlackTemplate.attachments[0].actions =
+                            inventorySlackTemplate.attachments[1].actions =
                                 [{
                                     "name": "itemList",
                                     "type": "select",
                                     "options": unequippedItemOptions
                                 }]
                         } else {
-                            inventorySlackTemplate.attachments[0] =
+                            inventorySlackTemplate.attachments[1] =
                                 {
                                     "text": "Your backpack is empty!"
                                 }
