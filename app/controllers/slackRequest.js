@@ -565,7 +565,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         });
 
                         //Get the index of the navigations buttins attachment so that buttons can be pushed into that index
-                        let navigationButtonAttachmentIndex = avatarList.attachments.length;
+                        let navigationButtonAttachmentIndex = avatarList.attachments.length - 1;
+
+                        console.log('DEBUG: navigationButtonAttachmentIndex: ', navigationButtonAttachmentIndex);
 
                         console.log('DEBUG: numericRequestActionValue: ', numericRequestActionValue);
 
