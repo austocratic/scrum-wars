@@ -290,8 +290,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     break;
 
                     case 'generate':
-
                         console.log('Called command/generate');
+
                         //Return the new character confirmation template
                         slackTemplate = slackTemplates.generateCharacterConfirmation;
 
@@ -357,18 +357,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Return a class selection template with all available classes from the DB
                         slackTemplate = gameContext.getCharacterClasses();
 
-                        //TODO to remove (reorganizing the flow)
-                        //slackTemplate = slackTemplates.genderList;
-
-                        //updatedCallback = requestCallback + ':yes/selectGender';
                         updatedCallback = requestCallback + ':yes/characterClassList';
 
-                        //TODO, I should change getAttachmentWithCallbacks to accept the slackTemplate (not just the attachment)
-                        //slackTemplate.attachments = [];
-
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-
-                        console.log('DEBUG: set the class template');
 
                         return slackTemplate;
                         
@@ -444,13 +435,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 return avatarList;
 
-                //updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
-                //updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
-
-                //slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-
-                //return slackTemplate;
-
                 break;
 
             case 'characterClassList':
@@ -496,60 +480,6 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 return slackTemplate;
 
                 break;
-
-                /*
-                let avatarList = {
-                    'text': 'What does your character look like?'
-                };
-
-                //TODO hard coded first page length with .slice(1, 6), need to move to config
-                let truncFileList;
-                if (localCharacter.props.gender === 'male'){
-                    truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
-                }
-                if (localCharacter.props.gender === 'female'){
-                    truncFileList = gameContext.femaleAvatarPaths.slice(1, 6);
-                }
-
-                avatarList.attachments = truncFileList.map( eachFilePath =>{
-                    console.log('eachFilePath: ', eachFilePath);
-                    return {
-                        "text": "",
-                        "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
-                        "actions":[{
-                            "name": "selection",
-                            "text": "Select",
-                            "style": "default",
-                            "type": "button",
-                            "value": eachFilePath
-                        }]
-                    }
-                });
-
-                //Add a more button to the attachment array
-                avatarList.attachments.push({
-                    "text": "",
-                    "image_url": '',
-                    "actions": [
-                        {
-                            "name": "more",
-                            "text": "More",
-                            "style": "default",
-                            "type": "button",
-                            "value": 6
-                        }
-                    ]
-                });
-
-                console.log('avatarList.attachments: ', avatarList.attachments);
-
-                updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
-
-                getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
-
-                return avatarList;
-
-                break;*/
             
             case 'avatarList':
                 

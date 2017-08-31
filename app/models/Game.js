@@ -183,11 +183,6 @@ class Game {
     }
 
     createCharacter(userID){
-
-        /*
-        function randomGenerator() {
-            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-        }*/
         
         var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
@@ -205,15 +200,7 @@ class Game {
                 hit_points: 100,
                 max_hit_points: 100,
                 match_wins: 0,
-                zone_id: '-Khu9Zazk5XdFX9fD2Y8',
-                inventory: {
-                    equipped: {
-                        hand_1: "-Kjk3sGUJy5Nu8GWsdff"
-                    },
-                    unequipped: [
-                        "-Kjk3sGUJy5Nu8GWsdff"
-                    ]
-                }
+                zone_id: '-Khu9Zazk5XdFX9fD2Y8'
             }
         };
 
