@@ -165,7 +165,7 @@ class Character extends BaseModel{
     getUnequippedItems(){
 
         //If character does not have an inventory property, character does not have any inventory yet.  Return empty array
-        if (this.props.inventory) {
+        if (!this.props.inventory) {
             return [];
         }
         
@@ -181,7 +181,7 @@ class Character extends BaseModel{
     getEquippedItems(){
 
         //If character does not have an inventory property, character does not have any inventory yet.  Return empty array
-        if (this.props.inventory) {
+        if (!this.props.inventory) {
             return [];
         }
         
