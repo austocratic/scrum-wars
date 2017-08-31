@@ -354,35 +354,19 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Update the user to new character
                         localUser.updateProperty('character_id', newLocalCharacterID);
 
-                        slackTemplate = slackTemplates.genderList;
+                        //Return a class selection template with all available classes from the DB
+                        slackTemplate = gameContext.getCharacterClasses();
 
-                        updatedCallback = requestCallback + ':yes/selectGender';
+                        //TODO to remove (reorganizing the flow)
+                        //slackTemplate = slackTemplates.genderList;
+
+                        //updatedCallback = requestCallback + ':yes/selectGender';
+                        updatedCallback = requestCallback + 'yes/characterClassList';
+
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
                         return slackTemplate;
-
-                        /*
-                        //Archive the player's current character
-                        //character.archive - this function should change the character's active property to 0
-                        localCharacter.inactivate();
-                        
-                        //Create new character record
-                        var newLocalCharacterID = gameContext.createCharacter(localUser.id);
-
-                        //Update the user to new character
-                        localUser.updateProperty('character_id', newLocalCharacterID);
-                        
-                        //Return a class selection template with all available classes from the DB
-                        slackTemplate = gameContext.getCharacterClasses();
-
-                        console.log('character class template: ', JSON.stringify(slackTemplate));
-
-                        updatedCallback = requestCallback + ':yes/generateCharacterClassList';
-
-                        slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
-
-                        return slackTemplate;*/
                         
                     break;
 
@@ -403,18 +387,72 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 localCharacter.updateProperty('gender', userSelection);
 
                 //Return a class selection template with all available classes from the DB
-                slackTemplate = gameContext.getCharacterClasses();
+                //slackTemplate = gameContext.getCharacterClasses();
 
-                updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
+                let avatarList = {
+                    'text': 'What does your character look like?'
+                };
 
-                slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+                //TODO hard coded first page length with .slice(1, 6), need to move to config
+                let truncFileList;
+                if (localCharacter.props.gender === 'male'){
+                    truncFileList = gameContext.maleAvatarPaths.slice(1, 6);
+                }
+                if (localCharacter.props.gender === 'female'){
+                    truncFileList = gameContext.femaleAvatarPaths.slice(1, 6);
+                }
 
-                return slackTemplate;
+                avatarList.attachments = truncFileList.map( eachFilePath =>{
+                    console.log('eachFilePath: ', eachFilePath);
+                    return {
+                        "text": "",
+                        "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
+                        "actions":[{
+                            "name": "selection",
+                            "text": "Select",
+                            "style": "default",
+                            "type": "button",
+                            "value": eachFilePath
+                        }]
+                    }
+                });
+
+                //Add a more button to the attachment array
+                avatarList.attachments.push({
+                    "text": "",
+                    "image_url": '',
+                    "actions": [
+                        {
+                            "name": "more",
+                            "text": "More",
+                            "style": "default",
+                            "type": "button",
+                            "value": 6
+                        }
+                    ]
+                });
+
+                console.log('avatarList.attachments: ', avatarList.attachments);
+
+                updatedCallback = requestCallback + ':' + userSelection + '/avatarList';
+
+                slackTemplate.attachments = getAttachmentWithCallbacks(avatarList.attachments, updatedCallback);
+
+                return avatarList;
+
+                //updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
+                //updatedCallback = requestCallback + ':' + userSelection + '/characterClassList';
+
+                //slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                //return slackTemplate;
 
                 break;
 
             case 'characterClassList':
                 console.log('Called characterClassList');
+
+                // *****************Based on class selection update DB stats*******************
 
                 let localCharacterClass = new Class(gameContext.state, userSelection);
 
@@ -444,6 +482,18 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 //Mutate the object
                 Object.assign(localCharacter.props, updates);
 
+                // *****************Return the gender selection menu*******************
+
+                //slackTemplate = slackTemplates.genderList;
+                updatedCallback = requestCallback + ':' + userSelection + '/selectGender';
+
+                slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                return slackTemplate;
+
+                break;
+
+                /*
                 let avatarList = {
                     'text': 'What does your character look like?'
                 };
@@ -495,7 +545,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 return avatarList;
 
-                break;
+                break;*/
             
             case 'avatarList':
                 
@@ -567,14 +617,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Get the index of the navigations buttins attachment so that buttons can be pushed into that index
                         let navigationButtonAttachmentIndex = avatarList.attachments.length - 1;
 
-                        console.log('DEBUG: navigationButtonAttachmentIndex: ', navigationButtonAttachmentIndex);
-
-                        console.log('DEBUG: numericRequestActionValue: ', numericRequestActionValue);
-
                         //If there is at least one value between 0 and current page beginning, add a previous button
                         //Add 'previous' button to the attachment array
                         if (numericRequestActionValue > 0) {
-                            console.log('DEBUG: passed numericRequestActionValue check');
                             avatarList.attachments[navigationButtonAttachmentIndex].actions.push(
                                 {
                                     "name": "more",
@@ -586,13 +631,9 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             );
                         }
 
-                        console.log('DEBUG: nextPaginationEnd: ', nextPaginationEnd);
-                        console.log('DEBUG: avatarPathArray.length: ', avatarPathArray.length);
-
                         //If there is at least one value after the current page end, add a next button
                         //Add 'more' button to the attachment array
                         if (nextPaginationEnd < avatarPathArray.length) {
-                            console.log('DEBUG: passed avatarPathArray.length check');
                             avatarList.attachments[navigationButtonAttachmentIndex].actions.push(
                                 {
                                     "name": "more",
