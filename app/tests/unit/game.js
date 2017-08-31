@@ -29,7 +29,7 @@ describe("Game model", () => {
         
     });
 });*/
-
+/*
 describe("game.getEquippedItemView()", () => {
 
     it("should return an array", done => {
@@ -43,7 +43,7 @@ describe("game.getEquippedItemView()", () => {
         done();
 
     });
-});
+});*/
 /*
 describe("game.initiate()", () => {
 

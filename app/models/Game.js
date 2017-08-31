@@ -623,9 +623,9 @@ class Game {
         let singleEquipmentSlot;
 
         //Returns array of equipped item objects
-        let equippedItems = localCharacter.getEquippedItems();
+        //let equippedItems = localCharacter.getEquippedItems();
 
-        console.log('DEBUG: equippedItems: ', equippedItems);
+        //console.log('DEBUG: equippedItems: ', equippedItems);
 
         //Iterate through all the standard inventory slots to create a template with an attachment for each slot
         return equipmentSlotKeys.map( eachEquipmentSlot =>{
@@ -633,69 +633,28 @@ class Game {
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
 
             console.log('DEBUG: searching equipment slot: ', singleEquipmentSlot.id);
-
-            //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
-            //If no equipped item, equippedSlotItem will be undefined
-            /*let equippedSlotItem = undefined;
-            equippedItems.forEach( eachItem =>{
-                console.log('DEBUG: searching eachItem.equipment_slot_id: ', eachItem.equipment_slot_id);
-                console.log('DEBUG: searching singleEquipmentSlot.id: ', singleEquipmentSlot.id);
-
-                let slotSearch = _.find(eachItem.equipment_slot_id, singleEquipmentSlot.id);
-                if (slotSearch) {
-                    console.log('DEBUG: found a match where slotSearch was not undefined')
-                    equippedSlotItem = slotSearch
-                }
-            });*/
-
+            
+            /*
+            //Find the equipped item in that slot
             let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
                 return eachEquippedItem.equipment_slot_id.indexOf(singleEquipmentSlot.id) >= 0
-            });
+            });*/
 
-            //let equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
-
-            console.log('DEBUG: standard properties: ', equippedSlotItem);
-            //console.log('DEBUG: modified properties: ', modifiedQquippedSlotItem);
-
+            let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
+            
             //Default to empty slot format, if not empty, over write it
             let formattedSlot = {
                 item_id: '-Kjk3sGUJy5Nu8GWsdff',
                 name: 'Empty'
             };
-
-
+            
             if (equippedSlotItem.length > 0){
                 formattedSlot = {
                     item_id: equippedSlotItem[0].item_id,
                     name: equippedSlotItem[0].name
                 }
             }
-
-            /*
-            if (slotEmpty === 1){
-                //TODO need to define "empty" item id in a config
-                equippedSlotItem = {
-                    item_id: '-Kjk3sGUJy5Nu8GWsdff',
-                    name: 'Empty'
-                };
-            }*/
-
-            /*
-            let slotEmpty = 0;
             
-            //If character has no equipped item in that slot (undefined), overwrite the properties to be used in the template
-            if (equippedSlotItem === undefined){
-                slotEmpty = 1;
-            }
-            
-            if (slotEmpty === 1){
-                //TODO need to define "empty" item id in a config
-                equippedSlotItem = {
-                    item_id: '-Kjk3sGUJy5Nu8GWsdff',
-                    name: 'Empty'
-                };
-            }*/
-
             let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",

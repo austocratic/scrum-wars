@@ -964,7 +964,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                         localItem = new Item(gameContext.state, itemID);
                         
-                        localCharacter.equipItem(localItem);
+                        //Verify that the character does not have an item equipped in any of the new item's slots
+                        localItem.props.equipment_slot_id.forEach( eachEquipmentSlotID =>{
+
+                            let equipmentInSlot = localCharacter.getEquipmentInSlot(eachEquipmentSlotID);
+
+                            if (equipmentInSlot.length === 0){
+                                localCharacter.equipItem(localItem);
+                            }
+                        });
+
 
                         return {
                             text: 'You equip ' + localItem.props.name

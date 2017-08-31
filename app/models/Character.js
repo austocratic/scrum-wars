@@ -192,6 +192,21 @@ class Character extends BaseModel{
                 return eachItem.is_equipped === 1;
             });
     }
+    
+    //Argument of slot ID
+    getEquipmentInSlot(slotID){
+        
+        let equippedItems = this.getEquippedItems();
+        
+        let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
+            return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
+        });
+        
+        console.log('DEBUG: getEquipmentInSlot(), equippedSlotItem: ', equippedSlotItem);
+        
+        return equippedSlotItem
+        
+    }
 
     equipItem(itemObject){
 
@@ -208,7 +223,7 @@ class Character extends BaseModel{
         
         if (unequippedItem.is_equipped === 1){
             return {
-                test: 'That Item is already equipped!'
+                text: 'That Item is already equipped!'
             }
         }
         unequippedItem.is_equipped = 1;

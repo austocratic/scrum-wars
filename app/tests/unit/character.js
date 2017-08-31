@@ -17,7 +17,7 @@ testGame.state = testDB;
 //Calculate properties in memory
 testGame.inititateRequest();
 
-var testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
+var testCharacterID = 'd130618f3a221f672cfc';
 
 var testCharacterID2 ='a7ad15dd1052e7e7ef8a';
 
@@ -162,3 +162,29 @@ describe("character.equipItem() ", () => {
     });
     
 });*/
+
+describe("character.getEquipmentInSlot() ", () => {
+
+    var testCharacter = new Character(testGame.state, testCharacterID);
+
+    var slotID = '-KmTV24FelP7T8rdKLEx';
+
+    //var unequippedItem = _.find(testCharacter.props.inventory, {'item_id': itemID});
+
+    console.log('TEST getEquipmentInSlot: ', testCharacter.getEquipmentInSlot(slotID));
+
+    /*
+    it("", done => {
+
+        var testPass = 0;
+
+        if (unequippedItem.is_equipped === 1){
+            testPass = 1;
+        }
+
+        assert.equal(testPass, 1);
+
+        done();
+    });*/
+
+});
