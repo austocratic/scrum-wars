@@ -1035,7 +1035,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('called characterProfile/Exit');
 
                         return {
-                            "text": ""
+                            "text": "",
+                            "delete_original": true
                         };
 
                         break;
