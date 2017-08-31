@@ -363,6 +363,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //updatedCallback = requestCallback + ':yes/selectGender';
                         updatedCallback = requestCallback + 'yes/characterClassList';
 
+                        //TODO, I should change getAttachmentWithCallbacks to accept the slackTemplate (not just the attachment)
+                        slackTemplate.attachments = [];
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
 
