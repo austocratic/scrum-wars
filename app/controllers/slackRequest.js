@@ -361,12 +361,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //slackTemplate = slackTemplates.genderList;
 
                         //updatedCallback = requestCallback + ':yes/selectGender';
-                        updatedCallback = requestCallback + 'yes/characterClassList';
+                        updatedCallback = requestCallback + ':yes/characterClassList';
 
                         //TODO, I should change getAttachmentWithCallbacks to accept the slackTemplate (not just the attachment)
-                        slackTemplate.attachments = [];
+                        //slackTemplate.attachments = [];
 
                         slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);
+
+                        console.log('DEBUG: set the class template');
 
                         return slackTemplate;
                         
@@ -486,7 +488,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
                 // *****************Return the gender selection menu*******************
 
-                //slackTemplate = slackTemplates.genderList;
+                slackTemplate = slackTemplates.genderList;
                 updatedCallback = requestCallback + ':' + userSelection + '/selectGender';
 
                 slackTemplate.attachments = getAttachmentWithCallbacks(slackTemplate.attachments, updatedCallback);

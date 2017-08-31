@@ -527,6 +527,8 @@ class Game {
             }
         });
 
+        console.log('DEBUG: characterClassesTemplate: ', characterClassesTemplate);
+        
         return characterClassesTemplate;
 
     }
