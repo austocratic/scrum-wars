@@ -1030,6 +1030,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 
                 switch (userSelection) {
 
+                    case 'Exit':
+
+                        console.log('called characterProfile/Exit');
+
+                        return {
+                            "text": ""
+                        };
+
+                        break;
+
                     case 'Inventory':
 
                         console.log('called characterProfile/Inventory');

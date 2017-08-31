@@ -348,6 +348,13 @@ class Game {
                 "style": "default",
                 "type": "button",
                 "value": "Equipment"
+            },
+            {
+                "name": "Exit",
+                "text": "Exit",
+                "style": "default",
+                "type": "button",
+                "value": "Exit"
             }]
         };
 
