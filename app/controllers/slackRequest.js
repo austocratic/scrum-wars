@@ -570,7 +570,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Add 'previous' button to the attachment array
                         if (numericRequestActionValue > 0) {
                             console.log('DEBUG: passed numericRequestActionValue check');
-                            avatarList.attachments.actions.push(
+                            avatarList.attachments[0].actions.push(
                                 {
                                     "name": "more",
                                     "text": "Previous",
@@ -588,7 +588,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Add 'more' button to the attachment array
                         if (nextPaginationEnd < avatarPathArray.length) {
                             console.log('DEBUG: passed avatarPathArray.length check');
-                            avatarList.attachments.actions.push(
+                            avatarList.attachments[0].actions.push(
                                 {
                                     "name": "more",
                                     "text": "More",
