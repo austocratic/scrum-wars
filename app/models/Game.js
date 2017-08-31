@@ -636,13 +636,51 @@ class Game {
 
             //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
             //If no equipped item, equippedSlotItem will be undefined
-            let equippedSlotItem = _.find(equippedItems, {"equipment_slot_id": singleEquipmentSlot.id});
+            /*let equippedSlotItem = undefined;
+            equippedItems.forEach( eachItem =>{
+                console.log('DEBUG: searching eachItem.equipment_slot_id: ', eachItem.equipment_slot_id);
+                console.log('DEBUG: searching singleEquipmentSlot.id: ', singleEquipmentSlot.id);
 
-            let modifiedQquippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+                let slotSearch = _.find(eachItem.equipment_slot_id, singleEquipmentSlot.id);
+                if (slotSearch) {
+                    console.log('DEBUG: found a match where slotSearch was not undefined')
+                    equippedSlotItem = slotSearch
+                }
+            });*/
+
+            let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
+                return eachEquippedItem.equipment_slot_id.indexOf(singleEquipmentSlot.id) >= 0
+            });
+
+            //let equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
 
             console.log('DEBUG: standard properties: ', equippedSlotItem);
-            console.log('DEBUG: modified properties: ', modifiedQquippedSlotItem);
+            //console.log('DEBUG: modified properties: ', modifiedQquippedSlotItem);
 
+            //Default to empty slot format, if not empty, over write it
+            let formattedSlot = {
+                item_id: '-Kjk3sGUJy5Nu8GWsdff',
+                name: 'Empty'
+            };
+
+
+            if (equippedSlotItem.length > 0){
+                formattedSlot = {
+                    item_id: equippedSlotItem[0].item_id,
+                    name: equippedSlotItem[0].name
+                }
+            }
+
+            /*
+            if (slotEmpty === 1){
+                //TODO need to define "empty" item id in a config
+                equippedSlotItem = {
+                    item_id: '-Kjk3sGUJy5Nu8GWsdff',
+                    name: 'Empty'
+                };
+            }*/
+
+            /*
             let slotEmpty = 0;
             
             //If character has no equipped item in that slot (undefined), overwrite the properties to be used in the template
@@ -656,14 +694,14 @@ class Game {
                     item_id: '-Kjk3sGUJy5Nu8GWsdff',
                     name: 'Empty'
                 };
-            }
+            }*/
 
             let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "equipmentMenu",
-                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + equippedSlotItem.item_id + ".jpg",
+                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + formattedSlot.item_id + ".jpg",
                 "fields": [{
-                    "title": equippedSlotItem.name,
+                    "title": formattedSlot.name,
                     "value": "",
                     "short": false
                 }],
@@ -671,14 +709,14 @@ class Game {
             };
             
             //If the item is any ID other than the "empty" item, add an inspect button
-            if (slotEmpty === 0){
+            if (equippedSlotItem.length > 0){
 
                 baseTemplate.actions.push({
                     "name": "inspect",
                     "text": "Inspect item",
                     "style": "default",
                     "type": "button",
-                    "value": equippedSlotItem.item_id
+                    "value": formattedSlot.item_id
                 })
             }
             

@@ -11,7 +11,7 @@ var helpers = require('../../helpers');
 var testGame = new Game();
 testGame.state = testDB;
 
-var testCharacterID = 'a7ad15dd1052e7e7ef8a';
+var testCharacterID = 'd130618f3a221f672cfc';
 
 var testCharacter = new Character(testGame.state, testCharacterID);
 /*
@@ -28,7 +28,7 @@ describe("Game model", () => {
         done();
         
     });
-});
+});*/
 
 describe("game.getEquippedItemView()", () => {
 
@@ -43,7 +43,7 @@ describe("game.getEquippedItemView()", () => {
         done();
 
     });
-});*/
+});
 /*
 describe("game.initiate()", () => {
 
@@ -76,7 +76,7 @@ describe("game.getFiles()", () => {
 
     });
 });*/
-
+/*
 describe("game.getImageFilePaths()", () => {
 
     it("should return an array", done => {
@@ -90,7 +90,7 @@ describe("game.getImageFilePaths()", () => {
         done();
 
     });
-});
+});*/
 /*
 describe("game.paginateCharacters()", () => {
 
