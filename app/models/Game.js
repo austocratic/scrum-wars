@@ -629,9 +629,16 @@ class Game {
             
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
 
+            console.log('DEBUG: searching equipment slot: ', singleEquipmentSlot.id);
+
             //Check if the character has an equipped item with equipment_slot_id = current iteration of slot id
             //If no equipped item, equippedSlotItem will be undefined
             let equippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+
+            let modifiedQquippedSlotItem = _.find(equippedItems, {equipment_slot_id: singleEquipmentSlot.id});
+
+            console.log('DEBUG: standard properties: ', equippedSlotItem);
+            console.log('DEBUG: modified properties: ', modifiedQquippedSlotItem);
 
             let slotEmpty = 0;
             
