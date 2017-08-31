@@ -91,7 +91,7 @@ class Character extends BaseModel{
         //Properties of an item that will be pushed to the character's inventory
         var item = {
             //Equipment slot will be set at time of equipped
-            //equipment_slot_id: itemObject.props.slot,
+            equipment_slot_id: itemObject.props.equipment_slot_id,
             name: itemObject.props.name,
             is_equipped: 0,
             item_id: itemObject.id,
@@ -197,8 +197,13 @@ class Character extends BaseModel{
     getEquipmentInSlot(slotID){
         
         let equippedItems = this.getEquippedItems();
+
+        console.log('DEBUG: getEquipmentInSlot(), equippedItems: ', equippedItems);
         
         let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
+
+            console.log('DEBUG: getEquipmentInSlot(), eachEquippedItem: ', eachEquippedItem);
+
             return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
         });
         

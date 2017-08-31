@@ -353,7 +353,7 @@
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "dexterity" : 12,
       "gender" : "female",
-      "gold" : 90,
+      "gold" : 80,
       "hit_points" : 100,
       "intelligence" : 18,
       "inventory" : [ {
@@ -365,14 +365,24 @@
           "modified_strength" : 5
         },
         "name" : "rusty longsword"
+      }, {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "is_equipped" : 1,
+        "item_id" : "-KjGQPbo-96j_Uikhjqh",
+        "modifiers" : {
+          "modified_dexterity" : 2,
+          "modified_strength" : 2
+        },
+        "name" : "rusty dagger"
       } ],
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
       "max_hit_points" : 100,
-      "modified_dexterity" : 12,
+      "modified_dexterity" : 14,
       "modified_intelligence" : 18,
-      "modified_strength" : 9,
+      "modified_strength" : 11,
       "modified_toughness" : 6,
       "name" : "Sindria",
       "strength" : 4,
@@ -482,7 +492,7 @@
   "item" : {
     "-KjGQ1IPuwE24t4LPPNd" : {
       "cost" : 10,
-      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
       "modifiers" : {
         "modified_strength" : 5
       },
@@ -490,7 +500,7 @@
     },
     "-KjGQEzVbaxRlWFawSqI" : {
       "cost" : 10,
-      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
         "modified_intelligence" : 2,
         "modified_strength" : 2
@@ -503,7 +513,7 @@
         "modified_dexterity" : 3,
         "modified_strength" : 2
       },
-      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
         "modified_dexterity" : 5
       },
@@ -511,7 +521,7 @@
     },
     "-KjGQPbo-96j_Uikhjqh" : {
       "cost" : 10,
-      "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
       "modifiers" : {
         "modified_dexterity" : 2,
         "modified_strength" : 2
