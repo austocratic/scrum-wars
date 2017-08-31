@@ -564,13 +564,16 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                             "actions": []
                         });
 
+                        //Get the index of the navigations buttins attachment so that buttons can be pushed into that index
+                        let navigationButtonAttachmentIndex = avatarList.attachments.length;
+
                         console.log('DEBUG: numericRequestActionValue: ', numericRequestActionValue);
 
                         //If there is at least one value between 0 and current page beginning, add a previous button
                         //Add 'previous' button to the attachment array
                         if (numericRequestActionValue > 0) {
                             console.log('DEBUG: passed numericRequestActionValue check');
-                            avatarList.attachments[0].actions.push(
+                            avatarList.attachments[navigationButtonAttachmentIndex].actions.push(
                                 {
                                     "name": "more",
                                     "text": "Previous",
@@ -588,7 +591,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         //Add 'more' button to the attachment array
                         if (nextPaginationEnd < avatarPathArray.length) {
                             console.log('DEBUG: passed avatarPathArray.length check');
-                            avatarList.attachments[0].actions.push(
+                            avatarList.attachments[navigationButtonAttachmentIndex].actions.push(
                                 {
                                     "name": "more",
                                     "text": "More",
