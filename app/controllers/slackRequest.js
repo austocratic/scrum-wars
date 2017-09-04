@@ -344,7 +344,8 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                         console.log('localCharacter: ', localCharacter);
 
                         //If the user has a character, inactivate it
-                        if (localCharacter !== 'undefined'){
+                        if (localCharacter.props !== undefined){
+                            console.log('Passed localCharacter props check')
                             localCharacter.inactivate();
                         }
 
