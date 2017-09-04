@@ -341,9 +341,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'yes':
                         console.log('Called generateCharacterConfirmation/yes');
 
-                        //Archive the player's current character
-                        //character.archive - this function should change the character's active property to 0
-                        localCharacter.inactivate();
+                        //If the user has a character, inactivate it
+                        if (localCharacter){
+                            localCharacter.inactivate();
+                        }
 
                         //Create new character record
                         var newLocalCharacterID = gameContext.createCharacter(localUser.id);
