@@ -341,8 +341,10 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     case 'yes':
                         console.log('Called generateCharacterConfirmation/yes');
 
+                        console.log('localCharacter: ', localCharacter);
+
                         //If the user has a character, inactivate it
-                        if (localCharacter){
+                        if (localCharacter !== 'undefined'){
                             localCharacter.inactivate();
                         }
 
