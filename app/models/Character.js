@@ -14,10 +14,10 @@ var _ = require('lodash');
 
 class Character extends BaseModel{
     constructor(gameState, characterID){
-        super();
-        
+        super(gameState, 'character', characterID);
+
         var characters = gameState.character;
-        
+
         //Set the character's props
         this.props = characters[characterID];
         this.id = characterID
@@ -125,13 +125,13 @@ class Character extends BaseModel{
 
     getActionIDs(){
 
-        var filteredActions = this.props.actions.filter( eachAction =>{
-            return eachAction.is_available === 1
-        });
-
-        return filteredActions.map( eachAction =>{
-            return eachAction.action_id;
-        });
+        return this.props.actions
+            .filter( eachAction =>{
+                return eachAction.is_available === 1
+            })
+            .map( eachAction =>{
+                return eachAction.action_id;
+            });
     }
     
     //Return an array of actionIDs that were used on the turnNumber argument

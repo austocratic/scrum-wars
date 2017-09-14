@@ -18,31 +18,17 @@ class Slack {
                 console.log('ERROR when sending message to slack: ' + err);
             }
         });
-        
-        /*
-        return new Promise( (resolve, reject) => {
-            request.post(this.options, (err, httpResponse, body) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(body);
-            })
-        })*/
     }
 }
 
 class Alert extends Slack {
-    constructor(params)
-    
-    {
+    constructor(params) {
         super();
 
         this.params = params;
 
         //Set options in format for passing to Slack
         this._setOptions();
-        
-        //this.sendToSlack();
     }
 
     _setOptions() {
@@ -56,7 +42,7 @@ class Alert extends Slack {
             body:                    this.params
         };
 
-        console.log('slack parameters: ', this. options)
+        console.log('slack parameters: ', this.options)
     }
 }
 

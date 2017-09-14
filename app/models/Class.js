@@ -4,7 +4,7 @@ var slackTemplates = require('../slackTemplates');
 
 class Class extends BaseModel{
     constructor(gameState, classID){
-        super();
+        super(gameState, 'class', classID);
 
         var classes = gameState.class;
 
@@ -17,6 +17,6 @@ class Class extends BaseModel{
 
 
 module.exports = {
-    Class: Class
+    Class
 };
 

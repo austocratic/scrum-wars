@@ -15,7 +15,7 @@ var BaseModel = require('./BaseModel').BaseModel;
 
 class Match extends BaseModel{
     constructor(gameState, matchID){
-        super();
+        super(gameState, 'match', matchID);
 
         var matches = gameState.match;
 
@@ -25,11 +25,21 @@ class Match extends BaseModel{
 
     }
     
+    //Start the match
     start(){
+        this.updateProperty('status', 'started')
+    }
+
+    end(){
+        this.updateProperty('status', 'ended')
+    }
+
+    getStartingCharacterIDs(){
+        if (this.props.starting_character_ids) {
+            return this.props.starting_character_ids
+        }
         
-        
-        //Create a new match
-        
+        return [];
     }
 }
 

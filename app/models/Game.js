@@ -14,10 +14,13 @@ var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 var slackTemplates = require('../slackTemplates');
 
+var slackAlert = require('../libraries/slack').Alert;
+
 var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
 var helpers = require('../helpers');
+var gameConfigurations = require('./gameConfigurations.json');
 
 //TODO - move this to a config file
 var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
@@ -52,6 +55,13 @@ class Game {
     randomGenerator() {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
+
+    /*TODO DELETE AFTER TESTING
+    getCurrentMatch(){
+
+
+        return this.state.match_id
+    }*/
     
     //Refresh function checks the game's state looking for certain conditions (player deaths, ect.)
     //It is invoked periodically by cron
@@ -59,31 +69,107 @@ class Game {
     //TODO I should probably make a gameController file and move this (and other functions) into it
     refresh(){
 
-        //check if there is an active match
-        var activeMatch = _.find(this.state.match, {'active': 1});
+        //console.log('DEBUG: this.state(): ', this.state);
 
-        var activeMatchID;
+        console.log('DEBUG: this.getCurrentMatchID(): ', this.getCurrentMatchID());
+
+        //**********************~~  Match  ~~***********************
+
+        //Read game state to find the current match ID
+        let currentMatch = new Match(this.state, this.getCurrentMatchID());
+
+        console.log('DEBUG: currentMatch.props: ', currentMatch.props);
         
-        if (activeMatch === undefined){
-            //No active match, create one
-            activeMatchID = this.createMatch();
+        //Read the match status & determine needed update
+        switch(currentMatch.props.status){
+
+            //If match is pending, determine if a match starting alert should be sent
+            case 'pending':
+                console.log('DEBUG: called game.refresh() currentMatch.props.status = pending');
+
+                let currentDate = new Date();
+
+                let currentHour = currentDate.getUTCHours();
+
+                //Look at the current time.  Compare current time to config property of match start time
+                console.log('DEBUG: Current hour: ', currentHour);
+                
+                console.log('gameConfiguration match start: ', gameConfigurations.match.startTime);
+
+                //Determine if the pending match should begin
+                if (currentHour > gameConfigurations.match.startTime){
+                    console.log('Time to start the match!');
+
+                    //Start the match - change status to started
+                    currentMatch.start();
+
+                    var alertDetails = {
+                        "username": "A mysterious voice",
+                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                        //TODO dont hardcode the arena
+                        "channel": ("#arena"),
+                        "text": "Prepare for battle! A new turn turn has arrived!"
+                    };
+
+                    let matchStartAlert = new slackAlert(alertDetails);
+
+                    matchStartAlert.sendToSlack(this.props)
+                }
+
+                break;
+            
+            //If match has started, determine if turn should be incremented, determine if game has hit end condition
+            case 'started':
+                console.log('DEBUG: called game.refresh() currentMatch.props.status = started');
+
+                let matchStartingCharacterIDs = currentMatch.getStartingCharacterIDs();
+
+                //If no characters in the zone, end the match
+                if (matchStartingCharacterIDs.length === 0) {
+                    currentMatch.end()
+                }
+
+                let characterIDinZone = matchStartingCharacterIDs
+                    //Filter starting characters for characters currently in the zone
+                    .filter( eachMatchStartingCharacterID =>{
+                        return this.state.character[eachMatchStartingCharacterID].zone_id === currentMatch.props.zone_id
+                    });
+                
+                if (characterIDinZone.length === 1) {
+                    
+                    //Create a winning character object reference
+                    let winningCharacter = new Character(this.state, characterIDinZone[0]);
+                    
+                    //Notify Slack about the winner
+                    
+                    //Increment that players win count
+                    winningCharacter.incrementProperty('arena_wins', 1);
+                    
+                    //Reward the winning character
+                    //TODO come up with randomization function for arena gold reward
+                    let arenaReward = 10;
+
+                    //Increment that players win count
+                    winningCharacter.incrementProperty('gold', arenaReward);
+                    
+                    currentMatch.end()
+                }
+                
+                break;
+            
+            //If match has ended, create a new match and update the global match ID
+            case 'ended':
+                console.log('DEBUG: called game.refresh() currentMatch.props.status = ended');
+
+                //Pass in old match zone when creating the new match
+                let newMatchID = this.createMatch(currentMatch.props.zoneID);
+
+                //Update the global state to new match id
+                this.state.global_state.match_id = newMatchID;
+                
+                break;
         }
         
-        if (activeMatchID === undefined){
-            //find the active match ID
-            
-            
-        }
-
-
-        //Compare current time with start time & if there is a current match started today
-
-
-
-        //Check for match start
-            //Announce that match has begun
-
-
 
 
         //Check for dead characters
@@ -103,7 +189,7 @@ class Game {
         try {
             var characterKeys = Object.keys(this.state.character);
 
-            console.log('characterKeys: ', characterKeys);
+            //console.log('characterKeys: ', characterKeys);
 
             var localCharacter;
             
@@ -165,14 +251,14 @@ class Game {
 
         var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
-        var currentMatches = this.state.match;
+        let currentMatches = this.state.match;
 
-        var newMatch = {
+        let newMatch = {
             [localRandomID]: {
                 active: 0,
                 turn: 0,
                 starting_character_ids : [],
-                zone_id : ''
+                zone_id : zoneID
             }
         };
 
@@ -212,10 +298,15 @@ class Game {
     
     getCurrentMatchID(){
 
+        console.log('DEBUG: called getCurrentMatchID');
+
+        console.log('DEBUG: this.state.global_state: ', this.state.global_state);
+
         return this.state.global_state.match_id
 
     }
 
+    /*
     characterTravel(requestSlackUserID, requestSlackChannelID) {
         
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
@@ -245,8 +336,9 @@ class Game {
         };
 
         return travelAlertDetails;
-    }
+    }*/
 
+    /*
     characterProfile(requestSlackUserID){
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
@@ -359,8 +451,9 @@ class Game {
         };
 
         return(template);
-    }
+    }*/
 
+    /*
     characterName(requestSlackUserID, slackTextInput){
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
@@ -399,11 +492,9 @@ class Game {
             return characterNameAcceptedTemplate
 
         }
-    }
+    }*/
 
     getAvailableActions(requestSlackUserID, requestSlackChannelID){
-
-        console.log('called getAvailableActions');
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
         var localUser = new User(this.state, requestSlackUserID);
@@ -500,31 +591,25 @@ class Game {
         
         characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
 
-            //Get the name for the class ID
-            var className = localCharacterClasses[singleClassID].name;
-
             return {
 
-                "title": className,
+                "title": localCharacterClasses[singleClassID].name,
                 "fallback": "You are unable to choose an action",
-                "callback_id": "characterSelectionClass",
+                "callback_id": "",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + singleClassID + ".jpg",
                 "actions": [{
                     "name": singleClassID,
-                    "text": className,
+                    "text": localCharacterClasses[singleClassID].name,
                     "style": "default",
                     "type": "button",
                     "value": singleClassID
                 }]
             }
         });
-
-        console.log('DEBUG: characterClassesTemplate: ', characterClassesTemplate);
         
         return characterClassesTemplate;
-
     }
 
     getCharacterIDsInZone(zoneID){

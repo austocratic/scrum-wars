@@ -10,7 +10,7 @@ var BaseModel = require('./BaseModel').BaseModel;
 
 class Action extends BaseModel{
     constructor(gameState, actionID){
-        super();
+        super(gameState, 'action', actionID);
 
         var actions = gameState.action;
 
@@ -19,9 +19,7 @@ class Action extends BaseModel{
         this.id = actionID
     }
     
-    announceActionActivation(){
-        
-    }
+ 
 
 }
 

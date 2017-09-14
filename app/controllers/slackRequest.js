@@ -18,47 +18,80 @@ var Match = require('../models/Match').Match;
 
 var slackTemplates = require('../slackTemplates');
 
-var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
+//TO DELETE
+//var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 
 //TODO this seems weird to have in the slackRequest file, maybe move when I refactor this file
 var game = new Game();
 
+// DANNY EXAMPLE
+const myCommandActionFn = ({ localCharacter, localZone, gameContext }) => {
+    const slackTemplate = 'something';
+    return slackTemplate;
+};
+
+const actionsAndThingsContext = {
+    command: {
+        action: require('./gameContexts/command').action,
+        generate: require('./gameContexts/command').generate,
+        profile: require('./gameContexts/command').profile,
+        travel: require('./gameContexts/command').travel,
+        name: require('./gameContexts/command').name
+    },
+    generateCharacterConfirmation: {
+        yes: require('./gameContexts/generateCharacterConfirmation').yes,
+        no: require('./gameContexts/generateCharacterConfirmation').no
+    },/*
+    selectGenderMenu: {
+        male: require('./gameContexts/selectGenderMenu').yes,
+    }*/
+    selectGenderMenu: require('./gameContexts/selectGenderMenu').genderSelection
+};
 
 
-/*
- 1. Get game's current state
- 2. Validate request
- 3. Extract properties from request payload locally
- */
 
+const processSlashCommand = async (req) => {
 
-exports.slackSlashCommand = async (req, res, next) => {
+    let payload;
 
-    //TODO need validation to ensure request came from slack and is structured correctly
+    if (req.body.payload){
+        payload = req.body.payload
+    } else {
+        payload = req.body
+    }
+
+    let game = await beginRequest();
+
+    let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
+
+    await endRequest(game);
     
-    console.log('called slackSlashCommand');
+    return slackResponseTemplateReturned;
+};
 
-    var slackPayload = req.body;
-
-    var slackUserID, slackChannelID, slackTextInput;
-
-    console.log('slackPayload: ', slackPayload);
-
-    //Get the user ID property (formatted differently based on /command or callback)
+const processInteractiveMessage = async (req) => {
     
-    slackUserID = slackPayload.user_id;
+    let payload;
 
-    slackChannelID = slackPayload.channel_id;
+    if (req.body.payload){
+        payload = req.body.payload
+    } else {
+        payload = req.body
+    }
 
-    slackTextInput = slackPayload.text;
+    let game = await beginRequest();
 
-    //Get the command property
-    var slashCommand = slackPayload.command;
+    let slackResponseTemplateReturned = getInteractiveMessageResponse(payload, game);
 
-    //Modify slachCommand text to remove proceeding '/'
-    var modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
+    await endRequest(game);
 
-    //var game = new Game();
+    return slackResponseTemplateReturned;
+};
+
+
+const beginRequest = async () => {
+
+    let game = new Game();
 
     //Set the game state locally
     await game.getState();
@@ -66,23 +99,134 @@ exports.slackSlashCommand = async (req, res, next) => {
     //Calculate properties in memory
     game.inititateRequest();
 
-    //Function format: getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID) {
-    //requestCallback = "command" hard coded
-    //requestActionName =
-    //requestActionValue
-    //requestSlackUserID
-    //requestSlackChannelID
-    var responseTemplate = getResponseTemplate('command', modifiedSlashCommand, 'requestActionValue not used', slackUserID, slackChannelID, game, slackTextInput);
+    return game;
+};
 
-    console.log('responseTemplate to update: ', JSON.stringify(responseTemplate));
+const processRequest = (action, userSelection, opts) => {
+
+    console.log('DEBUG action: ', action);
+    console.log('DEBUG userSelection: ', userSelection);
+    let actualFn;
+    try {
+        //For some game contexts, I don't have individual functions for each selection.  
+        //In these cases, the same function will be invoked regardless of selection
+        //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
+        actualFn = actionsAndThingsContext[action];
+        if (actionsAndThingsContext[action][userSelection]){
+            actualFn = actionsAndThingsContext[action][userSelection];
+        }
+    } catch(err) {
+        // invalid action and user selection
+        console.log('INVALID action & user selection: ', err)
+    }
+    if (typeof actualFn === 'function') {
+        return actualFn(opts);
+    }
+};
+
+const endRequest = async (game) => {
 
     //Overwrites with updated local props
     await game.updateState();
-
-    //Send success response
-    res.status(200).send(responseTemplate);
 };
 
+
+const getSlashCommandResponse = (payload, game) => {
+    console.log('called slackSlashCommand');
+
+    //TODO need validation to ensure request came from slack and is structured correctly
+
+    let slackRequestUserID = payload.user_id;
+    let slackRequestChannelID = payload.channel_id;
+    let slackRequestCommand = 'command';
+    let slackCallback = slackRequestCommand;
+
+    let slackRequestText = payload.text;
+
+    //Modify slashCommand text to remove proceeding '/'
+    //TODO WHAT IS THIS?
+    //let modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
+    
+    //Setup local game objects to send to request processor
+    let slackResponseTemplate = {};
+    let user = new User(game.state, slackRequestUserID);
+    let playerCharacter = new Character(game.state, user.props.character_id);
+    let requestZone = new Zone(game.state, slackRequestChannelID);
+    let currentMatch = new Match(game.state, game.getCurrentMatchID());
+    let characterClass = new Class(game.state, playerCharacter.props.class_id);
+
+    let userSelection = payload.command;
+
+    return processRequest(slackRequestCommand, userSelection, {
+        game,
+        user,
+        slackResponseTemplate,
+        playerCharacter,
+        userSelection,
+        slackRequestCommand, //TODO for slash commands use the command
+        slackCallback,
+        requestZone,
+        currentMatch,
+        characterClass
+    });
+};
+
+const getInteractiveMessageResponse = (payload, game) => {
+    console.log('called slackSlashCommand');
+
+    //TODO need validation to ensure request came from slack and is structured correctly
+
+    
+    let slackCallback = payload.callback_id;
+    let slackCallbackElements = slackCallback.split("/");
+
+    function getActionValue(){
+        if (payload.actions[0].value) {
+            return payload.actions[0].value
+        }
+
+        //Action value dicates the specific selection from drop down menus
+        return payload.actions[0].selected_options[0].value;
+    }
+
+    let slackRequestUserID = payload.user.id;
+    let slackRequestChannelID = payload.channel.id;
+    let slackRequestCommand = payload.command;
+
+    //let slackRequestCallbackID = req.body.callback_id; //TODO probably not needed since I split the callback ID earlier
+    let slackRequestText = payload.text;
+    
+    let slackRequestActionName = payload.actions[0].name;
+
+    //Modify slashCommand text to remove proceeding '/'
+    //TODO WHAT IS THIS?
+    //let modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
+
+    //Setup local game objects to send to request processor
+    let slackResponseTemplate = {};
+    let user = new User(game.state, slackRequestUserID);
+    let playerCharacter = new Character(game.state, user.props.character_id);
+    let requestZone = new Zone(game.state, slackRequestChannelID);
+    let currentMatch = new Match(game.state, game.getCurrentMatchID());
+    let characterClass = new Class(game.state, playerCharacter.props.class_id);
+    
+    let userSelection = getActionValue();
+    let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
+
+    return processRequest(gameContext, userSelection, {
+        game,
+        user,
+        slackResponseTemplate,
+        playerCharacter,
+        userSelection,
+        slackRequestCommand, //TODO for slash commands use the command
+        slackCallback,
+        requestZone,
+        currentMatch,
+        characterClass
+    });
+};
+/*
 exports.slackInteractiveMessage = async (req, res, next) => {
 
     //TODO: bad to use try/catch here.  Need to read the content type header and act accordingly
@@ -93,13 +237,6 @@ exports.slackInteractiveMessage = async (req, res, next) => {
     } catch(err){
         slackPayload = req.body.payload;
     }
-
-    /*
-     Format of API calls coming from slack:
-     callback: what view the interaction was made from
-     name:     button clicked on from that view
-     value:    optional specific selection made
-     */
 
     console.log('Incoming request to slackEvent: ', JSON.stringify(slackPayload));
 
@@ -144,10 +281,10 @@ exports.slackInteractiveMessage = async (req, res, next) => {
 
     //Send success response
     res.status(200).send(responseTemplate);
-};
+};*/
 
 //Lookup the callback & name take an action and returns result
-function getResponseTemplate(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext, requestTextInput) {
+function getResponseTemplateCHANGE(requestCallback, requestActionName, requestActionValue, requestSlackUserID, requestSlackChannelID, gameContext, requestTextInput) {
 
     console.log('called getResponseTemplate, requestCallback: ', requestCallback);
     console.log('called getResponseTemplate, requestActionName: ', requestActionName);
@@ -249,16 +386,25 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
     return responseTemplateSwitch(lastCallbackElement, requestActionName);
 
     //Switch logic to determine action
-    function responseTemplateSwitch(selectionContext, userSelection){
-
+    function responseTemplateSwitch(selectionContext, userSelection) {
+        // DANNY EXAMPLE
+        if (selectionContext === 'command' && userSelection === 'action') {
+            return fnToCall(selectionContext, userSelection, {
+                gameContext,
+                localCharacter,
+                localZone,
+            });
+        }
         var updatedCallback;
 
         switch (selectionContext) {
 
+            /* TO DELETE
             //Commands are generated by slash commands
             case 'command':
 
                 switch (userSelection){
+
 
                     case 'action':
                         console.log('Called command/action');
@@ -333,19 +479,17 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                 }
 
                 break;
-            
+             */
+
+            /* MOVED OUT - TO DELETE AFTER TESTING
             case 'generateCharacterConfirmation':
                 
                 switch (userSelection) {
                     
                     case 'yes':
-                        console.log('Called generateCharacterConfirmation/yes');
-
-                        console.log('localCharacter: ', localCharacter);
 
                         //If the user has a character, inactivate it
                         if (localCharacter.props !== undefined){
-                            console.log('Passed localCharacter props check')
                             localCharacter.inactivate();
                         }
 
@@ -374,7 +518,7 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
                     
                 }
                 
-                break;
+                break;*/
             
             //Choose male or female
             case 'selectGender':
@@ -1209,8 +1353,14 @@ function getResponseTemplate(requestCallback, requestActionName, requestActionVa
 
 }
 
-/*
+
 module.exports = {
-    getResponseTemplate: getResponseTemplate
+    beginRequest,
+    endRequest,
+    processRequest,
+    processSlashCommand,
+    processInteractiveMessage,
+    getInteractiveMessageResponse,
+    getSlashCommandResponse
 };
-*/
+

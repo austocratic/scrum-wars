@@ -106,3 +106,52 @@ describe("game.paginateCharacters()", () => {
 
     });
 });*/
+
+describe.skip("game.refresh()", () => {
+
+    testGame.state.global_state.match_id = 'testMatch';
+    
+    let modifiedMatches = Object.assign(testGame.state.match, {
+        testMatch: {
+            character_id_won: "-KkdlJPN_PdJCUydditm",
+            date_ended: 1497138621120,
+            date_started: 1.497136041051E9,
+            number_turns: 0,
+            starting_character_ids: [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
+            status: '',
+            zone_id: 0
+        }
+    });
+
+    testGame.state.match = modifiedMatches;
+
+    it("it should fail because current match status is not pending, started or ended", done => {
+
+        testGame.refresh();
+
+    });
+
+    testGame.state.match['testMatch'].status = 'pending';
+
+    it("it should do pending related stuff", done => {
+
+        testGame.refresh();
+
+    });
+    
+
+
+    //testGame.getCurrentMatchID();
+
+    //console.log('testGame.getCurrentMatch(): ', testGame.getCurrentMatch());
+
+    /*
+    testGame.refresh();
+
+    it("it should not fail", done => {
+
+
+        done();
+
+    });*/
+});

@@ -163,6 +163,7 @@ describe("character.equipItem() ", () => {
     
 });*/
 
+/*
 describe("character.getEquipmentInSlot() ", () => {
 
     var testCharacter = new Character(testGame.state, testCharacterID);
@@ -173,7 +174,6 @@ describe("character.getEquipmentInSlot() ", () => {
 
     console.log('TEST getEquipmentInSlot: ', testCharacter.getEquipmentInSlot(slotID));
 
-    /*
     it("", done => {
 
         var testPass = 0;
@@ -185,6 +185,6 @@ describe("character.getEquipmentInSlot() ", () => {
         assert.equal(testPass, 1);
 
         done();
-    });*/
+    });
 
-});
+});*/

@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -23,6 +25,7 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+/*
 
 //TODO testing jimp
 router.get('/jimp', function(req, res, next) {
@@ -111,19 +114,27 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
-});
+});*/
 
-//All client commands pass through this route
-router.post('/api/commands', (req, res, next) => {
-    //slackSlashCommand(req, res, next);
-    slackRequest.slackSlashCommand(req, res, next)
-});
+router.post('/api/commands',
+    async (req, res, next) => {
+        console.log('Received a request to /api/commands');
+
+        let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req);
+
+        res.status(200).send(slackResponseTemplateReturned);
+
+    });
+
 
 //All client interactive-message responses pass through this route
-router.post('/api/interactive-messages', (req, res, next) => {
-    //interactiveMessages(req, res, next);
-    //slackInteractiveMessage(req, res, next);
-    slackRequest.slackInteractiveMessage(req, res, next)
+router.post('/api/interactive-messages',
+    async (req, res, next) => {
+        console.log('Received a request to /api/interactive-messages');
+
+        let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
+
+        res.status(200).send(slackResponseTemplateReturned);
 });
 
 //All client interactive-message responses pass through this route

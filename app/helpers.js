@@ -14,7 +14,6 @@ var getImageFilePaths = (dir, filelist) => {
     })
 };
 
-
 //Populates an array of file path references based on dir parameter
 //Mutates the passed fileList array parameter, also returns it
 var getFilePaths = (dir, filelist) => {
@@ -33,8 +32,24 @@ var getFilePaths = (dir, filelist) => {
     return filelist;
 };
 
+var updateCallback = (attachmentsArray, callbackString) => {
+
+    //Check if attachmentsArray is empty.  If it is, create a single attachment
+    /*
+     if (attachmentsArray.length === 0){
+     attachmentsArray.push()
+     }*/
+
+    return attachmentsArray.map( eachAttachment =>{
+        eachAttachment.callback_id = callbackString;
+
+        return eachAttachment
+    })
+};
+
 module.exports = {
-    getImageFilePaths: getImageFilePaths,
-    getFilePaths: getFilePaths
+    getImageFilePaths,
+    getFilePaths,
+    updateCallback
 };
 
