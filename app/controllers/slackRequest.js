@@ -52,6 +52,10 @@ const actionsAndThingsContext = {
 
 const processSlashCommand = async (req) => {
 
+    console.log('DEBUG: called processSlashCommand')
+
+    console.log('DEBUG: router req.body: ', req.body);
+
     let payload;
 
     if (req.body.payload){
@@ -64,7 +68,11 @@ const processSlashCommand = async (req) => {
 
     let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
+    console.log('DEBUG: processSlashCommand: ', slackResponseTemplateReturned);
+
     await endRequest(game);
+
+    console.log('DEBUG endRequest complete');
     
     return slackResponseTemplateReturned;
 };
@@ -90,6 +98,8 @@ const processInteractiveMessage = async (req) => {
 
 
 const beginRequest = async () => {
+    console.log('DEBUG: called processSlashCommand')
+
 
     let game = new Game();
 
@@ -125,14 +135,15 @@ const processRequest = (action, userSelection, opts) => {
 };
 
 const endRequest = async (game) => {
+    console.log('DEBUG: called endRequest');
 
     //Overwrites with updated local props
-    await game.updateState();
+    return await game.updateState();
 };
 
 
 const getSlashCommandResponse = (payload, game) => {
-    console.log('called slackSlashCommand');
+    console.log('DEBUG called slackSlashCommand');
 
     //TODO need validation to ensure request came from slack and is structured correctly
 

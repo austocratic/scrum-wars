@@ -121,6 +121,8 @@ router.post('/api/commands',
         console.log('Received a request to /api/commands');
 
         let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req);
+        
+        console.log('DEBUG: router slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
         res.status(200).send(slackResponseTemplateReturned);
 
