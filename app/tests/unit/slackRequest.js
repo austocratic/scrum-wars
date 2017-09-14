@@ -111,7 +111,7 @@ function testSlackResponseFormat(responseToTest){
 describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
     let mockRequest = {
-        "command": "generate",
+        "command": "/generate",
         "user_id": "U4ZA6CCBG",
         "user_name": "austo",
         "channel_id": "C4Z7F8XMW",

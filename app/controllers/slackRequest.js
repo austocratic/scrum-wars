@@ -124,8 +124,10 @@ const processRequest = (action, userSelection, opts) => {
         actualFn = actionsAndThingsContext[action];
         if (actionsAndThingsContext[action][userSelection]){
             actualFn = actionsAndThingsContext[action][userSelection];
+        } else {
+            console.log('INVALID user selection: ', [userSelection])
         }
-        console.log('INVALID user selection: ', [userSelection])
+
     } catch(err) {
         // invalid action and user selection
         console.log('INVALID action & user selection: ', err)
@@ -145,6 +147,8 @@ const endRequest = async (game) => {
 
 const getSlashCommandResponse = (payload, game) => {
     console.log('DEBUG called slackSlashCommand');
+
+    //console.log('DEBUG: payload, ', payload);
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
@@ -190,6 +194,7 @@ const getInteractiveMessageResponse = (payload, game) => {
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
+    console.log('DEBUG: ', payload);
     
     let slackCallback = payload.callback_id;
     let slackCallbackElements = slackCallback.split("/");
@@ -203,6 +208,8 @@ const getInteractiveMessageResponse = (payload, game) => {
         return payload.actions[0].selected_options[0].value;
     }
 
+    console.log('DEBUG getInteractiveMessageResponse, slackRequestUserID: ', payload.user);
+
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
     let slackRequestCommand = payload.command;
@@ -212,18 +219,23 @@ const getInteractiveMessageResponse = (payload, game) => {
     
     let slackRequestActionName = payload.actions[0].name;
 
-    //Modify slashCommand text to remove proceeding '/'
-    //TODO WHAT IS THIS?
-    //let modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
-
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
     let user = new User(game.state, slackRequestUserID);
     let playerCharacter = new Character(game.state, user.props.character_id);
+
+    console.log('DEBUG playerCharacter.props: ', playerCharacter.props);
+
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
-    let characterClass = new Class(game.state, playerCharacter.props.class_id);
-    
+
+    //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+    let characterClass = undefined;
+
+    if (playerCharacter.props.class_id){
+        characterClass = new Class(game.state, playerCharacter.props.class_id);
+    }
+
     let userSelection = getActionValue();
     let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
 

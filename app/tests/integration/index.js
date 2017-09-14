@@ -156,7 +156,7 @@ var testCommandProfile = {
     "text": ""
 };
 
-var testCallbackCharacterSelectionNew = {"payload": {"actions":[{"name":"yes","type":"button","value":"yes"}],"callback_id":"command:generate/generateCharacterConfirmation","team":{"id":"T4ZAGTM1V","domain":"austo"},"channel":{"id":"C4YKJ3QBC","name":"general"},"user":{"id":"U4ZA6CCBG","name":"austo"},"action_ts":"1492112423.749941","message_ts":"1492110630.089291","attachment_id":"1","token":"a6qLRgANE3lHNDP50zb0vmoJ","is_app_unfurl":false,"original_message":{"text":"","bot_id":"B4YMB7WDS","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose an action","text":"Choose an action","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"action","text":"Attack","type":"button","value":"attack","style":"danger","confirm":{"text":"This action will put your character on the offensive!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}},{"id":"2","name":"action","text":"Defend","type":"button","value":"defend","style":"primary","confirm":{"text":"This action will defend your character from possible attacks!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"type":"message","subtype":"bot_message","ts":"1492110630.089291"},"response_url":"https:\/\/hooks.slack.com\/actions\/T4ZAGTM1V\/169780351094\/JjI9vAXZVLtcuQdJwUPowS9m"}};
+var testCallbackCharacterSelectionNew = {"payload": {"actions":[{"name":"yes","type":"button","value":"yes"}],"callback_id":"command:generate/generateCharacterConfirmation","team":{"id":"T4ZAGTM1V","domain":"austo"},"channel":{"id":"C4Z7F8XMW","name":"arena"},"user":{"id":"U4ZA6CCBG","name":"austo"},"action_ts":"1492112423.749941","message_ts":"1492110630.089291","attachment_id":"1","token":"a6qLRgANE3lHNDP50zb0vmoJ","is_app_unfurl":false,"original_message":{"text":"","bot_id":"B4YMB7WDS","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose an action","text":"Choose an action","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"action","text":"Attack","type":"button","value":"attack","style":"danger","confirm":{"text":"This action will put your character on the offensive!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}},{"id":"2","name":"action","text":"Defend","type":"button","value":"defend","style":"primary","confirm":{"text":"This action will defend your character from possible attacks!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"type":"message","subtype":"bot_message","ts":"1492110630.089291"},"response_url":"https:\/\/hooks.slack.com\/actions\/T4ZAGTM1V\/169780351094\/JjI9vAXZVLtcuQdJwUPowS9m"}};
 
 var testCallbackCharacterSelectionClass = {"payload": {"actions":[{"name":"class","type":"button","value":"Warrior"}],"callback_id":"characterSelectionClass","team":{"id":"T4ZAGTM1V","domain":"austo"},"channel":{"id":"C4YKJ3QBC","name":"general"},"user":{"id":"U55U8F5B7","name":"austo"},"action_ts":"1492112423.749941","message_ts":"1492110630.089291","attachment_id":"1","token":"a6qLRgANE3lHNDP50zb0vmoJ","is_app_unfurl":false,"original_message":{"text":"","bot_id":"B4YMB7WDS","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose an action","text":"Choose an action","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"action","text":"Attack","type":"button","value":"attack","style":"danger","confirm":{"text":"This action will put your character on the offensive!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}},{"id":"2","name":"action","text":"Defend","type":"button","value":"defend","style":"primary","confirm":{"text":"This action will defend your character from possible attacks!","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"type":"message","subtype":"bot_message","ts":"1492110630.089291"},"response_url":"https:\/\/hooks.slack.com\/actions\/T4ZAGTM1V\/169780351094\/JjI9vAXZVLtcuQdJwUPowS9m"}};
 
@@ -206,8 +206,8 @@ var testCallbackAttackCharacterSelection = {"payload": {"actions":[{"name":"-Kkx
 
  });
  });*/
-
-describe("Call router", function() {
+/*
+describe.skip("Call router w/ a mock of /profile", function() {
 
     console.log('calling router');
 
@@ -217,6 +217,25 @@ describe("Call router", function() {
 
         request(testRequest, function (error, response, body) {
             
+            console.log('Response: ', response.statusCode);
+
+            assert.equal(response.statusCode, 200);
+
+            done();
+        });
+    });
+});*/
+
+describe("Call router w/ a mock of character selection Yes", function() {
+
+    console.log('calling router');
+
+    it("should do stuff", function(done) {
+        testRequest.uri = interactiveMessagesURL;
+        testRequest.body = testCallbackCharacterSelectionNew;
+
+        request(testRequest, function (error, response, body) {
+
             console.log('Response: ', response.statusCode);
 
             assert.equal(response.statusCode, 200);
