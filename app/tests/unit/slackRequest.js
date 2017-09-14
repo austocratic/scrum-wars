@@ -182,8 +182,7 @@ describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
 });
 
-/*
-describe.skip("Testing slackRequest.processRequest()", function() {
+describe("Testing slackRequest.processRequest()", function() {
 
     describe("with ", function() {
 
@@ -508,4 +507,4 @@ describe.skip("Testing slackRequest.processRequest()", function() {
             });
         });
     });
-});*/
+});
