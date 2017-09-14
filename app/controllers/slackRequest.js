@@ -164,7 +164,13 @@ const getSlashCommandResponse = (payload, game) => {
     let playerCharacter = new Character(game.state, user.props.character_id);
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
-    let characterClass = new Class(game.state, playerCharacter.props.class_id);
+
+    //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+    let characterClass = undefined;
+
+    if (playerCharacter.props.class_id){
+        characterClass = new Class(game.state, playerCharacter.props.class_id);
+    }
 
     //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
     let userSelection = payload.command.slice(1, payload.command.length);
