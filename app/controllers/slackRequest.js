@@ -68,7 +68,7 @@ const processSlashCommand = async (req) => {
 
     let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
-    console.log('DEBUG: processSlashCommand: ', slackResponseTemplateReturned);
+    console.log('DEBUG: processSlashCommand slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
     await endRequest(game);
 
@@ -125,6 +125,7 @@ const processRequest = (action, userSelection, opts) => {
         if (actionsAndThingsContext[action][userSelection]){
             actualFn = actionsAndThingsContext[action][userSelection];
         }
+        console.log('INVALID user selection: ', [userSelection])
     } catch(err) {
         // invalid action and user selection
         console.log('INVALID action & user selection: ', err)
@@ -151,12 +152,7 @@ const getSlashCommandResponse = (payload, game) => {
     let slackRequestChannelID = payload.channel_id;
     let slackRequestCommand = 'command';
     let slackCallback = slackRequestCommand;
-
     let slackRequestText = payload.text;
-
-    //Modify slashCommand text to remove proceeding '/'
-    //TODO WHAT IS THIS?
-    //let modifiedSlashCommand = slashCommand.slice(1, slashCommand.length);
     
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
@@ -166,7 +162,13 @@ const getSlashCommandResponse = (payload, game) => {
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
     let characterClass = new Class(game.state, playerCharacter.props.class_id);
 
-    let userSelection = payload.command;
+    //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
+    let userSelection = payload.command.slice(1, payload.command.length);
+
+    console.log('DEBUG slackSlashCommand, about to call processRequest');
+
+    console.log('DEBUG slackRequestCommand: ', slackRequestCommand);
+    console.log('DEBUG userSelection: ', userSelection);
 
     return processRequest(slackRequestCommand, userSelection, {
         game,
@@ -178,7 +180,8 @@ const getSlashCommandResponse = (payload, game) => {
         slackCallback,
         requestZone,
         currentMatch,
-        characterClass
+        characterClass,
+        slackRequestText
     });
 };
 
