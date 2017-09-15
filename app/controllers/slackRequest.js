@@ -120,7 +120,6 @@ const beginRequest = async () => {
 const processRequest = (action, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
 
-
     console.log('DEBUG action: ', action);
     console.log('DEBUG userSelection: ', userSelection);
     let actualFn;
@@ -176,9 +175,6 @@ const getSlashCommandResponse = (payload, game) => {
     let characterClass = undefined;
 
     if (playerCharacter.props.class_id){
-
-        console.log('DEBUG passed getSlashCommandResponse if');
-        console.log('DEBUG passed getSlashCommandResponse if playerCharacter.props.class_id: ', playerCharacter.props.class_id);
         characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
@@ -221,8 +217,6 @@ const getInteractiveMessageResponse = (payload, game) => {
         return payload.actions[0].selected_options[0].value;
     }
 
-    console.log('DEBUG getInteractiveMessageResponse, slackRequestUserID: ', payload.user);
-
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
     let slackRequestCommand = payload.command;
@@ -236,8 +230,6 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackResponseTemplate = {};
     let user = new User(game.state, slackRequestUserID);
     let playerCharacter = new Character(game.state, user.props.character_id);
-
-    console.log('DEBUG playerCharacter.props: ', playerCharacter.props);
 
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());

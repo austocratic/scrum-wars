@@ -137,7 +137,7 @@ router.post('/api/interactive-messages',
 
         let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
 
-        //console.log('DEBUG: router interactive slackResponseTemplateReturned: ', slackResponseTemplateReturned);
+        console.log('DEBUG: router interactive slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
         res.status(200).send(slackResponseTemplateReturned);
 });
