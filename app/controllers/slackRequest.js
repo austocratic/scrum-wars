@@ -171,7 +171,7 @@ const getSlashCommandResponse = (payload, game) => {
 
         console.log('DEBUG passed getSlashCommandResponse if');
         console.log('DEBUG passed getSlashCommandResponse if playerCharacter.props.class_id: ', playerCharacter.props.class_id);
-        //characterClass = new Class(game.state, playerCharacter.props.class_id);
+        characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
     //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
@@ -192,7 +192,7 @@ const getSlashCommandResponse = (payload, game) => {
         slackCallback,
         requestZone,
         currentMatch,
-        //characterClass,
+        characterClass,
         slackRequestText
     });
 };
