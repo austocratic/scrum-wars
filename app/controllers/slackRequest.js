@@ -55,10 +55,18 @@ const processSlashCommand = async (req) => {
 
     let payload;
 
+    function tryToParseJSON(input){
+        try {
+            return JSON.parse(input);
+        } catch(err){
+            return input
+        }
+    }
+    
     if (req.body.payload){
-        payload = req.body.payload
+        payload = tryToParseJSON(req.body.payload)
     } else {
-        payload = req.body
+        payload = tryToParseJSON(req.body)
     }
 
     let game = await beginRequest();
