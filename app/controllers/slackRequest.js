@@ -51,10 +51,7 @@ const actionsAndThingsContext = {
 
 
 const processSlashCommand = async (req) => {
-
-    console.log('DEBUG: called processSlashCommand')
-
-    console.log('DEBUG: router req.body: ', req.body);
+    console.log('slackRequest.processSlashCommand() req.body: ,', req.body);
 
     let payload;
 
@@ -78,7 +75,7 @@ const processSlashCommand = async (req) => {
 };
 
 const processInteractiveMessage = async (req) => {
-    console.log('slackRequest.processInteractiveMessage() req: ,', JSON.stringify(req));
+    console.log('slackRequest.processInteractiveMessage() req.body: ,', req.body);
 
     let payload;
 
@@ -99,7 +96,7 @@ const processInteractiveMessage = async (req) => {
 
 
 const beginRequest = async () => {
-    console.log('DEBUG: called processSlashCommand')
+    console.log('slackRequest.beginRequest()');
 
     let game = new Game();
 
@@ -113,6 +110,8 @@ const beginRequest = async () => {
 };
 
 const processRequest = (action, userSelection, opts) => {
+    console.log('slackRequest.processRequest()');
+
 
     console.log('DEBUG action: ', action);
     console.log('DEBUG userSelection: ', userSelection);
@@ -138,7 +137,7 @@ const processRequest = (action, userSelection, opts) => {
 };
 
 const endRequest = async (game) => {
-    console.log('DEBUG: called endRequest');
+    console.log('slackRequest.endRequest()');
 
     //Overwrites with updated local props
     return await game.updateState();
@@ -146,7 +145,7 @@ const endRequest = async (game) => {
 
 
 const getSlashCommandResponse = (payload, game) => {
-    console.log('DEBUG called getSlashCommandResponse');
+    console.log('slackRequest.getSlashCommandResponse()');
 
     //console.log('DEBUG: payload, ', payload);
 
@@ -199,7 +198,7 @@ const getSlashCommandResponse = (payload, game) => {
 };
 
 const getInteractiveMessageResponse = (payload, game) => {
-    console.log('called getInteractiveMessageResponse');
+    console.log('slackRequest.getInteractiveMessageResponse()');
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
