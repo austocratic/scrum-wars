@@ -78,7 +78,8 @@ const processSlashCommand = async (req) => {
 };
 
 const processInteractiveMessage = async (req) => {
-    
+    console.log('slackRequest.processInteractiveMessage() req: ,', JSON.stringify(req));
+
     let payload;
 
     if (req.body.payload){
@@ -99,7 +100,6 @@ const processInteractiveMessage = async (req) => {
 
 const beginRequest = async () => {
     console.log('DEBUG: called processSlashCommand')
-
 
     let game = new Game();
 
@@ -146,7 +146,7 @@ const endRequest = async (game) => {
 
 
 const getSlashCommandResponse = (payload, game) => {
-    console.log('DEBUG called slackSlashCommand');
+    console.log('DEBUG called getSlashCommandResponse');
 
     //console.log('DEBUG: payload, ', payload);
 
@@ -199,7 +199,7 @@ const getSlashCommandResponse = (payload, game) => {
 };
 
 const getInteractiveMessageResponse = (payload, game) => {
-    console.log('called slackSlashCommand');
+    console.log('called getInteractiveMessageResponse');
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
