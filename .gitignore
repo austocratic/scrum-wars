@@ -2,5 +2,4 @@
 .idea/
 *.env
 node_modules/
-tests/integration
 /notes.txt

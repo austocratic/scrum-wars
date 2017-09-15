@@ -111,7 +111,7 @@ function testSlackResponseFormat(responseToTest){
 describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
     let mockRequest = {
-        "command": "generate",
+        "command": "/generate",
         "user_id": "U4ZA6CCBG",
         "user_name": "austo",
         "channel_id": "C4Z7F8XMW",
@@ -182,8 +182,7 @@ describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
 });
 
-/*
-describe.skip("Testing slackRequest.processRequest()", function() {
+describe("Testing slackRequest.processRequest()", function() {
 
     describe("with ", function() {
 
@@ -508,4 +507,4 @@ describe.skip("Testing slackRequest.processRequest()", function() {
             });
         });
     });
-});*/
+});

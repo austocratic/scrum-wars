@@ -118,7 +118,7 @@ router.get('/assets/:folder/:id', function (req, res, next) {
 
 router.post('/api/commands',
     async (req, res, next) => {
-        console.log('Received a request to /api/commands');
+        console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
 
         let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req);
         
@@ -132,9 +132,11 @@ router.post('/api/commands',
 //All client interactive-message responses pass through this route
 router.post('/api/interactive-messages',
     async (req, res, next) => {
-        console.log('Received a request to /api/interactive-messages');
+        console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
 
         let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
+
+        console.log('DEBUG: router interactive slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
         res.status(200).send(slackResponseTemplateReturned);
 });
