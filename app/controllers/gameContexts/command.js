@@ -143,7 +143,11 @@ const generate = gameObjects => {
 
     let updatedCallback = 'command:generate/generateCharacterConfirmation';
 
+    console.log('DEBUG: generate, gameObjects.slackResponseTemplate.attachments BEFORE updateCallback(): ', gameObjects.slackResponseTemplate.attachments);
+
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    console.log('DEBUG: generate, gameObjects.slackResponseTemplate.attachments AFTER updateCallback(): ', gameObjects.slackResponseTemplate.attachments);
 
     return gameObjects.slackResponseTemplate
 };

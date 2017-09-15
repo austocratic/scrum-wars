@@ -55,18 +55,10 @@ const processSlashCommand = async (req) => {
 
     let payload;
 
-    function tryToParseJSON(input){
-        try {
-            return JSON.parse(input);
-        } catch(err){
-            return input
-        }
-    }
-    
     if (req.body.payload){
-        payload = tryToParseJSON(req.body.payload)
+        payload = req.body.payload
     } else {
-        payload = tryToParseJSON(req.body)
+        payload = req.body
     }
 
     let game = await beginRequest();
@@ -87,10 +79,18 @@ const processInteractiveMessage = async (req) => {
 
     let payload;
 
-    if (req.body.payload){
-        payload = req.body.payload
+    function tryToParseJSON(input){
+        try {
+            return JSON.parse(input);
+        } catch(err){
+            return input
+        }
+    }
+
+    if (tryToParseJSON(req.body.payload)){
+        payload = tryToParseJSON(req.body.payload)
     } else {
-        payload = req.body
+        payload = tryToParseJSON(req.body)
     }
 
     let game = await beginRequest();
@@ -207,10 +207,7 @@ const getSlashCommandResponse = (payload, game) => {
 
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
-
-    //TODO need validation to ensure request came from slack and is structured correctly
-
-    console.log('DEBUG: ', payload);
+    console.log('slackRequest.getInteractiveMessageResponse(), payload: ', payload);
     
     let slackCallback = payload.callback_id;
     let slackCallbackElements = slackCallback.split("/");
