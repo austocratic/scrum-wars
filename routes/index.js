@@ -69,9 +69,10 @@ router.get('/jimp', function(req, res, next) {
         });
 
     //});
-});
+});*/
 
 //TODO To delete
+/*
 router.get('/file/:name', function (req, res, next) {
 
     var options = {
@@ -91,11 +92,9 @@ router.get('/file/:name', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
-});
+});*/
 
 router.get('/assets/:folder/:id', function (req, res, next) {
-
-    console.log('folder: ', req.params.folder);
 
     var options = {
         root: process.cwd() + '/app/assets/' + req.params.folder + '/',
@@ -114,7 +113,7 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
-});*/
+});
 
 router.post('/api/commands',
     async (req, res, next) => {
@@ -149,6 +148,7 @@ router.post('/api/turn/new', (req, res, next) => {
 
 //Routes for getting character avatar
 //TODO should not rely on the catch all for getting images
+/* what was this for?  I think it was part of my image manipulation test
 router.all('*', function (req, res, next) {
 
     //console.log('Called .all router, req.params: ', req.params['0']);
@@ -168,7 +168,7 @@ router.all('*', function (req, res, next) {
             //console.log('Sent:');
         }
     });
-});
+});*/
 
 
 module.exports = router;
