@@ -110,27 +110,68 @@ function testSlackResponseFormat(responseToTest){
 
 describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
-    let mockRequest = {
-        "command": "/generate",
-        "user_id": "U4ZA6CCBG",
-        "user_name": "austo",
-        "channel_id": "C4Z7F8XMW",
-        "channel_name": "The Arena",
-        "token": "a6qLRgANE3lHNDP50zb0vmoJ",
-        "team_id": "T4ZAGTM1V",
-        "team_domain": "austo",
-        "text": "",
-        "response_url": "https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT4ZAGTM1V%2F239499725731%2Fb0wOCK18eeETsD0mvH0LqYEB&trigger_id=239057170097.169356939063.08e9efc327159fc04d0a0845821c2a3a"
-    };
+    describe("with ", function(){
 
-    let slackResponseTemplateReturned = slackRequest.getSlashCommandResponse(mockRequest, game);
+        let mockRequest = {
+            "command": "/generate",
+            "user_id": "U4ZA6CCBG",
+            "user_name": "austo",
+            "channel_id": "C4Z7F8XMW",
+            "channel_name": "The Arena",
+            "token": "a6qLRgANE3lHNDP50zb0vmoJ",
+            "team_id": "T4ZAGTM1V",
+            "team_domain": "austo",
+            "text": "",
+            "response_url": "https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT4ZAGTM1V%2F239499725731%2Fb0wOCK18eeETsD0mvH0LqYEB&trigger_id=239057170097.169356939063.08e9efc327159fc04d0a0845821c2a3a"
+        };
 
-    testSlackResponseFormat(slackResponseTemplateReturned);
+        describe("mockRequest: " + mockRequest, function(){
 
-    console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
+            let slackResponseTemplateReturned = slackRequest.getSlashCommandResponse(mockRequest, game);
+
+            testSlackResponseFormat(slackResponseTemplateReturned);
+
+            /*
+            describe("and overriding the game state so that the user character does not have a class attribute", function(){
+
+                delete game.state.character['d130618f3a221f672cfc'].class_id;
+
+                let slackResponseTemplateReturned = slackRequest.getSlashCommandResponse(mockRequest, game);
+
+                console.log('DEBUG test slackResponseTemplateReturned: ', slackResponseTemplateReturned)
+
+                testSlackResponseFormat(slackResponseTemplateReturned);
+            })*/
+        })
+
+    });
+
+    describe("with ", function(){
+
+        let mockRequest = {
+            "command": "/generate",
+            "user_id": "U4ZA6CCBG",
+            "user_name": "austo",
+            "channel_id": "C4Z7F8XMW",
+            "channel_name": "The Arena",
+            "token": "a6qLRgANE3lHNDP50zb0vmoJ",
+            "team_id": "T4ZAGTM1V",
+            "team_domain": "austo",
+            "text": "",
+            "response_url": "https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT4ZAGTM1V%2F239499725731%2Fb0wOCK18eeETsD0mvH0LqYEB&trigger_id=239057170097.169356939063.08e9efc327159fc04d0a0845821c2a3a"
+        };
+
+        describe("mockRequest: " + mockRequest, function(){
+
+            let slackResponseTemplateReturned = slackRequest.getSlashCommandResponse(mockRequest, game);
+
+            testSlackResponseFormat(slackResponseTemplateReturned);
+        })
+    })
+
 
 });
-
+/*
 describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
     //Real slack interactive messages have a .payload property.  I;ve removed this since my processor will remove it before passing to processInteractiveMessage() function
@@ -507,4 +548,4 @@ describe("Testing slackRequest.processRequest()", function() {
             });
         });
     });
-});
+});*/

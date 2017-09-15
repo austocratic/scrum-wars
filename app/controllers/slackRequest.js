@@ -111,10 +111,7 @@ const beginRequest = async () => {
 
 const processRequest = (action, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
-
-
-    console.log('DEBUG action: ', action);
-    console.log('DEBUG userSelection: ', userSelection);
+    
     let actualFn;
     try {
         //For some game contexts, I don't have individual functions for each selection.  
@@ -147,8 +144,6 @@ const endRequest = async (game) => {
 const getSlashCommandResponse = (payload, game) => {
     console.log('slackRequest.getSlashCommandResponse()');
 
-    //console.log('DEBUG: payload, ', payload);
-
     //TODO need validation to ensure request came from slack and is structured correctly
 
     let slackRequestUserID = payload.user_id;
@@ -169,16 +164,13 @@ const getSlashCommandResponse = (payload, game) => {
 
     if (playerCharacter.props.class_id){
 
-        console.log('DEBUG passed getSlashCommandResponse if');
-        console.log('DEBUG passed getSlashCommandResponse if playerCharacter.props.class_id: ', playerCharacter.props.class_id);
-        //characterClass = new Class(game.state, playerCharacter.props.class_id);
+        characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
     //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
     let userSelection = payload.command.slice(1, payload.command.length);
 
     console.log('DEBUG slackSlashCommand, about to call processRequest');
-
     console.log('DEBUG slackRequestCommand: ', slackRequestCommand);
     console.log('DEBUG userSelection: ', userSelection);
 
@@ -199,10 +191,9 @@ const getSlashCommandResponse = (payload, game) => {
 
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
+    console.log('slackRequest.getInteractiveMessageResponse() payload: ', payload);
 
     //TODO need validation to ensure request came from slack and is structured correctly
-
-    console.log('DEBUG: ', payload);
     
     let slackCallback = payload.callback_id;
     let slackCallbackElements = slackCallback.split("/");
@@ -215,8 +206,6 @@ const getInteractiveMessageResponse = (payload, game) => {
         //Action value dicates the specific selection from drop down menus
         return payload.actions[0].selected_options[0].value;
     }
-
-    console.log('DEBUG getInteractiveMessageResponse, slackRequestUserID: ', payload.user);
 
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
@@ -231,8 +220,6 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackResponseTemplate = {};
     let user = new User(game.state, slackRequestUserID);
     let playerCharacter = new Character(game.state, user.props.character_id);
-
-    console.log('DEBUG playerCharacter.props: ', playerCharacter.props);
 
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());

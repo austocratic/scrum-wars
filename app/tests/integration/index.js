@@ -206,6 +206,26 @@ var testCallbackAttackCharacterSelection = {"payload": {"actions":[{"name":"-Kkx
 
  });
  });*/
+
+describe.skip("Test response when class id is not yet set", function() {
+
+    console.log('calling router');
+
+    it("should do stuff", function(done) {
+        testRequest.uri = commandsURL;
+        testRequest.body = testCommandProfile;
+
+        request(testRequest, function (error, response, body) {
+
+            console.log('Response: ', response.statusCode);
+
+            assert.equal(response.statusCode, 200);
+
+            done();
+        });
+    });
+});
+
 /*
 describe.skip("Call router w/ a mock of /profile", function() {
 
@@ -226,6 +246,7 @@ describe.skip("Call router w/ a mock of /profile", function() {
     });
 });*/
 
+/*
 describe("Call router w/ a mock of character selection Yes", function() {
 
     console.log('calling router');
@@ -243,7 +264,7 @@ describe("Call router w/ a mock of character selection Yes", function() {
             done();
         });
     });
-});
+});*/
 
 
 /*
