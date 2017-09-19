@@ -235,7 +235,7 @@ const profile = gameObjects => {
             }]
         }];
     
-    let updatedCallback = 'command:profile/characterProfile';
+    let updatedCallback = 'command:profile/characterProfileMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
