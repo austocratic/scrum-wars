@@ -4,12 +4,14 @@
 class BaseModel {
     constructor(gameState, modelType, id) {
 
+        if (!gameState[modelType]) {
+            throw ('Failed to find the model type, ' + modelType + ' in the database')
+        }
         let models = gameState[modelType];
 
         //If not found in database, throw error
         if (!models[id]){
-            let concatString = 'Failed to find the model type: ' + modelType + ', id: ' + id;
-            throw (concatString)
+            throw ('Failed to find the model type: ' + modelType + ', id: ' + id)
         }
     }
 

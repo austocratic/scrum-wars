@@ -197,17 +197,11 @@ class Character extends BaseModel{
     getEquipmentInSlot(slotID){
         
         let equippedItems = this.getEquippedItems();
-
-        console.log('DEBUG: getEquipmentInSlot(), equippedItems: ', equippedItems);
         
         let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
 
-            console.log('DEBUG: getEquipmentInSlot(), eachEquippedItem: ', eachEquippedItem);
-
             return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
         });
-        
-        console.log('DEBUG: getEquipmentInSlot(), equippedSlotItem: ', equippedSlotItem);
         
         return equippedSlotItem
         

@@ -3,6 +3,18 @@
 var baseURL = 'https://scrum-wars.herokuapp.com/';
 
 
+
+//TODO get Dannys advice
+const validateSlackResponseFormat = slackResponse => {
+
+    if (!slackResponse) {
+        throw new Error('root is undefined')
+    }
+    
+    return slackResponse
+
+};
+
 var getImageFilePaths = (dir, filelist) => {
 
     console.log('called getImageFilePaths(), filelist: ', filelist);
@@ -50,6 +62,7 @@ var updateCallback = (attachmentsArray, callbackString) => {
 module.exports = {
     getImageFilePaths,
     getFilePaths,
-    updateCallback
+    updateCallback,
+    validateSlackResponseFormat
 };
 

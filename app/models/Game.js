@@ -33,8 +33,8 @@ class Game {
         this.maleAvatarPaths = [];
         this.femaleAvatarPaths = [];
 
-        helpers.getFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
-        helpers.getFilePaths("app/assets/fullSize/character_avatar/female", this.femaleAvatarPaths);
+        helpers.getFilePaths("public/images/fullSize/character_avatar/male", this.maleAvatarPaths);
+        helpers.getFilePaths("public/images/fullSize/character_avatar/female", this.femaleAvatarPaths);
 
         //Was going to use a helper to append file path to URL, but these were never getting reset
         //helpers.getImageFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
@@ -306,37 +306,6 @@ class Game {
 
     }
 
-    /*
-    characterTravel(requestSlackUserID, requestSlackChannelID) {
-        
-        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-        var localUser = new User(this.state, requestSlackUserID);
-
-        //Get the local character's id
-        var characterID = localUser.getCharacterID();
-
-        //Create a local character object
-        var localCharacter = new Character(this.state, characterID);
-
-        //Create a local zone object
-        var localZone = new Zone(this.state, requestSlackChannelID);
-
-        //Update the zone_id property locally
-        localCharacter.updateProperty('zone_id', localZone.id);
-
-        //Update the game state for a certain character only based on the localCharacter
-        this.state.character[localCharacter.id] = localCharacter.props;
-
-        //Create object to send to
-        var travelAlertDetails = {
-            "username": "A mysterious voice",
-            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-            "channel": ("#" + localZone.props.channel),
-            "text": (localCharacter.props.name + ' has entered ' + localZone.props.name)
-        };
-
-        return travelAlertDetails;
-    }*/
 
     /*
     characterProfile(requestSlackUserID){
@@ -720,6 +689,8 @@ class Game {
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
 
             let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
+
+            console.log('DEBUG getEquipmentInSlot: ', equippedSlotItem);
             
             //Default to empty slot format, if not empty, over write it
             let formattedSlot = {
@@ -736,7 +707,8 @@ class Game {
             
             let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
-                "callback_id": "equipmentMenu",
+                "callback_id": "",
+                "fallback": "You are unable select that item",
                 "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + formattedSlot.item_id + ".jpg",
                 "fields": [{
                     "title": formattedSlot.name,

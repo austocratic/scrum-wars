@@ -143,11 +143,7 @@ const generate = gameObjects => {
 
     let updatedCallback = 'command:generate/generateCharacterConfirmation';
 
-    console.log('DEBUG: generate, gameObjects.slackResponseTemplate.attachments BEFORE updateCallback(): ', gameObjects.slackResponseTemplate.attachments);
-
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
-    console.log('DEBUG: generate, gameObjects.slackResponseTemplate.attachments AFTER updateCallback(): ', gameObjects.slackResponseTemplate.attachments);
 
     return gameObjects.slackResponseTemplate
 };
@@ -252,7 +248,7 @@ const travel = gameObjects => {
     //Update the zone_id property locally
     gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
 
-    //Create object to send to
+    //Create object to send to Slack
     gameObjects.slackResponseTemplate = {
         "username": "A mysterious voice",
         "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
@@ -296,3 +292,16 @@ module.exports = {
     travel,
     name
 };
+
+
+
+
+
+
+
+let response = {
+    text: "fslkfjlsdajfl ",
+    attachments: {
+        //action stuff
+    }
+}

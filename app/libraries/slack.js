@@ -1,9 +1,9 @@
 "use strict";
 
 // ---Modules---
-var request = require('request');
+const request = require('request');
 
-var slackHook = process.env.SLACK_HOOK;
+const slackHook = process.env.SLACK_HOOK;
 
 
 class Slack {
@@ -47,5 +47,5 @@ class Alert extends Slack {
 }
 
 module.exports = {
-    Alert: Alert
+    Alert
 };

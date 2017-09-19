@@ -22,11 +22,12 @@ var Jimp = require("jimp");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.sendStatus(200)
 });
 
-/*
 
+
+/*
 //TODO testing jimp
 router.get('/jimp', function(req, res, next) {
 
@@ -147,8 +148,7 @@ router.post('/api/turn/new', (req, res, next) => {
 });
 
 //Routes for getting character avatar
-//TODO should not rely on the catch all for getting images
-/* what was this for?  I think it was part of my image manipulation test
+//TODO should not rely on the catch all for getting images. this gets the avatar image
 router.all('*', function (req, res, next) {
 
     //console.log('Called .all router, req.params: ', req.params['0']);
@@ -168,7 +168,7 @@ router.all('*', function (req, res, next) {
             //console.log('Sent:');
         }
     });
-});*/
+});
 
 
 module.exports = router;

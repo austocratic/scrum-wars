@@ -11,7 +11,7 @@ var BaseModel = require('./BaseModel').BaseModel;
 
 class Item extends BaseModel {
     constructor(gameState, itemID) {
-        super();
+        super(gameState, 'item', itemID);
 
         var items = gameState.item;
 
@@ -27,13 +27,13 @@ class Item extends BaseModel {
             var template = {
                 "attachments": [
                     {
+                        "fallback": "You can't select this item"
 
                     }
                 ]
             };
 
             template.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + this.id + ".jpg";
-            //template.attachments[0].thumb_url = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.id + ".jpg";
 
             //Create the fields to show
             template.attachments[0].fields = [
@@ -45,7 +45,6 @@ class Item extends BaseModel {
 
             //Iterate through the object adding to the template
             for (var prop in this.props) {
-                //console.log(`obj.${prop} = ${itemProps[prop]}`);
 
                 template.attachments[0].fields.push({
                     "title": prop,
