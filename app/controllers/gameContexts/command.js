@@ -213,25 +213,25 @@ const profile = gameObjects => {
             "callback_id": "profileOptionSelection",
             "fallback": "Unable to load inventory buttons",
             "actions": [{
-                "name": "Inventory",
+                "name": "inventory",
                 "text": "Inventory",
                 "style": "default",
                 "type": "button",
-                "value": "Inventory"
+                "value": "inventory"
             },
             {
-                "name": "Equipment",
+                "name": "equipment",
                 "text": "Equipped Items",
                 "style": "default",
                 "type": "button",
-                "value": "Equipment"
+                "value": "equipment"
             },
             {
-                "name": "Exit",
+                "name": "exit",
                 "text": "Exit",
                 "style": "default",
                 "type": "button",
-                "value": "Exit"
+                "value": "exit"
             }]
         }];
     
