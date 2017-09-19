@@ -54,6 +54,7 @@ const actionsAndThingsContext = {
         exit: require('./gameContexts/characterProfileMenu').exit
     },
     selectEquipmentMenu: require('./gameContexts/selectEquipmentMenu').equipmentSelection,
+    selectInventoryMenu: require('./gameContexts/selectInventoryMenu').inventorySelection,
     itemDetailMenu: {
         yes: require('./gameContexts/itemDetailMenu').yes,
         equip: require('./gameContexts/itemDetailMenu').equip,
