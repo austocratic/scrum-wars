@@ -78,11 +78,11 @@ const inventory = gameObjects => {
     let updatedCallback = ':inventory/inventoryList';
 
     //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (requestCallback + updatedCallback));
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
-    console.log('DEBUG slackResponseTemplate: ', gameObjects.slackResponseTemplate);
+    console.log('DEBUG ****************inventory callback gameObjects.slackResponseTemplate: ', gameObjects.slackResponseTemplate);
 
     return gameObjects.slackResponseTemplate;
 };
@@ -147,9 +147,9 @@ const equipment = gameObjects => {
     let updatedCallback = ':equipment/selectEquipmentMenu';
 
     //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (requestCallback + updatedCallback));
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     return gameObjects.slackResponseTemplate;
 };

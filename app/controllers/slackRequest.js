@@ -227,8 +227,10 @@ const getSlashCommandResponse = (payload, game) => {
 
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
-    
-    let slackCallback = payload.callback_id;
+
+    console.log('DEBUG ********************* payload: ', payload);
+
+    let slackCallback = payload.actions[0].callback_id;
     let slackCallbackElements = slackCallback.split("/");
 
     function getActionValue(){
