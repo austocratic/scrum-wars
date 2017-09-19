@@ -19,9 +19,9 @@ let game = new Game();
 game.state = testDB;
 
 const gameContext = 'generateCharacterConfirmation';
-const userSelection = 'yes';
+const userActionValueSelection = 'yes';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 

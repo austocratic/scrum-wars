@@ -21,16 +21,16 @@ game.state = testDB;
 const gameContext = 'selectEquipmentMenu';
 
 //Random item id
-const userSelection = '-KjGQEzVbaxRlWFawSqI';
+const userActionValueSelection = '-KjGQEzVbaxRlWFawSqI';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 
     let slackResponseTemplateReturned = equipmentSelection({
         game,
         slackResponseTemplate,
-        userSelection
+        userActionValueSelection
     });
 
     testSlackResponseFormat(slackResponseTemplateReturned);

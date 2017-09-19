@@ -19,9 +19,9 @@ let game = new Game();
 game.state = testDB;
 
 const gameContext = 'travelConfirmation';
-const userSelection = 'no';
+const userActionValueSelection = 'no';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 

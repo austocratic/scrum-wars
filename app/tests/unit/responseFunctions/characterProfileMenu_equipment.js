@@ -19,9 +19,9 @@ let game = new Game();
 game.state = testDB;
 
 const gameContext = 'characterProfileMenu';
-const userSelection = 'equipment';
+const userActionValueSelection = 'equipment';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 

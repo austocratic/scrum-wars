@@ -58,6 +58,9 @@ const actionsAndThingsContext = {
         yes: require('./gameContexts/itemDetailMenu').yes,
         equip: require('./gameContexts/itemDetailMenu').equip,
         unequip: require('./gameContexts/itemDetailMenu').unequip
+    },
+    selectCharacterAvatarMenu: {
+        more: require('./gameContexts/selectCharacterAvatarMenu').more
     }
     
 };
@@ -231,7 +234,6 @@ const getInteractiveMessageResponse = (payload, game) => {
         if (payload.actions[0].value) {
             return payload.actions[0].value
         }
-
         //Action value dicates the specific selection from drop down menus
         return payload.actions[0].selected_options[0].value;
     }
@@ -260,15 +262,16 @@ const getInteractiveMessageResponse = (payload, game) => {
         characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
-    let userSelection = getActionValue();
+    let userActionNameSelection = payload.actions[0].name;
+    let userActionValueSelection = getActionValue();
     let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
 
-    return processRequest(gameContext, userSelection, {
+    return processRequest(gameContext, userActionNameSelection, {
         game,
         user,
         slackResponseTemplate,
         playerCharacter,
-        userSelection,
+        userActionValueSelection,
         slackRequestCommand, //TODO for slash commands use the command
         slackCallback,
         requestZone,

@@ -20,12 +20,12 @@ game.state = testDB;
 
 const gameContext = 'itemDetailMenu';
 
-//Random item id
-const userSelection = '-KjGQEzVbaxRlWFawSqI';
+
+const userActionValueSelection = '-KjGQEzVbaxRlWFawSqI'
 
 const slackCallback = 'selectShopItemMenu:-KjGQEzVbaxRlWFawSqI/purchaseItemConfirmation:yes';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 

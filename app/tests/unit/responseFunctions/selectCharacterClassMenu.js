@@ -21,14 +21,14 @@ game.state = testDB;
 const gameContext = 'selectCharacterClassMenu';
 
 //Shadow Knight
-const userSelection = '-KircSgAkPTavnfob8F5';
+const userActionValueSelection = '-KircSgAkPTavnfob8F5';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 
     //TODO should not use DB data here (even though it is test data it could still change)
-    let characterClass = new Class(game.state, userSelection);
+    let characterClass = new Class(game.state, userActionValueSelection);
 
     let playerCharacter = {
         "id": "4i2432o4i24o",

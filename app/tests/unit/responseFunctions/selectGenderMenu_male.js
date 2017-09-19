@@ -19,9 +19,9 @@ let game = new Game();
 game.state = testDB;
 
 const gameContext = 'genderSelection';
-const userSelection = 'male';
+const userActionValueSelection = 'male';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
 
@@ -33,7 +33,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
     let slackResponseTemplateReturned = genderSelection({
         game,
         slackResponseTemplate,
-        userSelection,
+        userActionValueSelection,
         playerCharacter
     });
 

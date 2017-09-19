@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const genderSelection = require('../../../controllers/gameContexts/selectGenderMenu').genderSelection;
+const selection = require('../../../controllers/gameContexts/selectCharacterAvatarMenu').selection;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 
@@ -18,26 +18,30 @@ let Class = require('../../../models/Class').Class;
 let game = new Game();
 game.state = testDB;
 
-const gameContext = 'genderSelection';
-const userActionValueSelection = 'female';
+const gameContext = 'selectCharacterAvatarMenu';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
+const userActionNameSelection = 'selection';
+const userActionValueSelection = 'public/images/fullSize/character_avatar/female/f_16.png';
+
+const slackCallback = 'selectShopItemMenu:-KjGQEzVbaxRlWFawSqI/purchaseItemConfirmation:yes';
+
+describe("Testing gameContext " + gameContext + " & user selection " +  userActionNameSelection, function() {
 
     let slackResponseTemplate = {};
 
-    //Mock a character that does not have gender property set yet
-    let testCharacterID = 'charNoGender';
+    let testCharacterID = 'd130618f3a221f672cfc';
 
     let playerCharacter = new Character(game.state, testCharacterID);
 
-    let slackResponseTemplateReturned = genderSelection({
+    let slackResponseTemplateReturned = selection({
         game,
-        slackResponseTemplate,
+        userActionNameSelection,
         userActionValueSelection,
-        playerCharacter
+        slackCallback,
+        playerCharacter,
+        slackResponseTemplate
     });
 
     testSlackResponseFormat(slackResponseTemplateReturned);
-
 });
 

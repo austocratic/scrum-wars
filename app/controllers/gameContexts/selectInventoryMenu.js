@@ -7,7 +7,7 @@ const inventorySelection = gameObjects => {
     console.log('called function selectInventoryMenu/inventorySelection');
 
     //Create a local item
-    let itemSelected = new Item(gameObjects.game.state, gameObjects.userSelection);
+    let itemSelected = new Item(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     //Create an item detail view template
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
@@ -31,7 +31,7 @@ const inventorySelection = gameObjects => {
             }]
     };
 
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/itemDetailMenu';
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 

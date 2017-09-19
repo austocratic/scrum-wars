@@ -6,7 +6,7 @@ const genderSelection = gameObjects => {
     console.log('called function selectGenderMenu/genderSelection');
 
     //Mutate the object
-    gameObjects.playerCharacter.updateProperty('gender', gameObjects.userSelection);
+    gameObjects.playerCharacter.updateProperty('gender', gameObjects.userActionValueSelection);
 
     //Create the first page of the avatar menu
     gameObjects.slackResponseTemplate.text = 'What does your character look like?';
@@ -51,7 +51,7 @@ const genderSelection = gameObjects => {
         ]
     });
     
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/avatarList';
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/avatarList';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
