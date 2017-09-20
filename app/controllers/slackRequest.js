@@ -33,7 +33,7 @@ const actionsAndThingsContext = {
         quickStrike: require('./gameContexts/selectActionMenu').quickStrike
     },
     selectActionTarget: {
-        processActionOnTarget: require('./gameContexts/selectActionMenu').processActionOnTarget
+        processActionOnTarget: require('./gameContexts/selectActionTarget').processActionOnTarget
     },
     generateCharacterConfirmation: {
         yes: require('./gameContexts/generateCharacterConfirmation').yes,
