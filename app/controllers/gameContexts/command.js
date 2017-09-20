@@ -106,7 +106,7 @@ const action = gameObjects => {
     //Use .value() to unwrap the lodash wrapper
     gameObjects.slackResponseTemplate.attachments = templateAttachments.value();
 
-    let updatedCallback = 'command:action/actionList';
+    let updatedCallback = 'command:action/selectActionMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
