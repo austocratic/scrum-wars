@@ -3,6 +3,7 @@
     "-Kjpe29q_fDkJG-73AQO" : {
       "cool_down" : 1,
       "delay" : 0,
+      "functionName" : "quickStrike",
       "minimum_level" : 1,
       "name" : "Quick Strike",
       "type" : "offensive",
@@ -12,6 +13,7 @@
       "cool_down" : 1,
       "delay" : 0,
       "effect_duration" : 100,
+      "functionName" : "defensive",
       "minimum_level" : 1,
       "name" : "Defensive",
       "type" : "combat stance",
@@ -19,6 +21,7 @@
     },
     "-KkJVqtBIhpAKBfz9tcb" : {
       "cool_down" : 1,
+      "functionName" : "shop",
       "minimum_level" : 1,
       "name" : "Shop",
       "type" : "explore",
@@ -27,6 +30,7 @@
     "-KkOq-y2_zgEgdhY-6_U" : {
       "cool_down" : 2,
       "delay" : 0,
+      "functionName" : "lifeTap",
       "minimum_level" : 1,
       "name" : "Life Tap",
       "type" : "offensive",
@@ -35,6 +39,7 @@
     "-KkdduB9XuB46EsxqwIX" : {
       "cool_down" : 2,
       "delay" : 1,
+      "functionName" : "forkedLightning",
       "minimum_level" : 1,
       "name" : "Forked Lightning",
       "type" : "offensive",
@@ -43,6 +48,7 @@
     "-Kkdk_CD5vx8vRGQD268" : {
       "cool_down" : 2,
       "delay" : 1,
+      "functionName" : "intoShadow",
       "minimum_level" : 1,
       "name" : "Into Shadow",
       "type" : "special",
@@ -51,6 +57,7 @@
     "-Kqem2qns2gX4YBQGt4m" : {
       "cool_down" : 2,
       "delay" : 1,
+      "functionName" : "savageStrike",
       "minimum_level" : 1,
       "name" : "Savage Strike",
       "strength" : 0,
@@ -60,6 +67,7 @@
     "-KqtOcn7MapqMfnGIZvo" : {
       "cool_down" : 1,
       "delay" : 0,
+      "functionName" : "balanced",
       "minimum_level" : 1,
       "name" : "Balanced",
       "type" : "combat stance",
@@ -68,6 +76,7 @@
     "-Kr3hnITyH9ZKx3VuZah" : {
       "cool_down" : 1,
       "delay" : 0,
+      "functionName" : "backstab",
       "minimum_level" : 1,
       "name" : "Backstab",
       "type" : "shadow",
@@ -75,6 +84,7 @@
     },
     "-Kr9TRwZS7C9JHm1VzE3" : {
       "cool_down" : 1,
+      "functionName" : "tavern",
       "minimum_level" : 1,
       "name" : "Tavern",
       "type" : "explore",
@@ -83,6 +93,7 @@
     "-KrJaBvyYDGrNVfcaAd0" : {
       "cool_down" : 1,
       "delay" : 0,
+      "functionName" : "arcaneBolt",
       "minimum_level" : 1,
       "name" : "Arcane Bolt",
       "type" : "offensive",

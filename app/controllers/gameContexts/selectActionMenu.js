@@ -91,9 +91,11 @@ const quickStrike = gameObjects => {
         {
             "text": "",
             "callback_id": "",
+            "fallback": "unable to select an option",
             "actions": [
                 {
-                    "name": "processActionOnTarget", 
+                    "name": "processActionOnTarget",
+                    "text": "Select a target",
                     "type": "select",
                     "options": []
                 }]
@@ -102,26 +104,43 @@ const quickStrike = gameObjects => {
 
     let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
 
+    console.log('DEBUG **** characterIDsInZone: ', characterIDsInZone);
+
     var filteredCharacterIDs = _.remove(characterIDsInZone, eachCharacterID =>{
         //If a character ID is not equal to the player's character ID, it stays (remove player's character)
         return eachCharacterID !== gameObjects.playerCharacter.id
     });
 
+    console.log('DEBUG **** filteredCharacterIDs: ', filteredCharacterIDs);
+
+
+    gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacterIDs.map( singleCharacterID => {
+        return {
+            "text": gameObjects.game.state.character[singleCharacterID].name,
+            //"style": "primary",
+            //"type": "button",
+            "value": singleCharacterID
+        }
+    });
+
     //Iterate through the character Ids formatting into slack format
-    gameObjects.slackResponseTemplate = filteredCharacterIDs.forEach(singleCharacterID => {
-        slackTemplate.attachments[0].actions[0].options.push({
+    /*
+    filteredCharacterIDs.forEach(singleCharacterID => {
+        gameObjects.slackResponseTemplate.attachments[0].actions[0].options.push({
             //"name": singleCharacterID,
             "text": gameObjects.game.state.character[singleCharacterID].name,
             //"style": "primary",
             //"type": "button",
             "value": singleCharacterID
         });
-    });
+    });*/
     
     //Set the callback, will be assigned at end of switch
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    console.log('DEBUG **** gameObjects.slackResponseTemplate: ', gameObjects.slackResponseTemplate);
 
     return gameObjects.slackResponseTemplate;
 
