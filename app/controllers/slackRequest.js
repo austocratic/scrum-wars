@@ -38,6 +38,9 @@ const actionsAndThingsContext = {
         travel: require('./gameContexts/command').travel,
         name: require('./gameContexts/command').name
     },
+    selectActionMenu: {
+        Shop: require('./gameContexts/selectActionMenu').shop
+    },
     generateCharacterConfirmation: {
         yes: require('./gameContexts/generateCharacterConfirmation').yes,
         no: require('./gameContexts/generateCharacterConfirmation').no

@@ -633,6 +633,7 @@ class Game {
         return slackTemplate;
     }
     
+    /* TODO moved this functionality into shop action, verify before deleting
     shopList(requestSlackChannelID){
 
         //Use the channel to create a local zone
@@ -654,7 +655,7 @@ class Game {
 
         var localMerchant = new Merchant(this.state, merchantID);
 
-        var itemsForSaleArray = localMerchant.getItemsForSale();*/
+        var itemsForSaleArray = localMerchant.getItemsForSale();
 
         var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
             var localItem = this.state.item[itemID];
@@ -674,7 +675,7 @@ class Game {
 
         return slackTemplate
         
-    }
+    }*/
 
     getEquippedItemView(localCharacter){
 

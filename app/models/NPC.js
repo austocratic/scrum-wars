@@ -4,7 +4,7 @@ var BaseModel = require('./BaseModel').BaseModel;
 
 class NPC extends BaseModel{
     constructor(gameState, npcID){
-        super();
+        super(gameState, 'npc', npcID);
 
         var merchants = gameState.npc;
 

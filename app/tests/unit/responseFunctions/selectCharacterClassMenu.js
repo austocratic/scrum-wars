@@ -69,6 +69,8 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         }
     };
 
+    console.log('DEBUG selectCharacterClassMenu, characterClass.id: ', characterClass.id);
+
     let slackResponseTemplateReturned = classSelection({
         slackResponseTemplate,
         characterClass,

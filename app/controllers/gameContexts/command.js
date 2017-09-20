@@ -4,6 +4,7 @@ const _ = require('lodash');
 
 const updateCallback = require('../../helpers').updateCallback;
 const Action = require('../../models/Action').Action;
+const slackAlert = require('../../libraries/slack').Alert;
 
 const action = gameObjects => {
     console.log('called function command/action');
@@ -14,7 +15,7 @@ const action = gameObjects => {
         gameObjects.slackResponseTemplate.text =  "_You can't perform an action in a zone that your character is not in_";
 
         gameObjects.slackResponseTemplate.attachments = [{
-            image_url: "https://scrum-wars.herokuapp.com/assets/fullSize/" + gameObjects.requestZone.id + ".jpg",
+            image_url: "https://scrum-wars.herokuapp.com/public/images/fullSize/" + gameObjects.requestZone.id + ".jpg",
             fallback: "Unable to travel to " + gameObjects.requestZone.props.name + " at this time",
             text: "Would you like to travel to " + gameObjects.requestZone.props.name + " now?",
             actions: [
@@ -92,7 +93,7 @@ const action = gameObjects => {
 
                 //Push each action into the actions array portion of the template
                 attachmentTemplate.actions.push({
-                    "name": actionDetails.id,
+                    "name": actionDetails.props.name,
                     "text": actionDetails.props.name,
                     "style": actionAvailableButtonColor,
                     "type": "button",
@@ -248,6 +249,16 @@ const travel = gameObjects => {
     //Update the zone_id property locally
     gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
 
+    //Alert the channel
+    let channelAlert = new slackAlert({
+        "username": "A mysterious voice",
+        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+        "channel": ("#" + gameObjects.requestZone.props.channel),
+        "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
+    });
+
+    channelAlert.sendToSlack();
+    
     //Create object to send to Slack
     gameObjects.slackResponseTemplate = {
         "username": "A mysterious voice",
