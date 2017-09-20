@@ -68,7 +68,7 @@ const shop = gameObjects => {
     };
     
     
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionMenu';
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectItemShopMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
