@@ -35,8 +35,12 @@ const actionsAndThingsContext = {
         yes: require('./gameContexts/generateCharacterConfirmation').yes,
         no: require('./gameContexts/generateCharacterConfirmation').no
     },
-    selectCharacterClassMenu: require('./gameContexts/selectCharacterClassMenu').classSelection,
-    selectGenderMenu: require('./gameContexts/selectGenderMenu').genderSelection,
+    selectCharacterClassMenu: {
+        classSelection: require('./gameContexts/selectCharacterClassMenu').classSelection
+    },
+    selectGenderMenu: {
+        genderSelection: require('./gameContexts/selectGenderMenu').genderSelection
+    },
     travelConfirmation: {
         yes: require('./gameContexts/travelConfirmation').yes,
         no: require('./gameContexts/travelConfirmation').no
@@ -46,8 +50,12 @@ const actionsAndThingsContext = {
         equipment: require('./gameContexts/characterProfileMenu').equipment,
         exit: require('./gameContexts/characterProfileMenu').exit
     },
-    selectEquipmentMenu: require('./gameContexts/selectEquipmentMenu').equipmentSelection,
-    selectInventoryMenu: require('./gameContexts/selectInventoryMenu').inventorySelection,
+    selectEquipmentMenu: {
+        equipmentSelection: require('./gameContexts/selectEquipmentMenu').equipmentSelection
+    },
+    selectInventoryMenu: {
+        inventorySelection: require('./gameContexts/selectInventoryMenu').inventorySelection
+    },
     selectItemShopMenu: {
         selectItem: require('./gameContexts/selectItemShopMenu').selectItem
     },
