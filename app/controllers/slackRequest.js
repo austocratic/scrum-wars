@@ -18,18 +18,8 @@ var Match = require('../models/Match').Match;
 
 var slackTemplates = require('../slackTemplates');
 
-//TO DELETE
-//var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 
-//TODO this seems weird to have in the slackRequest file, maybe move when I refactor this file
-var game = new Game();
-
-// DANNY EXAMPLE
-const myCommandActionFn = ({ localCharacter, localZone, gameContext }) => {
-    const slackTemplate = 'something';
-    return slackTemplate;
-};
-
+//Route the slackRequest
 const actionsAndThingsContext = {
     command: {
         action: require('./gameContexts/command').action,
@@ -58,7 +48,9 @@ const actionsAndThingsContext = {
     },
     selectEquipmentMenu: require('./gameContexts/selectEquipmentMenu').equipmentSelection,
     selectInventoryMenu: require('./gameContexts/selectInventoryMenu').inventorySelection,
-    selectItemShopMenu: require('./gameContexts/selectItemShopMenu').selectItem,
+    selectItemShopMenu: {
+        selectItem: require('./gameContexts/selectItemShopMenu').selectItem
+    },
     itemDetailMenu: {
         yes: require('./gameContexts/itemDetailMenu').yes,
         equip: require('./gameContexts/itemDetailMenu').equip,
@@ -67,7 +59,6 @@ const actionsAndThingsContext = {
     selectCharacterAvatarMenu: {
         more: require('./gameContexts/selectCharacterAvatarMenu').more
     }
-    
 };
 
 

@@ -33,6 +33,7 @@ const shop = gameObjects => {
                 "callback_id": "shopCharacterSelection",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
+                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg",
                 "actions": []
             },
             {
@@ -41,10 +42,10 @@ const shop = gameObjects => {
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "actions": [{
-                    "name": "item_list",
+                    "name": "selectItem",
                     "text": "Choose an item to purchase",
                     "type": "select",
-                    "options": []
+                    "options": slackTemplateDropdown
                 }]
             },
             {
@@ -65,11 +66,7 @@ const shop = gameObjects => {
             }
         ]
     };
-
-    //Add the corresponding merchant's image
-    gameObjects.slackResponseTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg";
-
-    gameObjects.slackResponseTemplate.attachments[1].actions[0].options = slackTemplateDropdown;
+    
     
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionMenu';
 
