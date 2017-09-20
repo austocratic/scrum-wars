@@ -106,6 +106,9 @@ const quickStrike = gameObjects => {
 
     console.log('DEBUG **** characterIDsInZone: ', characterIDsInZone);
 
+
+    //TODO need to filter for active characters
+
     var filteredCharacterIDs = _.remove(characterIDsInZone, eachCharacterID =>{
         //If a character ID is not equal to the player's character ID, it stays (remove player's character)
         return eachCharacterID !== gameObjects.playerCharacter.id

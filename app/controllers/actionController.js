@@ -507,8 +507,6 @@ class QuickStrike extends BaseAttack {
 
         let totalDamage = this._calculateDamage(power, mitigation);
         
-        console.log('DEBUG******* ')
-        
         //Process all the other effects of the action
         //this._damageEffect(totalDamage);
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
@@ -526,6 +524,8 @@ class QuickStrike extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+        
+        return '';
     }
 }
 
