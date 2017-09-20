@@ -58,6 +58,7 @@ const actionsAndThingsContext = {
     },
     selectEquipmentMenu: require('./gameContexts/selectEquipmentMenu').equipmentSelection,
     selectInventoryMenu: require('./gameContexts/selectInventoryMenu').inventorySelection,
+    selectItemShopMenu: require('./gameContexts/selectItemShopMenu').selectItem,
     itemDetailMenu: {
         yes: require('./gameContexts/itemDetailMenu').yes,
         equip: require('./gameContexts/itemDetailMenu').equip,

@@ -64,7 +64,7 @@ const shop = gameObjects => {
                 ]
             }
         ]
-    }
+    };
 
     //Add the corresponding merchant's image
     gameObjects.slackResponseTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg";
