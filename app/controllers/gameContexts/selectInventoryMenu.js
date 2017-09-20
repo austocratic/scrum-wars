@@ -27,27 +27,7 @@ const inventorySelection = gameObjects => {
         "type": "button",
         "value": "no"
     };
-
-    //Add purchase buttons to the bottom of the template
-    /*
-    gameObjects.slackResponseTemplate = {
-        "attachments": [
-            {
-                "name": 'equip',
-                "text": "Equip Item",
-                "fallback": "unable to select item",
-                "type": "button",
-                "value": itemSelected.id
-            },
-            {
-                "name": "back",
-                "text": "Back",
-                "fallback": "unable to go back",
-                "type": "button",
-                "value": "no"
-            }]
-    };*/
-
+    
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);

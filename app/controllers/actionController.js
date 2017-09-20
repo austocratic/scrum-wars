@@ -501,18 +501,20 @@ class QuickStrike extends BaseAttack {
             return this.playerActionAvoidedMessage
         }
 
-        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        let power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
 
-        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        let mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
 
-        var totalDamage = this._calculateDamage(power, mitigation);
-
+        let totalDamage = this._calculateDamage(power, mitigation);
+        
+        console.log('DEBUG******* ')
+        
         //Process all the other effects of the action
         //this._damageEffect(totalDamage);
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
         //Alert the channel of the action
-        var alertDetails = {
+        let alertDetails = {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": this.slackChannel,
@@ -520,7 +522,7 @@ class QuickStrike extends BaseAttack {
         };
 
         //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
+        let channelAlert = new Slack(alertDetails);
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);

@@ -49,7 +49,7 @@ const equip = gameObjects => {
 
         if (equipmentInSlot.length === 0){
             gameObjects.playerCharacter.equipItem(itemToEquip);
-
+        } else {
             gameObjects.slackResponseTemplate.text = 'You can not equip that item because you already have an item equipped in that slot!'
         }
     });

@@ -17,10 +17,10 @@ const shop = gameObjects => {
     let itemsForSaleArray = vendor.getItemsForSale();
 
     var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
-        var localItem = gameObjects.game.state.item[itemID];
+        let localItem = gameObjects.game.state.item[itemID];
 
         return {
-            "text": localItem.name,
+            "text": localItem.functionName,
             "value": itemID
         }
     });
@@ -66,8 +66,7 @@ const shop = gameObjects => {
             }
         ]
     };
-    
-    
+
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectItemShopMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
@@ -75,7 +74,82 @@ const shop = gameObjects => {
     return gameObjects.slackResponseTemplate;
 };
 
+const tavern = gameObjects => {
+
+};
+
+const defensive = gameObjects => {
+
+};
+
+const quickStrike = gameObjects => {
+
+    //actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
+
+    gameObjects.slackResponseTemplate = {
+        "attachments": [
+        {
+            "text": "",
+            "callback_id": "",
+            "actions": [
+                {
+                    "name": "processActionOnTarget", 
+                    "type": "select",
+                    "options": []
+                }]
+        }]
+    };
+
+    let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
+
+    var filteredCharacterIDs = _.remove(characterIDsInZone, eachCharacterID =>{
+        //If a character ID is not equal to the player's character ID, it stays (remove player's character)
+        return eachCharacterID !== gameObjects.playerCharacter.id
+    });
+
+    //Iterate through the character Ids formatting into slack format
+    gameObjects.slackResponseTemplate = filteredCharacterIDs.forEach(singleCharacterID => {
+        slackTemplate.attachments[0].actions[0].options.push({
+            //"name": singleCharacterID,
+            "text": gameObjects.game.state.character[singleCharacterID].name,
+            //"style": "primary",
+            //"type": "button",
+            "value": singleCharacterID
+        });
+    });
+    
+    //Set the callback, will be assigned at end of switch
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    return gameObjects.slackResponseTemplate;
+
+};
+const lifeTap = gameObjects => {
+
+};
+const forkedLightning = gameObjects => {
+
+};
+const intoShadow = gameObjects => {
+
+};
+const savageStrike = gameObjects => {
+
+};
+const balanced = gameObjects => {
+
+};
+const backstab = gameObjects => {
+
+};
+
+const arcaneBolt = gameObjects => {
+
+};
 
 module.exports = {
-    shop
+    shop,
+    quickStrike
 };

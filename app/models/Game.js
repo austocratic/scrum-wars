@@ -583,8 +583,7 @@ class Game {
 
     getCharacterIDsInZone(zoneID){
         console.log('called getCharacterIDsInZone');
-
-
+        
         //Set a variable for all character IDs in zone (active & inactive & all zones)
         var characterIDsInZone = Object.keys(this.state.character);
 
@@ -598,12 +597,14 @@ class Game {
         console.log('called getCharactersInZone');
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-        var localUser = new User(this.state, requestSlackUserID);
+        //var localUser = new User(this.state, requestSlackUserID);
+        
+        
 
         //Get the local character's id
-        var characterID = localUser.getCharacterID();
+        //var characterID = localUser.getCharacterID();
 
-        var localCharacter = new Character(this.state, characterID);
+        //var localCharacter = new Character(this.state, characterID);
 
         var slackTemplate = slackTemplates.characterList;
         
@@ -612,6 +613,7 @@ class Game {
         console.log('getCharactersInZone characterIDs: ', characterIDs);
 
         //Filter out the player's character
+        
         var filteredCharacterIDs = _.remove(characterIDs, eachCharacterID =>{
             //If a character ID is not equal to the player's character ID, it stays (remove player's character)
             return eachCharacterID !== localCharacter.id
@@ -710,7 +712,7 @@ class Game {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "",
                 "fallback": "You are unable select that item",
-                "thumb_url": "https://scrum-wars.herokuapp.com/assets/thumb/" + formattedSlot.item_id + ".jpg",
+                "thumb_url": "https://scrum-wars.herokuapp.com/public/images/thumb/" + formattedSlot.item_id + ".jpg",
                 "fields": [{
                     "title": formattedSlot.name,
                     "value": "",

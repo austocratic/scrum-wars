@@ -29,7 +29,11 @@ const actionsAndThingsContext = {
         name: require('./gameContexts/command').name
     },
     selectActionMenu: {
-        Shop: require('./gameContexts/selectActionMenu').shop
+        shop: require('./gameContexts/selectActionMenu').shop,
+        quickStrike: require('./gameContexts/selectActionMenu').quickStrike
+    },
+    selectActionTarget: {
+        processActionOnTarget: require('./gameContexts/selectActionMenu').processActionOnTarget
     },
     generateCharacterConfirmation: {
         yes: require('./gameContexts/generateCharacterConfirmation').yes,

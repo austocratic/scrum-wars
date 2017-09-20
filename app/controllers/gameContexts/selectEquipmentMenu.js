@@ -13,22 +13,22 @@ const equipmentSelection = gameObjects => {
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
 
     //Add purchase buttons to the bottom of the template
-    gameObjects.slackResponseTemplate = {
-        "attachments": [{
+    gameObjects.slackResponseTemplate.attachments[0].actions = [{
             "name": 'unequip',
             "fallback": "unable to select item",
             "text": "Unequip Item",
             "type": "button",
             "value": itemSelected.id
-        },
-        {
-            "name": "back",
-            "fallback": "unable to go back",
-            "text": "Back",
-            "type": "button",
-            "value": "no"
-        }]
+        }];
+
+    gameObjects.slackResponseTemplate.attachments[1] = {
+        "name": "back",
+        "text": "Back",
+        "fallback": "unable to go back",
+        "type": "button",
+        "value": "no"
     };
+    
     
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
