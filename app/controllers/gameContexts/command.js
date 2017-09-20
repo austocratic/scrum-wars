@@ -97,7 +97,7 @@ const action = gameObjects => {
                     "text": actionDetails.props.name,
                     "style": actionAvailableButtonColor,
                     "type": "button",
-                    "value": actionDetails.id
+                    "value": actionDetails.props.functionName
                 });
             });
             return attachmentTemplate
