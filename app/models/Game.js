@@ -723,7 +723,7 @@ class Game {
             if (equippedSlotItem.length > 0){
 
                 baseTemplate.actions.push({
-                    "name": "inspect",
+                    "name": "equipmentSelection",
                     "text": "Inspect item",
                     "style": "default",
                     "type": "button",

@@ -63,7 +63,7 @@ const inventory = gameObjects => {
 
         gameObjects.slackResponseTemplate.attachments[1].actions =
             [{
-                "name": "inventory",
+                "name": "inventorySelection",
                 "type": "select",
                 "options": unequippedItemOptions
             }]
@@ -75,7 +75,7 @@ const inventory = gameObjects => {
         }
     }
 
-    let updatedCallback = ':inventory/itemDetailMenu';
+    let updatedCallback = ':inventory/selectInventoryMenu';
 
     //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
@@ -144,7 +144,7 @@ const equipment = gameObjects => {
         ]
     });
 
-    let updatedCallback = ':equipment/itemDetailMenu';
+    let updatedCallback = ':equipment/selectEquipmentMenu';
 
     //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
