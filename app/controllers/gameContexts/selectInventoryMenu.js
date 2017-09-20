@@ -12,7 +12,24 @@ const inventorySelection = gameObjects => {
     //Create an item detail view template
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
 
+    gameObjects.slackResponseTemplate.attachments[0].actions = [{
+        "name": 'equip',
+        "text": "Equip Item",
+        "fallback": "unable to select item",
+        "type": "button",
+        "value": itemSelected.id
+    }];
+
+    gameObjects.slackResponseTemplate.attachments[1] = {
+        "name": "back",
+        "text": "Back",
+        "fallback": "unable to go back",
+        "type": "button",
+        "value": "no"
+    };
+
     //Add purchase buttons to the bottom of the template
+    /*
     gameObjects.slackResponseTemplate = {
         "attachments": [
             {
@@ -29,7 +46,7 @@ const inventorySelection = gameObjects => {
                 "type": "button",
                 "value": "no"
             }]
-    };
+    };*/
 
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
