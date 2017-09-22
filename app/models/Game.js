@@ -567,7 +567,7 @@ class Game {
                 "callback_id": "",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
-                "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + singleClassID + ".jpg",
+                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + singleClassID + ".jpg",
                 "actions": [{
                     "name": singleClassID,
                     "text": localCharacterClasses[singleClassID].name,
