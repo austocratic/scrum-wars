@@ -52,6 +52,8 @@ const processAction = (action, opts) => {
 
 const processActionOnTarget = gameObjects => {
 
+    console.log('DEBUG ****^^#*$#*$&# userActionValueSelection: ', gameObjects.userActionValueSelection);
+
     console.log('gameObjects.slackCallback: ', gameObjects.slackCallback);
 
     let slackCallbackElements = gameObjects.slackCallback.split("/");
@@ -64,11 +66,15 @@ const processActionOnTarget = gameObjects => {
 
     console.log('DEBUG* ***** * ** previousValue: ', previousValue);
 
+
+
+    //Need to determine the characters target
+
     //let actionObject = new actionsAndThingsContext.quickStrike;
 
     let actionObject = new actionsAndThingsContext[previousValue](
         gameObjects.playerCharacter,
-        gameObjects.targetCharacter,
+        targetCharacter,
         gameObjects.requestZone,
         gameObjects.currentMatch,
         previousValue
