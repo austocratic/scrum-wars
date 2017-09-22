@@ -4,9 +4,9 @@ const _ = require('lodash');
 const updateCallback = require('../../helpers').updateCallback;
 
 let NPC = require('../../models/NPC').NPC;
+let Character = require('../../models/Character').Character;
 
 const actionController = require('../actionController');
-
 
 
 const actionsAndThingsContext = {
@@ -66,7 +66,8 @@ const processActionOnTarget = gameObjects => {
 
     console.log('DEBUG* ***** * ** previousValue: ', previousValue);
 
-
+    //User selected a target character ID.  Create a character for that target
+    let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     //Need to determine the characters target
 
