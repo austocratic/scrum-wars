@@ -468,6 +468,14 @@ class ArcaneBolt extends BaseAttack {
 
 class QuickStrike extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+
+        console.log('DEBUG *****~~~QuickStrike~~~~~******');
+        console.log('actionCharacter: ', JSON.stringify(actionCharacter));
+        console.log('targetCharacter: ', JSON.stringify(targetCharacter));
+        console.log('currentZone: ', JSON.stringify(currentZone));
+        console.log('currentMatch: ', JSON.stringify(currentMatch));
+
+
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
         this.baseSuccessChance = .9;
