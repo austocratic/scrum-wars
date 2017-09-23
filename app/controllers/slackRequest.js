@@ -69,7 +69,8 @@ const actionsAndThingsContext = {
         unequip: require('./gameContexts/itemDetailMenu').unequip
     },
     selectCharacterAvatarMenu: {
-        more: require('./gameContexts/selectCharacterAvatarMenu').more
+        more: require('./gameContexts/selectCharacterAvatarMenu').more,
+        selection: require('./gameContexts/selectCharacterAvatarMenu').selection
     }
 };
 
