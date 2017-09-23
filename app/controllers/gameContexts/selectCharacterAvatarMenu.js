@@ -1,11 +1,18 @@
 "use strict";
 
-
 const updateCallback = require('../../helpers').updateCallback;
-
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 const more = gameObjects => {
     console.log('called function selectCharacterAvatarMenu/more');
+
+    validateGameObjects(gameObjects, [
+        'game', 
+        'playerCharacter', 
+        'userActionValueSelection',
+        'slackResponseTemplate', 
+        'slackCallback' 
+    ]);
 
     //TODO hard coded +6 into pagination calculation.  Need to set via config variable
     let attachmentsPerPage = 6;
@@ -28,9 +35,6 @@ const more = gameObjects => {
     //console.log('truncFileList before being set should be empty: ', truncFileList);
     if (gameObjects.playerCharacter.props.gender === 'male'){
 
-        console.log('character is male, requestActionValue: ', gameObjects.userActionValueSelection);
-        console.log('character is male, paginationEnd: ', nextPaginationEnd);
-
         //Path array is reference later to determine whether or not to display paginate button
         avatarPathArray = gameObjects.game.maleAvatarPaths;
         truncFileList = avatarPathArray.slice(gameObjects.userActionValueSelection, nextPaginationEnd);
@@ -47,7 +51,6 @@ const more = gameObjects => {
     }
 
     gameObjects.slackResponseTemplate.attachments = truncFileList.map( eachFilePath =>{
-        console.log('eachFilePath: ', eachFilePath);
         return {
             "text": "",
             "fallback": "Unable to select avatar",
