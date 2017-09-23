@@ -61,7 +61,7 @@ const genderSelection = gameObjects => {
         ]
     });
     
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/avatarList';
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectCharacterAvatarMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
