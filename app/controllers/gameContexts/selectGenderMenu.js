@@ -22,25 +22,26 @@ const genderSelection = gameObjects => {
     gameObjects.slackResponseTemplate.text = 'What does your character look like?';
     
     //TODO hard coded first page length with .slice(1, 6), need to move to config
-    let truncFileList;
+    let avatarFileNames;
     if (gameObjects.playerCharacter.props.gender === 'male'){
-        truncFileList = gameObjects.game.maleAvatarPaths.slice(1, 6);
+        avatarFileNames = gameObjects.game.maleAvatarFileNames.slice(1, 6);
     }
     if (gameObjects.playerCharacter.props.gender === 'female'){
-        truncFileList = gameObjects.game.femaleAvatarPaths.slice(1, 6);
+        avatarFileNames = gameObjects.game.femaleAvatarFileNames.slice(1, 6);
     }
 
-    gameObjects.slackResponseTemplate.attachments = truncFileList.map( eachFilePath =>{
+    gameObjects.slackResponseTemplate.attachments = avatarFileNames.map( eachAvatarFileName =>{
         return {
             "text": "",
-            "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
+            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachAvatarFileName,
+            //"image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
             "fallback": 'A strange force prevents you from choosing an avatar, try again!',
             "actions":[{
                 "name": "selection",
                 "text": "Select",
                 "style": "default",
                 "type": "button",
-                "value": eachFilePath
+                "value": eachAvatarFileName
             }]
         }
     });

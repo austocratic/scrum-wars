@@ -23,7 +23,7 @@ const gameContext = 'selectCharacterAvatarMenu';
 const userActionNameSelection = 'selection';
 const userActionValueSelection = 'public/images/fullSize/character_avatar/female/f_16.png';
 
-const slackCallback = 'selectShopItemMenu:-KjGQEzVbaxRlWFawSqI/purchaseItemConfirmation:yes';
+//const slackCallback = 'selectShopItemMenu:-KjGQEzVbaxRlWFawSqI/purchaseItemConfirmation:yes';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionNameSelection, function() {
 
@@ -34,10 +34,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     let playerCharacter = new Character(game.state, testCharacterID);
 
     let slackResponseTemplateReturned = selection({
-        game,
-        userActionNameSelection,
         userActionValueSelection,
-        slackCallback,
         playerCharacter,
         slackResponseTemplate
     });

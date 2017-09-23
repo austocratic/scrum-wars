@@ -1,6 +1,6 @@
 "use strict";
 
-var baseURL = 'https://scrum-wars.herokuapp.com/';
+const baseURL = 'https://scrum-wars.herokuapp.com/';
 
 
 

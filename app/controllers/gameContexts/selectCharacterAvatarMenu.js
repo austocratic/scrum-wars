@@ -29,38 +29,37 @@ const more = gameObjects => {
         'text': 'What does your character look like?',
         'attachments': []
     };
-
-    //TODO hard coded first page length with .slice(1, 6), need to move to config
-    let avatarPathArray, truncFileList;
-    //console.log('truncFileList before being set should be empty: ', truncFileList);
+    
+    let avatarFileNames, paginatedAvatarFileNames;
     if (gameObjects.playerCharacter.props.gender === 'male'){
 
         //Path array is reference later to determine whether or not to display paginate button
-        avatarPathArray = gameObjects.game.maleAvatarPaths;
-        truncFileList = avatarPathArray.slice(gameObjects.userActionValueSelection, nextPaginationEnd);
+        avatarFileNames = gameObjects.game.maleAvatarFileNames;
+        paginatedAvatarFileNames = avatarFileNames.slice(gameObjects.userActionValueSelection, nextPaginationEnd);
     }
     else if (gameObjects.playerCharacter.props.gender === 'female'){
 
         //Path array is reference later to determine whether or not to display paginate button
-        avatarPathArray = gameObjects.game.femaleAvatarPaths;
-        truncFileList = avatarPathArray.slice(gameObjects.userActionValueSelection, nextPaginationEnd);
+        avatarFileNames = gameObjects.game.femaleAvatarFileNames;
+        paginatedAvatarFileNames = avatarFileNames.slice(gameObjects.userActionValueSelection, nextPaginationEnd);
     } else {
         gameObjects.slackResponseTemplate = {
             "text": "ERROR, you have not selected your gender yet"
         }
     }
 
-    gameObjects.slackResponseTemplate.attachments = truncFileList.map( eachFilePath =>{
+    gameObjects.slackResponseTemplate.attachments = paginatedAvatarFileNames.map( eachPaginatedAvatarFileName =>{
         return {
             "text": "",
             "fallback": "Unable to select avatar",
-            "image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
+            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachPaginatedAvatarFileName,
+            //"image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
             "actions":[{
                 "name": "selection",
                 "text": "Select",
                 "style": "default",
                 "type": "button",
-                "value": eachFilePath
+                "value": eachPaginatedAvatarFileName
             }]
         }
     });
@@ -91,7 +90,7 @@ const more = gameObjects => {
 
     //If there is at least one value after the current page end, add a next button
     //Add 'more' button to the attachment array
-    if (nextPaginationEnd < avatarPathArray.length) {
+    if (nextPaginationEnd < avatarFileNames.length) {
         gameObjects.slackResponseTemplate.attachments[navigationButtonAttachmentIndex].actions.push(
             {
                 "name": "more",
@@ -112,6 +111,12 @@ const more = gameObjects => {
 
 const selection = gameObjects => {
     console.log('called function selectCharacterAvatarMenu/selection');
+
+    validateGameObjects(gameObjects, [
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'playerCharacter'
+    ]);
     
     //store the file path in the character's profile
     gameObjects.playerCharacter.updateProperty('avatar', gameObjects.userActionValueSelection);

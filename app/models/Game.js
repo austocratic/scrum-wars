@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+
 var Firebase = require('../libraries/firebase').Firebase;
 var firebase = new Firebase();
 
@@ -30,11 +32,23 @@ var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 class Game {
     constructor() {
         
-        this.maleAvatarPaths = [];
-        this.femaleAvatarPaths = [];
+        //this.maleAvatarPaths = [];
+        //this.femaleAvatarPaths = [];
 
-        helpers.getFilePaths("public/images/fullSize/character_avatar/male", this.maleAvatarPaths);
-        helpers.getFilePaths("public/images/fullSize/character_avatar/female", this.femaleAvatarPaths);
+        //helpers.getFilePaths("public/images/fullSize/character_avatar/male", this.maleAvatarPaths);
+        //helpers.getFilePaths("public/images/fullSize/character_avatar/female", this.femaleAvatarPaths);
+        
+        //var fs = fs || require('fs');
+        
+        this.baseURL = 'https://scrum-wars.herokuapp.com/';
+        
+        this.avatarPath = 'public/images/fullSize/character_avatar/';
+        
+        this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
+        this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
+        
+        console.log('DEBUG maleFiles = ', this.maleAvatarFileNames);
+        console.log('DEBUG femaleFiles = ', this.femaleAvatarFileNames);
 
         //Was going to use a helper to append file path to URL, but these were never getting reset
         //helpers.getImageFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
@@ -71,30 +85,30 @@ class Game {
 
         //console.log('DEBUG: this.state(): ', this.state);
 
-        console.log('DEBUG: this.getCurrentMatchID(): ', this.getCurrentMatchID());
+        //console.log('DEBUG: this.getCurrentMatchID(): ', this.getCurrentMatchID());
 
         //**********************~~  Match  ~~***********************
 
         //Read game state to find the current match ID
         let currentMatch = new Match(this.state, this.getCurrentMatchID());
 
-        console.log('DEBUG: currentMatch.props: ', currentMatch.props);
+        //console.log('DEBUG: currentMatch.props: ', currentMatch.props);
         
         //Read the match status & determine needed update
         switch(currentMatch.props.status){
 
             //If match is pending, determine if a match starting alert should be sent
             case 'pending':
-                console.log('DEBUG: called game.refresh() currentMatch.props.status = pending');
+                console.log('Called game.refresh() currentMatch.props.status = pending');
 
                 let currentDate = new Date();
 
                 let currentHour = currentDate.getUTCHours();
 
                 //Look at the current time.  Compare current time to config property of match start time
-                console.log('DEBUG: Current hour: ', currentHour);
+                //console.log('DEBUG: Current hour: ', currentHour);
                 
-                console.log('gameConfiguration match start: ', gameConfigurations.match.startTime);
+                //console.log('gameConfiguration match start: ', gameConfigurations.match.startTime);
 
                 //Determine if the pending match should begin
                 if (currentHour > gameConfigurations.match.startTime){
@@ -120,7 +134,7 @@ class Game {
             
             //If match has started, determine if turn should be incremented, determine if game has hit end condition
             case 'started':
-                console.log('DEBUG: called game.refresh() currentMatch.props.status = started');
+                console.log('Called game.refresh() currentMatch.props.status = started');
 
                 let matchStartingCharacterIDs = currentMatch.getStartingCharacterIDs();
 
