@@ -32,6 +32,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
     let characterClass = new Class(game.state, playerCharacter.props.class_id);
 
     let slackResponseTemplateReturned = profile({
+        game,
         slackResponseTemplate,
         characterClass,
         playerCharacter

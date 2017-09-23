@@ -153,11 +153,18 @@ const generate = gameObjects => {
 const profile = gameObjects => {
     console.log('slackRequest called function command/profile');
 
-    gameObjects.slackResponseTemplate.attachments =
-        [{
+    validateGameObjects(gameObjects, [
+        'game',
+        'characterClass', 
+        'playerCharacter',
+        'slackResponseTemplate'
+    ]);
+
+    gameObjects.slackResponseTemplate.attachments = [
+        {
             "title": gameObjects.playerCharacter.props.name + "'s Profile",
             "fallback": "Unable to load character image",
-            "image_url": "https://scrum-wars.herokuapp.com/" + gameObjects.playerCharacter.props.avatar,
+            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
             "fields": [
             ]
         },
