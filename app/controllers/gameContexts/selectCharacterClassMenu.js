@@ -1,9 +1,19 @@
+"use strict";
 
 const updateCallback = require('../../helpers').updateCallback;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
 const classSelection = gameObjects => {
     console.log('called function selectCharacterClassMenu/classSelection');
+    
+    //Valiate that required gameObjects are passed in before attempting to reference
+    validateGameObjects(gameObjects, [
+        'characterClass',
+        'playerCharacter',
+        'slackResponseTemplate',
+        'slackCallback'
+    ]);
 
     // *****************Based on class selection update DB stats*******************
 

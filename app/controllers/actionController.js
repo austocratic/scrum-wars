@@ -474,8 +474,7 @@ class QuickStrike extends BaseAttack {
         console.log('targetCharacter: ', JSON.stringify(targetCharacter));
         console.log('currentZone: ', JSON.stringify(currentZone));
         console.log('currentMatch: ', JSON.stringify(currentMatch));
-
-
+        
         super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
         this.baseSuccessChance = .9;

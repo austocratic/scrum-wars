@@ -20,7 +20,7 @@ game.state = testDB;
 
 const gameContext = 'selectCharacterAvatarMenu';
 
-const userActionValueSelection = '12';
+const userActionValueSelection = '-Kkxf1ukVSF9VV6mIPlG';
 
 const slackCallback = 'command:action/selectActionMenu:quickStrike/selectActionTarget';
 
@@ -30,8 +30,6 @@ describe("Testing selectActionTarget function", function() {
 
     let playerCharacter = new Character(game.state, 'd130618f3a221f672cfc');
 
-    let targetCharacter = new Character(game.state, '-Kkxf1ukVSF9VV6mIPlG');
-
     let requestChannelID = 'C4Z7F8XMW';
 
     let requestZone = new Zone(game.state, requestChannelID);
@@ -39,25 +37,16 @@ describe("Testing selectActionTarget function", function() {
     let matchID = '-KmTOFWVJav3v7j1hYLA';
     
     let currentMatch = new Match(game.state, matchID);
-
-    let targetCharacterHealthBefore = targetCharacter.props.hit_points;
-
-    console.log('DEBUG selectActionTarget targetCharacterHealthBefore: ', targetCharacterHealthBefore);
-
+    
     let slackResponseTemplateReturned = processActionOnTarget({
+        game,
         playerCharacter,
-        targetCharacter,
+        userActionValueSelection,
         requestZone,
         currentMatch,
         slackCallback
     });
-
-    let targetCharacterHealthAfter = targetCharacter.props.hit_points;
-
-    console.log('DEBUG selectActionTarget targetCharacterHealthAfter: ', targetCharacterHealthAfter);
-
-    console.log('DEBUG slackResponseTemplateReturned from selectActionTarget: ', slackResponseTemplateReturned);
-
+    
     //testSlackResponseFormat(slackResponseTemplateReturned);
 });
 

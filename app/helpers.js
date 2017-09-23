@@ -15,6 +15,19 @@ const validateSlackResponseFormat = slackResponse => {
 
 };
 
+//Validate expected gameObjects
+const validateGameObjects = (gameObjectsToValidate, expectedGameObjects) => {
+    if (!Array.isArray(expectedGameObjects)){
+        throw new Error('validateGameObjects invoked with argument expectedGameObjects that is not an array');
+    }
+
+    expectedGameObjects.forEach( eachExpectedGameObject =>{
+        if (!gameObjectsToValidate[eachExpectedGameObject]){
+            throw new Error('missing expected gameObject: ' + eachExpectedGameObject)
+        }
+    })
+};
+
 var getImageFilePaths = (dir, filelist) => {
 
     console.log('called getImageFilePaths(), filelist: ', filelist);
@@ -63,6 +76,7 @@ module.exports = {
     getImageFilePaths,
     getFilePaths,
     updateCallback,
-    validateSlackResponseFormat
+    validateSlackResponseFormat,
+    validateGameObjects
 };
 

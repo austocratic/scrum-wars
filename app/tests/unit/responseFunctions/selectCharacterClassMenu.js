@@ -23,6 +23,8 @@ const gameContext = 'selectCharacterClassMenu';
 //Shadow Knight
 const userActionValueSelection = '-KircSgAkPTavnfob8F5';
 
+const slackCallback = 'generateCharacterConfirmation:yes/selectCharacterClassMenu';
+
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
@@ -74,6 +76,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     let slackResponseTemplateReturned = classSelection({
         slackResponseTemplate,
         characterClass,
+        slackCallback,
         playerCharacter
     });
 
