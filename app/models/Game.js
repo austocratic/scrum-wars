@@ -47,12 +47,6 @@ class Game {
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
         
-        console.log('DEBUG maleFiles = ', this.maleAvatarFileNames);
-        console.log('DEBUG femaleFiles = ', this.femaleAvatarFileNames);
-
-        //Was going to use a helper to append file path to URL, but these were never getting reset
-        //helpers.getImageFilePaths("app/assets/fullSize/character_avatar/male", this.maleAvatarPaths);
-        //helpers.getImageFilePaths("app/assets/fullSize/character_avatar/female", this.femaleAvatarPaths);
     }
     
     //Get state of the game from DB

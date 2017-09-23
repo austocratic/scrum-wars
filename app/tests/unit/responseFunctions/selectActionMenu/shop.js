@@ -21,11 +21,10 @@ game.state = testDB;
 const gameContext = 'selectActionMenu';
 const userActionValueSelection = 'Shop';
 
-let slackCallback = 'command:action/Shop:';
+let slackCallback = 'command:action/shop:';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
-
-
+    
     let slackResponseTemplate = {};
 
     //The Town channel ID
@@ -39,6 +38,8 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         slackCallback,
         requestZone
     });
+    
+    console.log('DEBUG shop slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
     testSlackResponseFormat(slackResponseTemplateReturned);
 

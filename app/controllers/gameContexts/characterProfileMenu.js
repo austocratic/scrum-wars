@@ -160,7 +160,7 @@ const exit = gameObjects => {
     ]);
 
     gameObjects.slackResponseTemplate = {
-        "text": "Does this message show up?  Remove from controller",
+        "text": "_You exit your profile_",
         "delete_original": true
     };
 

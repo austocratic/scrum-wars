@@ -2,11 +2,19 @@
 
 const _ = require('lodash');
 const updateCallback = require('../../helpers').updateCallback;
-
 let NPC = require('../../models/NPC').NPC;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
 const shop = gameObjects => {
+    console.log('Called selectActionMenu/shop');
+
+    validateGameObjects(gameObjects, [
+        'game', //ok
+        'requestZone', //ok
+        'slackCallback', //ok
+        'slackResponseTemplate' //ok
+    ]);
 
     let npcID = _.findKey(gameObjects.game.state.npc, singleNPC => {
         {return singleNPC['zone_id'] === gameObjects.requestZone.id}
@@ -16,7 +24,7 @@ const shop = gameObjects => {
 
     let itemsForSaleArray = vendor.getItemsForSale();
 
-    var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
+    let slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
         let localItem = gameObjects.game.state.item[itemID];
 
         return {
@@ -67,7 +75,7 @@ const shop = gameObjects => {
         ]
     };
 
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectItemShopMenu';
+    let updatedCallback = gameObjects.slackCallback + ':shop/selectItemShopMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
