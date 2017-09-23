@@ -275,11 +275,10 @@ const name = gameObjects => {
     console.log('slackRequest called function command/name');
 
     validateGameObjects(gameObjects, [
-        'game', //ok
-        'slackTextInput', //ok
-        'playerCharacter', //ok
-        'slackResponseTemplate' //ok
-        
+        'game',
+        'slackRequestText',
+        'playerCharacter',
+        'slackResponseTemplate'
     ]);
 
     //Attempt to find a character.  If this returns undefined, name does not exist
