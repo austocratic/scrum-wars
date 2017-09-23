@@ -39,7 +39,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         userActionValueSelection,
         playerCharacter
     });
-
+    
     testSlackResponseFormat(slackResponseTemplateReturned);
 
 });
