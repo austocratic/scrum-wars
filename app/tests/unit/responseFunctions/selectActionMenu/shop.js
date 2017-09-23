@@ -21,7 +21,7 @@ game.state = testDB;
 const gameContext = 'selectActionMenu';
 const userActionValueSelection = 'Shop';
 
-let slackCallback = 'command:action/shop:';
+let slackCallback = 'command:action/selectActionMenu:';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
     
@@ -39,7 +39,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         requestZone
     });
     
-    console.log('DEBUG shop slackResponseTemplateReturned: ', slackResponseTemplateReturned);
+    console.log('DEBUG shop slackResponseTemplateReturned: ', JSON.stringify(slackResponseTemplateReturned));
 
     testSlackResponseFormat(slackResponseTemplateReturned);
 

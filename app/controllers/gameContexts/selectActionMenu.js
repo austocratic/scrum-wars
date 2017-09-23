@@ -2,7 +2,8 @@
 
 const _ = require('lodash');
 const updateCallback = require('../../helpers').updateCallback;
-let NPC = require('../../models/NPC').NPC;
+const NPC = require('../../models/NPC').NPC;
+const Item = require('../../models/Item').Item;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
@@ -25,10 +26,11 @@ const shop = gameObjects => {
     let itemsForSaleArray = vendor.getItemsForSale();
 
     let slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
-        let localItem = gameObjects.game.state.item[itemID];
+        //let localItem = gameObjects.game.state.item[itemID];
+        let itemSelectionOption = new Item(gameObjects.game.state, itemID);
 
         return {
-            "text": localItem.functionName,
+            "text": itemSelectionOption.props.name,
             "value": itemID
         }
     });
@@ -75,7 +77,7 @@ const shop = gameObjects => {
         ]
     };
 
-    let updatedCallback = gameObjects.slackCallback + ':shop/selectItemShopMenu';
+    let updatedCallback = gameObjects.slackCallback + 'shop/selectItemShopMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
