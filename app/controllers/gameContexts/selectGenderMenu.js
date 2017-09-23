@@ -33,7 +33,7 @@ const genderSelection = gameObjects => {
     gameObjects.slackResponseTemplate.attachments = avatarFileNames.map( eachAvatarFileName =>{
         return {
             "text": "",
-            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.gender + '/' + eachAvatarFileName,
+            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + eachAvatarFileName,
             //"image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
             "fallback": 'A strange force prevents you from choosing an avatar, try again!',
             "actions":[{
