@@ -64,14 +64,14 @@ const classSelection = gameObjects => {
                 "attachment_type": "default",
                 "actions": [
                     {
-                        "name": "male",
+                        "name": "genderSelection",
                         "text": "Male",
                         "style": "",
                         "type": "button",
                         "value": "male"
                     },
                     {
-                        "name": "female",
+                        "name": "genderSelection",
                         "text": "Female",
                         "style": "",
                         "type": "button",

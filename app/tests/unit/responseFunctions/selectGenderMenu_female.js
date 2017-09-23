@@ -21,6 +21,8 @@ game.state = testDB;
 const gameContext = 'genderSelection';
 const userActionValueSelection = 'female';
 
+const slackCallback = 'generateCharacterConfirmation:yes/selectCharacterClassMenu:-KircSgAkPTavnfob8F5/selectGenderMenu';
+
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
@@ -32,6 +34,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
 
     let slackResponseTemplateReturned = genderSelection({
         game,
+        slackCallback,
         slackResponseTemplate,
         userActionValueSelection,
         playerCharacter

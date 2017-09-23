@@ -1,9 +1,19 @@
+"use strict";
 
 const updateCallback = require('../../helpers').updateCallback;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
 const genderSelection = gameObjects => {
     console.log('called function selectGenderMenu/genderSelection');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'userActionValueSelection',
+        'playerCharacter',
+        'slackResponseTemplate', 
+        'slackCallback' 
+    ]);
 
     //Mutate the object
     gameObjects.playerCharacter.updateProperty('gender', gameObjects.userActionValueSelection);

@@ -21,6 +21,8 @@ game.state = testDB;
 const gameContext = 'characterProfileMenu';
 const userActionValueSelection = 'equipment';
 
+const slackCallback = 'command:profile/selectProfileMenu';
+
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};
@@ -31,6 +33,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
 
     let slackResponseTemplateReturned = equipment({
         game,
+        slackCallback,
         slackResponseTemplate,
         playerCharacter
     });

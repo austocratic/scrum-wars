@@ -1,11 +1,17 @@
 "use strict";
 
-
 const updateCallback = require('../../helpers').updateCallback;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
 const inventory = gameObjects => {
     console.log('called function characterProfileMenu/inventory');
+
+    validateGameObjects(gameObjects, [
+        'playerCharacter',
+        'slackResponseTemplate', 
+        'slackCallback' 
+    ]);
 
     gameObjects.slackResponseTemplate = {
         "attachments": [
@@ -50,8 +56,6 @@ const inventory = gameObjects => {
                 }
             });
 
-    console.log('DEBUG, unequippedItemOptions: ', unequippedItemOptions);
-
     //If the character has unequipped items return a drop down, else return "no items"
     if (unequippedItemOptions.length > 0){
 
@@ -76,19 +80,20 @@ const inventory = gameObjects => {
     }
 
     let updatedCallback = ':inventory/selectInventoryMenu';
-
-    //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
+    
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
-    console.log('DEBUG ****************inventory callback gameObjects.slackResponseTemplate: ', gameObjects.slackResponseTemplate);
 
     return gameObjects.slackResponseTemplate;
 };
 
 const equipment = gameObjects => {
     console.log('called function characterProfileMenu/equipment');
+
+    validateGameObjects(gameObjects, [
+        'playerCharacter',
+        'slackResponseTemplate',
+        'slackCallback'
+    ]);
 
     gameObjects.slackResponseTemplate = {
         "attachments": [
@@ -122,10 +127,6 @@ const equipment = gameObjects => {
 
     gameObjects.slackResponseTemplate.attachments = gameObjects.game.getEquippedItemView(gameObjects.playerCharacter);
 
-    //gameObjects.slackResponseTemplate.attachments.push(equipmentSlackTemplateAttachments)
-    
-    //console.log('DEBUG: equipmentSlackTemplateAttachments: ', equipmentSlackTemplateAttachments);
-
     //getEquipmentList above overwrites attachments on template.  Add a back button here
     gameObjects.slackResponseTemplate.attachments.push({
         "text": "",
@@ -145,17 +146,18 @@ const equipment = gameObjects => {
     });
 
     let updatedCallback = ':equipment/selectEquipmentMenu';
-
-    //TODO this was the format in the function before refactor.  Need to see why the new version below works or does not work
+    
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     return gameObjects.slackResponseTemplate;
 };
 
 const exit = gameObjects => {
     console.log('called function characterProfileMenu/exit');
+
+    validateGameObjects(gameObjects, [
+        'slackResponseTemplate'
+    ]);
 
     gameObjects.slackResponseTemplate = {
         "text": "Does this message show up?  Remove from controller",
