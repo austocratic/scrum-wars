@@ -561,7 +561,6 @@ class Game {
         characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
 
             return {
-
                 "title": localCharacterClasses[singleClassID].name,
                 "fallback": "You are unable to choose an action",
                 "callback_id": "",
@@ -569,7 +568,7 @@ class Game {
                 "attachment_type": "default",
                 "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + singleClassID + ".jpg",
                 "actions": [{
-                    "name": singleClassID,
+                    "name": 'classSelection',
                     "text": localCharacterClasses[singleClassID].name,
                     "style": "default",
                     "type": "button",
