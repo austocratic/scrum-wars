@@ -5,6 +5,7 @@ const _ = require('lodash');
 const updateCallback = require('../../helpers').updateCallback;
 const Action = require('../../models/Action').Action;
 const slackAlert = require('../../libraries/slack').Alert;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 const action = gameObjects => {
     console.log('called function command/action');
@@ -273,8 +274,16 @@ const travel = gameObjects => {
 const name = gameObjects => {
     console.log('slackRequest called function command/name');
 
+    validateGameObjects(gameObjects, [
+        'game', //ok
+        'slackTextInput', //ok
+        'playerCharacter', //ok
+        'slackResponseTemplate' //ok
+        
+    ]);
+
     //Attempt to find a character.  If this returns undefined, name does not exist
-    if(_.findKey(gameObjects.game.state.character, {'name': gameObjects.slackTextInput})){
+    if(_.findKey(gameObjects.game.state.character, {'name': gameObjects.slackRequestText})){
 
         gameObjects.slackResponseTemplate = {
             "user_name": "A mysterious voice",
@@ -284,11 +293,11 @@ const name = gameObjects => {
     } else {
 
         //Update the characters name property locally
-        gameObjects.playerCharacter.updateProperty('name', gameObjects.slackTextInput);
+        gameObjects.playerCharacter.updateProperty('name', gameObjects.slackRequestText);
 
         gameObjects.slackResponseTemplate = {
             "user_name": "A mysterious voice",
-            "text": "Well met traveler, " + gameObjects.slackTextInput
+            "text": "Well met traveler, " + gameObjects.slackRequestText
         };
     }
 

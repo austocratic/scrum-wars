@@ -31,13 +31,13 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
 
         let playerCharacter = new Character(game.state, testCharacterID);
 
-        let slackTextInput = 'Test Name';
+        let slackRequestText = 'Test Name';
 
         let slackResponseTemplateReturned = name({
             game,
             slackResponseTemplate,
             playerCharacter,
-            slackTextInput
+            slackRequestText
         });
 
         testSlackResponseFormat(slackResponseTemplateReturned);
