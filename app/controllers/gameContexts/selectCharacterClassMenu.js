@@ -3,16 +3,25 @@
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
+var Class = require('../../models/Class').Class;
+
 
 const classSelection = gameObjects => {
     console.log('called function selectCharacterClassMenu/classSelection');
-    
-    //Valiate that required gameObjects are passed in before attempting to reference
+
     validateGameObjects(gameObjects, [
-        'characterClass',
+        'game',
+        'userActionValueSelection',
         'playerCharacter',
         'slackResponseTemplate',
         'slackCallback'
+    ]);
+    
+    gameObjects.characterClass = new Class(gameObjects.game.state, gameObjects.userActionValueSelection);
+    
+    //Validate that required gameObjects are passed in before attempting to reference
+    validateGameObjects(gameObjects, [
+        'characterClass'
     ]);
 
     // *****************Based on class selection update DB stats*******************

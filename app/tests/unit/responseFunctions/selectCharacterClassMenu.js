@@ -29,9 +29,6 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
 
     let slackResponseTemplate = {};
 
-    //TODO should not use DB data here (even though it is test data it could still change)
-    let characterClass = new Class(game.state, userActionValueSelection);
-
     let playerCharacter = {
         "id": "4i2432o4i24o",
         "props": {
@@ -71,11 +68,10 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         }
     };
 
-    console.log('DEBUG selectCharacterClassMenu, characterClass.id: ', characterClass.id);
-
     let slackResponseTemplateReturned = classSelection({
+        game,
         slackResponseTemplate,
-        characterClass,
+        userActionValueSelection,
         slackCallback,
         playerCharacter
     });
