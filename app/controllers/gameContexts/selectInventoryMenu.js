@@ -20,13 +20,13 @@ const inventorySelection = gameObjects => {
         "value": itemSelected.id
     }];
 
-    gameObjects.slackResponseTemplate.attachments[1] = {
+    gameObjects.slackResponseTemplate.attachments[1].actions = [{
         "name": "back",
         "text": "Back",
         "fallback": "unable to go back",
         "type": "button",
         "value": "no"
-    };
+    }];
     
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
