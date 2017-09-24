@@ -35,6 +35,18 @@ const getTargetSelectionMenu = gameObjects => {
         }
     });
 
+    //Add a back button
+    gameObjects.slackResponseTemplate.attachments.push({
+        "fallback": "unable to go back",
+        "actions": [{
+            "name": "back",
+            "text": "Back",
+            "fallback": "unable to go back",
+            "type": "button",
+            "value": "no"
+        }]
+    });
+
     //Set the callback, will be assigned at end of switch
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
 
