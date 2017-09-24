@@ -21,6 +21,7 @@ const inventorySelection = gameObjects => {
     }];
 
     gameObjects.slackResponseTemplate.attachments.push({
+        "fallback": "unable to go back",
         "actions": [{
             "name": "back",
             "text": "Back",
