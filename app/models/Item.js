@@ -21,11 +21,12 @@ class Item extends BaseModel {
     }
 
     getDetailView(){
-        
+
+        //TODO not good to hardcode the url path here.  Elsewhere I use the game.baseURL property, but Item does not have access to game (ony game.state)
         let template = {
             "attachments": [
                 {
-                    "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/" + this.id + ".jpg",
+                    "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + this.id + ".jpg",
                     "fallback": "You can't select this item",
                     "fields": [
                         {

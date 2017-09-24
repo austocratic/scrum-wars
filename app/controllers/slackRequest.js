@@ -3,7 +3,8 @@
 var characterProfile = require('../menus/characterProfile').characterProfile;
 
 //Controllers
-var actionController = require('./actionController');
+const actionController = require('./actionController');
+const modifyCallbackForBack = require('./backButton').backButton;
 
 //Models
 var Game = require('../models/Game').Game;
@@ -75,9 +76,6 @@ const actionsAndThingsContext = {
 };
 
 
-
-
-
 const processSlashCommand = async (req) => {
     console.log('slackRequest.processSlashCommand()');
 
@@ -126,9 +124,6 @@ const processInteractiveMessage = async (req) => {
 
     return slackResponseTemplateReturned;
 };
-
-
-
 
 
 
@@ -237,8 +232,17 @@ const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
     console.log('DEBUG ********************* payload: ', payload);
+    
+    let userActionNameSelection = payload.actions[0].name;
 
-    let slackCallback = payload.callback_id;
+    //First check to see if the player selected "back".  If so. modify the callback to change the route
+    let slackCallback;
+    if (userActionNameSelection === "back"){
+        slackCallback = modifyCallbackForBack(payload.callback_id);
+    } else {
+        slackCallback = payload.callback_id;    
+    }
+    
     let slackCallbackElements = slackCallback.split("/");
 
     function getActionValue(){
@@ -252,11 +256,6 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
     let slackRequestCommand = payload.command;
-
-    //let slackRequestCallbackID = req.body.callback_id; //TODO probably not needed since I split the callback ID earlier
-    let slackRequestText = payload.text;
-    
-    let slackRequestActionName = payload.actions[0].name;
 
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
@@ -273,7 +272,6 @@ const getInteractiveMessageResponse = (payload, game) => {
         characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
-    let userActionNameSelection = payload.actions[0].name;
     let userActionValueSelection = getActionValue();
     let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
 
