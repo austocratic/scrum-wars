@@ -4,7 +4,8 @@ var characterProfile = require('../menus/characterProfile').characterProfile;
 
 //Controllers
 const actionController = require('./actionController');
-const modifyCallbackForBack = require('./backButton').backButton;
+const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
+const modifyUserActionNameSelection = require('./backButton').modifyUserActionNameSelection;
 
 //Models
 var Game = require('../models/Game').Game;
@@ -242,6 +243,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     if (userActionNameSelection === "back"){
         console.log('DEBUG payload.callback_id = ', payload.callback_id);
 
+        userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
         slackCallback = modifyCallbackForBack(payload.callback_id);
 
         console.log('DEBUG modified slackCallback = ', slackCallback);
