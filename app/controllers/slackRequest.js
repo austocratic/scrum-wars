@@ -235,9 +235,13 @@ const getInteractiveMessageResponse = (payload, game) => {
     
     let userActionNameSelection = payload.actions[0].name;
 
+    console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
+
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
     if (userActionNameSelection === "back"){
+        console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
+
         slackCallback = modifyCallbackForBack(payload.callback_id);
 
         console.log('DEBUG modified slackCallback = ', slackCallback);
