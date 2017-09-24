@@ -21,14 +21,15 @@ const equipmentSelection = gameObjects => {
             "value": itemSelected.id
         }];
 
-    gameObjects.slackResponseTemplate.attachments[1] = {
-        "name": "back",
-        "text": "Back",
-        "fallback": "unable to go back",
-        "type": "button",
-        "value": "no"
-    };
-    
+    gameObjects.slackResponseTemplate.attachments.push({
+        "actions": [{
+            "name": "back",
+            "text": "Back",
+            "fallback": "unable to go back",
+            "type": "button",
+            "value": "no"
+        }]
+    });
     
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
