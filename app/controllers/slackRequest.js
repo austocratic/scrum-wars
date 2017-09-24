@@ -239,6 +239,8 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackCallback;
     if (userActionNameSelection === "back"){
         slackCallback = modifyCallbackForBack(payload.callback_id);
+
+        console.log('DEBUG modified slackCallback = ', slackCallback);
     } else {
         slackCallback = payload.callback_id;    
     }
