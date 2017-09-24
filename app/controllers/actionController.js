@@ -463,6 +463,8 @@ class ArcaneBolt extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 
@@ -595,6 +597,8 @@ class LifeTap extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 
@@ -648,6 +652,8 @@ class DefensiveStance extends BaseModify {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 
@@ -694,6 +700,8 @@ class BalancedStance extends BaseModify {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 
@@ -750,6 +758,8 @@ class IntoShadow extends BaseModify {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 
@@ -833,6 +843,8 @@ class Backstab extends BaseAttack {
 
         //Send alert to slack
         channelAlert.sendToSlack(this.params);
+
+        return '';
     }
 }
 

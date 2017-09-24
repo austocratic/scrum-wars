@@ -99,59 +99,16 @@ const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
 
     validateGameObjects(gameObjects, [
-        'game', //ok
-        'requestZone', //ok
-        'playerCharacter', //ok
-        'slackCallback', //ok
-        'userActionValueSelection', //ok
-        'slackResponseTemplate' //ok
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
     ]);
 
     return targetSelection(gameObjects);
-    
-    /*
-    gameObjects.slackResponseTemplate = {
-        "attachments": [
-        {
-            "text": "",
-            "callback_id": "",
-            "fallback": "unable to select an option",
-            "actions": [
-                {
-                    "name": "processActionOnTarget",
-                    "text": "Select a target",
-                    "type": "select",
-                    "options": []
-                }]
-        }]
-    };
-
-    let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
-
-    let filteredCharacterIDs = characterIDsInZone.filter( eachCharacterID =>{
-        return eachCharacterID !== gameObjects.playerCharacter.id
-    });
-    
-    gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacterIDs.map( singleCharacterID => {
-        return {
-            "text": gameObjects.game.state.character[singleCharacterID].name,
-            //"style": "primary",
-            //"type": "button",
-            "value": singleCharacterID
-        }
-    });
-    
-    //Set the callback, will be assigned at end of switch
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
-
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
-    return gameObjects.slackResponseTemplate;*/
 };
-
-
-
-
 
 const lifeTap = gameObjects => {
 
@@ -173,10 +130,22 @@ const backstab = gameObjects => {
 };
 
 const arcaneBolt = gameObjects => {
+    console.log('Called selectActionMenu/arcaneBolt');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    return targetSelection(gameObjects);
 };
 
 module.exports = {
     shop,
-    quickStrike
+    quickStrike,
+    arcaneBolt
 };
