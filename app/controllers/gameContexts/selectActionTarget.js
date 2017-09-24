@@ -10,7 +10,8 @@ let Character = require('../../models/Character').Character;
 
 
 const actionsAndThingsContext = {
-    quickStrike: require('../actionController').QuickStrike
+    quickStrike: require('../actionController').QuickStrike,
+    arcaneBolt: require('../actionController').ArcaneBolt
 };
 
 const processActionOnTarget = gameObjects => {
