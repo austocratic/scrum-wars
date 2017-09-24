@@ -12,7 +12,7 @@ const modifyCallbackForBack = slackCallback => {
     console.log('DEBUG slackCallbackElements.length = ', slackCallbackElements.length);
 
     //If the callback string is short, process differently and return
-    if (slackCallbackElements.length <= 3) {
+    if (slackCallbackElements.length < 3) {
         return slackCallbackElements[slackCallbackElements.length - 2]
             .split(":")[0];
     }
@@ -29,8 +29,13 @@ const modifyCallbackForBack = slackCallback => {
 
     //Remove the value from the key:value
     lastKeyValue.pop();
+    
+    //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
+    if (slackCallbackElements.join("/").length === 0){
+        return lastKeyValue[0];
+    }
 
-    //Assemble the string again & return
+    //If there are more elements to join (does not hit if above), concatenate
     return slackCallbackElements.join("/") + "/" + lastKeyValue[0];
 };
 
