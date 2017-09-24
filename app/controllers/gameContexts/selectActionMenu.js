@@ -1,20 +1,23 @@
 "use strict";
 
 const _ = require('lodash');
-const updateCallback = require('../../helpers').updateCallback;
+
 const NPC = require('../../models/NPC').NPC;
 const Item = require('../../models/Item').Item;
+const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
+const targetSelection = require('../targetSelection').getTargetSelectionMenu;
+
 
 
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
 
     validateGameObjects(gameObjects, [
-        'game', //ok
-        'requestZone', //ok
-        'slackCallback', //ok
-        'slackResponseTemplate' //ok
+        'game',
+        'requestZone',
+        'slackCallback',
+        'slackResponseTemplate'
     ]);
 
     let npcID = _.findKey(gameObjects.game.state.npc, singleNPC => {
@@ -93,9 +96,20 @@ const defensive = gameObjects => {
 };
 
 const quickStrike = gameObjects => {
+    console.log('Called selectActionMenu/quickStrike');
 
-    //actionResponse = gameContext.getCharactersInZone(localZone.id, requestSlackUserID);
+    validateGameObjects(gameObjects, [
+        'game', //ok
+        'requestZone', //ok
+        'playerCharacter', //ok
+        'slackCallback', //ok
+        'userActionValueSelection', //ok
+        'slackResponseTemplate' //ok
+    ]);
 
+    return targetSelection(gameObjects);
+    
+    /*
     gameObjects.slackResponseTemplate = {
         "attachments": [
         {
@@ -114,19 +128,10 @@ const quickStrike = gameObjects => {
 
     let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
 
-    console.log('DEBUG **** characterIDsInZone: ', characterIDsInZone);
-
-
-    //TODO need to filter for active characters
-
-    var filteredCharacterIDs = _.remove(characterIDsInZone, eachCharacterID =>{
-        //If a character ID is not equal to the player's character ID, it stays (remove player's character)
+    let filteredCharacterIDs = characterIDsInZone.filter( eachCharacterID =>{
         return eachCharacterID !== gameObjects.playerCharacter.id
     });
-
-    console.log('DEBUG **** filteredCharacterIDs: ', filteredCharacterIDs);
-
-
+    
     gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacterIDs.map( singleCharacterID => {
         return {
             "text": gameObjects.game.state.character[singleCharacterID].name,
@@ -135,29 +140,19 @@ const quickStrike = gameObjects => {
             "value": singleCharacterID
         }
     });
-
-    //Iterate through the character Ids formatting into slack format
-    /*
-    filteredCharacterIDs.forEach(singleCharacterID => {
-        gameObjects.slackResponseTemplate.attachments[0].actions[0].options.push({
-            //"name": singleCharacterID,
-            "text": gameObjects.game.state.character[singleCharacterID].name,
-            //"style": "primary",
-            //"type": "button",
-            "value": singleCharacterID
-        });
-    });*/
     
     //Set the callback, will be assigned at end of switch
     let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
-    console.log('DEBUG **** gameObjects.slackResponseTemplate: ', gameObjects.slackResponseTemplate);
-
-    return gameObjects.slackResponseTemplate;
-
+    return gameObjects.slackResponseTemplate;*/
 };
+
+
+
+
+
 const lifeTap = gameObjects => {
 
 };

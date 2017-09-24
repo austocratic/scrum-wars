@@ -57,10 +57,10 @@ describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
     describe("where", function(){
 
-        //Real slack interactive messages have a .payload property.  I;ve removed this since my processor will remove it before passing to processInteractiveMessage() function
+        //Real slack interactive messages have a .payload property.  I've removed this since my processor will remove it before passing to processInteractiveMessage() function
         var mockRequest = {
             "actions":[{
-                "name":"-Kird8_Vef-8Ej2aShaO",
+                "name":"classSelection",
                 "type":"button",
                 "value":"-Kird8_Vef-8Ej2aShaO"
             }],

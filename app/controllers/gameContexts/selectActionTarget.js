@@ -3,10 +3,10 @@
 const _ = require('lodash');
 const updateCallback = require('../../helpers').updateCallback;
 
-let NPC = require('../../models/NPC').NPC;
+//let NPC = require('../../models/NPC').NPC;
 let Character = require('../../models/Character').Character;
 
-const actionController = require('../actionController');
+//const actionController = require('../actionController');
 
 
 const actionsAndThingsContext = {

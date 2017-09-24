@@ -24,8 +24,7 @@ const userActionValueSelection = 'quickStrike';
 let slackCallback = 'command:action/quickStrike:';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
-
-
+    
     let slackResponseTemplate = {};
 
     //The Town channel ID
@@ -38,6 +37,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     let slackResponseTemplateReturned = quickStrike({
         game,
         playerCharacter,
+        userActionValueSelection,
         slackResponseTemplate,
         slackCallback,
         requestZone
