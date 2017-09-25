@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 var Firebase = require('../libraries/firebase').Firebase;
 
@@ -12,7 +12,7 @@ var firebase = new Firebase();
 class Element {
     constructor() {}
 
-    /*
+    
      setByProperty(property, lookupID){
      return new Promise((resolve, reject)=> {
      firebase.get(this.firebaseType, property, lookupID)
@@ -26,7 +26,7 @@ class Element {
      resolve();
      })
      });
-     }*/
+     }
 
 
     //TODO: verify that this works!
@@ -43,8 +43,7 @@ class Element {
         this.props.id = id;
     };
 
-
-    /*
+    
      var setByID = (id) => {
      return new Promise((resolve, reject)=>{
      firebase.get(this.firebaseType + '/' + id)
@@ -55,7 +54,7 @@ class Element {
      resolve()
      });
      })
-     }*/
+     }
 
     //TODO: verify that this works!
 
@@ -116,3 +115,4 @@ class Element {
 module.exports = {
     Element: Element
 };
+*/

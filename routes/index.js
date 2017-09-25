@@ -4,8 +4,6 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
-var profile = require('../app/controllers/commands/profile');
-
 //var stockImage = require('../app/assets/wizardImage.jpg');
 
 var slackRequest = require('../app/controllers/slackRequest');

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 var Firebase = require('../libraries/firebase').Firebase;
 var Element = require('./Element').Element;
@@ -186,7 +186,7 @@ class Character_sync extends Element{
                                 });
                         })
                     });
-                    /*
+                    
                      function serialAsyncMap(collection, fn) {
 
                      let results = [];
@@ -203,7 +203,7 @@ class Character_sync extends Element{
                      });
                      }
 
-                     serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));*/
+                     serialAsyncMap(itemIDsToUnequip, this.unequipItem.bind(this));
 
 
                     //Wait until all equipment in inventory slots has been unequipped
@@ -232,7 +232,7 @@ class Character_sync extends Element{
 
             //TODO need to add functionality to remove effects from character's modified stats
 
-            /*
+            
              //Remove item from unequipped list
              var index = this.props.inventory.unequipped.indexOf(equippedItem.props.id);
 
@@ -257,12 +257,12 @@ class Character_sync extends Element{
              resolve()
              })
              })
-             });*/
+             });
 
         })
     }
 
-    /*
+    
      equipItem(equippedItem){
 
      console.log('called equipItem');
@@ -406,7 +406,7 @@ class Character_sync extends Element{
      resolve()
      })
      })
-     });*/
+     });
 
     //    })
     //}
@@ -464,7 +464,7 @@ class Character_sync extends Element{
             });
     }
 
-    /*
+
      resetHealth(){
      return new Promise((resolve, reject)=>{
      firebase.update(('character/' + characterID + '/actions/' + iterationIndex), singleActionUpdate)
@@ -475,7 +475,7 @@ class Character_sync extends Element{
      resolve();
      });
      })
-     }*/
+     }
 }
 
 
@@ -483,3 +483,4 @@ module.exports = {
     Character: Character_sync
 };
 
+*/

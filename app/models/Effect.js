@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 var _ = require('lodash');
 var BaseModel = require('./BaseModel').BaseModel;
@@ -15,7 +15,7 @@ class Effect extends BaseModel{
         this.id = effectID
     }
     
-    /*
+    
     changeAttribute(targetID, value){
         console.log('Called effect.activate');
 
@@ -27,7 +27,7 @@ class Effect extends BaseModel{
         
         console.log('Updated currentHP: ', )
         
-    }*/
+    }
 
 
 }
@@ -36,3 +36,4 @@ class Effect extends BaseModel{
 module.exports = {
     Effect: Effect
 };
+*/
