@@ -14,6 +14,7 @@ const actions = require('../actionControllers/actions/index');
 
 const { DefensiveStance, BalancedStance, IntoShadow } = actions;
 
+
 const actionControllers = {
     defensiveStance: DefensiveStance,
     balancedStance: BalancedStance,
