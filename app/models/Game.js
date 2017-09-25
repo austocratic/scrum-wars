@@ -18,7 +18,6 @@ var slackTemplates = require('../slackTemplates');
 
 var slackAlert = require('../libraries/slack').Alert;
 
-var moveCharacter = require('../components/zone/moveCharacter').moveCharacter;
 var _ = require('lodash');
 
 var helpers = require('../helpers');
