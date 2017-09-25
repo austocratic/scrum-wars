@@ -65,7 +65,7 @@ const action = gameObjects => {
             return _.indexOf(eachActionObject.props.zone_id, gameObjects.requestZone.id) > -1;
         });
 
-    //Group the actions for slack (this will add a lodash wrapper)
+    //Group the actionControllers for slack (this will add a lodash wrapper)
     let groupedActions = _(actionObjectsAvailable)
         .groupBy(singleAction => {
             return singleAction.props.type;
@@ -93,7 +93,7 @@ const action = gameObjects => {
                     actionAvailableButtonColor = "primary"
                 }
 
-                //Push each action into the actions array portion of the template
+                //Push each action into the actionControllers array portion of the template
                 attachmentTemplate.actions.push({
                     "name": actionDetails.props.functionName,
                     "text": actionDetails.props.name,

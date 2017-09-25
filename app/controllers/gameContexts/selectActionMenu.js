@@ -10,8 +10,9 @@ const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
-const actionController = require('../actionController');
-const { DefensiveStance, BalancedStance, IntoShadow } = actionController;
+const actions = require('../actionControllers/actions/index');
+
+const { DefensiveStance, BalancedStance, IntoShadow } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -193,7 +194,7 @@ const intoShadow = gameObjects => {
     actionObject.initiate();
 };
 
-//*******  These actions require a target, so will return selectActionTarget game context  *******
+//*******  These actionControllers require a target, so will return selectActionTarget game context  *******
 
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');

@@ -384,17 +384,17 @@ class Game {
             return new Action(this.state, eachActionID);
         });
 
-        //Filter the action object array for actions available in the current zone
+        //Filter the action object array for actionControllers available in the current zone
         var actionsAvailableInZone = actionObjectsAvailable.filter( eachActionObject =>{
             return _.indexOf(eachActionObject.props.zone_id, localZone.id) > -1;
         });
 
-        //Group the actions for slack
+        //Group the actionControllers for slack
         var groupedActions = _(actionsAvailableInZone).groupBy((singleAction) => {
             return singleAction.props.type;
         });
         
-        //Iterate through the grouped actions
+        //Iterate through the grouped actionControllers
         var templateAttachments = groupedActions.map(actionCategory => {
 
             var actionType = actionCategory[0].props.type;
@@ -418,7 +418,7 @@ class Game {
                     actionAvailableButtonColor = "primary"
                 }
 
-                //Push each action into the actions array portion of the template
+                //Push each action into the actionControllers array portion of the template
                 attachmentTemplate.actions.push({
                     "name": actionDetails.id,
                     "text": actionDetails.props.name,
@@ -434,7 +434,7 @@ class Game {
         //Get the basic action template from the JSON file
         var finalTemplate = slackTemplates.actionMenu;
 
-        //Add the actions template into the slack template to return
+        //Add the actionControllers template into the slack template to return
         //Use .value() to unwrap the lodash wrapper
         finalTemplate.attachments = templateAttachments.value();
 
@@ -565,7 +565,7 @@ class Game {
         //Add the corresponding merchant's image
         slackTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localNPC.id + ".jpg";
         
-        slackTemplate.attachments[1].actions[0].options = slackTemplateDropdown;
+        slackTemplate.attachments[1].actionControllers[0].options = slackTemplateDropdown;
 
         return slackTemplate
         

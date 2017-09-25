@@ -28,7 +28,7 @@ const testSlackResponseFormat = (responseToTest) => {
                                     assert(eachAttachment.fallback);
                                 });
                                 if (eachAttachment.actions) {
-                                    describe("the attachment has .actions property, testing actions specific format", function () {
+                                    describe("the attachment has .actionControllers property, testing actionControllers specific format", function () {
                                         it("action should be an array", function () {
                                             assert(Array.isArray(eachAttachment.actions));
                                         });

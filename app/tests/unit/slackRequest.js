@@ -94,7 +94,7 @@ describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
                 }],
                 "type":"message","subtype":"bot_message","ts":"1492110630.089291"
             },
-            "response_url":"https:\/\/hooks.slack.com\/actions\/T4ZAGTM1V\/169780351094\/JjI9vAXZVLtcuQdJwUPowS9m"
+            "response_url":"https:\/\/hooks.slack.com\/actionControllers\/T4ZAGTM1V\/169780351094\/JjI9vAXZVLtcuQdJwUPowS9m"
         };
 
         describe("mockRequest equals: " + mockRequest, function(){

@@ -9,8 +9,11 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 let Character = require('../../models/Character').Character;
 let Action = require('../../models/Action').Action;
 
-const actionController = require('../actionController');
-const { QuickStrike, ArcaneBolt, LifeTap, Backstab } = actionController;
+const actions = require('../actionControllers/actions/index');
+
+
+const { QuickStrike, ArcaneBolt, LifeTap, Backstab } = actions;
+
 
 const actionControllers = {
 
