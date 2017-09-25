@@ -1,4 +1,4 @@
-
+/*
 
 exports.actionCoolDown = (turnsToCoolDown) => {
 
@@ -6,4 +6,4 @@ exports.actionCoolDown = (turnsToCoolDown) => {
         "text": "That action is still recharging and will be available in " + turnsToCoolDown + " more turns!"
     };
 
-};
+};*/

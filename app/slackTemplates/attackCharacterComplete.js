@@ -1,4 +1,4 @@
-
+/*
 exports.attackCharacterComplete = payload => {
 
     return {
@@ -14,4 +14,4 @@ exports.attackCharacterComplete = payload => {
         ]
     };
 
-};
+};*/

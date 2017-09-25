@@ -1,5 +1,5 @@
 
-
+/*
 
 exports.characterNameTaken = payload => {
 
@@ -13,4 +13,4 @@ exports.characterNameTaken = payload => {
         ]
     };
 
-};
+};*/

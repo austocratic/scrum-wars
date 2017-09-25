@@ -1,5 +1,5 @@
 
-
+/*
 exports.characterProfile = payload => {
 
     return {
@@ -23,3 +23,4 @@ exports.characterProfile = payload => {
         ]
     };
 };
+*/

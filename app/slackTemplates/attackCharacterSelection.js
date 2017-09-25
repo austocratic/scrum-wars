@@ -1,5 +1,5 @@
 
-
+/*
 
 exports.attackCharacterSelection = payload => {
 
@@ -16,4 +16,4 @@ exports.attackCharacterSelection = payload => {
         ]
     };
 
-};
+};*/

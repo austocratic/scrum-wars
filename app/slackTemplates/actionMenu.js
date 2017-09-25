@@ -1,5 +1,5 @@
 
-
+/*
 
 exports.actionMenu = payload => {
 
@@ -15,4 +15,4 @@ exports.actionMenu = payload => {
             }
         ]
     };
-};
+};*/

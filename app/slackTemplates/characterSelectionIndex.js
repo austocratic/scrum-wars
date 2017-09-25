@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var characterSelectionNew = require('./characterSelectionNew').characterSelectionNew;
 var characterSelectionClass = require('./characterSelectionClass').characterSelectionClass;
@@ -12,4 +12,4 @@ exports.characterSelectionIndex = {
     characterSelectionClass: characterSelectionClass,
     characterClassSelectionConfirmation: characterClassSelectionConfirmation
     
-};
+};*/

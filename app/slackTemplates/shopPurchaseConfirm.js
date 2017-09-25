@@ -1,3 +1,4 @@
+/*
 exports.shopPurchaseConfirm = payload => {
 
     return {
@@ -20,3 +21,4 @@ exports.shopPurchaseConfirm = payload => {
     };
 
 };
+*/

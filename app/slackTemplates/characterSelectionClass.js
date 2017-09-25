@@ -1,6 +1,6 @@
 
 
-
+/*
 exports.characterSelectionClass = payload => {
     
     return {
@@ -9,4 +9,4 @@ exports.characterSelectionClass = payload => {
         "attachments": []
     };
     
-};
+};*/

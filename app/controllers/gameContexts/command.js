@@ -325,10 +325,3 @@ module.exports = {
 
 
 
-
-let response = {
-    text: "fslkfjlsdajfl ",
-    attachments: {
-        //action stuff
-    }
-}

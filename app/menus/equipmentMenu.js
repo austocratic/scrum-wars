@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../libraries/firebase').Firebase;
 var Character = require('../models/Character').Character;
@@ -95,4 +95,4 @@ exports.equipmentMenu = async (userID) => {
                         })
                 });
             });
-};
+};*/

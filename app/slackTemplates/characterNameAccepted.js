@@ -1,4 +1,4 @@
-
+/*
 exports.characterNameAccepted = payload => {
 
     return {
@@ -11,4 +11,4 @@ exports.characterNameAccepted = payload => {
         ]
     };
 
-};
+};*/

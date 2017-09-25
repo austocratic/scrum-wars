@@ -2,7 +2,7 @@
 
 
 
-
+/*
 exports.characterSelectionNew = payload => {
 
     return {
@@ -34,3 +34,4 @@ exports.characterSelectionNew = payload => {
         ]
     };
 };
+*/

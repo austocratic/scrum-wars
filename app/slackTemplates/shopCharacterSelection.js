@@ -1,4 +1,4 @@
-
+/*
 exports.shopCharacterSelection = payload => {
 
     return {
@@ -19,4 +19,4 @@ exports.shopCharacterSelection = payload => {
         ]
     };
 
-};
+};*/

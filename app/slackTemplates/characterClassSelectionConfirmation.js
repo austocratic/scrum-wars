@@ -1,5 +1,5 @@
 
-
+/*
 
 exports.characterClassSelectionConfirmation = payload => {
 
@@ -9,3 +9,4 @@ exports.characterClassSelectionConfirmation = payload => {
         "attachments": []
     };
 };
+*/

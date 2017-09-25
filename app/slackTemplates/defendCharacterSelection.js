@@ -1,6 +1,6 @@
 
 
-
+/*
 exports.defendCharacterSelection = payload => {
 
     return {
@@ -16,4 +16,4 @@ exports.defendCharacterSelection = payload => {
         ]
     };
 
-};
+};*/

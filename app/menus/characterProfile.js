@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Character_sync = require('../models/Character_sync').Character;
 
@@ -33,3 +33,4 @@ exports.characterProfile = async () => {
 };
 
 
+*/
