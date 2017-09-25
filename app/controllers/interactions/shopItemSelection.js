@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 var Firebase = require('../../libraries/firebase').Firebase;
 var shopPurchaseConfirm = require('../../slackTemplates/shopPurchaseConfirm').shopPurchaseConfirm;
 
@@ -44,4 +44,4 @@ exports.shopItemSelection = payload => {
                 resolve(responseTemplate)
             });
     })
-};
+};*/

@@ -1,10 +1,10 @@
 "use strict";
-
+/*
 var characterProfile = require('../../slackTemplates/characterProfile').characterProfile;
 
 var Character = require('../../models/Character').Character;
 
-/*
+
 exports.characterProfile = payload => {
 
     return new Promise( (resolve, reject) => {
@@ -75,7 +75,7 @@ exports.characterProfile = payload => {
             .catch(err=>{
                 console.log('error when calling setByProperty:', err);
             });
-};*/
+};
 
 
 exports.characterProfile = async payload => {
@@ -140,4 +140,4 @@ exports.characterProfile = async payload => {
 
     return(template);
     
-};
+};*/

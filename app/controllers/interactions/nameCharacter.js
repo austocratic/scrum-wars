@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var characterNameTaken = require('../../slackTemplates/characterNameTaken').characterNameTaken;
@@ -72,4 +72,4 @@ exports.nameCharacter = payload => {
         
         
     })
-};
+};*/

@@ -589,7 +589,7 @@ class QuickStrike extends BaseAttack {
     }
 }
 
-/*
+/* Structure to add additional property validations
 QuickStrike.validations = [
     ...BaseAttack.validations,
     'playerCharacter',

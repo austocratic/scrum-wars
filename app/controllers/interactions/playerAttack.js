@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var Slack = require('../../libraries/slack').Alert;
@@ -137,7 +137,7 @@ exports.playerAttack = payload => {
                 firebase.update(tableRef, updates)
                     .then( () => {
 
-                        /*
+                       
                         //Now that attacks have been updated in the DB, check for character deaths
                         checkForDeath(zoneID)
                             .then( deadCharacters =>{
@@ -145,7 +145,7 @@ exports.playerAttack = payload => {
                                     .then(()=>{
 
                                     })
-                            });*/
+                            });
 
                         //Then return the new template
                         resolve(template)
@@ -236,3 +236,4 @@ exports.playerAttack = payload => {
 
 
 
+*/

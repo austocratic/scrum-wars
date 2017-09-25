@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var Character = require('../../models/Character').Character;
@@ -31,11 +31,11 @@ exports.shopItemSelectionConfirmation = payload => {
             console.log('playerCharacter: ', JSON.stringify(playerCharacter));
 
             //Character's ID
-            /*
+            
             var characterID = Object.keys(character)[0];
 
             //Set the player's character locally
-            var playerCharacter = character[characterID];*/
+            var playerCharacter = character[characterID];
 
             //get the value of the item selected
             var purchaseSelection = payload.actions[0].value;
@@ -68,14 +68,14 @@ exports.shopItemSelectionConfirmation = payload => {
 
                         var playerInventory;
 
-                        /*
+                       
                         //Get the player's inventory array so it can be adjusted locally
                         //Check that the player has inventory set
                         if (playerCharacter.props.inventory) {
                             playerInventory = playerCharacter.props.inventory;
                         } else {
                             playerInventory = [];
-                        }*/
+                        }
 
                         //Compare the item's price to the character's gold
                         if (purchasedItem.props.cost > playerCharacter.props.gold) {
@@ -99,7 +99,7 @@ exports.shopItemSelectionConfirmation = payload => {
                             playerCharacter.purchaseItem(purchasedItem)
 
 
-                            /*
+                            
                             //Decrement the player's gold locally
                             playerGold = playerGold - itemCost;
 
@@ -116,7 +116,7 @@ exports.shopItemSelectionConfirmation = payload => {
                             var tableRef = 'character/' + playerCharacter.props.id;
 
                             //Update the character
-                            firebase.update(tableRef, updates)*/
+                            firebase.update(tableRef, updates)
                                 .then( ()=> {
 
                                     //Set the response template to successful purchase
@@ -133,5 +133,5 @@ exports.shopItemSelectionConfirmation = payload => {
     
 };
     
-    
+    */
     

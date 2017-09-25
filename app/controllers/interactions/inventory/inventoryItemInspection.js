@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../../libraries/firebase').Firebase;
 var Item = require('../../../models/Item').Item;
@@ -50,4 +50,4 @@ exports.inventoryItemInspection = payload => {
 
             });
     })
-};
+};*/

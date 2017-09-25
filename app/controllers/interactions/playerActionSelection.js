@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var attackCharacterSelection = require('../../slackTemplates/attackCharacterSelection').attackCharacterSelection;
@@ -271,4 +271,4 @@ exports.playerActionSelection = payload => {
             }
         })
     }
-};
+};*/

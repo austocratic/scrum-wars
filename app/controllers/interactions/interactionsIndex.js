@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var characterProfile = require('./characterProfile').characterProfile;
 var characterSelectionNew = require('./characterSelectionNew').characterSelectionNew;
@@ -34,4 +34,4 @@ exports.interactionsIndex = {
     shopItemSelection: shopItemSelection,
     shopItemSelectionConfirmation: shopItemSelectionConfirmation,
     travel: travel
-};
+};*/

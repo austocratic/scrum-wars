@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var actionMenu = require('../../slackTemplates/actionMenu').actionMenu;
@@ -253,3 +253,4 @@ exports.playerAction = payload => {
             });
     });
 };
+*/

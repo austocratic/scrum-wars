@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../../libraries/firebase').Firebase;
 var travel = require('../zone/travel').travel;
@@ -35,4 +35,4 @@ exports.travelDialogueSelection = payload => {
                 })
         }
     })
-};
+};*/

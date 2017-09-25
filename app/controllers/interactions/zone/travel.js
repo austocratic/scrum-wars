@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../../libraries/firebase').Firebase;
 var Slack = require('../../../libraries/slack').Alert;
@@ -76,4 +76,4 @@ exports.travel = (userID, destinationChannelID) => {
                     });
             });
     });
-};
+};*/

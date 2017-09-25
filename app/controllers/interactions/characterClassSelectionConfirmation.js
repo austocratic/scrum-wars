@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 var characterClassSelectionConfirmation = require('../../slackTemplates/characterClassSelectionConfirmation').characterClassSelectionConfirmation;
@@ -42,11 +42,11 @@ exports.characterClassSelectionConfirmation = payload => {
 
                         console.log('characterClass: ', characterClass);
 
-                        /*
+                       
                         //Convert the returned object into array of class IDs.  This works since the query only returns one result
                         var classID = Object.keys(characterClass)[0];
 
-                        console.log('classID: ', classID);*/
+                        console.log('classID: ', classID);
 
                         var startingAttributes = characterClass.starting_attributes;
 
@@ -97,4 +97,4 @@ exports.characterClassSelectionConfirmation = payload => {
                     })
             });
     })
-};
+};*/

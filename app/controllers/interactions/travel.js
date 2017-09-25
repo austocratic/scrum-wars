@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Slack = require('../../libraries/slack').Alert;
 
@@ -49,4 +49,4 @@ exports.travel = payload => {
                     });
             });
     });
-};
+};*/
