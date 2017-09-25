@@ -194,19 +194,66 @@ class Game {
     inititateRequest(){
         
         try {
-            var characterKeys = Object.keys(this.state.character);
+            //Get all the characters in game
+            let characterIDs = Object.keys(this.state.character);
 
-            //console.log('characterKeys: ', characterKeys);
+            console.log('characterIDs: ', characterIDs);
 
-            var localCharacter;
-            
+            //Get an array character objects and process
+            characterIDs
+                .map( eachCharacterID =>{
+                    return new Character(this.state, eachCharacterID)
+                })
+                //Filter the character array for active characters only
+                .filter( eachCharacterObject =>{
+                    return eachCharacterObject.props.active === 1
+                })
+                //Iterate through character objects setting their modified stats
+                .forEach( eachActiveCharacterObject =>{
+
+                    console.log('eachActiveCharacterObject: ', eachActiveCharacterObject.id);
+
+                    let cumulativeModifiers = {};
+
+                    //If the character has effects, accumulate those effects in cumulativeModifiers
+
+                    if (eachActiveCharacterObject.props.effects){
+
+                        eachActiveCharacterObject.props.effects
+                            .filter( eachEffect => {
+                                return eachEffect.end_turn > 5
+                            })
+                            .forEach( eachFilteredEffect => {
+                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
+                            });
+                    }
+
+                    //If the character has inventory items, accumulate those item's effects in cumulativeModifiers
+                    if (eachActiveCharacterObject.props.inventory){
+
+                        eachActiveCharacterObject.props.inventory
+                            //Filter for equipped items only
+                            .filter( eachItem => {
+                                return eachItem.is_equipped === 1
+                            })
+                            .forEach( eachFilteredItem => {
+                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
+                            });
+                    }
+
+                    //Now apply the cumulative modifiers
+                    eachActiveCharacterObject.setModifiedStats(cumulativeModifiers);
+
+                });
+
+            /* OLD VERSION
             //Iterate through each character's effects setting the modified properties
             characterKeys.forEach(eachCharacterKey => {
                 //console.log('eachCharacter.active: ', this.state.character[eachCharacterKey].active);
 
                 //Character must be active to set modified properties
                 if (this.state.character[eachCharacterKey].active === 1) {
-                    localCharacter = new Character(this.state, eachCharacterKey);
+                    let localCharacter = new Character(this.state, eachCharacterKey);
 
                     var cumulativeModifiers = {};
 
@@ -245,7 +292,7 @@ class Game {
             });
             //for each character iterate through each
 
-            return 5;
+            return 5;*/
         } catch(err){
     
         console.log('error in initiate(): ', err);

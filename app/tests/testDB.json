@@ -13,9 +13,9 @@
       "cool_down" : 1,
       "delay" : 0,
       "effect_duration" : 100,
-      "functionName" : "defensive",
+      "functionName" : "defensiveStance",
       "minimum_level" : 1,
-      "name" : "Defensive",
+      "name" : "Defensive Stance",
       "type" : "combat stance",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
@@ -67,7 +67,7 @@
     "-KqtOcn7MapqMfnGIZvo" : {
       "cool_down" : 1,
       "delay" : 0,
-      "functionName" : "balanced",
+      "functionName" : "balancedStance",
       "minimum_level" : 1,
       "name" : "Balanced",
       "type" : "combat stance",
@@ -128,7 +128,7 @@
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "dexterity" : 12,
       "gold" : 100,
-      "hit_points" : -17,
+      "hit_points" : -12,
       "intelligence" : 18,
       "inventory" : [ {
         "equipment_slot_id" : "hand",
@@ -156,17 +156,11 @@
       "user_id" : "U55U8F5B7",
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
-    "03a5045d75e71a4bdf5a" : {
+    "32398c7c3d142d9ff054" : {
       "active" : 0,
       "armor" : 0,
       "gold" : 100,
       "hit_points" : 100,
-      "inventory" : {
-        "equipped" : {
-          "hand_1" : "-Kjk3sGUJy5Nu8GWsdff"
-        },
-        "unequipped" : [ "-Kjk3sGUJy5Nu8GWsdff" ]
-      },
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
@@ -175,159 +169,22 @@
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     },
-    "0a467cb6ba5063b22c2e" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
+    "4883355fe7966f63879a" : {
       "active" : 0,
       "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
       "gold" : 100,
       "hit_points" : 100,
-      "intelligence" : 8,
-      "inventory" : {
-        "equipped" : {
-          "hand_1" : "-Kjk3sGUJy5Nu8GWsdff"
-        },
-        "unequipped" : [ "-Kjk3sGUJy5Nu8GWsdff" ]
-      },
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
       "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
       "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     },
-    "11ca0a1860f7b3c678f3" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "avatar" : "app/assets/fullSize/character_avatar/female/f_21.PNG",
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "female",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "inventory" : {
-        "equipped" : {
-          "hand_1" : "-Kjk3sGUJy5Nu8GWsdff"
-        },
-        "unequipped" : [ "-Kjk3sGUJy5Nu8GWsdff" ]
-      },
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "sindria",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "2377d4c44159779e39c5" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "inventory" : {
-        "equipped" : {
-          "hand_1" : "-Kjk3sGUJy5Nu8GWsdff"
-        },
-        "unequipped" : [ "-Kjk3sGUJy5Nu8GWsdff" ]
-      },
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "d130618f3a221f672cfc" : {
-      "actions" : [ {
+    "55e38d23d842e50e9026" : {
+      "actions" : [
+        {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
         "turn_available" : 0,
@@ -357,51 +214,65 @@
         "is_available" : 1,
         "turn_available" : 0,
         "turn_used" : 0
+      }, {
+        "action_id" : "-Kkdk_CD5vx8vRGQD268",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kr3hnITyH9ZKx3VuZah",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
       } ],
+      "actionsTest" : {
+        "-Kr3hnITyH9ZKx3VuZah" : {
+          "is_available" : 1
+        }
+      },
       "active" : 1,
       "armor" : 0,
-      "avatar" : "app/assets/fullSize/character_avatar/female/f_08.png",
+      "avatar" : "f_10.png",
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "dexterity" : 12,
+      "effects" : [ {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "end_turn" : 101,
+        "modifiers" : {
+          "modified_strength" : -5,
+          "modified_toughness" : 5
+        },
+        "type" : "combat stance"
+      } ],
       "gender" : "female",
-      "gold" : 80,
+      "gold" : 100,
       "hit_points" : 100,
       "intelligence" : 18,
-      "inventory" : [ {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "inventory": [ {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
         "is_equipped" : 1,
-        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "item_id" : "-KjGQEzVbaxRlWFawSqI",
         "modifiers" : {
-          "modified_strength" : 5
-        },
-        "name" : "rusty longsword"
-      }, {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "is_equipped" : 1,
-        "item_id" : "-KjGQPbo-96j_Uikhjqh",
-        "modifiers" : {
-          "modified_dexterity" : 2,
+          "modified_intelligence" : 2,
           "modified_strength" : 2
         },
-        "name" : "rusty dagger"
+        "name" : "Minor Staff of Ice"
       } ],
-      "is_hidden" : 0,
+      "is_hidden" : 1,
       "level" : 1,
       "match_wins" : 0,
       "max_hit_points" : 100,
-      "modified_dexterity" : 14,
+      "modified_dexterity" : 12,
       "modified_intelligence" : 18,
-      "modified_strength" : 11,
-      "modified_toughness" : 6,
-      "name" : "Sindria",
+      "modified_strength" : -5,
+      "modified_toughness" : 5,
+      "name" : "female_wizard_1",
       "strength" : 4,
       "toughness" : 6,
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
-    "charNoGender" : {
+    "57ab9fe659f08e77ec50" : {
       "actions" : [ {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
@@ -409,11 +280,6 @@
         "turn_used" : 0
       }, {
         "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkdduB9XuB46EsxqwIX",
         "is_available" : 1,
         "turn_available" : 0,
         "turn_used" : 0
@@ -427,51 +293,420 @@
         "is_available" : 1,
         "turn_available" : 0,
         "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "Unknown Traveler",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "5bdfe1adfef85f3af257" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 2,
+        "turn_used" : 1
       }, {
-        "action_id" : "-KrJaBvyYDGrNVfcaAd0",
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 2,
+        "turn_used" : 1
+      }, {
+        "action_id" : "-KkOq-y2_zgEgdhY-6_U",
         "is_available" : 1,
         "turn_available" : 0,
         "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kqem2qns2gX4YBQGt4m",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 2,
+        "turn_used" : 1
       } ],
       "active" : 1,
       "armor" : 0,
-      "avatar" : "app/assets/fullSize/character_avatar/female/f_08.png",
-      "class_id" : "-KircnK2x1_31EQiAYlk",
-      "dexterity" : 12,
-      "gold" : 80,
-      "hit_points" : 100,
-      "intelligence" : 18,
+      "avatar" : "app/assets/fullSize/character_avatar/male/m_07.png",
+      "class_id" : "-KircSgAkPTavnfob8F5",
+      "dexterity" : 10,
+      "gender" : "male",
+      "gold" : 90,
+      "hit_points" : -17,
+      "intelligence" : 10,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
         "is_equipped" : 1,
         "item_id" : "-KjGQ1IPuwE24t4LPPNd",
         "modifiers" : {
           "modified_strength" : 5
         },
-        "name" : "rusty longsword"
-      }, {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "is_equipped" : 1,
-        "item_id" : "-KjGQPbo-96j_Uikhjqh",
-        "modifiers" : {
-          "modified_dexterity" : 2,
-          "modified_strength" : 2
-        },
-        "name" : "rusty dagger"
+        "name" : "Basic Short Sword"
       } ],
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
       "max_hit_points" : 100,
-      "modified_dexterity" : 14,
-      "modified_intelligence" : 18,
-      "modified_strength" : 11,
-      "modified_toughness" : 6,
+      "modified_dexterity" : 10,
+      "modified_intelligence" : 10,
+      "modified_strength" : 20,
+      "modified_toughness" : 15,
       "name" : "Sindria",
-      "strength" : 4,
-      "toughness" : 6,
+      "strength" : 15,
+      "toughness" : 10,
+      "user_id" : "-Ksu5JKx8959TviyMFIy",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "5fec2c1995e1a4bfa50d" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "male",
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "Unknown Traveler",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "6b77e9e8c71bc1a96f3d" : {
+      "active" : 0,
+      "armor" : 0,
+      "gold" : 100,
+      "hit_points" : 100,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "name" : "Unknown Traveler",
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "71b93e43dc4c9e277b05" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "male",
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "Unknown Traveler",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "8f00ff7c00b3398ca31e" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "female",
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "Unknown Traveler",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "a87c293f6a16e16b0ed5" : {
+      "active" : 0,
+      "armor" : 0,
+      "gold" : 100,
+      "hit_points" : 100,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "name" : "Unknown Traveler",
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "af892bd31f2b97c51b97" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "avatar" : "public/images/fullSize/character_avatar/male/m_06.png",
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "male",
+      "gold" : 90,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "inventory" : [ {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+        "is_equipped" : 1,
+        "item_id" : "-KjGQMKZOUclKWQFER1O",
+        "modifiers" : {
+          "modified_dexterity" : 5
+        },
+        "name" : "Simple Bow"
+      } ],
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 20,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "9.4 Test",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "bb139fb6bb265e264f38" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "male",
+      "gold" : 100,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 10,
+      "modified_toughness" : 10,
+      "name" : "Unknown Traveler",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "e424b06c50525cb8c90d" : {
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 0,
+      "armor" : 0,
+      "avatar" : "f_19.PNG",
+      "class_id" : "-KirdGNRIajLmQ_CRRjW",
+      "dexterity" : 15,
+      "gender" : "female",
+      "gold" : 80,
+      "hit_points" : 100,
+      "intelligence" : 8,
+      "inventory" : [ {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "is_equipped" : 0,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "modified_strength" : 5
+        },
+        "name" : "Basic Short Sword"
+      }, {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+        "is_equipped" : 0,
+        "item_id" : "-KjGQMKZOUclKWQFER1O",
+        "modifiers" : {
+          "modified_dexterity" : 5
+        },
+        "name" : "Simple Bow"
+      } ],
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "modified_dexterity" : 15,
+      "modified_intelligence" : 8,
+      "modified_strength" : 15,
+      "modified_toughness" : 10,
+      "name" : "test_female_1",
+      "strength" : 10,
+      "toughness" : 10,
+      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "f33b09c588140f6adf90" : {
+      "active" : 0,
+      "armor" : 0,
+      "gold" : 100,
+      "hit_points" : 100,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "max_hit_points" : 100,
+      "name" : "Unknown Traveler",
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
@@ -581,7 +816,7 @@
       "modifiers" : {
         "modified_strength" : 5
       },
-      "name" : "rusty longsword"
+      "name" : "Basic Short Sword"
     },
     "-KjGQEzVbaxRlWFawSqI" : {
       "cost" : 10,
@@ -590,7 +825,7 @@
         "modified_intelligence" : 2,
         "modified_strength" : 2
       },
-      "name" : "cracked walking stick"
+      "name" : "Minor Staff of Ice"
     },
     "-KjGQMKZOUclKWQFER1O" : {
       "cost" : 10,
@@ -602,16 +837,16 @@
       "modifiers" : {
         "modified_dexterity" : 5
       },
-      "name" : "simple bow"
+      "name" : "Simple Bow"
     },
     "-KjGQPbo-96j_Uikhjqh" : {
       "cost" : 10,
-      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
         "modified_dexterity" : 2,
         "modified_strength" : 2
       },
-      "name" : "rusty dagger"
+      "name" : "Basic Spear"
     },
     "-Kjk3sGUJy5Nu8GWsdff" : {
       "cost" : 0,
@@ -864,7 +1099,6 @@
       "character_id_won" : 0,
       "date_ended" : 0,
       "date_started" : 0,
-      "status": "pending",
       "number_turns" : 1,
       "starting_character_ids" : 0,
       "zone_id" : 0
@@ -886,12 +1120,16 @@
   },
   "user" : {
     "-Kp1Y_uOmv_EwNc8mTj4" : {
-      "character_id" : "d130618f3a221f672cfc",
+      "character_id" : "55e38d23d842e50e9026",
       "slack_user_id" : "U4ZA6CCBG"
     },
     "-Kp1YomnSvJC_eFbFmNk" : {
       "character_id" : "-Kkxf1ukVSF9VV6mIPlG",
       "slack_user_id" : "U55U8F5B7"
+    },
+    "-Ksu5JKx8959TviyMFIy" : {
+      "character_id" : "5bdfe1adfef85f3af257",
+      "slack_user_id" : "U6WPUG78C"
     }
   },
   "zone" : {

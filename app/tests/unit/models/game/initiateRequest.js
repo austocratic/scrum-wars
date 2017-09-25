@@ -2,8 +2,6 @@
 
 const assert = require('assert');
 
-const testSlackResponseFormat = require('../../../testSlackResponseFormat').testSlackResponseFormat;
-
 const testDB = require('../../../testDB');
 
 let Game = require('../../../../models/Game').Game;
@@ -21,17 +19,11 @@ const userSelection = 'female';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
 
-    /* Broken test - to revise
     let slackResponseTemplate = {};
 
-    //Mock a character that does not have gender property set yet
-    let testCharacterID = 'd130618f3a221f672cfc';
-
-    let playerCharacter = new Character(game.state, testCharacterID);
-
-    let slackResponseTemplateReturned = game.getEquippedItemView(playerCharacter);
+    let slackResponseTemplateReturned = game.inititateRequest();
 
     //testSlackResponseFormat(slackResponseTemplateReturned);
-*/
+
 });
 
