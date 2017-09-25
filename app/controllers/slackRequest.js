@@ -12,7 +12,6 @@ var Character = require('../models/Character').Character;
 var User = require('../models/User').User;
 var Class = require('../models/Class').Class;
 var Zone = require('../models/Zone').Zone;
-var Effect = require('../models/Effect').Effect;
 var Action = require('../models/Action').Action;
 var Match = require('../models/Match').Match;
 
