@@ -51,6 +51,7 @@ const action = gameObjects => {
     //TODO I think this function should replace the one above:
     //Determine if any action was already taken this turn, if so return the action taken template
     //var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
+
     
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();
