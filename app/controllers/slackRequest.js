@@ -1,7 +1,5 @@
 "use strict";
 
-var characterProfile = require('../menus/characterProfile').characterProfile;
-
 //Controllers
 const actionController = require('./actionController');
 const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
