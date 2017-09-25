@@ -10,7 +10,6 @@ let Character = require('../../models/Character').Character;
 let Action = require('../../models/Action').Action;
 
 const actionController = require('../actionController');
-//TODO move slackRequest into this structure
 const { QuickStrike, ArcaneBolt, LifeTap, Backstab } = actionController;
 
 const actionControllers = {

@@ -228,5 +228,9 @@ module.exports = {
     balancedStance,
     quickStrike,
     arcaneBolt,
-    lifeTap
+    lifeTap,
+    forkedLightning,
+    intoShadow,
+    savageStrike,
+    backstab
 };

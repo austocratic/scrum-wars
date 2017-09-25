@@ -20,21 +20,32 @@ var Match = require('../models/Match').Match;
 
 var slackTemplates = require('../slackTemplates');
 
+const command = require('./gameContexts/command');
+const { action, generate, profile, travel, name } = command;
+
+const selectActionMenu = require('./gameContexts/selectActionMenu');
+const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance, forkedLightning, intoShadow, savageStrike, backstab } = selectActionMenu;
 
 //Route the slackRequest
 const actionsAndThingsContext = {
     command: {
-        action: require('./gameContexts/command').action,
-        generate: require('./gameContexts/command').generate,
-        profile: require('./gameContexts/command').profile,
-        travel: require('./gameContexts/command').travel,
-        name: require('./gameContexts/command').name
+        action: action,
+        generate: generate,
+        profile: profile,
+        travel: travel,
+        name: name
     },
     selectActionMenu: {
-        shop: require('./gameContexts/selectActionMenu').shop,
-        quickStrike: require('./gameContexts/selectActionMenu').quickStrike,
-        arcaneBolt: require('./gameContexts/selectActionMenu').arcaneBolt,
-        lifeTap: require('./gameContexts/selectActionMenu').lifeTap
+        shop: shop,
+        quickStrike: quickStrike,
+        arcaneBolt: arcaneBolt,
+        lifeTap: lifeTap,
+        defensiveStance: defensiveStance,
+        balancedStance: balancedStance,
+        forkedLightning: forkedLightning,
+        intoShadow: intoShadow,
+        savageStrike: savageStrike,
+        backstab: backstab
     },
     selectActionTarget: {
         processActionOnTarget: require('./gameContexts/selectActionTarget').processActionOnTarget
