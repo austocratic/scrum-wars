@@ -8,12 +8,8 @@ var profile = require('../app/controllers/commands/profile');
 
 //var stockImage = require('../app/assets/wizardImage.jpg');
 
-var slackSlashCommand = require('../app/controllers/slackSlashCommand').slackSlashCommand;
 var slackRequest = require('../app/controllers/slackRequest');
-var interactiveMessages = require('../app/controllers/interactiveMessages').interactiveMessages;
 var turns = require('../app/controllers/turns');
-
-var slackInteractiveMessage = require('../app/controllers/slackInteractiveMessage').slackInteractiveMessage;
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

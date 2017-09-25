@@ -1,6 +1,6 @@
 
 
-
+/*
 exports.moveCharacter = (zoneID, zoneName) => {
 
     var template = {
@@ -38,4 +38,4 @@ exports.moveCharacter = (zoneID, zoneName) => {
 
     return template;
 
-};
+};*/

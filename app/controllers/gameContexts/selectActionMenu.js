@@ -19,7 +19,7 @@ const actionControllers = {
     intoShadow: IntoShadow
 };
 
-//Shop does not use the actionController class right now
+//Shop is the only action not using the action controller
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
 

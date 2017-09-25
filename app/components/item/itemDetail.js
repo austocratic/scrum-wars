@@ -1,7 +1,7 @@
 "use strict";
 
 
-
+/*
 exports.itemDetail = (itemID, itemProps) => {
 
     var template = {
@@ -35,4 +35,4 @@ exports.itemDetail = (itemID, itemProps) => {
 
     return template;
 
-};
+};*/

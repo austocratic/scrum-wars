@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 var Firebase = require('../../libraries/firebase').Firebase;
 
@@ -79,7 +79,7 @@ exports.getCharacters = {
         });
     }
 };
-
+*/
 /*
 exports.getCharacters = {
     includePlayerCharacter: getCharacters.includePlayerCharacter,
