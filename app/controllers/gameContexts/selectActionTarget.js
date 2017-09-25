@@ -11,7 +11,7 @@ let Action = require('../../models/Action').Action;
 
 const actionController = require('../actionController');
 //TODO move slackRequest into this structure
-const { QuickStrike, ArcaneBolt, LifeTap } = actionController;
+const { QuickStrike, ArcaneBolt, LifeTap, Backstab } = actionController;
 
 const actionControllers = {
 
@@ -22,6 +22,7 @@ const actionControllers = {
     '-Kjpe29q_fDkJG-73AQO': QuickStrike,
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     '-KkOq-y2_zgEgdhY-6_U': LifeTap,
+    '-Kr3hnITyH9ZKx3VuZah': Backstab,
 };
 
 const processActionOnTarget = gameObjects => {

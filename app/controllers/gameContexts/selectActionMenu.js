@@ -10,8 +10,12 @@ const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
+const actionController = require('../actionController');
+const { DefensiveStance, BalancedStance } = actionController;
+
 const actionControllers = {
-    defensiveStance: require('../actionController').DefensiveStance
+    defensiveStance: DefensiveStance,
+    balancedStance: BalancedStance
 };
 
 //Shop does not use the actionController class right now
@@ -121,12 +125,44 @@ const defensiveStance = gameObjects => {
         'defensiveStance'
     );*/
     
-    let actionObject = new actionControllers['defensiveStance'](gameObjects);
+    //let actionObject = new actionControllers['defensiveStance'](gameObjects);
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['defensiveStance'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
 };
-const balanced = gameObjects => {
+const balancedStance = gameObjects => {
+    console.log('Called selectActionMenu/balancedStance');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['balancedStance'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
+
+    actionObject.initiate();
 };
 
 //*******  These actions require a target, so will return selectActionTarget game context  *******
@@ -189,6 +225,7 @@ const backstab = gameObjects => {
 module.exports = {
     shop,
     defensiveStance,
+    balancedStance,
     quickStrike,
     arcaneBolt,
     lifeTap

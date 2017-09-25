@@ -50,6 +50,20 @@ describe("Testing selectActionTarget function", function() {
             slackCallback
         });
     });
+
+    describe("when callback includes action selected of -Kr3hnITyH9ZKx3VuZah (Backstab)", function() {
+
+        const slackCallback = 'command:action/selectActionMenu:-Kr3hnITyH9ZKx3VuZah/selectActionTarget';
+
+        let slackResponseTemplateReturned = processActionOnTarget({
+            game,
+            playerCharacter,
+            userActionValueSelection,
+            requestZone,
+            currentMatch,
+            slackCallback
+        });
+    });
     
     //testSlackResponseFormat(slackResponseTemplateReturned);
 });

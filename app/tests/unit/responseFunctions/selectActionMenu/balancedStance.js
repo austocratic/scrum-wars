@@ -1,9 +1,8 @@
 "use strict";
 
-/*
 const assert = require('assert');
 
-const quickStrike = require('../../../../controllers/gameContexts/selectActionMenu').quickStrike;
+const balancedStance = require('../../../../controllers/gameContexts/selectActionMenu').balancedStance;
 
 const testSlackResponseFormat = require('../../../testSlackResponseFormat').testSlackResponseFormat;
 
@@ -20,33 +19,30 @@ let game = new Game();
 game.state = testDB;
 
 const gameContext = 'selectActionMenu';
-const userActionValueSelection = 'quickStrike';
+//Defensive stance action ID
+const userActionValueSelection = '-KjpeJT7Oct3ZCtLhENO';
 
-let slackCallback = 'command:action/quickStrike:';
+let slackCallback = 'command:action/selectActionMenu';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
-    
-    let slackResponseTemplate = {};
 
-    //The Town channel ID
-    let requestChannelID = 'C4Z4P1BUH';
-
+    //The Arena channel ID
+    let requestChannelID = 'C4Z7F8XMW';
     let requestZone = new Zone(game.state, requestChannelID);
 
     let playerCharacter = new Character(game.state, 'd130618f3a221f672cfc');
 
-    let slackResponseTemplateReturned = quickStrike({
+    let currentMatch = new Match(game.state, game.getCurrentMatchID());
+
+    let slackResponseTemplateReturned = balancedStance({
         game,
         playerCharacter,
-        userActionValueSelection,
-        slackResponseTemplate,
-        slackCallback,
-        requestZone
+        requestZone,
+        currentMatch,
+        userActionValueSelection
     });
 
-    testSlackResponseFormat(slackResponseTemplateReturned);
-    
-});
+    //testSlackResponseFormat(slackResponseTemplateReturned);
 
- */
+});
 

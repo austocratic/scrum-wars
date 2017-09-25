@@ -1,6 +1,5 @@
 "use strict";
 
-/*
 const assert = require('assert');
 
 const defensiveStance = require('../../../../controllers/gameContexts/selectActionMenu').defensiveStance;
@@ -27,7 +26,6 @@ let slackCallback = 'command:action/selectActionMenu';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
-    
     //The Arena channel ID
     let requestChannelID = 'C4Z7F8XMW';
     let requestZone = new Zone(game.state, requestChannelID);
@@ -44,8 +42,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
         userActionValueSelection
     });
 
-    testSlackResponseFormat(slackResponseTemplateReturned);
+    //testSlackResponseFormat(slackResponseTemplateReturned);
     
 });
 
-*/
