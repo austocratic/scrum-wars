@@ -3,19 +3,31 @@
 var Slack = require('../libraries/slack').Alert;
 var _ = require('lodash');
 
-
+const validateGameObjects = require('../helpers').validateGameObjects;
 
 
 class BaseAction {
-    constructor(actionCharacter, currentZone, currentMatch, actionTaken){
+    //constructor(actionCharacter, currentZone, currentMatch, actionTaken){
+    constructor(gameObjects){
 
-        this.actionCharacter = actionCharacter;
-        this.currentZone = currentZone;
-        this.currentMatch = currentMatch;
-        this.actionTaken = actionTaken;
+        /* Added before Danny's method
+        validateGameObjects(gameObjects, [
+            'game',
+            'playerCharacter',
+            'requestZone',
+            'currentMatch',
+            'actionTaken'
+        ]);*/
+        
+        this.actionCharacter = gameObjects.playerCharacter;
+        this.currentZone = gameObjects.requestZone;
+        this.currentMatch = gameObjects.currentMatch;
+        this.actionTaken = gameObjects.actionTaken;
+        this.targetCharacter = gameObjects.targetCharacter;
 
         this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         this.slackUserName = "A mysterious voice";
+        //this.slackChannel = ("#" + this.currentZone.props.channel);
         this.slackChannel = ("#" + this.currentZone.props.channel);
     }
 
@@ -176,6 +188,8 @@ class BaseAction {
         //var modifierObject = {};
 
         //modifierObject = Object.assign(modifierObject, modifiers);
+        
+        console.log('DEBUG: actionTaken: ', actionTaken);
 
         var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
 
@@ -300,11 +314,21 @@ class BaseAction {
     }
 }
 
-class BaseAttack extends BaseAction{
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-        super(actionCharacter, currentZone, currentMatch, actionTaken);
+//Attach validations to the BaseAction
+BaseAction.validations = [
+    'playerCharacter',
+    'requestZone',
+    'currentMatch',
+    'actionTaken',
+    'targetCharacter'
+];
 
-        this.targetCharacter = targetCharacter;
+class BaseAttack extends BaseAction{
+    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        //super(actionCharacter, currentZone, currentMatch, actionTaken);
+
+    constructor(gameObjects) {
+        super(gameObjects);
     }
 
     _avoidCheck(accuracyModifier, avoidModifier){
@@ -355,11 +379,28 @@ class BaseAttack extends BaseAction{
     }
 }
 
-class BaseModify extends BaseAction{
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-        super(actionCharacter, currentZone, currentMatch, actionTaken);
+/*
+BaseAttack.validations = [
+    ...BaseAction.validations,
+    'targetCharacter'
+];*/
 
-        this.targetCharacter = targetCharacter;
+class BaseModify extends BaseAction{
+    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+    constructor(gameObjects) {
+
+        //Validate the constructor inputs.  All should be objects
+        /*
+        console.log('DEBUG, typeof actionCharacter = ', typeof actionCharacter);
+        console.log('DEBUG, typeof targetCharacter = ', typeof targetCharacter);
+        console.log('DEBUG, typeof currentZone = ', typeof currentZone);
+        console.log('DEBUG, typeof currentMatch = ', typeof currentMatch);
+        console.log('DEBUG, typeof actionTaken = ', typeof actionTaken);*/
+
+        //super(actionCharacter, currentZone, currentMatch, actionTaken);
+        super(gameObjects);
+
+        this.targetCharacter = gameObjects.targetCharacter;
     }
 
     _reverseEffectsOfType(character, effectType){
@@ -403,6 +444,14 @@ class BaseModify extends BaseAction{
         return false
     }
 }
+
+/*
+BaseModify.validations = [
+    ...BaseAction.validations,
+    'targetCharacter'
+];
+*/
+
 
 //ArcaneBolt is a spell that deals damage to a single target
 class ArcaneBolt extends BaseAttack {
@@ -469,15 +518,17 @@ class ArcaneBolt extends BaseAttack {
 }
 
 class QuickStrike extends BaseAttack {
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-
-        console.log('DEBUG *****~~~QuickStrike~~~~~******');
-        console.log('actionCharacter: ', JSON.stringify(actionCharacter));
-        console.log('targetCharacter: ', JSON.stringify(targetCharacter));
-        console.log('currentZone: ', JSON.stringify(currentZone));
-        console.log('currentMatch: ', JSON.stringify(currentMatch));
+    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+    constructor(gameObjects) {
         
-        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+        console.log('DEBUG *****~~~QuickStrike~~~~~******');
+        console.log('playerCharacter: ', JSON.stringify(gameObjects.playerCharacter));
+        console.log('targetCharacter: ', JSON.stringify(gameObjects.targetCharacter));
+        console.log('requestZone: ', JSON.stringify(gameObjects.requestZone));
+        console.log('currentMatch: ', JSON.stringify(gameObjects.currentMatch));
+        console.log('actionTaken: ', JSON.stringify(gameObjects.actionTaken));
+        
+        super(gameObjects);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
@@ -537,6 +588,16 @@ class QuickStrike extends BaseAttack {
         return '';
     }
 }
+
+/*
+QuickStrike.validations = [
+    ...BaseAttack.validations,
+    'playerCharacter',
+    'targetCharacter',
+    'requestZone',
+    'currentMatch',
+    'actionTaken'
+];*/
 
 class LifeTap extends BaseAttack {
     constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
@@ -605,9 +666,21 @@ class LifeTap extends BaseAttack {
 //Defensive Stance is a stance that increases AC & lowers attack
 //Static success chance
 class DefensiveStance extends BaseModify {
-    constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-        super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
+    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
+        //super(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken);
 
+    constructor(gameObjects) {
+
+        validateGameObjects(gameObjects, [
+            'playerCharacter',
+            'targetCharacter',
+            'requestZone',
+            'currentMatch',
+            'actionTaken'
+        ]);
+        
+        super(gameObjects);
+    
         this.baseSuccessChance = 1; //% change of success
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;

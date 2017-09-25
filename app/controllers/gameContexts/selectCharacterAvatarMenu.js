@@ -126,7 +126,6 @@ const selection = gameObjects => {
     };
 
     return gameObjects.slackResponseTemplate;
-    
 };
 
 

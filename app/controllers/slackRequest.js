@@ -33,7 +33,8 @@ const actionsAndThingsContext = {
     selectActionMenu: {
         shop: require('./gameContexts/selectActionMenu').shop,
         quickStrike: require('./gameContexts/selectActionMenu').quickStrike,
-        arcaneBolt: require('./gameContexts/selectActionMenu').arcaneBolt
+        arcaneBolt: require('./gameContexts/selectActionMenu').arcaneBolt,
+        lifeTap: require('./gameContexts/selectActionMenu').lifeTap
     },
     selectActionTarget: {
         processActionOnTarget: require('./gameContexts/selectActionTarget').processActionOnTarget

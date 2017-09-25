@@ -4,12 +4,17 @@ const _ = require('lodash');
 
 const NPC = require('../../models/NPC').NPC;
 const Item = require('../../models/Item').Item;
+const Action = require('../../models/Action').Action;
+const Character = require('../../models/Character').Character;
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
+const actionControllers = {
+    defensiveStance: require('../actionController').DefensiveStance
+};
 
-
+//Shop does not use the actionController class right now
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
 
@@ -86,14 +91,45 @@ const shop = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
-
 const tavern = gameObjects => {
 
 };
+const defensiveStance = gameObjects => {
+    console.log('Called selectActionMenu/defensiveStance');
 
-const defensive = gameObjects => {
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+    
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+    
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken)
+    /*
+    let actionObject = new actionControllers['defensiveStance'](
+        gameObjects.playerCharacter,
+        gameObjects.targetCharacter,
+        gameObjects.requestZone,
+        gameObjects.currentMatch,
+        'defensiveStance'
+    );*/
+    
+    let actionObject = new actionControllers['defensiveStance'](gameObjects);
+
+    actionObject.initiate();
+};
+const balanced = gameObjects => {
 
 };
+
+//*******  These actions require a target, so will return selectActionTarget game context  *******
 
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
@@ -109,26 +145,20 @@ const quickStrike = gameObjects => {
 
     return targetSelection(gameObjects);
 };
-
 const lifeTap = gameObjects => {
+    console.log('Called selectActionMenu/lifeTap');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    return targetSelection(gameObjects);
 };
-const forkedLightning = gameObjects => {
-
-};
-const intoShadow = gameObjects => {
-
-};
-const savageStrike = gameObjects => {
-
-};
-const balanced = gameObjects => {
-
-};
-const backstab = gameObjects => {
-
-};
-
 const arcaneBolt = gameObjects => {
     console.log('Called selectActionMenu/arcaneBolt');
 
@@ -143,9 +173,23 @@ const arcaneBolt = gameObjects => {
 
     return targetSelection(gameObjects);
 };
+const forkedLightning = gameObjects => {
+
+};
+const intoShadow = gameObjects => {
+
+};
+const savageStrike = gameObjects => {
+
+};
+const backstab = gameObjects => {
+
+};
 
 module.exports = {
     shop,
+    defensiveStance,
     quickStrike,
-    arcaneBolt
+    arcaneBolt,
+    lifeTap
 };

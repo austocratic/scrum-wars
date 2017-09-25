@@ -306,9 +306,9 @@ class Game {
     
     getCurrentMatchID(){
 
-        console.log('DEBUG: called getCurrentMatchID');
+        //console.log('DEBUG: called getCurrentMatchID');
 
-        console.log('DEBUG: this.state.global_state: ', this.state.global_state);
+        //console.log('DEBUG: this.state.global_state: ', this.state.global_state);
 
         return this.state.global_state.match_id
 

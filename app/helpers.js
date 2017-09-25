@@ -22,10 +22,48 @@ const validateGameObjects = (gameObjectsToValidate, expectedGameObjects) => {
     }
 
     expectedGameObjects.forEach( eachExpectedGameObject =>{
+        //Verify that gameObject property was passed in
         if (!gameObjectsToValidate[eachExpectedGameObject]){
-            throw new Error('missing expected gameObject: ' + eachExpectedGameObject)
+            throw new Error('missing expected gameObject value: ' + eachExpectedGameObject)
         }
-    })
+    });
+
+    //******Data type validation*****
+
+    //Data types expected to be strings
+    let expectedStrings = [
+        'userActionValueSelection',
+        'slackCallback'
+    ];
+
+    //Data types expected to be strings
+    let expectedObjects = [
+        'game',
+        'user',
+        'slackResponseTemplate',
+        'playerCharacter',
+        'requestZone',
+        'currentMatch',
+        'characterClass',
+        'currentMatch',
+        'actionTaken'
+    ];
+
+    expectedStrings.forEach( eachExpectedStrings =>{
+        if (gameObjectsToValidate[eachExpectedStrings]) {
+            if(typeof gameObjectsToValidate[eachExpectedStrings] !== 'string'){
+                throw new Error('gameObject expected to be a string and is not!  gameObject: ' + eachExpectedStrings)
+            }
+        }
+    });
+
+    expectedObjects.forEach( eachExpectedObjects =>{
+        if (gameObjectsToValidate[eachExpectedObjects]) {
+            if(typeof gameObjectsToValidate[eachExpectedObjects] !== 'object'){
+                throw new Error('gameObject expected to be an object and is not!  gameObject: ' + eachExpectedObjects)
+            }
+        }
+    });
 };
 
 var getImageFilePaths = (dir, filelist) => {
