@@ -15,13 +15,6 @@ class ArcaneBolt extends BaseAttack {
         this.baseMitigation = 1;
         this.baseMin = 1;
         this.baseMax = 5;
-        
-        //Alerts & Messages
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
-        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Score used as the total damage dealt
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
@@ -29,6 +22,14 @@ class ArcaneBolt extends BaseAttack {
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
         //Total damage to be dealt if not avoided, resisted, ect.
         this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+        //Alerts & Messages
+        this.playerActionFailedMessage = "Your attack fails!";
+        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+
     }
 
     initiate() {
