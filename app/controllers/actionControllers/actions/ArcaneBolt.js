@@ -3,7 +3,6 @@ const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
-//ArcaneBolt is a spell that deals damage to a single target
 class ArcaneBolt extends BaseAttack {
     constructor(gameObjects) {
         super(gameObjects);
@@ -16,11 +15,8 @@ class ArcaneBolt extends BaseAttack {
         this.baseMin = 1;
         this.baseMax = 5;
 
-        //Score used as the total damage dealt
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        //Score used to reduce the total damage dealt
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        //Total damage to be dealt if not avoided, resisted, ect.
         this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
@@ -30,42 +26,40 @@ class ArcaneBolt extends BaseAttack {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
+        //Base Slack message Details
+        this.slackPayload = {
+            "username": this.actionCharacter.props.name,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            "channel": this.slackChannel
+        };
     }
 
     initiate() {
-
-        //Base Slack message Details
-        let slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel,
-            "text": this.channelActionSuccessMessage
-        };
 
         //BaseAction
         //skill check: this.baseSuccessChance + modifier
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(slackPayload);
-            return this.playerActionFailedMessage
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
-            slackPayload.text = this.channelActionAvoidedMessage;
-            slack.sendMessage(slackPayload);
-            return this.playerActionAvoidedMessage
+            this.slackPayload.text = this.channelActionAvoidedMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Process all the other effects of the action
         this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
-        slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(slackPayload);
+        this.slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(this.slackPayload);
 
-        return '';
+        //return;
     }
 }
 
