@@ -26,7 +26,7 @@ class ArcaneBolt extends BaseAttack {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
-        //Base Slack message Details
+        //Base Slack template
         this.slackPayload = {
             "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
@@ -35,9 +35,8 @@ class ArcaneBolt extends BaseAttack {
     }
 
     initiate() {
-
-        //BaseAction
-        //skill check: this.baseSuccessChance + modifier
+        
+        //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
             this.slackPayload.text = this.channelActionFailMessage;
@@ -59,7 +58,6 @@ class ArcaneBolt extends BaseAttack {
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
 
-        //return;
     }
 }
 

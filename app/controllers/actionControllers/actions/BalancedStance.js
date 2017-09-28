@@ -1,6 +1,6 @@
 
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack');
 const BaseModify = require('./../baseActions/BaseModify').BaseModify;
 
 
@@ -20,36 +20,32 @@ class BalancedStance extends BaseModify {
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a balanced stance, but stumbles!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a balanced combat stance!`;
+
+        //Base Slack template
+        this.slackPayload = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel
+        };
     }
 
     initiate(){
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a balanced stance, but stumbles!");
 
-        //Action success check
+        //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('Skill FAILED!');
-            return this.playerActionFailedMessage
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Reverse any effects of this type
         this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
 
-        //Alert the channel of the action
-        var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " enters a balanced combat stance!")
-        };
-
-        //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params);
-
-        return '';
+        this.slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(this.slackPayload);
     }
 }
 

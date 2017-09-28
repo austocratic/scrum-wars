@@ -1,6 +1,7 @@
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
+
 
 class QuickStrike extends BaseAttack {
     constructor(gameObjects) {
@@ -14,54 +15,49 @@ class QuickStrike extends BaseAttack {
         this.baseMin = 1;
         this.baseMax = 5;
 
+        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+        //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a powerful strike and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+
+        //Base Slack template
+        this.slackPayload = {
+            "username": this.actionCharacter.props.name,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            "channel": this.slackChannel
+        };
     }
 
     initiate() {
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
-        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
 
-        //BaseAction
-        //skill check: this.baseSuccessChance + modifier
+        //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('Skill FAILED!');
-            return this.playerActionFailedMessage
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
-            console.log('Target evaded!');
-            return this.playerActionAvoidedMessage
+            this.slackPayload.text = this.channelActionAvoidedMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
-        let power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        let mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-
-        let totalDamage = this._calculateDamage(power, mitigation);
-
         //Process all the other effects of the action
-        //this._damageEffect(totalDamage);
-        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
-        //Alert the channel of the action
-        let alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": this.slackChannel,
-            "text": (this.actionCharacter.props.name + " lunges forward with a powerful strike and lands a crushing blow on " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
-        };
-
-        //Create a new slack alert object
-        let channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params);
-
-        return '';
+        this.slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(this.slackPayload);
+        
     }
 }
 

@@ -131,6 +131,8 @@ class BaseAction {
 
     _applyEffect(characterToModify, modifiers, actionTaken){
 
+        //TODO add standard validation function check
+
         //Convert all keys into array
         /*
          var modifierKeys = Object.keys(modifiers);

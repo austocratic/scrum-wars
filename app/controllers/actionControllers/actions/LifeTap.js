@@ -1,5 +1,5 @@
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
@@ -15,58 +15,51 @@ class LifeTap extends BaseAttack {
         this.baseMin = 0;
         this.baseMax = 4;
 
+        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+        //Alerts & Messages
         this.playerActionFailedMessage = "Your target resists your spell!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to cast Life Tap, but the spell fizzles away!`;
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} conjures a life tapping effect but ${this.targetCharacter.props.name} resists the attack!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} conjures a life tapping effect and drains ${this.targetCharacter.props.name} for ${this.calculatedDamage} health!`;
+
+        //Base Slack template
+        this.slackPayload = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel
+        };
     }
 
     initiate() {
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to cast Life Tap, but the spell fizzles away!");
-        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " conjures a life tapping effect but " + this.targetCharacter.props.name + " resists the attack!")
 
-        //BaseAction
-        //skill check: this.baseSuccessChance + modifier
+        //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('Skill FAILED!');
-            return this.playerActionFailedMessage
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
-            console.log('Target evaded!');
-            return this.playerActionAvoidedMessage
+            this.slackPayload.text = this.channelActionAvoidedMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
-        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-
-        var totalDamage = this._calculateDamage(power, mitigation);
-
         //Process all the other effects of the action
-        //this._damageEffect(totalDamage);
-        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
-        this._changeProperty(this.actionCharacter, {hit_points: totalDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
+        this._changeProperty(this.actionCharacter, {hit_points: -this.calculatedDamage});
 
-        //Alert the channel of the action
-        var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": this.slackChannel,
-            "text": (this.actionCharacter.props.name + " conjures a life tapping effect and drains " + this.targetCharacter.props.name + " for " + totalDamage + " health!")
-        };
-
-        //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params);
-
-        return '';
+        this.slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(this.slackPayload);
     }
 }
-
 
 module.exports = {
     LifeTap

@@ -1,5 +1,5 @@
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
@@ -15,67 +15,57 @@ class Backstab extends BaseAttack {
         this.baseMin = 3;
         this.baseMax = 8;
 
+        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} emerges from the shadows and backstabs ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
+        //Base Slack template
+        this.slackPayload = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel
+        };
     }
 
     initiate(){
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a Quick Strike, but stumbles!");
-        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " lunges forward for a Quick Strike but  " + this.targetCharacter.props.name + " evades the attack!");
 
-        //BaseAction
-        //skill check: this.baseSuccessChance + modifier
+        //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('Skill FAILED!');
-            return this.playerActionFailedMessage
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
-            console.log('Target evaded!');
-            return this.playerActionAvoidedMessage
+            this.slackPayload.text = this.channelActionAvoidedMessage;
+            slack.sendMessage(this.slackPayload);
+            return;
         }
 
-        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-
-        var totalDamage = this._calculateDamage(power, mitigation);
-
-        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
-
-        var characterEffects = this.actionCharacter.props.effects;
+        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
         //Find all currently applied effects that change the targets is_hidden property
         if (this.actionCharacter.props.effects) {
-            var hidingEffects = this.actionCharacter.props.effects.filter(eachEffect => {
-                return eachEffect.modifiers.is_hidden === 1
-            });
-
-            //Reverse all effects that change is_hidden property
-            hidingEffects.forEach(eachEffect => {
-                this._reverseEffect(this.actionCharacter, eachEffect.action_id);
+            this.actionCharacter.props.effects
+                .filter(eachEffect => {
+                    return eachEffect.modifiers.is_hidden === 1
+                })
+                .forEach(eachEffect => {
+                    this._reverseEffect(this.actionCharacter, eachEffect.action_id);
             });
         }
-
-        //Alert the channel of the action
-        var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": ("#" + this.currentZone.props.channel),
-            "text": (this.actionCharacter.props.name + " emerges from the shadows and backstabs " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
-        };
-
-        //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params);
-
-        return '';
+        
+        this.slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(this.slackPayload);
     }
 }
 
