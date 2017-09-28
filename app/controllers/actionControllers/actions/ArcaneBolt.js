@@ -18,12 +18,19 @@ class ArcaneBolt extends BaseAttack {
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
+        //TODO I moved these out of the initiate function - need to make sure this works ok
+        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " bolts of arcane energy streak from  " + this.actionCharacter.props.name + "'s fingers, but " + this.targetCharacter.props.name + " resists the bolt's harm");
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to conjure an Arcane Bolt, but the spell fizzles away!");
+
+        //TODO I moved these out of the initiate function - need to make sure this works ok
+        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
     }
 
     initiate() {
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to conjure an Arcane Bolt, but the spell fizzles away!");
-        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " bolts of arcane energy streak from  " + this.actionCharacter.props.name + "'s fingers, but " + this.targetCharacter.props.name + " resists the bolt's harm");
-
+        
         //BaseAction
         //skill check: this.baseSuccessChance + modifier
         //If failure, return a failure message and end
@@ -39,22 +46,18 @@ class ArcaneBolt extends BaseAttack {
             return this.playerActionAvoidedMessage
         }
 
-        var power = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        var mitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-
-        var totalDamage = this._calculateDamage(power, mitigation);
-
         //Process all the other effects of the action
         //this._damageEffect(totalDamage);
-        this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
         //Alert the channel of the action
         var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
+            "username": this.actionCharacter.props.name,
+            //"username": this.slackUserName,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            //"icon_url": this.slackIcon,
             "channel": this.slackChannel,
-            "text": (this.actionCharacter.props.name + " launches bolts of arcane energy which strike " + this.targetCharacter.props.name + " for " + totalDamage + " points of damage!")
+            "text": (this.actionCharacter.props.name + " launches bolts of arcane energy which strike " + this.targetCharacter.props.name + " for " + this.calculatedDamage + " points of damage!")
         };
 
         //Create a new slack alert object

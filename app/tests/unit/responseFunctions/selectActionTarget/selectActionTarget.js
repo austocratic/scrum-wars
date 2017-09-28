@@ -27,7 +27,7 @@ describe("Testing selectActionTarget function", function() {
     
     let slackResponseTemplate = {};
 
-    let playerCharacter = new Character(game.state, 'd130618f3a221f672cfc');
+    let playerCharacter = new Character(game.state, '55e38d23d842e50e9026');
 
     let requestChannelID = 'C4Z7F8XMW';
 
@@ -41,6 +41,20 @@ describe("Testing selectActionTarget function", function() {
 
         const slackCallback = 'command:action/selectActionMenu:-Kjpe29q_fDkJG-73AQO/selectActionTarget';
         
+        let slackResponseTemplateReturned = processActionOnTarget({
+            game,
+            playerCharacter,
+            userActionValueSelection,
+            requestZone,
+            currentMatch,
+            slackCallback
+        });
+    });
+
+    describe("when callback includes action selected of -KrJaBvyYDGrNVfcaAd0 (Arcane Bolt)", function() {
+
+        const slackCallback = 'command:action/selectActionMenu:-KrJaBvyYDGrNVfcaAd0/selectActionTarget';
+
         let slackResponseTemplateReturned = processActionOnTarget({
             game,
             playerCharacter,

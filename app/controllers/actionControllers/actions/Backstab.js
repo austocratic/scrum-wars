@@ -45,23 +45,15 @@ class Backstab extends BaseAttack {
 
         var totalDamage = this._calculateDamage(power, mitigation);
 
-        console.log('actionCharacter.props: ', this.actionCharacter.props);
-
         this._changeProperty(this.targetCharacter, {hit_points: -totalDamage});
 
-        console.log('actionCharacter.props: ', this.actionCharacter.props);
-
         var characterEffects = this.actionCharacter.props.effects;
-
-        console.log('characterEffects: ', characterEffects);
 
         //Find all currently applied effects that change the targets is_hidden property
         if (this.actionCharacter.props.effects) {
             var hidingEffects = this.actionCharacter.props.effects.filter(eachEffect => {
                 return eachEffect.modifiers.is_hidden === 1
             });
-
-            console.log('effectsOfSameType: ', hidingEffects);
 
             //Reverse all effects that change is_hidden property
             hidingEffects.forEach(eachEffect => {

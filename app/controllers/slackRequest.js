@@ -150,7 +150,7 @@ const beginRequest = async () => {
     await game.getState();
 
     //Calculate properties in memory
-    game.inititateRequest();
+    game.initiateRequest();
 
     return game;
 };

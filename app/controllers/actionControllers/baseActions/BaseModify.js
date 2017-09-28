@@ -3,18 +3,7 @@ var _ = require('lodash');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class BaseModify extends BaseAction{
-    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
     constructor(gameObjects) {
-
-        //Validate the constructor inputs.  All should be objects
-        /*
-         console.log('DEBUG, typeof actionCharacter = ', typeof actionCharacter);
-         console.log('DEBUG, typeof targetCharacter = ', typeof targetCharacter);
-         console.log('DEBUG, typeof currentZone = ', typeof currentZone);
-         console.log('DEBUG, typeof currentMatch = ', typeof currentMatch);
-         console.log('DEBUG, typeof actionTaken = ', typeof actionTaken);*/
-
-        //super(actionCharacter, currentZone, currentMatch, actionTaken);
         super(gameObjects);
 
         this.targetCharacter = gameObjects.targetCharacter;
@@ -34,6 +23,7 @@ class BaseModify extends BaseAction{
         });
     }
 
+    //TODO, this is the same as the one in the BaseAttack.  Is this needed here?  If so move from both filed to BaseAction, otherwise remove from here
     _avoidCheck(accuracyModifier, avoidModifier){
 
         var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
@@ -62,9 +52,10 @@ class BaseModify extends BaseAction{
     }
 }
 
+/*
 BaseModify.validations = [
     ...BaseAction.validations
-];
+];*/
 
 
 module.exports = {

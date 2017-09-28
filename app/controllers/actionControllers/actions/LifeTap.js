@@ -20,7 +20,7 @@ class LifeTap extends BaseAttack {
     }
 
     initiate() {
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to case Life Tap, but the spell fizzles away!");
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to cast Life Tap, but the spell fizzles away!");
         this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " conjures a life tapping effect but " + this.targetCharacter.props.name + " resists the attack!")
 
         //BaseAction

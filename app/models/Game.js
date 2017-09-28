@@ -62,18 +62,10 @@ class Game {
     randomGenerator() {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
-
-    /*TODO DELETE AFTER TESTING
-    getCurrentMatch(){
-
-
-        return this.state.match_id
-    }*/
     
-    //Refresh function checks the game's state looking for certain conditions (player deaths, ect.)
+    //Checks the game's state looking for certain conditions (player deaths, ect.)
     //It is invoked periodically by cron
     //It is always invoked after a player action
-    //TODO I should probably make a gameController file and move this (and other functions) into it
     refresh(){
 
         //console.log('DEBUG: this.state(): ', this.state);
@@ -190,115 +182,55 @@ class Game {
 
     }
     
-    //Set properties in memory
-    inititateRequest(){
+    //Calculate properties in memory (I.E: stat effects, ect.)
+    //Different function than refresh() because refresh
+    initiateRequest(){
         
-        try {
-            //Get all the characters in game
-            let characterIDs = Object.keys(this.state.character);
+        //Get all the characters in game
+        let characterIDs = Object.keys(this.state.character);
 
-            console.log('characterIDs: ', characterIDs);
+        //Get an array character objects and process
+        characterIDs
+            .map( eachCharacterID =>{
+                return new Character(this.state, eachCharacterID)
+            })
+            //Filter the character array for active characters only
+            .filter( eachCharacterObject =>{
+                return eachCharacterObject.props.active === 1
+            })
+            //Iterate through character objects setting their modified stats
+            .forEach( eachActiveCharacterObject =>{
 
-            //Get an array character objects and process
-            characterIDs
-                .map( eachCharacterID =>{
-                    return new Character(this.state, eachCharacterID)
-                })
-                //Filter the character array for active characters only
-                .filter( eachCharacterObject =>{
-                    return eachCharacterObject.props.active === 1
-                })
-                //Iterate through character objects setting their modified stats
-                .forEach( eachActiveCharacterObject =>{
+                let cumulativeModifiers = {};
 
-                    console.log('eachActiveCharacterObject: ', eachActiveCharacterObject.id);
+                //If the character has effects, accumulate those effects in cumulativeModifiers
+                if (eachActiveCharacterObject.props.effects){
 
-                    let cumulativeModifiers = {};
-
-                    //If the character has effects, accumulate those effects in cumulativeModifiers
-
-                    if (eachActiveCharacterObject.props.effects){
-
-                        eachActiveCharacterObject.props.effects
-                            .filter( eachEffect => {
-                                return eachEffect.end_turn > 5
-                            })
-                            .forEach( eachFilteredEffect => {
-                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
-                            });
-                    }
-
-                    //If the character has inventory items, accumulate those item's effects in cumulativeModifiers
-                    if (eachActiveCharacterObject.props.inventory){
-
-                        eachActiveCharacterObject.props.inventory
-                            //Filter for equipped items only
-                            .filter( eachItem => {
-                                return eachItem.is_equipped === 1
-                            })
-                            .forEach( eachFilteredItem => {
-                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
-                            });
-                    }
-
-                    //Now apply the cumulative modifiers
-                    eachActiveCharacterObject.setModifiedStats(cumulativeModifiers);
-
-                });
-
-            /* OLD VERSION
-            //Iterate through each character's effects setting the modified properties
-            characterKeys.forEach(eachCharacterKey => {
-                //console.log('eachCharacter.active: ', this.state.character[eachCharacterKey].active);
-
-                //Character must be active to set modified properties
-                if (this.state.character[eachCharacterKey].active === 1) {
-                    let localCharacter = new Character(this.state, eachCharacterKey);
-
-                    var cumulativeModifiers = {};
-
-                    //console.log('localCharacter.props: ', localCharacter.props);
-
-                    //TODO hard coded 5 for matchTurn for unit test dev
-                    if (localCharacter.props.effects){
-
-                        //console.log('passed localCharacter.props.effects check')
-
-                        let filterFunction = eachEffect => {
-                            return eachEffect.end_turn > 5; //Match turn
-                        };
-
-                        let cumulativeEffects = localCharacter.getCumulativeModifiers('effects', filterFunction);
-
-                        localCharacter.accumulateProperties(cumulativeModifiers, cumulativeEffects);
-                    }
-
-                    if (localCharacter.props.inventory){
-
-                        let filterFunction = eachEffect => {
-                            return eachEffect.is_equipped === 1
-                        };
-
-                        let cumulativeInventory = localCharacter.getCumulativeModifiers('inventory', filterFunction);
-
-                        localCharacter.accumulateProperties(cumulativeModifiers, cumulativeInventory);
-                    }
-
-                    //Take modifiers object and set modified stats.  setModifiedStats takes the character's base stat and adds the modifier before updating
-                    localCharacter.setModifiedStats(cumulativeModifiers);
-
-                    //console.log('modified_strength after modifications: ', localCharacter.props.modified_strength);
+                    eachActiveCharacterObject.props.effects
+                        .filter( eachEffect => {
+                            return eachEffect.end_turn > 5
+                        })
+                        .forEach( eachFilteredEffect => {
+                            eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
+                        });
                 }
+
+                //If the character has inventory items, accumulate those item's effects in cumulativeModifiers
+                if (eachActiveCharacterObject.props.inventory){
+
+                    eachActiveCharacterObject.props.inventory
+                        //Filter for equipped items only
+                        .filter( eachItem => {
+                            return eachItem.is_equipped === 1
+                        })
+                        .forEach( eachFilteredItem => {
+                            eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
+                        });
+                }
+
+                //Now apply the cumulative modifiers
+                eachActiveCharacterObject.setModifiedStats(cumulativeModifiers);
             });
-            //for each character iterate through each
-
-            return 5;*/
-        } catch(err){
-    
-        console.log('error in initiate(): ', err);
-    }
-
-
     }
 
     createMatch(zoneID){

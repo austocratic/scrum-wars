@@ -5,37 +5,19 @@ const _ = require('lodash');
 
 
 class BaseAction {
-    //constructor(actionCharacter, currentZone, currentMatch, actionTaken){
     constructor(gameObjects){
 
-        /* Added before Danny's method
-         validateGameObjects(gameObjects, [
-         'game',
-         'playerCharacter',
-         'requestZone',
-         'currentMatch',
-         'actionTaken'
-         ]);*/
-
+        this.game = gameObjects.game;
         this.actionCharacter = gameObjects.playerCharacter;
         this.currentZone = gameObjects.requestZone;
         this.currentMatch = gameObjects.currentMatch;
         this.actionTaken = gameObjects.actionTaken;
         this.targetCharacter = gameObjects.targetCharacter;
 
-        this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
+        this.slackIcon = gameObjects.game.baseURL + "assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
         this.slackUserName = "A mysterious voice";
-        //this.slackChannel = ("#" + this.currentZone.props.channel);
         this.slackChannel = ("#" + this.currentZone.props.channel);
-    }
-
-    _setValues(){
-        console.log('BaseAction setvalues called');
-
-        this.levelMultiplier = ( 1 + (this.actionCharacter.props.level / 100));
-        //this.variablePower =  + this.actionCharacter.props.strength * this.levelMultiplier;
-        //this.variableMin = this.variablePower + this.baseMin;
-        //this.variableMax = this.variablePower + this.baseMax
     }
 
     _getRandomIntInclusive(min, max) {
@@ -46,13 +28,15 @@ class BaseAction {
 
     _successCheck(modifier){
 
-        var successChance = this.baseSuccessChance + modifier;
+        let successChance = this.baseSuccessChance + modifier;
 
         if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
 
             return true
         }
 
+        //If check returned true (successful, it will never get to this point to alert Slack)
+        
         //Alert the channel of the action
         var alertDetails = {
             "username": this.slackUserName,
@@ -70,61 +54,10 @@ class BaseAction {
         return false;
     }
 
-    /*
-     _successCheck(modifier){
-
-     var successChance = this.baseSuccessChance + modifier;
-
-     if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
-     return(true)
-     }
-
-     return(false);
-     }*/
-
-    _compareScores(){
-
-    }
-
-    /*
-     _isAvoided(avoidChance){
-     console.log('called isAvoided');
-
-     var diceRoll = (this._getRandomIntInclusive(0, 100));
-
-     console.log('diceRoll: ', diceRoll);
-
-     var targetResult = (avoidChance * 100);
-
-     console.log('targetResult: ', targetResult);
-
-     if (diceRoll <= targetResult) {
-     return(true)
-     }
-
-     return(false);
-     }*/
-
-    /*
-     _calculatePower(basePower, modifier, variableMin, variableMax){
-
-     console.log('called _calculatePower');
-     console.log('_calculatePower, basePower: ', basePower);
-     console.log('_calculatePower, modifier: ', modifier);
-     console.log('_calculatePower, variableMin: ', variableMin);
-     console.log('_calculatePower, variableMax: ', variableMax);
-
-     var calculatedPower = basePower + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
-
-     console.log('calculatedPower: ', calculatedPower);
-     return calculatedPower;
-     }*/
-
     _calculateStrength(base, modifier, variableMin, variableMax){
 
         var calculatedStrength = base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
-
-        console.log('calculatedStrength: ', calculatedStrength);
+        
         return calculatedStrength;
     }
 
@@ -314,6 +247,7 @@ class BaseAction {
 
 //Attach validations to the BaseAction
 BaseAction.validations = [
+    'game',
     'playerCharacter',
     'requestZone',
     'currentMatch',

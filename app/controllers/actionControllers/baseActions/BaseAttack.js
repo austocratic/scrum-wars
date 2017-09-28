@@ -3,9 +3,6 @@ const BaseAction = require('./BaseAction').BaseAction;
 
 
 class BaseAttack extends BaseAction{
-    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken) {
-    //super(actionCharacter, currentZone, currentMatch, actionTaken);
-
     constructor(gameObjects) {
         super(gameObjects);
     }
@@ -36,15 +33,6 @@ class BaseAttack extends BaseAction{
 
         return false
     }
-
-    /*
-     _setValues(){
-
-     this.chanceToAvoid = this.baseChanceToAvoid + (this.targetCharacter.props.dexterity / 100);
-     this.damageMitigation = (this.targetCharacter.props.toughness + this.targetCharacter.props.armor) / 10;
-
-     super._setValues();
-     }*/
 
     _calculateDamage(damage, mitigation){
 

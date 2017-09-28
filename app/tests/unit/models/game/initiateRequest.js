@@ -21,7 +21,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
 
     let slackResponseTemplate = {};
 
-    let slackResponseTemplateReturned = game.inititateRequest();
+    let slackResponseTemplateReturned = game.initiateRequest();
 
     //testSlackResponseFormat(slackResponseTemplateReturned);
 
