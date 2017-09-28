@@ -29,7 +29,7 @@ class LifeTap extends BaseAttack {
         //Base Slack template
         this.slackPayload = {
             "username": this.slackUserName,
-            "icon_url": this.slackIcon,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
     }

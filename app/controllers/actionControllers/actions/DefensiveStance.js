@@ -23,12 +23,12 @@ class DefensiveStance extends BaseModify {
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a defensive stance, but stumbles!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing toughness by ${power} while lowering strength by ${power}!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing toughness by ${this.calculatedPower} while lowering strength by ${this.calculatedPower}!`;
 
         //Base Slack template
         this.slackPayload = {
             "username": this.slackUserName,
-            "icon_url": this.slackIcon,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
     }
