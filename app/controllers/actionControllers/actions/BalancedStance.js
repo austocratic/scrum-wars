@@ -23,7 +23,7 @@ class BalancedStance extends BaseModify {
     }
 
     initiate(){
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a balance stance, but stumbles!");
+        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts a balanced stance, but stumbles!");
 
         //Action success check
         //If failure, return a failure message and end
@@ -32,6 +32,7 @@ class BalancedStance extends BaseModify {
             return this.playerActionFailedMessage
         }
 
+        //Reverse any effects of this type
         this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
 
         //Alert the channel of the action

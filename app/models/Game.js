@@ -68,17 +68,15 @@ class Game {
     //It is always invoked after a player action
     refresh(){
 
-        //console.log('DEBUG: this.state(): ', this.state);
-
-        //console.log('DEBUG: this.getCurrentMatchID(): ', this.getCurrentMatchID());
-
+        //Set 
+        
+        //Check for Game updates
+        
         //**********************~~  Match  ~~***********************
 
         //Read game state to find the current match ID
         let currentMatch = new Match(this.state, this.getCurrentMatchID());
 
-        //console.log('DEBUG: currentMatch.props: ', currentMatch.props);
-        
         //Read the match status & determine needed update
         switch(currentMatch.props.status){
 
@@ -183,7 +181,7 @@ class Game {
     }
     
     //Calculate properties in memory (I.E: stat effects, ect.)
-    //Different function than refresh() because refresh
+    //TODO move this into refresh()
     initiateRequest(){
         
         //Get all the characters in game

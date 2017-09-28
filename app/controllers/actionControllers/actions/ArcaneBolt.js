@@ -1,5 +1,5 @@
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
@@ -15,56 +15,54 @@ class ArcaneBolt extends BaseAttack {
         this.baseMitigation = 1;
         this.baseMin = 1;
         this.baseMax = 5;
-
+        
+        //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
-        //TODO I moved these out of the initiate function - need to make sure this works ok
-        this.channelActionAvoidedMessage = (this.actionCharacter.props.name + " bolts of arcane energy streak from  " + this.actionCharacter.props.name + "'s fingers, but " + this.targetCharacter.props.name + " resists the bolt's harm");
-        this.channelActionFailMessage = (this.actionCharacter.props.name + " attempts to conjure an Arcane Bolt, but the spell fizzles away!");
-
-        //TODO I moved these out of the initiate function - need to make sure this works ok
+        //Score used as the total damage dealt
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //Score used to reduce the total damage dealt
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        //Total damage to be dealt if not avoided, resisted, ect.
         this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
     }
 
     initiate() {
-        
+
+        //Base Slack message Details
+        let slackPayload = {
+            "username": this.actionCharacter.props.name,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            "channel": this.slackChannel,
+            "text": this.channelActionSuccessMessage
+        };
+
         //BaseAction
         //skill check: this.baseSuccessChance + modifier
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('Skill FAILED!');
+            slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(slackPayload);
             return this.playerActionFailedMessage
         }
 
         //Evasion check
         //Arguments: accuracyModifier, avoidModifier
         if (this._avoidCheck(0, 0) === false) {
-            console.log('Target evaded!');
+            slackPayload.text = this.channelActionAvoidedMessage;
+            slack.sendMessage(slackPayload);
             return this.playerActionAvoidedMessage
         }
 
         //Process all the other effects of the action
-        //this._damageEffect(totalDamage);
         this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
-        //Alert the channel of the action
-        var alertDetails = {
-            "username": this.actionCharacter.props.name,
-            //"username": this.slackUserName,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            //"icon_url": this.slackIcon,
-            "channel": this.slackChannel,
-            "text": (this.actionCharacter.props.name + " launches bolts of arcane energy which strike " + this.targetCharacter.props.name + " for " + this.calculatedDamage + " points of damage!")
-        };
-
-        //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        channelAlert.sendToSlack(this.params);
+        slackPayload.text = this.channelActionSuccessMessage;
+        slack.sendMessage(slackPayload);
 
         return '';
     }

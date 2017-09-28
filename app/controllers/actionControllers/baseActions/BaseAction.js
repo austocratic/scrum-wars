@@ -35,7 +35,7 @@ class BaseAction {
             return true
         }
 
-        //If check returned true (successful, it will never get to this point to alert Slack)
+        //If check returned true (if successful, it will never get to this point to alert Slack)
         
         //Alert the channel of the action
         var alertDetails = {
@@ -101,6 +101,33 @@ class BaseAction {
     }
 
     //modifiers = {is_active: -1}
+
+    _avoidCheck(accuracyModifier, avoidModifier){
+
+        var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
+        var avoidScore = this.baseAvoidScore + avoidModifier + this._getRandomIntInclusive(1, 10);
+        console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
+
+        if(accuracyScore >= avoidScore){
+            return true
+        }
+
+        //Alert the channel of the action
+        var alertDetails = {
+            "username": this.slackUserName,
+            "icon_url": this.slackIcon,
+            "channel": this.slackChannel,
+            "text": this.channelActionAvoidedMessage
+        };
+
+        //Create a new slack alert object
+        var channelAlert = new Slack(alertDetails);
+
+        //Send alert to slack
+        channelAlert.sendToSlack(this.params);
+
+        return false
+    }
 
     _applyEffect(characterToModify, modifiers, actionTaken){
 
@@ -169,15 +196,10 @@ class BaseAction {
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey => {
-                console.log('eachModifierKey: ', eachModifierKey);
 
                 var nestedProperty = modifiersToRemove[eachModifierKey];
 
-                console.log('eachModifierKeyObject: ', nestedProperty);
-
                 var nestedKeys = Object.keys(nestedProperty);
-
-                console.log('nestedKeys: ', nestedKeys);
 
                 //If key is nested
                 if (nestedKeys.length > 0) {
@@ -187,41 +209,13 @@ class BaseAction {
         }
 
         function getNestedKeys(nestedProperty){
-            console.log('nestedProperty: ', nestedProperty);
 
             var nestedKeys = Object.keys(nestedProperty);
 
-            console.log('nestedKeys: ', nestedKeys);
-
             nestedKeys.forEach( eachNestedKey =>{
                 var nestedValue = nestedProperty[eachNestedKey];
-
-                console.log('A nested value: ', nestedValue)
             });
-
-
-            /*
-
-             var nestedProperty = modifiersToRemove[eachModifierKey];
-
-             console.log('eachModifierKeyObject: ', nestedProperty);
-
-             var nestedKeys = Object.keys(nestedProperty);
-
-             */
         }
-
-
-        //Functionality from _changeProperty but with negative values
-        /*
-         var modifierKeys = Object.keys(effectsToRemove);
-
-         if (modifierKeys.length > 0) {
-         modifierKeys.forEach( eachModifierKey =>{
-
-         characterToModify.incrementProperty(eachModifierKey, -(effectsToRemove[eachModifierKey]));
-         })
-         }*/
 
         //Remove effect
         characterToModify.props.effects.splice(arrayIndex, 1);

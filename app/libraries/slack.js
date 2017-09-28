@@ -6,9 +6,27 @@ const request = require('request');
 const slackHook = process.env.SLACK_HOOK;
 
 
+//New Slack functionality.  To replace class hierarchy below
+const sendMessage = payloadBody => {
+
+    let requestOptions = {
+        uri:                     slackHook,
+        resolveWithFullResponse: true,
+        json:                    true,
+        body:                    payloadBody
+    };
+
+    request.post(requestOptions, (err, httpResponse, body) => {
+        if (err) {
+            console.log('ERROR when sending message to slack: ' + err);
+        }
+    });
+    
+};
+
+
 class Slack {
-    constructor() {
-    }
+    constructor() {}
 
     //TODO: need to add validation to ensure that this.options are set before calling
     sendToSlack(){
@@ -33,19 +51,16 @@ class Alert extends Slack {
 
     _setOptions() {
 
-        console.log('setting uri: ', process.env.SLACK_HOOK);
-
         this.options = {
             uri:                     slackHook,
             resolveWithFullResponse: true,
             json:                    true,
             body:                    this.params
         };
-
-        console.log('slack parameters: ', this.options)
     }
 }
 
 module.exports = {
-    Alert
+    Alert,
+    sendMessage
 };

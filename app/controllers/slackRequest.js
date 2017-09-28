@@ -155,42 +155,6 @@ const beginRequest = async () => {
     return game;
 };
 
-const processRequest = (action, userSelection, opts) => {
-    console.log('slackRequest.processRequest()');
-
-    console.log('DEBUG action: ', action);
-    console.log('DEBUG userSelection: ', userSelection);
-    let actualFn;
-    try {
-        //For some game contexts, I don't have individual functions for each selection.  
-        //In these cases, the same function will be invoked regardless of selection
-        //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
-        
-        actualFn = actionsAndThingsContext[action];
-
-        if (typeof actualFn === 'function') {
-            return actualFn(opts);
-        }
-
-        actualFn = actionsAndThingsContext[action][userSelection];
-        
-    } catch(err) {
-        // invalid action and user selection
-        console.log('INVALID action & user selection: ', err)
-    }
-    if (typeof actualFn === 'function') {
-        return actualFn(opts);
-    }
-};
-
-const endRequest = async (game) => {
-    console.log('slackRequest.endRequest()');
-
-    //Overwrites with updated local props
-    return await game.updateState();
-};
-
-
 const getSlashCommandResponse = (payload, game) => {
     console.log('slackRequest.getSlashCommandResponse()');
 
@@ -201,7 +165,7 @@ const getSlashCommandResponse = (payload, game) => {
     let slackRequestCommand = 'command';
     let slackCallback = slackRequestCommand;
     let slackRequestText = payload.text;
-    
+
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
     let user = new User(game.state, slackRequestUserID);
@@ -243,7 +207,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
     console.log('DEBUG ********************* payload: ', payload);
-    
+
     let userActionNameSelection = payload.actions[0].name;
 
     console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
@@ -254,9 +218,9 @@ const getInteractiveMessageResponse = (payload, game) => {
         userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
         slackCallback = modifyCallbackForBack(payload.callback_id);
     } else {
-        slackCallback = payload.callback_id;    
+        slackCallback = payload.callback_id;
     }
-    
+
     let slackCallbackElements = slackCallback.split("/");
 
     function getActionValue(){
@@ -301,6 +265,43 @@ const getInteractiveMessageResponse = (payload, game) => {
         currentMatch,
         characterClass
     });
+};
+
+const endRequest = async (game) => {
+    console.log('slackRequest.endRequest()');
+
+    //Overwrites with updated local props
+    return await game.updateState();
+};
+
+
+
+const processRequest = (action, userSelection, opts) => {
+    console.log('slackRequest.processRequest()');
+
+    console.log('DEBUG action: ', action);
+    console.log('DEBUG userSelection: ', userSelection);
+    let actualFn;
+    try {
+        //For some game contexts, I don't have individual functions for each selection.  
+        //In these cases, the same function will be invoked regardless of selection
+        //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
+
+        actualFn = actionsAndThingsContext[action];
+
+        if (typeof actualFn === 'function') {
+            return actualFn(opts);
+        }
+
+        actualFn = actionsAndThingsContext[action][userSelection];
+
+    } catch(err) {
+        // invalid action and user selection
+        console.log('INVALID action & user selection: ', err)
+    }
+    if (typeof actualFn === 'function') {
+        return actualFn(opts);
+    }
 };
 
 
