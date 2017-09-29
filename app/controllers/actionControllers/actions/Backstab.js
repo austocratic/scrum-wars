@@ -27,7 +27,7 @@ class Backstab extends BaseAttack {
 
         //Base Slack template
         this.slackPayload = {
-            "username": this.slackUserName,
+            "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
@@ -57,12 +57,17 @@ class Backstab extends BaseAttack {
         if (this.actionCharacter.props.effects) {
             this.actionCharacter.props.effects
                 .filter(eachEffect => {
-                    return eachEffect.modifiers.is_hidden === 1
+                    return eachEffect.modifiers.modified_is_hidden === 1
                 })
                 .forEach(eachEffect => {
                     this._reverseEffect(this.actionCharacter, eachEffect.action_id);
             });
         }
+        
+        /*
+        if (this.actionCharacter.props.is_hidden === 1){
+            this._changeProperty(this.actionCharacter, {is_hidden: -1});
+        }*/
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);

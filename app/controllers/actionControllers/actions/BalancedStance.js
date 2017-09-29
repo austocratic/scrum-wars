@@ -25,7 +25,7 @@ class BalancedStance extends BaseModify {
 
         //Base Slack template
         this.slackPayload = {
-            "username": this.slackUserName,
+            "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };

@@ -10,7 +10,7 @@ class DefensiveStance extends BaseModify {
     constructor(gameObjects) {
         super(gameObjects);
 
-        this.baseSuccessChance = 1; //% change of success
+        this.baseSuccessChance = 1; //% chance of success
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
         this.basePower = 4;
@@ -27,7 +27,7 @@ class DefensiveStance extends BaseModify {
 
         //Base Slack template
         this.slackPayload = {
-            "username": this.slackUserName,
+            "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };

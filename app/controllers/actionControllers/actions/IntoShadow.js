@@ -23,7 +23,7 @@ class IntoShadow extends BaseModify {
 
         //Base Slack template
         this.slackPayload = {
-            "username": this.slackUserName,
+            "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
@@ -39,8 +39,10 @@ class IntoShadow extends BaseModify {
             return;
         }
 
+        //TODO need to validate that the player is not already hidden and prevent hiding if already hidden
+
         let statsToModify = {
-            is_hidden: 1
+            modified_is_hidden: 1
         };
 
         //Mark the player's character as hidden
