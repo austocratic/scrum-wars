@@ -17,7 +17,7 @@ testGame.state = testDB;
 //Calculate properties in memory
 testGame.initiateRequest();
 
-var testCharacterID = 'd130618f3a221f672cfc';
+var testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
 
 var testCharacterID2 ='a7ad15dd1052e7e7ef8a';
 

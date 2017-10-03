@@ -20,7 +20,7 @@ describe("Testing helper function validateGameObjects", function(){
 
     let slackResponseTemplate = {};
 
-    let testCharacterID = 'd130618f3a221f672cfc';
+    let testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
 
     let playerCharacter = new Character(game.state, testCharacterID);
     let characterClass = new Class(game.state, playerCharacter.props.class_id);

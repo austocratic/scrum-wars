@@ -14,7 +14,7 @@ var NPC = require('./NPC').NPC;
 var Action = require('./Action').Action;
 var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
-var slackTemplates = require('../slackTemplates');
+//var slackTemplates = require('../slackTemplates');
 
 var slackAlert = require('../libraries/slack').Alert;
 
@@ -25,6 +25,8 @@ var gameConfigurations = require('./gameConfigurations.json');
 
 //TODO - move this to a config file
 var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
+
+const getActionEffectController = require('../controllers/actionEffectController').getActionEffectController;
 
 
 
@@ -45,6 +47,9 @@ class Game {
         
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
+        
+        //Configuration: # of minutes per turn
+        this.turnLengthMinutes = 60
         
     }
     
@@ -67,10 +72,7 @@ class Game {
     //It is invoked periodically by cron
     //It is always invoked after a player action
     refresh(){
-
-        //Set 
-        
-        //Check for Game updates
+        console.log('called Game.refresh()');
         
         //**********************~~  Match  ~~***********************
 
@@ -126,12 +128,22 @@ class Game {
                     currentMatch.end()
                 }
 
-                let characterIDinZone = matchStartingCharacterIDs
+         // *************** VICTORY CONDITIONS *****************
+
+                let charactersInZone = matchStartingCharacterIDs
+                    .map( eachMatchStartingCharacterID =>{
+                        return new Character(this.state, eachMatchStartingCharacterID);
+                    })
                     //Filter starting characters for characters currently in the zone
-                    .filter( eachMatchStartingCharacterID =>{
-                        return this.state.character[eachMatchStartingCharacterID].zone_id === currentMatch.props.zone_id
+                    .filter( eachMatchStartingCharacter =>{
+
+                        return eachMatchStartingCharacter.props.zone_id === currentMatch.props.zone_id;
+                        //return this.state.character[eachMatchStartingCharacterID].zone_id === currentMatch.props.zone_id
                     });
-                
+
+
+                /*
+                //Check for only one character left in zone (victory condition)
                 if (characterIDinZone.length === 1) {
                     
                     //Create a winning character object reference
@@ -151,9 +163,114 @@ class Game {
                     
                     currentMatch.end()
                 }
+
+                */
+            // *************** TURN END CONDITIONS *****************
+
+                console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
+
+                //Calculate the time that the next turn should start:
+                let nextTurnStartTime = (currentMatch.props.date_started + (currentMatch.props.number_turns * (this.turnLengthMinutes * 60000)));
+
+                console.log('nextTurnStartTime: ', nextTurnStartTime);
+
+                let humanTime = new Date(nextTurnStartTime);
+
+                console.log('nextTurnStartTime: ', humanTime.toTimeString());
+
+                console.log("Current time: ", Date.now())
+                
+                //Check to see if it is time to start the next turn
+                //if (Date.now() > nextTurnStartTime){
+                    
+                    //Increment the turn number
+                    
+                    //Resolve ongoing effects
+                        //lookup each character and its current effects
+                        //look at each effect ID
+                        //look up that effects ongoing effects properties
+                            //If that turn, trigger that function
+                    
+                    //For each character in the zone lookup IDs of all effects
+
+                    charactersInZone.forEach( eachCharacter => {
+                        
+                        console.log('DEBUG each character id: ', eachCharacter.id);
+
+                        //If the character has effects on them, process them
+                        if( eachCharacter.props.effects ) {
+
+                            console.log('DEBUG, eachCharacter effects: ', eachCharacter.props.effects);
+                            eachCharacter.props.effects.forEach( eachEffect => {
+
+                                let effectAction = new Action(this.state, eachEffect.action_id);
+
+                                //If the action has ongoing effects, process them
+                                if (effectAction.props.ongoing_effects){
+                                    
+                                    console.log('DEBUG ongoing_effects: ', effectAction.props.ongoing_effects);
+                                    
+                                    effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
+
+                                        //For each effect, determine if the effect should apply for the current turn
+                                        console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn)
+
+                                        //Need to determine what turn the effect was applied and
+
+                                        //Determine if the action is ongoing during the current turn
+                                        console.log('DEBUG current turn: ', currentMatch.props.number_turns);
+                                        //Check if the action has an ongoing effect that should apply to the current turn.
+                                        //In order to get the relative turn number take the current turn - the turn the action was applied
+                                        if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied)){
+                                            console.log('DEBUG it is relative turn: ', currentMatch.props.number_turns - eachEffect.turn_applied)
+
+                                            console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
+
+                                            console.log('DEBUG activating function: ', eachOngoingEffect.functionName);
+
+                                            //Declare the Class function without invoking, so I can then validate
+                                            const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
+
+                                            //TODO how to access these objecst like actionCharacter, currentZone, are they necessary?
+                                            let gameObjects = {
+                                                game: {
+                                                   baseURL: this.baseURL,
+                                                   avatarPath: this.avatarPath
+                                                },
+                                                targetCharacter: eachCharacter,
+                                                //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
+                                                currentZone: {
+                                                    props: {
+                                                        channel : "arena",
+                                                        channel_id : "C4Z7F8XMW",
+                                                        name : "The Arena"
+                                                    }
+                                                },
+                                                currentMatch
+                                            };
+
+                                            //Invoke validation function using the classes's attached validation properties before instantiating the class
+                                            helpers.validateGameObjects(gameObjects, actionEffectObjectToMake.validations);
+
+                                            let actionEffectObject = new actionEffectObjectToMake(gameObjects);
+
+                                            actionEffectObject.initiate();
+
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    });
+                    
+                    
+                //}
+
+
                 
                 break;
-            
+
+
             //If match has ended, create a new match and update the global match ID
             case 'ended':
                 console.log('DEBUG: called game.refresh() currentMatch.props.status = ended');

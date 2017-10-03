@@ -11,10 +11,9 @@ let Action = require('../../models/Action').Action;
 
 const actions = require('../actionControllers/actions/index');
 
-
 const { QuickStrike, ArcaneBolt, LifeTap, Backstab } = actions;
 
-
+//TODO I may want to make this a stand alone file/function "getActionController" so that it can be re used in Game to process effects
 const actionControllers = {
 
     //TODO for now I am only storing the game context & the action value selected (which is the action ID) in the callback string

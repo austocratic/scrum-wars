@@ -3,6 +3,13 @@
 // ---Modules---
 const request = require('request');
 
+if(process.env.USE_LOCAL_ENV) {
+
+    require('dotenv').load();
+    //require('dotenv').config()
+    console.log('ENV: ', process.env.SLACK_HOOK)
+}
+
 const slackHook = process.env.SLACK_HOOK;
 
 
@@ -10,7 +17,8 @@ const slackHook = process.env.SLACK_HOOK;
 const sendMessage = payloadBody => {
 
     let requestOptions = {
-        uri:                     slackHook,
+        //uri:                     slackHook,
+        uri:                     process.env.SLACK_HOOK,
         resolveWithFullResponse: true,
         json:                    true,
         body:                    payloadBody
@@ -19,6 +27,7 @@ const sendMessage = payloadBody => {
     request.post(requestOptions, (err, httpResponse, body) => {
         if (err) {
             console.log('ERROR when sending message to slack: ' + err);
+            return err
         }
     });
     

@@ -30,7 +30,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     let requestChannelID = 'C4Z7F8XMW';
     let requestZone = new Zone(game.state, requestChannelID);
 
-    let playerCharacter = new Character(game.state, 'd130618f3a221f672cfc');
+    let playerCharacter = new Character(game.state, '55e38d23d842e50e9026');
     
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
 

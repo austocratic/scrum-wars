@@ -27,7 +27,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
         let slackResponseTemplate = {};
         let slackCallback = '';
 
-        let testCharacterID = 'd130618f3a221f672cfc';
+        let testCharacterID = '55e38d23d842e50e9026';
 
         //Arena channel ID
         //slackPayload.channel_id
@@ -60,7 +60,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
         let slackResponseTemplate = {};
 
         //Mock a character that does not have gender property set yet
-        let testCharacterID = 'd130618f3a221f672cfc';
+        let testCharacterID = '55e38d23d842e50e9026';
 
         //Arena channel ID
         //slackPayload.channel_id

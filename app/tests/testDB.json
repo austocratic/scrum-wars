@@ -98,6 +98,19 @@
       "name" : "Arcane Bolt",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KvOpJ2FyGodmZCanea7" : {
+      "cool_down" : "3",
+      "delay" : "1",
+      "functionName" : "poisonedBlade",
+      "minimum_level" : "1",
+      "name" : "Poisoned Blade",
+      "ongoing_effects" : [ {
+        "active_on_turn" : [ 1, 2, 3 ],
+        "functionName" : "damageOverTime"
+      } ],
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     }
   },
   "character" : {
@@ -127,6 +140,13 @@
       "armor" : 0,
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "dexterity" : 12,
+      "effects": [
+        {
+          "action_id": "-KvOpJ2FyGodmZCanea7",
+          "turn_applied": 2
+        }
+      ],
+      "gender" : "male",
       "gold" : 100,
       "hit_points" : -12,
       "intelligence" : 18,

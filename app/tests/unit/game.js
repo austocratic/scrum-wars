@@ -11,7 +11,7 @@ var helpers = require('../../helpers');
 var testGame = new Game();
 testGame.state = testDB;
 
-var testCharacterID = 'd130618f3a221f672cfc';
+var testCharacterID = '55e38d23d842e50e9026';
 
 var testCharacter = new Character(testGame.state, testCharacterID);
 /*

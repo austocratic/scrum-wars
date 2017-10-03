@@ -151,6 +151,9 @@ const beginRequest = async () => {
 
     //Calculate properties in memory
     game.initiateRequest();
+    
+    //Refresh the game (check for new turn, player deaths, ect.)
+    game.refresh();
 
     return game;
 };

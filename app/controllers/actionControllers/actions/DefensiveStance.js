@@ -31,6 +31,12 @@ class DefensiveStance extends BaseModify {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
+
+        //Modifiers to apply on action success
+        this.statsToModify = {
+            modified_toughness: this.calculatedPower,
+            modified_strength: -this.calculatedPower
+        };
     }
 
     initiate(){
@@ -43,12 +49,8 @@ class DefensiveStance extends BaseModify {
             return;
         }
 
-        let statsToModify = {
-            modified_toughness: this.calculatedPower,
-            modified_strength: -this.calculatedPower
-        };
-
-        this._applyEffect(this.actionCharacter, statsToModify, this.actionTaken);
+        //Apply modifiers defined in constructor
+        this._applyEffect(this.actionCharacter, this.statsToModify, this.actionTaken);
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);

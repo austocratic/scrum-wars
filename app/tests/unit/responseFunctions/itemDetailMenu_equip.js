@@ -29,7 +29,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
 
     let slackResponseTemplate = {};
 
-    let testCharacterID = 'd130618f3a221f672cfc';
+    let testCharacterID = '-Kkxf1ukVSF9VV6mIPlG';
 
     let playerCharacter = new Character(game.state, testCharacterID);
 

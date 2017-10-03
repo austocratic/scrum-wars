@@ -21,7 +21,7 @@ game.state = testDB;
 
 const gameContext = 'selectCharacterAvatarMenu';
 
-const userActionValueSelection = '-Kkxf1ukVSF9VV6mIPlG';
+const userActionValueSelection = '55e38d23d842e50e9026';
 
 describe("Testing selectActionTarget function", function() {
     
@@ -78,6 +78,7 @@ describe("Testing selectActionTarget function", function() {
             slackCallback
         });
     });
+    
     
     //testSlackResponseFormat(slackResponseTemplateReturned);
 });
