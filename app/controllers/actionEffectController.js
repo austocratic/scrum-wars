@@ -12,6 +12,8 @@ const actionEffectControllers = {
 const getActionEffectController = actionEffectFunctionName => {
     console.log('Called getActionEffectController');
 
+    console.log('DEBUGGING actionEffectController: ', actionEffectController);
+
     console.log('DEBUGGING getActionEffectController: ', actionEffectControllers);
 
     console.log('DEBUGGING getActionEffectController damageOverTime: ', actionEffectControllers['damageOverTime']);
