@@ -16,7 +16,7 @@ const getActionEffectController = actionEffectFunctionName => {
 
     console.log('DEBUGGING getActionEffectController: ', actionEffectControllers);
 
-    console.log('DEBUGGING getActionEffectController damageOverTime: ', actionEffectControllers['damageOverTime']);
+    //console.log('DEBUGGING getActionEffectController damageOverTime: ', actionEffectControllers['damageOverTime']);
 
 
     //If the function name is not defined, throw an error
