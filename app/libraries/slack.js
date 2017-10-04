@@ -4,10 +4,7 @@
 const request = require('request');
 
 if(process.env.USE_LOCAL_ENV) {
-
     require('dotenv').load();
-    //require('dotenv').config()
-    console.log('ENV: ', process.env.SLACK_HOOK)
 }
 
 const slackHook = process.env.SLACK_HOOK;

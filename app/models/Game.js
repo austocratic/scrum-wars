@@ -213,9 +213,11 @@ class Game {
                                     effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
 
                                         //For each effect, determine if the effect should apply for the current turn
-                                        console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn)
+                                        console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn);
 
-                                        //Need to determine what turn the effect was applied and
+                                        //Get the character who applied the effect.
+                                        //TODO should effects only work if the character who applied it is still alive?
+                                        let playerCharacter = new Character(game.state, eachOngoingEffect.applied_by_character_id);
 
                                         //Determine if the action is ongoing during the current turn
                                         console.log('DEBUG current turn: ', currentMatch.props.number_turns);
@@ -246,7 +248,8 @@ class Game {
                                                         name : "The Arena"
                                                     }
                                                 },
-                                                currentMatch
+                                                currentMatch,
+                                                playerCharacter
                                             };
 
                                             //Invoke validation function using the classes's attached validation properties before instantiating the class

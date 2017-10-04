@@ -13,15 +13,17 @@ class DamageOverTime extends BaseActionEffect{
         //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
         this.calculatedDamage = 3;
 
+        this.iconFileName = "";
+
         this.channelActionSuccessMessage = `${this.targetCharacter.props.name} reels in pain from poison`;
         //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
-            //"username": this.actionCharacter.props.name,
-            //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "username": 'DOT_Name',
-            "icon_url": 'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png',
+            "username": this.actionCharacter.props.name,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            //"username": 'DOT_Name',
+            //"icon_url": 'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png',
             "channel": ("#" + gameObjects.currentZone.props.channel)
         };
     }
@@ -29,6 +31,8 @@ class DamageOverTime extends BaseActionEffect{
     initiate() {
 
         console.log('DEBUG called DamageOverTime.initiate()');
+
+        console.log('DEBUG DamageOverTime initiate() health before: ', this.targetCharacter.hit_points);
 
         //Process all the other effects of the action
         this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
