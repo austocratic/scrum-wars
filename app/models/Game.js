@@ -44,6 +44,7 @@ class Game {
         this.baseURL = 'https://scrum-wars.herokuapp.com/';
         
         this.avatarPath = 'public/images/fullSize/character_avatar/';
+        this.skillImagePath = 'public/images/thumb/';
         
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
@@ -238,8 +239,9 @@ class Game {
                                             //TODO how to access these objecst like actionCharacter, currentZone, are they necessary?
                                             let gameObjects = {
                                                 game: {
-                                                   baseURL: this.baseURL,
-                                                   avatarPath: this.avatarPath
+                                                    baseURL: this.baseURL,
+                                                    avatarPath: this.avatarPath,
+                                                    skillImagePath: this.skillImagePath
                                                 },
                                                 targetCharacter: eachCharacter,
                                                 //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
