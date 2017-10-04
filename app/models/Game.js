@@ -205,6 +205,12 @@ class Game {
 
                                 let effectAction = new Action(this.state, eachEffect.action_id);
 
+                                console.log('DEBUG eachEffect: ', eachEffect);
+
+                                //Get the character who applied the effect.
+                                //TODO should effects only work if the character who applied it is still alive?
+                                let playerCharacter = new Character(this.state, eachEffect.applied_by_character_id);
+
                                 //If the action has ongoing effects, process them
                                 if (effectAction.props.ongoing_effects){
                                     
@@ -214,10 +220,6 @@ class Game {
 
                                         //For each effect, determine if the effect should apply for the current turn
                                         console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn);
-
-                                        //Get the character who applied the effect.
-                                        //TODO should effects only work if the character who applied it is still alive?
-                                        let playerCharacter = new Character(this.state, eachOngoingEffect.applied_by_character_id);
 
                                         //Determine if the action is ongoing during the current turn
                                         console.log('DEBUG current turn: ', currentMatch.props.number_turns);
