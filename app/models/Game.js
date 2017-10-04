@@ -217,7 +217,7 @@ class Game {
 
                                         //Get the character who applied the effect.
                                         //TODO should effects only work if the character who applied it is still alive?
-                                        let playerCharacter = new Character(game.state, eachOngoingEffect.applied_by_character_id);
+                                        let playerCharacter = new Character(this.state, eachOngoingEffect.applied_by_character_id);
 
                                         //Determine if the action is ongoing during the current turn
                                         console.log('DEBUG current turn: ', currentMatch.props.number_turns);
