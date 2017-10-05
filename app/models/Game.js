@@ -166,7 +166,7 @@ class Game {
                 }
 
                 */
-            // *************** TURN END CONDITIONS *****************
+            //*************** TURN END CONDITIONS *****************
 
                 console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
 
@@ -179,7 +179,7 @@ class Game {
 
                 console.log('nextTurnStartTime: ', humanTime.toTimeString());
 
-                console.log("Current time: ", Date.now())
+                console.log("Current time: ", Date.now());
                 
                 //Check to see if it is time to start the next turn
                 //if (Date.now() > nextTurnStartTime){
@@ -236,7 +236,7 @@ class Game {
                                             //Declare the Class function without invoking, so I can then validate
                                             const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
 
-                                            //TODO how to access these objecst like actionCharacter, currentZone, are they necessary?
+                                            //TODO how to access these objects like actionCharacter, currentZone, are they necessary?
                                             let gameObjects = {
                                                 game: {
                                                     baseURL: this.baseURL,
@@ -245,14 +245,13 @@ class Game {
                                                 },
                                                 targetCharacter: eachCharacter,
                                                 //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
-                                                currentZone: {
+                                                requestZone: {
                                                     props: {
                                                         channel : "arena",
                                                         channel_id : "C4Z7F8XMW",
                                                         name : "The Arena"
                                                     }
                                                 },
-                                                currentMatch,
                                                 playerCharacter
                                             };
 
@@ -274,7 +273,6 @@ class Game {
                 //}
 
 
-                
                 break;
 
 
@@ -544,14 +542,16 @@ class Game {
 
     getCharacterClasses() {
 
-        var characterClassesTemplate = slackTemplates.generateCharacterClassList;
+        //var characterClassesTemplate = slackTemplates.generateCharacterClassList;
         
         //Get all available classes from local
-        var localCharacterClasses = this.state.class;
+        let localCharacterClasses = this.state.class;
 
         //Get an array of all class IDs
-        var classIDs = Object.keys(localCharacterClasses);
-        
+        let classIDs = Object.keys(localCharacterClasses);
+
+        let characterClassesTemplate = {};
+
         characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
 
             return {

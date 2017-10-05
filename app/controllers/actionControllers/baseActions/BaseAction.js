@@ -129,7 +129,7 @@ class BaseAction {
         return false
     }
 
-    _applyEffect(characterToModify, modifiers, actionTaken){
+    _applyEffect(characterToModify, modifiers){
 
         //TODO add standard validation function check
 
@@ -149,9 +149,9 @@ class BaseAction {
 
         //modifierObject = Object.assign(modifierObject, modifiers);
 
-        console.log('DEBUG: actionTaken: ', actionTaken);
+        console.log('DEBUG: actionTaken: ', this.actionTaken);
 
-        var endingTurn = this.currentMatch.props.number_turns + actionTaken.props.effect_duration;
+        var endingTurn = this.currentMatch.props.number_turns + this.actionTaken.props.effect_duration;
 
         //console.log('Modifier object: ', modifierObject);
 
@@ -160,17 +160,17 @@ class BaseAction {
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
-                action_id: actionTaken.id,
+                action_id: this.actionTaken.id,
                 end_turn: endingTurn,
-                type: actionTaken.props.type,
+                type: this.actionTaken.props.type,
                 modifiers: modifiers
                 //modifiers: modifierObject
             });
         } else {
             characterToModify.props.effects = [{
-                action_id: actionTaken.id,
+                action_id: this.actionTaken.id,
                 end_turn: endingTurn,
-                type: actionTaken.props.type,
+                type: this.actionTaken.props.type,
                 modifiers: modifiers
                 //modifiers: modifierObject
             }]

@@ -28,8 +28,5 @@ describe("Testing getActionEffectController", function() {
             );
         })
     })
-
-
-
 });
 

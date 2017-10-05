@@ -46,7 +46,7 @@ class IntoShadow extends BaseModify {
         };
 
         //Mark the player's character as hidden
-        this._applyEffect(this.actionCharacter, statsToModify, this.actionTaken);
+        this._applyEffect(this.actionCharacter, statsToModify);
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);

@@ -20,7 +20,7 @@ class PoisonedBlade extends BaseAttack {
         this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your lunge towards your enemy but stumble";
+        this.playerActionFailedMessage = "You lunge towards your enemy but stumble";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a poisonous strike, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes out with poisonous blades but ${this.targetCharacter.props.name} dodges the attack!`;
@@ -61,7 +61,7 @@ class PoisonedBlade extends BaseAttack {
         this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
         
         //Apply the effect
-        this._applyEffect(this.actionCharacter, this.statsToModify, this.actionTaken);
+        this._applyEffect(this.targetCharacter, this.statsToModify);
 
         //Alert the channel of the action
         this.slackPayload.text = this.channelActionSuccessMessage;

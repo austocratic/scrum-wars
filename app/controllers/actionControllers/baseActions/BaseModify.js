@@ -6,7 +6,7 @@ class BaseModify extends BaseAction{
     constructor(gameObjects) {
         super(gameObjects);
 
-        this.targetCharacter = gameObjects.targetCharacter;
+        //this.targetCharacter = gameObjects.targetCharacter;
     }
 
     _reverseEffectsOfType(character, effectType){

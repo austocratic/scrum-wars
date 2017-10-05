@@ -50,7 +50,7 @@ class DefensiveStance extends BaseModify {
         }
 
         //Apply modifiers defined in constructor
-        this._applyEffect(this.actionCharacter, this.statsToModify, this.actionTaken);
+        this._applyEffect(this.actionCharacter, this.statsToModify);
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);

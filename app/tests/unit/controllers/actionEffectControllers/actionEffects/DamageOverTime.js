@@ -18,7 +18,7 @@ describe("Testing DamageOverTime class", function() {
         let gameObjects = {
             targetCharacter: new Character(game.state, '-Kkxf1ukVSF9VV6mIPlG'), //Freddy
             playerCharacter: new Character(game.state, '55e38d23d842e50e9026'), //Test wizard
-            currentZone: new Zone(game.state, 'C4Z7F8XMW'), //arena
+            requestZone: new Zone(game.state, 'C4Z7F8XMW'), //arena
             game: {
                 baseURL: game.baseURL,
                 avatarPath: game.avatarPath

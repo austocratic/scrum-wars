@@ -7,8 +7,6 @@ const _ = require('lodash');
 class BaseActionEffect {
     constructor(gameObjects){
 
-        console.log('DEBUG actionCharacter: ', gameObjects.playerCharacter);
-
         this.game = gameObjects.game;
         this.actionCharacter = gameObjects.playerCharacter;
         this.currentZone = gameObjects.requestZone;
@@ -42,8 +40,9 @@ class BaseActionEffect {
 //Attach validations to the BaseAction
 BaseActionEffect.validations = [
     'game',
-    'currentMatch',
-    'targetCharacter'
+    'targetCharacter',
+    'requestZone',
+    'playerCharacter'
 ];
 
 module.exports = {

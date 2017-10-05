@@ -78,7 +78,20 @@ describe("Testing selectActionTarget function", function() {
             slackCallback
         });
     });
-    
+
+    describe("when callback includes action selected of -KvOpJ2FyGodmZCanea7 (Poison Blade)", function() {
+
+        const slackCallback = 'command:action/selectActionMenu:-KvOpJ2FyGodmZCanea7/selectActionTarget';
+
+        let slackResponseTemplateReturned = processActionOnTarget({
+            game,
+            playerCharacter,
+            userActionValueSelection,
+            requestZone,
+            currentMatch,
+            slackCallback
+        });
+    });
     
     //testSlackResponseFormat(slackResponseTemplateReturned);
 });
