@@ -161,6 +161,7 @@ class BaseAction {
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
                 action_id: this.actionTaken.id,
+                applied_by_character_id: this.actionCharacter.id,
                 end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
@@ -169,6 +170,7 @@ class BaseAction {
         } else {
             characterToModify.props.effects = [{
                 action_id: this.actionTaken.id,
+                applied_by_character_id: this.actionCharacter.id,
                 end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
