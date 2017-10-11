@@ -97,9 +97,11 @@ class Game {
                 
                 //console.log('gameConfiguration match start: ', gameConfigurations.match.startTime);
 
-                //Determine if the pending match should begin
+            //*************** CHECK FOR MATCH START *****************
                 if (currentHour > gameConfigurations.match.startTime){
                     console.log('Time to start the match!');
+
+                    //TODO get all the characters currently in the zone
 
                     //Start the match: set status, starting characters, start date
                     currentMatch.start();
@@ -109,7 +111,7 @@ class Game {
                         "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
                         //TODO dont hardcode the arena
                         "channel": ("#arena"),
-                        "text": "Prepare for battle! A new turn turn has arrived!"
+                        "text": "Prepare for battle! The match begins!"
                     };
 
                     slack(alertDetails);
@@ -374,8 +376,8 @@ class Game {
 
         let newMatch = {
             [localRandomID]: {
-                active: 0,
-                turn: 0,
+                number_turns: 0,
+                status: 'pending',
                 starting_character_ids : [],
                 zone_id : zoneID
             }
@@ -546,14 +548,26 @@ class Game {
 
     getCharacterIDsInZone(zoneID){
         console.log('called getCharacterIDsInZone');
-        
+
+        /*
         //Set a variable for all character IDs in zone (active & inactive & all zones)
-        var characterIDsInZone = Object.keys(this.state.character);
+        let characterIDsInZone = Object.keys(this.state.character);
 
         //Filter for Active characters && current zone (returns character IDs) && not hidden
         return characterIDsInZone.filter( singleCharacterID =>{
             return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID && this.state.character[singleCharacterID].is_hidden === 0)
-        });
+        });*/
+
+        return Object.keys(this.state.character)
+            .map( eachCharacterID =>{
+                return new Character(this.state, eachCharacterID)
+            })
+            .filter( eachCharacter => {
+                return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID && eachCharacter.props.is_hidden === 0
+            })
+            .map( eachCharacter => {
+                return eachCharacter.id
+            })
     }
 
     getCharactersInZone(zoneID, requestSlackUserID){
