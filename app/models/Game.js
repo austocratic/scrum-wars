@@ -242,14 +242,15 @@ class Game {
                         eachCharacterInZone.updateProperty('zone_id', '-Khu9Zazk5XdFX9fD2Y8');
                     }
                 });
-                
-                //*************** VICTORY CONDITIONS *****************
+
+            //*************** VICTORY CONDITIONS *****************
 
                 //Check for only one character left in zone (victory condition)
                 if (charactersInZone.length === 1) {
 
-                    //Create a winning character object reference
-                    let winningCharacter = new Character(this.state, characterIDinZone[0]);
+                    //Last character Object is the winner.  Create reference for ease of use
+                    let winningCharacter = charactersInZone[0];
+                    //let winningCharacter = new Character(this.state, charactersInZone[0].id);
 
                     //Notify Slack about the winner
                     let alertDetails = {
