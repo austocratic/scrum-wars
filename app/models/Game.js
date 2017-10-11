@@ -245,6 +245,8 @@ class Game {
 
             //*************** VICTORY CONDITIONS *****************
 
+                //TODO currently a single refresh will not detect that players are dead and declare one as the winner
+                //It will move dead characters in one refresh and declare the winner in the next refresh
                 //Check for only one character left in zone (victory condition)
                 if (charactersInZone.length === 1) {
 
@@ -297,6 +299,7 @@ class Game {
                 }
 
                 break;
+
 
             //If match has ended, create a new match and update the global match ID
             case 'ended':
