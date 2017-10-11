@@ -21,7 +21,7 @@ const gameContext = 'command';
 const userSelection = 'action';
 
 describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
-
+    /*
     describe("where the player typed the /action command in a channel that the player's character is not in", function(){
 
         let slackResponseTemplate = {};
@@ -84,7 +84,57 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
         });
 
         testSlackResponseFormat(slackResponseTemplateReturned);
-    });
+    });*/
+
+    describe("when the player has already taken an action this turn", function(){
+
+        let slackResponseTemplate = {};
+
+        let currentMatch = new Match(game.state, game.state.global_state.match_id);
+
+        //Mock a character that does not have gender property set yet
+        let testCharacterID = '55e38d23d842e50e9026';
+
+        let playerCharacter = new Character(game.state, testCharacterID);
+
+        //Push an action to the character that has already been used this turn
+        playerCharacter.props.actions.push( {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : currentMatch.props.number_turns
+        });
+
+        console.log('DEBUG player actions: ',  playerCharacter.props.actions);
+
+        //Arena channel ID
+        //slackPayload.channel_id
+        let requestChannelID = 'C4Z7F8XMW';
+
+        let requestZone = new Zone(game.state, requestChannelID);
+
+        //Overwrite the player character's zone to ensure the character is in the arena
+        playerCharacter.props.zone_id = '-Khu9Ti4cn9PQ2Q1TSBT';
+
+        let slackResponseTemplateReturned = action({
+            game,
+            slackResponseTemplate,
+            requestZone,
+            currentMatch,
+            playerCharacter
+        });
+
+        console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
+
+        const takenMessage = "You have already taken an action this turn, wait until next turn";
+
+        it(`should return an object with text stating ${takenMessage}`, function() {
+            assert.equal(slackResponseTemplateReturned.text, takenMessage)
+        });
+
+        //testSlackResponseFormat(slackResponseTemplateReturned);
+
+    })
 });
 
 

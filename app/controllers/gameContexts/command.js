@@ -52,6 +52,21 @@ const action = gameObjects => {
     //Determine if any action was already taken this turn, if so return the action taken template
     //var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
 
+    console.log('DEBUG game turns: ', gameObjects.currentMatch.props.number_turns);
+
+    console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length)
+
+    if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
+        //An action was used this turn, return a message
+
+        gameObjects.slackResponseTemplate = {
+            "text": "You have already taken an action this turn, wait until next turn"
+            //TODO I could add a message saying how long until the next turn
+        };
+
+        return gameObjects.slackResponseTemplate
+    }
+
     
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();

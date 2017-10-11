@@ -17,6 +17,7 @@ var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 //var slackTemplates = require('../slackTemplates');
 
 var slackAlert = require('../libraries/slack').Alert;
+const slack = require('../libraries/slack').sendMessage;
 
 var _ = require('lodash');
 
@@ -100,10 +101,10 @@ class Game {
                 if (currentHour > gameConfigurations.match.startTime){
                     console.log('Time to start the match!');
 
-                    //Start the match - change status to started
+                    //Start the match: set status, starting characters, start date
                     currentMatch.start();
 
-                    var alertDetails = {
+                    let alertDetails = {
                         "username": "A mysterious voice",
                         "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
                         //TODO dont hardcode the arena
@@ -111,14 +112,15 @@ class Game {
                         "text": "Prepare for battle! A new turn turn has arrived!"
                     };
 
-                    let matchStartAlert = new slackAlert(alertDetails);
+                    slack(alertDetails);
 
-                    matchStartAlert.sendToSlack(this.props)
+                    //let matchStartAlert = new slackAlert(alertDetails);
+                    //matchStartAlert.sendToSlack(this.props)
                 }
 
                 break;
             
-            //If match has started, determine if turn should be incremented, determine if game has hit end condition
+            //If match has started, determine if turn should be incremented or determine if game has hit end condition
             case 'started':
                 console.log('Called game.refresh() currentMatch.props.status = started');
 
@@ -129,7 +131,7 @@ class Game {
                     currentMatch.end()
                 }
 
-         // *************** VICTORY CONDITIONS *****************
+            //*************** PROCESS ONGOING EFFECTS *****************
 
                 let charactersInZone = matchStartingCharacterIDs
                     .map( eachMatchStartingCharacterID =>{
@@ -142,31 +144,138 @@ class Game {
                         //return this.state.character[eachMatchStartingCharacterID].zone_id === currentMatch.props.zone_id
                     });
 
+                //For each character in the zone lookup IDs of all effects
+                charactersInZone.forEach( eachCharacter => {
 
-                /*
+                    //If the character has effects on them, process them
+                    if( eachCharacter.props.effects ) {
+
+                        console.log('DEBUG, eachCharacter effects: ', eachCharacter.props.effects);
+                        eachCharacter.props.effects.forEach( eachEffect => {
+
+                            let effectAction = new Action(this.state, eachEffect.action_id);
+
+                            console.log('DEBUG eachEffect: ', eachEffect);
+
+                            //Get the character who applied the effect.
+                            //TODO should effects only work if the character who applied it is still alive?
+                            let playerCharacter = new Character(this.state, eachEffect.applied_by_character_id);
+
+                            //If the action has ongoing effects, process them
+                            if (effectAction.props.ongoing_effects){
+
+                                console.log('DEBUG ongoing_effects: ', effectAction.props.ongoing_effects);
+
+                                effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
+
+                                    //For each effect, determine if the effect should apply for the current turn
+                                    console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn);
+
+                                    //Determine if the action is ongoing during the current turn
+                                    console.log('DEBUG current turn: ', currentMatch.props.number_turns);
+                                    //Check if the action has an ongoing effect that should apply to the current turn.
+                                    //In order to get the relative turn number take the current turn - the turn the action was applied
+                                    if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied)){
+                                        console.log('DEBUG it is relative turn: ', currentMatch.props.number_turns - eachEffect.turn_applied);
+
+                                        console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
+
+                                        console.log('DEBUG activating function: ', eachOngoingEffect.functionName);
+
+                                        //Declare the Class function without invoking, so I can then validate
+                                        const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
+
+                                        //TODO how to access these objects like actionCharacter, currentZone, are they necessary?
+                                        let gameObjects = {
+                                            game: {
+                                                baseURL: this.baseURL,
+                                                avatarPath: this.avatarPath,
+                                                skillImagePath: this.skillImagePath
+                                            },
+                                            targetCharacter: eachCharacter,
+                                            //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
+                                            requestZone: {
+                                                props: {
+                                                    channel : "arena",
+                                                    channel_id : "C4Z7F8XMW",
+                                                    name : "The Arena"
+                                                }
+                                            },
+                                            playerCharacter
+                                        };
+
+                                        //Invoke validation function using the classes's attached validation properties before instantiating the class
+                                        helpers.validateGameObjects(gameObjects, actionEffectObjectToMake.validations);
+
+                                        let actionEffectObject = new actionEffectObjectToMake(gameObjects);
+
+                                        actionEffectObject.initiate();
+
+                                    }
+                                })
+                            }
+                        })
+                    }
+                });
+
+            //*************** CHECK FOR CHARACTER DEATHS *****************
+
+                //Iterate through the characters in the zone and check if any are dead
+                charactersInZone.forEach( eachCharacterInZone =>{
+
+                    //If health has dropped below 0, character is dead
+                    if(eachCharacterInZone.props.hit_points <= 0){
+
+                        //Announce that character has been defeated
+                        let characterDefeatedMessage = {
+                            "username": "Arena Announcer",
+                            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                            //TODO dont hardcode the arena
+                            "channel": ("#arena"),
+                            "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`
+                        };
+
+                        slack(characterDefeatedMessage);
+
+                        //Move the character to the town
+                        //TODO currently hard coding to the town square
+                        eachCharacterInZone.updateProperty('zone_id', '-Khu9Zazk5XdFX9fD2Y8');
+                    }
+                });
+                
+                //*************** VICTORY CONDITIONS *****************
+
                 //Check for only one character left in zone (victory condition)
-                if (characterIDinZone.length === 1) {
-                    
+                if (charactersInZone.length === 1) {
+
                     //Create a winning character object reference
                     let winningCharacter = new Character(this.state, characterIDinZone[0]);
-                    
+
                     //Notify Slack about the winner
-                    
+                    let alertDetails = {
+                        "username": "Arena Announcer",
+                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+                        //TODO dont hardcode the arena
+                        "channel": ("#arena"),
+                        "text": `We have a winner!  Congratulations ${winningCharacter.props.name}`
+                    };
+
+                    slack(alertDetails);
+
                     //Increment that players win count
                     winningCharacter.incrementProperty('arena_wins', 1);
-                    
+
                     //Reward the winning character
                     //TODO come up with randomization function for arena gold reward
                     let arenaReward = 10;
 
                     //Increment that players win count
                     winningCharacter.incrementProperty('gold', arenaReward);
-                    
-                    currentMatch.end()
+
+                    currentMatch.end(winningCharacter.id)
                 }
 
-                */
-            //*************** TURN END CONDITIONS *****************
+            //*************** CHECK FOR TURN INCREMENT *****************
 
                 console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
 
@@ -180,101 +289,13 @@ class Game {
                 console.log('nextTurnStartTime: ', humanTime.toTimeString());
 
                 console.log("Current time: ", Date.now());
-                
-                //Check to see if it is time to start the next turn
-                //if (Date.now() > nextTurnStartTime){
-                    
-                    //Increment the turn number
-                    
-                    //Resolve ongoing effects
-                        //lookup each character and its current effects
-                        //look at each effect ID
-                        //look up that effects ongoing effects properties
-                            //If that turn, trigger that function
-                    
-                    //For each character in the zone lookup IDs of all effects
 
-                    charactersInZone.forEach( eachCharacter => {
-                        
-                        console.log('DEBUG each character id: ', eachCharacter.id);
-
-                        //If the character has effects on them, process them
-                        if( eachCharacter.props.effects ) {
-
-                            console.log('DEBUG, eachCharacter effects: ', eachCharacter.props.effects);
-                            eachCharacter.props.effects.forEach( eachEffect => {
-
-                                let effectAction = new Action(this.state, eachEffect.action_id);
-
-                                console.log('DEBUG eachEffect: ', eachEffect);
-
-                                //Get the character who applied the effect.
-                                //TODO should effects only work if the character who applied it is still alive?
-                                let playerCharacter = new Character(this.state, eachEffect.applied_by_character_id);
-
-                                //If the action has ongoing effects, process them
-                                if (effectAction.props.ongoing_effects){
-                                    
-                                    console.log('DEBUG ongoing_effects: ', effectAction.props.ongoing_effects);
-                                    
-                                    effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
-
-                                        //For each effect, determine if the effect should apply for the current turn
-                                        console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn);
-
-                                        //Determine if the action is ongoing during the current turn
-                                        console.log('DEBUG current turn: ', currentMatch.props.number_turns);
-                                        //Check if the action has an ongoing effect that should apply to the current turn.
-                                        //In order to get the relative turn number take the current turn - the turn the action was applied
-                                        if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied)){
-                                            console.log('DEBUG it is relative turn: ', currentMatch.props.number_turns - eachEffect.turn_applied);
-
-                                            console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
-
-                                            console.log('DEBUG activating function: ', eachOngoingEffect.functionName);
-
-                                            //Declare the Class function without invoking, so I can then validate
-                                            const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
-
-                                            //TODO how to access these objects like actionCharacter, currentZone, are they necessary?
-                                            let gameObjects = {
-                                                game: {
-                                                    baseURL: this.baseURL,
-                                                    avatarPath: this.avatarPath,
-                                                    skillImagePath: this.skillImagePath
-                                                },
-                                                targetCharacter: eachCharacter,
-                                                //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
-                                                requestZone: {
-                                                    props: {
-                                                        channel : "arena",
-                                                        channel_id : "C4Z7F8XMW",
-                                                        name : "The Arena"
-                                                    }
-                                                },
-                                                playerCharacter
-                                            };
-
-                                            //Invoke validation function using the classes's attached validation properties before instantiating the class
-                                            helpers.validateGameObjects(gameObjects, actionEffectObjectToMake.validations);
-
-                                            let actionEffectObject = new actionEffectObjectToMake(gameObjects);
-
-                                            actionEffectObject.initiate();
-
-                                        }
-                                    })
-                                }
-                            })
-                        }
-                    });
-                    
-                    
-                //}
-
+                //Test if turn should be incremented
+                if (Date.now() > nextTurnStartTime){
+                    currentMatch.incrementProperty('number_turns', 1);
+                }
 
                 break;
-
 
             //If match has ended, create a new match and update the global match ID
             case 'ended':
@@ -288,21 +309,9 @@ class Game {
                 
                 break;
         }
-        
-
-
-        //Check for dead characters
-            //If dead character, remove them from the arena
-
-       //Check for only a single character in the arena after it has begun
-            //Announce character as the winner
-            //Increment that character's win total
-            //Heal
-        
-
     }
     
-    //Calculate properties in memory (I.E: stat effects, ect.)
+    //Calculate properties in memory (I.E: ongoing effects, item effects, ect.)
     //TODO move this into refresh()
     initiateRequest(){
         
@@ -355,7 +364,7 @@ class Game {
 
     createMatch(zoneID){
 
-        var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
+        let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
         let currentMatches = this.state.match;
 
@@ -368,7 +377,7 @@ class Game {
             }
         };
 
-        //Mutate the object
+        //Mutate the matches object to include the new match
         Object.assign(currentMatches, newMatch);
 
         return localRandomID;
@@ -411,49 +420,6 @@ class Game {
         return this.state.global_state.match_id
 
     }
-
-
-
-    /*
-    characterName(requestSlackUserID, slackTextInput){
-
-        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-        var localUser = new User(this.state, requestSlackUserID);
-
-        //Get the local character's id
-        var characterID = localUser.getCharacterID();
-
-        //Object containing all character IDs in the game
-        var characters = this.state.character;
-
-        //Create a local character object
-        var localCharacter = new Character(this.state, characterID);
-
-        //Attempt to find a character.  If this returns undefined, name does not exist
-        if(_.findKey(characters, {'name': slackTextInput})){
-
-            console.log('character name taken');
-
-            //Return character taken template
-            return slackTemplates.characterNameTaken;
-
-        } else {
-
-            console.log('character name NOT taken (returned undefined)');
-
-            //Update the characters name property locally
-            localCharacter.updateProperty('name', slackTextInput);
-
-            //Return character taken template
-            var characterNameAcceptedTemplate = slackTemplates.characterNameAccepted;
-
-            //Add the inputted name into the template before returning
-            characterNameAcceptedTemplate.attachments[0].text = (characterNameAcceptedTemplate.attachments[0].text + slackTextInput);
-
-            return characterNameAcceptedTemplate
-
-        }
-    }*/
 
     getAvailableActions(requestSlackUserID, requestSlackChannelID){
 
@@ -627,50 +593,6 @@ class Game {
 
         return slackTemplate;
     }
-    
-    /* TODO moved this functionality into shop action, verify before deleting
-    shopList(requestSlackChannelID){
-
-        //Use the channel to create a local zone
-        var localZone = new Zone(this.state, requestSlackChannelID);
-
-        var npcID = _.findKey(this.state.npc, singleNPC => {
-            {return singleNPC['zone_id'] === localZone.id}
-        });
-
-        var localNPC = new NPC(this.state, npcID);
-
-        var itemsForSaleArray = localNPC.getItemsForSale();
-
-        /*
-        //Look at state and determine which merchant is in the zone
-        var merchantID = _.findKey(this.state.merchant, singleMerchant => {
-            {return singleMerchant['zone_id'] === localZone.id}
-        });
-
-        var localMerchant = new Merchant(this.state, merchantID);
-
-        var itemsForSaleArray = localMerchant.getItemsForSale();
-
-        var slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
-            var localItem = this.state.item[itemID];
-
-            return {
-                "text": localItem.name,
-                "value": itemID
-            }
-        });
-
-        var slackTemplate = slackTemplates.shopMenu;
-
-        //Add the corresponding merchant's image
-        slackTemplate.attachments[0].image_url = "https://scrum-wars.herokuapp.com/assets/fullSize/" + localNPC.id + ".jpg";
-        
-        slackTemplate.attachments[1].actionControllers[0].options = slackTemplateDropdown;
-
-        return slackTemplate
-        
-    }*/
 
     getEquippedItemView(localCharacter){
 

@@ -24,8 +24,9 @@ class PoisonedBlade extends BaseAttack {
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a poisonous strike, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes out with poisonous blades but ${this.targetCharacter.props.name} dodges the attack!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} slices ${this.targetCharacter.props.name} for ${this.calculatedDamage} damage!
-                                            ${this.actionCharacter.props.name}'s blade releases a noxious poison!`;
+        this.channelActionSuccessMessage =
+            `${this.actionCharacter.props.name} slices ${this.targetCharacter.props.name} for ${this.calculatedDamage} damage!
+            ${this.actionCharacter.props.name}'s blade releases a noxious poison!`;
 
         //Base Slack template
         this.slackPayload = {

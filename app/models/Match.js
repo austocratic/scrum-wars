@@ -27,11 +27,15 @@ class Match extends BaseModel{
     
     //Start the match
     start(){
+        this.updateProperty('date_started', Date.now());
         this.updateProperty('status', 'started')
     }
 
-    end(){
-        this.updateProperty('status', 'ended')
+    end(winningCharacterID){
+
+        this.updateProperty('date_ended', Date.now());
+        this.updateProperty('character_id_won', winningCharacterID);
+        this.updateProperty('status', 'ended');
     }
 
     getStartingCharacterIDs(){

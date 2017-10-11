@@ -151,7 +151,7 @@ class BaseAction {
 
         console.log('DEBUG: actionTaken: ', this.actionTaken);
 
-        var endingTurn = this.currentMatch.props.number_turns + this.actionTaken.props.effect_duration;
+        //var endingTurn = this.currentMatch.props.number_turns + this.actionTaken.props.effect_duration;
 
         //console.log('Modifier object: ', modifierObject);
 
@@ -162,7 +162,8 @@ class BaseAction {
             characterToModify.props.effects.push({
                 action_id: this.actionTaken.id,
                 applied_by_character_id: this.actionCharacter.id,
-                end_turn: endingTurn,
+                turn_applied: this.currentMatch.number_turns,
+                //end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
                 //modifiers: modifierObject
@@ -171,7 +172,8 @@ class BaseAction {
             characterToModify.props.effects = [{
                 action_id: this.actionTaken.id,
                 applied_by_character_id: this.actionCharacter.id,
-                end_turn: endingTurn,
+                turn_applied: this.currentMatch.number_turns,
+                //end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
                 //modifiers: modifierObject
