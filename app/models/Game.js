@@ -318,7 +318,6 @@ class Game {
     }
     
     //Calculate properties in memory (I.E: ongoing effects, item effects, ect.)
-    //TODO move this into refresh()
     initiateRequest(){
         
         //Get all the characters in game
@@ -391,11 +390,11 @@ class Game {
 
     createCharacter(userID){
         
-        var localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
+        let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
-        var currentCharacters = this.state.character;
+        let currentCharacters = this.state.character;
 
-        var newChar = {
+        let newChar = {
             [localRandomID]: {
                 active: 1,
                 name: 'Unknown Traveler',
@@ -418,13 +417,7 @@ class Game {
     }
     
     getCurrentMatchID(){
-
-        //console.log('DEBUG: called getCurrentMatchID');
-
-        //console.log('DEBUG: this.state.global_state: ', this.state.global_state);
-
         return this.state.global_state.match_id
-
     }
 
     getAvailableActions(requestSlackUserID, requestSlackChannelID){

@@ -96,7 +96,9 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
         let testCharacterID = '55e38d23d842e50e9026';
 
         let playerCharacter = new Character(game.state, testCharacterID);
-
+        
+        console.log('DEBUG current turn: ', currentMatch.props.number_turns);
+        
         //Push an action to the character that has already been used this turn
         playerCharacter.props.actions.push( {
             "action_id" : "-Kjpe29q_fDkJG-73AQO",
@@ -105,7 +107,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
             "turn_used" : currentMatch.props.number_turns
         });
 
-        console.log('DEBUG player actions: ',  playerCharacter.props.actions);
+        //console.log('DEBUG player actions: ',  playerCharacter.props.actions);
 
         //Arena channel ID
         //slackPayload.channel_id
@@ -124,7 +126,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
             playerCharacter
         });
 
-        console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
+        //console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
         const takenMessage = "You have already taken an action this turn, wait until next turn";
 

@@ -66,7 +66,6 @@ const action = gameObjects => {
 
         return gameObjects.slackResponseTemplate
     }
-
     
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();

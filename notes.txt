@@ -1,0 +1,54 @@
+
+
+10/11/17:
+
+I built the basics of the ForkedLightning function, need to add in a way to get a random target, get the action added to the controller and to a character,
+then test it in production
+
+There may be some code here that I can re use for area effect spells
+
+
+
+Next up:
+
+--Create selection pagination function (should this be based on DB records or images)?
+~~Considerations:   ~~What are the advantages of pagination of attachments instead of a drop down?
+                    ~~A: Images and displaying more information
+~~Use cases:    ~~choosing avatar image: need to paginate through images, these don't tie to DB records
+                ~~Character rankings?  That way you can see a mini avatar and see buttons like (Inspect)
+                ~~Zone list - is DB based
+                ~~Possibly a shop if you want to see stats and a "purchase" button without having to inspect
+                ~~Class selection - is DB based
+~~Requirements: ~~Should be flexible to accomodate array of values, whether those are DB records or images from file
+                ~~Should include back and forward buttons
+~~Questions:    ~~How will pagination state be handled?  I.E: display records 1-6, how does "forward" button know to pull records 7-12 & where are those records stored locally?
+
+
+
+--Clean up views: profile (add exit button) - Exit button should be reusable and clear any interaction - ask slack what I can do for this
+--Change images in class selection list - maybe class icons
+--check that profile, inventory, equipped, equiping and shopping mechanics all still work
+--refactor get action call to move into its own function or file
+--refactor slackRequest file - make it able to be tested with unit tests, make it easier to follow
+--create game refresh mechanic - working
+
+Backlog (near term):
+--vendor sell item mechanic
+
+
+Backlog (long term):
+--Use canvas or something like it to combine images rendered on the server and deliver that image to slack.  I.E inventory image with empty slots.
+equip an item, then next time the image renders it will contain the item image equipped
+--Questing mechanic using EQ style context terms: "Have you heard about [the missing child] from the town of beladore?"
+--Generate .gif images to show animations in slack
+
+
+
+Plot/Quest ideas
+
+"Tithes of _____"
+
+King died and you have traveled to pay your respects.
+
+King has summoned you to
+
