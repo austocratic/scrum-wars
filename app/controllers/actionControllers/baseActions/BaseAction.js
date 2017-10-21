@@ -63,18 +63,19 @@ class BaseAction {
         //If check returned true (if successful, it will never get to this point to alert Slack)
         
         //Alert the channel of the action
+        /*
         var alertDetails = {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": this.slackChannel,
             "text": this.channelActionFailMessage
-        };
+        };*/
 
         //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
+        //var channelAlert = new Slack(alertDetails);
 
         //Send alert to slack
-        channelAlert.sendToSlack(this.params);
+        //channelAlert.sendToSlack(this.params);
 
         return false;
     }
@@ -112,18 +113,19 @@ class BaseAction {
         }
 
         //Alert the channel of the action
+        /*
         var alertDetails = {
             "username": this.slackUserName,
             "icon_url": this.slackIcon,
             "channel": this.slackChannel,
             "text": this.channelActionAvoidedMessage
-        };
+        };*/
 
         //Create a new slack alert object
-        var channelAlert = new Slack(alertDetails);
+        //var channelAlert = new Slack(alertDetails);
 
         //Send alert to slack
-        channelAlert.sendToSlack(this.params);
+        //channelAlert.sendToSlack(this.params);
 
         return false
     }
