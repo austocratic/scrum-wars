@@ -106,6 +106,8 @@ class Game {
                     //Start the match: set status, starting characters, start date
                     //Pass in an array of character IDs to set as starting characters.  These should be characters in the zone when the match starts
 
+                    console.log('DEBUG this.getCharacterIDsInZone(currentMatch.props.zone_id): ', this.getCharacterIDsInZone(currentMatch.props.zone_id));
+
                     currentMatch.start(this.getCharacterIDsInZone(currentMatch.props.zone_id));
 
                     let alertDetails = {
