@@ -86,7 +86,7 @@ class BaseAction {
         return calculatedStrength;
     }
 
-    //Object of stat/modifier key/value pairs
+    //modifiers should be an object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
 
         let mergedProperty = _.merge(characterToModify.props, modifiers);
@@ -94,6 +94,11 @@ class BaseAction {
         console.log('DEBUG characterToModify: ', characterToModify);
 
         characterToModify.props = mergedProperty;
+    }
+
+    //Modifier will increment the previous property attribute
+    _incrementProperty(characterToModify, modifiers){
+
     }
 
     _avoidCheck(accuracyModifier, avoidModifier){

@@ -59,6 +59,10 @@ describe("Testing BaseAction class", function() {
             it("should not return the playerCharacter", function (){
                 assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
             })
+        });
+
+        describe("testing BaseAction method _changeProperty", function (){
+
         })
     });
 });
