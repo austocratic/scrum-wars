@@ -66,7 +66,8 @@ class ForkedLightning extends BaseAttack {
             console.log('DEBUG about to change the property by: ', -this.calculatedDamage);
 
             //Process all the other effects of the action
-            this._changeProperty(singleTarget, {hit_points: -this.calculatedDamage});
+            //this._changeProperty(singleTarget, {hit_points: -this.calculatedDamage});
+            singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
             
             return true;
         };
