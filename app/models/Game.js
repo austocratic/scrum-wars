@@ -548,21 +548,14 @@ class Game {
     getCharacterIDsInZone(zoneID){
         console.log('called getCharacterIDsInZone');
 
-        /*
-        //Set a variable for all character IDs in zone (active & inactive & all zones)
-        let characterIDsInZone = Object.keys(this.state.character);
-
-        //Filter for Active characters && current zone (returns character IDs) && not hidden
-        return characterIDsInZone.filter( singleCharacterID =>{
-            return (this.state.character[singleCharacterID].active === 1 && this.state.character[singleCharacterID].zone_id === zoneID && this.state.character[singleCharacterID].is_hidden === 0)
-        });*/
-
         return Object.keys(this.state.character)
             .map( eachCharacterID =>{
                 return new Character(this.state, eachCharacterID)
             })
             .filter( eachCharacter => {
-                return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID && eachCharacter.props.is_hidden === 0
+                //Why did I only return not hidden characters?
+                //return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID && eachCharacter.props.is_hidden === 0
+                return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
             })
             .map( eachCharacter => {
                 return eachCharacter.id

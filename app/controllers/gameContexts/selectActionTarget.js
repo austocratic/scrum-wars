@@ -11,7 +11,7 @@ let Action = require('../../models/Action').Action;
 
 const actions = require('../actionControllers/actions/index');
 
-const { QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade } = actions;
+const { QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade, ForkedLightning } = actions;
 
 //TODO I may want to make this a stand alone file/function "getActionController" so that it can be re used in Game to process effects
 const actionControllers = {
@@ -24,7 +24,8 @@ const actionControllers = {
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     '-KkOq-y2_zgEgdhY-6_U': LifeTap,
     '-Kr3hnITyH9ZKx3VuZah': Backstab,
-    '-KvOpJ2FyGodmZCanea7': PoisonedBlade
+    '-KvOpJ2FyGodmZCanea7': PoisonedBlade,
+    '-KkdduB9XuB46EsxqwIX': ForkedLightning
 };
 
 const processActionOnTarget = gameObjects => {
@@ -51,6 +52,14 @@ const processActionOnTarget = gameObjects => {
         'targetCharacter',
         'actionTaken'
     ]);
+
+    //Validate that the action is in the actionControllers mapping above
+    //If not return an error to Slack
+    if (!actionControllers[previousValue]){
+        return {
+            "text": "Error: that action is missing from selectActionTarget action mapping!"
+        }
+    }
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers[previousValue];
