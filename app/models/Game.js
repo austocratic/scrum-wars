@@ -104,7 +104,8 @@ class Game {
                     //TODO get all the characters currently in the zone
 
                     //Start the match: set status, starting characters, start date
-                    currentMatch.start();
+                    //Pass in an array of character IDs to set as starting characters.  These should be characters in the zone when the match starts
+                    currentMatch.start(this.getCharacterIDsInZone(currentMatch.id));
 
                     let alertDetails = {
                         "username": "A mysterious voice",

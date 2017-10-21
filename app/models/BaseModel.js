@@ -22,7 +22,6 @@ class BaseModel {
     }*/
     
     updateProperty(propertyToUpdate, newValue){
-        
         this.props[propertyToUpdate] = newValue
     }
 
@@ -38,8 +37,8 @@ class BaseModel {
     //If key does not exist on base, add that key:value
     accumulateProperties(base, newProperties){
 
-        console.log('accumulateProperties base: ', base);
-        console.log('accumulateProperties newProperties: ', newProperties);
+        //console.log('accumulateProperties base: ', base);
+        //console.log('accumulateProperties newProperties: ', newProperties);
 
         //Look at modifiers property
         var newPropertyKeys = Object.keys(newProperties);
