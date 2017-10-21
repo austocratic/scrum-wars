@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require('assert');
-const ForkedLightning = require('../../../../../../app/controllers/actionControllers/actions/ForkedLightning').ForkedLightning;
+const BaseAction = require('../../../../../../app/controllers/actionControllers/baseActions/BaseAction').BaseAction;
 const Character = require('../../../../../../app/models/Character').Character;
 const Game = require('../../../../../../app/models/Game').Game;
 const Action = require('../../../../../../app/models/Action').Action;
@@ -13,7 +13,7 @@ let game = new Game();
 game.state = testDB;
 
 
-describe("Testing ForkedLightning class", function() {
+describe("Testing BaseAction class", function() {
 
     describe("testing instantiating it", function () {
 
@@ -43,24 +43,22 @@ describe("Testing ForkedLightning class", function() {
             actionTaken: new Action(game.state, '-Kjpe29q_fDkJG-73AQO')
         };
 
-        let testForkedLightning = new ForkedLightning(gameObjects);
+        let testBaseAction = new BaseAction(gameObjects);
 
         it("should not be undefined", function () {
-
-            assert(testForkedLightning);
-
+            assert(testBaseAction);
         });
 
-        describe("calling initiate()", function () {
+        describe("testing BaseAction method _getRandomTarget", function () {
+            let randomTargetObject = testBaseAction._getRandomTarget();
 
-            let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.hit_points;
+            it("should return an object", function (){
+                assert(typeof randomTargetObject === 'object');
+            });
 
-            testForkedLightning.initiate();
-            
-            /* It wont necessarily reduce the targets health (it could miss)
-            it("should reduce targetCharacter's health by ForkedLightning's calculatedDamage property", function () {
-                assert(gameObjects.targetCharacter.props.hit_points + testForkedLightning.calculatedDamage === targetCharacterPreviousHealth);
-            });*/
+            it("should not return the playerCharacter", function (){
+                assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
+            })
         })
     });
 });

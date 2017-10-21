@@ -3,6 +3,7 @@
 const Slack = require('../../../libraries/slack').Alert;
 const _ = require('lodash');
 
+const Character = require('../../../models/Character').Character;
 
 class BaseAction {
     constructor(gameObjects){
@@ -20,10 +21,34 @@ class BaseAction {
         this.slackChannel = ("#" + this.currentZone.props.channel);
     }
 
+    //TODO this should probably be moved to the helpers file
     _getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    //Return a random character object who is still alive in the current match
+    _getRandomTarget(){
+
+        //Returns an array of character IDs
+        let startingCharacterObjects = this.currentMatch.getStartingCharacterIDs()
+            .map( eachStartingCharacterID =>{
+                return new Character(this.game.state, eachStartingCharacterID)
+            })
+            //Filter for characters in the zone (alive characters)
+            .filter( eachCharacter =>{
+                return eachCharacter.props.zone_id === this.currentMatch.props.zone_id
+            })
+            //Filter for all characters but the character performing the action
+            .filter( eachCharacterInZone =>{
+                return eachCharacterInZone.id !== this.actionCharacter.id
+            });
+
+        console.log('randomTarget startingCharacterObjects: ', startingCharacterObjects);
+
+        //Return a random character object from filtered array of character objects
+        return startingCharacterObjects[this._getRandomIntInclusive(0, startingCharacterObjects.length - 1)]
     }
 
     _successCheck(modifier){
@@ -64,43 +89,12 @@ class BaseAction {
     //Object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
 
-        //console.log('called _changeProperty, modifiers: ', modifiers);
+        let mergedProperty = _.merge(characterToModify.props, modifiers);
 
-        //var mergedProperty = Object.assign(characterToModify.props, modifiers);
-
-        //console.log('mergedProperties: ', mergedProperty);
-
-        //characterToModify.props = mergedProperty;
-
-        var mergedProperty = _.merge(characterToModify.props, modifiers);
-
-        //console.log('mergedProperties, using lodash: ', mergedProperty);
+        console.log('DEBUG characterToModify: ', characterToModify);
 
         characterToModify.props = mergedProperty;
-
-        //{is_available: 1, nested: {prop1:1, prop2:2}}
-
-        //{nested:{ prop1:1, prop2: 1}, nested:{prop2:2}} --> {nested:{ prop1:1, prop2: 2} }
-
-        /*
-         //Convert all keys into array
-         var modifierKeys = Object.keys(modifiers);
-
-         if (modifierKeys.length > 0) {
-         modifierKeys.forEach( eachModifierKey =>{
-
-         console.log('each modifier key: ', eachModifierKey);
-
-         console.log('character with reference: ', characterToModify.props[eachModifierKey]);
-
-         characterToModify.props[eachModifierKey] = modifiers[eachModifierKey];
-
-         //characterToModify.incrementProperty(eachModifierKey, modifiers[eachModifierKey]);
-         })
-         }*/
     }
-
-    //modifiers = {is_active: -1}
 
     _avoidCheck(accuracyModifier, avoidModifier){
 

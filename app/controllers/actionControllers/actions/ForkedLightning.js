@@ -42,7 +42,6 @@ class ForkedLightning extends BaseAttack {
         //If successful, process on second target with half chance to hurt
         //continue until out of targets or a failure
         
-        
         const processOnSingleTarget = (singleTarget, avoidModifier) => {
 
             console.log('DEBUG processing ForkedLightning on a single target: ', -this.calculatedDamage);
@@ -72,14 +71,24 @@ class ForkedLightning extends BaseAttack {
             return true;
         };
 
+        //Value will increase with each recursion
         let avoidModifier = 1;
-        
+
         const processOnOtherTargets = () => {
             
             console.log('called processOnOtherTargets, avoidModifier: ', avoidModifier);
             //const randomTarget = game.props.characters;
 
-            if(processOnSingleTarget(this.targetCharacter, avoidModifier) === true) {
+            let randomTarget = this._getRandomTarget();
+
+            console.log('Random target: ', randomTarget);
+
+            //If randomTarget is undefined, then there are no eligible targets, Forked Lightning should end
+            if (!randomTarget){
+                return
+            }
+
+            if(processOnSingleTarget(randomTarget, avoidModifier) === true) {
 
                 avoidModifier = avoidModifier * 2;
                 
@@ -95,39 +104,6 @@ class ForkedLightning extends BaseAttack {
             //Recursive function
             processOnOtherTargets();
         }
-    
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        /*
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Evasion check
-        //Arguments: accuracyModifier, avoidModifier
-        if (this._avoidCheck(0, 0) === false) {
-            this.slackPayload.text = this.channelActionAvoidedMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Process all the other effects of the action
-        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);*/
-        
     }
 }
 
