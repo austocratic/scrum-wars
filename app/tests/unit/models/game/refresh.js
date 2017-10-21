@@ -29,12 +29,9 @@ describe("Testing gameContext game.refresh()", function() {
         game.state.global_state.match_id = "pendingMatch";
         game.state.match["pendingMatch"] = {
             "character_id_won" : 0,
-            "date_started" : 1443615911.108, // 9AM & 15 seconds PST
+            "date_started" : 0,
             "date_ended" : 0,
             "number_turns" : 0,
-            "starting_character_ids" : [
-
-            ],
             "status": "pending",
             "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
         };
@@ -43,7 +40,15 @@ describe("Testing gameContext game.refresh()", function() {
 
         it("should change the status to started", function(){
             assert.equal(game.state.match["pendingMatch"].status, 'started')
-        })
+        });
+        it("should set date_started to a value greater than 0", function(){
+            assert(game.state.match["pendingMatch"].date_started > 0)
+        });
+        it("should create the starting_character_ids property", function(){
+
+            console.log('starting character ids: ', game.state.match["pendingMatch"].starting_character_ids);
+            assert(game.state.match["pendingMatch"].starting_character_ids)
+        });
 
     });
 
