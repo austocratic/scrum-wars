@@ -45,8 +45,6 @@ class BaseAction {
                 return eachCharacterInZone.id !== this.actionCharacter.id
             });
 
-        console.log('randomTarget startingCharacterObjects: ', startingCharacterObjects);
-
         //Return a random character object from filtered array of character objects
         return startingCharacterObjects[this._getRandomIntInclusive(0, startingCharacterObjects.length - 1)]
     }
@@ -104,10 +102,16 @@ class BaseAction {
 
     _avoidCheck(accuracyModifier, avoidModifier){
 
-        var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
-        var avoidScore = this.baseAvoidScore + avoidModifier + this._getRandomIntInclusive(1, 10);
+        let accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
+
+        let avoidRandomInt = this._getRandomIntInclusive(1, 10);
+
+        let avoidScore = this.baseAvoidScore + avoidModifier + avoidRandomInt;
+
         console.log('DEBUG this.baseAvoidScore: ', this.baseAvoidScore);
         console.log('DEBUG avoidModifier: ', avoidModifier);
+        console.log('DEBUG avoidRandomInt: ', avoidRandomInt);
+
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
         if(accuracyScore >= avoidScore){

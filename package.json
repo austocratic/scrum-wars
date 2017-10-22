@@ -16,7 +16,9 @@
     "test:unit:responseFunctions:command_action": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/responseFunctions/command_action",
     "test:unit:models": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models",
     "test:unit:controllers": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/controllers",
+    "test:unit:controllers:actionControllers": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/controllers/actionControllers",
     "test:unit:controllers:actionControllers:baseActions": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/controllers/actionControllers/baseActions",
+    "test:unit:controllers:actionControllers:actions": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/controllers/actionControllers/actions",
     "test:helpers": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/helpers",
     "test:backButton": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/backButton.js"
   },

@@ -82,7 +82,7 @@ class ForkedLightning extends BaseAttack {
 
             let randomTarget = this._getRandomTarget();
 
-            console.log('Random target: ', randomTarget);
+            console.log('Random target.id: ', randomTarget.id);
 
             //If randomTarget is undefined, then there are no eligible targets, Forked Lightning should end
             if (!randomTarget){
