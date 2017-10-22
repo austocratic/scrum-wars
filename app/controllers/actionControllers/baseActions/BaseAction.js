@@ -53,7 +53,7 @@ class BaseAction {
                     return eachTargetToExclude.id === eachCharacterInZone.id;
                 });
 
-                console.log('foundTarget: ', foundTarget);
+                console.log('foundTarget: ', foundTarget.id);
 
                 return foundTarget === undefined
             });

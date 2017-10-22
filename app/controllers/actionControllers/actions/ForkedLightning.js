@@ -121,6 +121,10 @@ class ForkedLightning extends BaseAttack {
             //Recursive function
             processOnOtherTargets();
         }
+
+        return {
+            "text": "action complete"
+        }
     }
 }
 
