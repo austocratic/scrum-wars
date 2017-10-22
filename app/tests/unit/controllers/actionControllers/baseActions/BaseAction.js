@@ -54,7 +54,22 @@ describe("Testing BaseAction class", function() {
             describe("when passing an empty eachTargetToExclude", function () {
                 let randomTargetObject = testBaseAction._getRandomTarget([]);
 
-                it("should return undefined", function (){
+                it("should return an object", function (){
+                    assert(typeof randomTargetObject === 'object');
+                });
+                it("should not return the playerCharacter", function (){
+                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
+                })
+            });
+            describe("when passing an eachTargetToExclude array with 1 character objects", function () {
+                let randomTargetObject = testBaseAction._getRandomTarget([
+                    {
+                        id: "5bdfe1adfef85f3af257",
+                        props: {}
+                    }
+                ]);
+
+                it("should return an object", function (){
                     assert(typeof randomTargetObject === 'object');
                 });
                 it("should not return the playerCharacter", function (){
@@ -62,7 +77,7 @@ describe("Testing BaseAction class", function() {
                 })
             });
 
-            describe("when passing an eachTargetToExclude array with several character objects", function () {
+            describe("when passing an eachTargetToExclude array with 2 character objects", function () {
                 let randomTargetObject = testBaseAction._getRandomTarget([
                     {
                         id: "5bdfe1adfef85f3af257",
