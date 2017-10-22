@@ -29,7 +29,7 @@ class BaseAction {
     }
 
     //Return a random character object who is still alive in the current match
-    _getRandomTarget(){
+    _getRandomTarget(targetsToExclude){
 
         //Returns an array of character IDs
         let startingCharacterObjects = this.currentMatch.getStartingCharacterIDs()
@@ -43,7 +43,27 @@ class BaseAction {
             //Filter for all characters but the character performing the action
             .filter( eachCharacterInZone =>{
                 return eachCharacterInZone.id !== this.actionCharacter.id
+            })
+            //Filter out characters that are included in the targetsToExclude argument
+            .filter( eachCharacterInZone =>{
+
+                console.log('DEBUG eachCharacterInZone: ', eachCharacterInZone.id);
+
+                let foundTarget = targetsToExclude.find( eachTargetToExclude =>{
+                    return eachTargetToExclude.id === eachCharacterInZone.id;
+                });
+
+                console.log('foundTarget: ', foundTarget);
+
+                return foundTarget === undefined
             });
+
+        console.log('startingCharacterObjects: ', startingCharacterObjects);
+
+        //If there are no available targets return undefined
+        if(startingCharacterObjects.length === 0){
+            return undefined
+        }
 
         //Return a random character object from filtered array of character objects
         return startingCharacterObjects[this._getRandomIntInclusive(0, startingCharacterObjects.length - 1)]

@@ -66,6 +66,9 @@ class ForkedLightning extends BaseAttack {
             
             console.log('DEBUG about to change the property by: ', -this.calculatedDamage);
 
+            //Push the target into the affectedCharacters array.  Array will be checked to
+            affectedCharacters.push(singleTarget);
+
             //Process all the other effects of the action
             //this._changeProperty(singleTarget, {hit_points: -this.calculatedDamage});
             singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
@@ -76,12 +79,16 @@ class ForkedLightning extends BaseAttack {
         //Value will increase with each recursion
         let avoidModifier = 1;
 
+        //Array to hold targets who have already been damaged.  ForkedLightning should not affect a character more than once
+        let affectedCharacters = [];
+
         const processOnOtherTargets = () => {
             
             console.log('called processOnOtherTargets, avoidModifier: ', avoidModifier);
             //const randomTarget = game.props.characters;
 
-            let randomTarget = this._getRandomTarget();
+            //Pass in array of characters to exclude
+            let randomTarget = this._getRandomTarget(affectedCharacters);
 
             console.log('Random target.id: ', randomTarget.id);
 

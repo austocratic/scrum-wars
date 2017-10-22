@@ -50,14 +50,36 @@ describe("Testing BaseAction class", function() {
         });
 
         describe("testing BaseAction method _getRandomTarget", function () {
-            let randomTargetObject = testBaseAction._getRandomTarget();
 
-            it("should return an object", function (){
-                assert(typeof randomTargetObject === 'object');
+            describe("when passing an empty eachTargetToExclude", function () {
+                let randomTargetObject = testBaseAction._getRandomTarget([]);
+
+                it("should return undefined", function (){
+                    assert(typeof randomTargetObject === 'object');
+                });
+                it("should not return the playerCharacter", function (){
+                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
+                })
             });
 
-            it("should not return the playerCharacter", function (){
-                assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
+            describe("when passing an eachTargetToExclude array with several character objects", function () {
+                let randomTargetObject = testBaseAction._getRandomTarget([
+                    {
+                        id: "5bdfe1adfef85f3af257",
+                        props: {}
+                    },
+                    {
+                        id: "-Kkxf1ukVSF9VV6mIPlG",
+                        props: {}
+                    }
+                ]);
+
+                it("should return undefined", function (){
+                    assert(randomTargetObject === undefined);
+                });
+                it("should not return the playerCharacter", function (){
+                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
+                })
             })
         });
 
