@@ -106,6 +106,8 @@ class BaseAction {
 
         var accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
         var avoidScore = this.baseAvoidScore + avoidModifier + this._getRandomIntInclusive(1, 10);
+        console.log('DEBUG this.baseAvoidScore: ', this.baseAvoidScore);
+        console.log('DEBUG avoidModifier: ', avoidModifier);
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
         if(accuracyScore >= avoidScore){
