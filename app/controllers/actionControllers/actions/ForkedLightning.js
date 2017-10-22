@@ -26,6 +26,7 @@ class ForkedLightning extends BaseAttack {
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        this.channelAdditionalActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -91,6 +92,10 @@ class ForkedLightning extends BaseAttack {
 
             if(processOnSingleTarget(randomTarget, avoidModifier) === true) {
 
+                //Alert the channel of the action
+                this.slackPayload.text = this.channelAdditionalActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+
                 avoidModifier = avoidModifier * 2;
                 
                 processOnOtherTargets();
@@ -101,6 +106,10 @@ class ForkedLightning extends BaseAttack {
         //If processOnSingleTarget does NOT return a value, continue to process
         if (processOnSingleTarget(this.targetCharacter, 1) === true){
             console.log('keep processing!');
+
+            //Alert the channel of the action
+            this.slackPayload.text = this.channelActionSuccessMessage;
+            slack.sendMessage(this.slackPayload);
 
             //Recursive function
             processOnOtherTargets();
