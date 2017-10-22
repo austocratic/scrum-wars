@@ -50,10 +50,13 @@ class BaseAction {
                 console.log('DEBUG eachCharacterInZone: ', eachCharacterInZone.id);
 
                 let foundTarget = targetsToExclude.find( eachTargetToExclude =>{
+
+                    console.log('DEBUG eachTargetToExclude: ', eachTargetToExclude);
+
                     return eachTargetToExclude.id === eachCharacterInZone.id;
                 });
 
-                console.log('foundTarget: ', foundTarget.id);
+                //console.log('foundTarget: ', foundTarget.id);
 
                 return foundTarget === undefined
             });
