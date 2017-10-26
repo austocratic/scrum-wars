@@ -26,7 +26,6 @@ class ForkedLightning extends BaseAttack {
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
-        this.channelAdditionalActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -64,7 +63,7 @@ class ForkedLightning extends BaseAttack {
                 return false;
             }
             
-            console.log('DEBUG about to change the property by: ', -this.calculatedDamage);
+            console.log(`DEBUG about to change ${singleTarget.props.name}'s health by: `, -this.calculatedDamage);
 
             //Push the target into the affectedCharacters array.  Array will be checked to
             affectedCharacters.push(singleTarget);
@@ -90,17 +89,21 @@ class ForkedLightning extends BaseAttack {
             //Pass in array of characters to exclude
             let randomTarget = this._getRandomTarget(affectedCharacters);
 
-            //console.log('Random target.id: ', randomTarget.id);
-
             //If randomTarget is undefined, then there are no eligible targets, Forked Lightning should end
             if (!randomTarget){
                 return
             }
 
+            //Build a new message based on the randomTarget
+            this.channelAdditionalActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${randomTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+
+            console.log('DEBUG Random target.name: ', randomTarget.props.name);
+
             if(processOnSingleTarget(randomTarget, avoidModifier) === true) {
 
                 //Alert the channel of the action
                 this.slackPayload.text = this.channelAdditionalActionSuccessMessage;
+                console.log('SLACK channelAdditionalActionSuccessMessage: ', this.slackPayload.text);
                 slack.sendMessage(this.slackPayload);
 
                 avoidModifier = avoidModifier * 2;
@@ -116,6 +119,7 @@ class ForkedLightning extends BaseAttack {
 
             //Alert the channel of the action
             this.slackPayload.text = this.channelActionSuccessMessage;
+            console.log('SLACK channelActionSuccessMessage: ', this.slackPayload.text);
             slack.sendMessage(this.slackPayload);
 
             //Recursive function

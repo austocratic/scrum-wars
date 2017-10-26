@@ -61,6 +61,7 @@ describe("Testing BaseAction class", function() {
                     assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
                 })
             });
+
             describe("when passing an eachTargetToExclude array with 1 character objects", function () {
                 let randomTargetObject = testBaseAction._getRandomTarget([
                     {
@@ -97,9 +98,5 @@ describe("Testing BaseAction class", function() {
                 })
             })
         });
-
-        describe("testing BaseAction method _changeProperty", function (){
-
-        })
     });
 });
