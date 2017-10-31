@@ -12,13 +12,13 @@ const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow } = actions;
-
+const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
     balancedStance: BalancedStance,
-    intoShadow: IntoShadow
+    intoShadow: IntoShadow,
+    whirlwind: Whirlwind
 };
 
 //Shop is the only action not using the action controller
@@ -194,6 +194,33 @@ const intoShadow = gameObjects => {
 
     actionObject.initiate();
 };
+const whirlwind = gameObjects => {
+    console.log('Called selectActionMenu/whirlwind');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['whirlwind'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
+
+    actionObject.initiate();
+};
 
 //*******  These actionControllers require a target, so will return selectActionTarget game context  *******
 
@@ -300,11 +327,12 @@ module.exports = {
     shop,
     defensiveStance,
     balancedStance,
+    intoShadow,
+    whirlwind,
     quickStrike,
     arcaneBolt,
     lifeTap,
     forkedLightning,
-    intoShadow,
     savageStrike,
     backstab,
     poisonedBlade
