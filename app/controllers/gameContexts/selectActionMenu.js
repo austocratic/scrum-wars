@@ -12,10 +12,11 @@ const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind } = actions;
+const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
+    offensiveStance: OffensiveStance,
     balancedStance: BalancedStance,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind
@@ -132,6 +133,33 @@ const defensiveStance = gameObjects => {
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['defensiveStance'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
+
+    actionObject.initiate();
+};
+const offensiveStance = gameObjects => {
+    console.log('Called selectActionMenu/offensiveStance');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['offensiveStance'];
 
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
@@ -326,6 +354,7 @@ const poisonedBlade = gameObjects => {
 module.exports = {
     shop,
     defensiveStance,
+    offensiveStance,
     balancedStance,
     intoShadow,
     whirlwind,
