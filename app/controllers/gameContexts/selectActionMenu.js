@@ -350,6 +350,20 @@ const poisonedBlade = gameObjects => {
 
     return targetSelection(gameObjects);
 };
+const cleave = gameObjects => {
+    console.log('Called selectActionMenu/cleave');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    return targetSelection(gameObjects);
+};
 
 module.exports = {
     shop,
@@ -364,5 +378,6 @@ module.exports = {
     forkedLightning,
     savageStrike,
     backstab,
-    poisonedBlade
+    poisonedBlade,
+    cleave
 };

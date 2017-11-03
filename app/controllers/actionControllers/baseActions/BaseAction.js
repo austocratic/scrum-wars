@@ -118,11 +118,6 @@ class BaseAction {
         characterToModify.props = mergedProperty;
     }
 
-    //Modifier will increment the previous property attribute
-    _incrementProperty(characterToModify, modifiers){
-
-    }
-
     _avoidCheck(accuracyModifier, avoidModifier){
 
         let accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
@@ -160,32 +155,6 @@ class BaseAction {
     }
 
     _applyEffect(characterToModify, modifiers){
-
-        //TODO add standard validation function check
-
-        //Convert all keys into array
-        /*
-         var modifierKeys = Object.keys(modifiers);
-
-         var modifierObject = {};
-
-         if (modifierKeys.length > 0) {
-         modifierKeys.forEach( eachModifierKey =>{
-         modifierObject = Object.assign(modifierObject, {[eachModifierKey]: modifiers[eachModifierKey]});
-         })
-         }*/
-
-        //var modifierObject = {};
-
-        //modifierObject = Object.assign(modifierObject, modifiers);
-
-        console.log('DEBUG: actionTaken: ', this.actionTaken);
-
-        //var endingTurn = this.currentMatch.props.number_turns + this.actionTaken.props.effect_duration;
-
-        //console.log('Modifier object: ', modifierObject);
-
-        //console.log('modifiers passed in: ', modifiers);
 
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
