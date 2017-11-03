@@ -39,6 +39,10 @@ class Whirlwind extends BaseAttack {
 
     initiate() {
 
+        //Build a new message based on the randomTarget
+        this.slackPayload.text = `${this.actionCharacter.props.name} becomes a whirlwind of blades, striking our wildly!`;
+        slack.sendMessage(this.slackPayload);
+
         const processOnSingleTarget = (singleTarget, avoidModifier) => {
             //skill check
             //If failure, return a failure message and end
@@ -59,7 +63,8 @@ class Whirlwind extends BaseAttack {
             //Process all the other effects of the action
             singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
 
-            this.slackPayload.text = this.channelActionSuccessMessage;
+            //Build a new message based on the randomTarget
+            this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
             slack.sendMessage(this.slackPayload);
         };
 
