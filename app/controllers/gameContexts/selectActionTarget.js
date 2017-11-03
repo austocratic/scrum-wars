@@ -71,6 +71,12 @@ const processActionOnTarget = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    console.log('DEBUG actionTaken: ', actionObject.actionTaken.props);
+
+    return {
+        "text": "You perform action: " + actionObject.actionTaken.props.name
+    }
 };
 
 module.exports = {

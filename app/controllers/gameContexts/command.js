@@ -70,8 +70,6 @@ const action = gameObjects => {
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();
 
-    console.log('DEBUG command, actionIDsAvailable: ', actionIDsAvailable);
-
     //Use action IDs to make an array of action objects
     let actionObjectsAvailable = actionIDsAvailable
         .map( eachActionID =>{
@@ -81,15 +79,11 @@ const action = gameObjects => {
             return _.indexOf(eachActionObject.props.zone_id, gameObjects.requestZone.id) > -1;
         });
 
-    console.log('DEBUG command, actionObjectsAvailable: ', actionObjectsAvailable);
-
     //Group the actionControllers for slack (this will add a lodash wrapper)
     let groupedActions = _(actionObjectsAvailable)
         .groupBy(singleAction => {
             return singleAction.props.type;
         });
-
-    console.log('DEBUG command, groupedActions: ', groupedActions);
 
     let templateAttachments = groupedActions
         .map(actionCategory => {
