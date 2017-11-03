@@ -26,7 +26,7 @@ const actionControllers = {
     '-Kr3hnITyH9ZKx3VuZah': Backstab,
     '-KvOpJ2FyGodmZCanea7': PoisonedBlade,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning,
-    '-Ky1zv4JXgbAKvxFFBmp': Cleave 
+    '-Ky1zv4JXgbAKvxFFBmp': Cleave
 };
 
 const processActionOnTarget = gameObjects => {
