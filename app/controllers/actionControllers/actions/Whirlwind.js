@@ -64,8 +64,11 @@ class Whirlwind extends BaseAttack {
             singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
 
             //Build a new message based on the randomTarget
-            this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
-            slack.sendMessage(this.slackPayload);
+            setTimeout( () => {
+                this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                slack.sendMessage(this.slackPayload);
+            }, 500);
+
         };
 
         //Array to hold targets who have already been damaged.  ForkedLightning should not affect a character more than once
