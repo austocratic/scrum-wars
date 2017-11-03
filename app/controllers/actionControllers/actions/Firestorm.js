@@ -71,19 +71,17 @@ class Firestorm extends BaseAttack {
 
         };
 
-        //Array to hold targets who have already been damaged.  ForkedLightning should not affect a character more than once
+        //Array to hold targets who have already been damaged.  Should not affect a character more than once
         let affectedCharacters = [];
 
         //Invoke process on target code each target
         for (let i = 0; i < this.maxTargetsAffected; i++){
-            console.log('DEBUG invoking processOnSingleTarget in loop');
 
             //Exclude any character already affected by passing in array
             let randomTarget = this._getRandomTarget(affectedCharacters);
 
             //As long as _getRandomTarget returns a character, continue
             if (randomTarget){
-                console.log('DEBUG Whirlwind, processing on randomTarget.id: ', randomTarget.id);
 
                 this.processOnSingleTarget(randomTarget, 0);
 

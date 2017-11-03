@@ -76,14 +76,12 @@ class Whirlwind extends BaseAttack {
 
         //Invoke process on target code each target
         for (let i = 0; i < this.maxTargetsAffected; i++){
-            console.log('DEBUG invoking processOnSingleTarget in loop');
 
             //Exclude any character already affected by passing in array
             let randomTarget = this._getRandomTarget(affectedCharacters);
 
             //As long as _getRandomTarget returns a character, continue
             if (randomTarget){
-                console.log('DEBUG Whirlwind, processing on randomTarget.id: ', randomTarget.id);
 
                 this.processOnSingleTarget(randomTarget, 0);
 
