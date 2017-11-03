@@ -3,20 +3,20 @@ const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
-class Whirlwind extends BaseAttack {
+class Firestorm extends BaseAttack {
     constructor(gameObjects) {
         super(gameObjects);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
-        this.baseAvoidScore = 5;
+        this.baseAvoidScore = 1;
         this.basePower = 5;
         this.baseMitigation = 1;
         this.baseMin = 1;
         this.baseMax = 5;
 
         //AOE Specific attributes
-        this.maxTargetsAffected = 3;
+        this.maxTargetsAffected = 5;
 
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
@@ -25,9 +25,9 @@ class Whirlwind extends BaseAttack {
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
-        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a powerful strike and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure a *fiery storm*, but it fizzles away!`;
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -40,7 +40,7 @@ class Whirlwind extends BaseAttack {
     initiate() {
 
         //Build a new message based on the randomTarget
-        this.slackPayload.text = `${this.actionCharacter.props.name} becomes a whirlwind of blades, striking our wildly!`;
+        this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
         slack.sendMessage(this.slackPayload);
 
         this.processOnSingleTarget = (singleTarget, avoidModifier) => {
@@ -65,7 +65,7 @@ class Whirlwind extends BaseAttack {
 
             //Build a new message based on the randomTarget
             setTimeout( () => {
-                this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                this.slackPayload.text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
                 slack.sendMessage(this.slackPayload);
             }, 500);
 
@@ -106,5 +106,5 @@ class Whirlwind extends BaseAttack {
 
 
 module.exports = {
-    Whirlwind
+    Firestorm
 };

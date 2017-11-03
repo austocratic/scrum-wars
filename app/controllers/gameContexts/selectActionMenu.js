@@ -249,6 +249,33 @@ const whirlwind = gameObjects => {
 
     actionObject.initiate();
 };
+const firestorm = gameObjects => {
+    console.log('Called selectActionMenu/firestorm');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['firestorm'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
+
+    actionObject.initiate();
+};
 
 //*******  These actionControllers require a target, so will return selectActionTarget game context  *******
 
@@ -379,5 +406,6 @@ module.exports = {
     savageStrike,
     backstab,
     poisonedBlade,
-    cleave
+    cleave,
+    firestorm
 };
