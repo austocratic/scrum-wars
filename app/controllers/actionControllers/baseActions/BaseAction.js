@@ -177,26 +177,26 @@ class BaseAction {
 
     _reverseEffect(characterToModify, actionID){
 
-        var arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
+        let arrayIndex = _.findIndex(characterToModify.props.effects, {'action_id': actionID});
 
         if (arrayIndex === -1){
             console.log('"Attempted to reverse actionID that does not exist on the target"');
             return "Attempted to reverse actionID that does not exist on the target"
         }
 
-        var modifiersToRemove = characterToModify.props.effects[arrayIndex].modifiers;
+        let modifiersToRemove = characterToModify.props.effects[arrayIndex].modifiers;
 
         console.log('modifiersToRemove: ', modifiersToRemove);
 
         //Look at modifiers to determine if there are any nested properties:
-        var modifierKeys = Object.keys(modifiersToRemove);
+        let modifierKeys = Object.keys(modifiersToRemove);
 
         if (modifierKeys.length > 0) {
             modifierKeys.forEach( eachModifierKey => {
 
-                var nestedProperty = modifiersToRemove[eachModifierKey];
+                let nestedProperty = modifiersToRemove[eachModifierKey];
 
-                var nestedKeys = Object.keys(nestedProperty);
+                let nestedKeys = Object.keys(nestedProperty);
 
                 //If key is nested
                 if (nestedKeys.length > 0) {
@@ -207,10 +207,10 @@ class BaseAction {
 
         function getNestedKeys(nestedProperty){
 
-            var nestedKeys = Object.keys(nestedProperty);
+            let nestedKeys = Object.keys(nestedProperty);
 
             nestedKeys.forEach( eachNestedKey =>{
-                var nestedValue = nestedProperty[eachNestedKey];
+                let nestedValue = nestedProperty[eachNestedKey];
             });
         }
 

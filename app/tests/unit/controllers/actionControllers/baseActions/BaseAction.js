@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require('assert');
+const _ = require('lodash');
 const BaseAction = require('../../../../../../app/controllers/actionControllers/baseActions/BaseAction').BaseAction;
 const Character = require('../../../../../../app/models/Character').Character;
 const Game = require('../../../../../../app/models/Game').Game;
@@ -110,7 +111,7 @@ describe("Testing BaseAction class", function() {
             let toughnessBefore = gameObjects.targetCharacter.props.modified_toughness;
             let strengthBefore = gameObjects.targetCharacter.props.modified_strength;
 
-            testBaseAction._incrementProperties(gameObjects.targetCharacter , statsToModify);
+            testBaseAction._incrementProperties(gameObjects.targetCharacter, statsToModify);
 
             it("updated modified_toughness should be " + statsToModify.modified_toughness + " greater than previous modified_toughness", function (){
                 assert.equal(gameObjects.targetCharacter.props.modified_toughness, toughnessBefore + statsToModify.modified_toughness);
@@ -119,7 +120,33 @@ describe("Testing BaseAction class", function() {
             it("updated modified_strength should be " + statsToModify.modified_strength + " less than previous modified_strength", function (){
                 assert.equal(gameObjects.targetCharacter.props.modified_strength, strengthBefore + statsToModify.modified_strength);
             })
+        });
 
-        })
+        describe("testing BaseAction method _reverseEffect", function () {
+
+            let testEffect = {
+                action_id: "test_action_id",
+                applied_by_character_id: "someone",
+                modifiers: {
+                    modified_strength: -5,
+                    modified_toughness: 5
+                },
+                type: "combat stance"
+            };
+
+            if (gameObjects.targetCharacter.props.effects) {
+                gameObjects.targetCharacter.props.effects.push(testEffect)
+            } else {
+                gameObjects.targetCharacter.props.effects = [
+                    testEffect
+                ]
+            }
+
+            testBaseAction._reverseEffect(gameObjects.targetCharacter, testEffect.action_id);
+
+            it("gameObjects.targetCharacter should no longer have an effect of " + testEffect.action_id, function(){
+                assert.equal(_.findIndex(gameObjects.targetCharacter.props.effects, {'action_id': testEffect.action_id}), -1)
+            })
+        });
     });
 });
