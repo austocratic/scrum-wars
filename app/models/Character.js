@@ -55,9 +55,9 @@ class Character extends BaseModel{
     setModifiedStats(modifiers){
 
         //Get the keys of the update object
-        var updateKeys = Object.keys(modifiers);
+        let updateKeys = Object.keys(modifiers);
 
-        var baseAttribute, modifiedAttribute;
+        let baseAttribute, modifiedAttribute;
         
         //For each key, update the local character by adding that value plus the base attribute
         updateKeys.forEach( eachUpdateKey =>{
@@ -67,9 +67,10 @@ class Character extends BaseModel{
 
             //Add base attribute to modified attribute
             modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
-            
+
             this.updateProperty(eachUpdateKey, modifiedAttribute);
 
+            console.log('~~~~~DEBUG props in function: ', this.props[eachUpdateKey])
         });
     }
 

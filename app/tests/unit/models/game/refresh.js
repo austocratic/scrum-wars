@@ -22,7 +22,7 @@ game.state.global_state = {
     "next_match_start" : 5000000000
 };
 
-describe("Testing gameContext game.refresh()", function() {
+describe.skip("Testing gameContext game.refresh()", function() {
 
     describe("Game match is 'pending' state", function(){
 
