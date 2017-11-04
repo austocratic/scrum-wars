@@ -70,6 +70,8 @@ class Character extends BaseModel{
 
             this.updateProperty(eachUpdateKey, modifiedAttribute);
 
+            console.log('~~~~~DEBUG character name: ', this.props.name);
+            console.log('~~~~~DEBUG eachUpdateKey: ', eachUpdateKey);
             console.log('~~~~~DEBUG props in function: ', this.props[eachUpdateKey])
         });
     }
