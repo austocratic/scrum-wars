@@ -38,14 +38,17 @@ class BaseModel {
     accumulateProperties(base, newProperties){
 
         //Look at modifiers property
-        var newPropertyKeys = Object.keys(newProperties);
+        let newPropertyKeys = Object.keys(newProperties);
 
         newPropertyKeys.forEach( eachPropertyKey =>{
 
             //If the property exists, increment it, otherwise add it
             if (base[eachPropertyKey]) {
+                console.log('DEBUG accumulateProperties base[eachPropertyKey]: ', base[eachPropertyKey]);
+                console.log('DEBUG accumulateProperties newProperties[eachPropertyKey]: ', newProperties[eachPropertyKey]);
                 base[eachPropertyKey] = base[eachPropertyKey] + newProperties[eachPropertyKey];
             } else {
+                console.log('DEBUG accumulateProperties else: ', base[eachPropertyKey]);
                 base = Object.assign(base, {[eachPropertyKey]: newProperties[eachPropertyKey]})
             }
         });
