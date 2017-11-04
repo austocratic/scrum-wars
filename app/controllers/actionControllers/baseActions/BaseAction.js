@@ -110,12 +110,15 @@ class BaseAction {
 
     //modifiers should be an object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
+        characterToModify.props = _.merge(characterToModify.props, modifiers);
+    }
 
-        let mergedProperty = _.merge(characterToModify.props, modifiers);
-
-        console.log('DEBUG characterToModify: ', characterToModify);
-
-        characterToModify.props = mergedProperty;
+    //modifiers should be an object of stat/modifier key/value pairs
+    //Take the properties passed in add them to existing properties
+    _incrementProperties(characterToModify, modifiers){
+        characterToModify.props = _.mergeWith(characterToModify.props, modifiers, (objValue, srcValue) =>{
+            return objValue + srcValue
+        });
     }
 
     _avoidCheck(accuracyModifier, avoidModifier){
@@ -132,26 +135,15 @@ class BaseAction {
 
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
+        return (accuracyScore >= avoidScore);
+
+
+        /* Replaced by above, test
         if(accuracyScore >= avoidScore){
             return true
         }
 
-        //Alert the channel of the action
-        /*
-        var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": this.slackChannel,
-            "text": this.channelActionAvoidedMessage
-        };*/
-
-        //Create a new slack alert object
-        //var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        //channelAlert.sendToSlack(this.params);
-
-        return false
+        return false*/
     }
 
     _applyEffect(characterToModify, modifiers){
@@ -180,7 +172,7 @@ class BaseAction {
         }
 
         //Update the character's properties
-        this._changeProperty(characterToModify, modifiers)
+        this._incrementProperties(characterToModify, modifiers)
     }
 
     _reverseEffect(characterToModify, actionID){

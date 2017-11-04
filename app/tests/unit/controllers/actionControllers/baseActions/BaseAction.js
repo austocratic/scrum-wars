@@ -98,5 +98,28 @@ describe("Testing BaseAction class", function() {
                 })
             })
         });
+
+        describe("testing BaseAction method _incrementProperties", function () {
+
+            //Modifiers to apply on action success
+            let statsToModify = {
+                modified_toughness: 8,
+                modified_strength: -8
+            };
+
+            let toughnessBefore = gameObjects.targetCharacter.props.modified_toughness;
+            let strengthBefore = gameObjects.targetCharacter.props.modified_strength;
+
+            testBaseAction._incrementProperties(gameObjects.targetCharacter , statsToModify);
+
+            it("updated modified_toughness should be " + statsToModify.modified_toughness + " greater than previous modified_toughness", function (){
+                assert.equal(gameObjects.targetCharacter.props.modified_toughness, toughnessBefore + statsToModify.modified_toughness);
+            });
+
+            it("updated modified_strength should be " + statsToModify.modified_strength + " less than previous modified_strength", function (){
+                assert.equal(gameObjects.targetCharacter.props.modified_strength, strengthBefore + statsToModify.modified_strength);
+            })
+
+        })
     });
 });
