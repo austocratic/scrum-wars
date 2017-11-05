@@ -288,6 +288,15 @@
       "modified_intelligence" : 18,
       "modified_strength" : -5,
       "modified_toughness" : 5,
+      "modified_stats": {
+        "armor" : 0,
+        "dexterity" : 0,
+        "health" : 100,
+        "hit_points" : 100,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 16
+      },
       "name" : "female_wizard_1",
       "strength" : 4,
       "toughness" : 6,

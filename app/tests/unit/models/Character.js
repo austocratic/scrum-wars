@@ -20,20 +20,12 @@ describe("Testing Character model", function() {
         let testBaseProperties = {};
 
         let testPropertiesToModify = {
-            modified_strength: 5,
-            modified_toughness: 12
+            strength: 5,
+            toughness: 12
         };
-
-        console.log('~~~~~~~DEBUG: modified_strength BEFORE: ', testCharacter.props.modified_strength);
-        console.log('~~~~~~~DEBUG: modified_toughness BEFORE: ', testCharacter.props.modified_toughness);
 
         //Argument: modifiers object
         testCharacter.setModifiedStats(testPropertiesToModify);
-
-        console.log('~~~~~~~DEBUG: modified_strength AFTER: ', testCharacter.props.modified_strength);
-        console.log('~~~~~~~DEBUG: modified_toughness AFTER: ', testCharacter.props.modified_toughness);
-
-
     })
 
 

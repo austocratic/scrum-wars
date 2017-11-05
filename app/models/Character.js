@@ -63,16 +63,15 @@ class Character extends BaseModel{
         updateKeys.forEach( eachUpdateKey =>{
 
             //Parse the update key into two parts to get the base (I.E: modified_strength --> strength)
-            baseAttribute = eachUpdateKey.split("_")[1];
+            //baseAttribute = eachUpdateKey.split("_")[1];
 
             //Add base attribute to modified attribute
-            modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
+            //modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
 
-            this.updateProperty(eachUpdateKey, modifiedAttribute);
+            //Set the modified_stats object
+            this.props.modified_stats[eachUpdateKey] = modifiers[eachUpdateKey] + this.props[eachUpdateKey];
 
-            console.log('~~~~~DEBUG character name: ', this.props.name);
-            console.log('~~~~~DEBUG eachUpdateKey: ', eachUpdateKey);
-            console.log('~~~~~DEBUG props in function: ', this.props[eachUpdateKey])
+            //this.updateProperty(eachUpdateKey, modifiedAttribute);
         });
     }
 
