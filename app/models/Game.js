@@ -352,6 +352,9 @@ class Game {
                         //    return eachEffect.end_turn > 5
                         //})
                         .forEach( eachFilteredEffect => {
+
+                            console.log('DEBUG 11.5 eachFilteredEffect: ', eachFilteredEffect);
+
                             if(eachFilteredEffect.modifiers){
                                 eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
                             }
@@ -367,6 +370,9 @@ class Game {
                             return eachItem.is_equipped === 1
                         })
                         .forEach( eachFilteredItem => {
+
+                            console.log('DEBUG 11.5 eachFilteredItem: ', eachFilteredItem);
+
                             if(eachFilteredItem.modifiers){
                                 eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
                             }
