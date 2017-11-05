@@ -34,10 +34,8 @@ class OffensiveStance extends BaseModify {
 
         //Modifiers to apply on action success
         this.statsToModify = {
-            stats_current: {
-                modified_dexterity: -this.calculatedPower,
-                modified_strength: this.calculatedPower
-            }
+            dexterity: -this.calculatedPower,
+            strength: this.calculatedPower
         };
     }
 
