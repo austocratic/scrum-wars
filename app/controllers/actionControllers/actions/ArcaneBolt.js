@@ -53,7 +53,7 @@ class ArcaneBolt extends BaseAttack {
         }
 
         //Process all the other effects of the action
-        this.targetCharacter.incrementProperty('hit_points', -this.calculatedDamage);
+        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
 
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);

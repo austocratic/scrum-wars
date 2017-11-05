@@ -59,7 +59,7 @@ class PoisonedBlade extends BaseAttack {
         }
 
         //Process all the other effects of the action
-        this.targetCharacter.incrementProperty('hit_points', -this.calculatedDamage);
+        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
         
         //Apply the effect
         this._applyEffect(this.targetCharacter, this.statsToModify);

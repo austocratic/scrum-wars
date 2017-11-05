@@ -351,9 +351,6 @@ class Game {
                             return eachEffect.end_turn > 5
                         })
                         .forEach( eachFilteredEffect => {
-
-                            console.log('DEBUG eachFilteredEffect.modifiers: ', eachFilteredEffect.modifiers);
-
                             eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
                         });
                 }

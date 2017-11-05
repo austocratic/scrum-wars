@@ -28,7 +28,12 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     let slackResponseTemplate = {};
 
     //Mock a character that does not have gender property set yet
-    let testCharacterID = '32398c7c3d142d9ff054';
+    let testCharacterID = 'testCharacterID';
+
+    //Insert testCharacterID to characters
+    game.state.character[testCharacterID] = {
+
+    };
 
     let playerCharacter = new Character(game.state, testCharacterID);
 

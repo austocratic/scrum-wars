@@ -51,7 +51,7 @@ class Backstab extends BaseAttack {
             return;
         }
 
-        this.targetCharacter.incrementProperty('hit_points', -this.calculatedDamage);
+        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
 
         //Find all currently applied effects that change the targets is_hidden property
         if (this.actionCharacter.props.effects) {

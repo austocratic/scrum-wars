@@ -61,7 +61,7 @@ class Firestorm extends BaseAttack {
             }
 
             //Process all the other effects of the action
-            singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
+            singleTarget.incrementProperty('health', -this.calculatedDamage);
 
             //Build a new message based on the randomTarget
             setTimeout( () => {

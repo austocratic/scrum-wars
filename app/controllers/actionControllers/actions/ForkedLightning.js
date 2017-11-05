@@ -70,7 +70,7 @@ class ForkedLightning extends BaseAttack {
 
             //Process all the other effects of the action
             //this._changeProperty(singleTarget, {hit_points: -this.calculatedDamage});
-            singleTarget.incrementProperty('hit_points', -this.calculatedDamage);
+            singleTarget.incrementProperty('health', -this.calculatedDamage);
             
             return true;
         };

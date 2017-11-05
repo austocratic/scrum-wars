@@ -198,37 +198,37 @@ const profile = gameObjects => {
                 },
                 {
                     "title": "Current Health",
-                    "value": gameObjects.playerCharacter.props.current_hit_points,
+                    "value": gameObjects.playerCharacter.props.health,
                     "short": true
                 },
                 {
                     "title": "Max Health",
-                    "value": `${gameObjects.playerCharacter.props.hit_points} + ${gameObjects.playerCharacter.props.modified_stats.hit_points - gameObjects.playerCharacter.props.hit_points} = ${gameObjects.playerCharacter.props.modified_stats.hit_points}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.hit_points} + ${gameObjects.playerCharacter.props.stats_current.hit_points - gameObjects.playerCharacter.props.stats_base.hit_points} = ${gameObjects.playerCharacter.props.stats_current.hit_points}`,
                     "short": true
                 },
                 {
                     "title": "Strength",
-                    "value": `${gameObjects.playerCharacter.props.strength} + ${gameObjects.playerCharacter.props.modified_stats.strength - gameObjects.playerCharacter.props.strength} = ${gameObjects.playerCharacter.props.modified_stats.strength}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.strength} + ${gameObjects.playerCharacter.props.stats_current.strength - gameObjects.playerCharacter.props.stats_base.strength} = ${gameObjects.playerCharacter.props.stats_current.strength}`,
                     "short": true
                 },
                 {
                     "title": "Intelligence",
-                    "value": `${gameObjects.playerCharacter.props.intelligence} + ${gameObjects.playerCharacter.props.modified_stats.intelligence - gameObjects.playerCharacter.props.intelligence} = ${gameObjects.playerCharacter.props.modified_stats.intelligence}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.intelligence} + ${gameObjects.playerCharacter.props.stats_current.intelligence - gameObjects.playerCharacter.props.stats_base.intelligence} = ${gameObjects.playerCharacter.props.stats_current.intelligence}`,
                     "short": true
                 },
                 {
                     "title": "Dexterity",
-                    "value": `${gameObjects.playerCharacter.props.dexterity} + ${gameObjects.playerCharacter.props.modified_stats.dexterity - gameObjects.playerCharacter.props.dexterity} = ${gameObjects.playerCharacter.props.modified_stats.dexterity}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.dexterity} + ${gameObjects.playerCharacter.props.stats_current.dexterity - gameObjects.playerCharacter.props.stats_base.dexterity} = ${gameObjects.playerCharacter.props.stats_current.dexterity}`,
                     "short": true
                 },
                 {
                     "title": "Toughness",
-                    "value": `${gameObjects.playerCharacter.props.toughness} + ${gameObjects.playerCharacter.props.modified_stats.toughness - gameObjects.playerCharacter.props.toughness} = ${gameObjects.playerCharacter.props.modified_stats.toughness}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.toughness} + ${gameObjects.playerCharacter.props.stats_current.toughness - gameObjects.playerCharacter.props.stats_base.toughness} = ${gameObjects.playerCharacter.props.stats_current.toughness}`,
                     "short": true
                 },
                 {
                     "title": "Armor",
-                    "value": gameObjects.playerCharacter.props.armor,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.armor} + ${gameObjects.playerCharacter.props.stats_current.armor - gameObjects.playerCharacter.props.stats_base.armor} = ${gameObjects.playerCharacter.props.stats_current.armor}`,
                     "short": true
                 }
             ]

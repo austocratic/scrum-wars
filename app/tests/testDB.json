@@ -96,6 +96,13 @@
       "functionName" : "arcaneBolt",
       "minimum_level" : 1,
       "name" : "Arcane Bolt",
+      "ongoing_effects" : [ {
+        "functionName" : "poisonDamage",
+        "on_turn" : [ 1, 2, 3, 4 ]
+      }, {
+        "functionName" : "effectComplete",
+        "on_turn" : [ 5 ]
+      } ],
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
@@ -110,6 +117,42 @@
         "functionName" : "damageOverTime"
       } ],
       "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KxkBOZgjEPwKmHOWueQ" : {
+      "cool_down" : "2",
+      "delay" : "1",
+      "functionName" : "whirlwind",
+      "minimum_level" : "1",
+      "name" : "Whirlwind",
+      "type" : "offensive",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Kxp5dhdmtUQ0aZ6YpiI" : {
+      "cool_down" : "1",
+      "delay" : "0",
+      "functionName" : "offensiveStance",
+      "minimum_level" : "1",
+      "name" : "Offensive Stance",
+      "type" : "combat stance",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Ky1zv4JXgbAKvxFFBmp" : {
+      "cool_down" : "2",
+      "delay" : "1",
+      "functionName" : "cleave",
+      "minimum_level" : "1",
+      "name" : "Cleave",
+      "type" : "offensive2",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-Ky3C664qBFIYS4R4ItQ" : {
+      "cool_down" : "3",
+      "delay" : "1",
+      "functionName" : "firestorm",
+      "minimum_level" : "1",
+      "name" : "Firestorm",
+      "type" : "offensive2",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     }
   },
@@ -137,75 +180,53 @@
         "turn_used" : 0
       } ],
       "active" : 1,
-      "armor" : 0,
       "class_id" : "-KircnK2x1_31EQiAYlk",
-      "dexterity" : 12,
-      "effects": [
-        {
-          "action_id": "-KvOpJ2FyGodmZCanea7",
-          "applied_by_character_id": "55e38d23d842e50e9026",
-          "turn_applied": 2
-        }
-      ],
+      "effects" : [ {
+        "action_id" : "-KvOpJ2FyGodmZCanea7",
+        "applied_by_character_id" : "55e38d23d842e50e9026",
+        "turn_applied" : 1,
+        "type" : "offensive"
+      } ],
       "gender" : "male",
       "gold" : 100,
-      "hit_points" : -12,
-      "intelligence" : 18,
+      "health" : 50000,
       "inventory" : [ {
         "equipment_slot_id" : "hand",
         "is_equipped" : 1,
         "item_id" : "-KjGQ1IPuwE24t4LPPNd",
         "modifiers" : {
-          "modified_intelligence" : 4,
-          "modified_strength" : -1
+          "intelligence" : 4,
+          "strength" : -1
         }
       } ],
       "is_defending" : false,
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 3,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 12,
-      "modified_intelligence" : 22,
-      "modified_strength" : 3,
-      "modified_toughness" : 6,
       "name" : "Freddy",
       "profile_image" : "unknown_character.jpg",
-      "strength" : 4,
-      "toughness" : 6,
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 12,
+        "hit_points" : 50000,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 6
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 0,
+        "hit_points" : 50000,
+        "intelligence" : 18,
+        "strength" : 0,
+        "toughness" : 6
+      },
       "turn_action_used" : 0,
       "user_id" : "U55U8F5B7",
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
-    "32398c7c3d142d9ff054" : {
-      "active" : 0,
-      "armor" : 0,
-      "gold" : 100,
-      "hit_points" : 100,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "name" : "Unknown Traveler",
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "4883355fe7966f63879a" : {
-      "active" : 0,
-      "armor" : 0,
-      "gold" : 100,
-      "hit_points" : 100,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "name" : "Unknown Traveler",
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
     "55e38d23d842e50e9026" : {
-      "actions" : [
-        {
+      "actions" : [ {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
         "turn_available" : 0,
@@ -245,106 +266,79 @@
         "is_available" : 1,
         "turn_available" : 0,
         "turn_used" : 0
+      }, {
+        "action_id" : "-KvOpJ2FyGodmZCanea7",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KxkBOZgjEPwKmHOWueQ",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kxp5dhdmtUQ0aZ6YpiI",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Ky1zv4JXgbAKvxFFBmp",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Ky3C664qBFIYS4R4ItQ",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
       } ],
-      "actionsTest" : {
-        "-Kr3hnITyH9ZKx3VuZah" : {
-          "is_available" : 1
-        }
-      },
       "active" : 1,
-      "armor" : 0,
       "avatar" : "f_10.png",
       "class_id" : "-KircnK2x1_31EQiAYlk",
-      "dexterity" : 12,
       "effects" : [ {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "end_turn" : 101,
-        "applied_by_character_id": "55e38d23d842e50e9026",
+        "action_id" : "-Kkdk_CD5vx8vRGQD268",
+        "applied_by_character_id" : "55e38d23d842e50e9026",
         "modifiers" : {
-          "modified_strength" : -5,
-          "modified_toughness" : 5
+          "modified_is_hidden" : 1
         },
-        "type" : "combat stance"
+        "type" : "special"
       } ],
       "gender" : "female",
       "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 18,
-      "inventory": [ {
+      "health" : 50000,
+      "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
         "is_equipped" : 1,
         "item_id" : "-KjGQEzVbaxRlWFawSqI",
         "modifiers" : {
-          "modified_intelligence" : 2,
-          "modified_strength" : 2
+          "intelligence" : 2,
+          "strength" : 2
         },
         "name" : "Minor Staff of Ice"
       } ],
-      "is_hidden" : 1,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 12,
-      "modified_intelligence" : 18,
-      "modified_strength" : -5,
-      "modified_toughness" : 5,
-      "modified_stats": {
-        "armor" : 0,
-        "dexterity" : 0,
-        "health" : 100,
-        "hit_points" : 100,
-        "intelligence" : 18,
-        "strength" : 4,
-        "toughness" : 16
-      },
-      "name" : "female_wizard_1",
-      "strength" : 4,
-      "toughness" : 6,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
-    },
-    "57ab9fe659f08e77ec50" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
+      "modified_is_hidden" : 1,
+      "name" : "Test 1",
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 12,
+        "hit_points" : 100,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 6
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 12,
+        "hit_points" : 100,
+        "intelligence" : 20,
+        "strength" : 6,
+        "toughness" : 6
+      },
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
     "5bdfe1adfef85f3af257" : {
       "actions" : [ {
@@ -379,367 +373,42 @@
         "turn_used" : 1
       } ],
       "active" : 1,
-      "armor" : 0,
       "avatar" : "app/assets/fullSize/character_avatar/male/m_07.png",
       "class_id" : "-KircSgAkPTavnfob8F5",
-      "dexterity" : 10,
       "gender" : "male",
       "gold" : 90,
-      "hit_points" : -17,
-      "intelligence" : 10,
+      "health" : 50000,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
         "is_equipped" : 1,
         "item_id" : "-KjGQ1IPuwE24t4LPPNd",
         "modifiers" : {
-          "modified_strength" : 5
+          "strength" : 5
         },
         "name" : "Basic Short Sword"
       } ],
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 10,
-      "modified_intelligence" : 10,
-      "modified_strength" : 20,
-      "modified_toughness" : 15,
       "name" : "Sindria",
-      "strength" : 15,
-      "toughness" : 10,
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 10,
+        "hit_points" : 50000,
+        "intelligence" : 10,
+        "strength" : 15,
+        "toughness" : 10
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 0,
+        "hit_points" : 50000,
+        "intelligence" : 10,
+        "strength" : 5,
+        "toughness" : 10
+      },
       "user_id" : "-Ksu5JKx8959TviyMFIy",
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
-    },
-    "5fec2c1995e1a4bfa50d" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "6b77e9e8c71bc1a96f3d" : {
-      "active" : 0,
-      "armor" : 0,
-      "gold" : 100,
-      "hit_points" : 100,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "name" : "Unknown Traveler",
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "71b93e43dc4c9e277b05" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "8f00ff7c00b3398ca31e" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "female",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "a87c293f6a16e16b0ed5" : {
-      "active" : 0,
-      "armor" : 0,
-      "gold" : 100,
-      "hit_points" : 100,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "name" : "Unknown Traveler",
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "af892bd31f2b97c51b97" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "avatar" : "public/images/fullSize/character_avatar/male/m_06.png",
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
-      "gold" : 90,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "inventory" : [ {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
-        "is_equipped" : 1,
-        "item_id" : "-KjGQMKZOUclKWQFER1O",
-        "modifiers" : {
-          "modified_dexterity" : 5
-        },
-        "name" : "Simple Bow"
-      } ],
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 20,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "9.4 Test",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
-    },
-    "bb139fb6bb265e264f38" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "male",
-      "gold" : 100,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 10,
-      "modified_toughness" : 10,
-      "name" : "Unknown Traveler",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
-    },
-    "e424b06c50525cb8c90d" : {
-      "actions" : [ {
-        "action_id" : "-Kjpe29q_fDkJG-73AQO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      }, {
-        "action_id" : "-KqtOcn7MapqMfnGIZvo",
-        "is_available" : 1,
-        "turn_available" : 0,
-        "turn_used" : 0
-      } ],
-      "active" : 0,
-      "armor" : 0,
-      "avatar" : "f_19.PNG",
-      "class_id" : "-KirdGNRIajLmQ_CRRjW",
-      "dexterity" : 15,
-      "gender" : "female",
-      "gold" : 80,
-      "hit_points" : 100,
-      "intelligence" : 8,
-      "inventory" : [ {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "is_equipped" : 0,
-        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
-        "modifiers" : {
-          "modified_strength" : 5
-        },
-        "name" : "Basic Short Sword"
-      }, {
-        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
-        "is_equipped" : 0,
-        "item_id" : "-KjGQMKZOUclKWQFER1O",
-        "modifiers" : {
-          "modified_dexterity" : 5
-        },
-        "name" : "Simple Bow"
-      } ],
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "modified_dexterity" : 15,
-      "modified_intelligence" : 8,
-      "modified_strength" : 15,
-      "modified_toughness" : 10,
-      "name" : "test_female_1",
-      "strength" : 10,
-      "toughness" : 10,
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
-    },
-    "f33b09c588140f6adf90" : {
-      "active" : 0,
-      "armor" : 0,
-      "gold" : 100,
-      "hit_points" : 100,
-      "is_hidden" : 0,
-      "level" : 1,
-      "match_wins" : 0,
-      "max_hit_points" : 100,
-      "name" : "Unknown Traveler",
-      "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
   "class" : {
@@ -804,12 +473,6 @@
       }
     }
   },
-  "effect" : {
-    "-KqKLddOaYcWnOvVIAYe" : {
-      "name" : "damage_target",
-      "strength" : 0
-    }
-  },
   "equipment_slot" : {
     "-KmTV24FelP7T8rdKLEx" : {
       "name" : "Primary hand"
@@ -837,7 +500,7 @@
     "-Kjkkd-WF6OZAa9tCOt0" : {
       "number_turns" : 1
     },
-    "match_id" : "-KmTOFWVJav3v7j1hYLA",
+    "match_id" : "8fca374b794e69b788b4",
     "next_match_start" : 5000000000
   },
   "item" : {
@@ -845,7 +508,7 @@
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
       "modifiers" : {
-        "modified_strength" : 5
+        "strength" : 5
       },
       "name" : "Basic Short Sword"
     },
@@ -853,20 +516,16 @@
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
-        "modified_intelligence" : 2,
-        "modified_strength" : 2
+        "intelligence" : 2,
+        "strength" : 2
       },
       "name" : "Minor Staff of Ice"
     },
     "-KjGQMKZOUclKWQFER1O" : {
       "cost" : 10,
-      "effects" : {
-        "modified_dexterity" : 3,
-        "modified_strength" : 2
-      },
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
-        "modified_dexterity" : 5
+        "dexterity" : 5
       },
       "name" : "Simple Bow"
     },
@@ -874,8 +533,8 @@
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
       "modifiers" : {
-        "modified_dexterity" : 2,
-        "modified_strength" : 2
+        "dexterity" : 2,
+        "strength" : 2
       },
       "name" : "Basic Spear"
     },
@@ -886,230 +545,6 @@
     }
   },
   "match" : {
-    "-Kjkkd-WF6OZAa9tCOt0" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1496119710572,
-      "date_started" : 1.496074304976E9,
-      "number_turns" : 397,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : "ph"
-    },
-    "-KlMflE7J-zwdJBJmNY_" : {
-      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
-      "date_ended" : 1496553539359,
-      "date_started" : 1.496553534675E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KllXgT1-KB18m8SNwAr" : {
-      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
-      "date_ended" : 1496553630138,
-      "date_started" : 1.496553612384E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KllY1cFIXaYWyuYc0-g" : {
-      "character_id_won" : "-Kkxf1ukVSF9VV6mIPlG",
-      "date_ended" : 1496622436863,
-      "date_started" : 1.496598313244E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KlpdW8Ia8b7xskjbxtc" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497135786695,
-      "date_started" : 1.497135641641E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJEmgVsA_-sUixx47E" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497135833602,
-      "date_started" : 1.497135811717E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJEy8J90m3mD8SewpC" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497136015550,
-      "date_started" : 1.497135911108E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJFeZKlNAMdzwPV3t0" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497138621120,
-      "date_started" : 1.497136041051E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KmJPagOhYPdiGXJzxvI" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497141392279,
-      "date_started" : 1.497138673404E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJ_AEqQc5lGaOjU6mp" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497141991090,
-      "date_started" : 1.497141510799E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJbSRFVQjVniM6Qw49" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497142231807,
-      "date_started" : 1.497142018469E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJcNCuDYCRxrM3U9s8" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497142547438,
-      "date_started" : 1.497142242868E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJd_G9P_nLGFR05mG7" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497142943492,
-      "date_started" : 1.497142556254E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJf4xXCQDW3CJQFYZW" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497143178516,
-      "date_started" : 1.497142949667E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJfzLAIkUizFa78orF" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497144409624,
-      "date_started" : 1.497144047858E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmJkftdlQ_OjSI-0kPV" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497226479348,
-      "date_started" : 1.497145075672E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmOdkS_mlSczVmmgj4h" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497290339154,
-      "date_started" : 1.497288528156E9,
-      "number_turns" : 1,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KmSSMDhxjLRlprKuNUW" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497290751650,
-      "date_started" : 1.497290357657E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmSTvyaogjtcKpNY_jL" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497298911293,
-      "date_started" : 1.497290818814E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm", "-Kkxf1ukVSF9VV6mIPlG" ],
-      "zone_id" : 0
-    },
-    "-KmSy32-7n9fVV1lans8" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497298946073,
-      "date_started" : 1.497298935021E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmSyBX-6Arw54WUeNSN" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497299142791,
-      "date_started" : 1.497299137592E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmSywYO7yXIl92vLGiA" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497301163568,
-      "date_started" : 1.497301158677E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmT5dul7gX8Akk1Cdwe" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497301678106,
-      "date_started" : 1.497301671887E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmT7bWeApJ4mFiEe1FL" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497301691839,
-      "date_started" : 1.497301685213E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmT7esIBtGZA1epSm5m" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497301883873,
-      "date_started" : 1.497301869989E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmT8Ol-sPsqrZ4rmcZE" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497302448700,
-      "date_started" : 1.497302444992E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmTAYeHgCK2WM2_DtJr" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497302465490,
-      "date_started" : 1.497302454921E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
-    "-KmTAbkcYvb9HLD9wynf" : {
-      "character_id_won" : "-KkdlJPN_PdJCUydditm",
-      "date_ended" : 1497302815742,
-      "date_started" : 1.497302476931E9,
-      "number_turns" : 0,
-      "starting_character_ids" : [ "-KkdlJPN_PdJCUydditm" ],
-      "zone_id" : 0
-    },
     "-KmTBxH0tkNaSo0rdT61" : {
       "character_id_won" : "-KkdlJPN_PdJCUydditm",
       "date_ended" : 1497305895619,
@@ -1127,12 +562,23 @@
       "zone_id" : 0
     },
     "-KmTOFWVJav3v7j1hYLA" : {
-      "character_id_won" : 0,
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1507684335177,
+      "date_started" : 1507053597123,
+      "number_turns" : 8,
+      "starting_character_ids" : [ "5bdfe1adfef85f3af257", "55e38d23d842e50e9026", "-Kkxf1ukVSF9VV6mIPlG" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "8fca374b794e69b788b4" : {
+      "active" : 0,
       "date_ended" : 0,
-      "date_started" : 0,
-      "number_turns" : 1,
-      "starting_character_ids" : 0,
-      "zone_id" : 0
+      "date_started" : 1508626472777,
+      "number_turns" : 113,
+      "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257" ],
+      "status" : "started",
+      "turn" : 0,
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     }
   },
   "merchant" : {

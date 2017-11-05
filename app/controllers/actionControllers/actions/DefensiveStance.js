@@ -34,8 +34,10 @@ class DefensiveStance extends BaseModify {
 
         //Modifiers to apply on action success
         this.statsToModify = {
-            modified_toughness: this.calculatedPower,
-            modified_strength: -this.calculatedPower
+            stats_current: {
+                toughness: this.calculatedPower,
+                strength: -this.calculatedPower
+            }
         };
     }
 

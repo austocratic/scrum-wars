@@ -26,7 +26,9 @@ describe("Testing Character model", function() {
 
         //Argument: modifiers object
         testCharacter.setModifiedStats(testPropertiesToModify);
+
+        it("stats_current.strength should equal stats_base.strength + testPropertiesToModify.strength", function(){
+            assert.equal(testCharacter.props.stats_current['strength'], testCharacter.props.stats_base['strength'] + testPropertiesToModify.strength)
+        });
     })
-
-
 });

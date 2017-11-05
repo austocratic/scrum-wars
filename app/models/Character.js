@@ -54,13 +54,25 @@ class Character extends BaseModel{
 
     setModifiedStats(modifiers){
 
-        //Get the keys of the update object
-        let updateKeys = Object.keys(modifiers);
+        console.log('DEBUG modifiers: ', modifiers);
 
-        let baseAttribute, modifiedAttribute;
-        
+        _.forEach(this.props.stats_current, (value, key) =>{
+
+            this.props.stats_current[key] = this.props.stats_base[key] +
+                //If there is a modifier, modify the base otherwise modify by 0
+                (()=>{
+                    if(modifiers[key]){
+                        return modifiers[key]
+                    } else {
+                        return 0
+                    }
+                })();
+        })
+
+
+
         //For each key, update the local character by adding that value plus the base attribute
-        updateKeys.forEach( eachUpdateKey =>{
+        //updateKeys.forEach( eachUpdateKey =>{
 
             //Parse the update key into two parts to get the base (I.E: modified_strength --> strength)
             //baseAttribute = eachUpdateKey.split("_")[1];
@@ -69,10 +81,10 @@ class Character extends BaseModel{
             //modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
 
             //Set the modified_stats object
-            this.props.modified_stats[eachUpdateKey] = modifiers[eachUpdateKey] + this.props[eachUpdateKey];
+            //this.props.modified_stats[eachUpdateKey] = modifiers[eachUpdateKey] + this.props[eachUpdateKey];
 
             //this.updateProperty(eachUpdateKey, modifiedAttribute);
-        });
+        //});
     }
 
     purchaseItem(itemObject){
