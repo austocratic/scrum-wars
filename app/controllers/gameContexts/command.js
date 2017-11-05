@@ -208,7 +208,7 @@ const profile = gameObjects => {
                 },
                 {
                     "title": "Strength",
-                    "value": gameObjects.playerCharacter.props.modified_strength,
+                    "value": `${gameObjects.playerCharacter.props.strength} + ~${gameObjects.playerCharacter.props.modified_stats.strength - gameObjects.playerCharacter.props.strength}~ = *${gameObjects.playerCharacter.props.modified_stats.strength}*`,
                     "short": true
                 },
                 {
