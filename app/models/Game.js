@@ -352,7 +352,9 @@ class Game {
                         //    return eachEffect.end_turn > 5
                         //})
                         .forEach( eachFilteredEffect => {
-                            eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
+                            if(eachFilteredEffect.modifiers){
+                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
+                            }
                         });
                 }
 
@@ -365,7 +367,9 @@ class Game {
                             return eachItem.is_equipped === 1
                         })
                         .forEach( eachFilteredItem => {
-                            eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
+                            if(eachFilteredItem.modifiers){
+                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
+                            }
                         });
                 }
 
