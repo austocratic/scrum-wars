@@ -68,23 +68,6 @@ class Character extends BaseModel{
                     }
                 })();
         })
-
-
-
-        //For each key, update the local character by adding that value plus the base attribute
-        //updateKeys.forEach( eachUpdateKey =>{
-
-            //Parse the update key into two parts to get the base (I.E: modified_strength --> strength)
-            //baseAttribute = eachUpdateKey.split("_")[1];
-
-            //Add base attribute to modified attribute
-            //modifiedAttribute = modifiers[eachUpdateKey] + this.props[baseAttribute];
-
-            //Set the modified_stats object
-            //this.props.modified_stats[eachUpdateKey] = modifiers[eachUpdateKey] + this.props[eachUpdateKey];
-
-            //this.updateProperty(eachUpdateKey, modifiedAttribute);
-        //});
     }
 
     purchaseItem(itemObject){
@@ -258,6 +241,12 @@ class Character extends BaseModel{
         }
 
         equippedItem.is_equipped = 0;
+    }
+
+    updateActionUsed(actionID, turnNumber){
+        let actionKey = _.findKey(this.actionCharacter.props.actions, {'action_id': actionID});
+
+        this.props.actions[actionKey].turn_used = turnNumber;
     }
 
     inactivate(){

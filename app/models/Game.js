@@ -147,9 +147,7 @@ class Game {
                     })
                     //Filter starting characters for characters currently in the zone
                     .filter( eachMatchStartingCharacter =>{
-
                         return eachMatchStartingCharacter.props.zone_id === currentMatch.props.zone_id;
-                        //return this.state.character[eachMatchStartingCharacterID].zone_id === currentMatch.props.zone_id
                     });
 
                 //For each character in the zone lookup IDs of all effects
@@ -157,13 +155,9 @@ class Game {
 
                     //If the character has effects on them, process them
                     if( eachCharacter.props.effects ) {
-
-                        console.log('DEBUG, eachCharacter effects: ', eachCharacter.props.effects);
                         eachCharacter.props.effects.forEach( eachEffect => {
 
                             let effectAction = new Action(this.state, eachEffect.action_id);
-
-                            console.log('DEBUG eachEffect: ', eachEffect);
 
                             //Get the character who applied the effect.
                             //TODO should effects only work if the character who applied it is still alive?
@@ -171,16 +165,7 @@ class Game {
 
                             //If the action has ongoing effects, process them
                             if (effectAction.props.ongoing_effects){
-
-                                console.log('DEBUG ongoing_effects: ', effectAction.props.ongoing_effects);
-
                                 effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
-
-                                    //For each effect, determine if the effect should apply for the current turn
-                                    console.log('DEBUG eachOngoingEffect active_on_turn: ', eachOngoingEffect.active_on_turn);
-
-                                    //Determine if the action is ongoing during the current turn
-                                    console.log('DEBUG current turn: ', currentMatch.props.number_turns);
                                     //Check if the action has an ongoing effect that should apply to the current turn.
                                     //In order to get the relative turn number take the current turn - the turn the action was applied
                                     if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied)){
