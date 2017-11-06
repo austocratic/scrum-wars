@@ -6,17 +6,17 @@
 //var Item = require('./Item').Item;
 //var firebase = new Firebase();
 
-var BaseModel = require('./BaseModel').BaseModel;
-var slackTemplates = require('../slackTemplates');
+const BaseModel = require('./BaseModel').BaseModel;
+const slackTemplates = require('../slackTemplates');
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 
 class Character extends BaseModel{
     constructor(gameState, characterID){
         super(gameState, 'character', characterID);
 
-        var characters = gameState.character;
+        let characters = gameState.character;
 
         //Set the character's props
         this.props = characters[characterID];
@@ -244,7 +244,12 @@ class Character extends BaseModel{
     }
 
     updateActionUsed(actionID, turnNumber){
+
+        console.log('@@@@DEBUG: this.props.actions: ', this.props.actions);
+
         let actionKey = _.findKey(this.props.actions, {'action_id': actionID});
+
+        console.log('@@@@DEBUG: actionKey: ', actionKey);
 
         this.props.actions[actionKey].turn_used = turnNumber;
     }
