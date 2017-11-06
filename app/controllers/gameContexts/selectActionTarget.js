@@ -73,10 +73,10 @@ const processActionOnTarget = gameObjects => {
     //Perform the action
     gameObjects.actionTaken.initiate();
 
+    console.log('!!!DEBUG gameObjects.actionTaken: ', gameObjects.actionTaken);
+
     //Mark the action as used, pass in action id & turn number
     gameObjects.playerCharacter.updateActionUsed(gameObjects.actionTaken.id, gameObjects.currentMatch.props.number_turns);
-
-    console.log('!!!DEBUG gameObjects.actionTaken: ', gameObjects.actionTaken);
 
     return {
         "text": `_You perform ${gameObjects.actionTaken.props.name}_`
