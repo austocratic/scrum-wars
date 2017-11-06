@@ -43,10 +43,10 @@ const action = gameObjects => {
     }
 
     //If character already took an action this turn return the no action available template
-    /* TODO commented out check for if action is already taken to make testing easier
-     if (actionsUsedThisTurn.length > 0) {
-     return slackTemplates.actionAlreadyTaken;
-     }*/
+    //TODO commented out check for if action is already taken to make testing easier
+     //if (actionsUsedThisTurn.length > 0) {
+     //   return slackTemplates.actionAlreadyTaken;
+     //}
 
     //TODO I think this function should replace the one above:
     //Determine if any action was already taken this turn, if so return the action taken template
@@ -324,8 +324,6 @@ const name = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
-
-(()=>{})();
 
 module.exports = {
     action,

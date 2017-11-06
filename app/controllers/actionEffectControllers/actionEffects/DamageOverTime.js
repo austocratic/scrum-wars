@@ -17,8 +17,7 @@ class DamageOverTime extends BaseActionEffect{
 
         this.channelActionSuccessMessage = `${this.targetCharacter.props.name} reels in pain from poison taking ${this.calculatedDamage} damage!`;
         //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
-
-
+        
         //TODO need to make fields dynamic based on the effect
 
         //Base Slack template
@@ -49,12 +48,8 @@ class DamageOverTime extends BaseActionEffect{
 
     initiate() {
 
-        console.log('DEBUG called DamageOverTime.initiate()');
-
-        console.log('DEBUG DamageOverTime initiate() health before: ', this.targetCharacter.hit_points);
-
         //Process all the other effects of the action
-        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
+        this._changeProperty(this.targetCharacter, {health: -this.calculatedDamage});
 
         console.log('DEBUG just changed the property');
 
