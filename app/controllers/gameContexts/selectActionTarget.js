@@ -68,18 +68,18 @@ const processActionOnTarget = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
     
-    gameObjects.actionTaken = new actionObjectToMake(gameObjects);
+    let actionTaken = new actionObjectToMake(gameObjects);
 
     //Perform the action
-    gameObjects.actionTaken.initiate();
+    actionTaken.initiate();
 
-    console.log('!!!DEBUG gameObjects.actionTaken: ', gameObjects.actionTaken);
+    console.log('!!!DEBUG actionTaken.id: ', actionTaken);
 
     //Mark the action as used, pass in action id & turn number
-    gameObjects.playerCharacter.updateActionUsed(gameObjects.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+    gameObjects.playerCharacter.updateActionUsed(actionTaken.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
     return {
-        "text": `_You perform ${gameObjects.actionTaken.props.name}_`
+        "text": `_You perform ${actionTaken.actionTaken.props.name}_`
     }
 };
 
