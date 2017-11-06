@@ -244,7 +244,7 @@ class Character extends BaseModel{
     }
 
     updateActionUsed(actionID, turnNumber){
-        let actionKey = _.findKey(this.actionCharacter.props.actions, {'action_id': actionID});
+        let actionKey = _.findKey(this.props.actions, {'action_id': actionID});
 
         this.props.actions[actionKey].turn_used = turnNumber;
     }
