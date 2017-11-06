@@ -120,18 +120,6 @@ const defensiveStance = gameObjects => {
     
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //constructor(actionCharacter, targetCharacter, currentZone, currentMatch, actionTaken)
-    /*
-    let actionObject = new actionControllers['defensiveStance'](
-        gameObjects.playerCharacter,
-        gameObjects.targetCharacter,
-        gameObjects.requestZone,
-        gameObjects.currentMatch,
-        'defensiveStance'
-    );*/
-    
-    //let actionObject = new actionControllers['defensiveStance'](gameObjects);
-
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['defensiveStance'];
 
@@ -141,6 +129,10 @@ const defensiveStance = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 const offensiveStance = gameObjects => {
     console.log('Called selectActionMenu/offensiveStance');
@@ -168,6 +160,10 @@ const offensiveStance = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 const balancedStance = gameObjects => {
     console.log('Called selectActionMenu/balancedStance');
@@ -195,6 +191,10 @@ const balancedStance = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 const intoShadow = gameObjects => {
     console.log('Called selectActionMenu/intoShadow');
@@ -222,6 +222,10 @@ const intoShadow = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 const whirlwind = gameObjects => {
     console.log('Called selectActionMenu/whirlwind');
@@ -249,6 +253,10 @@ const whirlwind = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 const firestorm = gameObjects => {
     console.log('Called selectActionMenu/firestorm');

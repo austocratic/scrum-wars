@@ -14,14 +14,13 @@ let Class = require('../../../../models/Class').Class;
 let game = new Game();
 game.state = testDB;
 
-const gameContext = 'genderSelection';
-const userSelection = 'female';
-
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
+describe("Testing game.initiateRequest ", function() {
 
     let slackResponseTemplate = {};
 
-    let slackResponseTemplateReturned = game.initiateRequest();
+    console.log('DEBUG game.state.character[55e38d23d842e50e9026]: ', game.state.character['55e38d23d842e50e9026'].stats_current);
+
+    game.initiateRequest();
 
     //testSlackResponseFormat(slackResponseTemplateReturned);
 

@@ -75,7 +75,7 @@ const processActionOnTarget = gameObjects => {
     console.log('DEBUG actionTaken: ', actionObject.actionTaken.props);
 
     return {
-        "text": "You perform action: " + actionObject.actionTaken.props.name
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
     }
 };
 
