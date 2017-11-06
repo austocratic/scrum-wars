@@ -28,6 +28,10 @@ class BaseModel {
     incrementProperty(propertyName, value){
         console.log('Called incrementProperty');
 
+        console.log('@@@@DEBUG incrementProperty, propertyName: ', propertyName);
+        console.log('@@@@DEBUG incrementProperty, value: ', value);
+        console.log('@@@@DEBUG this.props, value: ', this.props);
+
         let currentProperty = this.props[propertyName];
 
         this.props[propertyName] = currentProperty + value;
