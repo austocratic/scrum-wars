@@ -284,6 +284,10 @@ const firestorm = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
 };
 
 //*******  These actionControllers require a target, so will return selectActionTarget game context  *******
