@@ -204,6 +204,8 @@ class Game {
 
                                         actionEffectObject.initiate();
 
+                                        //Mark that ongoing effect as used this turn, this prevents duplicate processing
+                                        eachCharacter.updateEffectProcessed(effectAction.id, currentMatch.props.number_turns)
                                     }
                                 })
                             }
