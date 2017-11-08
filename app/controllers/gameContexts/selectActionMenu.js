@@ -404,21 +404,25 @@ const arcaneBolt = gameObjects => {
 const forkedLightning = gameObjects => {
     console.log('Called selectActionMenu/forkedLightning');
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
-        return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
-        }
-    }
-
     validateGameObjects(gameObjects, [
         'game',
         'requestZone',
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
