@@ -141,16 +141,18 @@ class Character extends BaseModel{
     }
 
     //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
-    isActionAvailable(actionID, turnNumber){
+    isActionAvailable(actionDetails, turnNumber){
 
-        var foundAction = _.find(this.props.actions, {'action_id': actionID});
+        let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
 
+        return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
+        /*
         if (foundAction.turn_available <= turnNumber) {
             return true;
-        }
-        
-        //Else return false
-        return false;
+        } else {
+            return false;
+        }*/
+
     }
     
     //Return an array of items owned by character not equipped
@@ -245,11 +247,7 @@ class Character extends BaseModel{
 
     updateActionUsed(actionID, turnNumber){
 
-        console.log('@@@@DEBUG: this.props.actions: ', this.props.actions);
-
         let actionKey = _.findKey(this.props.actions, {'action_id': actionID});
-
-        console.log('@@@@DEBUG: actionKey: ', actionKey);
 
         this.props.actions[actionKey].turn_used = turnNumber;
     }
@@ -257,9 +255,6 @@ class Character extends BaseModel{
     inactivate(){
         this.updateProperty('active', 0);
     }
-    
- 
-    
 }
 
 

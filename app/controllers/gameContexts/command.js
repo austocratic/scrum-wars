@@ -42,19 +42,9 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
-    //If character already took an action this turn return the no action available template
-    //TODO commented out check for if action is already taken to make testing easier
-     //if (actionsUsedThisTurn.length > 0) {
-     //   return slackTemplates.actionAlreadyTaken;
-     //}
-
-    //TODO I think this function should replace the one above:
-    //Determine if any action was already taken this turn, if so return the action taken template
-    //var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
-
     console.log('DEBUG game turns: ', gameObjects.currentMatch.props.number_turns);
 
-    console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length)
+    console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length);
 
     if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
         //An action was used this turn, return a message
@@ -103,7 +93,7 @@ const action = gameObjects => {
                 let actionAvailableButtonColor = "danger";
 
                 //If the button is available based on the match turn, overwrite the color to green
-                if (gameObjects.playerCharacter.isActionAvailable(actionDetails.id, gameObjects.currentMatch.props.number_turns)) {
+                if (gameObjects.playerCharacter.isActionAvailable(actionDetails, gameObjects.currentMatch.props.number_turns)) {
                     actionAvailableButtonColor = "primary"
                 }
 

@@ -42,7 +42,7 @@ class IntoShadow extends BaseModify {
         //TODO need to validate that the player is not already hidden and prevent hiding if already hidden
 
         let statsToModify = {
-            modified_is_hidden: 1
+            is_hidden: 1
         };
 
         //Mark the player's character as hidden
