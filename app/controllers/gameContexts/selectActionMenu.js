@@ -290,6 +290,13 @@ const firestorm = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['firestorm'];
 
