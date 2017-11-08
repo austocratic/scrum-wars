@@ -254,9 +254,9 @@ class Character extends BaseModel{
 
     updateEffectProcessed(actionID, turnNumber){
 
-        let actionKey = _.findKey(this.props.actions, {'action_id': actionID});
+        let effectKey = _.findKey(this.props.effects, {'action_id': actionID});
 
-        this.props.effects[actionKey].turn_effect_processed.push(turnNumber)
+        this.props.effects[effectKey].turn_effect_processed.push(turnNumber)
     }
 
     inactivate(){
