@@ -120,6 +120,13 @@ const defensiveStance = gameObjects => {
     
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['defensiveStance'];
 
@@ -153,6 +160,13 @@ const offensiveStance = gameObjects => {
     gameObjects.targetCharacter = gameObjects.playerCharacter;
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['offensiveStance'];
@@ -188,6 +202,13 @@ const balancedStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['balancedStance'];
 
@@ -222,6 +243,13 @@ const intoShadow = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['intoShadow'];
 
@@ -255,6 +283,13 @@ const whirlwind = gameObjects => {
     gameObjects.targetCharacter = gameObjects.playerCharacter;
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['whirlwind'];
@@ -320,6 +355,13 @@ const firestorm = gameObjects => {
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
 
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
     validateGameObjects(gameObjects, [
         'game',
         'requestZone',
@@ -361,6 +403,13 @@ const arcaneBolt = gameObjects => {
 };
 const forkedLightning = gameObjects => {
     console.log('Called selectActionMenu/forkedLightning');
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     validateGameObjects(gameObjects, [
         'game',
