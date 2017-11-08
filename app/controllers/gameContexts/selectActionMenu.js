@@ -130,6 +130,9 @@ const defensiveStance = gameObjects => {
 
     actionObject.initiate();
 
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
     }
@@ -160,6 +163,9 @@ const offensiveStance = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
@@ -192,6 +198,9 @@ const balancedStance = gameObjects => {
 
     actionObject.initiate();
 
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
     }
@@ -222,6 +231,9 @@ const intoShadow = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
@@ -254,6 +266,9 @@ const whirlwind = gameObjects => {
 
     actionObject.initiate();
 
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
     }
@@ -284,6 +299,9 @@ const firestorm = gameObjects => {
     let actionObject = new actionObjectToMake(gameObjects);
 
     actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
