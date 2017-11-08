@@ -355,13 +355,6 @@ const firestorm = gameObjects => {
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
-        return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
-        }
-    }
-
     validateGameObjects(gameObjects, [
         'game',
         'requestZone',
@@ -370,6 +363,15 @@ const quickStrike = gameObjects => {
         'userActionValueSelection',
         'slackResponseTemplate'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -382,8 +384,19 @@ const lifeTap = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -396,8 +409,19 @@ const arcaneBolt = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -435,8 +459,19 @@ const savageStrike = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -449,8 +484,19 @@ const backstab = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -463,8 +509,19 @@ const poisonedBlade = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
@@ -477,8 +534,19 @@ const cleave = gameObjects => {
         'playerCharacter',
         'slackCallback',
         'userActionValueSelection',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
     ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
 
     return targetSelection(gameObjects);
 };
