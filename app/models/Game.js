@@ -171,6 +171,8 @@ class Game {
                                     console.log('DEBUG it is turn_applied: ', eachEffect.turn_applied);
                                     console.log('DEBUG activating function: ', eachOngoingEffect.functionName);
                                     console.log('DEBUG eachEffect: ', eachEffect);
+                                    console.log('DEBUG eachEffect turn: ', eachEffect.turn_effect_processed[0]);
+                                    console.log('DEBUG includes? ', eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns - eachEffect.turn_applied));
 
 
                                     //Check if the action has an ongoing effect that should apply to the current turn.
