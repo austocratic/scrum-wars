@@ -28,10 +28,6 @@ class BaseModel {
     incrementProperty(propertyName, value){
         console.log('Called incrementProperty');
 
-        console.log('@@@@DEBUG incrementProperty, propertyName: ', propertyName);
-        console.log('@@@@DEBUG incrementProperty, value: ', value);
-        console.log('@@@@DEBUG this.props, value: ', this.props);
-
         let currentProperty = this.props[propertyName];
 
         this.props[propertyName] = currentProperty + value;
@@ -48,11 +44,11 @@ class BaseModel {
 
             //If the property exists, increment it, otherwise add it
             if (base[eachPropertyKey]) {
-                console.log('DEBUG accumulateProperties base[eachPropertyKey]: ', base[eachPropertyKey]);
-                console.log('DEBUG accumulateProperties newProperties[eachPropertyKey]: ', newProperties[eachPropertyKey]);
+                //console.log('DEBUG accumulateProperties base[eachPropertyKey]: ', base[eachPropertyKey]);
+                //console.log('DEBUG accumulateProperties newProperties[eachPropertyKey]: ', newProperties[eachPropertyKey]);
                 base[eachPropertyKey] = base[eachPropertyKey] + newProperties[eachPropertyKey];
             } else {
-                console.log('DEBUG accumulateProperties else: ', base[eachPropertyKey]);
+                //console.log('DEBUG accumulateProperties else: ', base[eachPropertyKey]);
                 base = Object.assign(base, {[eachPropertyKey]: newProperties[eachPropertyKey]})
             }
         });

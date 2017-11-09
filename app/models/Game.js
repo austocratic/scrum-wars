@@ -305,8 +305,6 @@ class Game {
 
             //If match has ended, create a new match and update the global match ID
             case 'ended':
-                console.log('DEBUG: called game.refresh() currentMatch.props.status = ended');
-
                 //Pass in old match zone when creating the new match
                 let newMatchID = this.createMatch(currentMatch.props.zoneID);
 
@@ -346,9 +344,6 @@ class Game {
                         //    return eachEffect.end_turn > 5
                         //})
                         .forEach( eachFilteredEffect => {
-
-                            console.log('DEBUG 11.5 eachFilteredEffect: ', eachFilteredEffect);
-
                             if(eachFilteredEffect.modifiers){
                                 eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
                             }
@@ -364,9 +359,6 @@ class Game {
                             return eachItem.is_equipped === 1
                         })
                         .forEach( eachFilteredItem => {
-
-                            console.log('DEBUG 11.5 eachFilteredItem: ', eachFilteredItem);
-
                             if(eachFilteredItem.modifiers){
                                 eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredItem.modifiers);
                             }
@@ -622,8 +614,6 @@ class Game {
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
 
             let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
-
-            console.log('DEBUG getEquipmentInSlot: ', equippedSlotItem);
             
             //Default to empty slot format, if not empty, over write it
             let formattedSlot = {
