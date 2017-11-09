@@ -168,12 +168,19 @@ class Game {
                                 effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
                                     //Check if the action has an ongoing effect that should apply to the current turn.
                                     //In order to get the relative turn number take the current turn - the turn the action was applied
-                                    if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied)){
+                                    if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied) &&
+                                        !eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns - eachEffect.turn_applied)
+                                    ){
+
                                         console.log('DEBUG it is relative turn: ', currentMatch.props.number_turns - eachEffect.turn_applied);
-
                                         console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
-
                                         console.log('DEBUG activating function: ', eachOngoingEffect.functionName);
+
+                                        //Validate that the effect has not already been processed this turn
+
+
+
+
 
                                         //Declare the Class function without invoking, so I can then validate
                                         const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
