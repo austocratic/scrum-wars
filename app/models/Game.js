@@ -178,7 +178,8 @@ class Game {
                                     //Check if the action has an ongoing effect that should apply to the current turn.
                                     //In order to get the relative turn number take the current turn - the turn the action was applied
                                     if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied) &&
-                                        !eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns - eachEffect.turn_applied)
+                                        //Don't need the relative turn here
+                                        !eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns)
                                     ){
                                         console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
 
