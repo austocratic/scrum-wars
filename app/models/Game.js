@@ -222,16 +222,8 @@ class Game {
                     avatarPath: this.avatarPath,
                     skillImagePath: this.skillImagePath
                 },
-                targetCharacter: eachCharacter,
-                //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
-                requestZone: {
-                    props: {
-                        channel : "arena",
-                        channel_id : "C4Z7F8XMW",
-                        name : "The Arena"
-                    }
-                },
-                playerCharacter
+                currentMatch: new Match(game.state, this.getCurrentMatchID()),
+                slackResponseTemplate: {}
             };
 
             effectQueue(gameObjects);

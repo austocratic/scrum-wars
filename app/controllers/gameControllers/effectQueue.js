@@ -40,6 +40,7 @@ const effectQueue = (gameObjects) =>{
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachEffectToProcess.action_id);
             gameObjects.playerCharacter = new Character(gameObjects.game.state, eachEffectToProcess.player_character_id);
+            gameObjects.requestZone = new Zone(game.state, eachEffectToProcess.zone_id);
             gameObjects.targetCharacter = {};
 
             //Declare the Class function without invoking

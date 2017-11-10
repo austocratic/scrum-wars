@@ -42,14 +42,16 @@ describe("Testing effectQueue", function() {
                 effect_function: "beginCastingMessage",
                 activation_turn: 1,
                 player_character_id: "55e38d23d842e50e9026",
-                target_character_id: "" //AOE action does not have a target (wont be referenced)
+                target_character_id: "", //AOE action does not have a target (wont be referenced)
+                zone_id: "-Khu9Ti4cn9PQ2Q1TSBT"
             },
             {
                 action_id: "-KyZ-_1kQ7_4UrHLt1vR", //Firestorm2 (will need to update if I removed this action)
                 effect_function: "",
                 activation_turn: 2,
                 player_character_id: "55e38d23d842e50e9026",
-                target_character_id: "" //AOE action does not have a target (wont be referenced)
+                target_character_id: "", //AOE action does not have a target (wont be referenced)
+                zone_id: "-Khu9Ti4cn9PQ2Q1TSBT"
             }
         ]
     };
@@ -58,7 +60,6 @@ describe("Testing effectQueue", function() {
 
         let gameObjects = {
             slackResponseTemplate: {},
-            requestZone: new Zone(game.state, 'C4Z7F8XMW'), //arena
             currentMatch: new Match(game.state, 'testingMatch'),
             game,
             slackCallback: 'command:action/selectActionMenu:-Kjpe29q_fDkJG-73AQO/selectActionTarget',
