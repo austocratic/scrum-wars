@@ -53,7 +53,9 @@ describe("Testing ForkedLightning class", function() {
 
         describe("calling initiate()", function () {
 
-            let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.hit_points;
+            let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.health;
+
+            console.log("forkedLightning gameObjects: ", JSON.stringify(gameObjects));
 
             testForkedLightning.initiate();
             

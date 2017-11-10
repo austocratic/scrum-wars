@@ -349,6 +349,47 @@ const firestorm = gameObjects => {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
     }
 };
+const firestorm2 = gameObjects => {
+    console.log('Called selectActionMenu/firestorm2');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['firestorm2'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects);
+
+    actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
+};
 
 //*******  These actionControllers require a target, so will return selectActionTarget game context  *******
 

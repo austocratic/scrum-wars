@@ -35,13 +35,13 @@ describe("Testing DamageOverTime class", function() {
 
         describe("calling initiate()", function () {
 
-            let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.hit_points;
+            let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.health;
 
             testDamageOverTime.initiate();
 
             it("should reduce targetCharacter's health by DamageOverTime's calculatedDamage property", function () {
 
-                assert(gameObjects.targetCharacter.props.hit_points + testDamageOverTime.calculatedDamage === targetCharacterPreviousHealth);
+                assert(gameObjects.targetCharacter.props.health + testDamageOverTime.calculatedDamage === targetCharacterPreviousHealth);
 
             });
         })
