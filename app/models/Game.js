@@ -218,7 +218,7 @@ class Game {
 
             let gameObjects = {
                 game: this,
-                currentMatch: new Match(game.state, this.getCurrentMatchID()),
+                currentMatch: new Match(this.state, this.getCurrentMatchID()),
                 slackResponseTemplate: {}
             };
 
