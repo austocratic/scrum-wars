@@ -28,7 +28,7 @@ var gameConfigurations = require('./gameConfigurations.json');
 var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 const getActionEffectController = require('../controllers/actionEffectController').getActionEffectController;
-
+const effectQueue = require('../controllers/gameControllers/effectQueue').effectQueue;
 
 
 class Game {
@@ -212,6 +212,30 @@ class Game {
                         })
                     }
                 });
+
+
+            //*************** PROCESS ONGOING EFFECTS *****************
+
+            let gameObjects = {
+                game: {
+                    baseURL: this.baseURL,
+                    avatarPath: this.avatarPath,
+                    skillImagePath: this.skillImagePath
+                },
+                targetCharacter: eachCharacter,
+                //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
+                requestZone: {
+                    props: {
+                        channel : "arena",
+                        channel_id : "C4Z7F8XMW",
+                        name : "The Arena"
+                    }
+                },
+                playerCharacter
+            };
+
+            effectQueue(gameObjects);
+
 
             //*************** CHECK FOR CHARACTER DEATHS *****************
 

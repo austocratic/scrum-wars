@@ -154,8 +154,25 @@
       "name" : "Firestorm",
       "type" : "offensive2",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
+    },
+    "-KyZ-_1kQ7_4UrHLt1vR": {
+      "cool_down" : "2",
+      "delay" : "1",
+      "effects" : [ {
+        "active_on_turn" : [ 1 ],
+        "functionName" : "beginCastingMessage"
+      }, {
+        "active_on_turn" : [ 2 ],
+        "functionName" : "mainAction"
+      } ],
+      "functionName" : "firestorm2",
+      "minimum_level" : "1",
+      "name" : "Firestorm2",
+      "type" : "offensive2",
+      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     }
-  },
+
+},
   "character" : {
     "-Kkxf1ukVSF9VV6mIPlG" : {
       "actions" : [ {

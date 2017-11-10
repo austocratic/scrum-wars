@@ -26,8 +26,8 @@ class Firestorm2 extends BaseAttack {
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure a *fiery storm*, but it fizzles away!`;
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        //this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
+        //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -93,6 +93,7 @@ class Firestorm2 extends BaseAttack {
 
     //Send message of casting beginning
     beginCastingMessage(){
+        console.log('Called Firstorm2 beginCastingMessage()');
 
         this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
 
