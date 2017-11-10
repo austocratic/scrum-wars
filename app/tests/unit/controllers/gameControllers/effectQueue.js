@@ -43,7 +43,7 @@ describe("Testing effectQueue", function() {
                 activation_turn: 1,
                 player_character_id: "55e38d23d842e50e9026",
                 target_character_id: "", //AOE action does not have a target (wont be referenced)
-                zone_id: "-Khu9Ti4cn9PQ2Q1TSBT"
+                channel_id: "C4Z7F8XMW"
             },
             {
                 action_id: "-KyZ-_1kQ7_4UrHLt1vR", //Firestorm2 (will need to update if I removed this action)
@@ -51,7 +51,7 @@ describe("Testing effectQueue", function() {
                 activation_turn: 2,
                 player_character_id: "55e38d23d842e50e9026",
                 target_character_id: "", //AOE action does not have a target (wont be referenced)
-                zone_id: "-Khu9Ti4cn9PQ2Q1TSBT"
+                channel_id: "C4Z7F8XMW"
             }
         ]
     };
