@@ -2,6 +2,7 @@
 
 const Character = require('../../../app/models/Character').Character;
 const Action = require('../../../app/models/Action').Action;
+const Zone = require('../../../app/models/Zone').Zone;
 
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
