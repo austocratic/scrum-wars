@@ -217,11 +217,7 @@ class Game {
             //*************** PROCESS ONGOING EFFECTS *****************
 
             let gameObjects = {
-                game: {
-                    baseURL: this.baseURL,
-                    avatarPath: this.avatarPath,
-                    skillImagePath: this.skillImagePath
-                },
+                game: this,
                 currentMatch: new Match(game.state, this.getCurrentMatchID()),
                 slackResponseTemplate: {}
             };
