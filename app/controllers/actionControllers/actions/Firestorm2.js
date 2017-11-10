@@ -3,7 +3,7 @@ const slack = require('../../../libraries/slack');
 const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
 
 
-class Firestorm extends BaseAttack {
+class Firestorm2 extends BaseAttack {
     constructor(gameObjects) {
         super(gameObjects);
 
@@ -112,5 +112,5 @@ class Firestorm extends BaseAttack {
 
 
 module.exports = {
-    Firestorm
+    Firestorm2
 };

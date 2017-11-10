@@ -12,7 +12,7 @@ const targetSelection = require('../targetSelection').getTargetSelectionMenu;
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance, Firestorm, Firestorm2 } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -20,7 +20,8 @@ const actionControllers = {
     balancedStance: BalancedStance,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
-    firestorm: Firestorm
+    firestorm: Firestorm,
+    firestorm2: Firestorm2
 };
 
 //Shop is the only action not using the action controller
