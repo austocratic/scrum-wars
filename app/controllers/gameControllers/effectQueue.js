@@ -35,8 +35,11 @@ const effectQueue = (gameObjects) =>{
         .filter( eachEffectInQueue =>{
             return eachEffectInQueue.activation_turn === gameObjects.currentMatch.props.number_turns
         })
-        .forEach( eachEffectToProcess =>{
+        //Process the effect
+        .forEach( (eachEffectToProcess, index) =>{
             console.log('DEBUG eachEffectToProcess: ', eachEffectToProcess);
+
+            console.log('processing index: ', index);
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachEffectToProcess.action_id);
@@ -47,19 +50,20 @@ const effectQueue = (gameObjects) =>{
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
-            console.log('About to validate');
-
             validateGameObjects(gameObjects, actionObjectToMake.validations);
-
-            console.log('Passed validate');
 
             let actionObject = new actionObjectToMake(gameObjects);
 
+            //Process the effect
             actionObject[eachEffectToProcess.effect_function]();
 
+            //After effect has processed, remove it from effect queue
+            gameObjects.currentMatch.props.effect_queue.splice(index, 1)
 
+        });
 
-        })
+    console.log('gameObjects after filter: ', gameObjects.currentMatch.props.effect_queue);
+
 };
 
 

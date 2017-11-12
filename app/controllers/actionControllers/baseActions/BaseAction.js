@@ -47,16 +47,9 @@ class BaseAction {
             //Filter out characters that are included in the targetsToExclude argument
             .filter( eachCharacterInZone =>{
 
-                console.log('DEBUG eachCharacterInZone: ', eachCharacterInZone.id);
-
                 let foundTarget = targetsToExclude.find( eachTargetToExclude =>{
-
-                    console.log('DEBUG eachTargetToExclude: ', eachTargetToExclude.id);
-
                     return eachTargetToExclude.id === eachCharacterInZone.id;
                 });
-
-                //console.log('foundTarget: ', foundTarget.id);
 
                 return foundTarget === undefined
             });
