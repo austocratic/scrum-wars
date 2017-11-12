@@ -64,7 +64,7 @@ class Firestorm extends BaseAttack {
     }
 
     continueCastingMessage(){
-        this.slackPayload.text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+        this.slackPayload.text = `Heat ripples throughout the ${this.requestZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
 
         slack.sendMessage(this.slackPayload);
     }
