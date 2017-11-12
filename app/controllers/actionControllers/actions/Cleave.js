@@ -35,7 +35,7 @@ class Cleave extends BaseAttack {
 
         this.effectQueue = [{
             "action_id": this.actionTaken.id,
-            "activation_turn": 1 + this.currentMatch.props.number_turns,
+            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
             "channel_id": this.currentZone.props.channel_id,
             "effect_function": "mainAction",
             "player_character_id": this.actionCharacter.id,

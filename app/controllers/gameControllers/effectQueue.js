@@ -8,7 +8,7 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
 const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
-    Firestorm, Firestorm2, Cleave } = actions;
+    Firestorm, Firestorm2, Cleave, ForkedLightning } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -18,7 +18,8 @@ const actionControllers = {
     whirlwind: Whirlwind,
     firestorm: Firestorm,
     '-KyZ-_1kQ7_4UrHLt1vR': Firestorm2,
-    '-Ky1zv4JXgbAKvxFFBmp': Cleave
+    '-Ky1zv4JXgbAKvxFFBmp': Cleave,
+    '-KkdduB9XuB46EsxqwIX': ForkedLightning
 };
 
 
@@ -53,9 +54,6 @@ const effectQueue = (gameObjects) =>{
             } else {
                 gameObjects.targetCharacter = {};
             }
-
-            //If effect has a target character ID, invoke character model for it, else empty object
-            //gameObjects.targetCharacter = new Character(gameObjects.game.state, eachEffectToProcess.target_character_id) || {};
 
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];

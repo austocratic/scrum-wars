@@ -33,9 +33,29 @@ class ForkedLightning extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
+
+        this.effectQueue = [{
+            "action_id": this.actionTaken.id,
+            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "mainAction",
+            "player_character_id": this.actionCharacter.id,
+            "target_character_id": this.targetCharacter.id,
+        }]
     }
 
-    initiate() {
+    initiate(){
+        console.log('Called ForkedLightning.initiate()');
+
+        this.slackPayload.text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
+
+        slack.sendMessage(this.slackPayload);
+
+        //Push the effects into the effect queue
+        this._insertEffectsInQueue()
+    }
+
+    mainAction() {
         
         //Process on target with a high chance to hurt
         //If successful, process on second target with half chance to hurt
