@@ -26,8 +26,8 @@ class Firestorm extends BaseAttack {
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure a *fiery storm*, but it fizzles away!`;
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        //this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
+        //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -87,7 +87,7 @@ class Firestorm extends BaseAttack {
             //Evasion check
             //Arguments: accuracyModifier, avoidModifier
             if (this._avoidCheck(0, 0) === false) {
-                this.slackPayload.text = this.channelActionAvoidedMessage;
+                this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${singleTarget.props.name} evades the the fiery downpour!`;
                 slack.sendMessage(this.slackPayload);
                 return;
             }
