@@ -32,9 +32,28 @@ class Cleave extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
+
+        this.effectQueue = [{
+            "action_id": this.actionTaken.id,
+            "activation_turn": 1 + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "mainAction",
+            "player_character_id": this.actionCharacter.id
+        }]
     }
 
-    initiate() {
+    initiate(){
+        console.log('Called Cleave.initiate()');
+
+        this.slackPayload.text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
+
+        slack.sendMessage(this.slackPayload);
+
+        //Push the effects into the effect queue
+        this._insertEffectsInQueue()
+    }
+
+    mainAction() {
 
         //skill check
         //If failure, return a failure message and end
@@ -57,7 +76,6 @@ class Cleave extends BaseAttack {
 
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
-
     }
 }
 

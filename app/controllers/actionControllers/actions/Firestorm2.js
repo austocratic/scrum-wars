@@ -58,6 +58,15 @@ class Firestorm2 extends BaseAttack {
         this._insertEffectsInQueue()
     }
 
+    //Send message of casting beginning
+    beginCastingMessage(){
+        console.log('Called Firstorm2 beginCastingMessage()');
+
+        this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+
+        slack.sendMessage(this.slackPayload);
+    }
+
     mainAction() {
 
         //Build a new message based on the randomTarget
@@ -112,14 +121,7 @@ class Firestorm2 extends BaseAttack {
         }
     }
 
-    //Send message of casting beginning
-    beginCastingMessage(){
-        console.log('Called Firstorm2 beginCastingMessage()');
 
-        this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
-
-        slack.sendMessage(this.slackPayload);
-    }
 }
 
 /* Structure to add additional property validations
