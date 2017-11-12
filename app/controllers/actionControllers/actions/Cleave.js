@@ -38,7 +38,8 @@ class Cleave extends BaseAttack {
             "activation_turn": 1 + this.currentMatch.props.number_turns,
             "channel_id": this.currentZone.props.channel_id,
             "effect_function": "mainAction",
-            "player_character_id": this.actionCharacter.id
+            "player_character_id": this.actionCharacter.id,
+            "target_character_id": this.targetCharacter.id,
         }]
     }
 

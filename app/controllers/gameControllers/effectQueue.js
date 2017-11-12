@@ -48,14 +48,14 @@ const effectQueue = (gameObjects) =>{
             gameObjects.playerCharacter = new Character(gameObjects.game.state, eachEffectToProcess.player_character_id);
             gameObjects.requestZone = new Zone(gameObjects.game.state, eachEffectToProcess.channel_id);
 
-            //if (eachEffectToProcess.target_character_id) {
-            //    gameObjects.targetCharacter = new Character(gameObjects.game.state, eachEffectToProcess.target_character_id);
-            //} else {
-            //    gameObjects.targetCharacter = {};
-            //}
+            if (eachEffectToProcess.target_character_id) {
+                gameObjects.targetCharacter = new Character(gameObjects.game.state, eachEffectToProcess.target_character_id);
+            } else {
+                gameObjects.targetCharacter = {};
+            }
 
             //If effect has a target character ID, invoke character model for it, else empty object
-            gameObjects.targetCharacter = new Character(gameObjects.game.state, eachEffectToProcess.target_character_id) || {};
+            //gameObjects.targetCharacter = new Character(gameObjects.game.state, eachEffectToProcess.target_character_id) || {};
 
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
