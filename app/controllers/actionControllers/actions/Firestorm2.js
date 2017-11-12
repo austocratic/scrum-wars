@@ -40,7 +40,7 @@ class Firestorm2 extends BaseAttack {
             "action_id": this.actionTaken.id,
             "activation_turn": 1 + this.currentMatch.props.number_turns,
             "channel_id": this.currentZone.props.channel_id,
-            "effect_function": "initiate",
+            "effect_function": "beginCastingMessage",
             "player_character_id": this.actionCharacter.id
         },
         {
@@ -53,7 +53,7 @@ class Firestorm2 extends BaseAttack {
     }
 
     initiate(){
-
+        console.log('Called Firestorm2.initiate()');
         //Push the effects into the effect queue
         this._insertEffectsInQueue()
     }
