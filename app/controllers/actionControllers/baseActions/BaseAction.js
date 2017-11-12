@@ -218,6 +218,19 @@ class BaseAction {
         characterToModify.props.effects.splice(arrayIndex, 1);
     }
 
+    _insertEffectsInQueue(){
+
+        //If the match does not have an effect_queue, create one as empty array
+        if(!this.currentMatch.props.effect_queue){
+            this.currentMatch.props.effect_queue = [];
+        }
+
+        //Push each of the action's effects into the queue
+        this.effectQueue.forEach( eachEffect =>{
+            this.currentMatch.props.effect_queue.push(eachEffect)
+        })
+    }
+
     updateAction(){
 
         //Take the current actionControllers

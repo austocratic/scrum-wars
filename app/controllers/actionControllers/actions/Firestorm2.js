@@ -35,6 +35,27 @@ class Firestorm2 extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
+
+        this.effectQueue = [{
+            "action_id": this.actionTaken.id,
+            "activation_turn": 1 + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "initiate",
+            "player_character_id": this.actionCharacter.id
+        },
+        {
+            "action_id": this.actionTaken.id,
+            "activation_turn": 2 + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "mainAction",
+            "player_character_id": this.actionCharacter.id
+        }]
+    }
+
+    initiate(){
+
+        //Push the effects into the effect queue
+        this._insertEffectsInQueue()
     }
 
     mainAction() {

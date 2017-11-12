@@ -65,8 +65,19 @@ describe("Testing effectQueue", function() {
             slackCallback: 'command:action/selectActionMenu:-Kjpe29q_fDkJG-73AQO/selectActionTarget',
         };
 
-        it("calling the function should not be undefined", function(){
-            assert(effectQueue(gameObjects))
+        describe("testing first effect", function(){
+            it("calling the function should not be undefined", function(){
+                assert(effectQueue(gameObjects))
+            })
+        });
+
+        describe("testing second effect", function(){
+
+            game.state.match['testingMatch'].number_turns = 2;
+
+            it("calling the function should not be undefined", function(){
+                assert(effectQueue(gameObjects))
+            })
         })
     });
 
