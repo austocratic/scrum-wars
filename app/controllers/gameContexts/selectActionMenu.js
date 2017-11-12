@@ -608,5 +608,6 @@ module.exports = {
     backstab,
     poisonedBlade,
     cleave,
-    firestorm
+    firestorm,
+    firestorm2
 };
