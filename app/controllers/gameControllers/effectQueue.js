@@ -7,7 +7,8 @@ const Zone = require('../../../app/models/Zone').Zone;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance, Firestorm, Firestorm2 } = actions;
+const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
+    Firestorm, Firestorm2, Cleave } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -16,7 +17,8 @@ const actionControllers = {
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
     firestorm: Firestorm,
-    '-KyZ-_1kQ7_4UrHLt1vR': Firestorm2
+    '-KyZ-_1kQ7_4UrHLt1vR': Firestorm2,
+    '-Ky1zv4JXgbAKvxFFBmp': Cleave
 };
 
 
