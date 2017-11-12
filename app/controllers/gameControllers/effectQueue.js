@@ -16,8 +16,8 @@ const actionControllers = {
     balancedStance: BalancedStance,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
-    firestorm: Firestorm,
     '-KyZ-_1kQ7_4UrHLt1vR': Firestorm2,
+    '-Ky3C664qBFIYS4R4ItQ': Firestorm,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning
 };

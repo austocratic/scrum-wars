@@ -35,9 +35,41 @@ class Firestorm extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
+
+        this.effectQueue = [{
+            "action_id": this.actionTaken.id,
+            "activation_turn": (this.actionTaken.props.delay - 1) + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "continueCastingMessage",
+            "player_character_id": this.actionCharacter.id
+        },
+        {
+            "action_id": this.actionTaken.id,
+            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "effect_function": "mainAction",
+            "player_character_id": this.actionCharacter.id
+        }]
     }
 
-    initiate() {
+    initiate(){
+        console.log('Called Firestorm.initiate()');
+
+        this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+
+        slack.sendMessage(this.slackPayload);
+
+        //Push the effects into the effect queue
+        this._insertEffectsInQueue()
+    }
+
+    continueCastingMessage(){
+        this.slackPayload.text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+
+        slack.sendMessage(this.slackPayload);
+    }
+
+    mainAction() {
 
         //Build a new message based on the randomTarget
         this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
