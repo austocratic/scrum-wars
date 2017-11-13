@@ -92,11 +92,6 @@ class Game {
 
                 let currentHour = currentDate.getUTCHours();
 
-                //Look at the current time.  Compare current time to config property of match start time
-                //console.log('DEBUG: Current hour: ', currentHour);
-                
-                //console.log('gameConfiguration match start: ', gameConfigurations.match.startTime);
-
             //*************** CHECK FOR MATCH START *****************
                 if (currentHour > gameConfigurations.match.startTime){
                     console.log('Time to start the match!');
@@ -160,7 +155,6 @@ class Game {
                             let effectAction = new Action(this.state, eachEffect.action_id);
 
                             //Get the character who applied the effect.
-                            //TODO should effects only work if the character who applied it is still alive?
                             let playerCharacter = new Character(this.state, eachEffect.applied_by_character_id);
 
                             //If the action has ongoing effects, process them
@@ -422,6 +416,23 @@ class Game {
         Object.assign(currentCharacters, newChar);
         
         return localRandomID;
+    }
+
+    createUser(slackRequestUserID){
+        let randomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
+
+        let currentUsers = this.state.user;
+
+        let newUser = {
+            [randomID]: {
+                slack_user_id: slackRequestUserID
+            }
+        };
+
+        //Mutate the object
+        Object.assign(currentUsers, newUser);
+
+        return randomID;
     }
     
     getCurrentMatchID(){

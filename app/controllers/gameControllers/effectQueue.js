@@ -8,7 +8,7 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
 const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
-    Firestorm, Firestorm2, Cleave, ForkedLightning } = actions;
+    Firestorm, Cleave, ForkedLightning } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -16,12 +16,10 @@ const actionControllers = {
     balancedStance: BalancedStance,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
-    '-KyZ-_1kQ7_4UrHLt1vR': Firestorm2,
     '-Ky3C664qBFIYS4R4ItQ': Firestorm,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning
 };
-
 
 //Check that action queue for functions that should be initiated on the current turn
 const effectQueue = (gameObjects) =>{
@@ -73,9 +71,6 @@ const effectQueue = (gameObjects) =>{
     console.log('gameObjects after filter: ', gameObjects.currentMatch.props.effect_queue);
 
 };
-
-
-
 
 module.exports = {
     effectQueue

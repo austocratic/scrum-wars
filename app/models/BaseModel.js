@@ -4,6 +4,8 @@
 class BaseModel {
     constructor(gameState, modelType, id) {
 
+        console.log('ID: ', id);
+
         if (!gameState[modelType]) {
             throw ('Failed to find the model type, ' + modelType + ' in the database')
         }

@@ -8,7 +8,6 @@ const Match = require('../../../../../app/models/Match').Match;
 const Zone = require('../../../../../app/models/Zone').Zone;
 const testDB = require('../../../testDB');
 const effectQueue = require('../../../../../app/controllers/gameControllers/effectQueue').effectQueue;
-const Firestorm2 = require('../../../../../app/controllers/actionControllers/actions/Firestorm2').Firestorm2;
 
 let game = new Game();
 game.state = testDB;
@@ -38,7 +37,7 @@ describe("Testing effectQueue", function() {
         "zone_id" : '-Khu9Ti4cn9PQ2Q1TSBT',
         "effect_queue": [
             {
-                action_id: "-KyZ-_1kQ7_4UrHLt1vR", //Firestorm2 (will need to update if I removed this action)
+                action_id: "-Ky3C664qBFIYS4R4ItQ",
                 effect_function: "beginCastingMessage",
                 activation_turn: 1,
                 player_character_id: "55e38d23d842e50e9026",
@@ -46,7 +45,7 @@ describe("Testing effectQueue", function() {
                 channel_id: "C4Z7F8XMW"
             },
             {
-                action_id: "-KyZ-_1kQ7_4UrHLt1vR", //Firestorm2 (will need to update if I removed this action)
+                action_id: "-Ky3C664qBFIYS4R4ItQ",
                 effect_function: "mainAction",
                 activation_turn: 2,
                 player_character_id: "55e38d23d842e50e9026",

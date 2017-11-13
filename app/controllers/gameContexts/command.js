@@ -122,6 +122,8 @@ const action = gameObjects => {
 const generate = gameObjects => {
     console.log('slackRequest called function command/generate');
 
+    //Determine if the user
+
     gameObjects.slackResponseTemplate.attachments =
         [{
             "text": "Hail traveler, are you ready to embark on a NEW faithful journey to lands uncharted and depths unknown?  All your previous progress will be lost",
@@ -264,20 +266,20 @@ const travel = gameObjects => {
 
     //Alert the channel
     let channelAlert = new slackAlert({
-        "username": "A mysterious voice",
-        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+        "username": gameObjects.playerCharacter.props.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
         "channel": ("#" + gameObjects.requestZone.props.channel),
         "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
     });
 
     channelAlert.sendToSlack();
-    
+
     //Create object to send to Slack
     gameObjects.slackResponseTemplate = {
-        "username": "A mysterious voice",
-        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+        "username": gameObjects.playerCharacter.props.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
         "channel": ("#" + gameObjects.requestZone.props.channel),
-        "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
+        "text": "_You travel to a new zone_"
     };
 
     return gameObjects.slackResponseTemplate;

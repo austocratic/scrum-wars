@@ -172,18 +172,38 @@ const getSlashCommandResponse = (payload, game) => {
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
+    console.log('DEBUG payload.user_id: ', payload.user_id);
+
     let slackRequestUserID = payload.user_id;
     let slackRequestChannelID = payload.channel_id;
     let slackRequestCommand = 'command';
     let slackCallback = slackRequestCommand;
     let slackRequestText = payload.text;
 
+    let user;
+    //Check if slack requester has been set up as a user
+    try {
+        user = new User(game.state, slackRequestUserID);
+    } catch(err) {
+        game.createUser(slackRequestUserID);
+
+        console.log('users: ', game.state.user);
+        user = new User(game.state, slackRequestUserID);
+    }
+
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
-    let user = new User(game.state, slackRequestUserID);
-    let playerCharacter = new Character(game.state, user.props.character_id);
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
+
+    //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+    let playerCharacter = {
+        props: {}
+    };
+
+    if (user.props.character_id){
+        playerCharacter = new Character(game.state, user.props.character_id);
+    }
 
     //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
     let characterClass = undefined;

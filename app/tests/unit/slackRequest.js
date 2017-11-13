@@ -29,7 +29,7 @@ let testSlackRequest = {
 let user = new User(game.state, testSlackRequest.user.id);
 let slackCallback = testSlackRequest.callback_id;
 
-
+/*
 describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
     let mockRequest = {
@@ -51,8 +51,31 @@ describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
     console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
 
-});
+});*/
 
+describe("Testing slackRequest.getSlashCommandResponse() when user_id is not yet in DB", function(){
+
+    let mockRequest = {
+        "command": "/generate",
+        "user_id": "missing_user",
+        "user_name": "austo",
+        "channel_id": "C4Z7F8XMW",
+        "channel_name": "The Arena",
+        "token": "a6qLRgANE3lHNDP50zb0vmoJ",
+        "team_id": "T4ZAGTM1V",
+        "team_domain": "austo",
+        "text": "",
+        "response_url": "https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT4ZAGTM1V%2F239499725731%2Fb0wOCK18eeETsD0mvH0LqYEB&trigger_id=239057170097.169356939063.08e9efc327159fc04d0a0845821c2a3a"
+    };
+
+    let slackResponseTemplateReturned = slackRequest.getSlashCommandResponse(mockRequest, game);
+
+    testSlackResponseFormat(slackResponseTemplateReturned);
+
+    console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
+
+});
+/*
 describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
     describe("where", function(){
@@ -109,3 +132,4 @@ describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
     });
 
 });
+*/
