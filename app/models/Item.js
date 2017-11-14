@@ -22,7 +22,7 @@ class Item extends BaseModel {
             "attachments": [
                 {
                     //"image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + this.id + ".jpg",
-                    "image_url": `https://scrum-wars.herokuapp.com/public/images/ ${this.props.icon_name}.png`,
+                    "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
                     "fallback": "You can't select this item",
                     "fields": [
                         {
