@@ -1,19 +1,14 @@
 'use strict';
 
-//var Firebase = require('../libraries/firebase').Firebase;
-//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
-//var firebase = new Firebase();
-
-
-var BaseModel = require('./BaseModel').BaseModel;
+const BaseModel = require('./BaseModel').BaseModel;
 
 
 class Item extends BaseModel {
     constructor(gameState, itemID) {
         super(gameState, 'item', itemID);
 
-        var items = gameState.item;
+        let items = gameState.item;
 
         //Set the character's props
         this.props = items[itemID];
@@ -26,7 +21,8 @@ class Item extends BaseModel {
         let template = {
             "attachments": [
                 {
-                    "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + this.id + ".jpg",
+                    //"image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + this.id + ".jpg",
+                    "image_url": `https://scrum-wars.herokuapp.com/public/images/ ${this.props.icon_name}.png`,
                     "fallback": "You can't select this item",
                     "fields": [
                         {
@@ -39,7 +35,7 @@ class Item extends BaseModel {
         };
 
         //Iterate through the object adding properties to the template
-        for (var prop in this.props) {
+        for (let prop in this.props) {
 
             template.attachments[0].fields.push({
                 "title": prop,
@@ -47,23 +43,12 @@ class Item extends BaseModel {
                 "short": true
             });
         }
-
         return template;
-
     };
-
 }
 
-/*
-class Item extends FirebaseBaseController {
-    constructor() {
-        super();
-        this.firebaseType = 'item'
-    }
-    
-}*/
 
 
 module.exports = {
-    Item: Item
+    Item
 };

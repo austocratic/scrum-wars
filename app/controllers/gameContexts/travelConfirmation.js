@@ -10,8 +10,8 @@ const yes = gameObjects => {
     gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
     
     let channelAlert = new slackAlert({
-        "username": "A mysterious voice",
-        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
+        "username": gameObjects.playerCharacter.props.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
         "channel": ("#" + gameObjects.requestZone.props.channel),
         "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
     });
