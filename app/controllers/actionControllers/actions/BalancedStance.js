@@ -31,8 +31,8 @@ class BalancedStance extends BaseModify {
         };
     }
 
+    /*
     initiate(){
-
         //skill check
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
@@ -46,7 +46,35 @@ class BalancedStance extends BaseModify {
 
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
+    }*/
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
     }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                if (this._avoidCheck(0, 0) === false) {
+                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.slackPayload);
+                    return;
+                }
+
+                //Reverse any effects of this type
+                this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
+
 }
 
 

@@ -39,13 +39,12 @@ class ForkedLightning extends BaseAttack {
     }
 
     initiate(){
-        console.log('Called ForkedLightning.initiate()');
-
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
         return this._initiateAction();
     }
 
     process(turn) {
-        console.log('called ForkedLightning.process on turn: ', turn);
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
 
         switch (true) {
             case (turn <= 0):

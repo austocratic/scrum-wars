@@ -32,7 +32,7 @@ class Backstab extends BaseAttack {
             "channel": this.slackChannel
         };
     }
-
+    /*
     initiate(){
 
         //skill check
@@ -64,14 +64,58 @@ class Backstab extends BaseAttack {
             });
         }
         
-        /*
-        if (this.actionCharacter.props.is_hidden === 1){
-            this._changeProperty(this.actionCharacter, {is_hidden: -1});
-        }*/
+
+        //if (this.actionCharacter.props.is_hidden === 1){
+        //    this._changeProperty(this.actionCharacter, {is_hidden: -1});
+        //}
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
+    }*/
+
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
     }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                if (this._avoidCheck(0, 0) === false) {
+                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.slackPayload);
+                    return;
+                }
+
+                //Process all the other effects of the action
+                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+                //Find all currently applied effects that change the targets is_hidden property
+                if (this.actionCharacter.props.effects) {
+                    this.actionCharacter.props.effects
+                        .filter(eachEffect => {
+                            return eachEffect.modifiers.modified_is_hidden === 1
+                        })
+                        .forEach(eachEffect => {
+                            this._reverseEffect(this.actionCharacter, eachEffect.action_id);
+                        });
+                }
+
+                //if (this.actionCharacter.props.is_hidden === 1){
+                //    this._changeProperty(this.actionCharacter, {is_hidden: -1});
+                //}
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
+
 }
 
 

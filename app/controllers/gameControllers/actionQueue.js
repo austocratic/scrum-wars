@@ -8,7 +8,7 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
 const { ArcaneBolt, DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
-    Firestorm, Cleave, ForkedLightning, ForkedLightning2 } = actions;
+    Firestorm, Cleave, ForkedLightning } = actions;
 
 const actionControllers = {
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
@@ -19,8 +19,7 @@ const actionControllers = {
     whirlwind: Whirlwind,
     '-Ky3C664qBFIYS4R4ItQ': Firestorm,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
-    '-KkdduB9XuB46EsxqwIX': ForkedLightning,
-    '-KzFQs54K3qanmeGEEgF': ForkedLightning2
+    '-KkdduB9XuB46EsxqwIX': ForkedLightning
 };
 
 //Check that action queue for functions that should be initiated on the current turn
@@ -64,6 +63,8 @@ const actionQueue = (gameObjects) =>{
             //Process the action by passing in the relative turn
             actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
+            //Mark action as processed this turn
+            eachActionToProcess.last_turn_processed = gameObjects.currentMatch.props.number_turns;
         });
 
     return true;

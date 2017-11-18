@@ -35,13 +35,12 @@ class ArcaneBolt extends BaseAttack {
     }
 
     initiate(){
-        console.log('Called ArcaneBolt.initiate()');
-
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
         return this._initiateAction();
     }
 
     process(turn) {
-        console.log('called ForkedLightning2.process on turn: ', turn);
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
 
         switch (true) {
             case (turn <= 0):

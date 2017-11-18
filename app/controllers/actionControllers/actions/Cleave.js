@@ -43,6 +43,7 @@ class Cleave extends BaseAttack {
         }]
     }
 
+    /*
     initiate(){
         console.log('Called Cleave.initiate()');
 
@@ -77,7 +78,41 @@ class Cleave extends BaseAttack {
 
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
+    }*/
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
     }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                this.slackPayload.text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn <= 1):
+
+                //Evasion check
+                //Arguments: accuracyModifier, avoidModifier
+                if (this._avoidCheck(0, 0) === false) {
+                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.slackPayload);
+                    return;
+                }
+
+                //Process all the other effects of the action
+                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+                break;
+            case (turn >= 2):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
+
+
 }
 
 /* Structure to add additional property validations
