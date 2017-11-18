@@ -315,7 +315,10 @@ class BaseAction {
             return
         }
 
-        let actionToRemoveID = this.currentMatch.props.action_queue.indexOf(this.actionTaken.id);
+        //let actionToRemoveID = this.currentMatch.props.action_queue.indexOf(this.actionTaken.id);
+        let actionToRemoveID = this.currentMatch.props.action_queue.find( eachActionInQueue =>{
+            return eachActionInQueue.action_id === this.actionTaken.id;
+        });
 
         if(actionToRemoveID !== -1) {
             this.currentMatch.props.action_queue.splice(actionToRemoveID, 1);
