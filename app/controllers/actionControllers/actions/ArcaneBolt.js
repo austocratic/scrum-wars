@@ -34,6 +34,8 @@ class ArcaneBolt extends BaseAttack {
         };
     }
 
+    //TODO refactoring
+    /*
     initiate() {
         
         //skill check
@@ -58,7 +60,55 @@ class ArcaneBolt extends BaseAttack {
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
 
+    }*/
+
+    initiate(){
+        console.log('Called ArcaneBolt.initiate()');
+
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('ForkedLightning failed');
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return false;
+        }
+
+        //Push the effects into the effect queue
+        this._insertActionInQueue();
+
+        //Process the action with turn 0
+        this.process(0);
+
+        return {
+            "text": "action complete"
+        }
     }
+
+    process(turn) {
+        console.log('called ForkedLightning2.process on turn: ', turn);
+
+        switch (true) {
+            case (turn <= 0):
+                if (this._avoidCheck(0, 0) === false) {
+                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.slackPayload);
+                    return;
+                }
+
+                //Process all the other effects of the action
+                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
+
+
+
 }
 
 

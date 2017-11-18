@@ -37,9 +37,6 @@ const actionQueue = (gameObjects) =>{
     gameObjects.currentMatch.props.action_queue
         //Process the effect
         .forEach( (eachActionToProcess, index) =>{
-            //console.log('DEBUG eachActionToProcess: ', eachActionToProcess);
-
-            //console.log('processing index: ', index);
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
@@ -59,13 +56,8 @@ const actionQueue = (gameObjects) =>{
 
             let actionObject = new actionObjectToMake(gameObjects);
 
-            console.log('number_turns: ', gameObjects.currentMatch.props.number_turns);
-            console.log('turn_initiated: ', eachActionToProcess.turn_initiated);
-
-            //Determine the relative turn number
-            let relativeTurn = gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated;
-
-            actionObject.process(relativeTurn);
+            //Process the action by passing in the relative turn
+            actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
         });
 

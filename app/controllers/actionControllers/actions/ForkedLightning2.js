@@ -37,14 +37,14 @@ class ForkedLightning2 extends BaseAttack {
             "channel": this.slackChannel
         };
 
+        /*
         this.effectQueue = [{
             "action_id": this.actionTaken.id,
             "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
             "channel_id": this.currentZone.props.channel_id,
-            //"effect_function": "mainAction", REMOVE: will always call .process()
             "player_character_id": this.actionCharacter.id,
             "target_character_id": this.targetCharacter.id,
-        }]
+        }]*/
     }
 
     initiate(){
@@ -76,12 +76,9 @@ class ForkedLightning2 extends BaseAttack {
             case (turn <= 0):
                 this.slackPayload.text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
                 slack.sendMessage(this.slackPayload);
-                return;
                 break;
             case (turn <= 1):
-
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
-                console.log('DEBUG ForkedLightning2 targets: ', targets);
 
                 //Value will increase with each iteration
                 let avoidModifier = 1;
@@ -120,12 +117,9 @@ class ForkedLightning2 extends BaseAttack {
                     this.slackPayload.text = this.channelActionSuccessMessage;
                     slack.sendMessage(this.slackPayload);
                 }
-
-                return;
                 break;
             case (turn >= 2):
                 this._deleteActionInQueue();
-                return;
                 break;
         }
     }
