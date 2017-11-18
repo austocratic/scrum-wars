@@ -51,8 +51,7 @@ const actionsAndThingsContext = {
         poisonedBlade: poisonedBlade,
         whirlwind: whirlwind,
         cleave: cleave,
-        firestorm: firestorm,
-        firestorm2: firestorm2 //TESTING
+        firestorm: firestorm
     },
     selectActionTarget: {
         processActionOnTarget: require('./gameContexts/selectActionTarget').processActionOnTarget
