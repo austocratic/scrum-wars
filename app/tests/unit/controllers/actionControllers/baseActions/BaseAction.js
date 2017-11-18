@@ -100,27 +100,62 @@ describe("Testing BaseAction class", function() {
             })
         });
 
+        describe("testing BaseAction method _getUniqueRandomTarget", function () {
+
+            describe("with argument 1", function () {
+                let targetArray = testBaseAction._getUniqueRandomTarget(1);
+
+                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+
+                it("should return an array of length", function (){
+                    assert.equal(targetArray.length, 1);
+                });
+            });
+            describe("with argument 2", function () {
+                let targetArray = testBaseAction._getUniqueRandomTarget(2);
+
+                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+
+                it("should return an array of length", function (){
+                    assert.equal(targetArray.length, 2);
+                });
+            });
+            describe("with argument 3", function () {
+                let targetArray = testBaseAction._getUniqueRandomTarget(3);
+
+                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+
+                it("should return an array of length", function (){
+                    assert.equal(targetArray.length, 2);
+                });
+            });
+
+        });
+
+        /* Depricating the _incrementProperties method in BaseAction, property increment will be done by models (function in the base model)
         describe("testing BaseAction method _incrementProperties", function () {
 
             //Modifiers to apply on action success
             let statsToModify = {
-                modified_toughness: 8,
-                modified_strength: -8
+                toughness: 8,
+                strength: -8
             };
 
-            let toughnessBefore = gameObjects.targetCharacter.props.modified_toughness;
-            let strengthBefore = gameObjects.targetCharacter.props.modified_strength;
+            let toughnessBefore = gameObjects.targetCharacter.props.stats_current.toughness;
+            let strengthBefore = gameObjects.targetCharacter.props.stats_current.strength;
+
+            console.log('toughness before modify: ', toughnessBefore);
 
             testBaseAction._incrementProperties(gameObjects.targetCharacter, statsToModify);
 
-            it("updated modified_toughness should be " + statsToModify.modified_toughness + " greater than previous modified_toughness", function (){
-                assert.equal(gameObjects.targetCharacter.props.modified_toughness, toughnessBefore + statsToModify.modified_toughness);
+            it("updated modified_toughness should be " + statsToModify.toughness + " greater than previous toughness", function (){
+                assert.equal(gameObjects.targetCharacter.props.stats_current.toughness, toughnessBefore + statsToModify.toughness);
             });
 
-            it("updated modified_strength should be " + statsToModify.modified_strength + " less than previous modified_strength", function (){
-                assert.equal(gameObjects.targetCharacter.props.modified_strength, strengthBefore + statsToModify.modified_strength);
+            it("updated modified_strength should be " + statsToModify.strength + " less than previous strength", function (){
+                assert.equal(gameObjects.targetCharacter.props.stats_current.strength, strengthBefore + statsToModify.modified_strength);
             })
-        });
+        });*/
 
         describe("testing BaseAction method _reverseEffect", function () {
 
@@ -147,6 +182,20 @@ describe("Testing BaseAction class", function() {
             it("gameObjects.targetCharacter should no longer have an effect of " + testEffect.action_id, function(){
                 assert.equal(_.findIndex(gameObjects.targetCharacter.props.effects, {'action_id': testEffect.action_id}), -1)
             })
+        });
+
+        describe("testing BaseAction method _applyDamage", function () {
+
+            console.log('calculatedPower: ', testBaseAction.calculatedPower);
+
+            console.log('calculatedMitigation: ', testBaseAction.calculatedMitigation);
+
+            //testBaseAction._applyDamage();
+
+            /*
+            it("gameObjects.targetCharacter should no longer have an effect of " + testEffect.action_id, function(){
+                assert.equal(_.findIndex(gameObjects.targetCharacter.props.effects, {'action_id': testEffect.action_id}), -1)
+            })*/
         });
     });
 });

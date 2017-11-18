@@ -47,7 +47,7 @@
     },
     "-Kkdk_CD5vx8vRGQD268" : {
       "cool_down" : 2,
-      "delay" : 1,
+      "delay" : 0,
       "functionName" : "intoShadow",
       "minimum_level" : 1,
       "name" : "Into Shadow",
@@ -107,10 +107,10 @@
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KvOpJ2FyGodmZCanea7" : {
-      "cool_down" : "3",
-      "delay" : "1",
+      "cool_down" : 3,
+      "delay" : 1,
       "functionName" : "poisonedBlade",
-      "minimum_level" : "1",
+      "minimum_level" : 1,
       "name" : "Poisoned Blade",
       "ongoing_effects" : [ {
         "active_on_turn" : [ 1, 2, 3 ],
@@ -120,59 +120,49 @@
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KxkBOZgjEPwKmHOWueQ" : {
-      "cool_down" : "2",
-      "delay" : "1",
+      "cool_down" : 2,
+      "delay" : 1,
       "functionName" : "whirlwind",
-      "minimum_level" : "1",
+      "minimum_level" : 1,
       "name" : "Whirlwind",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Kxp5dhdmtUQ0aZ6YpiI" : {
-      "cool_down" : "1",
-      "delay" : "0",
+      "cool_down" : 1,
+      "delay" : 0,
       "functionName" : "offensiveStance",
-      "minimum_level" : "1",
+      "minimum_level" : 1,
       "name" : "Offensive Stance",
       "type" : "combat stance",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Ky1zv4JXgbAKvxFFBmp" : {
-      "cool_down" : "2",
-      "delay" : "1",
+      "cool_down" : 2,
+      "delay" : 1,
       "functionName" : "cleave",
-      "minimum_level" : "1",
+      "minimum_level" : 1,
       "name" : "Cleave",
       "type" : "offensive2",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Ky3C664qBFIYS4R4ItQ" : {
-      "cool_down" : "3",
-      "delay" : "1",
+      "cool_down" : 3,
+      "delay" : 2,
       "functionName" : "firestorm",
-      "minimum_level" : "1",
+      "minimum_level" : 1,
       "name" : "Firestorm",
       "type" : "offensive2",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
-    "-KyZ-_1kQ7_4UrHLt1vR": {
-      "cool_down" : "2",
-      "delay" : "1",
-      "effects" : [ {
-        "active_on_turn" : [ 1 ],
-        "functionName" : "beginCastingMessage"
-      }, {
-        "active_on_turn" : [ 2 ],
-        "functionName" : "mainAction"
-      } ],
-      "functionName" : "firestorm2",
-      "minimum_level" : "1",
-      "name" : "Firestorm2",
+    "-KzFQs54K3qanmeGEEgF" : {
+      "cool_down" : 2,
+      "minimum_level" : 1,
+      "name" : "Forked Lightning 2",
       "type" : "offensive2",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     }
-
-},
+  },
   "character" : {
     "-Kkxf1ukVSF9VV6mIPlG" : {
       "actions" : [ {
@@ -202,11 +192,12 @@
         "action_id" : "-KvOpJ2FyGodmZCanea7",
         "applied_by_character_id" : "55e38d23d842e50e9026",
         "turn_applied" : 1,
+        "turn_effect_processed" : [ 1, 2, 3, 4 ],
         "type" : "offensive"
       } ],
       "gender" : "male",
       "gold" : 100,
-      "health" : 50000,
+      "health" : 49731,
       "inventory" : [ {
         "equipment_slot_id" : "hand",
         "is_equipped" : 1,
@@ -232,10 +223,10 @@
       },
       "stats_current" : {
         "armor" : 0,
-        "dexterity" : 0,
+        "dexterity" : 12,
         "hit_points" : 50000,
-        "intelligence" : 18,
-        "strength" : 0,
+        "intelligence" : 22,
+        "strength" : 3,
         "toughness" : 6
       },
       "turn_action_used" : 0,
@@ -247,7 +238,7 @@
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 0
+        "turn_used" : 1
       }, {
         "action_id" : "-KjpeJT7Oct3ZCtLhENO",
         "is_available" : 1,
@@ -257,7 +248,7 @@
         "action_id" : "-KkdduB9XuB46EsxqwIX",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 0
+        "turn_used" : 15
       }, {
         "action_id" : "-KkJVqtBIhpAKBfz9tcb",
         "is_available" : 1,
@@ -302,19 +293,18 @@
         "action_id" : "-Ky1zv4JXgbAKvxFFBmp",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 0
+        "turn_used" : 14
       }, {
         "action_id" : "-Ky3C664qBFIYS4R4ItQ",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 0
+        "turn_used" : 16
       } ],
       "active" : 1,
       "avatar" : "f_10.png",
       "class_id" : "-KircnK2x1_31EQiAYlk",
-      "effects" : [ ],
       "gender" : "female",
-      "gold" : 100,
+      "gold" : 80,
       "health" : 50000,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
@@ -325,6 +315,22 @@
           "strength" : 2
         },
         "name" : "Minor Staff of Ice"
+      }, {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "is_equipped" : 0,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "strength" : 5
+        },
+        "name" : "Basic Short Sword"
+      }, {
+        "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+        "is_equipped" : 1,
+        "item_id" : "-KysPQ1R52pWKRULl5az",
+        "modifiers" : {
+          "armor" : 4
+        },
+        "name" : "Leather Tunic"
       } ],
       "is_hidden" : 0,
       "level" : 1,
@@ -340,7 +346,7 @@
         "toughness" : 6
       },
       "stats_current" : {
-        "armor" : 0,
+        "armor" : 4,
         "dexterity" : 12,
         "hit_points" : 100,
         "intelligence" : 20,
@@ -348,7 +354,7 @@
         "toughness" : 6
       },
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     },
     "5bdfe1adfef85f3af257" : {
       "actions" : [ {
@@ -387,7 +393,7 @@
       "class_id" : "-KircSgAkPTavnfob8F5",
       "gender" : "male",
       "gold" : 90,
-      "health" : 50000,
+      "health" : 49910,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
         "is_equipped" : 1,
@@ -411,10 +417,10 @@
       },
       "stats_current" : {
         "armor" : 0,
-        "dexterity" : 0,
+        "dexterity" : 10,
         "hit_points" : 50000,
         "intelligence" : 10,
-        "strength" : 5,
+        "strength" : 20,
         "toughness" : 10
       },
       "user_id" : "-Ksu5JKx8959TviyMFIy",
@@ -552,6 +558,15 @@
       "cost" : 0,
       "equipment_slots" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVOX1hzSD2llNT0Pk", "-KmTVQX2nCD8-AQrzHCN", "-KmTVRv_WT0zSC5tZ-rn", "-KmTVTTNGywT45mkais0", "-KmTVUqVKXWRDr4VCb3k", "-KmTVXPr_KQ1an1N2Ih1" ],
       "name" : "empty"
+    },
+    "-KysPQ1R52pWKRULl5az" : {
+      "cost" : 10,
+      "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+      "icon_name" : "Armor01",
+      "modifiers" : {
+        "armor" : 4
+      },
+      "name" : "Leather Tunic"
     }
   },
   "match" : {
@@ -583,8 +598,8 @@
     "8fca374b794e69b788b4" : {
       "active" : 0,
       "date_ended" : 0,
-      "date_started" : 1508626472777,
-      "number_turns" : 113,
+      "date_started" : 1510522083610,
+      "number_turns" : 30,
       "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257" ],
       "status" : "started",
       "turn" : 0,
@@ -593,14 +608,14 @@
   },
   "merchant" : {
     "-KjGPSzj3HGaBbAitsvL" : {
-      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh" ],
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az" ],
       "name" : "Winston",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
   "npc" : {
     "-Kr9WiJ3rRP-OuNPkpMQ" : {
-      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh" ],
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az" ],
       "name" : "Winston",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }

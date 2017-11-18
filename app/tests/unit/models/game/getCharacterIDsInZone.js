@@ -22,6 +22,4 @@ describe("Testing game.getCharacterIDsInZone", function() {
     //In the arena
     let charsInZone = game.getCharacterIDsInZone('-Khu9Ti4cn9PQ2Q1TSBT');
 
-    console.log('DEBUG getCharacterIDsInZone: ', charsInZone);
-
 });

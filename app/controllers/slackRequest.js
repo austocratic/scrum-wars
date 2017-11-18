@@ -23,7 +23,7 @@ const { action, generate, profile, travel, name } = command;
 const selectActionMenu = require('./gameContexts/selectActionMenu');
 const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
     offensiveStance, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
-    whirlwind, cleave, firestorm, firestorm2
+    whirlwind, cleave, firestorm, forkedLightning2
 } = selectActionMenu;
 
 //Route the slackRequest
@@ -44,6 +44,7 @@ const actionsAndThingsContext = {
         balancedStance: balancedStance,
         offensiveStance: offensiveStance,
         forkedLightning: forkedLightning,
+        forkedLightning2: forkedLightning2,
         intoShadow: intoShadow,
         savageStrike: savageStrike,
         backstab: backstab,
@@ -172,7 +173,7 @@ const getSlashCommandResponse = (payload, game) => {
 
     //TODO need validation to ensure request came from slack and is structured correctly
 
-    console.log('DEBUG payload.user_id: ', payload.user_id);
+    //console.log('DEBUG payload.user_id: ', payload.user_id);
 
     let slackRequestUserID = payload.user_id;
     let slackRequestChannelID = payload.channel_id;
@@ -215,10 +216,10 @@ const getSlashCommandResponse = (payload, game) => {
     //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
     let userSelection = payload.command.slice(1, payload.command.length);
 
-    console.log('DEBUG slackSlashCommand, about to call processRequest');
+    //console.log('DEBUG slackSlashCommand, about to call processRequest');
 
-    console.log('DEBUG slackRequestCommand: ', slackRequestCommand);
-    console.log('DEBUG userSelection: ', userSelection);
+    //console.log('DEBUG slackRequestCommand: ', slackRequestCommand);
+    //console.log('DEBUG userSelection: ', userSelection);
 
     return processRequest(slackRequestCommand, userSelection, {
         game,
@@ -238,11 +239,11 @@ const getSlashCommandResponse = (payload, game) => {
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
-    console.log('DEBUG ********************* payload: ', payload);
+    //console.log('DEBUG ********************* payload: ', payload);
 
     let userActionNameSelection = payload.actions[0].name;
 
-    console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
+    //console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
 
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
@@ -311,8 +312,8 @@ const endRequest = async (game) => {
 const processRequest = (action, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
 
-    console.log('DEBUG action: ', action);
-    console.log('DEBUG userSelection: ', userSelection);
+    //console.log('DEBUG action: ', action);
+    //console.log('DEBUG userSelection: ', userSelection);
     let actualFn;
     try {
         //For some game contexts, I don't have individual functions for each selection.  

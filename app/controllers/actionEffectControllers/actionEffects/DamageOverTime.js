@@ -51,12 +51,12 @@ class DamageOverTime extends BaseActionEffect{
         //Process all the other effects of the action
         this._changeProperty(this.targetCharacter, {health: -this.calculatedDamage});
 
-        console.log('DEBUG just changed the property');
+        //console.log('DEBUG just changed the property');
 
         //Send slack notification
         //this.slackPayload.text = this.channelActionSuccessMessage;
 
-        console.log('DEBUG calling slack alert, ', JSON.stringify(this.slackPayload));
+        //console.log('DEBUG calling slack alert, ', JSON.stringify(this.slackPayload));
 
         slack.sendMessage(this.slackPayload);
     }

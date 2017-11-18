@@ -97,7 +97,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
 
         let playerCharacter = new Character(game.state, testCharacterID);
         
-        console.log('DEBUG current turn: ', currentMatch.props.number_turns);
+        //console.log('DEBUG current turn: ', currentMatch.props.number_turns);
         
         //Push an action to the character that has already been used this turn
         playerCharacter.props.actions.push( {

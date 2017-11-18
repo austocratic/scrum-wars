@@ -18,8 +18,6 @@ describe("Testing game.initiateRequest ", function() {
 
     let slackResponseTemplate = {};
 
-    console.log('DEBUG game.state.character[55e38d23d842e50e9026]: ', game.state.character['55e38d23d842e50e9026'].stats_current);
-
     game.initiateRequest();
 
     //testSlackResponseFormat(slackResponseTemplateReturned);

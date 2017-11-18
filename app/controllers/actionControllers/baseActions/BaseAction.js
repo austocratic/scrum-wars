@@ -65,6 +65,47 @@ class BaseAction {
         return startingCharacterObjects[this._getRandomIntInclusive(0, startingCharacterObjects.length - 1)]
     }
 
+    //Return a random character object who is still alive in the current match
+    _getUniqueRandomTarget(numberOfTargets){
+
+        //Get targets, how can I standardize this?
+        const targets = [];
+
+        //Returns an array of character IDs
+        let availableTargets = this.currentMatch.getStartingCharacterIDs()
+            .map( eachStartingCharacterID =>{
+                return new Character(this.game.state, eachStartingCharacterID)
+            })
+            //Filter for characters in the zone (alive characters)
+            .filter( eachCharacter =>{
+                return eachCharacter.props.zone_id === this.currentMatch.props.zone_id
+            })
+            //Filter for all characters but the character performing the action
+            .filter( eachCharacterInZone =>{
+                return eachCharacterInZone.id !== this.actionCharacter.id
+            });
+
+        //If desired # of targets is greater than the # of available targets, only return # of available targets
+        if (availableTargets.length < numberOfTargets){
+            numberOfTargets = availableTargets.length
+        }
+
+        for (let i = 0; i < numberOfTargets; i++) {
+            availableTargets
+                //Filter out characters that are already found
+                .filter( eachCharacterInZone =>{
+                    let foundTarget = targets.find( eachTargetToExclude =>{
+                        return eachTargetToExclude.id === eachCharacterInZone.id;
+                    });
+                    return foundTarget === undefined
+                });
+            //Return a random character object from filtered array of character objects
+            targets.push(availableTargets[this._getRandomIntInclusive(0, availableTargets.length - 1)]);
+        }
+
+        return targets
+    }
+
     _successCheck(modifier){
 
         let successChance = this.baseSuccessChance + modifier;
@@ -95,10 +136,36 @@ class BaseAction {
     }
 
     _calculateStrength(base, modifier, variableMin, variableMax){
+        return base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
+    }
 
-        var calculatedStrength = base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
-        
-        return calculatedStrength;
+    _calculateDamage(damage, mitigation){
+
+        let totalDamage = damage - mitigation;
+
+        if (totalDamage < 0) {
+            return 0;
+        }
+
+        return totalDamage;
+    }
+
+    //TODO working on 11/13/17
+    _applyDamage(){
+        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+        //Check if the target has a barrier
+        /*
+        let targetCharacterShielding = this.targetCharacter.props.effects.find( eachEffect =>{
+            return eachEffect.type === "shield"
+        });
+
+        //Target has shielding.  Apply damage to shielding
+        if (targetCharacterShielding){
+
+        }*/
+
+        this.targetCharacter.incrementProperty('health', -calculatedDamage);
     }
 
     //modifiers should be an object of stat/modifier key/value pairs
@@ -108,11 +175,12 @@ class BaseAction {
 
     //modifiers should be an object of stat/modifier key/value pairs
     //Take the properties passed in add them to existing properties
+    /*
     _incrementProperties(characterToModify, modifiers){
         characterToModify.props = _.mergeWith(characterToModify.props, modifiers, (objValue, srcValue) =>{
             return objValue + srcValue
         });
-    }
+    }*/
 
     _avoidCheck(accuracyModifier, avoidModifier){
 
@@ -122,9 +190,9 @@ class BaseAction {
 
         let avoidScore = this.baseAvoidScore + avoidModifier + avoidRandomInt;
 
-        console.log('DEBUG this.baseAvoidScore: ', this.baseAvoidScore);
-        console.log('DEBUG avoidModifier: ', avoidModifier);
-        console.log('DEBUG avoidRandomInt: ', avoidRandomInt);
+        //console.log('DEBUG this.baseAvoidScore: ', this.baseAvoidScore);
+        //console.log('DEBUG avoidModifier: ', avoidModifier);
+        //console.log('DEBUG avoidRandomInt: ', avoidRandomInt);
 
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
@@ -165,7 +233,7 @@ class BaseAction {
         }
 
         //Update the character's properties
-        this._incrementProperties(characterToModify, modifiers)
+        //this._incrementProperties(characterToModify, modifiers)
     }
 
     _reverseEffect(characterToModify, actionID){
@@ -223,6 +291,37 @@ class BaseAction {
             this.currentMatch.props.effect_queue.push(eachEffect)
         })
     }
+
+    _insertActionInQueue(){
+
+        //If the match does not have an action_queue, create one as empty array
+        if(!this.currentMatch.props.action_queue){
+            this.currentMatch.props.action_queue = [];
+        }
+
+        //Push the action ID into the action queue
+        this.currentMatch.props.action_queue.push({
+            "action_id": this.actionTaken.id,
+            "turn_initiated": this.currentMatch.props.number_turns,
+            "channel_id": this.currentZone.props.channel_id,
+            "player_character_id": this.actionCharacter.id,
+            "target_character_id": this.targetCharacter.id
+        })
+    }
+
+    _deleteActionInQueue(){
+
+        if(!this.currentMatch.props.action_queue) {
+            return
+        }
+
+        let actionToRemoveID = this.currentMatch.props.action_queue.indexOf(this.actionTaken.id);
+
+        if(actionToRemoveID !== -1) {
+            this.currentMatch.props.action_queue.splice(actionToRemoveID, 1);
+        }
+    }
+
 
     updateAction(){
 

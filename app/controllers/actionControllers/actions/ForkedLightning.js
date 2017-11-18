@@ -64,7 +64,7 @@ class ForkedLightning extends BaseAttack {
         
         const processOnSingleTarget = (singleTarget, avoidModifier) => {
 
-            console.log('DEBUG processing ForkedLightning on a single target: ', -this.calculatedDamage);
+            //console.log('DEBUG processing ForkedLightning on a single target: ', -this.calculatedDamage);
 
             //If failure, return a failure message and end
             if (this._successCheck(0) === false) {
@@ -83,7 +83,7 @@ class ForkedLightning extends BaseAttack {
                 return false;
             }
             
-            console.log(`DEBUG about to change ${singleTarget.props.name}'s health by: `, -this.calculatedDamage);
+            //console.log(`DEBUG about to change ${singleTarget.props.name}'s health by: `, -this.calculatedDamage);
 
             //Push the target into the affectedCharacters array.  Array will be checked to
             affectedCharacters.push(singleTarget);
@@ -117,7 +117,7 @@ class ForkedLightning extends BaseAttack {
             //Build a new message based on the randomTarget
             this.channelAdditionalActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${randomTarget.props.name} for ${this.calculatedDamage} points of damage!`;
 
-            console.log('DEBUG Random target.name: ', randomTarget.props.name);
+            //console.log('DEBUG Random target.name: ', randomTarget.props.name);
 
             if(processOnSingleTarget(randomTarget, avoidModifier) === true) {
 

@@ -1,5 +1,6 @@
 
 const BaseAction = require('./BaseAction').BaseAction;
+const _ = require('lodash');
 
 
 class BaseAttack extends BaseAction{
@@ -7,16 +8,20 @@ class BaseAttack extends BaseAction{
         super(gameObjects);
     }
 
-    _calculateDamage(damage, mitigation){
 
-        var totalDamage = damage - mitigation;
 
-        if (totalDamage < 0) {
-            return 0;
-        }
+    _calculateDamage2(){
 
-        return totalDamage;
+        let calculatedDamage = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+
+        //Determine if target has an effect that prevents damage
+
+        //
+
+
     }
+
+
 }
 
 BaseAttack.validations = [

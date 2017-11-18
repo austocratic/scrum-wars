@@ -29,6 +29,7 @@ var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 const getActionEffectController = require('../controllers/actionEffectController').getActionEffectController;
 const effectQueue = require('../controllers/gameControllers/effectQueue').effectQueue;
+const actionQueue = require('../controllers/gameControllers/actionQueue').actionQueue;
 
 
 class Game {
@@ -101,9 +102,9 @@ class Game {
                     //Start the match: set status, starting characters, start date
                     //Pass in an array of character IDs to set as starting characters.  These should be characters in the zone when the match starts
 
-                    console.log('DEBUG Game.refresh currentMatch.props.zone_id: ', currentMatch.props.zone_id);
+                    //console.log('DEBUG Game.refresh currentMatch.props.zone_id: ', currentMatch.props.zone_id);
 
-                    console.log('DEBUG this.getCharacterIDsInZone(currentMatch.props.zone_id): ', this.getCharacterIDsInZone(currentMatch.props.zone_id));
+                    //console.log('DEBUG this.getCharacterIDsInZone(currentMatch.props.zone_id): ', this.getCharacterIDsInZone(currentMatch.props.zone_id));
 
                     currentMatch.start(this.getCharacterIDsInZone(currentMatch.props.zone_id));
 
@@ -167,7 +168,7 @@ class Game {
                                         //Don't need the relative turn here
                                         !eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns)
                                     ){
-                                        console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
+                                        //console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
 
                                         //Declare the Class function without invoking, so I can then validate
                                         const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
@@ -208,7 +209,7 @@ class Game {
                 });
 
 
-            //*************** PROCESS ONGOING EFFECTS *****************
+            //*************** PROCESS ACTION EFFECTS *****************
 
             let gameObjects = {
                 game: this,
@@ -216,8 +217,8 @@ class Game {
                 slackResponseTemplate: {}
             };
 
-            effectQueue(gameObjects);
-
+            //effectQueue(gameObjects);
+            actionQueue(gameObjects);
 
             //*************** CHECK FOR CHARACTER DEATHS *****************
 

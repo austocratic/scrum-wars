@@ -450,6 +450,31 @@ const forkedLightning = gameObjects => {
 
     return targetSelection(gameObjects);
 };
+const forkedLightning2 = gameObjects => {
+    console.log('Called selectActionMenu/forkedLightning2');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //If action is not available return action "unavailable" template
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+        return {
+            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }
+
+    return targetSelection(gameObjects);
+};
 const savageStrike = gameObjects => {
     console.log('Called selectActionMenu/savageStrike');
 
@@ -562,6 +587,7 @@ module.exports = {
     arcaneBolt,
     lifeTap,
     forkedLightning,
+    forkedLightning2,
     savageStrike,
     backstab,
     poisonedBlade,

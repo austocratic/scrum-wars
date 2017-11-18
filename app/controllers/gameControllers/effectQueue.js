@@ -38,9 +38,9 @@ const effectQueue = (gameObjects) =>{
         })
         //Process the effect
         .forEach( (eachEffectToProcess, index) =>{
-            console.log('DEBUG eachEffectToProcess: ', eachEffectToProcess);
+            //console.log('DEBUG eachEffectToProcess: ', eachEffectToProcess);
 
-            console.log('processing index: ', index);
+            //console.log('processing index: ', index);
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachEffectToProcess.action_id);
@@ -68,7 +68,7 @@ const effectQueue = (gameObjects) =>{
 
         });
 
-    console.log('gameObjects after filter: ', gameObjects.currentMatch.props.effect_queue);
+    //console.log('gameObjects after filter: ', gameObjects.currentMatch.props.effect_queue);
 
 };
 

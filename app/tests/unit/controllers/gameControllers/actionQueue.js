@@ -7,21 +7,12 @@ const Action = require('../../../../../app/models/Action').Action;
 const Match = require('../../../../../app/models/Match').Match;
 const Zone = require('../../../../../app/models/Zone').Zone;
 const testDB = require('../../../testDB');
-const effectQueue = require('../../../../../app/controllers/gameControllers/effectQueue').effectQueue;
+const actionQueue = require('../../../../../app/controllers/gameControllers/actionQueue').actionQueue;
 
 let game = new Game();
 game.state = testDB;
 
-describe("Testing effectQueue", function() {
-
-    //What should it do?
-
-    //It should process the effect that has the right turn
-
-    //It should remove the effect from the queue that has the right turn
-
-    //It should not change effects that have a different turn than current turn
-
+describe("Testing actionQueue", function() {
 
     //Add a match for this test with an action queue
     game.state.match['testingMatch'] = {
@@ -35,27 +26,20 @@ describe("Testing effectQueue", function() {
             '5bdfe1adfef85f3af257'
         ],
         "zone_id" : '-Khu9Ti4cn9PQ2Q1TSBT',
-        "effect_queue": [
+        "action_queue": [
             {
-                action_id: "-Ky3C664qBFIYS4R4ItQ",
-                effect_function: "beginCastingMessage",
-                activation_turn: 1,
+                action_id: "-KzFQs54K3qanmeGEEgF",
+                turn_initiated: 1,
                 player_character_id: "55e38d23d842e50e9026",
-                target_character_id: "", //AOE action does not have a target (wont be referenced)
-                channel_id: "C4Z7F8XMW"
-            },
-            {
-                action_id: "-Ky3C664qBFIYS4R4ItQ",
-                effect_function: "mainAction",
-                activation_turn: 2,
-                player_character_id: "55e38d23d842e50e9026",
-                target_character_id: "", //AOE action does not have a target (wont be referenced)
+                target_character_id: "-Kkxf1ukVSF9VV6mIPlG",
                 channel_id: "C4Z7F8XMW"
             }
         ]
     };
 
-    describe("passing the match into effectQueue()", function(){
+    let numberTurnsToTest = 5;
+
+    describe(`passing the match into actionQueue(), testing for ${numberTurnsToTest} turns`, function(){
 
         let gameObjects = {
             slackResponseTemplate: {},
@@ -64,14 +48,26 @@ describe("Testing effectQueue", function() {
             slackCallback: 'command:action/selectActionMenu:-Kjpe29q_fDkJG-73AQO/selectActionTarget',
         };
 
-        describe("testing first effect", function(){
+        for (let turnNumber = 1; turnNumber < numberTurnsToTest; turnNumber++) {
+            describe(`on turn number ${turnNumber}`, function() {
+                it(`calling the function should not be undefined`, function () {
+                    gameObjects.currentMatch.props.number_turns = turnNumber;
+                    assert(actionQueue(gameObjects))
+                })
+            })
+        }
+
+        /*
+        describe("testing first action", function(){
 
             //console.log('DEBUG, # of array elements BEFORE processing: ', game.state.match['testingMatch'].effect_queue.length);
+
+            game.state.match['testingMatch'].number_turns = 1;
 
             it("calling the function should not be undefined", function(){
                 //assert(effectQueue(gameObjects));
 
-                effectQueue(gameObjects);
+                actionQueue(gameObjects);
 
                 //console.log('DEBUG, # of array elements AFTER processing: ', game.state.match['testingMatch'].effect_queue.length);
             })
@@ -84,9 +80,9 @@ describe("Testing effectQueue", function() {
             game.state.match['testingMatch'].number_turns = 2;
 
             it("calling the function should not be undefined", function(){
-                assert(effectQueue(gameObjects))
+                assert(actionQueue(gameObjects))
             })
-        })
+        })*/
     });
 
 });

@@ -42,9 +42,9 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
-    console.log('DEBUG game turns: ', gameObjects.currentMatch.props.number_turns);
+    //console.log('DEBUG game turns: ', gameObjects.currentMatch.props.number_turns);
 
-    console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length);
+    //console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length);
 
     if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
         //An action was used this turn, return a message

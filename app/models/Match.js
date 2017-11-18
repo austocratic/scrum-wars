@@ -28,7 +28,7 @@ class Match extends BaseModel{
     //Start the match
     start(startingCharacterIds){
 
-        console.log('DEBUG Match.start startingCharacterIds: ', startingCharacterIds);
+        //console.log('DEBUG Match.start startingCharacterIds: ', startingCharacterIds);
 
         this.updateProperty('date_started', Date.now());
         this.updateProperty('status', 'started');
