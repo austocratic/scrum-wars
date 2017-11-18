@@ -30,6 +30,7 @@ class BaseAction {
 
     //All actions call this function when invoked
     _initiateAction(){
+
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
             this.slackPayload.text = this.channelActionFailMessage;
