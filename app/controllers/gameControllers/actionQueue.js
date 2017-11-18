@@ -36,7 +36,11 @@ const actionQueue = (gameObjects) =>{
 
     //Iterate through effect queue
     gameObjects.currentMatch.props.action_queue
-        //Process the effect
+        //Determine if action has already been processed this turn
+        .filter( eachActionInQueue =>{
+            return eachActionInQueue.last_turn_processed !== gameObjects.currentMatch.props.number_turns
+        })
+        //Process the unprocessed actions
         .forEach( (eachActionToProcess, index) =>{
 
             //Create an action model
