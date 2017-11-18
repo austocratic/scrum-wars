@@ -1,6 +1,6 @@
 'use strict';
 
-const Slack = require('../../../libraries/slack').Alert;
+const slack = require('../../../libraries/slack').Alert;
 const _ = require('lodash');
 
 const Character = require('../../../models/Character').Character;
