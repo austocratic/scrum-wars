@@ -38,25 +38,6 @@ class ArcaneBolt extends BaseAttack {
         console.log('Called ArcaneBolt.initiate()');
 
         return this._initiateAction();
-
-        /*
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            console.log('ForkedLightning failed');
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return false;
-        }
-
-        //Push the effects into the effect queue
-        this._insertActionInQueue();
-
-        //Process the action with turn 0
-        this.process(0);
-
-        return {
-            "text": "action complete"
-        }*/
     }
 
     process(turn) {

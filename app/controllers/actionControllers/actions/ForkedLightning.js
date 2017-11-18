@@ -15,6 +15,9 @@ class ForkedLightning extends BaseAttack {
         this.baseMin = 1;
         this.baseMax = 5;
 
+        //AOE Specific attributes
+        this.maxTargetsAffected = 5;
+
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
         this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
@@ -33,121 +36,66 @@ class ForkedLightning extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
-
-        this.effectQueue = [{
-            "action_id": this.actionTaken.id,
-            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
-            "channel_id": this.currentZone.props.channel_id,
-            "effect_function": "mainAction",
-            "player_character_id": this.actionCharacter.id,
-            "target_character_id": this.targetCharacter.id,
-        }]
     }
 
     initiate(){
         console.log('Called ForkedLightning.initiate()');
 
-        this.slackPayload.text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
-
-        slack.sendMessage(this.slackPayload);
-
-        //Push the effects into the effect queue
-        this._insertEffectsInQueue()
+        return this._initiateAction();
     }
 
-    mainAction() {
-        
-        //Process on target with a high chance to hurt
-        //If successful, process on second target with half chance to hurt
-        //If successful, process on second target with half chance to hurt
-        //continue until out of targets or a failure
-        
-        const processOnSingleTarget = (singleTarget, avoidModifier) => {
+    process(turn) {
+        console.log('called ForkedLightning.process on turn: ', turn);
 
-            //console.log('DEBUG processing ForkedLightning on a single target: ', -this.calculatedDamage);
-
-            //If failure, return a failure message and end
-            if (this._successCheck(0) === false) {
-                console.log('ForkedLightning failed');
-                this.slackPayload.text = this.channelActionFailMessage;
+        switch (true) {
+            case (turn <= 0):
+                this.slackPayload.text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
                 slack.sendMessage(this.slackPayload);
-                return false;
-            }
+                break;
+            case (turn <= 1):
+                let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
-            //Evasion check
-            //Arguments: accuracyModifier, avoidModifier
-            if (this._avoidCheck(0, (0 + avoidModifier)) === false) {
-                console.log('ForkedLightning failed (dodge)');
-                this.slackPayload.text = this.channelActionAvoidedMessage;
-                slack.sendMessage(this.slackPayload);
-                return false;
-            }
-            
-            //console.log(`DEBUG about to change ${singleTarget.props.name}'s health by: `, -this.calculatedDamage);
+                //Value will increase with each iteration
+                let avoidModifier = 1;
 
-            //Push the target into the affectedCharacters array.  Array will be checked to
-            affectedCharacters.push(singleTarget);
+                const processOnSingleTarget = (singleTarget, avoidModifier) => {
+                    console.log('Called processOnSingleTarget');
 
-            //Process all the other effects of the action
-            //this._changeProperty(singleTarget, {hit_points: -this.calculatedDamage});
-            singleTarget.incrementProperty('health', -this.calculatedDamage);
-            
-            return true;
-        };
+                    //Evasion check
+                    //Arguments: accuracyModifier, avoidModifier
+                    if (this._avoidCheck(0, (0 + avoidModifier)) === false) {
+                        console.log('ForkedLightning failed (dodge)');
+                        this.slackPayload.text = this.channelActionAvoidedMessage;
+                        slack.sendMessage(this.slackPayload);
+                        return false;
+                    }
 
-        //Value will increase with each recursion
-        let avoidModifier = 1;
+                    //Process all the other effects of the action
+                    singleTarget.incrementProperty('health', -this.calculatedDamage);
 
-        //Array to hold targets who have already been damaged.  ForkedLightning should not affect a character more than once
-        let affectedCharacters = [];
+                    return true;
+                };
 
-        const processOnOtherTargets = () => {
-            
-            console.log('called processOnOtherTargets, avoidModifier: ', avoidModifier);
-            //const randomTarget = game.props.characters;
+                //Iterate through targets processing, if one fails, stop
+                for(const target of targets){
+                    console.log('keep processing!');
 
-            //Pass in array of characters to exclude
-            let randomTarget = this._getRandomTarget(affectedCharacters);
+                    let result = processOnSingleTarget(target, 1);
 
-            //If randomTarget is undefined, then there are no eligible targets, Forked Lightning should end
-            if (!randomTarget){
-                return
-            }
+                    if(result === false){
+                        break
+                    }
 
-            //Build a new message based on the randomTarget
-            this.channelAdditionalActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${randomTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                    avoidModifier = avoidModifier * 2;
 
-            //console.log('DEBUG Random target.name: ', randomTarget.props.name);
-
-            if(processOnSingleTarget(randomTarget, avoidModifier) === true) {
-
-                //Alert the channel of the action
-                this.slackPayload.text = this.channelAdditionalActionSuccessMessage;
-                console.log('SLACK channelAdditionalActionSuccessMessage: ', this.slackPayload.text);
-                slack.sendMessage(this.slackPayload);
-
-                avoidModifier = avoidModifier * 2;
-                
-                processOnOtherTargets();
-            }
-        };
-        
-        //Process on first target
-        //If processOnSingleTarget does NOT return a value, continue to process
-        if (processOnSingleTarget(this.targetCharacter, 1) === true){
-            console.log('keep processing!');
-
-            //Alert the channel of the action
-            this.slackPayload.text = this.channelActionSuccessMessage;
-            console.log('SLACK channelActionSuccessMessage: ', this.slackPayload.text);
-            slack.sendMessage(this.slackPayload);
-
-            //Recursive function
-            processOnOtherTargets();
-        }
-
-        return {
-            "text": "action complete"
+                    //Alert the channel of the action
+                    this.slackPayload.text = this.channelActionSuccessMessage;
+                    slack.sendMessage(this.slackPayload);
+                }
+                break;
+            case (turn >= 2):
+                this._deleteActionInQueue();
+                break;
         }
     }
 }

@@ -23,7 +23,7 @@ const { action, generate, profile, travel, name } = command;
 const selectActionMenu = require('./gameContexts/selectActionMenu');
 const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
     offensiveStance, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
-    whirlwind, cleave, firestorm, forkedLightning2
+    whirlwind, cleave, firestorm
 } = selectActionMenu;
 
 //Route the slackRequest
@@ -44,7 +44,6 @@ const actionsAndThingsContext = {
         balancedStance: balancedStance,
         offensiveStance: offensiveStance,
         forkedLightning: forkedLightning,
-        forkedLightning2: forkedLightning2,
         intoShadow: intoShadow,
         savageStrike: savageStrike,
         backstab: backstab,

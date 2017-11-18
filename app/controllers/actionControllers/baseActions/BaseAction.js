@@ -28,10 +28,10 @@ class BaseAction {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    //All actions call this function when invoked
     _initiateAction(){
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            console.log('ForkedLightning failed');
             this.slackPayload.text = this.channelActionFailMessage;
             slack.sendMessage(this.slackPayload);
             return false;

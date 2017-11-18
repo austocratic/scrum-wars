@@ -36,37 +36,12 @@ class ForkedLightning2 extends BaseAttack {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
         };
-
-        /*
-        this.effectQueue = [{
-            "action_id": this.actionTaken.id,
-            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
-            "channel_id": this.currentZone.props.channel_id,
-            "player_character_id": this.actionCharacter.id,
-            "target_character_id": this.targetCharacter.id,
-        }]*/
     }
 
     initiate(){
         console.log('Called ForkedLightning.initiate()');
 
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            console.log('ForkedLightning failed');
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return false;
-        }
-
-        //Push the effects into the effect queue
-        this._insertActionInQueue();
-
-        //Process the action with turn 0
-        this.process(0);
-
-        return {
-            "text": "action complete"
-        }
+        return this._initiateAction();
     }
 
     process(turn) {

@@ -28,7 +28,7 @@ describe("Testing actionQueue", function() {
         "zone_id" : '-Khu9Ti4cn9PQ2Q1TSBT',
         "action_queue": [
             {
-                action_id: "-KzFQs54K3qanmeGEEgF",
+                action_id: "-KkdduB9XuB46EsxqwIX",
                 turn_initiated: 1,
                 player_character_id: "55e38d23d842e50e9026",
                 target_character_id: "-Kkxf1ukVSF9VV6mIPlG",

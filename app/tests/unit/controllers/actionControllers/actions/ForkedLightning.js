@@ -55,14 +55,20 @@ describe("Testing ForkedLightning class", function() {
 
             let targetCharacterPreviousHealth = gameObjects.targetCharacter.props.health;
 
-            console.log("forkedLightning gameObjects: ", JSON.stringify(gameObjects));
+            // console.log("forkedLightning gameObjects: ", JSON.stringify(gameObjects));
 
             testForkedLightning.initiate();
-            
+
+            console.log('DEBUG, currentMatch.props.action_queue: ', testForkedLightning.currentMatch.props.action_queue)
+
             /* It wont necessarily reduce the targets health (it could miss)
             it("should reduce targetCharacter's health by ForkedLightning's calculatedDamage property", function () {
                 assert(gameObjects.targetCharacter.props.hit_points + testForkedLightning.calculatedDamage === targetCharacterPreviousHealth);
             });*/
+        });
+
+        describe("calling process() with turn 1", function (){
+            testForkedLightning.process(1);
         })
     });
 });
