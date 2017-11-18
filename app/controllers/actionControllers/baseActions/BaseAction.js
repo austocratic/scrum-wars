@@ -28,6 +28,26 @@ class BaseAction {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    _initiateAction(){
+        //If failure, return a failure message and end
+        if (this._successCheck(0) === false) {
+            console.log('ForkedLightning failed');
+            this.slackPayload.text = this.channelActionFailMessage;
+            slack.sendMessage(this.slackPayload);
+            return false;
+        }
+
+        //Push the effects into the effect queue
+        this._insertActionInQueue();
+
+        //Process the action with turn 0
+        this.process(0);
+
+        return {
+            "text": "action complete"
+        }
+    }
+
     //Return a random character object who is still alive in the current match
     _getRandomTarget(targetsToExclude){
 

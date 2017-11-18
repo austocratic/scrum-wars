@@ -34,37 +34,12 @@ class ArcaneBolt extends BaseAttack {
         };
     }
 
-    //TODO refactoring
-    /*
-    initiate() {
-        
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Evasion check
-        //Arguments: accuracyModifier, avoidModifier
-        if (this._avoidCheck(0, 0) === false) {
-            this.slackPayload.text = this.channelActionAvoidedMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Process all the other effects of the action
-        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
-
-    }*/
-
     initiate(){
         console.log('Called ArcaneBolt.initiate()');
 
+        return this._initiateAction();
+
+        /*
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
             console.log('ForkedLightning failed');
@@ -81,7 +56,7 @@ class ArcaneBolt extends BaseAttack {
 
         return {
             "text": "action complete"
-        }
+        }*/
     }
 
     process(turn) {
