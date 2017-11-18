@@ -7,10 +7,11 @@ const Zone = require('../../../app/models/Zone').Zone;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
+const { ArcaneBolt, DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
     Firestorm, Cleave, ForkedLightning, ForkedLightning2 } = actions;
 
 const actionControllers = {
+    '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     defensiveStance: DefensiveStance,
     offensiveStance: OffensiveStance,
     balancedStance: BalancedStance,
