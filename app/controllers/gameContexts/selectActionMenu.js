@@ -562,7 +562,6 @@ module.exports = {
     arcaneBolt,
     lifeTap,
     forkedLightning,
-    forkedLightning2,
     savageStrike,
     backstab,
     poisonedBlade,
