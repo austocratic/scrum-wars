@@ -7,16 +7,20 @@ const Zone = require('../../../app/models/Zone').Zone;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
-const { ArcaneBolt, DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
+const { QuickStrike, ArcaneBolt, DefensiveStance, Backstab, LifeTap, PoisonedBlade, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
     Firestorm, Cleave, ForkedLightning } = actions;
 
 const actionControllers = {
+    '-Kjpe29q_fDkJG-73AQO': QuickStrike,
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
-    defensiveStance: DefensiveStance,
-    offensiveStance: OffensiveStance,
-    balancedStance: BalancedStance,
-    intoShadow: IntoShadow,
-    whirlwind: Whirlwind,
+    '-KjpeJT7Oct3ZCtLhENO': DefensiveStance,
+    '-KkOq-y2_zgEgdhY-6_U': LifeTap,
+    '-KvOpJ2FyGodmZCanea7': PoisonedBlade,
+    '-Kxp5dhdmtUQ0aZ6YpiI': OffensiveStance,
+    '-KqtOcn7MapqMfnGIZvo': BalancedStance,
+    '-Kr3hnITyH9ZKx3VuZah': Backstab,
+    '-Kkdk_CD5vx8vRGQD268': IntoShadow,
+    '-KxkBOZgjEPwKmHOWueQ': Whirlwind,
     '-Ky3C664qBFIYS4R4ItQ': Firestorm,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning
@@ -54,6 +58,7 @@ const actionQueue = (gameObjects) =>{
             }
 
             //Declare the Class function without invoking
+            //TODO need a way to handle if ID for actionControllers is undefined
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
             validateGameObjects(gameObjects, actionObjectToMake.validations);
