@@ -54,6 +54,8 @@ class ForkedLightning extends BaseAttack {
             case (turn <= 1):
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
+                console.log('DEBUG, ForkedLightning targets: ', targets);
+
                 //Value will increase with each iteration
                 let avoidModifier = 1;
 
