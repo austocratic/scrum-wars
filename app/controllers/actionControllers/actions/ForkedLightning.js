@@ -28,7 +28,7 @@ class ForkedLightning extends BaseAttack {
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
         this.slackPayload = {
@@ -102,7 +102,7 @@ class ForkedLightning extends BaseAttack {
                     avoidModifier = avoidModifier * 2;
 
                     //Alert the channel of the action
-                    this.slackPayload.text = this.channelActionSuccessMessage;
+                    this.slackPayload.text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
                     slack.sendMessage(this.slackPayload);
                 }
                 break;
