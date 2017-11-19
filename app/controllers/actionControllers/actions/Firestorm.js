@@ -36,6 +36,7 @@ class Firestorm extends BaseAttack {
             "channel": this.slackChannel
         };
 
+        /*
         this.effectQueue = [{
             "action_id": this.actionTaken.id,
             "activation_turn": (this.actionTaken.props.delay - 1) + this.currentMatch.props.number_turns,
@@ -49,11 +50,11 @@ class Firestorm extends BaseAttack {
             "channel_id": this.currentZone.props.channel_id,
             "effect_function": "mainAction",
             "player_character_id": this.actionCharacter.id
-        }]
+        }]*/
     }
 
 
-
+    /* TO DELETE
     mainAction() {
 
         //Build a new message based on the randomTarget
@@ -106,7 +107,7 @@ class Firestorm extends BaseAttack {
                 affectedCharacters.push(randomTarget)
             }
         }
-    }
+    }*/
 
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
@@ -132,6 +133,8 @@ class Firestorm extends BaseAttack {
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
+                console.log('DEBUG Firestorm targets to process: ', targets);
+
                 const processOnSingleTarget = (singleTarget) => {
 
                     //Evasion check
@@ -153,15 +156,17 @@ class Firestorm extends BaseAttack {
 
                 };
 
-                //Iterate through targets processing, if one fails, stop
+                //Iterate through targets processing
                 for(const target of targets){
                     console.log('keep processing!');
 
+                    //let result = processOnSingleTarget(target, 1);
                     let result = processOnSingleTarget(target, 1);
 
+                    /*
                     if(result === false){
                         break
-                    }
+                    }*/
 
                     //Alert the channel of the action
                     this.slackPayload.text = this.channelActionSuccessMessage;
