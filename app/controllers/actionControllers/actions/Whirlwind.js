@@ -90,6 +90,60 @@ class Whirlwind extends BaseAttack {
             }
         }
     }
+
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
+    }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                this.slackPayload.text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn <= 1):
+                this.slackPayload.text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
+                slack.sendMessage(this.slackPayload);
+
+                let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
+
+                const processOnSingleTarget = (singleTarget) => {
+
+                    //Evasion check
+                    //Arguments: accuracyModifier, avoidModifier
+                    if (this._avoidCheck(0, 0) === false) {
+                        this.slackPayload.text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        slack.sendMessage(this.slackPayload);
+                        return;
+                    }
+
+                    //Process all the other effects of the action
+                    singleTarget.incrementProperty('health', -this.calculatedDamage);
+
+                    //Build a new message based on the randomTarget
+                    setTimeout( () => {
+                        this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        slack.sendMessage(this.slackPayload);
+                    }, 500);
+
+                };
+
+                //Iterate through targets processing
+                for(const target of targets){
+                    console.log('keep processing!');
+
+                    processOnSingleTarget(target, 1);
+                }
+
+                break;
+            case (turn >= 2):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
 }
 
 /* Structure to add additional property validations

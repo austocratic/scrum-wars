@@ -34,30 +34,32 @@ class QuickStrike extends BaseAttack {
         };
     }
 
-    initiate() {
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
+    }
 
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                if (this._avoidCheck(0, 0) === false) {
+                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.slackPayload);
+                    return;
+                }
+
+                //Process all the other effects of the action
+                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
         }
-
-        //Evasion check
-        //Arguments: accuracyModifier, avoidModifier
-        if (this._avoidCheck(0, 0) === false) {
-            this.slackPayload.text = this.channelActionAvoidedMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Process all the other effects of the action
-        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
-        
     }
 }
 

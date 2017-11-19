@@ -40,20 +40,25 @@ class OffensiveStance extends BaseModify {
     }
 
     initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
+    }
 
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                //Apply modifiers defined in constructor
+                this._applyEffect(this.actionCharacter, this.statsToModify);
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
         }
-
-        //Apply modifiers defined in constructor
-        this._applyEffect(this.actionCharacter, this.statsToModify);
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
     }
 }
 
