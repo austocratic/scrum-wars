@@ -38,7 +38,7 @@ class DefensiveStance extends BaseModify {
             strength: -this.calculatedPower
         };
     }
-
+    /*
     initiate(){
         
         //skill check
@@ -54,6 +54,28 @@ class DefensiveStance extends BaseModify {
         
         this.slackPayload.text = this.channelActionSuccessMessage;
         slack.sendMessage(this.slackPayload);
+    }*/
+
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
+    }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                //Apply modifiers defined in constructor
+                this._applyEffect(this.actionCharacter, this.statsToModify);
+
+                this.slackPayload.text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn >= 1):
+                this._deleteActionInQueue();
+                break;
+        }
     }
 }
 

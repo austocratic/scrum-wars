@@ -52,22 +52,7 @@ class Firestorm extends BaseAttack {
         }]
     }
 
-    initiate(){
-        console.log('Called Firestorm.initiate()');
 
-        this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
-
-        slack.sendMessage(this.slackPayload);
-
-        //Push the effects into the effect queue
-        this._insertEffectsInQueue()
-    }
-
-    continueCastingMessage(){
-        this.slackPayload.text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
-
-        slack.sendMessage(this.slackPayload);
-    }
 
     mainAction() {
 
@@ -122,6 +107,75 @@ class Firestorm extends BaseAttack {
             }
         }
     }
+
+    initiate(){
+        console.log(`Called ${this.actionTaken.props.name}.initiate()`);
+        return this._initiateAction();
+    }
+
+    process(turn) {
+        console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
+
+        switch (true) {
+            case (turn <= 0):
+                this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn <= 1):
+                this.slackPayload.text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+                slack.sendMessage(this.slackPayload);
+                break;
+            case (turn <= 2):
+                //Build a new message based on the randomTarget
+                this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
+                slack.sendMessage(this.slackPayload);
+
+                let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
+
+                const processOnSingleTarget = (singleTarget) => {
+
+                    //Evasion check
+                    //Arguments: accuracyModifier, avoidModifier
+                    if (this._avoidCheck(0, 0) === false) {
+                        this.slackPayload.text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        slack.sendMessage(this.slackPayload);
+                        return;
+                    }
+
+                    //Process all the other effects of the action
+                    singleTarget.incrementProperty('health', -this.calculatedDamage);
+
+                    //Build a new message based on the randomTarget
+                    setTimeout( () => {
+                        this.slackPayload.text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        slack.sendMessage(this.slackPayload);
+                    }, 500);
+
+                };
+
+                //Iterate through targets processing, if one fails, stop
+                for(const target of targets){
+                    console.log('keep processing!');
+
+                    let result = processOnSingleTarget(target, 1);
+
+                    if(result === false){
+                        break
+                    }
+
+                    //Alert the channel of the action
+                    this.slackPayload.text = this.channelActionSuccessMessage;
+                    slack.sendMessage(this.slackPayload);
+                }
+
+                break;
+            case (turn >= 3):
+                this._deleteActionInQueue();
+                break;
+        }
+    }
+
+
 }
 
 /* Structure to add additional property validations
