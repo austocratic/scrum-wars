@@ -112,18 +112,21 @@ class BaseAction {
         }
 
         for (let i = 0; i < numberOfTargets; i++) {
-            availableTargets
+            let availableTargetsNotChosen = availableTargets
                 //Filter out characters that are already found
-                .filter( eachCharacterInZone =>{
-                    let foundTarget = targets.find( eachTargetToExclude =>{
-                        return eachTargetToExclude.id === eachCharacterInZone.id;
+                .filter( eachAvailableTarget =>{
+                    let foundTarget = targets.find( eachTarget =>{
+                        return eachTarget.id === eachAvailableTarget.id;
                     });
-                    return foundTarget === undefined
-                });
-            //Return a random character object from filtered array of character objects
-            targets.push(availableTargets[this._getRandomIntInclusive(0, availableTargets.length - 1)]);
-        }
 
+                    if (!foundTarget){
+                        return eachAvailableTarget
+                    }
+                });
+
+            //Return a random character object from filtered array of character objects
+            targets.push(availableTargetsNotChosen[this._getRandomIntInclusive(0, availableTargetsNotChosen.length - 1)]);
+        }
         return targets
     }
 

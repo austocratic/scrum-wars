@@ -54,7 +54,19 @@ class ForkedLightning extends BaseAttack {
             case (turn <= 1):
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
-                console.log('DEBUG, ForkedLightning targets: ', targets);
+                console.log('DEBUG, ForkedLightning targets before filter: ', targets);
+
+                //Filter out the originally targeted character (it will be added again as first element)
+                targets = targets.filter( eachTarget =>{
+                    return eachTarget.id !== this.targetCharacter.id
+                });
+
+                console.log('DEBUG, ForkedLightning targets after filter: ', targets);
+
+                //Push the original target into the targets array (must be first position!)
+                targets.unshift(this.targetCharacter);
+
+                console.log('DEBUG, ForkedLightning targets after adding target back: ', targets);
 
                 //Value will increase with each iteration
                 let avoidModifier = 1;

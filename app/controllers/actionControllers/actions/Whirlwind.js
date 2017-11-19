@@ -37,6 +37,7 @@ class Whirlwind extends BaseAttack {
         };
     }
 
+    /* TO DELETE
     initiate() {
 
         //Build a new message based on the randomTarget
@@ -89,7 +90,7 @@ class Whirlwind extends BaseAttack {
                 affectedCharacters.push(randomTarget)
             }
         }
-    }
+    }*/
 
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
