@@ -27,11 +27,12 @@ class ArcaneBolt extends BaseAttack {
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
         //Base Slack template
+        /*
         this.slackPayload = {
             "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": this.slackChannel
-        };
+        };*/
     }
 
     initiate(){

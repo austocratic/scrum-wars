@@ -15,10 +15,20 @@ class BaseAction {
         this.actionTaken = gameObjects.actionTaken;
         this.targetCharacter = gameObjects.targetCharacter;
 
-        this.slackIcon = gameObjects.game.baseURL + "assets/thumb/" + this.actionTaken.id + ".jpg";
+        //this.slackIcon = gameObjects.game.baseURL + "assets/thumb/" + this.actionTaken.id + ".jpg";
         //this.slackIcon = "https://scrum-wars.herokuapp.com/assets/thumb/" + this.actionTaken.id + ".jpg";
-        this.slackUserName = "A mysterious voice";
-        this.slackChannel = ("#" + this.currentZone.props.channel);
+        //this.slackUserName = "A mysterious voice";
+        //this.slackChannel = ("#" + this.currentZone.props.channel);
+
+        //Base Slack template
+        this.slackPayload = {
+            "username": this.actionCharacter.props.name,
+            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            "channel": ("#" + this.currentZone.props.channel),
+            "attachments": [{
+                "thumb_url": this.game.baseURL + this.game.skillImagePath + this.actionTaken.props.image_id + '.png'
+            }]
+        };
     }
 
     //TODO this should probably be moved to the helpers file
