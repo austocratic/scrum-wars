@@ -179,7 +179,23 @@ class BaseAction {
         return totalDamage;
     }
 
-    //TODO working on 11/13/17
+    _processDamage(){
+        //Decrease target's health
+        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+        //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
+
+        //Check for interrupting target's actions in the queue
+        if (this.currentMatch.props.actionQueue){
+            //Filter the actionQueue to see if this action's target has any pending actions
+            //let targetCharacterActionQueue = this.currentMatch.props.actionQueue
+            this.currentMatch.props.actionQueue = this.currentMatch.props.actionQueue
+                .filter( eachActionQueue =>{
+                    return eachActionQueue.player_character_id !== this.targetCharacter.id
+                });
+        }
+    }
+
     _applyDamage(){
         let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
@@ -201,15 +217,6 @@ class BaseAction {
     _changeProperty(characterToModify, modifiers){
         characterToModify.props = _.merge(characterToModify.props, modifiers);
     }
-
-    //modifiers should be an object of stat/modifier key/value pairs
-    //Take the properties passed in add them to existing properties
-    /*
-    _incrementProperties(characterToModify, modifiers){
-        characterToModify.props = _.mergeWith(characterToModify.props, modifiers, (objValue, srcValue) =>{
-            return objValue + srcValue
-        });
-    }*/
 
     _avoidCheck(accuracyModifier, avoidModifier){
 

@@ -105,7 +105,7 @@ describe("Testing BaseAction class", function() {
             describe("with argument 1", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(1);
 
-                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 1);
@@ -114,7 +114,7 @@ describe("Testing BaseAction class", function() {
             describe("with argument 2", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(2);
 
-                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 2);
@@ -123,13 +123,56 @@ describe("Testing BaseAction class", function() {
             describe("with argument 3", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(3);
 
-                console.log('DEBUG BaseAction test targetArray: ', targetArray);
+                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 2);
                 });
             });
 
+        });
+
+        describe("testing BaseAction method _processDamage", function () {
+
+            //Set up an action Queue
+            game.state.match['testingMatch'].actionQueue = [
+                {
+                    "action_id": testBaseAction.actionTaken.id,
+                    "turn_initiated": testBaseAction.currentMatch.props.number_turns,
+                    "channel_id": testBaseAction.currentZone.props.channel_id,
+                    "player_character_id": testBaseAction.targetCharacter.id,
+                    "target_character_id": testBaseAction.actionCharacter.id,
+                    "last_turn_processed": testBaseAction.currentMatch.props.number_turns
+                },
+                {
+                    "action_id": testBaseAction.actionTaken.id,
+                    "turn_initiated": testBaseAction.currentMatch.props.number_turns,
+                    "channel_id": testBaseAction.currentZone.props.channel_id,
+                    "player_character_id": testBaseAction.targetCharacter.id,
+                    "target_character_id": testBaseAction.actionCharacter.id,
+                    "last_turn_processed": testBaseAction.currentMatch.props.number_turns
+                },
+                {
+                    "action_id": testBaseAction.actionTaken.id,
+                    "turn_initiated": testBaseAction.currentMatch.props.number_turns,
+                    "channel_id": testBaseAction.currentZone.props.channel_id,
+                    "player_character_id": testBaseAction.actionCharacter.id,
+                    "target_character_id": testBaseAction.targetCharacter.id,
+                    "last_turn_processed": testBaseAction.currentMatch.props.number_turns
+                }
+            ];
+
+            console.log('DEBUG actionQueue BEFORE: ', game.state.match['testingMatch'].actionQueue.length);
+
+            testBaseAction._processDamage();
+
+            console.log('DEBUG actionQueue AFTER: ', game.state.match['testingMatch'].actionQueue.length);
+
+            //console.log('DEBUG BaseAction test targetArray: ', targetArray);
+
+            //it("should return an array of length", function (){
+            //    assert.equal(targetArray.length, 1);
+            //});
         });
 
         /* Depricating the _incrementProperties method in BaseAction, property increment will be done by models (function in the base model)

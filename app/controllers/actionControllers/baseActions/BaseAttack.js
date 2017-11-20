@@ -9,19 +9,6 @@ class BaseAttack extends BaseAction{
     }
 
 
-
-    _calculateDamage2(){
-
-        let calculatedDamage = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-
-        //Determine if target has an effect that prevents damage
-
-        //
-
-
-    }
-
-
 }
 
 BaseAttack.validations = [
