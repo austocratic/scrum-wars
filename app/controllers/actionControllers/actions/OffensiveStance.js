@@ -25,13 +25,6 @@ class OffensiveStance extends BaseModify {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts an offensive stance, but stumbles!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a berserker's frenzy, increasing strength by ${this.calculatedPower} while lowering dexterity by ${this.calculatedPower}!`;
 
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
-
         //Modifiers to apply on action success
         this.statsToModify = {
             dexterity: -this.calculatedPower,
@@ -52,7 +45,7 @@ class OffensiveStance extends BaseModify {
                 //Apply modifiers defined in constructor
                 this._applyEffect(this.actionCharacter, this.statsToModify);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):

@@ -26,88 +26,8 @@ class Firestorm extends BaseAttack {
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure a *fiery storm*, but it fizzles away!`;
-        //this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${this.targetCharacter.props.name} evades the the fiery downpour!`;
-        //this.channelActionSuccessMessage = `${this.actionCharacter.props.name} unleashes a tempest of fire scorching ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
-
-        /*
-        this.effectQueue = [{
-            "action_id": this.actionTaken.id,
-            "activation_turn": (this.actionTaken.props.delay - 1) + this.currentMatch.props.number_turns,
-            "channel_id": this.currentZone.props.channel_id,
-            "effect_function": "continueCastingMessage",
-            "player_character_id": this.actionCharacter.id
-        },
-        {
-            "action_id": this.actionTaken.id,
-            "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
-            "channel_id": this.currentZone.props.channel_id,
-            "effect_function": "mainAction",
-            "player_character_id": this.actionCharacter.id
-        }]*/
     }
-
-
-    /* TO DELETE
-    mainAction() {
-
-        //Build a new message based on the randomTarget
-        this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
-        slack.sendMessage(this.slackPayload);
-
-        this.processOnSingleTarget = (singleTarget, avoidModifier) => {
-            //skill check
-            //If failure, return a failure message and end
-            if (this._successCheck(0) === false) {
-                this.slackPayload.text = this.channelActionFailMessage;
-                slack.sendMessage(this.slackPayload);
-                return;
-            }
-
-            //Evasion check
-            //Arguments: accuracyModifier, avoidModifier
-            if (this._avoidCheck(0, 0) === false) {
-                this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire but ${singleTarget.props.name} evades the the fiery downpour!`;
-                slack.sendMessage(this.slackPayload);
-                return;
-            }
-
-            //Process all the other effects of the action
-            singleTarget.incrementProperty('health', -this.calculatedDamage);
-
-            //Build a new message based on the randomTarget
-            setTimeout( () => {
-                this.slackPayload.text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
-                slack.sendMessage(this.slackPayload);
-            }, 500);
-
-        };
-
-        //Array to hold targets who have already been damaged.  Should not affect a character more than once
-        let affectedCharacters = [];
-
-        //Invoke process on target code each target
-        for (let i = 0; i < this.maxTargetsAffected; i++){
-
-            //Exclude any character already affected by passing in array
-            let randomTarget = this._getRandomTarget(affectedCharacters);
-
-            //As long as _getRandomTarget returns a character, continue
-            if (randomTarget){
-
-                this.processOnSingleTarget(randomTarget, 0);
-
-                //Push character affected into array of characters affected (to be skipped by _getRandomTarget function)
-                affectedCharacters.push(randomTarget)
-            }
-        }
-    }*/
 
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
@@ -119,16 +39,16 @@ class Firestorm extends BaseAttack {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
-                this.slackPayload.text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+                this.slackPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 2):
                 //Build a new message based on the randomTarget
-                this.slackPayload.text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
+                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
                 slack.sendMessage(this.slackPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
@@ -169,7 +89,7 @@ class Firestorm extends BaseAttack {
                     }*/
 
                     //Alert the channel of the action
-                    this.slackPayload.text = this.channelActionSuccessMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                     slack.sendMessage(this.slackPayload);
                 }
 

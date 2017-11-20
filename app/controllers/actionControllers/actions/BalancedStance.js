@@ -22,31 +22,8 @@ class BalancedStance extends BaseModify {
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a balanced stance, but stumbles!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a balanced combat stance!`;
-
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
     }
 
-    /*
-    initiate(){
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Reverse any effects of this type
-        this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
-    }*/
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
         return this._initiateAction();
@@ -58,7 +35,7 @@ class BalancedStance extends BaseModify {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.slackPayload);
                     return;
                 }
@@ -66,7 +43,7 @@ class BalancedStance extends BaseModify {
                 //Reverse any effects of this type
                 this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):

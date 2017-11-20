@@ -20,13 +20,6 @@ class IntoShadow extends BaseModify {
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to fade into the shadows but is noticed, action failed!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} fades into the shadows!`;
-
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
     }
 
     initiate(){
@@ -47,7 +40,7 @@ class IntoShadow extends BaseModify {
                 //Mark the player's character as hidden
                 this._applyEffect(this.actionCharacter, statsToModify);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):

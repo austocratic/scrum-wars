@@ -28,13 +28,6 @@ class PoisonedBlade extends BaseAttack {
         `${this.actionCharacter.props.name} slices ${this.targetCharacter.props.name} for ${this.calculatedDamage} damage!
         ${this.actionCharacter.props.name}'s blade releases a noxious poison!`;
 
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
-
         //Modifiers to apply on action success - empty because we apply an effect, but this effect has no modifiers
         this.statsToModify = {
         };
@@ -51,7 +44,7 @@ class PoisonedBlade extends BaseAttack {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.slackPayload);
                     return;
                 }
@@ -62,7 +55,7 @@ class PoisonedBlade extends BaseAttack {
                 //Apply the effect
                 this._applyEffect(this.targetCharacter, this.statsToModify);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):

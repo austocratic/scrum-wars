@@ -28,69 +28,7 @@ class Whirlwind extends BaseAttack {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a powerful strike and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
-
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
     }
-
-    /* TO DELETE
-    initiate() {
-
-        //Build a new message based on the randomTarget
-        this.slackPayload.text = `${this.actionCharacter.props.name} becomes a whirlwind of blades, striking our wildly!`;
-        slack.sendMessage(this.slackPayload);
-
-        this.processOnSingleTarget = (singleTarget, avoidModifier) => {
-            //skill check
-            //If failure, return a failure message and end
-            if (this._successCheck(0) === false) {
-                this.slackPayload.text = this.channelActionFailMessage;
-                slack.sendMessage(this.slackPayload);
-                return;
-            }
-
-            //Evasion check
-            //Arguments: accuracyModifier, avoidModifier
-            if (this._avoidCheck(0, 0) === false) {
-                this.slackPayload.text = this.channelActionAvoidedMessage;
-                slack.sendMessage(this.slackPayload);
-                return;
-            }
-
-            //Process all the other effects of the action
-            singleTarget.incrementProperty('health', -this.calculatedDamage);
-
-            //Build a new message based on the randomTarget
-            setTimeout( () => {
-                this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
-                slack.sendMessage(this.slackPayload);
-            }, 500);
-
-        };
-
-        //Array to hold targets who have already been damaged.  ForkedLightning should not affect a character more than once
-        let affectedCharacters = [];
-
-        //Invoke process on target code each target
-        for (let i = 0; i < this.maxTargetsAffected; i++){
-
-            //Exclude any character already affected by passing in array
-            let randomTarget = this._getRandomTarget(affectedCharacters);
-
-            //As long as _getRandomTarget returns a character, continue
-            if (randomTarget){
-
-                this.processOnSingleTarget(randomTarget, 0);
-
-                //Push character affected into array of characters affected (to be skipped by _getRandomTarget function)
-                affectedCharacters.push(randomTarget)
-            }
-        }
-    }*/
 
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
@@ -102,11 +40,11 @@ class Whirlwind extends BaseAttack {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
+                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
-                this.slackPayload.text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
+                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
                 slack.sendMessage(this.slackPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
@@ -116,7 +54,7 @@ class Whirlwind extends BaseAttack {
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, 0) === false) {
-                        this.slackPayload.text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
                         slack.sendMessage(this.slackPayload);
                         return;
                     }
@@ -126,7 +64,7 @@ class Whirlwind extends BaseAttack {
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
                         slack.sendMessage(this.slackPayload);
                     }, 500);
 

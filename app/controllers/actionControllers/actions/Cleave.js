@@ -26,13 +26,6 @@ class Cleave extends BaseAttack {
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} attempts a massive cleaving attack but ${this.targetCharacter.props.name} evades the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name}'s blade comes *cleaving* down delivering a massive blow to ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
 
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
-
         this.effectQueue = [{
             "action_id": this.actionTaken.id,
             "activation_turn": this.actionTaken.props.delay + this.currentMatch.props.number_turns,
@@ -43,42 +36,6 @@ class Cleave extends BaseAttack {
         }]
     }
 
-    /*
-    initiate(){
-        console.log('Called Cleave.initiate()');
-
-        this.slackPayload.text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
-
-        slack.sendMessage(this.slackPayload);
-
-        //Push the effects into the effect queue
-        this._insertEffectsInQueue()
-    }
-
-    mainAction() {
-
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Evasion check
-        //Arguments: accuracyModifier, avoidModifier
-        if (this._avoidCheck(0, 0) === false) {
-            this.slackPayload.text = this.channelActionAvoidedMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Process all the other effects of the action
-        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
-    }*/
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
         return this._initiateAction();
@@ -89,21 +46,23 @@ class Cleave extends BaseAttack {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
+                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
-
                 //Evasion check
                 //Arguments: accuracyModifier, avoidModifier
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.slackPayload);
                     return;
                 }
 
                 //Process all the other effects of the action
                 this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
 
                 break;
             case (turn >= 2):

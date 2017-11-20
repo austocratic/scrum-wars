@@ -25,36 +25,12 @@ class DefensiveStance extends BaseModify {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a defensive stance, but stumbles!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing toughness by ${this.calculatedPower} while lowering strength by ${this.calculatedPower}!`;
 
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
-
         //Modifiers to apply on action success
         this.statsToModify = {
             toughness: this.calculatedPower,
             strength: -this.calculatedPower
         };
     }
-    /*
-    initiate(){
-        
-        //skill check
-        //If failure, return a failure message and end
-        if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
-            return;
-        }
-
-        //Apply modifiers defined in constructor
-        this._applyEffect(this.actionCharacter, this.statsToModify);
-        
-        this.slackPayload.text = this.channelActionSuccessMessage;
-        slack.sendMessage(this.slackPayload);
-    }*/
 
     initiate(){
         console.log(`Called ${this.actionTaken.props.name}.initiate()`);
@@ -69,7 +45,7 @@ class DefensiveStance extends BaseModify {
                 //Apply modifiers defined in constructor
                 this._applyEffect(this.actionCharacter, this.statsToModify);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):

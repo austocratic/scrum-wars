@@ -38,7 +38,7 @@ class BaseAction {
 
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            this.slackPayload.text = this.channelActionFailMessage;
+            this.slackPayload.attachments[0].text = this.channelActionFailMessage;
             slack.sendMessage(this.slackPayload);
             return false;
         }

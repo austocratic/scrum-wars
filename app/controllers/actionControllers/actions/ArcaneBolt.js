@@ -25,14 +25,6 @@ class ArcaneBolt extends BaseAttack {
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
-
-        //Base Slack template
-        /*
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };*/
     }
 
     initiate(){
@@ -46,7 +38,7 @@ class ArcaneBolt extends BaseAttack {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.slackPayload);
                     return;
                 }

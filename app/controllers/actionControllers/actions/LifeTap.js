@@ -25,13 +25,6 @@ class LifeTap extends BaseAttack {
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to cast Life Tap, but the spell fizzles away!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} conjures a life tapping effect but ${this.targetCharacter.props.name} resists the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} conjures a life tapping effect and drains ${this.targetCharacter.props.name} for ${this.calculatedDamage} health!`;
-
-        //Base Slack template
-        this.slackPayload = {
-            "username": this.actionCharacter.props.name,
-            "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": this.slackChannel
-        };
     }
 
     initiate(){
@@ -45,16 +38,15 @@ class LifeTap extends BaseAttack {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.slackPayload);
                     return;
                 }
 
                 this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-                //this._changeProperty(this.actionCharacter, {hit_points: -this.calculatedDamage});
                 this.actionCharacter.incrementProperty('health', this.calculatedDamage);
 
-                this.slackPayload.text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):
