@@ -26,7 +26,7 @@ class BaseAction {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": ("#" + this.currentZone.props.channel),
             "attachments": [{
-                "thumb_url": this.game.baseURL + this.game.skillImagePath + this.actionTaken.props.image_id + '.png'
+                "image_url": this.game.baseURL + this.game.skillImagePath + this.actionTaken.props.image_id + '.png'
             }]
         };
     }
