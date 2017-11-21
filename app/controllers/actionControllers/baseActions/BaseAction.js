@@ -188,17 +188,28 @@ class BaseAction {
 
         console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
 
-
         //Check for interrupting target's actions in the queue
         if (this.currentMatch.props.action_queue){
-            //Filter the actionQueue to see if this action's target has any pending actions
+
+            let interruptedActions = this.currentMatch.props.action_queue
+                .filter( eachActionQueue =>{
+                    return eachActionQueue.player_character_id === this.targetCharacter.id;
+                })
+                .forEach( eachInterruptedAction =>{
+
+                    let interruptedAction = new Action(this.game.state, eachInterruptedAction.action_id);
+
+                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
+
+                    console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
+
+                    slack.sendMessage(this.slackPayload);
+                });
+
+            //Filter the actionQueue to only contain actions that were NOT interrupted
             this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
                 .filter( eachActionQueue =>{
-
-                    console.log('DEBUG eachActionQueue.player_character_id: ', eachActionQueue.player_character_id);
-                    console.log('DEBUG this.targetCharacter.id: ', this.targetCharacter.id);
-
-                    return eachActionQueue.player_character_id !== this.targetCharacter.id
+                    return eachActionQueue.player_character_id !== this.targetCharacter.id;
                 });
         }
 
