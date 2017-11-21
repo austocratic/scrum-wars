@@ -4,6 +4,7 @@ const slack = require('../../../libraries/slack');
 const _ = require('lodash');
 
 const Character = require('../../../models/Character').Character;
+const Action = require('../../../models/Action').Action;
 
 class BaseAction {
     constructor(gameObjects){
