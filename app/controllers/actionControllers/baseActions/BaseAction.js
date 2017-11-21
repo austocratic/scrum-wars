@@ -180,20 +180,29 @@ class BaseAction {
     }
 
     _processDamage(){
+        console.log('called _processDamage()')
         //Decrease target's health
         this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
 
         //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
 
+        console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.actionQueue);
+
+
         //Check for interrupting target's actions in the queue
         if (this.currentMatch.props.actionQueue){
             //Filter the actionQueue to see if this action's target has any pending actions
-            //let targetCharacterActionQueue = this.currentMatch.props.actionQueue
             this.currentMatch.props.actionQueue = this.currentMatch.props.actionQueue
                 .filter( eachActionQueue =>{
+
+                    console.log('DEBUG eachActionQueue.player_character_id: ', eachActionQueue.player_character_id);
+                    console.log('DEBUG this.targetCharacter.id: ', this.targetCharacter.id);
+
                     return eachActionQueue.player_character_id !== this.targetCharacter.id
                 });
         }
+
+        console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.actionQueue);
     }
 
     _applyDamage(){
