@@ -186,13 +186,13 @@ class BaseAction {
 
         //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
 
-        console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.actionQueue);
+        console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
 
 
         //Check for interrupting target's actions in the queue
-        if (this.currentMatch.props.actionQueue){
+        if (this.currentMatch.props.action_queue){
             //Filter the actionQueue to see if this action's target has any pending actions
-            this.currentMatch.props.actionQueue = this.currentMatch.props.actionQueue
+            this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
                 .filter( eachActionQueue =>{
 
                     console.log('DEBUG eachActionQueue.player_character_id: ', eachActionQueue.player_character_id);
@@ -202,7 +202,7 @@ class BaseAction {
                 });
         }
 
-        console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.actionQueue);
+        console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.action_queue);
     }
 
     _applyDamage(){
