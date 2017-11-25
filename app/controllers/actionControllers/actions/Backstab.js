@@ -42,8 +42,11 @@ class Backstab extends BaseAttack {
                     return;
                 }
 
-                //Process all the other effects of the action
-                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+
+                //Process damage & Interrupts
+                this._processDamage();
 
                 //Find all currently applied effects that change the targets is_hidden property
                 if (this.actionCharacter.props.effects) {
@@ -55,13 +58,6 @@ class Backstab extends BaseAttack {
                             this._reverseEffect(this.actionCharacter, eachEffect.action_id);
                         });
                 }
-
-                //if (this.actionCharacter.props.is_hidden === 1){
-                //    this._changeProperty(this.actionCharacter, {is_hidden: -1});
-                //}
-
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

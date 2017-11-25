@@ -75,8 +75,8 @@ class ForkedLightning extends BaseAttack {
                         return false;
                     }
 
-                    //Process all the other effects of the action
-                    singleTarget.incrementProperty('health', -this.calculatedDamage);
+                    //Process damage & Interrupts
+                    this._processDamage();
 
                     return true;
                 };

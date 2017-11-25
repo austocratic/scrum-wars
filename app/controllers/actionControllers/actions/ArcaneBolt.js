@@ -43,13 +43,12 @@ class ArcaneBolt extends BaseAttack {
                     return;
                 }
 
-                //Process all the other effects of the action
-                //TODO moving this into _processDamage
-                //this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-                this._processDamage();
-
                 this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
+
+                //Process damage & Interrupts
+                this._processDamage();
+
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

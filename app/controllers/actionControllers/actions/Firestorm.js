@@ -53,7 +53,7 @@ class Firestorm extends BaseAttack {
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
-                console.log('DEBUG Firestorm targets to process: ', targets);
+                //console.log('DEBUG Firestorm targets to process: ', targets);
 
                 const processOnSingleTarget = (singleTarget) => {
 
@@ -65,8 +65,8 @@ class Firestorm extends BaseAttack {
                         return;
                     }
 
-                    //Process all the other effects of the action
-                    singleTarget.incrementProperty('health', -this.calculatedDamage);
+                    //Process damage & Interrupts
+                    this._processDamage();
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {

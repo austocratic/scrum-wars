@@ -49,14 +49,15 @@ class PoisonedBlade extends BaseAttack {
                     return;
                 }
 
-                //Process all the other effects of the action
-                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.slackPayload);
+
+                //Process damage & Interrupts
+                this._processDamage();
 
                 //Apply the effect
                 this._applyEffect(this.targetCharacter, this.statsToModify);
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

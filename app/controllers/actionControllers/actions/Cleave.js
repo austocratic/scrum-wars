@@ -58,11 +58,11 @@ class Cleave extends BaseAttack {
                     return;
                 }
 
-                //Process all the other effects of the action
-                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-
                 this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
+
+                //Process damage & Interrupts
+                this._processDamage();
 
                 break;
             case (turn >= 2):

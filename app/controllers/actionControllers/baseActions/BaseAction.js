@@ -202,7 +202,7 @@ class BaseAction {
 
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
 
-                    console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
+                    //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
 
                     slack.sendMessage(this.slackPayload);
                 });

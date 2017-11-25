@@ -43,11 +43,13 @@ class LifeTap extends BaseAttack {
                     return;
                 }
 
-                this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
-                this.actionCharacter.incrementProperty('health', this.calculatedDamage);
-
                 this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.slackPayload);
+
+                //Process damage & Interrupts
+                this._processDamage();
+                this.actionCharacter.incrementProperty('health', this.calculatedDamage);
+
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

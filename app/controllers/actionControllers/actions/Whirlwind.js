@@ -59,8 +59,8 @@ class Whirlwind extends BaseAttack {
                         return;
                     }
 
-                    //Process all the other effects of the action
-                    singleTarget.incrementProperty('health', -this.calculatedDamage);
+                    //Process damage & Interrupts
+                    this._processDamage();
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
