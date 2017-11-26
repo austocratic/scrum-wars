@@ -148,7 +148,10 @@ const processSlashCommand = async (req) => {
             "text": "Sorry traveler, but I fear you can't take actions in this land"
         },
         //User is able to call slash commands
-        1: "choice 1"//getSlashCommandResponse(payload, game)
+        //1: "choice 1"//getSlashCommandResponse(payload, game)
+        1: (()=>{
+            getSlashCommandResponse(payload, game)
+        })()
     };
 
     let slackResponseTemplateReturned = userPermissions[user.props.permission_id] || {
