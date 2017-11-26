@@ -116,9 +116,7 @@ router.post('/api/commands',
 
         let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req);
 
-        //TODO I should add a function call to my slack validation test function and log if it fails
-        //console.log('DEBUG: router slackResponseTemplateReturned: ', slackResponseTemplateReturned);
-
+        console.log('/api/commands router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
 
     });
@@ -131,8 +129,7 @@ router.post('/api/interactive-messages',
 
         let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
 
-        console.log('DEBUG: router interactive slackResponseTemplateReturned: ', slackResponseTemplateReturned);
-
+        console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
 });
 
