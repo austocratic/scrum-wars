@@ -3,8 +3,6 @@
 const baseURL = 'https://scrum-wars.herokuapp.com/';
 
 
-
-//TODO get Dannys advice
 const validateSlackResponseFormat = slackResponse => {
 
     if (!slackResponse) {
@@ -12,10 +10,9 @@ const validateSlackResponseFormat = slackResponse => {
     }
     
     return slackResponse
-
 };
 
-//Validate expected gameObjects
+//Validate expected gameObjects.  For internal use, throws errors if invalid
 const validateGameObjects = (gameObjectsToValidate, expectedGameObjects) => {
     if (!Array.isArray(expectedGameObjects)){
         throw new Error('validateGameObjects invoked with argument expectedGameObjects that is not an array');

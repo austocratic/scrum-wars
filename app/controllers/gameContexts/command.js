@@ -10,6 +10,18 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const action = gameObjects => {
     console.log('called function command/action');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'user',
+        'slackResponseTemplate',
+        'playerCharacter',
+        'userSelection',
+        'slackCallback',
+        'requestZone',
+        'currentMatch',
+        'characterClass'
+    ]);
+
     //Test if the player's character is not in the zone where the player initiated the action command
     if (gameObjects.playerCharacter.props.zone_id !== gameObjects.requestZone.id) {
         
@@ -42,9 +54,6 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
-    //console.log('DEBUG game turns: ', gameObjects.currentMatch.props.number_turns);
-
-    //console.log('DEBUG actions used:', gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length);
 
     if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
         //An action was used this turn, return a message
@@ -122,7 +131,11 @@ const action = gameObjects => {
 const generate = gameObjects => {
     console.log('slackRequest called function command/generate');
 
-    //Determine if the user
+    validateGameObjects(gameObjects, [
+        'game',
+        'user',
+        'slackResponseTemplate'
+    ]);
 
     gameObjects.slackResponseTemplate.attachments =
         [{
@@ -159,6 +172,13 @@ const generate = gameObjects => {
 
 const profile = gameObjects => {
     console.log('slackRequest called function command/profile');
+
+    if(!gameObjects.user.getCharacterID()){
+        return {
+            "text": "You have not yet created a character"
+        }
+
+    }
 
     validateGameObjects(gameObjects, [
         'game',
@@ -261,6 +281,13 @@ const profile = gameObjects => {
 const travel = gameObjects => {
     console.log('slackRequest called function command/travel');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'characterClass',
+        'playerCharacter',
+        'slackResponseTemplate'
+    ]);
+
     //Update the zone_id property locally
     gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
 
@@ -290,7 +317,7 @@ const name = gameObjects => {
 
     validateGameObjects(gameObjects, [
         'game',
-        'slackRequestText',
+        'characterClass',
         'playerCharacter',
         'slackResponseTemplate'
     ]);
