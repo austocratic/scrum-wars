@@ -28,8 +28,13 @@ class Item extends BaseModel {
                 {
                     "color": "#000000",
                     "fallback": "You can't select this item",
-                    "title": "Item stats",
+                    "title": "Stats",
                     "fields": [
+                        {
+                            "title": "Name",
+                            "value": this.props.name,
+                            "short": false
+                        },
                         {
                             "title": "Value",
                             "value": this.props.cost,
@@ -40,7 +45,7 @@ class Item extends BaseModel {
                 {
                     "color": "#000000",
                     "fallback": "You can't select this item",
-                    "title": "Item modifiers",
+                    "title": "Modifiers",
                     "fields": []
                 }
 

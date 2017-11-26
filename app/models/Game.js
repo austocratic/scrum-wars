@@ -47,6 +47,7 @@ class Game {
         
         this.avatarPath = 'public/images/fullSize/character_avatar/';
         this.skillImagePath = 'public/images/thumb/';
+        this.imagePath = 'public/images/';
         
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');

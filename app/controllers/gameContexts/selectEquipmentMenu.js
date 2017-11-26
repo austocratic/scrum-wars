@@ -12,9 +12,6 @@ const equipmentSelection = gameObjects => {
     //Create an item detail view template
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
 
-    //Add purchase button to the last attachment
-    //gameObjects.slackResponseTemplate.attachments[gameObjects.slackResponseTemplate.attachments.length - 1].actions = [];
-
     gameObjects.slackResponseTemplate.attachments.push({
         "fallback": "unable to go back",
         "actions": [{
