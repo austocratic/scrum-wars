@@ -12,7 +12,7 @@ const action = gameObjects => {
 
     if(!gameObjects.user.getCharacterID()){
         return {
-            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to begin your journey"
         }
     }
 
@@ -181,7 +181,7 @@ const profile = gameObjects => {
 
     if(!gameObjects.user.getCharacterID()){
         return {
-            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to begin your journey"
         }
     }
 
@@ -288,7 +288,7 @@ const travel = gameObjects => {
 
     if(!gameObjects.user.getCharacterID()){
         return {
-            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to begin your journey"
         }
     }
 
@@ -328,7 +328,7 @@ const name = gameObjects => {
 
     if(!gameObjects.user.getCharacterID()){
         return {
-            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to begin your journey"
         }
     }
 

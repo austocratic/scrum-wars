@@ -202,12 +202,6 @@ const getSlashCommandResponse = (payload, game) => {
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
 
-    //In a few situations, the user does not have playerCharacter set up yet
-    //TODO I may want to move the character instantiation into the commands themselves
-    //let playerCharacter = {
-    //    props: {}
-    //};
-
     let playerCharacter, characterClass;
 
     //Only instantiate playerCharacter if there is a character ID available to use
@@ -268,16 +262,20 @@ const getInteractiveMessageResponse = (payload, game) => {
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
     let user = new User(game.state, slackRequestUserID);
-    let playerCharacter = new Character(game.state, user.props.character_id);
 
     let requestZone = new Zone(game.state, slackRequestChannelID);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
 
-    //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
-    let characterClass = undefined;
+    let playerCharacter, characterClass;
 
-    if (playerCharacter.props.class_id){
-        characterClass = new Class(game.state, playerCharacter.props.class_id);
+    //Only instantiate playerCharacter if there is a character ID available to use
+    if (user.props.character_id){
+        playerCharacter = new Character(game.state, user.props.character_id);
+
+        //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+        if (playerCharacter.props.class_id){
+            characterClass = new Class(game.state, playerCharacter.props.class_id);
+        }
     }
 
     let userActionValueSelection = getActionValue();
