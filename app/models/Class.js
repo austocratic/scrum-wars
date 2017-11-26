@@ -1,5 +1,5 @@
-var BaseModel = require('./BaseModel').BaseModel;
-var slackTemplates = require('../slackTemplates');
+const BaseModel = require('./BaseModel').BaseModel;
+const Action = require('./Action').Action;
 
 
 class Class extends BaseModel{
@@ -12,6 +12,40 @@ class Class extends BaseModel{
         this.props = classes[classID];
         this.id = classID
     }
+
+    getDetailView(){
+
+        //TODO not good to hardcode the url path here.  Elsewhere I use the game.baseURL property, but Item does not have access to game (ony game.state)
+        let template = {
+            "attachments": [
+                {
+                    //"image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+                    "title": "Starting stats",
+                    "fallback": "",
+                    "fields": [
+                        {
+                            "title": this.props.name,
+                            "short": false
+                        }
+                    ]
+                }
+            ]
+        };
+
+        //Iterate through the object adding properties to the template
+        for (let starting_attributes in this.props.starting_attributes) {
+
+            template.attachments[0].fields.push({
+                "title": starting_attributes,
+                "value": `${this.props.starting_attributes[starting_attributes]}`,
+                "short": true
+            });
+        }
+
+
+
+        return template;
+    };
 }
 
 

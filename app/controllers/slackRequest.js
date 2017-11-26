@@ -59,7 +59,13 @@ const contextsAndActions = {
         no: require('./gameContexts/generateCharacterConfirmation').no
     },
     selectCharacterClassMenu: {
-        classSelection: require('./gameContexts/selectCharacterClassMenu').classSelection
+        classSelection: require('./gameContexts/selectCharacterClassMenu').classSelection,
+        classDetail: require('./gameContexts/selectCharacterClassMenu').classDetail
+    },
+    classDetailMenu: {
+        //yes: require('./gameContexts/itemDetailMenu').yes,
+        //equip: require('./gameContexts/itemDetailMenu').equip,
+        //unequip: require('./gameContexts/itemDetailMenu').unequip
     },
     selectGenderMenu: {
         genderSelection: require('./gameContexts/selectGenderMenu').genderSelection

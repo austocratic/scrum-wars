@@ -90,9 +90,53 @@ const classSelection = gameObjects => {
     return gameObjects.slackResponseTemplate;
 };
 
+const classDetailMenu = gameObjects => {
+    console.log('called function selectCharacterClassMenu/classDetail');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'userActionValueSelection',
+        'playerCharacter',
+        'slackResponseTemplate',
+        'slackCallback'
+    ]);
+
+    gameObjects.characterClass = new Class(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    //Validate that required gameObjects are passed in before attempting to reference
+    validateGameObjects(gameObjects, [
+        'characterClass'
+    ]);
+
+    //Create an item detail view template
+    gameObjects.slackResponseTemplate = gameObjects.characterClass.getDetailView();
+
+    //Add a back button
+    gameObjects.slackResponseTemplate.attachments.push({
+        "fallback": "unable to go back",
+        "actions": [{
+            "name": "back",
+            "text": "Back",
+            "fallback": "unable to go back",
+            "type": "button",
+            "value": "no"
+        }]
+    });
+
+
+    // *****************Return the gender selection menu*******************
+
+    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/classDetailMenu';
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    return gameObjects.slackResponseTemplate;
+};
+
 
 
 
 module.exports = {
-    classSelection
+    classSelection,
+    classDetailMenu
 };

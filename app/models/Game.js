@@ -557,7 +557,7 @@ class Game {
                     "title": eachActiveClassObject.props.name,
                     "fallback": "You are unable to choose an action",
                     "callback_id": "",
-                    "color": "#3AA3E3",
+                    "color": "#000000",
                     "attachment_type": "default",
                     "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachActiveClassObject.id + ".jpg",
                     "fields": [{
@@ -573,7 +573,7 @@ class Game {
                         "value": eachActiveClassObject.id
                     },
                     {
-                        "name": 'moreClassInformation',
+                        "name": 'classDetailMenu',
                         "text": 'More information',
                         "style": "default",
                         "type": "button",
