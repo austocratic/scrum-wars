@@ -1,16 +1,9 @@
 'use strict';
 
-//var Firebase = require('../libraries/firebase').Firebase;
-//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
-//var Slack = require('../libraries/slack').Alert;
-//var Item = require('./Item').Item;
-//var firebase = new Firebase();
-
 const BaseModel = require('./BaseModel').BaseModel;
 const slackTemplates = require('../slackTemplates');
 
 const _ = require('lodash');
-
 
 class Character extends BaseModel{
     constructor(gameState, characterID){

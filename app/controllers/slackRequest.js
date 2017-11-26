@@ -14,12 +14,7 @@ const User = require('../models/User').User;
 const Class = require('../models/Class').Class;
 const Zone = require('../models/Zone').Zone;
 const Match = require('../models/Match').Match;
-
-
-//TO DELETE
-//var slackTemplates = require('../slackTemplates');
-//var Item = require('../models/Item').Item;
-//var Action = require('../models/Action').Action;
+const Permission = require('../models/Permission').Permission;
 
 const command = require('./gameContexts/command');
 const { action, generate, profile, travel, name } = command;
@@ -98,7 +93,6 @@ const contextsAndActions = {
     }
 };
 
-
 const processSlashCommand = async (req) => {
     console.log('slackRequest.processSlashCommand()');
 
@@ -117,50 +111,17 @@ const processSlashCommand = async (req) => {
 
     console.log('slackRequest.processSlashCommand() passed beginRequest()');
 
-    //1. Determine if the requester has a user DB record
-    /*
-    let slackRequestUserID = game.state.user.find( eachUser =>{
-        return eachUser.slack_user_id === payload.user_id;
-    });*/
-
-    //console.log('slackRequest.processSlashCommand() payload.user_id: ', payload.user_id);
-
+    //See if slack user is available in DB
     let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
 
-    //2. If no DB record, create a DB record with default authentication
+    //If Slack user is not available in the DB, add them
     if (!slackRequestUserID){
         console.log('Requesting user does not exist, adding');
         game.createUser(payload.user_id);
         console.log('game.users after user added: ', game.state.user);
     }
 
-    //console.log('game.users after user added before user invoked: ', game.state.user);
-
-    //3. Declare a user
-    let user = new User(game.state, payload.user_id);
-
-    console.log('DEBUG declared user locally: ', user.props);
-
-    //4. Read the authentication id to determine template to respond with
-    const userPermissions = {
-        //User does not have permission to call slack commands
-        0: {
-            "text": "Sorry traveler, but I fear you can't take actions in this land"
-        },
-        //User is able to call slash commands
-        //1: "choice 1"//getSlashCommandResponse(payload, game)
-        1: (()=>{
-            getSlashCommandResponse(payload, game)
-        })
-    };
-
-    let slackResponseTemplateReturned = userPermissions[user.props.permission_id] || {
-        "text": "ERROR, user's permission is not supported"
-    };
-
-    console.log('DEBUG slackResponseTemplateReturned: ', slackResponseTemplateReturned);
-
-    //let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
+    let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
     await endRequest(game);
     
@@ -215,29 +176,26 @@ const beginRequest = async () => {
 const getSlashCommandResponse = (payload, game) => {
     console.log('slackRequest.getSlashCommandResponse()');
 
-    //TODO need validation to ensure request came from slack and is structured correctly
+    //Declare a user selection based on the command entered in slack (trim the "/")
+    let userSelection = payload.command.slice(1, payload.command.length);
 
-    //console.log('DEBUG payload.user_id: ', payload.user_id);
+    //Declare a user based on the slack ID making the request
+    let user = new User(game.state, payload.user_id);
 
-    let slackRequestUserID = payload.user_id;
+    //Declare a permission based on user's permission
+    let permission = new Permission(game.state, user.props.permission_id);
+
+    //If user's permission can not access that slash command, return an error
+    if (!permission.canAccessSlashCommand(userSelection)){
+        return {
+            "text": "Sorry traveler, but I fear you can't take actions in this land"
+        }
+    }
+
     let slackRequestChannelID = payload.channel_id;
     let slackRequestCommand = 'command';
     let slackCallback = slackRequestCommand;
     let slackRequestText = payload.text;
-
-    let user = new User(game.state, slackRequestUserID);
-
-    /* TP DELETE - moved user alidation to
-    let user;
-    //Check if slack requester has been set up as a user
-    try {
-        user = new User(game.state, slackRequestUserID);
-    } catch(err) {
-        game.createUser(slackRequestUserID);
-
-        console.log('users: ', game.state.user);
-        user = new User(game.state, slackRequestUserID);
-    }*/
 
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
@@ -260,14 +218,6 @@ const getSlashCommandResponse = (payload, game) => {
         characterClass = new Class(game.state, playerCharacter.props.class_id);
     }
 
-    //Get the user selection by referencing the command property this represents which slash command was used.  Trim the "/" from the beginning of the command string
-    let userSelection = payload.command.slice(1, payload.command.length);
-
-    //console.log('DEBUG slackSlashCommand, about to call processRequest');
-
-    //console.log('DEBUG slackRequestCommand: ', slackRequestCommand);
-    //console.log('DEBUG userSelection: ', userSelection);
-
     return processRequest(slackRequestCommand, userSelection, {
         game,
         user,
@@ -285,8 +235,6 @@ const getSlashCommandResponse = (payload, game) => {
 
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
-
-    //console.log('DEBUG ********************* payload: ', payload);
 
     let userActionNameSelection = payload.actions[0].name;
 
@@ -333,7 +281,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     let userActionValueSelection = getActionValue();
     let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
 
-    return processRequest(gameContext, userActionNameSelection, {
+return processRequest(gameContext, userActionNameSelection, {
         game,
         user,
         slackResponseTemplate,
@@ -363,7 +311,7 @@ const processRequest = (action, userSelection, opts) => {
     //console.log('DEBUG userSelection: ', userSelection);
     let actualFn;
     try {
-        //For some game contexts, I don't have individual functions for each selection.  
+        //For some game contexts, I don't have individual functions for each selection.
         //In these cases, the same function will be invoked regardless of selection
         //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
 
@@ -387,12 +335,12 @@ const processRequest = (action, userSelection, opts) => {
 
 
 module.exports = {
-    beginRequest,
-    endRequest,
-    processRequest,
-    processSlashCommand,
-    processInteractiveMessage,
-    getInteractiveMessageResponse,
-    getSlashCommandResponse
+beginRequest,
+endRequest,
+processRequest,
+processSlashCommand,
+processInteractiveMessage,
+getInteractiveMessageResponse,
+getSlashCommandResponse
 };
 

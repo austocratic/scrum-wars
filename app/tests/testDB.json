@@ -620,6 +620,16 @@
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
+  "permission": {
+    "-KztKzvAkoPFhI3ShzCu" : {
+      "available_commands" : [ "rankings" ],
+      "name" : "Observer"
+    },
+    "-KztL8ki0966YvCX3nGy" : {
+      "available_commands" : [ "profile", "action", "generate", "travel", "name" ],
+      "name" : "Player"
+    }
+  },
   "user" : {
     "-Kp1Y_uOmv_EwNc8mTj4" : {
       "character_id" : "55e38d23d842e50e9026",

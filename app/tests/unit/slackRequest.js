@@ -53,6 +53,37 @@ describe("Testing slackRequest.getSlashCommandResponse()", function(){
 
 });*/
 
+/* THIS TEST IS NOT WORKING.  processSlashCommand() queries the real DB, so I have no way to mock the DB
+describe("Testing slackRequest.processSlashCommand() with a mock slash command", function(){
+
+    let mockRequest = {
+        body: {
+            "command": "/generate",
+            "user_id": "missing_user",
+            "user_name": "austo",
+            "channel_id": "C4Z7F8XMW",
+            "channel_name": "The Arena",
+            "token": "a6qLRgANE3lHNDP50zb0vmoJ",
+            "team_id": "T4ZAGTM1V",
+            "team_domain": "austo",
+            "text": "",
+            "response_url": "https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT4ZAGTM1V%2F239499725731%2Fb0wOCK18eeETsD0mvH0LqYEB&trigger_id=239057170097.169356939063.08e9efc327159fc04d0a0845821c2a3a"
+        }
+    };
+
+    let numberOfUsersBeforeTest = Object.keys(game.state.user).length;
+
+    let slackResponseTemplateReturned = slackRequest.processSlashCommand(mockRequest);
+
+    let numberOfUsersAfterTest = Object.keys(game.state.user).length;
+
+    it("should increase the # of users by 1", function(){
+        assert.equal(numberOfUsersAfterTest, numberOfUsersBeforeTest + 1);
+    })
+});*/
+
+
+/*
 describe("Testing slackRequest.getSlashCommandResponse() when user_id is not yet in DB", function(){
 
     let mockRequest = {
@@ -74,7 +105,7 @@ describe("Testing slackRequest.getSlashCommandResponse() when user_id is not yet
 
     console.log('slackResponseTemplateReturned: ', slackResponseTemplateReturned)
 
-});
+});*/
 /*
 describe("Testing slackRequest.getInteractiveMessageResponse()", function(){
 
