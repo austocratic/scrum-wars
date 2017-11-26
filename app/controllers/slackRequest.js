@@ -208,20 +208,19 @@ const getSlashCommandResponse = (payload, game) => {
     //    props: {}
     //};
 
-    let playerCharacter;
+    let playerCharacter, characterClass;
 
     //Only instantiate playerCharacter if there is a character ID available to use
     if (user.props.character_id){
         playerCharacter = new Character(game.state, user.props.character_id);
+
+        //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+        if (playerCharacter.props.class_id){
+            characterClass = new Class(game.state, playerCharacter.props.class_id);
+        }
     }
 
-    //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
-    let characterClass = undefined;
-
-    if (playerCharacter.props.class_id){
-        characterClass = new Class(game.state, playerCharacter.props.class_id);
-    }
-
+    
     return processRequest(slackRequestCommand, userSelection, {
         game,
         user,
