@@ -220,7 +220,6 @@ const getSlashCommandResponse = (payload, game) => {
         }
     }
 
-    
     return processRequest(slackRequestCommand, userSelection, {
         game,
         user,

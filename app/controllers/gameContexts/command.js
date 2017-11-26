@@ -10,6 +10,12 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const action = gameObjects => {
     console.log('called function command/action');
 
+    if(!gameObjects.user.getCharacterID()){
+        return {
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+        }
+    }
+
     validateGameObjects(gameObjects, [
         'game',
         'user',
@@ -175,9 +181,8 @@ const profile = gameObjects => {
 
     if(!gameObjects.user.getCharacterID()){
         return {
-            "text": "You have not yet created a character"
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
         }
-
     }
 
     validateGameObjects(gameObjects, [
@@ -281,6 +286,12 @@ const profile = gameObjects => {
 const travel = gameObjects => {
     console.log('slackRequest called function command/travel');
 
+    if(!gameObjects.user.getCharacterID()){
+        return {
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+        }
+    }
+
     validateGameObjects(gameObjects, [
         'game',
         'characterClass',
@@ -314,6 +325,12 @@ const travel = gameObjects => {
 
 const name = gameObjects => {
     console.log('slackRequest called function command/name');
+
+    if(!gameObjects.user.getCharacterID()){
+        return {
+            "text": "I'm sorry traveler, but it seems that you have not yet created a character, type /generate to create begin your journey"
+        }
+    }
 
     validateGameObjects(gameObjects, [
         'game',
