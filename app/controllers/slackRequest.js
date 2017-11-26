@@ -5,17 +5,21 @@ const actionController = require('./actionController');
 const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
 const modifyUserActionNameSelection = require('./backButton').modifyUserActionNameSelection;
 
-//Models
-var Game = require('../models/Game').Game;
-var Item = require('../models/Item').Item;
-var Character = require('../models/Character').Character;
-var User = require('../models/User').User;
-var Class = require('../models/Class').Class;
-var Zone = require('../models/Zone').Zone;
-var Action = require('../models/Action').Action;
-var Match = require('../models/Match').Match;
+const _ = require('lodash');
 
-var slackTemplates = require('../slackTemplates');
+//Models
+const Game = require('../models/Game').Game;
+const Character = require('../models/Character').Character;
+const User = require('../models/User').User;
+const Class = require('../models/Class').Class;
+const Zone = require('../models/Zone').Zone;
+const Match = require('../models/Match').Match;
+
+
+//TO DELETE
+//var slackTemplates = require('../slackTemplates');
+//var Item = require('../models/Item').Item;
+//var Action = require('../models/Action').Action;
 
 const command = require('./gameContexts/command');
 const { action, generate, profile, travel, name } = command;
@@ -110,9 +114,14 @@ const processSlashCommand = async (req) => {
     let game = await beginRequest();
 
     //1. Determine if the requester has a user DB record
+    /*
     let slackRequestUserID = game.state.user.find( eachUser =>{
         return eachUser.slack_user_id === payload.user_id;
-    });
+    });*/
+
+    console.log('slackRequest.processSlashCommand() payload.user_id: ', payload.user_id);
+
+    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
 
     //2. If no DB record, create a DB record with default authentication
     if (!slackRequestUserID){
