@@ -113,6 +113,8 @@ const processSlashCommand = async (req) => {
     //Create a game object, initiate, refresh
     let game = await beginRequest();
 
+    console.log('slackRequest.processSlashCommand() passed beginRequest()');
+
     //1. Determine if the requester has a user DB record
     /*
     let slackRequestUserID = game.state.user.find( eachUser =>{
