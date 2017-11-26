@@ -110,6 +110,8 @@ const processSlashCommand = async (req) => {
         payload = req.body
     }
 
+    console.log('DEBUG payload: ', payload);
+
     //Create a game object, initiate, refresh
     let game = await beginRequest();
 
