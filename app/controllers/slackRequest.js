@@ -60,7 +60,7 @@ const contextsAndActions = {
     },
     selectCharacterClassMenu: {
         classSelection: require('./gameContexts/selectCharacterClassMenu').classSelection,
-        classDetail: require('./gameContexts/selectCharacterClassMenu').classDetail
+        classDetailMenu: require('./gameContexts/selectCharacterClassMenu').classDetailMenu
     },
     classDetailMenu: {
         //yes: require('./gameContexts/itemDetailMenu').yes,
