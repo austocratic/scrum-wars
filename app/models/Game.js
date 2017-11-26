@@ -560,9 +560,21 @@ class Game {
                     "color": "#3AA3E3",
                     "attachment_type": "default",
                     "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachActiveClassObject.id + ".jpg",
+                    "fields": [{
+                        "title": "Description",
+                        "value": eachActiveClassObject.props.description,
+                        "short": false
+                    }],
                     "actions": [{
                         "name": 'classSelection',
-                        "text": eachActiveClassObject.props.name,
+                        "text": `Choose ${eachActiveClassObject.props.name}`,
+                        "style": "default",
+                        "type": "button",
+                        "value": eachActiveClassObject.id
+                    },
+                    {
+                        "name": 'moreClassInformation',
+                        "text": 'More information',
                         "style": "default",
                         "type": "button",
                         "value": eachActiveClassObject.id
