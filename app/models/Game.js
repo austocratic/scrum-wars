@@ -402,14 +402,15 @@ class Game {
                 active: 1,
                 name: 'Unknown Traveler',
                 level: 1,
-                user_id: userID,
+                //user_id: userID, Not needed
                 gold: 100,
-                armor: 0,
                 is_hidden: 0,
-                hit_points: 100,
-                max_hit_points: 100,
                 match_wins: 0,
-                zone_id: '-Khu9Zazk5XdFX9fD2Y8'
+                zone_id: '-Khu9Zazk5XdFX9fD2Y8',
+                stats_base: {
+                    hit_points: 100,
+                    armor: 0
+                }
             }
         };
 

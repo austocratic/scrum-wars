@@ -37,16 +37,19 @@ const classSelection = gameObjects => {
     });
 
     let updates = {
-        "actions": characterActions,
-        "class_id": gameObjects.characterClass.id,
-        "strength": gameObjects.characterClass.props.starting_attributes.strength,
-        "toughness": gameObjects.characterClass.props.starting_attributes.toughness,
-        "dexterity": gameObjects.characterClass.props.starting_attributes.dexterity,
-        "intelligence": gameObjects.characterClass.props.starting_attributes.intelligence,
-        "modified_strength": gameObjects.characterClass.props.starting_attributes.strength,
-        "modified_toughness": gameObjects.characterClass.props.starting_attributes.toughness,
-        "modified_dexterity": gameObjects.characterClass.props.starting_attributes.dexterity,
-        "modified_intelligence": gameObjects.characterClass.props.starting_attributes.intelligence
+        actions: characterActions,
+        class_id: gameObjects.characterClass.id,
+        stats_base: {
+            strength: gameObjects.characterClass.props.starting_attributes.strength,
+            toughness: gameObjects.characterClass.props.starting_attributes.toughness,
+            dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
+            intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
+        }
+
+        //"modified_strength": gameObjects.characterClass.props.starting_attributes.strength,
+        //"modified_toughness": gameObjects.characterClass.props.starting_attributes.toughness,
+        //"modified_dexterity": gameObjects.characterClass.props.starting_attributes.dexterity,
+        //"modified_intelligence": gameObjects.characterClass.props.starting_attributes.intelligence
     };
 
     //Mutate the object
