@@ -129,7 +129,8 @@ const processSlashCommand = async (req) => {
 
     //2. If no DB record, create a DB record with default authentication
     if (!slackRequestUserID){
-        game.createUser(slackRequestUserID);
+        console.log('Requesting user does not exist, adding');
+        game.createUser(payload.user_id);
     }
 
     //3. Declare a user
