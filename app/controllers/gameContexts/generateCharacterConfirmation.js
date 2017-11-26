@@ -1,12 +1,19 @@
 
 const updateCallback = require('../../helpers').updateCallback;
+const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
 const yes = gameObjects => {
     console.log('called function generateCharacterConfirmation/yes');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'user',
+        'slackResponseTemplate'
+    ]);
+
     //If the user has a character, inactivate it
-    if (gameObjects.playerCharacter.props !== undefined){
+    if (gameObjects.playerCharacter){
         gameObjects.playerCharacter.inactivate();
     }
     
