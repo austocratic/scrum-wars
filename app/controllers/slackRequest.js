@@ -123,7 +123,7 @@ const processSlashCommand = async (req) => {
         return eachUser.slack_user_id === payload.user_id;
     });*/
 
-    console.log('slackRequest.processSlashCommand() payload.user_id: ', payload.user_id);
+    //console.log('slackRequest.processSlashCommand() payload.user_id: ', payload.user_id);
 
     let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
 
@@ -134,10 +134,12 @@ const processSlashCommand = async (req) => {
         console.log('game.users after user added: ', game.state.user);
     }
 
-    console.log('game.users after user added before user invoked: ', game.state.user);
+    //console.log('game.users after user added before user invoked: ', game.state.user);
 
     //3. Declare a user
     let user = new User(game.state, payload.user_id);
+
+    console.log('DEBUG declared user locally: ', user.id);
 
     //4. Read the authentication id to determine template to respond with
     const userPermissions = {
@@ -149,9 +151,11 @@ const processSlashCommand = async (req) => {
         1: getSlashCommandResponse(payload, game)
     };
 
-    let slackResponseTemplateReturned = userPermissions[user.props.authentication_id] || {
+    let slackResponseTemplateReturned = userPermissions[user.props.permission_id] || {
         "text": "ERROR, user's permission is not supported"
     };
+
+    console.log('DEBUG slackResponseTemplateReturned: ', slackResponseTemplateReturned);
 
     //let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
