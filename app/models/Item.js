@@ -21,9 +21,9 @@ class Item extends BaseModel {
         let template = {
             "attachments": [
                 {
-                    "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
-                    "color": "#000000",
                     "fallback": "You can't select this item",
+                    "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+                    "color": "#000000"
                 },
                 {
                     "color": "#000000",

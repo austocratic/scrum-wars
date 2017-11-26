@@ -19,7 +19,6 @@ const equipmentSelection = gameObjects => {
         "fallback": "unable to go back",
         "actions": [{
             "name": 'unequip',
-            "fallback": "unable to select item",
             "text": "Unequip Item",
             "type": "button",
             "value": itemSelected.id
@@ -27,7 +26,6 @@ const equipmentSelection = gameObjects => {
         {
             "name": "back",
             "text": "Back",
-            "fallback": "unable to go back",
             "type": "button",
             "value": "no"
         }]
