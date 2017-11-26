@@ -533,8 +533,7 @@ class Game {
     }
 
     getCharacterClasses() {
-
-        //var characterClassesTemplate = slackTemplates.generateCharacterClassList;
+        console.log('called Game.getCharacterClasses()');
         
         //Get all available classes from local
         let localCharacterClasses = this.state.class;
@@ -544,23 +543,31 @@ class Game {
 
         let characterClassesTemplate = {};
 
-        characterClassesTemplate.attachments = classIDs.map( singleClassID =>{
-
-            return {
-                "title": localCharacterClasses[singleClassID].name,
-                "fallback": "You are unable to choose an action",
-                "callback_id": "",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + singleClassID + ".jpg",
-                "actions": [{
-                    "name": 'classSelection',
-                    "text": localCharacterClasses[singleClassID].name,
-                    "style": "default",
-                    "type": "button",
-                    "value": singleClassID
-                }]
-            }
+        characterClassesTemplate.attachments = classIDs
+            //Declare a class object for each class ID
+            .map( eachClassID =>{
+                return new Class(this.state, eachClassID);
+            })
+            //Filter active classes only
+            .filter( eachClassObject =>{
+                return eachClassObject.props.active === 1
+            })
+            .map( eachActiveClassObject =>{
+                return {
+                    "title": eachActiveClassObject.props.name,
+                    "fallback": "You are unable to choose an action",
+                    "callback_id": "",
+                    "color": "#3AA3E3",
+                    "attachment_type": "default",
+                    "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachActiveClassObject.id + ".jpg",
+                    "actions": [{
+                        "name": 'classSelection',
+                        "text": eachActiveClassObject.props.name,
+                        "style": "default",
+                        "type": "button",
+                        "value": eachActiveClassObject.id
+                    }]
+                }
         });
         
         return characterClassesTemplate;

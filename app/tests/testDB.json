@@ -430,6 +430,7 @@
   "class" : {
     "-KircSgAkPTavnfob8F5" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkOq-y2_zgEgdhY-6_U", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "active" : 0,
       "name" : "Shadow Knight",
       "starting_attributes" : {
         "dexterity" : 10,
@@ -440,6 +441,7 @@
     },
     "-KircgtGZhoRrHnKryS5" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "active" : 1,
       "name" : "Warrior",
       "starting_attributes" : {
         "dexterity" : 10,
@@ -450,6 +452,7 @@
     },
     "-KircnK2x1_31EQiAYlk" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkdduB9XuB46EsxqwIX", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo", "-KrJaBvyYDGrNVfcaAd0" ],
+      "active" : 1,
       "name" : "Wizard",
       "starting_attributes" : {
         "dexterity" : 12,
@@ -460,6 +463,7 @@
     },
     "-KircwaX4eX6rAVoGYJm" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "active" : 0,
       "name" : "Paladin",
       "starting_attributes" : {
         "dexterity" : 10,
@@ -470,6 +474,7 @@
     },
     "-Kird8_Vef-8Ej2aShaO" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kkdk_CD5vx8vRGQD268", "-KqtOcn7MapqMfnGIZvo", "-Kr3hnITyH9ZKx3VuZah" ],
+      "active" : 1,
       "name" : "Rogue",
       "starting_attributes" : {
         "dexterity" : 18,
@@ -480,6 +485,7 @@
     },
     "-KirdGNRIajLmQ_CRRjW" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo" ],
+      "active" : 0,
       "name" : "Ranger",
       "starting_attributes" : {
         "dexterity" : 15,
