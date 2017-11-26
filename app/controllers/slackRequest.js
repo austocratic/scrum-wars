@@ -131,7 +131,10 @@ const processSlashCommand = async (req) => {
     if (!slackRequestUserID){
         console.log('Requesting user does not exist, adding');
         game.createUser(payload.user_id);
+        console.log('game.users after user added: ', game.state.user);
     }
+
+    console.log('game.users after user added before user invoked: ', game.state.user);
 
     //3. Declare a user
     let user = new User(game.state, slackRequestUserID);
