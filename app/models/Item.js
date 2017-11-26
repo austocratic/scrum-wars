@@ -47,12 +47,12 @@ class Item extends BaseModel {
             ]
         };
 
-        //Iterate through the object adding properties to the template
+        //Show all the item's modifiers:
         for (let prop in this.props.modifiers) {
 
             template.attachments[2].fields.push({
                 "title": prop,
-                "value": `${this.props[prop]}`,
+                "value": `${this.props.modifiers[prop]}`,
                 "short": true
             });
         }
