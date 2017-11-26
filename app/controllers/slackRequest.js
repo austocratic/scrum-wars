@@ -137,7 +137,7 @@ const processSlashCommand = async (req) => {
     console.log('game.users after user added before user invoked: ', game.state.user);
 
     //3. Declare a user
-    let user = new User(game.state, slackRequestUserID);
+    let user = new User(game.state, payload.user_id);
 
     //4. Read the authentication id to determine template to respond with
     const userPermissions = {
