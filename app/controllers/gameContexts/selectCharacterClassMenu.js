@@ -44,6 +44,12 @@ const classSelection = gameObjects => {
             toughness: gameObjects.characterClass.props.starting_attributes.toughness,
             dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
             intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
+        },
+        stats_current: {
+            strength: gameObjects.characterClass.props.starting_attributes.strength,
+            toughness: gameObjects.characterClass.props.starting_attributes.toughness,
+            dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
+            intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
         }
 
         //"modified_strength": gameObjects.characterClass.props.starting_attributes.strength,

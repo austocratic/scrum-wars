@@ -410,6 +410,10 @@ class Game {
                 stats_base: {
                     hit_points: 100,
                     armor: 0
+                },
+                stats_current: {
+                    hit_points: 100,
+                    armor: 0
                 }
             }
         };
