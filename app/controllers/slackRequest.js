@@ -139,7 +139,7 @@ const processSlashCommand = async (req) => {
     //3. Declare a user
     let user = new User(game.state, payload.user_id);
 
-    console.log('DEBUG declared user locally: ', user.id);
+    console.log('DEBUG declared user locally: ', user.props);
 
     //4. Read the authentication id to determine template to respond with
     const userPermissions = {
@@ -148,7 +148,7 @@ const processSlashCommand = async (req) => {
             "text": "Sorry traveler, but I fear you can't take actions in this land"
         },
         //User is able to call slash commands
-        1: getSlashCommandResponse(payload, game)
+        1: "choice 1"//getSlashCommandResponse(payload, game)
     };
 
     let slackResponseTemplateReturned = userPermissions[user.props.permission_id] || {
