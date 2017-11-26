@@ -27,7 +27,7 @@ const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
 } = selectActionMenu;
 
 //Route the slackRequest
-const actionsAndThingsContext = {
+const contextsAndActions = {
     command: {
         action: action,
         generate: generate,
@@ -106,15 +106,42 @@ const processSlashCommand = async (req) => {
         payload = req.body
     }
 
+    //Create a game object, initiate, refresh
     let game = await beginRequest();
 
-    let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
+    //1. Determine if the requester has a user DB record
+    let slackRequestUserID = game.state.user.find( eachUser =>{
+        return eachUser.slack_user_id === payload.user_id;
+    });
+
+    //2. If no DB record, create a DB record with default authentication
+    if (!slackRequestUserID){
+        game.createUser(slackRequestUserID);
+    }
+
+    //3. Declare a user
+    let user = new User(game.state, slackRequestUserID);
+
+    //4. Read the authentication id to determine template to respond with
+    const userPermissions = {
+        //User does not have permission to call slack commands
+        0: {
+            "text": "Sorry traveler, but I fear you can't take actions in this land"
+        },
+        //User is able to call slash commands
+        1: getSlashCommandResponse(payload, game)
+    };
+
+    let slackResponseTemplateReturned = userPermissions[user.props.authentication_id] || {
+        "text": "ERROR, user's permission is not supported"
+    };
+
+    //let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
     await endRequest(game);
     
     return slackResponseTemplateReturned;
 };
-
 
 const processInteractiveMessage = async (req) => {
     console.log('slackRequest.processInteractiveMessage()');
@@ -143,11 +170,6 @@ const processInteractiveMessage = async (req) => {
 
     return slackResponseTemplateReturned;
 };
-
-
-
-
-
 
 const beginRequest = async () => {
     console.log('slackRequest.beginRequest()');
@@ -179,6 +201,9 @@ const getSlashCommandResponse = (payload, game) => {
     let slackCallback = slackRequestCommand;
     let slackRequestText = payload.text;
 
+    let user = new User(game.state, slackRequestUserID);
+
+    /* TP DELETE - moved user alidation to
     let user;
     //Check if slack requester has been set up as a user
     try {
@@ -188,7 +213,7 @@ const getSlashCommandResponse = (payload, game) => {
 
         console.log('users: ', game.state.user);
         user = new User(game.state, slackRequestUserID);
-    }
+    }*/
 
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
@@ -318,13 +343,13 @@ const processRequest = (action, userSelection, opts) => {
         //In these cases, the same function will be invoked regardless of selection
         //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
 
-        actualFn = actionsAndThingsContext[action];
+        actualFn = contextsAndActions[action];
 
         if (typeof actualFn === 'function') {
             return actualFn(opts);
         }
 
-        actualFn = actionsAndThingsContext[action][userSelection];
+        actualFn = contextsAndActions[action][userSelection];
 
     } catch(err) {
         // invalid action and user selection

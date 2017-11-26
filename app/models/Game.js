@@ -426,7 +426,8 @@ class Game {
 
         let newUser = {
             [randomID]: {
-                slack_user_id: slackRequestUserID
+                slack_user_id: slackRequestUserID,
+                permission_id: 0 //Default permission
             }
         };
 
