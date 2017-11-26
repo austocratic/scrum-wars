@@ -151,7 +151,7 @@ const processSlashCommand = async (req) => {
         //1: "choice 1"//getSlashCommandResponse(payload, game)
         1: (()=>{
             getSlashCommandResponse(payload, game)
-        })()
+        })
     };
 
     let slackResponseTemplateReturned = userPermissions[user.props.permission_id] || {
