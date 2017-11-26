@@ -404,6 +404,7 @@ class Game {
                 level: 1,
                 //user_id: userID, Not needed
                 gold: 100,
+                health: 100, //Need to make this class dictated
                 is_hidden: 0,
                 match_wins: 0,
                 zone_id: '-Khu9Zazk5XdFX9fD2Y8',

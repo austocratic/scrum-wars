@@ -36,30 +36,23 @@ const classSelection = gameObjects => {
         }
     });
 
-    let updates = {
+    //Mutate the object - combine these 3 calls?
+    Object.assign(gameObjects.playerCharacter.props, {
         actions: characterActions,
-        class_id: gameObjects.characterClass.id,
-        stats_base: {
-            strength: gameObjects.characterClass.props.starting_attributes.strength,
-            toughness: gameObjects.characterClass.props.starting_attributes.toughness,
-            dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
-            intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
-        },
-        stats_current: {
-            strength: gameObjects.characterClass.props.starting_attributes.strength,
-            toughness: gameObjects.characterClass.props.starting_attributes.toughness,
-            dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
-            intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
-        }
-
-        //"modified_strength": gameObjects.characterClass.props.starting_attributes.strength,
-        //"modified_toughness": gameObjects.characterClass.props.starting_attributes.toughness,
-        //"modified_dexterity": gameObjects.characterClass.props.starting_attributes.dexterity,
-        //"modified_intelligence": gameObjects.characterClass.props.starting_attributes.intelligence
-    };
-
-    //Mutate the object
-    Object.assign(gameObjects.playerCharacter.props, updates);
+        class_id: gameObjects.characterClass.id
+    });
+    Object.assign(gameObjects.playerCharacter.props.stats_base, {
+        strength: gameObjects.characterClass.props.starting_attributes.strength,
+        toughness: gameObjects.characterClass.props.starting_attributes.toughness,
+        dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
+        intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
+    });
+    Object.assign(gameObjects.playerCharacter.props.stats_current, {
+        strength: gameObjects.characterClass.props.starting_attributes.strength,
+        toughness: gameObjects.characterClass.props.starting_attributes.toughness,
+        dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
+        intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
+    });
 
     // *****************Return the gender selection menu*******************
 
