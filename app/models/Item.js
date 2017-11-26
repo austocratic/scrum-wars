@@ -21,23 +21,36 @@ class Item extends BaseModel {
         let template = {
             "attachments": [
                 {
-                    //"image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + this.id + ".jpg",
                     "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+                    "color": "#000000",
                     "fallback": "You can't select this item",
+                },
+                {
+                    "color": "#000000",
+                    "fallback": "You can't select this item",
+                    "title": "Item stats",
                     "fields": [
                         {
-                            "title": this.props.name,
+                            "title": "Value",
+                            "value": this.props.cost,
                             "short": false
                         }
                     ]
+                },
+                {
+                    "color": "#000000",
+                    "fallback": "You can't select this item",
+                    "title": "Item modifiers",
+                    "fields": []
                 }
+
             ]
         };
 
         //Iterate through the object adding properties to the template
-        for (let prop in this.props) {
+        for (let prop in this.props.modifiers) {
 
-            template.attachments[0].fields.push({
+            template.attachments[2].fields.push({
                 "title": prop,
                 "value": `${this.props[prop]}`,
                 "short": true

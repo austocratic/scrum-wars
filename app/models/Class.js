@@ -20,14 +20,10 @@ class Class extends BaseModel{
             "attachments": [
                 {
                     //"image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+                    "color": "#000000",
                     "title": "Starting stats",
                     "fallback": "",
-                    "fields": [
-                        {
-                            "title": this.props.name,
-                            "short": false
-                        }
-                    ]
+                    "fields": []
                 }
             ]
         };
