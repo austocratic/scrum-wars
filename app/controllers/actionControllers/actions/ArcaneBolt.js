@@ -39,11 +39,13 @@ class ArcaneBolt extends BaseAttack {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
                     this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                    this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'white-burst.gif';
                     slack.sendMessage(this.slackPayload);
                     return;
                 }
 
                 this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'white-burst.gif';
                 slack.sendMessage(this.slackPayload);
 
                 //Process damage & Interrupts

@@ -41,24 +41,19 @@ class ForkedLightning extends BaseAttack {
         switch (true) {
             case (turn <= 0):
                 this.slackPayload.attachments[0].text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'lightning-ball.gif';
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
-
-                console.log('DEBUG, ForkedLightning targets before filter: ', targets);
 
                 //Filter out the originally targeted character (it will be added again as first element)
                 targets = targets.filter( eachTarget =>{
                     return eachTarget.id !== this.targetCharacter.id
                 });
 
-                console.log('DEBUG, ForkedLightning targets after filter: ', targets);
-
                 //Push the original target into the targets array (must be first position!)
                 targets.unshift(this.targetCharacter);
-
-                console.log('DEBUG, ForkedLightning targets after adding target back: ', targets);
 
                 //Value will increase with each iteration
                 let avoidModifier = 1;
@@ -95,6 +90,7 @@ class ForkedLightning extends BaseAttack {
 
                     //Alert the channel of the action
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
+                    this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'yellow-lightning-circle.gif';
                     slack.sendMessage(this.slackPayload);
                 }
                 break;

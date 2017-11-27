@@ -40,15 +40,18 @@ class Firestorm extends BaseAttack {
         switch (true) {
             case (turn <= 0):
                 this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'orange-flame.gif';
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
                 this.slackPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'fire-2.gif';
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 2):
                 //Build a new message based on the randomTarget
                 this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'fire-burst.gif';
                 slack.sendMessage(this.slackPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
