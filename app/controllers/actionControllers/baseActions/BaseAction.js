@@ -147,23 +147,6 @@ class BaseAction {
             return true
         }
 
-        //If check returned true (if successful, it will never get to this point to alert Slack)
-        
-        //Alert the channel of the action
-        /*
-        var alertDetails = {
-            "username": this.slackUserName,
-            "icon_url": this.slackIcon,
-            "channel": this.slackChannel,
-            "text": this.channelActionFailMessage
-        };*/
-
-        //Create a new slack alert object
-        //var channelAlert = new Slack(alertDetails);
-
-        //Send alert to slack
-        //channelAlert.sendToSlack(this.params);
-
         return false;
     }
 
@@ -189,14 +172,20 @@ class BaseAction {
 
         //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
 
-        console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
+        //console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
 
         //Check for interrupting target's actions in the queue
         if (this.currentMatch.props.action_queue){
 
+            /*
             let interruptedActions = this.currentMatch.props.action_queue
+                //Filter pending actions that are being cast by a target of players action
                 .filter( eachActionQueue =>{
                     return eachActionQueue.player_character_id === this.targetCharacter.id;
+                })
+                //Filter out actions initiated by the character taking the action
+                .filter( eachActionQueue =>{
+                    return eachActionQueue.player_character_id !== this.actionCharacter.id;
                 })
                 .forEach( eachInterruptedAction =>{
 
@@ -213,10 +202,42 @@ class BaseAction {
             this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
                 .filter( eachActionQueue =>{
                     return eachActionQueue.player_character_id !== this.targetCharacter.id;
+                });*/
+
+            //console.log('DEBUG: this.targetCharacter.id: ', this.targetCharacter.id);
+            //console.log('DEBUG: this.actionCharacter.id: ', this.actionCharacter.id);
+
+            this.currentMatch.props.action_queue
+                //Filter out pending actions initiated by a target of player's action (don't filter the player's own actions)
+                .filter( eachActionQueue =>{
+                    return eachActionQueue.player_character_id === this.targetCharacter.id &&
+                        eachActionQueue.player_character_id !== this.actionCharacter.id;
+                })
+                //Send interrupt messages and return final list of interrupted actions
+                .forEach( eachInterruptedAction =>{
+
+                    //console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
+                    let interruptedAction = new Action(this.game.state, eachInterruptedAction.action_id);
+                    //console.log('DEBUG eachInterruptedAction object: ', interruptedAction.props);
+                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
+                    //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
+                    slack.sendMessage(this.slackPayload);
+
+                    //return eachInterruptedAction
                 });
+
+            //console.log('interruptedActions.length: ', interruptedActions.length);
+
+            //Filter the actionQueue to remove interrupted actions
+            this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
+                .filter( eachActionQueue =>{
+                    //Filter queue to only contain actions who were initiated by a player that is not the target of this action OR were initiated
+                    //by the player that is initiating this action
+                    return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
+                })
         }
 
-        console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.action_queue);
+        //console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.action_queue);
     }
 
     _applyDamage(){

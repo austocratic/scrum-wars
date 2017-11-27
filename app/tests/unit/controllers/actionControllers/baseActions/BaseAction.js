@@ -135,9 +135,9 @@ describe("Testing BaseAction class", function() {
         describe("testing BaseAction method _processDamage", function () {
 
             //Set up an action Queue
-            game.state.match['testingMatch'].actionQueue = [
+            testBaseAction.currentMatch.props.action_queue = [
                 {
-                    "action_id": testBaseAction.actionTaken.id,
+                    "action_id": '-Kjpe29q_fDkJG-73AQO', //Quickstrike
                     "turn_initiated": testBaseAction.currentMatch.props.number_turns,
                     "channel_id": testBaseAction.currentZone.props.channel_id,
                     "player_character_id": testBaseAction.targetCharacter.id,
@@ -145,34 +145,46 @@ describe("Testing BaseAction class", function() {
                     "last_turn_processed": testBaseAction.currentMatch.props.number_turns
                 },
                 {
-                    "action_id": testBaseAction.actionTaken.id,
-                    "turn_initiated": testBaseAction.currentMatch.props.number_turns,
+                    "action_id": '-Ky1zv4JXgbAKvxFFBmp', //Cleave
+                    "turn_initiated": testBaseAction.currentMatch.props.number_turns + 1,
                     "channel_id": testBaseAction.currentZone.props.channel_id,
                     "player_character_id": testBaseAction.targetCharacter.id,
                     "target_character_id": testBaseAction.actionCharacter.id,
                     "last_turn_processed": testBaseAction.currentMatch.props.number_turns
                 },
                 {
-                    "action_id": testBaseAction.actionTaken.id,
+                    "action_id": '-Ky3C664qBFIYS4R4ItQ', //Firestorm
                     "turn_initiated": testBaseAction.currentMatch.props.number_turns,
                     "channel_id": testBaseAction.currentZone.props.channel_id,
-                    "player_character_id": testBaseAction.actionCharacter.id,
-                    "target_character_id": testBaseAction.targetCharacter.id,
+                    "player_character_id": '55e38d23d842e50e9026', //Sindria
+                    "target_character_id": '-Kkxf1ukVSF9VV6mIPlG', //Freddy,
+                    "last_turn_processed": testBaseAction.currentMatch.props.number_turns
+                },
+                {
+                    "action_id": '-Ky3C664qBFIYS4R4ItQ', //Firestorm
+                    "turn_initiated": testBaseAction.currentMatch.props.number_turns,
+                    "channel_id": testBaseAction.currentZone.props.channel_id,
+                    "player_character_id": '-Kkxf1ukVSF9VV6mIPlG', //Freddy
+                    "target_character_id": '55e38d23d842e50e9026', //Sindria,
                     "last_turn_processed": testBaseAction.currentMatch.props.number_turns
                 }
             ];
 
-            console.log('DEBUG actionQueue BEFORE: ', game.state.match['testingMatch'].actionQueue.length);
+            //console.log('DEBUG actionQueue BEFORE: ', testBaseAction.currentMatch.props.action_queue.length);
 
             testBaseAction._processDamage();
 
-            console.log('DEBUG actionQueue AFTER: ', game.state.match['testingMatch'].actionQueue.length);
+            //console.log('DEBUG actionQueue AFTER: ', testBaseAction.currentMatch.props.action_queue);
 
             //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
-            //it("should return an array of length", function (){
-            //    assert.equal(targetArray.length, 1);
-            //});
+            it("action_queue should not contain any actions initiated by this action's target", function(){
+                assert.equal(_.find(testBaseAction.currentMatch.props.action_queue, {player_character_id: testBaseAction.targetCharacter.id}), undefined)
+            });
+
+            it("action_queue should still contain at least 1 action initiated by this action's player", function(){
+                assert(_.find(testBaseAction.currentMatch.props.action_queue, {player_character_id: testBaseAction.actionCharacter.id}))
+            })
         });
 
         /* Depricating the _incrementProperties method in BaseAction, property increment will be done by models (function in the base model)

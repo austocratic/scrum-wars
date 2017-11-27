@@ -73,8 +73,7 @@ class Game {
     }
     
     //Checks the game's state looking for certain conditions (player deaths, ect.)
-    //It is invoked periodically by cron
-    //It is always invoked after a player action
+    //It is invoked periodically by cron & always invoked by a player action
     refresh(){
         console.log('called Game.refresh()');
         
