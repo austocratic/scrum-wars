@@ -35,9 +35,11 @@ const shop = gameObjects => {
     ]);
 
     //Add the previous 
-    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
+    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);
+
+    console.log('DEBUG shop function attachment BEFORE: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
 
     //New version of the above function
     let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
@@ -88,11 +90,13 @@ const shop = gameObjects => {
         ]
     };
 
-    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userSelection}/shopMainMenu`;
+    let updatedCallback2 = `${gameObjects.slackCallback}shopMainMenu`;
     
     //let updatedCallback = gameObjects.slackCallback + ':shop/shopMainMenu';
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback2);
+
+    console.log('DEBUG shop function attachment FINAL: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
 
     return gameObjects.slackResponseTemplate;
 };
