@@ -34,10 +34,9 @@ const shop = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    console.log('DEBUG: gameObjects.requestZone.id: ', gameObjects.requestZone.id);
+    let npcID = _.findKey(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
 
-    //New version of the above function
-    let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
+    //this.props.actions[npcKey].turn_used = turnNumber;
 
     console.log('DEBUG: npcID: ', npcID);
 
