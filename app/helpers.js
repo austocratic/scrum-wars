@@ -30,6 +30,7 @@ const validateGameObjects = (gameObjectsToValidate, expectedGameObjects) => {
     //Data types expected to be strings
     let expectedStrings = [
         'userActionValueSelection',
+        'userActionNameSelection',
         'slackCallback'
     ];
 

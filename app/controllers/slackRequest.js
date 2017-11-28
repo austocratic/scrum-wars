@@ -293,7 +293,8 @@ return processRequest(gameContext, userActionNameSelection, {
         slackResponseTemplate,
         playerCharacter,
         userActionValueSelection,
-        slackRequestCommand, //TODO for slash commands use the command
+        userActionNameSelection,
+        slackRequestCommand,
         slackCallback,
         requestZone,
         currentMatch,

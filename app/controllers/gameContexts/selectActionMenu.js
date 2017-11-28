@@ -31,7 +31,9 @@ const shop = gameObjects => {
         'game',
         'requestZone',
         'slackCallback',
-        'slackResponseTemplate'
+        'slackResponseTemplate',
+        'userActionNameSelection',
+        'userActionValueSelection'
     ]);
 
     //Due to the DB data structure, I use _findKey()
@@ -84,7 +86,7 @@ const shop = gameObjects => {
     };
 
     //TODO broke up the callback update to two lines because I hope to use this as middleware soon
-    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
+    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
 
     gameObjects.slackCallback = updatedCallback1;
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);
