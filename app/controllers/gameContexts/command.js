@@ -97,7 +97,7 @@ const action = gameObjects => {
             let attachmentTemplate = {
                 "title": actionCategory[0].props.type,
                 "fallback": "You are unable to choose an action",
-                "color": "#3AA3E3",
+                "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
                 "actions": []
             };

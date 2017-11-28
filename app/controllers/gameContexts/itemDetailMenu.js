@@ -4,8 +4,12 @@ const updateCallback = require('../../helpers').updateCallback;
 const Item = require('../../models/Item').Item;
 
 
-const yes = gameObjects => {
-    console.log('called function itemDetailMenu/yes');
+const yesConfirmation = gameObjects => {
+    console.log('called function itemDetailMenu/yesConfirmation');
+
+    //Add the previous 
+    //TODO I should be able to add this as middleware.  We will always store the previous selection value 
+    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
     
     //Parse the slackCallback
     let slackCallbackElements = gameObjects.slackCallback.split("/");

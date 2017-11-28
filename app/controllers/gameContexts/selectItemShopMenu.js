@@ -1,4 +1,6 @@
-"use strict";
+/* TO DELETE - replaced by shopPurchaseMenu.js
+
+
 
 const updateCallback = require('../../helpers').updateCallback;
 const Item = require('../../models/Item').Item;
@@ -42,3 +44,4 @@ const selectItem = gameObjects => {
 module.exports = {
     selectItem
 };
+*/

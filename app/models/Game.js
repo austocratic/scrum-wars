@@ -52,8 +52,13 @@ class Game {
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
         
+        //GAME SETTINGS
+        
         //Configuration: # of minutes per turn
-        this.turnLengthMinutes = 60
+        this.turnLengthMinutes = 60;
+        //Default Slack left side border menu color
+        this.menuColor = '#000000';
+        
         
     }
     

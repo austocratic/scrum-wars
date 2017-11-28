@@ -34,54 +34,48 @@ const shop = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    let npcID = _.findKey(gameObjects.game.state.npc, singleNPC => {
-        {return singleNPC['zone_id'] === gameObjects.requestZone.id}
-    });
+    //Add the previous 
+    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    //New version of the above function
+    let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
 
     let vendor = new NPC(gameObjects.game.state, npcID);
-
-    let itemsForSaleArray = vendor.getItemsForSale();
-
-    let slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
-        //let localItem = gameObjects.game.state.item[itemID];
-        let itemSelectionOption = new Item(gameObjects.game.state, itemID);
-
-        return {
-            "text": itemSelectionOption.props.name,
-            "value": itemID
-        }
-    });
 
     gameObjects.slackResponseTemplate = {
         "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
         "attachments": [
             {
                 "fallback": "You are unable to choose an action",
-                "callback_id": "shopCharacterSelection",
-                "color": "#3AA3E3",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
                 "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg",
                 "actions": []
             },
             {
-                "fallback": "You are unable to choose an action",
-                "callback_id": "shopCharacterSelection",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "actions": [{
-                    "name": "selectItem",
-                    "text": "Choose an item to purchase",
-                    "type": "select",
-                    "options": slackTemplateDropdown
-                }]
-            },
-            {
                 "text": "",
                 "fallback": "You are unable to go back",
-                "callback_id": "shopCharacterSelection",
-                "color": "#3AA3E3",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
                 "actions": [
+                    {
+                        "name": "shopPurchaseMenu",
+                        "text": "Purchase Items",
+                        "style": "",
+                        "type": "button",
+                        "value": "shopPurchaseMenu"
+                    },
+                    {
+                        "name": "shopSellMenu",
+                        "text": "Sell Items",
+                        "style": "",
+                        "type": "button",
+                        "value": "shopSellMenu"
+                    },
                     {
                         "name": "back",
                         "text": "Exit shop",
@@ -94,7 +88,9 @@ const shop = gameObjects => {
         ]
     };
 
-    let updatedCallback = gameObjects.slackCallback + ':shop/selectItemShopMenu';
+    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userSelection}/shopMainMenu`;
+    
+    //let updatedCallback = gameObjects.slackCallback + ':shop/shopMainMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
