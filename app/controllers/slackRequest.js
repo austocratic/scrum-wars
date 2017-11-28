@@ -249,6 +249,11 @@ const getInteractiveMessageResponse = (payload, game) => {
         return payload.actions[0].selected_options[0].value;
     }
 
+    let slackCallbackElements = payload.callback_id.split("/");
+
+    //The last element of the parsed callback string will be the context
+    let gameContext = slackCallbackElements[slackCallbackElements.length - 1];
+
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
     if (userActionNameSelection === "back"){
@@ -258,8 +263,6 @@ const getInteractiveMessageResponse = (payload, game) => {
         //Add the slack attachment name & value into the callback
         slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
     }
-
-    let slackCallbackElements = slackCallback.split("/");
 
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
@@ -285,10 +288,10 @@ const getInteractiveMessageResponse = (payload, game) => {
         }
     }
 
-    //The last element of the parsed callback string will be the context
-    let gameContext = slackCallbackElements[slackCallbackElements.length - 1];
+    console.log('DEBUG gameContext: ', gameContext);
+    console.log('DEBUG userActionNameSelection: ', userActionNameSelection);
 
-return processRequest(gameContext, userActionNameSelection, {
+    return processRequest(gameContext, userActionNameSelection, {
         game,
         user,
         slackResponseTemplate,
