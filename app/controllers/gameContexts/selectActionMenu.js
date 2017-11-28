@@ -34,13 +34,6 @@ const shop = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    //Add the previous 
-    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
-
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);
-
-    console.log('DEBUG shop function attachment BEFORE: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
-
     //New version of the above function
     let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
 
@@ -89,6 +82,13 @@ const shop = gameObjects => {
             }
         ]
     };
+
+    //TODO broke up the callback update to two lines because I hope to use this as middleware soon
+    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);
+
+    console.log('DEBUG shop function attachment BEFORE: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
 
     let updatedCallback2 = `${gameObjects.slackCallback}shopMainMenu`;
     

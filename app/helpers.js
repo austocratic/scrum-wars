@@ -76,7 +76,7 @@ var getImageFilePaths = (dir, filelist) => {
 
 //Populates an array of file path references based on dir parameter
 //Mutates the passed fileList array parameter, also returns it
-var getFilePaths = (dir, filelist) => {
+const getFilePaths = (dir, filelist) => {
     var path = path || require('path');
     var fs = fs || require('fs'),
         files = fs.readdirSync(dir);
@@ -92,7 +92,7 @@ var getFilePaths = (dir, filelist) => {
     return filelist;
 };
 
-var updateCallback = (attachmentsArray, callbackString) => {
+const updateCallback = (attachmentsArray, callbackString) => {
 
     //Check if attachmentsArray is empty.  If it is, create a single attachment
     /*
