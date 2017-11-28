@@ -239,19 +239,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
     let userActionNameSelection = payload.actions[0].name;
-
-    //console.log('DEBUG userActionNameSelection = ', userActionNameSelection);
-
-    //First check to see if the player selected "back".  If so. modify the callback to change the route
-    let slackCallback;
-    if (userActionNameSelection === "back"){
-        userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
-        slackCallback = modifyCallbackForBack(payload.callback_id);
-    } else {
-        slackCallback = payload.callback_id;
-    }
-
-    let slackCallbackElements = slackCallback.split("/");
+    let userActionValueSelection = getActionValue();
 
     function getActionValue(){
         if (payload.actions[0].value) {
@@ -261,12 +249,25 @@ const getInteractiveMessageResponse = (payload, game) => {
         return payload.actions[0].selected_options[0].value;
     }
 
+    //First check to see if the player selected "back".  If so. modify the callback to change the route
+    let slackCallback;
+    if (userActionNameSelection === "back"){
+        userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
+        slackCallback = modifyCallbackForBack(payload.callback_id);
+    } else {
+        //Add the slack attachment name & value into the callback
+        slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
+    }
+
+    let slackCallbackElements = slackCallback.split("/");
+
     let slackRequestUserID = payload.user.id;
     let slackRequestChannelID = payload.channel.id;
     let slackRequestCommand = payload.command;
 
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
+
     let user = new User(game.state, slackRequestUserID);
 
     let requestZone = new Zone(game.state, slackRequestChannelID);
@@ -284,8 +285,8 @@ const getInteractiveMessageResponse = (payload, game) => {
         }
     }
 
-    let userActionValueSelection = getActionValue();
-    let gameContext = slackCallbackElements[slackCallbackElements.length - 1]; //The last element of the parsed callback string will be the context
+    //The last element of the parsed callback string will be the context
+    let gameContext = slackCallbackElements[slackCallbackElements.length - 1];
 
 return processRequest(gameContext, userActionNameSelection, {
         game,
