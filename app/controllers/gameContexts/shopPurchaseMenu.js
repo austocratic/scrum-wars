@@ -54,5 +54,5 @@ const itemDetailMenu = gameObjects => {
 
 
 module.exports = {
-    selectItem
+    itemDetailMenu
 };

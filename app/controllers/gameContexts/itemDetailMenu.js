@@ -89,7 +89,7 @@ const unequip = gameObjects => {
 
 
 module.exports = {
-    yes,
+    yesConfirmation,
     equip,
     unequip
 };

@@ -1,8 +1,8 @@
 "use strict";
-
+/*
 const assert = require('assert');
 
-const selectItem = require('../../../controllers/gameContexts/selectItemShopMenu').selectItem;
+//const selectItem = require('../../../controllers/gameContexts/selectItemShopMenu').selectItem;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 
@@ -36,3 +36,4 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userActi
     testSlackResponseFormat(slackResponseTemplateReturned);
 });
 
+*/
