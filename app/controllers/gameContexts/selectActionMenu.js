@@ -34,11 +34,8 @@ const shop = gameObjects => {
         'slackResponseTemplate'
     ]);
 
+    //Due to the DB data structure, I use _findKey()
     let npcID = _.findKey(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
-
-    //this.props.actions[npcKey].turn_used = turnNumber;
-
-    console.log('DEBUG: npcID: ', npcID);
 
     let vendor = new NPC(gameObjects.game.state, npcID);
 
@@ -89,6 +86,7 @@ const shop = gameObjects => {
     //TODO broke up the callback update to two lines because I hope to use this as middleware soon
     let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
 
+    gameObjects.slackCallback = updatedCallback1;
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);
 
     console.log('DEBUG shop function attachment BEFORE: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
