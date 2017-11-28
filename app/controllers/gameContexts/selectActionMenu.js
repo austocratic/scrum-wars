@@ -34,8 +34,12 @@ const shop = gameObjects => {
         'slackResponseTemplate'
     ]);
 
+    console.log('DEBUG: gameObjects.requestZone.id: ', gameObjects.requestZone.id);
+
     //New version of the above function
     let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
+
+    console.log('DEBUG: npcID: ', npcID);
 
     let vendor = new NPC(gameObjects.game.state, npcID);
 
