@@ -269,6 +269,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackCallback;
     if (userActionNameSelection === "back"){
         userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
+        console.log('DEBUG userActionNameSelection after modify: ', userActionNameSelection);
         slackCallback = modifyCallbackForBack(payload.callback_id);
     } else {
         //Add the slack attachment name & value into the callback

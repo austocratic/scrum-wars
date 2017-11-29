@@ -43,13 +43,13 @@ const modifyUserActionNameSelection = slackCallback => {
     //Split up the callback string
     let slackCallbackElements = slackCallback.split("/");
 
-    console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
+    //console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
 
     //take the previous element & split it into context:name:value
-    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 1]
+    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 2]
         .split(":");
 
-    console.log('DEBUG lastKeyValue: ', lastKeyValue);
+    //console.log('DEBUG lastKeyValue: ', lastKeyValue);
 
     //Return the last value selected
     return lastKeyValue[1];
