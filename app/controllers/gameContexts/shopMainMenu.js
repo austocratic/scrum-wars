@@ -9,8 +9,8 @@ const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
 
-const shopPurchaseMenu = gameObjects => {
-    console.log('Called shopMainMenu/shopPurchaseMenu');
+const purchaseButton = gameObjects => {
+    console.log('Called shopMainMenu/purchaseButton');
 
     validateGameObjects(gameObjects, [
         'game',
@@ -19,12 +19,6 @@ const shopPurchaseMenu = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    //Add the previous 
-    //TODO I should be able to add this as middleware.  We will always store the previous selection value 
-    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
     //Find the zone's NPC (for this zone I know there is only one NPC). To adjust in the future
     let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
 
@@ -32,7 +26,7 @@ const shopPurchaseMenu = gameObjects => {
 
     let itemsForSaleArray = vendor.getItemsForSale();
 
-    //Create a template dropdown of items based on the vendoor's items
+    //Create a template dropdown of items based on the vendor's items
     let slackTemplateDropdown = itemsForSaleArray.map( itemID =>{
         let itemSelectionOption = new Item(gameObjects.game.state, itemID);
 
@@ -60,7 +54,7 @@ const shopPurchaseMenu = gameObjects => {
                 "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
                 "actions": [{
-                    "name": "",
+                    "name": "itemList",
                     "text": "Choose an item to purchase",
                     "type": "select",
                     "options": slackTemplateDropdown
@@ -85,21 +79,20 @@ const shopPurchaseMenu = gameObjects => {
         ]
     };
 
-    //let updatedCallback = gameObjects.slackCallback + ':shopPurchaseMenu/shopPurchaseMenu';
-
-    //...:shopPurchaseMenu/shopPurchaseMenu
-    
-    //TODO I should already know the name of the selection in order to add it to the callback (should not hardcode)
-    let updatedCallback2 = `${gameObjects.slackCallback}shopPurchaseMenu`;
-
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopPurchaseMenu`);
 
     return gameObjects.slackResponseTemplate;
     
 };
 
-const shopSellMenu = gameObjects => {
-    console.log('Called shopMainMenu/shopSellMenu');
+const sellButton = gameObjects => {
+    console.log('Called shopMainMenu/sellButton');
 
 
+};
+
+
+module.exports = {
+    purchaseButton,
+    sellButton,
 };

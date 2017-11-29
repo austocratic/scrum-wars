@@ -41,6 +41,7 @@ const shop = gameObjects => {
 
     let vendor = new NPC(gameObjects.game.state, npcID);
 
+    //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
     gameObjects.slackResponseTemplate = {
         "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
         "attachments": [
@@ -60,18 +61,18 @@ const shop = gameObjects => {
                 "attachment_type": "default",
                 "actions": [
                     {
-                        "name": "shopPurchaseMenu",
+                        "name": "purchaseButton",
                         "text": "Purchase Items",
                         "style": "",
                         "type": "button",
-                        "value": "shopPurchaseMenu"
+                        "value": "purchase"
                     },
                     {
-                        "name": "shopSellMenu",
+                        "name": "sellButton",
                         "text": "Sell Items",
                         "style": "",
                         "type": "button",
-                        "value": "shopSellMenu"
+                        "value": "sell"
                     },
                     {
                         "name": "back",
@@ -85,22 +86,7 @@ const shop = gameObjects => {
         ]
     };
 
-    //TODO broke up the callback update to two lines because I hope to use this as middleware soon
-    /*
-    let updatedCallback1 = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
-
-    gameObjects.slackCallback = updatedCallback1;
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback1);*/
-
-    console.log('DEBUG shop function attachment BEFORE: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
-
-    let updatedCallback2 = `${gameObjects.slackCallback}shopMainMenu`;
-    
-    //let updatedCallback = gameObjects.slackCallback + ':shop/shopMainMenu';
-
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback2);
-
-    console.log('DEBUG shop function attachment FINAL: ', JSON.stringify(gameObjects.slackResponseTemplate.attachments));
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopMainMenu`);
 
     return gameObjects.slackResponseTemplate;
 };

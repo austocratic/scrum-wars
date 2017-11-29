@@ -264,16 +264,10 @@ const getInteractiveMessageResponse = (payload, game) => {
         slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
     }
 
-    let slackRequestUserID = payload.user.id;
-    let slackRequestChannelID = payload.channel.id;
     let slackRequestCommand = payload.command;
-
-    //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
-
-    let user = new User(game.state, slackRequestUserID);
-
-    let requestZone = new Zone(game.state, slackRequestChannelID);
+    let user = new User(game.state, payload.user.id);
+    let requestZone = new Zone(game.state, payload.channel.id);
     let currentMatch = new Match(game.state, game.getCurrentMatchID());
 
     let playerCharacter, characterClass;
@@ -287,9 +281,6 @@ const getInteractiveMessageResponse = (payload, game) => {
             characterClass = new Class(game.state, playerCharacter.props.class_id);
         }
     }
-
-    console.log('DEBUG gameContext: ', gameContext);
-    console.log('DEBUG userActionNameSelection: ', userActionNameSelection);
 
     return processRequest(gameContext, userActionNameSelection, {
         game,

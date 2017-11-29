@@ -91,13 +91,10 @@ class Character extends BaseModel{
         //If sufficient gold:
         //Add item ID to player's inventory
         if (this.props.inventory){
-
             this.props.inventory.push(item);
         } else {
             this.props.inventory = [item]
         }
-
-        //this.updateProperty('inventory', this.props.inventory);
 
         //Calculate the player's updated gold
         //Update the characters name property locally
@@ -110,7 +107,6 @@ class Character extends BaseModel{
 
         //Return purchase confirmation template
         return responseTemplate;
-
     }
 
     getActionIDs(){

@@ -4,12 +4,17 @@ const updateCallback = require('../../helpers').updateCallback;
 const Item = require('../../models/Item').Item;
 
 
-const itemDetailMenu = gameObjects => {
-    console.log('called function shopPurchaseMenu/itemDetailMenu');
+const itemList = gameObjects => {
+    console.log('called function shopPurchaseMenu/itemList');
 
-    //Add the previous 
-    //TODO I should be able to add this as middleware.  We will always store the previous selection value 
-    let updatedCallback = `${gameObjects.slackCallback}:${gameObjects.userActionValueSelection}/`;
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'slackCallback',
+        'slackResponseTemplate',
+        'userActionNameSelection',
+        'userActionValueSelection'
+    ]);
 
     //Create a local item
     let itemSelected = new Item(gameObjects.game.state, gameObjects.userActionValueSelection);
@@ -19,7 +24,7 @@ const itemDetailMenu = gameObjects => {
 
     //Add purchase buttons to the bottom of the template
     gameObjects.slackResponseTemplate.attachments[0].actions = [{
-            "name": "yesConfirmation",
+            "name": "yesButton",
             "text": "Yes, I'll take it!",
             "type": "button",
             "value": "yes"
@@ -30,20 +35,10 @@ const itemDetailMenu = gameObjects => {
             "type": "button",
             "value": "no"
         }];
+    
+    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
-    //Full current flow: always store context & either name or value of selection
-    //selectActionMenu:shop/shopMainMenu:shopPurchaseMenu/shopPurchaseMenu:k2j3rn32u4u/itemDetailMenu:yes/other menu if necessary
-
-    //Potential flow: always store previous name (same as context) & the value:
-    //selectActionMenu:shopMainMenu/shopMainMenu:shopPurchaseMenu/shopPurchaseMenu:k2j3rn32u4u/itemDetailMenu:yes/purchaseConfirmationMenu:yes       
-    
-    
-    
-    //Next view:
-    
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
-
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}itemDetailMenu`);
 
     return gameObjects.slackResponseTemplate;
 
@@ -51,8 +46,6 @@ const itemDetailMenu = gameObjects => {
 
 
 
-
-
 module.exports = {
-    itemDetailMenu
+    itemList
 };
