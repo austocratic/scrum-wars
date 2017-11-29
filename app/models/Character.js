@@ -101,12 +101,36 @@ class Character extends BaseModel{
         var updatedPlayerGold = this.props.gold - itemObject.props.cost;
         this.updateProperty('gold', updatedPlayerGold);
 
-        responseTemplate = slackTemplates.purchaseSuccess;
+        responseTemplate = {
+            "text": "_You successfully purchase the item_"
+        };
 
         responseTemplate.text = "_You hand the merchant " + itemObject.props.cost + " in exchange for the " + itemObject.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
 
         //Return purchase confirmation template
         return responseTemplate;
+    }
+
+    sellItem(itemObject, percentOfCost) {
+
+        //Look up the item ID in the player's inventory.  If multiple items with the same ID it will find the first and remove it
+        let arrayIndex = _.findIndex(this.props.inventory, {'item_id': itemObject.id});
+
+        if (arrayIndex === -1) {
+            console.log("ERROR: player attempted to sell an item that was no longer in their inventory");
+            return "I'm sorry but it appears that item is no longer in your inventory"
+        }
+
+        //Remove the item
+        this.props.inventory.splice(arrayIndex, 1);
+
+        //Calculate the player's updated gold
+        let updatedPlayerGold = this.props.gold + (itemObject.props.cost * percentOfCost);
+        this.updateProperty('gold', updatedPlayerGold);
+
+        return {
+            text: `_The merchant hands you ${itemObject.props.cost * percentOfCost} in exchange for the ${itemObject.props.name}_\nThank you for you patronage.  Safe travels, my friend`
+        };
     }
 
     getActionIDs(){

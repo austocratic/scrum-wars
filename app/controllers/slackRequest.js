@@ -86,6 +86,9 @@ const contextsAndActions = {
     shopPurchaseMenu: {
         itemList: require('./gameContexts/shopPurchaseMenu').itemList
     },
+    shopSellMenu: {
+        itemList: require('./gameContexts/shopSellMenu').itemList
+    },
     selectEquipmentMenu: {
         equipmentSelection: require('./gameContexts/selectEquipmentMenu').equipmentSelection
     },
@@ -94,6 +97,7 @@ const contextsAndActions = {
     },
     itemDetailMenu: {
         yesButton: require('./gameContexts/itemDetailMenu').yesButton,
+        yesSellButton: require('./gameContexts/itemDetailMenu').yesSellButton,
         equip: require('./gameContexts/itemDetailMenu').equip,
         unequip: require('./gameContexts/itemDetailMenu').unequip
     },

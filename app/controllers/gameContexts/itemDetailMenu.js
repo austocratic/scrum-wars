@@ -32,6 +32,34 @@ const yesButton = gameObjects => {
     
 };
 
+const yesSellButton = gameObjects => {
+    console.log('called function itemDetailMenu/yesSellButton');
+
+    //Parse the slackCallback
+    let slackCallbackElements = gameObjects.slackCallback.split("/");
+
+    console.log('DEBUG: slackCallbackElements: ', slackCallbackElements);
+
+    //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
+    let itemSelection = slackCallbackElements[slackCallbackElements.length - 3];
+
+    console.log('DEBUG: itemSelection: ', itemSelection);
+
+    let valueSelection = itemSelection.split(":");
+
+    console.log('DEBUG: valueSelection: ', valueSelection);
+
+    let itemID = valueSelection[valueSelection.length - 1];
+
+    console.log('DEBUG: itemID: ', itemID);
+
+    let itemToSell = new Item(gameObjects.game.state, itemID);
+
+    //TODO currently passing the sale rate through by hard coding.  Need a better way
+    return gameObjects.playerCharacter.sellItem(itemToSell, .6);
+
+};
+
 const equip = gameObjects => {
     console.log('called function itemDetailMenu/equip');
 
@@ -95,6 +123,7 @@ const unequip = gameObjects => {
 
 module.exports = {
     yesButton,
+    yesSellButton,
     equip,
     unequip
 };
