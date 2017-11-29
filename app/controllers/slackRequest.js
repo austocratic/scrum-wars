@@ -249,6 +249,9 @@ const getInteractiveMessageResponse = (payload, game) => {
     let userActionNameSelection = payload.actions[0].name;
     let userActionValueSelection = getActionValue();
 
+    console.log('Interactive message userActionNameSelection: ', userActionNameSelection);
+    console.log('Interactive message userActionValueSelection: ', userActionValueSelection);
+
     function getActionValue(){
         if (payload.actions[0].value) {
             return payload.actions[0].value
@@ -311,8 +314,6 @@ const endRequest = async (game) => {
     //Overwrites with updated local props
     return await game.updateState();
 };
-
-
 
 const processRequest = (action, userSelection, opts) => {
     console.log('slackRequest.processRequest()');

@@ -144,7 +144,7 @@ const sellButton = gameObjects => {
 
         gameObjects.slackResponseTemplate.attachments[0].actions =
             [{
-                "name": "inventorySelection",
+                "name": "itemList",
                 "type": "select",
                 "options": unequippedItemOptions
             }]
@@ -159,7 +159,6 @@ const sellButton = gameObjects => {
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopSellMenu`);
 
     return gameObjects.slackResponseTemplate;
-
 };
 
 

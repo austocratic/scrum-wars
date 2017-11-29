@@ -6,7 +6,7 @@ const Item = require('../../models/Item').Item;
 
 
 const itemList = gameObjects => {
-    console.log('called function shopPurchaseMenu/itemList');
+    console.log('called function shopSellMenu/itemList');
 
     validateGameObjects(gameObjects, [
         'game',
