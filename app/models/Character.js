@@ -112,6 +112,7 @@ class Character extends BaseModel{
     }
 
     sellItem(itemObject, percentOfCost) {
+        console.log('called Character.sellItem()');
 
         //Look up the item ID in the player's inventory.  If multiple items with the same ID it will find the first and remove it
         let arrayIndex = _.findIndex(this.props.inventory, {'item_id': itemObject.id});
@@ -129,7 +130,7 @@ class Character extends BaseModel{
         this.updateProperty('gold', updatedPlayerGold);
 
         return {
-            text: `_The merchant hands you ${itemObject.props.cost * percentOfCost} in exchange for the ${itemObject.props.name}_\nThank you for you patronage.  Safe travels, my friend`
+            text: `_The merchant hands you ${itemObject.props.cost * percentOfCost} in exchange for your ${itemObject.props.name}_\nThank you for you patronage.  Safe travels, my friend`
         };
     }
 

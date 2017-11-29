@@ -16,10 +16,10 @@ const Zone = require('../models/Zone').Zone;
 const Match = require('../models/Match').Match;
 const Permission = require('../models/Permission').Permission;
 
-const command = require('./gameContexts/command');
+const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name } = command;
 
-const selectActionMenu = require('./gameContexts/selectActionMenu');
+const selectActionMenu = require('./gameContextControllers/selectActionMenu');
 const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
     offensiveStance, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
     whirlwind, cleave, firestorm
@@ -52,15 +52,15 @@ const contextsAndActions = {
         firestorm: firestorm
     },
     selectActionTarget: {
-        processActionOnTarget: require('./gameContexts/selectActionTarget').processActionOnTarget
+        processActionOnTarget: require('./gameContextControllers/selectActionTarget').processActionOnTarget
     },
     generateCharacterConfirmation: {
-        yes: require('./gameContexts/generateCharacterConfirmation').yes,
-        no: require('./gameContexts/generateCharacterConfirmation').no
+        yes: require('./gameContextControllers/generateCharacterConfirmation').yes,
+        no: require('./gameContextControllers/generateCharacterConfirmation').no
     },
     selectCharacterClassMenu: {
-        classSelection: require('./gameContexts/selectCharacterClassMenu').classSelection,
-        classDetailMenu: require('./gameContexts/selectCharacterClassMenu').classDetailMenu
+        classSelection: require('./gameContextControllers/selectCharacterClassMenu').classSelection,
+        classDetailMenu: require('./gameContextControllers/selectCharacterClassMenu').classDetailMenu
     },
     classDetailMenu: {
         //yes: require('./gameContexts/itemDetailMenu').yes,
@@ -68,42 +68,42 @@ const contextsAndActions = {
         //unequip: require('./gameContexts/itemDetailMenu').unequip
     },
     selectGenderMenu: {
-        genderSelection: require('./gameContexts/selectGenderMenu').genderSelection
+        genderSelection: require('./gameContextControllers/selectGenderMenu').genderSelection
     },
     travelConfirmation: {
-        yes: require('./gameContexts/travelConfirmation').yes,
-        no: require('./gameContexts/travelConfirmation').no
+        yes: require('./gameContextControllers/travelConfirmation').yes,
+        no: require('./gameContextControllers/travelConfirmation').no
     },
     characterProfileMenu: {
-        inventory: require('./gameContexts/characterProfileMenu').inventory,
-        equipment: require('./gameContexts/characterProfileMenu').equipment,
-        exit: require('./gameContexts/characterProfileMenu').exit
+        inventory: require('./gameContextControllers/characterProfileMenu').inventory,
+        equipment: require('./gameContextControllers/characterProfileMenu').equipment,
+        exit: require('./gameContextControllers/characterProfileMenu').exit
     },
     shopMainMenu: {
-        purchaseButton: require('./gameContexts/shopMainMenu').purchaseButton,
-        sellButton: require('./gameContexts/shopMainMenu').sellButton
+        purchaseButton: require('./gameContextControllers/shopMainMenu').purchaseButton,
+        sellButton: require('./gameContextControllers/shopMainMenu').sellButton
     },
     shopPurchaseMenu: {
-        itemList: require('./gameContexts/shopPurchaseMenu').itemList
+        itemList: require('./gameContextControllers/shopPurchaseMenu').itemList
     },
     shopSellMenu: {
-        itemList: require('./gameContexts/shopSellMenu').itemList
+        itemList: require('./gameContextControllers/shopSellMenu').itemList
     },
     selectEquipmentMenu: {
-        equipmentSelection: require('./gameContexts/selectEquipmentMenu').equipmentSelection
+        equipmentSelection: require('./gameContextControllers/selectEquipmentMenu').equipmentSelection
     },
     selectInventoryMenu: {
-        inventorySelection: require('./gameContexts/selectInventoryMenu').inventorySelection
+        inventorySelection: require('./gameContextControllers/selectInventoryMenu').inventorySelection
     },
     itemDetailMenu: {
-        yesButton: require('./gameContexts/itemDetailMenu').yesButton,
-        yesSellButton: require('./gameContexts/itemDetailMenu').yesSellButton,
-        equip: require('./gameContexts/itemDetailMenu').equip,
-        unequip: require('./gameContexts/itemDetailMenu').unequip
+        yesButton: require('./gameContextControllers/itemDetailMenu').yesButton,
+        yesSellButton: require('./gameContextControllers/itemDetailMenu').yesSellButton,
+        equip: require('./gameContextControllers/itemDetailMenu').equip,
+        unequip: require('./gameContextControllers/itemDetailMenu').unequip
     },
     selectCharacterAvatarMenu: {
-        more: require('./gameContexts/selectCharacterAvatarMenu').more,
-        selection: require('./gameContexts/selectCharacterAvatarMenu').selection
+        more: require('./gameContextControllers/selectCharacterAvatarMenu').more,
+        selection: require('./gameContextControllers/selectCharacterAvatarMenu').selection
     }
 };
 

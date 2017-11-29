@@ -24,10 +24,10 @@ const itemList = gameObjects => {
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
 
     gameObjects.slackResponseTemplate.attachments.push({
-        "text": `_I'll give you ${itemSelected.props.cost * .6} for it!_`,
+        "text": `I'll give you ${itemSelected.props.cost * .6} for it!`,
         "color": gameObjects.game.menuColor,
         "fallback": "You can't select this item",
-        "title": "Stats",
+        "title": "",
         "actions": [
             {
                 "name": "yesSellButton",
@@ -42,8 +42,6 @@ const itemList = gameObjects => {
                 "value": "no"
             }]
     });
-
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}itemDetailMenu`);
 

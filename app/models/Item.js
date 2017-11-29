@@ -20,14 +20,15 @@ class Item extends BaseModel {
         //TODO not good to hardcode the url path here.  Elsewhere I use the game.baseURL property, but Item does not have access to game (ony game.state)
         let template = {
             "attachments": [
-                {
+               /* {
                     "fallback": "You can't select this item",
-                    "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+
                     "color": "#000000"
-                },
+                },*/
                 {
                     "color": "#000000",
                     "fallback": "You can't select this item",
+                    "image_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
                     "title": "Stats",
                     "fields": [
                         {
@@ -55,7 +56,7 @@ class Item extends BaseModel {
         //Show all the item's modifiers:
         for (let prop in this.props.modifiers) {
 
-            template.attachments[2].fields.push({
+            template.attachments[1].fields.push({
                 "title": prop,
                 "value": `${this.props.modifiers[prop]}`,
                 "short": true

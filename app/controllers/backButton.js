@@ -7,6 +7,8 @@ const modifyCallbackForBack = slackCallback => {
     //Split up the callback string
     let slackCallbackElements = slackCallback.split("/");
 
+    console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
+
     //If the callback string is short, process differently and return
     if (slackCallbackElements.length < 3) {
         return slackCallbackElements[slackCallbackElements.length - 2]
@@ -33,15 +35,21 @@ const modifyCallbackForBack = slackCallback => {
     return slackCallbackElements.join("/") + "/" + lastKeyValue[0];
 };
 
+
+//User selected "back", this changes the click from "back" to whatever was clicked on previous context
 const modifyUserActionNameSelection = slackCallback => {
     console.log('called function modifyUserActionNameSelection');
 
     //Split up the callback string
     let slackCallbackElements = slackCallback.split("/");
 
-    //take the last element & split it into context:selection
-    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
+    console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
+
+    //take the previous element & split it into context:name:value
+    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 1]
         .split(":");
+
+    console.log('DEBUG lastKeyValue: ', lastKeyValue);
 
     //Return the last value selected
     return lastKeyValue[1];
