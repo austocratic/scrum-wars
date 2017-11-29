@@ -14,7 +14,7 @@ const yesButton = gameObjects => {
     console.log('DEBUG: slackCallbackElements: ', slackCallbackElements);
 
     //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
-    let itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
+    let itemSelection = slackCallbackElements[slackCallbackElements.length - 3];
 
     console.log('DEBUG: itemSelection: ', itemSelection);
 

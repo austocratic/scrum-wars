@@ -28,7 +28,7 @@ const itemList = gameObjects => {
             "name": "yesButton",
             "text": "Yes, I'll take it!",
             "type": "button",
-            "value": "yes"
+            "value": "yesButton"
         },
         {
             "name": "back",
