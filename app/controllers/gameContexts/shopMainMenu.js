@@ -19,8 +19,8 @@ const purchaseButton = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    //Find the zone's NPC (for this zone I know there is only one NPC). To adjust in the future
-    let npcID = _.find(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
+    //Due to the DB data structure, I use _findKey()
+    let npcID = _.findKey(gameObjects.game.state.npc, {zone_id: gameObjects.requestZone.id});
 
     let vendor = new NPC(gameObjects.game.state, npcID);
 
