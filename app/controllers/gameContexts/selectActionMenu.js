@@ -65,14 +65,14 @@ const shop = gameObjects => {
                         "text": "Purchase Items",
                         "style": "",
                         "type": "button",
-                        "value": "purchase"
+                        "value": "purchaseButton"
                     },
                     {
                         "name": "sellButton",
                         "text": "Sell Items",
                         "style": "",
                         "type": "button",
-                        "value": "sell"
+                        "value": "sellButton"
                     },
                     {
                         "name": "back",

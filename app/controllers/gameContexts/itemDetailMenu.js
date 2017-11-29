@@ -11,12 +11,20 @@ const yesButton = gameObjects => {
     //Parse the slackCallback
     let slackCallbackElements = gameObjects.slackCallback.split("/");
 
+    console.log('DEBUG: slackCallbackElements: ', slackCallbackElements);
+
     //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
     let itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
 
+    console.log('DEBUG: itemSelection: ', itemSelection);
+
     let valueSelection = itemSelection.split(":");
 
+    console.log('DEBUG: valueSelection: ', valueSelection);
+
     let itemID = valueSelection[valueSelection.length - 1];
+
+    console.log('DEBUG: itemID: ', itemID);
     
     let itemToPurchase = new Item(gameObjects.game.state, itemID);
 
