@@ -79,17 +79,21 @@ const contextsAndActions = {
         equipment: require('./gameContexts/characterProfileMenu').equipment,
         exit: require('./gameContexts/characterProfileMenu').exit
     },
+    shopMainMenu: {
+        purchaseButton: require('./gameContexts/shopMainMenu').purchaseButton,
+        sellButton: require('./gameContexts/shopMainMenu').sellButton
+    },
+    shopPurchaseMenu: {
+        itemList: require('./gameContexts/shopPurchaseMenu').itemList
+    },
     selectEquipmentMenu: {
         equipmentSelection: require('./gameContexts/selectEquipmentMenu').equipmentSelection
     },
     selectInventoryMenu: {
         inventorySelection: require('./gameContexts/selectInventoryMenu').inventorySelection
     },
-    selectItemShopMenu: {
-        selectItem: require('./gameContexts/selectItemShopMenu').selectItem
-    },
     itemDetailMenu: {
-        yes: require('./gameContexts/itemDetailMenu').yes,
+        yesButton: require('./gameContexts/itemDetailMenu').yesButton,
         equip: require('./gameContexts/itemDetailMenu').equip,
         unequip: require('./gameContexts/itemDetailMenu').unequip
     },
