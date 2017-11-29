@@ -40,19 +40,12 @@ const purchaseButton = gameObjects => {
     gameObjects.slackResponseTemplate = {
         "text": "_The vendor smiles at you warmly_ \nOf course my friend!  Have a look around, I have many items that could help you on your travels",
         "attachments": [
-            /*TO UPDATE IMAGE{
-                "fallback": "You are unable to choose an action",
-                "callback_id": "",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg",
-                "actions": []
-            },*/
             {
                 "fallback": "Choose an item",
                 "callback_id": "",
                 "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
+                "image_url": gameObjects.game.baseURL + gameObjects.game.imagePath + 'weapon-shop-1.png',
                 "actions": [{
                     "name": "itemList",
                     "text": "Choose an item to purchase",
@@ -69,7 +62,7 @@ const purchaseButton = gameObjects => {
                 "actions": [
                     {
                         "name": "back",
-                        "text": "Exit shop",
+                        "text": "Back",
                         "style": "",
                         "type": "button",
                         "value": "back"
@@ -88,6 +81,84 @@ const purchaseButton = gameObjects => {
 const sellButton = gameObjects => {
     console.log('Called shopMainMenu/sellButton');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'slackCallback',
+        'slackResponseTemplate'
+    ]);
+
+    gameObjects.slackResponseTemplate = {
+        "text": "_The vendor smiles at you eagerly_ \nOf course, I'm always looking for new items to purchase!",
+        "attachments": [
+            {
+                "fallback": "Choose an item",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
+                "attachment_type": "default",
+                "image_url": gameObjects.game.baseURL + gameObjects.game.imagePath + 'weapon-shop-1.png',
+                "actions": [{
+                    "name": "itemList",
+                    "text": "Choose an item to purchase",
+                    "type": "select"
+                }]
+            },
+            {
+                "text": "",
+                "fallback": "You are unable to go back",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
+                "attachment_type": "default",
+                "actions": [
+                    {
+                        "name": "back",
+                        "text": "Back",
+                        "style": "",
+                        "type": "button",
+                        "value": "back"
+                    }
+                ]
+            }
+        ]
+    };
+
+    let unequippedItemOptions =
+
+        //Get the unequipped items then map into slack format
+        gameObjects.playerCharacter.getUnequippedItems()
+            .map(eachItem => {
+                return {
+                    "text": eachItem.name,
+                    "value": eachItem.item_id
+                }
+            });
+
+    //If the character has unequipped items return a drop down, else return "no items"
+    if (unequippedItemOptions.length > 0){
+
+        gameObjects.slackResponseTemplate.attachments[0] =
+            {
+                "text": "",
+                "fallback": "You are unable to select that item"
+            };
+
+        gameObjects.slackResponseTemplate.attachments[0].actions =
+            [{
+                "name": "inventorySelection",
+                "type": "select",
+                "options": unequippedItemOptions
+            }]
+    } else {
+        gameObjects.slackResponseTemplate.attachments[0] =
+            {
+                "text": "Your backpack is empty!",
+                "fallback": "Unable to process"
+            }
+    }
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopSellMenu`);
+
+    return gameObjects.slackResponseTemplate;
 
 };
 

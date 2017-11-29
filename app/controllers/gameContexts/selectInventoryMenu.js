@@ -12,26 +12,6 @@ const inventorySelection = gameObjects => {
     //Create an item detail view template
     gameObjects.slackResponseTemplate = itemSelected.getDetailView();
 
-    /*
-    gameObjects.slackResponseTemplate.attachments[0].actions = [{
-        "name": 'equip',
-        "text": "Equip Item",
-        "fallback": "unable to select item",
-        "type": "button",
-        "value": itemSelected.id
-    }];
-
-    gameObjects.slackResponseTemplate.attachments.push({
-        "fallback": "unable to go back",
-        "actions": [{
-            "name": "back",
-            "text": "Back",
-            "fallback": "unable to go back",
-            "type": "button",
-            "value": "no"
-        }]
-    });*/
-
     gameObjects.slackResponseTemplate.attachments.push({
         "fallback": "unable to go back",
         "actions": [{
