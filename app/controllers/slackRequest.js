@@ -256,7 +256,7 @@ const getInteractiveMessageResponse = (payload, game) => {
         if (payload.actions[0].value) {
             return payload.actions[0].value
         }
-        //Action value dicates the specific selection from drop down menus
+        //Action value dictates the specific selection from drop down menus
         return payload.actions[0].selected_options[0].value;
     }
 
@@ -267,14 +267,17 @@ const getInteractiveMessageResponse = (payload, game) => {
 
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
+
+    /*
     if (userActionNameSelection === "back"){
         userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
         console.log('DEBUG userActionNameSelection after modify: ', userActionNameSelection);
         slackCallback = modifyCallbackForBack(payload.callback_id);
+        console.log('DEBUG slackCallback after modify: ', slackCallback);
     } else {
         //Add the slack attachment name & value into the callback
         slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
-    }
+    }*/
 
     let slackRequestCommand = payload.command;
     let slackResponseTemplate = {};
@@ -305,7 +308,8 @@ const getInteractiveMessageResponse = (payload, game) => {
         slackCallback,
         requestZone,
         currentMatch,
-        characterClass
+        characterClass,
+        payload
     });
 };
 
@@ -316,7 +320,7 @@ const endRequest = async (game) => {
     return await game.updateState();
 };
 
-const processRequest = (action, userSelection, opts) => {
+const processRequest = (gameContext, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
 
     //console.log('DEBUG action: ', action);
@@ -327,13 +331,18 @@ const processRequest = (action, userSelection, opts) => {
         //In these cases, the same function will be invoked regardless of selection
         //Therefore, first set the function based on [action], then if there is a matching [userSelection], overwrite the function
 
-        actualFn = contextsAndActions[action];
+        console.log("DEBUG gameContext: ", gameContext);
+
+        /* NOT NEEDED, all functions mapped require userSelection
+        actualFn = contextsAndActions[gameContext];
 
         if (typeof actualFn === 'function') {
             return actualFn(opts);
-        }
+        }*/
 
-        actualFn = contextsAndActions[action][userSelection];
+        actualFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": "ERROR button not set up yet!"}});
+
+        console.log("DEBUG actualFn: ", actualFn)
 
     } catch(err) {
         // invalid action and user selection
@@ -347,12 +356,12 @@ const processRequest = (action, userSelection, opts) => {
 
 
 module.exports = {
-beginRequest,
-endRequest,
-processRequest,
-processSlashCommand,
-processInteractiveMessage,
-getInteractiveMessageResponse,
-getSlashCommandResponse
+    beginRequest,
+    endRequest,
+    processRequest,
+    processSlashCommand,
+    processInteractiveMessage,
+    getInteractiveMessageResponse,
+    getSlashCommandResponse
 };
 
