@@ -276,8 +276,11 @@ const getInteractiveMessageResponse = (payload, game) => {
         console.log('DEBUG slackCallback after modify: ', slackCallback);
     } else {
         //Add the slack attachment name & value into the callback
-        slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
+
     }*/
+
+    //Moved out of else statement above
+    slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
 
     let slackRequestCommand = payload.command;
     let slackResponseTemplate = {};
