@@ -127,7 +127,6 @@ const back = gameObjects => {
     console.log('called function itemDetailMenu/back');
 
     return backButton(gameObjects)
-
 };
 
 
@@ -137,5 +136,6 @@ module.exports = {
     yesButton,
     yesSellButton,
     equip,
-    unequip
+    unequip,
+    back
 };

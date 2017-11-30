@@ -75,7 +75,12 @@ const processBackButton = gameObjects =>{
     //Modify the callback and the user selection
 
     //Make a request to slackController, passing in the modified callback and user selection
+    console.log('processBackButton - slackCallback: ', gameObjects.slackCallback);
 
+    //TODO these are pulled from gameObjects, I will need to modify the gameObjects.payload in order to route the request back
+    console.log('processBackButton - payload: ', gameObjects.payload);
+    console.log('processBackButton - userActionValueSelection: ', gameObjects.userActionValueSelection);
+    console.log('processBackButton - userActionNameSelection: ', gameObjects.userActionNameSelection);
 
 
     //Recreate the payload to pass in:
