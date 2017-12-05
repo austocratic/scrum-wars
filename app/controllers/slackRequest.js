@@ -263,10 +263,16 @@ const getInteractiveMessageResponse = (payload, game) => {
 
     let slackCallbackMajorElements = payload.callback_id.split("/");
 
+    console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
+
     let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 1].split(":");
+
+    console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
 
     //The last element of the parsed callback string will be the context
     let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
+
+    console.log('gameContext: ', gameContext);
 
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
