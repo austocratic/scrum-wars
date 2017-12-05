@@ -265,7 +265,7 @@ const getInteractiveMessageResponse = (payload, game) => {
 
     console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
 
-    let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 1].split(":");
+    let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 2].split(":");
 
     console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
 
