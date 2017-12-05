@@ -248,19 +248,18 @@ const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
     let userActionNameSelection = payload.actions[0].name;
-    //let userActionValueSelection = getActionValue();
+    let userActionValueSelection = getActionValue();
 
     //console.log('Interactive message userActionNameSelection: ', userActionNameSelection);
     //console.log('Interactive message userActionValueSelection: ', userActionValueSelection);
 
-    /*
     function getActionValue(){
         if (payload.actions[0].value) {
             return payload.actions[0].value
         }
         //Action value dictates the specific selection from drop down menus
         return payload.actions[0].selected_options[0].value;
-    }*/
+    }
 
     let slackCallbackMajorElements = payload.callback_id.split("/");
 
