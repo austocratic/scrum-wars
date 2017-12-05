@@ -4,8 +4,14 @@ const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
 const backButton = require('../backButton').processBackButton;
+const modifyCallbackForBack = require('../backButton').modifyCallbackForBack;
 
 const Item = require('../../models/Item').Item;
+
+//TESTING
+const otherFunctionTest = require('../slackRequest') //.otherFunctionTest;
+
+//const getInteractiveMessageResponse = require('../slackRequest').getInteractiveMessageResponse;
 
 
 const yesButton = gameObjects => {
@@ -123,11 +129,6 @@ const unequip = gameObjects => {
 
 };
 
-const back = gameObjects => {
-    console.log('called function itemDetailMenu/back');
-
-    return backButton(gameObjects)
-};
 
 
 
@@ -136,6 +137,5 @@ module.exports = {
     yesButton,
     yesSellButton,
     equip,
-    unequip,
-    back
+    unequip
 };

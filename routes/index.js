@@ -1,13 +1,17 @@
 "use strict";
 
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 
 //var stockImage = require('../app/assets/wizardImage.jpg');
 
-var slackRequest = require('../app/controllers/slackRequest');
-var turns = require('../app/controllers/turns');
+const slackRequest = require('../app/controllers/slackRequest');
+const formatPayload = require('../app/middleware/formatSlackRequest').formatPayload;
+const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
+
+
+const turns = require('../app/controllers/turns');
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -123,15 +127,40 @@ router.post('/api/commands',
 
 
 //All client interactive-message responses pass through this route
+router.post('/api/interactive-messages', (req, res, next) => {
+    console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
+
+        //payload.actions[0].name;
+        req.payload = formatPayload(req);
+
+        //Pass to next router
+        next();
+    },(req, res, next) => {
+
+        //Modify the request based on reserved words or format the callback
+        modifyPayloadForReservedActions(req);
+
+    //Pass to next router
+    next();
+}, async(req, res, next) => {
+
+        //let slackResponseTemplateReturned = 'test complete';
+        let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req.payload);
+
+        console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
+        res.status(200).send(slackResponseTemplateReturned);
+    });
+
+/*
 router.post('/api/interactive-messages',
     async (req, res, next) => {
-        console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
+
 
         let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
 
         console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
-});
+});*/
 
 //All client interactive-message responses pass through this route
 router.post('/api/turn/new', (req, res, next) => {
@@ -140,6 +169,7 @@ router.post('/api/turn/new', (req, res, next) => {
 
 //Routes for getting character avatar
 //TODO should not rely on the catch all for getting images. this gets the avatar image
+//TODO Remove this and move it all to public images
 router.all('*', function (req, res, next) {
 
     //console.log('Called .all router, req.params: ', req.params['0']);

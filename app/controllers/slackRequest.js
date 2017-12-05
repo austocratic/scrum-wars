@@ -99,8 +99,7 @@ const contextsAndActions = {
         yesButton: require('./gameContextControllers/itemDetailMenu').yesButton,
         yesSellButton: require('./gameContextControllers/itemDetailMenu').yesSellButton,
         equip: require('./gameContextControllers/itemDetailMenu').equip,
-        unequip: require('./gameContextControllers/itemDetailMenu').unequip,
-        back: require('./gameContextControllers/itemDetailMenu').back
+        unequip: require('./gameContextControllers/itemDetailMenu').unequip
     },
     selectCharacterAvatarMenu: {
         more: require('./gameContextControllers/selectCharacterAvatarMenu').more,
@@ -143,9 +142,10 @@ const processSlashCommand = async (req) => {
     return slackResponseTemplateReturned;
 };
 
-const processInteractiveMessage = async (req) => {
+const processInteractiveMessage = async (payload) => {
     console.log('slackRequest.processInteractiveMessage()');
 
+    /*
     let payload;
 
     function tryToParseJSON(input){
@@ -160,7 +160,7 @@ const processInteractiveMessage = async (req) => {
         payload = tryToParseJSON(req.body.payload)
     } else {
         payload = tryToParseJSON(req.body)
-    }
+    }*/
 
     let game = await beginRequest();
 
@@ -269,7 +269,7 @@ const getInteractiveMessageResponse = (payload, game) => {
     //First check to see if the player selected "back".  If so. modify the callback to change the route
     let slackCallback;
 
-    /*
+    /* MOVING TO MIDDLEWARE
     if (userActionNameSelection === "back"){
         userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
         console.log('DEBUG userActionNameSelection after modify: ', userActionNameSelection);
@@ -277,11 +277,8 @@ const getInteractiveMessageResponse = (payload, game) => {
         console.log('DEBUG slackCallback after modify: ', slackCallback);
     } else {
         //Add the slack attachment name & value into the callback
-
+        slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
     }*/
-
-    //Moved out of else statement above
-    slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
 
     let slackRequestCommand = payload.command;
     let slackResponseTemplate = {};
@@ -348,7 +345,6 @@ const processRequest = (gameContext, userSelection, opts) => {
         return actualFn(opts);
     }
 };
-
 
 
 module.exports = {
