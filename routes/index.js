@@ -131,14 +131,23 @@ router.post('/api/interactive-messages', (req, res, next) => {
     console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
 
         //payload.actions[0].name;
-        req.payload = formatPayload(req);
+        try {
+            req.payload = formatPayload(req);
+        } catch(err){
+            console.log('ERROR when calling formatPayload: ', err)
+        }
 
         //Pass to next router
         next();
     },(req, res, next) => {
 
         //Modify the request based on reserved words or format the callback
-        modifyPayloadForReservedActions(req);
+        try{
+            modifyPayloadForReservedActions(req);
+        }catch(err){
+            console.log('ERROR when calling modifyPayloadForReservedActions: ', err)
+        }
+
 
     //Pass to next router
     next();

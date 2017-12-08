@@ -40,6 +40,8 @@ const modifyPayloadForReservedActions = (req) => {
     switch(req.payload.actions[0].name){
         case 'back':
 
+            console.log('DEBUG: modifyPayloadForReservedActions contained name back')
+
             let slackCallbackElements = req.payload.callback_id.split("/");
 
             let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
