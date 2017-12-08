@@ -78,14 +78,14 @@ const modifyCallbackForBack = slackCallback => {
 
     //If the callback string is less than 4 elements then it has at most 3 game contexts.
     //In order to go "back" we need to get the context that is 2 elements down.
-    if (slackCallbackElements.length < 3) {
+    if (slackCallbackElements.length < 4) {
         console.log('DEBUG slackCallbackElements was less than 3');
-        return slackCallbackElements[slackCallbackElements.length - 2]
+        return slackCallbackElements[slackCallbackElements.length - 3]
             .split(":")[0];
     }
 
-    //take the last element & split it into context:selection
-    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 2]
+    //take the last element & split it into context:name:value
+    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
         .split(":");
 
     //remove the last element from the array (the current context)
@@ -110,8 +110,12 @@ const modifyCallbackForBack = slackCallback => {
     console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
     console.log('DEBUG modifyCallbackForBack, lastKeyValue: ', lastKeyValue);
 
+    let modifiedCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
+
+    console.log('DEBUG modifyCallbackForBack modifiedCallback: ', modifiedCallback);
+
     //If there are more elements to join (does not hit if above), concatenate
-    return slackCallbackElements.join("/") + "/" + lastKeyValue[0];
+    return modifiedCallback
 };
 
 
