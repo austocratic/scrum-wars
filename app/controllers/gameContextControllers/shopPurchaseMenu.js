@@ -34,7 +34,7 @@ const itemList = gameObjects => {
             "name": "back",
             "text": "No thanks",
             "type": "button",
-            "value": "no"
+            "value": "back"
         }];
     
     //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';

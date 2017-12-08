@@ -334,10 +334,11 @@ const processRequest = (gameContext, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
 
     //console.log('DEBUG action: ', action);
-    //console.log('DEBUG userSelection: ', userSelection);
+
     let actualFn;
 
     console.log("DEBUG gameContext: ", gameContext);
+    console.log('DEBUG userSelection: ', userSelection);
 
     /* NOT NEEDED, all functions mapped require userSelection
     actualFn = contextsAndActions[gameContext];
@@ -345,9 +346,12 @@ const processRequest = (gameContext, userSelection, opts) => {
     if (typeof actualFn === 'function') {
         return actualFn(opts);
     }*/
+    if (!contextsAndActions[gameContext]){
+        return {"text": "ERROR context not configured in processRequest: ", gameContext}
+    }
 
     //Build the response function.  If response not available, return an error message
-    actualFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": "ERROR button not set up yet!"}});
+    actualFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": `ERROR, button ${userSelection} is not yet setup for context ${gameContext}!`}});
 
         //console.log("DEBUG actualFn: ", actualFn)
     if (typeof actualFn === 'function') {
