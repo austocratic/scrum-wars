@@ -44,7 +44,7 @@ const modifyPayloadForReservedActions = (req) => {
 
             let slackCallbackElements = req.payload.callback_id.split("/");
 
-            let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 2]
+            let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
                 .split(":");
 
             //return lastKeyValue[1];
@@ -88,16 +88,18 @@ const modifyCallbackForBack = slackCallback => {
     let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
         .split(":");
 
+    //Remove the value from the key:value
+    //lastKeyValue.pop();
+    lastKeyValue
+        .splice(lastKeyValue.length - 2, 2);
+
     //remove the last element from the array (the current context)
     slackCallbackElements
         .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
     console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
 
-    //Remove the value from the key:value
-    //lastKeyValue.pop();
-    lastKeyValue
-        .splice(lastKeyValue.length - 2, 2);
+
 
     console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
 
