@@ -90,7 +90,7 @@ const modifyCallbackForBack = slackCallback => {
 
     //remove the last element from the array (the current context)
     slackCallbackElements
-        .splice( slackCallbackElements.length - 2, slackCallbackElements.length);
+        .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
     console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
 
