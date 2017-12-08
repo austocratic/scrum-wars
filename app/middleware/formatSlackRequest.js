@@ -47,7 +47,7 @@ const modifyPayloadForReservedActions = (req) => {
             let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
                 .split(":");
 
-            return lastKeyValue[1];
+            //return lastKeyValue[1];
 
             req.payload.actions[0].name = lastKeyValue[1];
 
