@@ -53,7 +53,7 @@ const modifyPayloadForReservedActions = (req) => {
 
             //req.payload.actions[0].name = modifyUserActionNameSelection(req.payload.callback_id);
 
-            req.payload.callback_id = modifyCallbackForBack(payload.callback_id);
+            req.payload.callback_id = modifyCallbackForBack(req.payload.callback_id);
 
             break;
 
