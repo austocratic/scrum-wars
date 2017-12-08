@@ -56,13 +56,9 @@ const modifyPayloadForReservedActions = (req) => {
             req.payload.callback_id = modifyCallbackForBack(req.payload.callback_id);
 
             break;
-
-        default:
-
-            req.payload.callback_id = `${req.payload.callback_id}:${req.payload.actions[0].name}:${userActionValueSelection}/`;
-
-            break;
     }
+
+    req.payload.callback_id = `${req.payload.callback_id}:${req.payload.actions[0].name}:${userActionValueSelection}/`;
 
     console.log('DEBUG finished modifying for reserved words req.payload.callback_id: ', req.payload.callback_id);
     console.log('DEBUG finished modifying for reserved words req.payload.actions[0].name: ', req.payload.actions[0].name);
