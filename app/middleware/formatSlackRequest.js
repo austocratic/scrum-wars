@@ -25,7 +25,7 @@ const formatPayload = (req) => {
 const modifyPayloadForReservedActions = (req) => {
     console.log('Called formatSlackRequest.modifyPayloadForReservedActions()');
 
-    console.log('DEBUG modifyPayloadForReservedActions: req.payload: ', req.payload);
+    //console.log('DEBUG modifyPayloadForReservedActions: req.payload: ', req.payload);
 
     let userActionValueSelection;
 
@@ -70,7 +70,7 @@ const modifyCallbackForBack = slackCallback => {
     //Split up the callback string
     let slackCallbackElements = slackCallback.split("/");
 
-    console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
+    //console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
 
     //If the callback string is less than 4 elements then it has at most 3 game contexts.
     //In order to go "back" we need to get the context that is 2 elements down.
@@ -93,11 +93,11 @@ const modifyCallbackForBack = slackCallback => {
     slackCallbackElements
         .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
-    console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
+    //console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
 
 
 
-    console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
+    //console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
 
     //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
     if (slackCallbackElements.join("/").length === 0){
@@ -105,12 +105,12 @@ const modifyCallbackForBack = slackCallback => {
         return lastKeyValue[0];
     }
 
-    console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
-    console.log('DEBUG modifyCallbackForBack, lastKeyValue: ', lastKeyValue);
+    //console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
+    //console.log('DEBUG modifyCallbackForBack, lastKeyValue: ', lastKeyValue);
 
     let modifiedCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
 
-    console.log('DEBUG modifyCallbackForBack modifiedCallback: ', modifiedCallback);
+    //console.log('DEBUG modifyCallbackForBack modifiedCallback: ', modifiedCallback);
 
     //If there are more elements to join (does not hit if above), concatenate
     return modifiedCallback
