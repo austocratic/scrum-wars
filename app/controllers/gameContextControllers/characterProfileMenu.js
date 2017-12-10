@@ -79,9 +79,10 @@ const inventory = gameObjects => {
         }
     }
 
-    let updatedCallback = ':inventory/selectInventoryMenu';
-    
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectInventoryMenu`);
+
+    //let updatedCallback = ':inventory/selectInventoryMenu';
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
 
     return gameObjects.slackResponseTemplate;
 };
@@ -145,9 +146,11 @@ const equipment = gameObjects => {
         ]
     });
 
-    let updatedCallback = ':equipment/selectEquipmentMenu';
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectEquipmentMenu`);
+
+    //let updatedCallback = ':equipment/selectEquipmentMenu';
     
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
 
     return gameObjects.slackResponseTemplate;
 };

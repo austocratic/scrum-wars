@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const unequip = require('../../../controllers/gameContexts/itemDetailMenu').unequip;
+const unequip = require('../../../controllers/gameContextControllers/itemDetailMenu').unequip;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

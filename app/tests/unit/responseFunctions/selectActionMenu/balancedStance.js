@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const balancedStance = require('../../../../controllers/gameContexts/selectActionMenu').balancedStance;
+const balancedStance = require('../../../../controllers/gameContextControllers/selectActionMenu').balancedStance;
 
 const testSlackResponseFormat = require('../../../testSlackResponseFormat').testSlackResponseFormat;
 

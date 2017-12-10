@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const classSelection = require('../../../controllers/gameContexts/selectCharacterClassMenu').classSelection;
+const classSelection = require('../../../controllers/gameContextControllers/selectCharacterClassMenu').classSelection;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

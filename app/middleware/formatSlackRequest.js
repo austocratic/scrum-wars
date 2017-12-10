@@ -40,20 +40,23 @@ const modifyPayloadForReservedActions = (req) => {
     switch(req.payload.actions[0].name){
         case 'back':
 
-            console.log('DEBUG: modifyPayloadForReservedActions contained name back')
+            console.log('DEBUG: modifyPayloadForReservedActions contained name back');
 
             let slackCallbackElements = req.payload.callback_id.split("/");
 
             let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
                 .split(":");
 
-            //return lastKeyValue[1];
-
+            //Take the name used from previous context
             req.payload.actions[0].name = lastKeyValue[1];
+            //Take the value used from previous context
+            req.payload.actions[0].value = lastKeyValue[2];
 
             //req.payload.actions[0].name = modifyUserActionNameSelection(req.payload.callback_id);
 
             req.payload.callback_id = modifyCallbackForBack(req.payload.callback_id);
+
+            console.log('DEBUG req.payload.callback_id returned by modifyCallbackForBack()');
 
             break;
     }
@@ -94,8 +97,6 @@ const modifyCallbackForBack = slackCallback => {
         .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
     //console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
-
-
 
     //console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
 
@@ -140,6 +141,7 @@ const modifyUserActionNameSelection = slackCallback => {
 
 module.exports = {
     formatPayload,
-    modifyPayloadForReservedActions
+    modifyPayloadForReservedActions,
+    modifyCallbackForBack
 };
 

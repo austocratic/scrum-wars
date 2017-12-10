@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const action = require('../../../controllers/gameContexts/command').action;
+const action = require('../../../controllers/gameContextControllers/command').action;
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 
 const testDB = require('../../testDB');

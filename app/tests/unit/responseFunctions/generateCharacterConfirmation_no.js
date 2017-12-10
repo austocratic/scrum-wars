@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const no = require('../../../controllers/gameContexts/generateCharacterConfirmation').no;
+const no = require('../../../controllers/gameContextControllers/generateCharacterConfirmation').no;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

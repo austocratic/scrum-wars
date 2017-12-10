@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const yes = require('../../../controllers/gameContexts/travelConfirmation').yes;
+const yes = require('../../../controllers/gameContextControllers/travelConfirmation').yes;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

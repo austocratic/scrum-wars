@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const name = require('../../../controllers/gameContexts/command').name;
+const name = require('../../../controllers/gameContextControllers/command').name;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

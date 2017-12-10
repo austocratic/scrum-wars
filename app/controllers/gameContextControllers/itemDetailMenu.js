@@ -3,15 +3,11 @@
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
-const backButton = require('../backButton').processBackButton;
+//const backButton = require('../backButton').processBackButton;
 const modifyCallbackForBack = require('../backButton').modifyCallbackForBack;
 
 const Item = require('../../models/Item').Item;
 
-//TESTING
-const otherFunctionTest = require('../slackRequest') //.otherFunctionTest;
-
-//const getInteractiveMessageResponse = require('../slackRequest').getInteractiveMessageResponse;
 
 
 const yesButton = gameObjects => {

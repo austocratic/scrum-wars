@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const inventory = require('../../../controllers/gameContexts/characterProfileMenu').inventory;
+const inventory = require('../../../controllers/gameContextControllers/characterProfileMenu').inventory;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

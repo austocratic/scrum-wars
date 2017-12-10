@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const genderSelection = require('../../../controllers/gameContexts/selectGenderMenu').genderSelection;
+const genderSelection = require('../../../controllers/gameContextControllers/selectGenderMenu').genderSelection;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

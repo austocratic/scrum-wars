@@ -3,7 +3,7 @@
 
 const assert = require('assert');
 
-const processActionOnTarget = require('../../../../controllers/gameContexts/selectActionTarget').processActionOnTarget;
+const processActionOnTarget = require('../../../../controllers/gameContextControllers/selectActionTarget').processActionOnTarget;
 
 const testSlackResponseFormat = require('../../../testSlackResponseFormat').testSlackResponseFormat;
 

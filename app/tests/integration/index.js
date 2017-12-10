@@ -236,6 +236,9 @@ describe("Call router w/ a mock of character selection Yes", function() {
 
         request(testRequest, function (error, response, body) {
 
+            if (error){
+                console.log('Error when testing: ', error);
+            }
             console.log('Response: ', response.statusCode);
 
             assert.equal(response.statusCode, 200);

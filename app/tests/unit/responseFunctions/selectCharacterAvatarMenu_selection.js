@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const selection = require('../../../controllers/gameContexts/selectCharacterAvatarMenu').selection;
+const selection = require('../../../controllers/gameContextControllers/selectCharacterAvatarMenu').selection;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

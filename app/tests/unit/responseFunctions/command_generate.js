@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const generate = require('../../../controllers/gameContexts/command').generate;
+const generate = require('../../../controllers/gameContextControllers/command').generate;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

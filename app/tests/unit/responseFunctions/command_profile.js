@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const profile = require('../../../controllers/gameContexts/command').profile;
+const profile = require('../../../controllers/gameContextControllers/command').profile;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

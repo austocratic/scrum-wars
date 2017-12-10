@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const exit = require('../../../controllers/gameContexts/characterProfileMenu').exit;
+const exit = require('../../../controllers/gameContextControllers/characterProfileMenu').exit;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

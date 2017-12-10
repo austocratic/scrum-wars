@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const equipment = require('../../../controllers/gameContexts/characterProfileMenu').equipment;
+const equipment = require('../../../controllers/gameContextControllers/characterProfileMenu').equipment;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

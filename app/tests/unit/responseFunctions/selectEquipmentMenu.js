@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const equipmentSelection = require('../../../controllers/gameContexts/selectEquipmentMenu').equipmentSelection;
+const equipmentSelection = require('../../../controllers/gameContextControllers/selectEquipmentMenu').equipmentSelection;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 

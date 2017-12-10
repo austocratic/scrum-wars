@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const travel = require('../../../controllers/gameContexts/command').travel;
+const travel = require('../../../controllers/gameContextControllers/command').travel;
 
 const testSlackResponseFormat = require('../../testSlackResponseFormat').testSlackResponseFormat;
 
