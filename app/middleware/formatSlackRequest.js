@@ -22,8 +22,6 @@ const formatPayload = (req) => {
         payload = tryToParseJSON(req.body)
     }
 
-    console.log('DEBUG formatPayload, payload: ', JSON.stringify(payload));
-
     //Format the user property to a standard format
     if (payload.user_id) {
         return payload;
@@ -76,7 +74,7 @@ const modifyPayloadForReservedActions = (req) => {
             //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
             if (slackCallbackElements.length < 4) {
                 console.log('DEBUG slackCallbackElements was less than 3, setting command property');
-                req.payload.command = "/" + slackCallbackElements[slackCallbackElements.length - 3].split(":")[0];
+                req.payload.command = "/" + slackCallbackElements[slackCallbackElements.length - 3].split(":")[1];
             }
 
             //If code did not hit an if condition above, invoke callback modification
