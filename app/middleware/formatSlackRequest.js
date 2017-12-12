@@ -21,6 +21,8 @@ const formatPayload = (req) => {
     } else {
         payload = tryToParseJSON(req.body)
     }
+    
+    console.log('DEBUG formatPayload, payload: ', JSON.stringify(payload));
 
     //Format the user property to a standard format
     if (payload.user.id) {
