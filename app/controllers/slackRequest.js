@@ -247,6 +247,8 @@ const getSlashCommandResponse = (payload, game) => {
 const getInteractiveMessageResponse = (payload, game) => {
     console.log('slackRequest.getInteractiveMessageResponse()');
 
+    console.log('DEBUG getInteractiveMessageResponse payload: ', JSON.stringify(payload));
+
     let userActionNameSelection = payload.actions[0].name;
     let userActionValueSelection = getActionValue();
 
