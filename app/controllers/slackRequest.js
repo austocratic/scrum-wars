@@ -107,16 +107,17 @@ const contextsAndActions = {
     }
 };
 
-const processSlashCommand = async (req) => {
+const processSlashCommand = async (payload) => {
     console.log('slackRequest.processSlashCommand()');
 
+    /*
     let payload;
 
     if (req.body.payload){
         payload = req.body.payload
     } else {
         payload = req.body
-    }
+    }*/
 
     console.log('DEBUG payload: ', payload);
 
