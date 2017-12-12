@@ -1,5 +1,8 @@
 "use strict";
 
+
+const _ = require('lodash');
+
 const formatPayload = (req) => {
     console.log('Called formatSlackRequest.formatPayload()');
 
@@ -17,6 +20,11 @@ const formatPayload = (req) => {
         payload = tryToParseJSON(req.body.payload)
     } else {
         payload = tryToParseJSON(req.body)
+    }
+
+    //Format the user property to a standard format
+    if (payload.user.id) {
+        payload.user_id = payload.user.id
     }
 
     return payload;

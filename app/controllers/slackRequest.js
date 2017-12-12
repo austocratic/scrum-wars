@@ -117,14 +117,8 @@ const processSlashCommand = async (payload) => {
 
     console.log('slackRequest.processSlashCommand() passed beginRequest()');
 
-    let slackRequestUserID;
-
-    if (payload.user_id){
         //See if slack user is available in DB
-        slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
-    } else {
-        slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user.id});
-    }
+    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
 
     //If Slack user is not available in the DB, add them
     if (!slackRequestUserID){
