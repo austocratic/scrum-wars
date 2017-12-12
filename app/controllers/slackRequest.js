@@ -110,15 +110,6 @@ const contextsAndActions = {
 const processSlashCommand = async (payload) => {
     console.log('slackRequest.processSlashCommand()');
 
-    /*
-    let payload;
-
-    if (req.body.payload){
-        payload = req.body.payload
-    } else {
-        payload = req.body
-    }*/
-
     console.log('DEBUG payload: ', payload);
 
     //Create a game object, initiate, refresh
@@ -126,8 +117,14 @@ const processSlashCommand = async (payload) => {
 
     console.log('slackRequest.processSlashCommand() passed beginRequest()');
 
-    //See if slack user is available in DB
-    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
+    let slackRequestUserID;
+
+    if (payload.user_id){
+        //See if slack user is available in DB
+        slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
+    } else {
+        slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user.id});
+    }
 
     //If Slack user is not available in the DB, add them
     if (!slackRequestUserID){
@@ -145,23 +142,6 @@ const processSlashCommand = async (payload) => {
 
 const processInteractiveMessage = async (payload) => {
     console.log('slackRequest.processInteractiveMessage()');
-
-    /*
-    let payload;
-
-    function tryToParseJSON(input){
-        try {
-            return JSON.parse(input);
-        } catch(err){
-            return input
-        }
-    }
-
-    if (tryToParseJSON(req.body.payload)){
-        payload = tryToParseJSON(req.body.payload)
-    } else {
-        payload = tryToParseJSON(req.body)
-    }*/
 
     let game = await beginRequest();
 
