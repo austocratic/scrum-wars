@@ -125,6 +125,8 @@ router.post('/api/commands',
             console.log('ERROR when calling formatPayload: ', err)
         }
 
+        console.log('DEBUG /commands req.payload: ', JSON.stringify(req.payload));
+
         //Pass to next router
         next();
     }, async(req, res, next) => {
