@@ -54,6 +54,19 @@ const modifyPayloadForReservedActions = (req) => {
 
             //req.payload.actions[0].name = modifyUserActionNameSelection(req.payload.callback_id);
 
+            //If the callback is less than 2 elements, there is no further to go back.  Going back further should Exit the context
+            //if (slackCallbackElements.length < 3) {
+
+            //}
+
+
+            //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
+            if (slackCallbackElements.length < 4) {
+                console.log('DEBUG slackCallbackElements was less than 3, setting command property');
+                req.payload.command = "/" + slackCallbackElements[slackCallbackElements.length - 3].split(":")[0];
+            }
+
+            //If code did not hit an if condition above, invoke callback modification
             req.payload.callback_id = modifyCallbackForBack(req.payload.callback_id);
 
             console.log('DEBUG req.payload.callback_id returned by modifyCallbackForBack()');
@@ -77,6 +90,7 @@ const modifyCallbackForBack = slackCallback => {
 
     //If the callback string is less than 4 elements then it has at most 3 game contexts.
     //In order to go "back" we need to get the context that is 2 elements down.
+
     if (slackCallbackElements.length < 4) {
         console.log('DEBUG slackCallbackElements was less than 3');
         return slackCallbackElements[slackCallbackElements.length - 3]
@@ -105,9 +119,6 @@ const modifyCallbackForBack = slackCallback => {
         //console.log('DEBUG passed .length if statement');
         return lastKeyValue[0];
     }
-
-    //console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
-    //console.log('DEBUG modifyCallbackForBack, lastKeyValue: ', lastKeyValue);
 
     let modifiedCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
 
