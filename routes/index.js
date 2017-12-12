@@ -118,7 +118,18 @@ router.post('/api/commands',
     async (req, res, next) => {
         console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
 
-        let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req);
+        //payload.actions[0].name;
+        try {
+            req.payload = formatPayload(req);
+        } catch(err){
+            console.log('ERROR when calling formatPayload: ', err)
+        }
+
+        //Pass to next router
+        next();
+    }, async(req, res, next) => {
+
+        let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
 
         console.log('/api/commands router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
@@ -148,13 +159,19 @@ router.post('/api/interactive-messages', (req, res, next) => {
             console.log('ERROR when calling modifyPayloadForReservedActions: ', err)
         }
 
-
     //Pass to next router
     next();
 }, async(req, res, next) => {
 
-        //let slackResponseTemplateReturned = 'test complete';
-        let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req.payload);
+    let slackResponseTemplateReturned;
+
+    console.log('DEBUG interactive-messages router received req.payload: ', JSON.stringify(req.payload));
+
+        if (req.payload.command){
+            slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
+        } else {
+            slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req.payload);
+        }
 
         console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
