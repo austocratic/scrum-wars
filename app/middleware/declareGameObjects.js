@@ -63,7 +63,9 @@ const declareGameObjects = (game, slackRequest) => {
     let gameObjects = {
         user: new User(game.state, slackRequest.user_id),
         requestZone: new Zone(game.state, slackRequest.channel_id),
-        currentMatch: new Match(game.state, game.getCurrentMatchID())
+        currentMatch: new Match(game.state, game.getCurrentMatchID()),
+        //TODO I dont think that responseTemplate should be a standard game object....
+        slackResponseTemplate: {}
     };
 
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
