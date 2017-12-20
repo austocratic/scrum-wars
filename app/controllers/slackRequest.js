@@ -113,11 +113,12 @@ const processSlashCommand = async (payload) => {
     console.log('DEBUG payload: ', payload);
 
     //Create a game object, initiate, refresh
-    let game = await beginRequest();
+    //let game = await beginRequest();
 
     console.log('slackRequest.processSlashCommand() passed beginRequest()');
 
-        //See if slack user is available in DB
+    /*
+    //See if slack user is available in DB
     let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
 
     //If Slack user is not available in the DB, add them
@@ -125,7 +126,7 @@ const processSlashCommand = async (payload) => {
         console.log('Requesting user does not exist, adding');
         game.createUser(payload.user_id);
         console.log('game.users after user added: ', game.state.user);
-    }
+    }*/
 
     let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
@@ -168,7 +169,7 @@ const getSlashCommandResponse = (payload, game) => {
     console.log('slackRequest.getSlashCommandResponse()');
 
     //Declare a user selection based on the command entered in slack (trim the "/")
-    let userSelection = payload.command.slice(1, payload.command.length);
+    //let userSelection = payload.command.slice(1, payload.command.length);
 
     //Declare a user based on the slack ID making the request
     //let user = new User(game.state, payload.user_id);
@@ -177,11 +178,12 @@ const getSlashCommandResponse = (payload, game) => {
     //let permission = new Permission(game.state, user.props.permission_id);
 
     //If user's permission can not access that slash command, return an error
+    /*
     if (!permission.canAccessSlashCommand(userSelection)){
         return {
             "text": "Sorry traveler, but I fear you can't take actions in this land"
         }
-    }
+    }*/
 
     let slackRequestChannelID = payload.channel_id;
     let slackRequestCommand = 'command';
@@ -304,12 +306,13 @@ const getInteractiveMessageResponse = (payload, game) => {
     });
 };
 
+/*
 const endRequest = async (game) => {
     console.log('slackRequest.endRequest()');
 
     //Overwrites with updated local props
     return await game.updateState();
-};
+};*/
 
 const processRequest = (gameContext, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
@@ -342,12 +345,12 @@ const processRequest = (gameContext, userSelection, opts) => {
 
 
 module.exports = {
-    beginRequest,
-    endRequest,
+    //beginRequest,
+    //endRequest,
     processRequest,
     processSlashCommand,
-    processInteractiveMessage,
-    getInteractiveMessageResponse,
-    getSlashCommandResponse
+    processInteractiveMessage
+    //getInteractiveMessageResponse,
+    //getSlashCommandResponse
 };
 

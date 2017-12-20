@@ -9,6 +9,10 @@ const bodyParser = require('body-parser');
 const slackRequest = require('../app/controllers/slackRequest');
 const formatPayload = require('../app/middleware/formatSlackRequest').formatPayload;
 const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
+const getGame = require('../app/middleware/getGame').getGame;
+const declareGameObjects = require('../app/middleware/declareGameObjects').declareGameObjects;
+const checkUserPermissions = require('../app/middleware/checkUserPermissions').checkUserPermissions;
+const updateGame = require('../app/middleware/updateGame').updateGame;
 
 
 const turns = require('../app/controllers/turns');
@@ -127,11 +131,34 @@ router.post('/api/commands',
 
         console.log('DEBUG /commands req.payload: ', JSON.stringify(req.payload));
 
-        //Pass to next router
         next();
     }, async(req, res, next) => {
 
-        let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
+        //Get the game state and calculate values in memory
+        req.gameObjects.game = getGame();
+
+        next();
+    }, async(req, res, next) => {
+
+        //Declare objects based on the request
+        declareGameObjects(req);
+
+        next();
+    }, async(req, res, next) => {
+
+        //Declare objects based on the request
+        checkUserPermissions(req.gameObjects.permission);
+
+        next();
+    }, async(req, res, next) => {
+
+        //let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
+        //(gameContext, userSelection, opts)
+        //Command is hard coded for slash commands
+        let slackResponseTemplateReturned = await slackRequest.processRequest('command', req.gameObjects.command, req.gameObjects);
+
+        //Update game state
+        await updateGame(req);
 
         console.log('/api/commands router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);

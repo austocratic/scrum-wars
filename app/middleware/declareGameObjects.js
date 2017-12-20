@@ -19,6 +19,20 @@ const declareGameObjects = (req) => {
     
     console.log('DEBUG: req.body: ', req.body.payload.user_id);
 
+    //See if slack user is available in DB
+    let slackRequestUserID = _.find(req.gameObjects.game.state.user, {'slack_user_id': req.body.payload.user_id});
+
+    //If Slack user is not available in the DB, add them
+    if (!slackRequestUserID){
+        console.log('Requesting user does not exist, adding');
+        game.createUser(req.body.payload.user_id);
+    }
+
+    //Slash commands have a command attribute
+    if (req.body.payload.command){
+        req.gameObjects.command = req.body.payload.command.slice(1, req.body.payload.command.length);
+    }
+
     //Declare a user based on the slack ID making the request
     req.gameObjects.user = new User(req.gameObjects.game.state, req.body.payload.user_id);
 

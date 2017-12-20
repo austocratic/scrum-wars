@@ -21,7 +21,7 @@ const getGame = async (req) => {
     //Refresh the game (check for new turn, player deaths, ect.)
     game.refresh();
 
-    req.gameObjects.game = game;
+    return game;
 };
 
 
