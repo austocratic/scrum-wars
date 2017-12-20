@@ -118,6 +118,42 @@ router.get('/assets/:folder/:id', function (req, res, next) {
     });
 });
 
+//Working, I combined middleware into a single function
+router.post('/api/commands',
+    async (req, res, next) => {
+
+        let formattedRequest;
+
+        try {
+
+            //formatPayload() attempts to parse the request &
+            formattedRequest = formatPayload(req);
+        } catch(err){
+            console.log('ERROR when calling formatPayload: ', err)
+        }
+
+        let game = await getGame();
+
+        //Get the game state and calculate values in memory
+        //req.gameObjects = {
+        //    game: gameState
+        //};
+
+        //declareGameObjects(req);
+        let gameObjects = declareGameObjects(game, formattedRequest);
+
+        //TODO need to determine what to do with the response from this call:
+        checkUserPermissions(gameObjects.permission, gameObjects.command);
+
+        let slackResponseTemplateReturned = await slackRequest.processRequest('command', gameObjects.command, gameObjects);
+
+        //Update game state
+        await updateGame(req);
+        res.status(200).send(slackResponseTemplateReturned);
+    });
+
+
+/*
 router.post('/api/commands',
     async (req, res, next) => {
         console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
@@ -167,7 +203,7 @@ router.post('/api/commands',
         console.log('/api/commands router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
 
-    });
+    });*/
 
 
 //All client interactive-message responses pass through this route

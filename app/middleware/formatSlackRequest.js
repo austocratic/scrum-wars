@@ -23,11 +23,11 @@ const formatPayload = (req) => {
     }
 
     //Format the user property to a standard format
-    if (payload.user_id) {
-        return payload;
-    }
+    //if (payload.user_id) {
+    //    return payload;
+    //}
 
-    payload.user_id = payload.user.id;
+    //payload.user_id = payload.user.id;
 
     return payload;
 

@@ -24,7 +24,7 @@ req = {
 
 describe("Testing declareGameObject() Middleware", function() {
 
-    req.body.payload = {
+    let testRequest = {
         "command": "/generate",
         "user_id": "U4ZA6CCBG",
         "user_name": "austo",
@@ -46,19 +46,30 @@ describe("Testing declareGameObject() Middleware", function() {
     }
 
     if (tryToParseJSON(req.body.payload)){
-        req.body.payload = tryToParseJSON(req.body.payload)
+        testRequest = tryToParseJSON(testRequest)
     } else {
-        req.body.payload = tryToParseJSON(req.body)
+        testRequest = tryToParseJSON(testRequest)
     }
 
-    declareGameObjects(req);
+    let gameObjects = declareGameObjects(game, testRequest);
     
-    it("should set the req.gameObjects property to contain several standard objects.", function () {
-        assert(req.gameObjects.user);
-        assert(req.gameObjects.permission);
-        assert(req.gameObjects.requestZone);
-        assert(req.gameObjects.currentMatch);
-        assert(req.gameObjects.playerCharacter);
-        assert(req.gameObjects.characterClass);
+    it("should set the gameObject object to contain a user", function () {
+        assert(gameObjects.user);
     });
+    it("should set the gameObject object to contain a permission", function () {
+        assert(gameObjects.permission);
+    });
+    it("should set the gameObject object to contain a requestZone", function () {
+        assert(gameObjects.requestZone);
+    });
+    it("should set the gameObject object to contain a currentMatch", function () {
+        assert(gameObjects.currentMatch);
+    });
+    it("should set the gameObject object to contain a playerCharacter", function () {
+        assert(gameObjects.playerCharacter);
+    });
+    it("should set the gameObject object to contain a characterClass", function () {
+        assert(gameObjects.characterClass);
+    });
+
 });

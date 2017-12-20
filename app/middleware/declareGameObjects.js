@@ -11,7 +11,7 @@ const Match = require('../models/Match').Match;
 const Character = require('../models/Character').Character;
 const Class = require('../models/Class').Class;
 
-
+/*
 const declareGameObjects = (req) => {
     console.log('called Middleware: declareGameObjects()');
 
@@ -52,6 +52,52 @@ const declareGameObjects = (req) => {
         }
     }
 
+
+    //Declare standard objects (from getInteractiveMessageResponse)
+
+};*/
+
+const declareGameObjects = (game, slackRequest) => {
+    console.log('called Middleware: declareGameObjects()');
+
+    let gameObjects = {
+        user: new User(game.state, slackRequest.user_id),
+        requestZone: new Zone(game.state, slackRequest.channel_id),
+        currentMatch: new Match(game.state, game.getCurrentMatchID())
+    };
+
+    gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
+
+    //See if slack user is available in DB
+    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': slackRequest.user_id});
+
+    //If Slack user is not available in the DB, add them
+    if (!slackRequestUserID){
+        console.log('Requesting user does not exist, adding');
+        game.createUser(slackRequest.user_id);
+    }
+
+    //Slash commands have a command attribute
+    if (slackRequest.command){
+        gameObjects.command = slackRequest.command.slice(1, slackRequest.command.length);
+    }
+
+    //Only instantiate playerCharacter if there is a character ID available to use
+    if (gameObjects.user.props.character_id){
+        gameObjects.playerCharacter = new Character(game.state, gameObjects.user.props.character_id);
+
+        //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
+        if (gameObjects.playerCharacter.props.class_id){
+            gameObjects.characterClass = new Class(game.state, gameObjects.playerCharacter.props.class_id);
+        }
+    }
+
+    console.log('DEBUG gameObjects.user.props: ', gameObjects.user.props);
+    console.log('DEBUG gameObjects.requestZone.props: ', gameObjects.requestZone.props);
+    console.log('DEBUG gameObjects.match.props: ', gameObjects.currentMatch.props);
+    console.log('DEBUG gameObjects.permission.props: ', gameObjects.permission.props);
+
+    return gameObjects;
 
     //Declare standard objects (from getInteractiveMessageResponse)
 
