@@ -4,7 +4,7 @@ const updateGame = async (req) => {
     console.log('called Middleware: getGame()');
 
     //Overwrites with updated local props
-    return await req.gameObjects.game.updateState();
+    return await game.updateState();
 };
 
 

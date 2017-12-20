@@ -68,6 +68,23 @@ const declareGameObjects = (game, slackRequest) => {
         slackResponseTemplate: {}
     };
 
+    if (slackRequest.callback_id){
+        gameObjects.slackCallback = slackRequest.callback_id;
+    }
+
+    if (slackRequest.actions[0]){
+        if(slackRequest.actions[0].name) {
+            gameObjects.userActionNameSelection = slackRequest.actions[0].name;
+        }
+        if(slackRequest.actions[0].value){
+            gameObjects.userActionValueSelection = slackRequest.actions[0].value
+        }
+        if(slackRequest.actions[0].selected_options[0].value){
+            gameObjects.userActionValueSelection = slackRequest.actions[0].selected_options[0].value
+        }
+
+    }
+
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
 
     //See if slack user is available in DB
@@ -94,15 +111,7 @@ const declareGameObjects = (game, slackRequest) => {
         }
     }
 
-    console.log('DEBUG gameObjects.user.props: ', gameObjects.user.props);
-    console.log('DEBUG gameObjects.requestZone.props: ', gameObjects.requestZone.props);
-    console.log('DEBUG gameObjects.match.props: ', gameObjects.currentMatch.props);
-    console.log('DEBUG gameObjects.permission.props: ', gameObjects.permission.props);
-
     return gameObjects;
-
-    //Declare standard objects (from getInteractiveMessageResponse)
-
 };
 
 

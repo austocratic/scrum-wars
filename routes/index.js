@@ -118,15 +118,13 @@ router.get('/assets/:folder/:id', function (req, res, next) {
     });
 });
 
-//Working, I combined middleware into a single function
-router.post('/api/commands',
-    async (req, res, next) => {
+router.post('/api/commands', async (req, res, next) => {
+    console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
 
         let formattedRequest;
 
         try {
-
-            //formatPayload() attempts to parse the request &
+            //formatPayload() attempt to parse the request
             formattedRequest = formatPayload(req);
         } catch(err){
             console.log('ERROR when calling formatPayload: ', err)
@@ -134,12 +132,7 @@ router.post('/api/commands',
 
         let game = await getGame();
 
-        //Get the game state and calculate values in memory
-        //req.gameObjects = {
-        //    game: gameState
-        //};
-
-        //declareGameObjects(req);
+        //Declare standard game objects based on the Slack request
         let gameObjects = declareGameObjects(game, formattedRequest);
 
         //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
@@ -156,60 +149,48 @@ router.post('/api/commands',
         res.status(200).send(slackResponseTemplateReturned);
     });
 
+//All client interactive-message responses pass through this route
+router.post('/api/interactive-messages', async (req, res, next) => {
+    console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
+
+    let formattedRequest;
+
+    try {
+        //formatPayload() attempt to parse the request
+        formattedRequest = formatPayload(req);
+    } catch(err){
+        console.log('ERROR when calling formatPayload: ', err)
+    }
+
+    let game = await getGame();
+
+    //Declare standard game objects based on the Slack request
+    let gameObjects = declareGameObjects(game, formattedRequest);
+
+    //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
+    gameObjects.game = game;
+
+    let slackCallbackMajorElements = gameObjects.callback_id.split("/");
+
+    //console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
+
+    let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 2].split(":");
+
+    //console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
+
+    //The last element of the parsed callback string will be the context
+    let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
+
+    let slackResponseTemplateReturned = await slackRequest.processRequest(gameContext, gameObjects.command, gameObjects);
+
+    //Update game state
+    //await updateGame(req);
+    game.updateState();
+    res.status(200).send(slackResponseTemplateReturned);
+});
+
 
 /*
-router.post('/api/commands',
-    async (req, res, next) => {
-        console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
-
-        //payload.actions[0].name;
-        try {
-            req.payload = formatPayload(req);
-        } catch(err){
-            console.log('ERROR when calling formatPayload: ', err)
-        }
-
-        console.log('DEBUG /commands req.payload: ', JSON.stringify(req.payload));
-
-        next();
-    }, async(req, res, next) => {
-
-        let gameState = await getGame();
-
-        //Get the game state and calculate values in memory
-        req.gameObjects = {
-            game: gameState
-        };
-
-        next();
-    }, async(req, res, next) => {
-
-        //Declare objects based on the request
-        declareGameObjects(req);
-
-        next();
-    }, async(req, res, next) => {
-
-        //Declare objects based on the request
-        checkUserPermissions(req.gameObjects.permission);
-
-        next();
-    }, async(req, res, next) => {
-
-        //let slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
-        //(gameContext, userSelection, opts)
-        //Command is hard coded for slash commands
-        let slackResponseTemplateReturned = await slackRequest.processRequest('command', req.gameObjects.command, req.gameObjects);
-
-        //Update game state
-        await updateGame(req);
-
-        console.log('/api/commands router sending response: ', JSON.stringify(slackResponseTemplateReturned));
-        res.status(200).send(slackResponseTemplateReturned);
-
-    });*/
-
-
 //All client interactive-message responses pass through this route
 router.post('/api/interactive-messages', (req, res, next) => {
     console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
@@ -248,7 +229,7 @@ router.post('/api/interactive-messages', (req, res, next) => {
 
         console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
-    });
+    });*/
 
 /*
 router.post('/api/interactive-messages',

@@ -228,11 +228,9 @@ const getInteractiveMessageResponse = (payload, game) => {
 
     console.log('DEBUG getInteractiveMessageResponse payload: ', JSON.stringify(payload));
 
+    /*
     let userActionNameSelection = payload.actions[0].name;
     let userActionValueSelection = getActionValue();
-
-    //console.log('Interactive message userActionNameSelection: ', userActionNameSelection);
-    //console.log('Interactive message userActionValueSelection: ', userActionValueSelection);
 
     function getActionValue(){
         if (payload.actions[0].value) {
@@ -240,7 +238,7 @@ const getInteractiveMessageResponse = (payload, game) => {
         }
         //Action value dictates the specific selection from drop down menus
         return payload.actions[0].selected_options[0].value;
-    }
+    }*/
 
     let slackCallbackMajorElements = payload.callback_id.split("/");
 
@@ -269,9 +267,9 @@ const getInteractiveMessageResponse = (payload, game) => {
         slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
     }*/
 
-    let slackCallback = payload.callback_id;
-    let slackRequestCommand = payload.command;
-    let slackResponseTemplate = {};
+    //let slackCallback = payload.callback_id;
+    //let slackRequestCommand = payload.command;
+    //let slackResponseTemplate = {};
     //let user = new User(game.state, payload.user.id);
     //let requestZone = new Zone(game.state, payload.channel.id);
     //let currentMatch = new Match(game.state, game.getCurrentMatchID());
