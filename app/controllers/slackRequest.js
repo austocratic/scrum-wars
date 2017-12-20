@@ -146,6 +146,7 @@ const processInteractiveMessage = async (payload) => {
     return slackResponseTemplateReturned;
 };
 
+/* Moving to middleware
 const beginRequest = async () => {
     console.log('slackRequest.beginRequest()');
 
@@ -161,7 +162,7 @@ const beginRequest = async () => {
     game.refresh();
 
     return game;
-};
+};*/
 
 const getSlashCommandResponse = (payload, game) => {
     console.log('slackRequest.getSlashCommandResponse()');
@@ -170,10 +171,10 @@ const getSlashCommandResponse = (payload, game) => {
     let userSelection = payload.command.slice(1, payload.command.length);
 
     //Declare a user based on the slack ID making the request
-    let user = new User(game.state, payload.user_id);
+    //let user = new User(game.state, payload.user_id);
 
     //Declare a permission based on user's permission
-    let permission = new Permission(game.state, user.props.permission_id);
+    //let permission = new Permission(game.state, user.props.permission_id);
 
     //If user's permission can not access that slash command, return an error
     if (!permission.canAccessSlashCommand(userSelection)){
@@ -189,9 +190,10 @@ const getSlashCommandResponse = (payload, game) => {
 
     //Setup local game objects to send to request processor
     let slackResponseTemplate = {};
-    let requestZone = new Zone(game.state, slackRequestChannelID);
-    let currentMatch = new Match(game.state, game.getCurrentMatchID());
+    //let requestZone = new Zone(game.state, slackRequestChannelID);
+    //let currentMatch = new Match(game.state, game.getCurrentMatchID());
 
+    /*
     let playerCharacter, characterClass;
 
     //Only instantiate playerCharacter if there is a character ID available to use
@@ -202,7 +204,7 @@ const getSlashCommandResponse = (payload, game) => {
         if (playerCharacter.props.class_id){
             characterClass = new Class(game.state, playerCharacter.props.class_id);
         }
-    }
+    }*/
 
     return processRequest(slackRequestCommand, userSelection, {
         game,
@@ -268,10 +270,12 @@ const getInteractiveMessageResponse = (payload, game) => {
     let slackCallback = payload.callback_id;
     let slackRequestCommand = payload.command;
     let slackResponseTemplate = {};
-    let user = new User(game.state, payload.user.id);
-    let requestZone = new Zone(game.state, payload.channel.id);
-    let currentMatch = new Match(game.state, game.getCurrentMatchID());
+    //let user = new User(game.state, payload.user.id);
+    //let requestZone = new Zone(game.state, payload.channel.id);
+    //let currentMatch = new Match(game.state, game.getCurrentMatchID());
 
+    
+    /*
     let playerCharacter, characterClass;
 
     //Only instantiate playerCharacter if there is a character ID available to use
@@ -282,7 +286,7 @@ const getInteractiveMessageResponse = (payload, game) => {
         if (playerCharacter.props.class_id){
             characterClass = new Class(game.state, playerCharacter.props.class_id);
         }
-    }
+    }*/
 
     return processRequest(gameContext, userActionNameSelection, {
         game,
