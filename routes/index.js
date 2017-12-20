@@ -142,6 +142,9 @@ router.post('/api/commands',
         //declareGameObjects(req);
         let gameObjects = declareGameObjects(game, formattedRequest);
 
+        //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
+        gameObjects.game = game;
+
         //TODO need to determine what to do with the response from this call:
         checkUserPermissions(gameObjects.permission, gameObjects.command);
 
