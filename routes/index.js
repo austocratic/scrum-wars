@@ -148,7 +148,8 @@ router.post('/api/commands',
         let slackResponseTemplateReturned = await slackRequest.processRequest('command', gameObjects.command, gameObjects);
 
         //Update game state
-        await updateGame(req);
+        //await updateGame(req);
+        game.updateState();
         res.status(200).send(slackResponseTemplateReturned);
     });
 
