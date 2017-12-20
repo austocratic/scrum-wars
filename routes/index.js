@@ -134,9 +134,11 @@ router.post('/api/commands',
         next();
     }, async(req, res, next) => {
 
+        let gameState = await getGame();
+
         //Get the game state and calculate values in memory
-        await req.gameObjects = {
-            game: getGame()
+        req.gameObjects = {
+            game: gameState
         };
 
         next();
