@@ -83,7 +83,7 @@ const declareGameObjects = (game, slackRequest) => {
         if(slackRequest.actions[0].value){
             gameObjects.userActionValueSelection = slackRequest.actions[0].value
         }
-        if(slackRequest.actions[0].selected_options[0].value){
+        if(slackRequest.actions[0].selected_options){
             gameObjects.userActionValueSelection = slackRequest.actions[0].selected_options[0].value
         }
     }
