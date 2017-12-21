@@ -21,7 +21,6 @@ const action = gameObjects => {
         'user',
         'slackResponseTemplate',
         'playerCharacter',
-        'slackCallback',
         'requestZone',
         'currentMatch',
         'characterClass'
