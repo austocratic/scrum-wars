@@ -89,7 +89,10 @@ const declareGameObjects = (game, slackRequest) => {
         }
 
         //Format the callback string to include the name and value of user's selection
-        slackRequest.callback_id = `${slackRequest.callback_id}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
+        gameObjects.callback_id = `${gameObjects.callback_id}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
+
+        console.log('DEBUG modifed callback: ', slackRequest.callback_id)
+
     }
 
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
