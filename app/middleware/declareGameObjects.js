@@ -58,7 +58,7 @@ const declareGameObjects = (req) => {
 };*/
 
 const declareGameObjects = (game, slackRequest) => {
-    console.log('called Middleware: declareGameObjects()');
+    console.log('called Middleware: declareGameObjects() with slackRequest: ', JSON.stringify(slackRequest));
 
     let gameObjects = {
         currentMatch: new Match(game.state, game.getCurrentMatchID()),
@@ -69,7 +69,7 @@ const declareGameObjects = (game, slackRequest) => {
     //Process interactive_message specific properties
     if (slackRequest.type === 'interactive_message'){
         gameObjects.user = new User(game.state, slackRequest.user.id);
-        gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id)
+        gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id);
         gameObjects.slackCallback = slackRequest.callback_id;
     } else {
         gameObjects.user = new User(game.state, slackRequest.user_id);
