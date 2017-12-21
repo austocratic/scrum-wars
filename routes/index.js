@@ -172,11 +172,11 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     let slackCallbackMajorElements = gameObjects.slackCallback.split("/");
 
-    //console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
+    console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
 
     let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 2].split(":");
 
-    //console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
+    console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
 
     //The last element of the parsed callback string will be the context
     let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];

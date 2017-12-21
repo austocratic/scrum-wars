@@ -72,8 +72,6 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id);
         gameObjects.slackCallback = slackRequest.callback_id;
 
-
-
     } else {
         gameObjects.user = new User(game.state, slackRequest.user_id);
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel_id)
