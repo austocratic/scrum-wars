@@ -170,7 +170,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
 
-    let slackCallbackMajorElements = gameObjects.callback_id.split("/");
+    let slackCallbackMajorElements = gameObjects.slackCallback.split("/");
 
     //console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
 
