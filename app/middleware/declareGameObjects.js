@@ -72,7 +72,7 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.slackCallback = slackRequest.callback_id;
     }
 
-    if (slackRequest.actions[0]){
+    if (slackRequest.actions){
         if(slackRequest.actions[0].name) {
             gameObjects.userActionNameSelection = slackRequest.actions[0].name;
         }
@@ -82,7 +82,6 @@ const declareGameObjects = (game, slackRequest) => {
         if(slackRequest.actions[0].selected_options[0].value){
             gameObjects.userActionValueSelection = slackRequest.actions[0].selected_options[0].value
         }
-
     }
 
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
