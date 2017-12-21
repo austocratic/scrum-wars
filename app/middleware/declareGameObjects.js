@@ -71,6 +71,9 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.user = new User(game.state, slackRequest.user.id);
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id);
         gameObjects.slackCallback = slackRequest.callback_id;
+
+
+
     } else {
         gameObjects.user = new User(game.state, slackRequest.user_id);
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel_id)
@@ -86,6 +89,9 @@ const declareGameObjects = (game, slackRequest) => {
         if(slackRequest.actions[0].selected_options){
             gameObjects.userActionValueSelection = slackRequest.actions[0].selected_options[0].value
         }
+
+        //Format the callback string to include the name and value of user's selection
+        slackRequest.callback_id = `${slackRequest.callback_id}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
     }
 
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
