@@ -61,15 +61,19 @@ const declareGameObjects = (game, slackRequest) => {
     console.log('called Middleware: declareGameObjects()');
 
     let gameObjects = {
-        user: new User(game.state, slackRequest.user_id),
-        requestZone: new Zone(game.state, slackRequest.channel_id),
         currentMatch: new Match(game.state, game.getCurrentMatchID()),
         //TODO I dont think that responseTemplate should be a standard game object....
         slackResponseTemplate: {}
     };
 
-    if (slackRequest.callback_id){
+    //Process interactive_message specific properties
+    if (slackRequest.type === 'interactive_message'){
+        gameObjects.user = new User(game.state, slackRequest.user.id);
+        gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id)
         gameObjects.slackCallback = slackRequest.callback_id;
+    } else {
+        gameObjects.user = new User(game.state, slackRequest.user_id);
+        gameObjects.requestZone = new Zone(game.state, slackRequest.channel_id)
     }
 
     if (slackRequest.actions){
@@ -87,12 +91,12 @@ const declareGameObjects = (game, slackRequest) => {
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
 
     //See if slack user is available in DB
-    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': slackRequest.user_id});
+    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': gameObjects.user.id});
 
     //If Slack user is not available in the DB, add them
     if (!slackRequestUserID){
         console.log('Requesting user does not exist, adding');
-        game.createUser(slackRequest.user_id);
+        game.createUser(gameObjects.user.id);
     }
 
     //Slash commands have a command attribute
