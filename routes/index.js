@@ -186,7 +186,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //The last element of the parsed callback string will be the context
     let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
     */
-    let slackResponseTemplateReturned = await slackRequest.processRequest(gameContext, gameObjects.userActionNameSelection, gameObjects);
+    let slackResponseTemplateReturned = await slackRequest.processRequest(gameObjects.gameContext, gameObjects.userActionNameSelection, gameObjects);
 
     //Update game state
     //await updateGame(req);
