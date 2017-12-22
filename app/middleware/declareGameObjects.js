@@ -146,8 +146,13 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
                 .split(":");
 
+            console.log('DEBUG gameObjects.userActionNameSelection BEFORE: ', gameObjects.userActionNameSelection);
+
             //Take the name used from previous context
             gameObjects.userActionNameSelection = lastKeyValue[1];
+
+            console.log('DEBUG gameObjects.userActionNameSelection AFTER: ', gameObjects.userActionNameSelection);
+
             //Take the value used from previous context
             gameObjects.userActionValueSelection = lastKeyValue[2];
 
