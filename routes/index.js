@@ -174,7 +174,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
-
+    /*
     let slackCallbackMajorElements = gameObjects.slackCallback.split("/");
 
     console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
@@ -185,7 +185,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     //The last element of the parsed callback string will be the context
     let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
-
+    */
     let slackResponseTemplateReturned = await slackRequest.processRequest(gameContext, gameObjects.userActionNameSelection, gameObjects);
 
     //Update game state
