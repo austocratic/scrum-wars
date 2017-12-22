@@ -186,8 +186,6 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             break;
     }
 
-    return true;
-
 };
 
 const modifyCallbackForBack = slackCallback => {
