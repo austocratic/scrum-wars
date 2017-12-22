@@ -3,7 +3,7 @@
 const assert = require('assert');
 const formatSlackRequest = require('../../../../app/middleware/formatSlackRequest');
 
-
+/*
 describe("Testing formatSlackRequest.modifyCallbackForBack", function() {
 
     //Example of back working correctly
@@ -27,7 +27,7 @@ describe("Testing formatSlackRequest.modifyCallbackForBack", function() {
         it("should shorten the callback", function(){
             assert.equal(formattedResponse, 'command')
         })
-    });
+    });*/
 
     /*
     let testRequest = {"payload": {"actions":[
@@ -48,5 +48,5 @@ describe("Testing formatSlackRequest.modifyCallbackForBack", function() {
     });*/
 
 
-});
+//});
 

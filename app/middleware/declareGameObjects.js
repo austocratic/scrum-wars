@@ -99,10 +99,10 @@ const declareGameObjects = (game, slackRequest) => {
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
 
     //See if slack user is available in DB
-    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': gameObjects.user.id});
+    //let slackRequestUserID = _.find(game.state.user, {'slack_user_id': gameObjects.user.id});
 
     //If Slack user is not available in the DB, add them
-    if (!slackRequestUserID){
+    if (!_.find(game.state.user, {'slack_user_id': gameObjects.user.id})){
         console.log('Requesting user does not exist, adding');
         game.createUser(gameObjects.user.id);
     }
@@ -125,7 +125,122 @@ const declareGameObjects = (game, slackRequest) => {
     return gameObjects;
 };
 
+const updateGameObjectsForReservedActionName = (gameObjects) => {
+    console.log("gameObjects.userActionNameSelection: ", gameObjects.userActionNameSelection);
+
+    if (gameObjects.userActionNameSelection === undefined) {
+        throw "gameObjects.userActionNameSelection is undefined"
+    }
+
+    //Modify the "name" value depending on what reserved word was selected
+    switch(gameObjects.userActionNameSelection) {
+        case 'back':
+            console.log('DEBUG: updateGameObjectsForReservedActionName contained name back');
+
+            if (gameObjects.slackCallback === undefined) {
+                return "gameObjects.slackCallback is undefined"
+            }
+
+            let slackCallbackElements = gameObjects.slackCallback.split("/");
+
+            let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
+                .split(":");
+
+            //Take the name used from previous context
+            gameObjects.userActionNameSelection = lastKeyValue[1];
+            //Take the value used from previous context
+            gameObjects.userActionValueSelection = lastKeyValue[2];
+
+            //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
+            if (slackCallbackElements.length < 4) {
+                console.log('DEBUG slackCallbackElements was less than 3, setting command property');
+                gameObjects.command = "/" + slackCallbackElements[slackCallbackElements.length - 3].split(":")[1];
+            }
+
+            //If code did not hit an if condition above, invoke callback modification
+            //gameObjects.slackCallback = modifyCallbackForBack(req.payload.callback_id);
+
+            //Remove the value from the key:value
+            //lastKeyValue.pop();
+            lastKeyValue
+                .splice(lastKeyValue.length - 2, 2);
+
+            //remove the last element from the array (the current context)
+            slackCallbackElements
+                .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
+
+            //console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
+
+            //console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
+
+            //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
+            if (slackCallbackElements.join("/").length === 0){
+                //console.log('DEBUG passed .length if statement');
+                return lastKeyValue[0];
+            }
+
+            gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
+
+
+
+            break;
+    }
+
+    return true;
+
+};
+
+const modifyCallbackForBack = slackCallback => {
+    console.log('called function modifyCallbackForBack');
+
+    //Split up the callback string
+    let slackCallbackElements = slackCallback.split("/");
+
+    //console.log('DEBUG modifyCallbackForBack, slackCallbackElements: ', slackCallbackElements);
+
+    //If the callback string is less than 4 elements then it has at most 3 game contexts.
+    //In order to go "back" we need to get the context that is 2 elements down.
+
+    if (slackCallbackElements.length < 4) {
+        console.log('DEBUG slackCallbackElements was less than 3');
+        return slackCallbackElements[slackCallbackElements.length - 3]
+            .split(":")[0];
+    }
+
+    //take the last element & split it into context:name:value
+    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
+        .split(":");
+
+    //Remove the value from the key:value
+    //lastKeyValue.pop();
+    lastKeyValue
+        .splice(lastKeyValue.length - 2, 2);
+
+    //remove the last element from the array (the current context)
+    slackCallbackElements
+        .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
+
+    //console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
+
+    //console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
+
+    //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
+    if (slackCallbackElements.join("/").length === 0){
+        //console.log('DEBUG passed .length if statement');
+        return lastKeyValue[0];
+    }
+
+    let modifiedCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
+
+    //console.log('DEBUG modifyCallbackForBack modifiedCallback: ', modifiedCallback);
+
+    //If there are more elements to join (does not hit if above), concatenate
+    return modifiedCallback
+};
+
+
 
 module.exports = {
-    declareGameObjects
+    declareGameObjects,
+    updateGameObjectsForReservedActionName
 };

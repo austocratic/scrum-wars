@@ -11,6 +11,7 @@ const formatPayload = require('../app/middleware/formatSlackRequest').formatPayl
 const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
 const getGame = require('../app/middleware/getGame').getGame;
 const declareGameObjects = require('../app/middleware/declareGameObjects').declareGameObjects;
+const updateGameObjectsForReservedActionName = require('../app/middleware/declareGameObjects').updateGameObjectsForReservedActionName;
 const checkUserPermissions = require('../app/middleware/checkUserPermissions').checkUserPermissions;
 const updateGame = require('../app/middleware/updateGame').updateGame;
 
@@ -166,6 +167,8 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     //Declare standard game objects based on the Slack request
     let gameObjects = declareGameObjects(game, formattedRequest);
+
+    updateGameObjectsForReservedActionName(gameObjects);
 
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;

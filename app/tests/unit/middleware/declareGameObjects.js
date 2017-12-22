@@ -1,7 +1,9 @@
 "use strict";
 
 const assert = require('assert');
-const declareGameObjects = require('../../../../app/middleware/declareGameObjects').declareGameObjects
+const declareGameObjects = require('../../../../app/middleware/declareGameObjects').declareGameObjects;
+const updateGameObjectsForReservedActionName = require('../../../../app/middleware/declareGameObjects').updateGameObjectsForReservedActionName;
+
 
 var testDB = require('../../testDB');
 var Game = require('../../../models/Game').Game;
@@ -71,5 +73,31 @@ describe("Testing declareGameObject() Middleware", function() {
     it("should set the gameObject object to contain a characterClass", function () {
         assert(gameObjects.characterClass);
     });
+
+});
+
+describe("Testing updateGameObjectsForReservedActionName() Middleware", function(){
+
+    let gameObjects = {
+        userActionNameSelection: 'back',
+        userActionValueSelection: '',
+        command: '',
+        slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu',
+    };
+
+    updateGameObjectsForReservedActionName(gameObjects);
+
+    it("should modify the callback", function(){
+        assert.equal(gameObjects.slackCallback, 'command:profile/characterProfileMenu')
+    });
+
+    it("should modify the userActionNameSelection", function(){
+        assert.equal(gameObjects.userActionNameSelection, 'inventory')
+    });
+
+    it("should modify the userActionValueSelection", function(){
+        assert.equal(gameObjects.userActionValueSelection, 'inventory')
+    });
+
 
 });
