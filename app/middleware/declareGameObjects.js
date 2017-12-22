@@ -174,10 +174,6 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             slackCallbackElements
                 .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
-            //console.log('DEBUG slackCallbackElements after splice: ', slackCallbackElements);
-
-            //console.log('DEBUG lastKeyValue after splice: ', lastKeyValue);
-
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
                 //console.log('DEBUG passed .length if statement');
@@ -185,7 +181,6 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             }
 
             gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
-
 
 
             break;

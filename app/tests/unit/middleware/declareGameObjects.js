@@ -73,31 +73,48 @@ describe("Testing declareGameObject() Middleware", function() {
     it("should set the gameObject object to contain a characterClass", function () {
         assert(gameObjects.characterClass);
     });
-
 });
 
 describe("Testing updateGameObjectsForReservedActionName() Middleware", function(){
 
-    let gameObjects = {
+    let gameObjectsLong = {
         userActionNameSelection: 'back',
-        userActionValueSelection: '',
+        userActionValueSelection: 'stuff',
         command: '',
-        slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu',
+        slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu:back:stuff/',
     };
 
-    updateGameObjectsForReservedActionName(gameObjects);
+
+    updateGameObjectsForReservedActionName(gameObjectsLong);
 
     it("should modify the callback", function(){
-        assert.equal(gameObjects.slackCallback, 'command:profile/characterProfileMenu')
+        assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
     });
 
     it("should modify the userActionNameSelection", function(){
-        assert.equal(gameObjects.userActionNameSelection, 'inventory')
+        assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
     });
 
     it("should modify the userActionValueSelection", function(){
-        assert.equal(gameObjects.userActionValueSelection, 'inventory')
+        assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
     });
+
+    let gameObjectsShort = {
+        userActionNameSelection: 'back',
+        userActionValueSelection: '',
+        command: '',
+        slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu',
+    };
+
+    /*
+    updateGameObjectsForReservedActionName(gameObjectsShort);
+
+    it("should modify the callback", function(){
+        assert.equal(gameObjectsShort.slackCallback, 'command')
+    });*/
+
+
+
 
 
 });
