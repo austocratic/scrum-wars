@@ -125,7 +125,9 @@ const action = gameObjects => {
     //Use .value() to unwrap the lodash wrapper
     gameObjects.slackResponseTemplate.attachments = templateAttachments.value();
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectActionMenu`);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectActionMenu`);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:action/selectActionMenu`);
 
     //let updatedCallback = 'command:action/selectActionMenu';
 
@@ -279,10 +281,6 @@ const profile = gameObjects => {
         }];
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:profile/characterProfileMenu`);
-
-    //let updatedCallback = 'command:profile/characterProfileMenu';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     return gameObjects.slackResponseTemplate;
 };
