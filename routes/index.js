@@ -155,6 +155,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //Update game state
     //await updateGame(req);
     game.updateState();
+    console.log('Responded to request to /api/interactive-messages: ', JSON.stringify(slackResponseTemplateReturned));
     res.status(200).send(slackResponseTemplateReturned);
 });
 

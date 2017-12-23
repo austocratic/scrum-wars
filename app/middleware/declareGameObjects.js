@@ -124,10 +124,10 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
                 //console.log('DEBUG passed .length if statement');
-                return lastKeyValue[0];
+                return gameObjects.gameContext;
             }
 
-            gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + lastKeyValue[0];
+            gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + gameObjects.gameContext;
             console.log('Updated slackCallback for back: ', gameObjects.slackCallback);
 
             break;
