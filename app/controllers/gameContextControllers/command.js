@@ -328,6 +328,7 @@ const name = gameObjects => {
         'game',
         'characterClass',
         'playerCharacter',
+        'slackText',
         'slackResponseTemplate'
     ]);
 

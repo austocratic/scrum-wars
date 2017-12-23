@@ -64,6 +64,10 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.command = slackRequest.command.slice(1, slackRequest.command.length);
     }
 
+    if (slackRequest.text){
+        gameObjects.slackText = slackRequest.text;
+    }
+
     //Only instantiate playerCharacter if there is a character ID available to use
     if (gameObjects.user.props.character_id){
         gameObjects.playerCharacter = new Character(game.state, gameObjects.user.props.character_id);
@@ -123,7 +127,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
-                //console.log('DEBUG passed .length if statement');
+                console.log('DEBUG passed .length if statement');
                 return gameObjects.gameContext;
             }
 

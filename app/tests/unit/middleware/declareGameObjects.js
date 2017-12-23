@@ -216,6 +216,9 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
         it("should modify the userActionNameSelection", function(){
             assert.equal(gameObjectsShort.userActionNameSelection, 'profile')
         });
+        //it("should modify the slackCallback", function(){
+        //    assert.equal(gameObjectsShort.slackCallback, 'profile')
+        //});
 
     });
 });
