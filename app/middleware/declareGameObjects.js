@@ -99,7 +99,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             let slackCallbackElements = gameObjects.slackCallback.split("/");
 
             //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
-            if (slackCallbackElements.length < 4) {
+            if (slackCallbackElements.length < 3) {
                 console.log('DEBUG slackCallbackElements was less than 4, setting command property');
                 let firstKeyValue = slackCallbackElements[0]
                     .split(":");
@@ -109,7 +109,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
                 return
             }
 
-            let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 4]
+            let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
                 .split(":");
 
             console.log('lastKeyValue before splice: ', lastKeyValue);
@@ -120,14 +120,14 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             //Remove the value from the key:value
             //lastKeyValue.pop();
-            lastKeyValue
-                .splice(lastKeyValue.length - 2, 2);
+            //lastKeyValue
+            //    .splice(lastKeyValue.length - 2, 2);
 
-            console.log('lastKeyValue: ', lastKeyValue);
+            //console.log('lastKeyValue: ', lastKeyValue);
 
             //remove the last element from the array (the current context)
             slackCallbackElements
-                .splice( slackCallbackElements.length - 4, slackCallbackElements.length);
+                .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
 
             console.log('slackCallbackElements: ', slackCallbackElements);
 
