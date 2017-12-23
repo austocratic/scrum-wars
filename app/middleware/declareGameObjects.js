@@ -131,9 +131,10 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
                 return gameObjects.gameContext;
             }
 
+            console.log('Updated slackCallback before BACK update: ', gameObjects.slackCallback);
             //gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + gameObjects.gameContext;
             gameObjects.slackCallback = slackCallbackElements.join("/") + `:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}:` + "/" + gameObjects.gameContext;
-            console.log('Updated slackCallback for back: ', gameObjects.slackCallback);
+            console.log('Updated slackCallback after BACK update: ', gameObjects.slackCallback);
 
             break;
     }
