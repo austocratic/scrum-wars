@@ -333,7 +333,7 @@ const name = gameObjects => {
     ]);
 
     //Attempt to find a character.  If this returns undefined, name does not exist
-    if(_.findKey(gameObjects.game.state.character, {'name': gameObjects.slackRequestText})){
+    if(_.findKey(gameObjects.game.state.character, {'name': gameObjects.slackText})){
 
         gameObjects.slackResponseTemplate = {
             "user_name": "A mysterious voice",
@@ -343,11 +343,11 @@ const name = gameObjects => {
     } else {
 
         //Update the characters name property locally
-        gameObjects.playerCharacter.updateProperty('name', gameObjects.slackRequestText);
+        gameObjects.playerCharacter.updateProperty('name', gameObjects.slackText);
 
         gameObjects.slackResponseTemplate = {
             "user_name": "A mysterious voice",
-            "text": "Well met traveler, " + gameObjects.slackRequestText
+            "text": "Well met traveler, " + gameObjects.slackText
         };
     }
 
