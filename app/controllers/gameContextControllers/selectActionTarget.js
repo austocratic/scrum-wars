@@ -45,8 +45,6 @@ const processActionOnTarget = gameObjects => {
     
     let slackCallbackElements = gameObjects.slackCallback.split("/");
 
-    console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
-
     let previousSelectionElements = slackCallbackElements[slackCallbackElements.length - 3];
     let previousValue = previousSelectionElements.split(":")[2];
 

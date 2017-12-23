@@ -47,11 +47,6 @@ const getTargetSelectionMenu = gameObjects => {
         }]
     });
 
-    //Set the callback, will be assigned at end of switch
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectActionTarget';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectActionTarget`);
 
     return gameObjects.slackResponseTemplate;

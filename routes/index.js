@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 
 const slackRequest = require('../app/controllers/slackRequest');
 const formatPayload = require('../app/middleware/formatSlackRequest').formatPayload;
-const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
+//const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
 const getGame = require('../app/middleware/getGame').getGame;
 const declareGameObjects = require('../app/middleware/declareGameObjects').declareGameObjects;
 const updateGameObjectsForReservedActionName = require('../app/middleware/declareGameObjects').updateGameObjectsForReservedActionName;
@@ -73,29 +73,6 @@ router.get('/jimp', function(req, res, next) {
         });
 
     //});
-});*/
-
-//TODO To delete
-/*
-router.get('/file/:name', function (req, res, next) {
-
-    var options = {
-        root: process.cwd() + '/app/assets/',
-        dotfiles: 'deny',
-        headers: {
-            'x-timestamp': Date.now(),
-            'x-sent': true
-        }
-    };
-
-    var fileName = req.params.name;
-    res.sendFile(fileName, options, function (err) {
-        if (err) {
-            next(err);
-        } else {
-            console.log('Sent:', fileName);
-        }
-    });
 });*/
 
 router.get('/assets/:folder/:id', function (req, res, next) {
@@ -170,22 +147,9 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     updateGameObjectsForReservedActionName(gameObjects);
 
-    console.log('INDEX gameObjects.slackCallback: ', gameObjects.slackCallback);
-
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
-    /*
-    let slackCallbackMajorElements = gameObjects.slackCallback.split("/");
 
-    console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
-
-    let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 2].split(":");
-
-    console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
-
-    //The last element of the parsed callback string will be the context
-    let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
-    */
     let slackResponseTemplateReturned = await slackRequest.processRequest(gameObjects.gameContext, gameObjects.userActionNameSelection, gameObjects);
 
     //Update game state
@@ -193,59 +157,6 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     game.updateState();
     res.status(200).send(slackResponseTemplateReturned);
 });
-
-
-/*
-//All client interactive-message responses pass through this route
-router.post('/api/interactive-messages', (req, res, next) => {
-    console.log('Received a request to /api/interactive-messages: ', JSON.stringify(req.body));
-
-        //payload.actions[0].name;
-        try {
-            req.payload = formatPayload(req);
-        } catch(err){
-            console.log('ERROR when calling formatPayload: ', err)
-        }
-
-        //Pass to next router
-        next();
-    },(req, res, next) => {
-
-        //Modify the request based on reserved words or format the callback
-        try{
-            modifyPayloadForReservedActions(req);
-        }catch(err){
-            console.log('ERROR when calling modifyPayloadForReservedActions: ', err)
-        }
-
-    //Pass to next router
-    next();
-}, async(req, res, next) => {
-
-    let slackResponseTemplateReturned;
-
-    console.log('DEBUG interactive-messages router received req.payload: ', JSON.stringify(req.payload));
-
-        if (req.payload.command){
-            slackResponseTemplateReturned = await slackRequest.processSlashCommand(req.payload);
-        } else {
-            slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req.payload);
-        }
-
-        console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
-        res.status(200).send(slackResponseTemplateReturned);
-    });*/
-
-/*
-router.post('/api/interactive-messages',
-    async (req, res, next) => {
-
-
-        let slackResponseTemplateReturned = await slackRequest.processInteractiveMessage(req);
-
-        console.log('/api/interactive-messages router sending response: ', JSON.stringify(slackResponseTemplateReturned));
-        res.status(200).send(slackResponseTemplateReturned);
-});*/
 
 //All client interactive-message responses pass through this route
 router.post('/api/turn/new', (req, res, next) => {

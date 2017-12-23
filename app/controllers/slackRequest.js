@@ -107,6 +107,7 @@ const contextsAndActions = {
     }
 };
 
+/*
 const processSlashCommand = async (payload) => {
     console.log('slackRequest.processSlashCommand()');
 
@@ -117,24 +118,14 @@ const processSlashCommand = async (payload) => {
 
     console.log('slackRequest.processSlashCommand() passed beginRequest()');
 
-    /*
-    //See if slack user is available in DB
-    let slackRequestUserID = _.find(game.state.user, {'slack_user_id': payload.user_id});
-
-    //If Slack user is not available in the DB, add them
-    if (!slackRequestUserID){
-        console.log('Requesting user does not exist, adding');
-        game.createUser(payload.user_id);
-        console.log('game.users after user added: ', game.state.user);
-    }*/
-
     let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
 
     await endRequest(game);
     
     return slackResponseTemplateReturned;
-};
+};*/
 
+/*
 const processInteractiveMessage = async (payload) => {
     console.log('slackRequest.processInteractiveMessage()');
 
@@ -145,7 +136,7 @@ const processInteractiveMessage = async (payload) => {
     await endRequest(game);
 
     return slackResponseTemplateReturned;
-};
+};*/
 
 /* Moving to middleware
 const beginRequest = async () => {
@@ -163,153 +154,6 @@ const beginRequest = async () => {
     game.refresh();
 
     return game;
-};*/
-
-const getSlashCommandResponse = (payload, game) => {
-    console.log('slackRequest.getSlashCommandResponse()');
-
-    //Declare a user selection based on the command entered in slack (trim the "/")
-    //let userSelection = payload.command.slice(1, payload.command.length);
-
-    //Declare a user based on the slack ID making the request
-    //let user = new User(game.state, payload.user_id);
-
-    //Declare a permission based on user's permission
-    //let permission = new Permission(game.state, user.props.permission_id);
-
-    //If user's permission can not access that slash command, return an error
-    /*
-    if (!permission.canAccessSlashCommand(userSelection)){
-        return {
-            "text": "Sorry traveler, but I fear you can't take actions in this land"
-        }
-    }*/
-
-    let slackRequestChannelID = payload.channel_id;
-    let slackRequestCommand = 'command';
-    let slackCallback = slackRequestCommand;
-    let slackRequestText = payload.text;
-
-    //Setup local game objects to send to request processor
-    let slackResponseTemplate = {};
-    //let requestZone = new Zone(game.state, slackRequestChannelID);
-    //let currentMatch = new Match(game.state, game.getCurrentMatchID());
-
-    /*
-    let playerCharacter, characterClass;
-
-    //Only instantiate playerCharacter if there is a character ID available to use
-    if (user.props.character_id){
-        playerCharacter = new Character(game.state, user.props.character_id);
-
-        //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
-        if (playerCharacter.props.class_id){
-            characterClass = new Class(game.state, playerCharacter.props.class_id);
-        }
-    }*/
-
-    return processRequest(slackRequestCommand, userSelection, {
-        game,
-        user,
-        slackResponseTemplate,
-        playerCharacter,
-        userSelection,
-        slackRequestCommand, //TODO for slash commands use the command
-        slackCallback,
-        requestZone,
-        currentMatch,
-        characterClass,
-        slackRequestText
-    });
-};
-
-const getInteractiveMessageResponse = (payload, game) => {
-    console.log('slackRequest.getInteractiveMessageResponse()');
-
-    console.log('DEBUG getInteractiveMessageResponse payload: ', JSON.stringify(payload));
-
-    /*
-    let userActionNameSelection = payload.actions[0].name;
-    let userActionValueSelection = getActionValue();
-
-    function getActionValue(){
-        if (payload.actions[0].value) {
-            return payload.actions[0].value
-        }
-        //Action value dictates the specific selection from drop down menus
-        return payload.actions[0].selected_options[0].value;
-    }*/
-
-    let slackCallbackMajorElements = payload.callback_id.split("/");
-
-    //console.log('slackCallbackMajorElements: ', slackCallbackMajorElements);
-
-    let slackCallbackMinorElements = slackCallbackMajorElements[slackCallbackMajorElements.length - 2].split(":");
-
-    //console.log('slackCallbackMinorElements: ', slackCallbackMinorElements);
-
-    //The last element of the parsed callback string will be the context
-    let gameContext = slackCallbackMinorElements[slackCallbackMinorElements.length - 3];
-
-    //console.log('gameContext: ', gameContext);
-
-    //First check to see if the player selected "back".  If so. modify the callback to change the route
-
-
-    /* MOVING TO MIDDLEWARE
-    if (userActionNameSelection === "back"){
-        userActionNameSelection = modifyUserActionNameSelection(payload.callback_id);
-        console.log('DEBUG userActionNameSelection after modify: ', userActionNameSelection);
-        slackCallback = modifyCallbackForBack(payload.callback_id);
-        console.log('DEBUG slackCallback after modify: ', slackCallback);
-    } else {
-        //Add the slack attachment name & value into the callback
-        slackCallback = `${payload.callback_id}:${userActionNameSelection}:${userActionValueSelection}/`;
-    }*/
-
-    //let slackCallback = payload.callback_id;
-    //let slackRequestCommand = payload.command;
-    //let slackResponseTemplate = {};
-    //let user = new User(game.state, payload.user.id);
-    //let requestZone = new Zone(game.state, payload.channel.id);
-    //let currentMatch = new Match(game.state, game.getCurrentMatchID());
-
-    
-    /*
-    let playerCharacter, characterClass;
-
-    //Only instantiate playerCharacter if there is a character ID available to use
-    if (user.props.character_id){
-        playerCharacter = new Character(game.state, user.props.character_id);
-
-        //In a few situations, the playerCharacter does not have a class_id yet (i.e: before the user has selected a class.  Default to undefined
-        if (playerCharacter.props.class_id){
-            characterClass = new Class(game.state, playerCharacter.props.class_id);
-        }
-    }*/
-
-    return processRequest(gameContext, userActionNameSelection, {
-        game,
-        user,
-        slackResponseTemplate,
-        playerCharacter,
-        userActionValueSelection,
-        userActionNameSelection,
-        slackRequestCommand,
-        slackCallback,
-        requestZone,
-        currentMatch,
-        characterClass,
-        payload
-    });
-};
-
-/*
-const endRequest = async (game) => {
-    console.log('slackRequest.endRequest()');
-
-    //Overwrites with updated local props
-    return await game.updateState();
 };*/
 
 const processRequest = (gameContext, userSelection, opts) => {
@@ -343,12 +187,6 @@ const processRequest = (gameContext, userSelection, opts) => {
 
 
 module.exports = {
-    //beginRequest,
-    //endRequest,
-    processRequest,
-    processSlashCommand,
-    processInteractiveMessage
-    //getInteractiveMessageResponse,
-    //getSlashCommandResponse
+    processRequest
 };
 

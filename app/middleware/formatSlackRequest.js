@@ -32,7 +32,7 @@ const formatPayload = (req) => {
     return payload;
 
 };
-
+/*
 const modifyPayloadForReservedActions = (req) => {
     console.log('Called formatSlackRequest.modifyPayloadForReservedActions()');
 
@@ -140,33 +140,11 @@ const modifyCallbackForBack = slackCallback => {
 
     //If there are more elements to join (does not hit if above), concatenate
     return modifiedCallback
-};
-
-
-//User selected "back", this changes the click from "back" to whatever was clicked on previous context
-/*
-const modifyUserActionNameSelection = slackCallback => {
-    console.log('called function modifyUserActionNameSelection');
-
-    //Split up the callback string
-    let slackCallbackElements = slackCallback.split("/");
-
-    //console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
-
-    let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 3]
-        .split(":");
-
-    //console.log('DEBUG lastKeyValue: ', lastKeyValue);
-
-    //Return the last value selected
-    return lastKeyValue[1];
 };*/
 
 
 
 module.exports = {
-    formatPayload,
-    modifyPayloadForReservedActions,
-    modifyCallbackForBack
+    formatPayload
 };
 
