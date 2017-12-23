@@ -145,9 +145,15 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //Declare standard game objects based on the Slack request
     let gameObjects = declareGameObjects(game, formattedRequest);
 
+    console.log('gameObjects.slackCallback after declare: ', gameObjects.slackCallback);
+
     updateGameObjectsForReservedActionName(gameObjects);
 
+    console.log('gameObjects.slackCallback in router BEFORE: ', gameObjects.slackCallback);
+
     gameObjects.slackCallback = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
+
+    console.log('gameObjects.slackCallback in router AFTER: ', gameObjects.slackCallback);
 
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
