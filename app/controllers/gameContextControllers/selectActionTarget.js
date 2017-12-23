@@ -44,8 +44,11 @@ const processActionOnTarget = gameObjects => {
     gameObjects.targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
     
     let slackCallbackElements = gameObjects.slackCallback.split("/");
-    let previousSelectionElements = slackCallbackElements[slackCallbackElements.length - 2];
-    let previousValue = previousSelectionElements.split(":")[1];
+
+    console.log('DEBUG slackCallbackElements: ', slackCallbackElements);
+
+    let previousSelectionElements = slackCallbackElements[slackCallbackElements.length - 3];
+    let previousValue = previousSelectionElements.split(":")[2];
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, previousValue);
 
