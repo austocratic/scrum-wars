@@ -170,18 +170,11 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             console.log('DEBUG lastKeyValue: ', lastKeyValue);
 
-            //console.log('DEBUG gameObjects.userActionNameSelection BEFORE: ', gameObjects.userActionNameSelection);
-
             //Take the name used from previous context
             gameObjects.userActionNameSelection = lastKeyValue[1];
 
-            //console.log('DEBUG gameObjects.userActionNameSelection AFTER: ', gameObjects.userActionNameSelection);
-
             //Take the value used from previous context
             gameObjects.userActionValueSelection = lastKeyValue[2];
-
-            //If code did not hit an if condition above, invoke callback modification
-            //gameObjects.slackCallback = modifyCallbackForBack(req.payload.callback_id);
 
             //Remove the value from the key:value
             //lastKeyValue.pop();
@@ -190,7 +183,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             //remove the last element from the array (the current context)
             slackCallbackElements
-                .splice( slackCallbackElements.length - 3, slackCallbackElements.length);
+                .splice( slackCallbackElements.length - 4, slackCallbackElements.length);
 
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
