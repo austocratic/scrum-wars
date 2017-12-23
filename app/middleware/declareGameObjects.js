@@ -112,6 +112,8 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             let lastKeyValue = slackCallbackElements[slackCallbackElements.length - 4]
                 .split(":");
 
+            console.log('lastKeyValue before splice: ', lastKeyValue);
+
             gameObjects.gameContext = lastKeyValue[0];
             gameObjects.userActionNameSelection = lastKeyValue[1];
             gameObjects.userActionValueSelection = lastKeyValue[2];
@@ -121,9 +123,13 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             lastKeyValue
                 .splice(lastKeyValue.length - 2, 2);
 
+            console.log('lastKeyValue: ', lastKeyValue);
+
             //remove the last element from the array (the current context)
             slackCallbackElements
                 .splice( slackCallbackElements.length - 4, slackCallbackElements.length);
+
+            console.log('slackCallbackElements: ', slackCallbackElements);
 
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
@@ -132,8 +138,8 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             }
 
             console.log('Updated slackCallback before BACK update: ', gameObjects.slackCallback);
-            //gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + gameObjects.gameContext;
-            gameObjects.slackCallback = slackCallbackElements.join("/") + `:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}:` + "/" + gameObjects.gameContext;
+            gameObjects.slackCallback = slackCallbackElements.join("/") + "/" + gameObjects.gameContext;
+            //gameObjects.slackCallback = slackCallbackElements.join("/") + `:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}:` + "/" + gameObjects.gameContext;
             console.log('Updated slackCallback after BACK update: ', gameObjects.slackCallback);
 
             break;
