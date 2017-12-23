@@ -172,46 +172,50 @@ describe("Testing declareGameObject() Middleware", function() {
 
 describe("Testing updateGameObjectsForReservedActionName() Middleware", function(){
 
-    let gameObjectsLong = {
-        userActionNameSelection: 'back',
-        userActionValueSelection: 'stuff',
-        command: '',
-        slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu:back:stuff/',
-    };
+    describe("with a long callback", function(){
 
+        let gameObjectsLong = {
+            userActionNameSelection: 'back',
+            userActionValueSelection: 'stuff',
+            command: '',
+            slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu:back:stuff/',
+        };
 
-    updateGameObjectsForReservedActionName(gameObjectsLong);
+        updateGameObjectsForReservedActionName(gameObjectsLong);
 
-    it("should modify the callback", function(){
-        assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+        it("should modify the callback", function(){
+            assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+        });
+        it("should modify the gameContext", function(){
+            assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+        });
+        it("should modify the userActionNameSelection", function(){
+            assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
+        });
+        it("should modify the userActionValueSelection", function(){
+            assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
+        });
+
     });
-    it("should modify the gameContext", function(){
-        assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+
+    describe("with a short callback", function(){
+
+        let gameObjectsShort = {
+            type: 'interactive_message',
+            userActionNameSelection: 'back',
+            userActionValueSelection: '',
+            command: '',
+            slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu:back:stuff/',
+        };
+
+        updateGameObjectsForReservedActionName(gameObjectsShort);
+
+        it("should modify the command", function(){
+            assert.equal(gameObjectsShort.gameContext, 'command')
+        });
+        it("should modify the userActionNameSelection", function(){
+            assert.equal(gameObjectsShort.userActionNameSelection, 'profile')
+        });
+
     });
-    it("should modify the userActionNameSelection", function(){
-        assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
-    });
-    it("should modify the userActionValueSelection", function(){
-        assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
-    });
-
-    let gameObjectsShort = {
-        type: 'interactive_message',
-        userActionNameSelection: 'back',
-        userActionValueSelection: '',
-        command: '',
-        slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu',
-    };
-
-    /*
-    updateGameObjectsForReservedActionName(gameObjectsShort);
-
-    it("should modify the command", function(){
-        assert.equal(gameObjectsShort.command, '/profile')
-    });*/
-
-
-
-
-
 });

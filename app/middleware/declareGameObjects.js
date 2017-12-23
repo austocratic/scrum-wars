@@ -160,8 +160,15 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
             if (slackCallbackElements.length < 4) {
                 console.log('DEBUG slackCallbackElements was less than 4, setting command property');
-                gameObjects.command = slackCallbackElements[slackCallbackElements.length - 3].split(":")[1];
-                gameObjects.gameContext = 'command';
+                let firstKeyValue = slackCallbackElements[0]
+                    .split(":");
+                gameObjects.gameContext = firstKeyValue[0];
+                gameObjects.command = firstKeyValue[1];
+                gameObjects.userActionNameSelection = firstKeyValue[1];
+                //let secondKeyValue = slackCallbackElements[1]
+                //    .split(":");
+                //gameObjects.userActionNameSelection = secondKeyValue[1];
+                //gameObjects.userActionValueSelection = secondKeyValue[2];
                 return
             }
 
@@ -173,6 +180,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
             gameObjects.gameContext = lastKeyValue[0];
             gameObjects.userActionNameSelection = lastKeyValue[1];
             gameObjects.userActionValueSelection = lastKeyValue[2];
+
 
             //Remove the value from the key:value
             //lastKeyValue.pop();
