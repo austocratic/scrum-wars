@@ -30,6 +30,9 @@ const yes = gameObjects => {
 
     //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
+    console.log('callback before gameObjects.slackResponseTemplate.attachments update: ', gameObjects.slackResponseTemplate.attachments);
+    console.log('callback before generateCharacterConfirmation update: ', gameObjects.slackCallback);
+
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterClassMenu`);
 
     return gameObjects.slackResponseTemplate;
