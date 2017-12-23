@@ -24,6 +24,7 @@ class BaseModel {
     }*/
     
     updateProperty(propertyToUpdate, newValue){
+        console.log(`Called updateProperty.  Updating property: ${propertyToUpdate} to ${newValue}`);
         this.props[propertyToUpdate] = newValue
     }
 
