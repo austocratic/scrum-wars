@@ -183,13 +183,14 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
     updateGameObjectsForReservedActionName(gameObjectsLong);
 
     it("should modify the callback", function(){
-        assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu:inventory:inventory/characterProfileMenu')
+        assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
     });
-
+    it("should modify the gameContext", function(){
+        assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+    });
     it("should modify the userActionNameSelection", function(){
         assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
     });
-
     it("should modify the userActionValueSelection", function(){
         assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
     });

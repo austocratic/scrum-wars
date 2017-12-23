@@ -170,10 +170,8 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             console.log('DEBUG lastKeyValue: ', lastKeyValue);
 
-            //Take the name used from previous context
+            gameObjects.gameContext = lastKeyValue[0];
             gameObjects.userActionNameSelection = lastKeyValue[1];
-
-            //Take the value used from previous context
             gameObjects.userActionValueSelection = lastKeyValue[2];
 
             //Remove the value from the key:value
