@@ -102,9 +102,11 @@ const more = gameObjects => {
         );
     }
 
-    let updatedCallback = gameObjects.slackCallback;
+    //let updatedCallback = gameObjects.slackCallback;
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}`);
 
     return gameObjects.slackResponseTemplate;
 };

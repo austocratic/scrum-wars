@@ -83,9 +83,11 @@ const classSelection = gameObjects => {
             }]
     };
     
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/selectGenderMenu';
+    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/selectGenderMenu';
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectGenderMenu`);
 
     return gameObjects.slackResponseTemplate;
 };
@@ -119,16 +121,18 @@ const classDetailMenu = gameObjects => {
             "text": "Back",
             "fallback": "unable to go back",
             "type": "button",
-            "value": "no"
+            "value": "back"
         }]
     });
 
 
     // *****************Return the gender selection menu*******************
 
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/classDetailMenu';
+    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/classDetailMenu';
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectGenderMenu`);
 
     return gameObjects.slackResponseTemplate;
 };

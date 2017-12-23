@@ -62,9 +62,11 @@ const genderSelection = gameObjects => {
         ]
     });
     
-    let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectCharacterAvatarMenu';
+    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectCharacterAvatarMenu';
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterAvatarMenu`);
 
     return gameObjects.slackResponseTemplate;
 };
