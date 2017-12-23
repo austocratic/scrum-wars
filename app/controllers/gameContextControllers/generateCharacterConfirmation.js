@@ -26,9 +26,11 @@ const yes = gameObjects => {
     //Return a class selection template with all available classes from the DB
     gameObjects.slackResponseTemplate = gameObjects.game.getCharacterClasses();
 
-    let updatedCallback = gameObjects.slackCallback + ':yes/selectCharacterClassMenu';
+    //let updatedCallback = gameObjects.slackCallback + ':yes/selectCharacterClassMenu';
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterClassMenu`);
 
     return gameObjects.slackResponseTemplate;
 };
