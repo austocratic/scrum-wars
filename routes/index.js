@@ -147,6 +147,8 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     updateGameObjectsForReservedActionName(gameObjects);
 
+    gameObjects.slackCallback = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
+
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
 
