@@ -178,7 +178,7 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
             userActionNameSelection: 'back',
             userActionValueSelection: 'stuff',
             command: '',
-            slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu:back:stuff/',
+            slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu',
         };
 
         updateGameObjectsForReservedActionName(gameObjectsLong);
@@ -195,8 +195,33 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
         it("should modify the userActionValueSelection", function(){
             assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
         });
-
     });
+
+    /*
+    describe("with a callback from characterClassDetail", function(){
+
+        let gameObjectsLong = {
+            userActionNameSelection: 'back',
+            userActionValueSelection: 'stuff',
+            command: '',
+            slackCallback: "command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classDetailMenu:-Kird8_Vef-8Ej2aShaO/selectGenderMenu"
+        };
+
+        updateGameObjectsForReservedActionName(gameObjectsLong);
+
+        it("should modify the callback", function(){
+            assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+        });
+        it("should modify the gameContext", function(){
+            assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+        });
+        it("should modify the userActionNameSelection", function(){
+            assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
+        });
+        it("should modify the userActionValueSelection", function(){
+            assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
+        });
+    });*/
 
     describe("with a short callback", function(){
 
@@ -205,7 +230,7 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
             userActionNameSelection: 'back',
             userActionValueSelection: '',
             command: '',
-            slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu:back:stuff/',
+            slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu',
         };
 
         updateGameObjectsForReservedActionName(gameObjectsShort);

@@ -26,13 +26,6 @@ const yes = gameObjects => {
     //Return a class selection template with all available classes from the DB
     gameObjects.slackResponseTemplate = gameObjects.game.getCharacterClasses();
 
-    //let updatedCallback = gameObjects.slackCallback + ':yes/selectCharacterClassMenu';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
-
-    console.log('callback before gameObjects.slackResponseTemplate.attachments update: ', gameObjects.slackResponseTemplate.attachments);
-    console.log('callback before generateCharacterConfirmation update: ', gameObjects.slackCallback);
-
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterClassMenu`);
 
     return gameObjects.slackResponseTemplate;

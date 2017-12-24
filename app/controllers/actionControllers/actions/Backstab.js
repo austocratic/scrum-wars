@@ -52,7 +52,7 @@ class Backstab extends BaseAttack {
                 if (this.actionCharacter.props.effects) {
                     this.actionCharacter.props.effects
                         .filter(eachEffect => {
-                            return eachEffect.modifiers.modified_is_hidden === 1
+                            return eachEffect.modifiers.is_hidden === 1
                         })
                         .forEach(eachEffect => {
                             this._reverseEffect(this.actionCharacter, eachEffect.action_id);
