@@ -595,6 +595,7 @@ class Game {
 
         return Object.keys(this.state.character)
             .map( eachCharacterID =>{
+                //Create a character object for each character
                 return new Character(this.state, eachCharacterID)
             })
             .filter( eachCharacter => {
@@ -603,10 +604,25 @@ class Game {
                 return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
             })
             .map( eachCharacter => {
+                //Return only the character's ID
                 return eachCharacter.id
             })
     }
 
+    getCharactersInZone(zoneID){
+        console.log('called getCharacterIDsInZone');
+
+        return Object.keys(this.state.character)
+            .map( eachCharacterID =>{
+                //Create a character object for each character
+                return new Character(this.state, eachCharacterID)
+            })
+            .filter( eachCharacter => {
+                return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
+            })
+    }
+
+    /*
     getCharactersInZone(zoneID, requestSlackUserID){
         console.log('called getCharactersInZone');
 
@@ -647,7 +663,7 @@ class Game {
         });
 
         return slackTemplate;
-    }
+    }*/
 
     getEquippedItemView(localCharacter){
 

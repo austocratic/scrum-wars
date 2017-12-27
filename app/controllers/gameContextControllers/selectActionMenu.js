@@ -3,9 +3,9 @@
 const _ = require('lodash');
 
 const NPC = require('../../models/NPC').NPC;
-const Item = require('../../models/Item').Item;
+//const Item = require('../../models/Item').Item;
 const Action = require('../../models/Action').Action;
-const Character = require('../../models/Character').Character;
+//const Character = require('../../models/Character').Character;
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection').getTargetSelectionMenu;

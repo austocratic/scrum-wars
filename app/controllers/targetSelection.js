@@ -20,18 +20,24 @@ const getTargetSelectionMenu = gameObjects => {
             }]
     };
 
-    let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
+    //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
+    let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
 
-    let filteredCharacterIDs =characterIDsInZone.filter( eachCharacterID =>{
-        return eachCharacterID !== gameObjects.playerCharacter.id
-    });
+    let filteredCharacters = charactersInZone
+        //Filter out the player's character
+        .filter( eachCharacter =>{
+            return eachCharacter !== gameObjects.playerCharacter.id
+        })
+        //Filter out hidden characters
+        .filter( eachCharacter => {
+            return eachCharacter.props.is_hidden !== 0
+        });
 
-    gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacterIDs.map( singleCharacterID => {
+    gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacters.map( eachCharacter => {
         return {
-            "text": gameObjects.game.state.character[singleCharacterID].name,
-            //"style": "primary",
-            //"type": "button",
-            "value": singleCharacterID
+            "text": eachCharacter.props.name,
+            //"text": gameObjects.game.state.character[singleCharacterID].name,
+            "value": eachCharacter.id
         }
     });
 
