@@ -58,7 +58,6 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
-
     if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
         //An action was used this turn, return a message
 

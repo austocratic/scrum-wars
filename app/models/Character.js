@@ -160,13 +160,6 @@ class Character extends BaseModel{
         let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
 
         return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
-        /*
-        if (foundAction.turn_available <= turnNumber) {
-            return true;
-        } else {
-            return false;
-        }*/
-
     }
     
     //Return an array of items owned by character not equipped
@@ -177,9 +170,10 @@ class Character extends BaseModel{
             return [];
         }
         
-        let items = this.props.inventory;
+        //let items = this.props.inventory;
 
-        return items
+        //return items
+        return this.props.inventory
             .filter( eachItem =>{
                 return eachItem.is_equipped === 0;
             })
@@ -206,12 +200,12 @@ class Character extends BaseModel{
         
         let equippedItems = this.getEquippedItems();
         
-        let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
-
+        //let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
+        return equippedItems.filter( eachEquippedItem=>{
             return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
         });
         
-        return equippedSlotItem
+        //return equippedSlotItem
         
     }
 
