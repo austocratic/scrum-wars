@@ -1,9 +1,9 @@
+'use strict';
 
 const slack = require('../../../libraries/slack');
-const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
+const BaseAction = require('./BaseAction').BaseAction;
 
-
-class PoisonedBlade extends BaseAttack {
+class PoisonedBlade extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 

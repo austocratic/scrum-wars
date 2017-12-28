@@ -1,10 +1,10 @@
+'use strict';
 
 const slack = require('../../../libraries/slack');
-const BaseModify = require('./../baseActions/BaseModify').BaseModify;
-
+const BaseAction = require('./BaseAction').BaseAction;
 
 //IntoShadow sets the character's is_visible property to zero.  This makes them unable to be targeted directly (can still be affected by area damage)
-class IntoShadow extends BaseModify {
+class IntoShadow extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 

@@ -546,8 +546,19 @@ class Game {
         //Get an array of all class IDs
         let classIDs = Object.keys(localCharacterClasses);
 
-        let characterClassesTemplate = {};
+        //let characterClassesTemplate = {};
 
+        return classIDs
+            .map( eachClassID =>{
+                return new Class(this.state, eachClassID);
+            })
+            //Filter active classes only
+            .filter( eachClassObject =>{
+                return eachClassObject.props.active === 1
+            });
+        
+        
+        /*
         characterClassesTemplate.attachments = classIDs
             //Declare a class object for each class ID
             .map( eachClassID =>{
@@ -587,7 +598,7 @@ class Game {
                 }
         });
         
-        return characterClassesTemplate;
+        return characterClassesTemplate;*/
     }
 
     getCharacterIDsInZone(zoneID){
@@ -621,49 +632,6 @@ class Game {
                 return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
             })
     }
-
-    /*
-    getCharactersInZone(zoneID, requestSlackUserID){
-        console.log('called getCharactersInZone');
-
-        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-        //var localUser = new User(this.state, requestSlackUserID);
-        
-        
-
-        //Get the local character's id
-        //var characterID = localUser.getCharacterID();
-
-        //var localCharacter = new Character(this.state, characterID);
-
-        var slackTemplate = slackTemplates.characterList;
-        
-        var characterIDs = this.getCharacterIDsInZone(zoneID);
-
-        console.log('getCharactersInZone characterIDs: ', characterIDs);
-
-        //Filter out the player's character
-        
-        var filteredCharacterIDs = _.remove(characterIDs, eachCharacterID =>{
-            //If a character ID is not equal to the player's character ID, it stays (remove player's character)
-            return eachCharacterID !== localCharacter.id
-        });
-
-        console.log('getCharactersInZone filteredCharacterIDs: ', filteredCharacterIDs);
-
-        //Iterate through the character Ids formatting into slack format
-        filteredCharacterIDs.forEach(singleCharacterID => {
-            slackTemplate.attachments[0].actions[0].options.push({
-                //"name": singleCharacterID,
-                "text": this.state.character[singleCharacterID].name,
-                //"style": "primary",
-                //"type": "button",
-                "value": singleCharacterID
-            });
-        });
-
-        return slackTemplate;
-    }*/
 
     getEquippedItemView(localCharacter){
 

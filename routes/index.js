@@ -11,12 +11,10 @@ const formatPayload = require('../app/middleware/formatSlackRequest').formatPayl
 //const modifyPayloadForReservedActions = require('../app/middleware/formatSlackRequest').modifyPayloadForReservedActions;
 const getGame = require('../app/middleware/getGame').getGame;
 const declareGameObjects = require('../app/middleware/declareGameObjects').declareGameObjects;
-const updateGameObjectsForReservedActionName = require('../app/middleware/declareGameObjects').updateGameObjectsForReservedActionName;
+const updateGameObjectsForReservedActionName = require('../app/middleware/updateGameObjectsForReservedActionName').updateGameObjectsForReservedActionName;
 const checkUserPermissions = require('../app/middleware/checkUserPermissions').checkUserPermissions;
 const updateGame = require('../app/middleware/updateGame').updateGame;
 
-
-const turns = require('../app/controllers/turns');
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -145,15 +143,15 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //Declare standard game objects based on the Slack request
     let gameObjects = declareGameObjects(game, formattedRequest);
 
-    console.log('gameObjects.slackCallback after declare: ', gameObjects.slackCallback);
+    //console.log('gameObjects.slackCallback after declare: ', gameObjects.slackCallback);
 
     updateGameObjectsForReservedActionName(gameObjects);
 
-    console.log('gameObjects.slackCallback in router BEFORE: ', gameObjects.slackCallback);
+    //console.log('gameObjects.slackCallback in router BEFORE: ', gameObjects.slackCallback);
 
     gameObjects.slackCallback = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
 
-    console.log('gameObjects.slackCallback in router AFTER: ', gameObjects.slackCallback);
+    //console.log('gameObjects.slackCallback in router AFTER: ', gameObjects.slackCallback);
 
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
@@ -168,9 +166,6 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 });
 
 //All client interactive-message responses pass through this route
-router.post('/api/turn/new', (req, res, next) => {
-    turns.newTurn(req, res, next);
-});
 
 //Routes for getting character avatar
 //TODO should not rely on the catch all for getting images. this gets the avatar image

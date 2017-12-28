@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const _ = require('lodash');
-const BaseAction = require('../../../../../../app/controllers/actionControllers/baseActions/BaseAction').BaseAction;
+const BaseAction = require('../../../../../../app/controllers/actionControllers/actions/BaseAction').BaseAction;
 const Character = require('../../../../../../app/models/Character').Character;
 const Game = require('../../../../../../app/models/Game').Game;
 const Action = require('../../../../../../app/models/Action').Action;

@@ -1,12 +1,11 @@
-
+'use strict';
 
 const slack = require('../../../libraries/slack');
-const BaseModify = require('./../baseActions/BaseModify').BaseModify;
-
+const BaseAction = require('./BaseAction').BaseAction;
 
 //Balanced Stance is a stance that removes other stances (reverses the effects of stances)
 //Static success chance
-class BalancedStance extends BaseModify {
+class BalancedStance extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 

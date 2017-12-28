@@ -24,7 +24,42 @@ const yes = gameObjects => {
     gameObjects.user.updateProperty('character_id', newPlayerCharacterID);
 
     //Return a class selection template with all available classes from the DB
-    gameObjects.slackResponseTemplate = gameObjects.game.getCharacterClasses();
+    //gameObjects.slackResponseTemplate = gameObjects.game.getCharacterClasses();
+
+    gameObjects.slackResponseTemplate = {};
+    
+    let characterClasses = gameObjects.game.getCharacterClasses();
+
+    gameObjects.slackResponseTemplate.attachments = characterClasses
+        .map( eachCharacterClass => {
+            return {
+                "title": eachCharacterClass.props.name,
+                "fallback": "You are unable to choose an action",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
+                "attachment_type": "default",
+                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachCharacterClass.id + ".jpg",
+                "fields": [{
+                    "title": "Description",
+                    "value": eachCharacterClass.props.description,
+                    "short": false
+                }],
+                "actions": [{
+                    "name": 'classSelection',
+                    "text": `Choose ${eachCharacterClass.props.name}`,
+                    "style": "default",
+                    "type": "button",
+                    "value": eachCharacterClass.id
+                },
+                {
+                    "name": 'classDetailMenu',
+                    "text": 'More information',
+                    "style": "default",
+                    "type": "button",
+                    "value": eachCharacterClass.id
+                }]
+            };
+    });
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterClassMenu`);
 

@@ -140,15 +140,15 @@ const generate = gameObjects => {
 
     gameObjects.slackResponseTemplate.attachments =
         [{
-            "text": "Hail traveler, are you ready to embark on a NEW faithful journey to lands uncharted and depths unknown?  All your previous progress will be lost",
+            "text": "Are you sure you want to generate a *new* character?  Any previous character will be made inactive",
             "fallback": "You are unable to choose an action",
-            "callback_id": "characterSelectionNew",
-            "color": "#3AA3E3",
+            "callback_id": "",
+            "color": gameObjects.game.menuColor,
             "attachment_type": "default",
             "actions": [
                 {
                     "name": "yes",
-                    "text": "I head the call",
+                    "text": "Yes",
                     "style": "primary",
                     "type": "button",
                     "value": "yes"
@@ -156,7 +156,7 @@ const generate = gameObjects => {
                 },
                 {
                     "name": "no",
-                    "text": "Nay, I shall continue on my current path",
+                    "text": "No",
                     "style": "danger",
                     "type": "button",
                     "value": "no"
@@ -195,6 +195,7 @@ const profile = gameObjects => {
         },
         {
             "fallback": "Unable to load character stats",
+            "color": gameObjects.game.menuColor,
             "fields": [
                 {
                     "title": "Class",
@@ -245,6 +246,7 @@ const profile = gameObjects => {
         },
         {
             "callback_id": "profileOptionSelection",
+            "color": gameObjects.game.menuColor,
             "fallback": "Unable to load inventory buttons",
             "actions": [{
                 "name": "inventory",

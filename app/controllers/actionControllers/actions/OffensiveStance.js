@@ -1,12 +1,11 @@
-
+'use strict';
 
 const slack = require('../../../libraries/slack');
-const BaseModify = require('./../baseActions/BaseModify').BaseModify;
-
+const BaseAction = require('./BaseAction').BaseAction;
 
 //Defensive Stance is a stance that increases AC & lowers attack
 //Static success chance
-class OffensiveStance extends BaseModify {
+class OffensiveStance extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 

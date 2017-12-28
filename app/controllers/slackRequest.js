@@ -1,9 +1,8 @@
 "use strict";
 
 //Controllers
-const actionController = require('./actionController');
-const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
-const modifyUserActionNameSelection = require('./backButton').modifyUserActionNameSelection;
+//const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
+//const modifyUserActionNameSelection = require('./backButton').modifyUserActionNameSelection;
 
 const _ = require('lodash');
 

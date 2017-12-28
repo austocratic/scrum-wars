@@ -481,6 +481,14 @@ const backstab = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    //Check if the initiating character is not hidden.  This character must be hidden to use this ability
+    if (gameObjects.playerCharacter.props.is_hidden === 0){
+        return {
+            "text": `You can not use this ability if you are not hidden.  Use a hiding ability first!_`
+        }
+    }
+    
+    
     //If action is not available return action "unavailable" template
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
         return {

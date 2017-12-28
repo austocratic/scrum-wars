@@ -142,12 +142,15 @@ class BaseAction {
 
         let successChance = this.baseSuccessChance + modifier;
 
+        return this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100);
+        
+        /*
         if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
 
             return true
         }
 
-        return false;
+        return false;*/
     }
 
     _calculateStrength(base, modifier, variableMin, variableMax){
@@ -171,41 +174,10 @@ class BaseAction {
         this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
 
         //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
-
         //console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
 
-        //Check for interrupting target's actions in the queue
+        //Interrupt check: look in the action_queue for pending actions initiated by the target & interrupt them
         if (this.currentMatch.props.action_queue){
-
-            /*
-            let interruptedActions = this.currentMatch.props.action_queue
-                //Filter pending actions that are being cast by a target of players action
-                .filter( eachActionQueue =>{
-                    return eachActionQueue.player_character_id === this.targetCharacter.id;
-                })
-                //Filter out actions initiated by the character taking the action
-                .filter( eachActionQueue =>{
-                    return eachActionQueue.player_character_id !== this.actionCharacter.id;
-                })
-                .forEach( eachInterruptedAction =>{
-
-                    let interruptedAction = new Action(this.game.state, eachInterruptedAction.action_id);
-
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
-
-                    //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
-
-                    slack.sendMessage(this.slackPayload);
-                });
-
-            //Filter the actionQueue to only contain actions that were NOT interrupted
-            this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
-                .filter( eachActionQueue =>{
-                    return eachActionQueue.player_character_id !== this.targetCharacter.id;
-                });*/
-
-            //console.log('DEBUG: this.targetCharacter.id: ', this.targetCharacter.id);
-            //console.log('DEBUG: this.actionCharacter.id: ', this.actionCharacter.id);
 
             this.currentMatch.props.action_queue
                 //Filter out pending actions initiated by a target of player's action (don't filter the player's own actions)
@@ -236,15 +208,20 @@ class BaseAction {
                     return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
                 })
         }
-
-        //console.log('DEBUG this.currentMatch.props.actionQueue AFTER: ', this.currentMatch.props.action_queue);
+        
+        //Break hiding check: look at the target and see if hidden.  If so, remove hiding
+        if (this.targetCharacter.props.is_hidden === 1){
+            this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${this.targetCharacter.props.name} *out of hiding!*`;
+            slack.sendMessage(this.slackPayload);
+        }
     }
 
+    /*
     _applyDamage(){
         let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Check if the target has a barrier
-        /*
+        
         let targetCharacterShielding = this.targetCharacter.props.effects.find( eachEffect =>{
             return eachEffect.type === "shield"
         });
@@ -252,10 +229,10 @@ class BaseAction {
         //Target has shielding.  Apply damage to shielding
         if (targetCharacterShielding){
 
-        }*/
+        }
 
         this.targetCharacter.incrementProperty('health', -calculatedDamage);
-    }
+    }*/
 
     //modifiers should be an object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
@@ -357,6 +334,21 @@ class BaseAction {
 
         //Remove effect
         characterToModify.props.effects.splice(arrayIndex, 1);
+    }
+
+    //Moved from BaseModify file - is this used?
+    _reverseEffectsOfType(character, effectType){
+
+        var characterEffects = character.props.effects;
+
+        //Lookup all actionControllers that have the same type as the actionTaken
+        var effectsOfSameType = _.filter(characterEffects, {type: effectType});
+
+        console.log('effectsOfSameType: ', effectsOfSameType);
+
+        effectsOfSameType.forEach( eachEffect =>{
+            this._reverseEffect(this.targetCharacter, eachEffect.action_id);
+        });
     }
 
     _insertEffectsInQueue(){

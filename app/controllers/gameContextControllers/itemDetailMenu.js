@@ -3,12 +3,7 @@
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
-//const backButton = require('../backButton').processBackButton;
-const modifyCallbackForBack = require('../backButton').modifyCallbackForBack;
-
 const Item = require('../../models/Item').Item;
-
-
 
 const yesButton = gameObjects => {
     console.log('called function itemDetailMenu/yesButton');

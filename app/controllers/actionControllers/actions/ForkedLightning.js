@@ -1,9 +1,9 @@
+'use strict';
 
 const slack = require('../../../libraries/slack');
-const BaseAttack = require('./../baseActions/BaseAttack').BaseAttack;
+const BaseAction = require('./BaseAction').BaseAction;
 
-
-class ForkedLightning extends BaseAttack {
+class ForkedLightning extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 
