@@ -38,7 +38,7 @@ const getTargetSelectionMenu = gameObjects => {
 
             console.log('DEBUG getTargetSelectionMenu eachCharacter 2: ', eachCharacter);
 
-            return eachCharacter.props.is_hidden !== 0
+            return eachCharacter.props.is_hidden === 0
         });
 
     console.log('DEBUG getTargetSelectionMenu filteredCharacters: ', filteredCharacters);
