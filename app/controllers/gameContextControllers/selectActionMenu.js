@@ -484,7 +484,7 @@ const backstab = gameObjects => {
     //Check if the initiating character is not hidden.  This character must be hidden to use this ability
     if (gameObjects.playerCharacter.props.is_hidden === 0){
         return {
-            "text": `You can not use this ability if you are not hidden.  Use a hiding ability first!_`
+            "text": `_You can not use this ability if you are not hidden.  First use a hiding ability!_`
         }
     }
     
