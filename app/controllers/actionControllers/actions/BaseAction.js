@@ -49,7 +49,7 @@ class BaseAction {
 
         //If the action is successful remove hidden effect (if applicable)
         //This is done before processing the action so you don't apply and immediately remove hiding effect
-        this.actionCharacter.getEffectsWithModifiers(['is_hidden'])
+        this.actionCharacter.getEffectsWithModifier('is_hidden')
             .forEach( eachHidingEffect =>{
 
                 console.log('DEBUG _initiateAction called, eachHidingEffect: ', eachHidingEffect);
@@ -222,7 +222,7 @@ class BaseAction {
 
         //_reverseEffect(this.actionCharacter, eachEffect.action_id)
 
-        let hidingEffects = this.targetCharacter.getEffectsWithModifiers(['is_hidden']);
+        let hidingEffects = this.targetCharacter.getEffectsWithModifier('is_hidden');
 
         //If the target is hidden, break hiding and remove any hiding effects
         if (hidingEffects.length > 0){

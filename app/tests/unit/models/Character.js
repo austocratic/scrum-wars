@@ -44,51 +44,43 @@ describe("Testing Character model", function() {
             })
         });
 
-        describe("calling method getEffectsWithModifiers", function(){
+        describe("calling method getEffectsWithModifier", function(){
 
             describe("with an empty array parameter", function(){
                 it("should return an empty array", function(){
-                    assert.equal(testCharacter.getEffectsWithModifiers([]).length, 0)
-                })
-            })
-
-            //Add a hidden effect to testCharacter
-            testCharacter.props.effects = [{
-                "action_id" : "hidden_effect_id",
-                "applied_by_character_id" : "cd3addd0cb0bb7611e8b",
-                "modifiers" : {
-                    "is_hidden" : 1
-                },
-                "type" : "special"
-            }]
-
-            describe("with an array parameter containing is_hidden", function(){
-
-                it("should return an array with 1 element", function(){
-
-                    //console.log('getEffects result: ', testCharacter.getEffectsWithModifiers(['is_hidden']))
-
-                    assert.equal(testCharacter.getEffectsWithModifiers(['is_hidden']).length, 1)
+                    assert.equal(testCharacter.getEffectsWithModifier([]).length, 0)
                 })
             });
 
-            testCharacter.props.effects.push({
-                "action_id" : "ice_effect_id",
-                "applied_by_character_id" : "cd3addd0cb0bb7611e8b",
-                "modifiers" : {
-                    "is_frozen" : 1
+            describe("and contains another effect with is_hidden", function(){
+
+                testCharacter.props.effects = [{
+                    "action_id" : "hidden_effect_id",
+                    "applied_by_character_id" : "cd3addd0cb0bb7611e8b",
+                    "modifiers" : {
+                        "is_hidden" : 1
+                    },
+                    "type" : "special"
+                },{
+                    "action_id" : "ice_effect_id",
+                    "applied_by_character_id" : "cd3addd0cb0bb7611e8b",
+                    "modifiers" : {
+                        "is_frozen" : 1,
+                        "is_hidden" : 1
+                    },
+                    "type" : "special"
                 },
-                "type" : "special"
+                {
+                    "action_id" : "another_effect",
+                    "applied_by_character_id" : "cd3addd0cb0bb7611e8b",
+                    "type" : "special"
+                }];
+
+
+                it("should return an array with 2 elements", function(){
+                    assert.equal(testCharacter.getEffectsWithModifier('is_hidden').length, 2)
+                })
             })
-
-            it("should return an array with 2 elements", function(){
-
-                //console.log('getEffects result: ', testCharacter.getEffectsWithModifiers(['is_hidden', 'is_frozen']))
-
-                assert.equal(testCharacter.getEffectsWithModifiers(['is_hidden', 'is_frozen']).length, 2)
-            })
-
-
 
         });
 

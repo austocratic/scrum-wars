@@ -162,24 +162,25 @@ class Character extends BaseModel{
         return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
     }
 
-    //Pass in array of modifiers to search for
-    //Return an array of effects with that contain ANY of those modifiers
-    getEffectsWithModifiers(modifiersToFind){
-
+    //Return an array of effects with that contain the modifier searched for
+    getEffectsWithModifier(modifierToFind){
         //If character has no effects return empty array
         if (!this.props.effects) {
             return []
         }
 
-        return modifiersToFind.map(eachModifier=>{
+        return this.props.effects.filter( eachEffect =>{
 
-            return this.props.effects.filter( eachEffect =>{
-                if(eachEffect.modifiers[eachModifier]){
-                    //results.push(eachEffect.modifiers[eachModifier])
-                    return eachEffect.modifiers[eachModifier]
-                }
-            });
-        })
+            //If the effect does not have modifiers don't include
+            if (!eachEffect.modifiers){
+                return
+            }
+
+            if(eachEffect.modifiers[modifierToFind]){
+                //results.push(eachEffect.modifiers[eachModifier])
+                return eachEffect.modifiers[modifierToFind]
+            }
+        });
     }
 
     //Return an array of items owned by character not equipped
