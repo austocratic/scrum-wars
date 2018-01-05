@@ -46,6 +46,13 @@ class BaseAction {
             return false;
         }
 
+        //If the action is successful remove hidden effect (if applicable)
+        //This is done before processing the action so you don't apply and immediately remove hiding effect
+        this.actionCharacter.getEffectsWithModifiers(['is_hidden'])
+            .forEach( eachEffectWithModifiers =>{
+                this._reverseEffect(this.actionCharacter, eachEffectWithModifiers.action_id);
+            });
+
         //Push the effects into the effect queue
         this._insertActionInQueue();
 
@@ -208,11 +215,20 @@ class BaseAction {
                     return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
                 })
         }
-        
-        //Break hiding check: look at the target and see if hidden.  If so, remove hiding
-        if (this.targetCharacter.props.is_hidden === 1){
+
+        //_reverseEffect(this.actionCharacter, eachEffect.action_id)
+
+        let hidingEffects = this.targetCharacter.getEffectsWithModifiers(['is_hidden']);
+
+        //If the target is hidden, break hiding and remove any hiding effects
+        if (hidingEffects.length > 0){
             this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${this.targetCharacter.props.name} *out of hiding!*`;
             slack.sendMessage(this.slackPayload);
+
+            //Reverse each hiding effect
+            hidingEffects.forEach( eachHidingEffect =>{
+                this._reverseEffect(this.targetCharacter, eachHidingEffect.action_id);
+            });
         }
     }
 

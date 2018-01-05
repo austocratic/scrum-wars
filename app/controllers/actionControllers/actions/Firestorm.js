@@ -59,8 +59,6 @@ class Firestorm extends BaseAction {
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
-                //console.log('DEBUG Firestorm targets to process: ', targets);
-
                 const processOnSingleTarget = (singleTarget) => {
 
                     //Evasion check

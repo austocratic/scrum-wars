@@ -38,6 +38,10 @@ const getTargetSelectionMenu = gameObjects => {
 
             console.log('DEBUG getTargetSelectionMenu eachCharacter 2: ', eachCharacter);
 
+            //Only return characters that are not hidden
+            return eachCharacter.getEffectsWithModifiers(['is_hidden']).length === 0;
+
+            /*
             let isHidden = 0;
 
             if(eachCharacter.effects){
@@ -47,10 +51,10 @@ const getTargetSelectionMenu = gameObjects => {
 
                 console.log('DEBUG hiddenEffect: ', hiddenEffect);
 
-            }
+            }*/
 
 
-            return eachCharacter.props.is_hidden === 0
+            //return eachCharacter.props.is_hidden === 0
         });
 
     console.log('DEBUG getTargetSelectionMenu filteredCharacters: ', filteredCharacters);

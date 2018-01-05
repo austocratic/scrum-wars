@@ -32,7 +32,7 @@ class IntoShadow extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                //TODO need to validate that the player is not already hidden and prevent hiding if already hidden
+
                 let statsToModify = {
                     is_hidden: 1
                 };

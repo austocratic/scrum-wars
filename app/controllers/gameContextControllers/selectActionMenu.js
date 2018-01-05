@@ -240,6 +240,13 @@ const intoShadow = gameObjects => {
         }
     }
 
+    //Check if the character is already hidden
+    if(gameObjects.playerCharacter.getEffectsWithModifiers(['is_hidden']).length > 0){
+        return {
+            "text": `_You are already hidden!_`
+        }
+    }
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['intoShadow'];
 
@@ -482,12 +489,11 @@ const backstab = gameObjects => {
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     //Check if the initiating character is not hidden.  This character must be hidden to use this ability
-    if (gameObjects.playerCharacter.props.is_hidden === 0){
+    if (gameObjects.playerCharacter.getEffectsWithModifiers(['is_hidden']).length === 0){
         return {
             "text": `_You can not use this ability if you are not hidden.  First use a hiding ability!_`
         }
     }
-    
     
     //If action is not available return action "unavailable" template
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {

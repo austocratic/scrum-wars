@@ -48,7 +48,8 @@ class Backstab extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage();
 
-                //Find all currently applied effects that change the targets is_hidden property
+                //Moved this into _initiateAction call
+                /*
                 if (this.actionCharacter.props.effects) {
                     this.actionCharacter.props.effects
                         .filter(eachEffect => {
@@ -57,7 +58,9 @@ class Backstab extends BaseAction {
                         .forEach(eachEffect => {
                             this._reverseEffect(this.actionCharacter, eachEffect.action_id);
                         });
-                }
+                }*/
+
+
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();
