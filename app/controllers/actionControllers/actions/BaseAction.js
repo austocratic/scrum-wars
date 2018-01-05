@@ -38,6 +38,7 @@ class BaseAction {
 
     //All actions call this function when invoked
     _initiateAction(){
+        console.log('_initiateAction() called');
 
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
@@ -49,8 +50,11 @@ class BaseAction {
         //If the action is successful remove hidden effect (if applicable)
         //This is done before processing the action so you don't apply and immediately remove hiding effect
         this.actionCharacter.getEffectsWithModifiers(['is_hidden'])
-            .forEach( eachEffectWithModifiers =>{
-                this._reverseEffect(this.actionCharacter, eachEffectWithModifiers.action_id);
+            .forEach( eachHidingEffect =>{
+
+                console.log('DEBUG _initiateAction called, eachHidingEffect: ', eachHidingEffect);
+
+                this._reverseEffect(this.actionCharacter, eachHidingEffect.action_id);
             });
 
         //Push the effects into the effect queue

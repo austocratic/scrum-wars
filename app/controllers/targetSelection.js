@@ -31,7 +31,7 @@ const getTargetSelectionMenu = gameObjects => {
 
             console.log('DEBUG getTargetSelectionMenu eachCharacter 1: ', eachCharacter);
 
-            return eachCharacter !== gameObjects.playerCharacter.id
+            return eachCharacter.id !== gameObjects.playerCharacter.id
         })
         //Filter out hidden characters
         .filter( eachCharacter => {
