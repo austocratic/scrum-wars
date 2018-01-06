@@ -359,11 +359,14 @@ const name = gameObjects => {
 
 //Increment the match turn
 const turn = gameObjects => {
+    console.log('slackRequest called function command/turn');
+
     gameObjects.currentMatch.incrementTurn(gameObjects.currentZone)
 };
 
 //End the current match & start a new match
 const match = gameObjects => {
+    console.log('slackRequest called function command/match');
 
     //End current match
     //Passing in a blank winning character

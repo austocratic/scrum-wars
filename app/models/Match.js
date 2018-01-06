@@ -45,8 +45,7 @@ class Match extends BaseModel{
 
     incrementTurn(currentZone){
         this.incrementProperty('number_turns', 1);
-
-        this.slackPayload.attachments[0].text = this.channelActionFailMessage;
+        
         slack.sendMessage({
            // "username": this.actionCharacter.props.name,
             //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
