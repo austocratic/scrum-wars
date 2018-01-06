@@ -114,8 +114,12 @@ router.post('/api/commands', async (req, res, next) => {
         //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
         gameObjects.game = game;
 
-        //TODO need to determine what to do with the response from this call:
-        checkUserPermissions(gameObjects.permission, gameObjects.command);
+        //Check the user's permission to see if they can access that command
+        if(checkUserPermissions(gameObjects.permission, gameObjects.command) === false) {
+            return {
+                "text": "Sorry but you are not authorized for this command"
+            }
+        }
 
         let slackResponseTemplateReturned = await slackRequest.processRequest('command', gameObjects.command, gameObjects);
 

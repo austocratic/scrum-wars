@@ -1,9 +1,5 @@
 "use strict";
 
-//Controllers
-//const modifyCallbackForBack = require('./backButton').modifyCallbackForBack;
-//const modifyUserActionNameSelection = require('./backButton').modifyUserActionNameSelection;
-
 const _ = require('lodash');
 
 //Models
@@ -16,7 +12,7 @@ const Match = require('../models/Match').Match;
 const Permission = require('../models/Permission').Permission;
 
 const command = require('./gameContextControllers/command');
-const { action, generate, profile, travel, name } = command;
+const { action, generate, profile, travel, name, turn, match } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
 const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
@@ -31,7 +27,9 @@ const contextsAndActions = {
         generate: generate,
         profile: profile,
         travel: travel,
-        name: name
+        name: name,
+        turn: turn,
+        match: match
     },
     selectActionMenu: {
         shop: shop,
@@ -106,71 +104,14 @@ const contextsAndActions = {
     }
 };
 
-/*
-const processSlashCommand = async (payload) => {
-    console.log('slackRequest.processSlashCommand()');
-
-    console.log('DEBUG payload: ', payload);
-
-    //Create a game object, initiate, refresh
-    //let game = await beginRequest();
-
-    console.log('slackRequest.processSlashCommand() passed beginRequest()');
-
-    let slackResponseTemplateReturned = getSlashCommandResponse(payload, game);
-
-    await endRequest(game);
-    
-    return slackResponseTemplateReturned;
-};*/
-
-/*
-const processInteractiveMessage = async (payload) => {
-    console.log('slackRequest.processInteractiveMessage()');
-
-    let game = await beginRequest();
-
-    let slackResponseTemplateReturned = getInteractiveMessageResponse(payload, game);
-
-    await endRequest(game);
-
-    return slackResponseTemplateReturned;
-};*/
-
-/* Moving to middleware
-const beginRequest = async () => {
-    console.log('slackRequest.beginRequest()');
-
-    let game = new Game();
-
-    //Set the game state locally
-    await game.getState();
-
-    //Calculate properties in memory
-    game.initiateRequest();
-    
-    //Refresh the game (check for new turn, player deaths, ect.)
-    game.refresh();
-
-    return game;
-};*/
-
 const processRequest = (gameContext, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
-
-    //console.log('DEBUG action: ', action);
 
     let actualFn;
 
     console.log("DEBUG gameContext: ", gameContext);
     console.log('DEBUG userSelection: ', userSelection);
 
-    /* NOT NEEDED, all functions mapped require userSelection
-    actualFn = contextsAndActions[gameContext];
-
-    if (typeof actualFn === 'function') {
-        return actualFn(opts);
-    }*/
     if (!contextsAndActions[gameContext]){
         return {"text": "ERROR context not configured in processRequest: ", gameContext}
     }

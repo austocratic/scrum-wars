@@ -123,6 +123,10 @@ class BaseAction {
             //Filter for all characters but the character performing the action
             .filter( eachCharacterInZone =>{
                 return eachCharacterInZone.id !== this.actionCharacter.id
+            })
+            //Filter for active characters only (may have gone inactive after match started)
+            .filter( eachCharacter => {
+                return eachCharacter.props.active === 1
             });
 
         //If desired # of targets is greater than the # of available targets, only return # of available targets

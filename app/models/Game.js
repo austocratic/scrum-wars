@@ -287,22 +287,25 @@ class Game {
 
             //*************** CHECK FOR TURN INCREMENT *****************
 
-                console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
+                //console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
 
                 //Calculate the time that the next turn should start:
                 let nextTurnStartTime = (currentMatch.props.date_started + (currentMatch.props.number_turns * (this.turnLengthMinutes * 60000)));
 
-                console.log('nextTurnStartTime: ', nextTurnStartTime);
+                //console.log('nextTurnStartTime: ', nextTurnStartTime);
 
                 let humanTime = new Date(nextTurnStartTime);
 
-                console.log('nextTurnStartTime: ', humanTime.toTimeString());
+                //console.log('nextTurnStartTime: ', humanTime.toTimeString());
 
-                console.log("Current time: ", Date.now());
+                //console.log("Current time: ", Date.now());
 
                 //Test if turn should be incremented
                 if (Date.now() > nextTurnStartTime){
+
                     currentMatch.incrementProperty('number_turns', 1);
+                    //TODO implement this standard method (needs a argument for zone)
+                    //currentMatch.incrementTurn()
                 }
 
                 break;
@@ -452,6 +455,7 @@ class Game {
         return this.state.global_state.match_id
     }
 
+    /* TO DELETE
     getAvailableActions(requestSlackUserID, requestSlackChannelID){
 
         //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
@@ -465,15 +469,6 @@ class Game {
 
         //Returns an array of all the character's action IDs with is_active = 1
         var actionIDsAvailable = localCharacter.getActionIDs();
-
-        //Determine if any action was already taken this turn, if so return the action taken template
-        //var actionsUsedThisTurn = localCharacter.getActionsUsedOnTurn(localMatch.props.number_turns);
-
-        //If character already took an action this turn return the no action available template
-        /* TODO commented out check for if action is already taken to make testing easier
-        if (actionsUsedThisTurn.length > 0) {
-            return slackTemplates.actionAlreadyTaken;
-        }*/
 
         //Use action IDs to make an array of action objects
         var actionObjectsAvailable = actionIDsAvailable.map( eachActionID =>{
@@ -535,7 +530,7 @@ class Game {
         finalTemplate.attachments = templateAttachments.value();
 
         return finalTemplate;
-    }
+    }*/
 
     getCharacterClasses() {
         console.log('called Game.getCharacterClasses()');

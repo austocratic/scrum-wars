@@ -355,12 +355,42 @@ const name = gameObjects => {
     return gameObjects.slackResponseTemplate;
 };
 
+//Admin commands
+
+//Increment the match turn
+const turn = gameObjects => {
+    gameObjects.currentMatch.incrementTurn(gameObjects.currentZone)
+};
+
+//End the current match & start a new match
+const match = gameObjects => {
+
+    //End current match
+    //Passing in a blank winning character
+    gameObjects.currentMatch.end('');
+
+    //Pass in old match zone when creating the new match
+    let newMatchID = this.createMatch(gameObjects.currentMatch.props.zoneID);
+
+    //Game state won't have the new match in it... will it?
+    let newMatch = new Match(gameObjects.game.state, newMatchID);
+
+    //Update the global state to new match id
+    this.state.global_state.match_id = newMatchID;
+
+    //Start a new match
+    newMatch.start(this.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
+
+};
+
 module.exports = {
     action,
     generate,
     profile,
     travel,
-    name
+    name,
+    turn,
+    match
 };
 
 

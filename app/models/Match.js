@@ -1,23 +1,16 @@
 'use strict';
 
-//var Firebase = require('../libraries/firebase').Firebase;
-//var Slack = require('../libraries/slack').Alert;
-//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
+const slack = require('../libraries/slack');
 
-//var Zone = require('./Zone').Zone;
-
-//var firebase = new Firebase();
-
-
-var _ = require('lodash');
-var BaseModel = require('./BaseModel').BaseModel;
+const _ = require('lodash');
+const BaseModel = require('./BaseModel').BaseModel;
 
 
 class Match extends BaseModel{
     constructor(gameState, matchID){
         super(gameState, 'match', matchID);
 
-        var matches = gameState.match;
+        let matches = gameState.match;
 
         //Set the character's props
         this.props = matches[matchID];
@@ -48,6 +41,19 @@ class Match extends BaseModel{
         }
         
         return [];
+    }
+
+    incrementTurn(currentZone){
+        this.incrementProperty('number_turns', 1);
+
+        this.slackPayload.attachments[0].text = this.channelActionFailMessage;
+        slack.sendMessage({
+           // "username": this.actionCharacter.props.name,
+            //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+            "channel": ("#" + currentZone.props.channel),
+            "text": "_A new turn begins!_"
+        });
+
     }
 }
 
