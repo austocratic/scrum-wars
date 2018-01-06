@@ -394,10 +394,14 @@ const match = gameObjects => {
     let newMatch = new Match(gameObjects.game.state, newMatchID);
 
     //Update the global state to new match id
-    game.state.global_state.match_id = newMatchID;
+    gameObjects.game.state.global_state.match_id = newMatchID;
 
     //Start a new match
     newMatch.start(this.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
+
+    return {
+        "text": "You create a new match"
+    }
 
 };
 
