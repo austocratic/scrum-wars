@@ -388,7 +388,7 @@ const match = gameObjects => {
     gameObjects.currentMatch.end('');
 
     //Pass in old match zone when creating the new match
-    let newMatchID = game.createMatch(gameObjects.currentMatch.props.zoneID);
+    let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zoneID);
 
     //Game state won't have the new match in it... will it?
     let newMatch = new Match(gameObjects.game.state, newMatchID);
