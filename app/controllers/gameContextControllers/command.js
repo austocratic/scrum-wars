@@ -3,9 +3,11 @@
 const _ = require('lodash');
 
 const updateCallback = require('../../helpers').updateCallback;
-const Action = require('../../models/Action').Action;
 const slackAlert = require('../../libraries/slack').Alert;
 const validateGameObjects = require('../../helpers').validateGameObjects;
+
+const Action = require('../../models/Action').Action;
+const Match = require('../../models/Match').Match;
 
 const action = gameObjects => {
     console.log('called function command/action');
