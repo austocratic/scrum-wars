@@ -43,13 +43,13 @@ class Match extends BaseModel{
         return [];
     }
 
-    incrementTurn(currentZone){
+    incrementTurn(requestZone){
         this.incrementProperty('number_turns', 1);
-        
+
         slack.sendMessage({
            // "username": this.actionCharacter.props.name,
             //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
-            "channel": ("#" + currentZone.props.channel),
+            "channel": ("#" + requestZone.props.channel),
             "text": "_A new turn begins!_"
         });
 

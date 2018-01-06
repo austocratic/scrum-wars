@@ -361,12 +361,27 @@ const name = gameObjects => {
 const turn = gameObjects => {
     console.log('slackRequest called function command/turn');
 
-    gameObjects.currentMatch.incrementTurn(gameObjects.currentZone)
+    validateGameObjects(gameObjects, [
+        'requestZone',
+        'currentMatch'
+    ]);
+
+    gameObjects.currentMatch.incrementTurn(gameObjects.requestZone);
+
+    return {
+        "text": "You increment the match's turn"
+    }
 };
 
 //End the current match & start a new match
 const match = gameObjects => {
     console.log('slackRequest called function command/match');
+
+    validateGameObjects(gameObjects, [
+        'requestZone',
+        'game',
+        'currentMatch'
+    ]);
 
     //End current match
     //Passing in a blank winning character
@@ -379,7 +394,7 @@ const match = gameObjects => {
     let newMatch = new Match(gameObjects.game.state, newMatchID);
 
     //Update the global state to new match id
-    this.state.global_state.match_id = newMatchID;
+    game.state.global_state.match_id = newMatchID;
 
     //Start a new match
     newMatch.start(this.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
