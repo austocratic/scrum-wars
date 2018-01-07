@@ -378,6 +378,7 @@ class Game {
     }
 
     createMatch(zoneID){
+        console.log(`called game.createMatch(${zoneID})`);
 
         let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
