@@ -409,7 +409,8 @@ const match = gameObjects => {
     //Start a new match
     newMatch.start(charactersInZone);
 
-    //Reset all player's actions
+    //Announce that new match has begun
+
 
     return {
         "text": "You create a new match"

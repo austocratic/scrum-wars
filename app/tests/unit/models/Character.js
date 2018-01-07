@@ -12,7 +12,6 @@ game.state = testDB;
 
 
 describe("Testing Character model", function() {
-
     describe("instantiating new Character", function(){
 
         let testCharacter = new Character(game.state, '55e38d23d842e50e9026');
@@ -84,9 +83,24 @@ describe("Testing Character model", function() {
 
         });
 
+        describe("calling method resetActions", function(){
 
+            let resetActionsTestCharacter = new Character(game.state, '-Kkxf1ukVSF9VV6mIPlG');
 
+            //Set the characters actions to be reset
+            resetActionsTestCharacter.props.actions = [{
+                "action_id": "first_test_action",
+                "turn_used": 500
+            }];
 
+            resetActionsTestCharacter.resetActions();
 
+            it("should change the actions in the array .turn_used property to 0", function(){
+
+                //console.log('DEBUG testCharacter.props.actions: ', testCharacter.props.actions[0].turn_used);
+
+                assert.equal(resetActionsTestCharacter.props.actions[0].turn_used, 0)
+            })
+        })
     });
 });
