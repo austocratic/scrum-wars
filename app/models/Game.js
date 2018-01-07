@@ -213,7 +213,6 @@ class Game {
                     }
                 });
 
-
             //*************** PROCESS ACTION EFFECTS *****************
 
             let gameObjects = {

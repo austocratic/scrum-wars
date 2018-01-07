@@ -281,6 +281,13 @@ class Character extends BaseModel{
         this.props.actions[actionKey].turn_used = turnNumber;
     }
 
+    //Update the character's action's turn_used to 0
+    resetActions(){
+        this.props.actions.forEach( eachAction => {
+            eachAction.turn_used = 0
+        })
+    }
+
     updateEffectProcessed(actionID, turnNumber){
 
         let effectKey = _.findKey(this.props.effects, {'action_id': actionID});

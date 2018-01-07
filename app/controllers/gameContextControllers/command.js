@@ -392,14 +392,24 @@ const match = gameObjects => {
     //Pass in old match zone when creating the new match
     let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zoneID);
 
-    //Game state won't have the new match in it... will it?
+    //Setup a new match
     let newMatch = new Match(gameObjects.game.state, newMatchID);
 
     //Update the global state to new match id
     gameObjects.game.state.global_state.match_id = newMatchID;
 
+    //Get participating characters:
+    let charactersInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id);
+
+    //For characters participating in the match, reset their actions
+    charactersInZone.forEach( eachCharacterInZone =>{
+        eachCharacterInZone.resetActions();
+    });
+
     //Start a new match
-    newMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
+    newMatch.start(charactersInZone);
+
+    //Reset all player's actions
 
     return {
         "text": "You create a new match"
