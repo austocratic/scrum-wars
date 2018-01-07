@@ -409,7 +409,7 @@ const match = gameObjects => {
     });
 
     //Start a new match
-    newMatch.start(charactersInZone);
+    newMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
 
     //Announce that new match has begun
 
