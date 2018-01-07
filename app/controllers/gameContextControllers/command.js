@@ -399,7 +399,9 @@ const match = gameObjects => {
     gameObjects.game.state.global_state.match_id = newMatchID;
 
     //Get participating characters:
-    let charactersInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id);
+    let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id);
+
+    console.log('DEBUG charactersInZone: ', charactersInZone);
 
     //For characters participating in the match, reset their actions
     charactersInZone.forEach( eachCharacterInZone =>{
