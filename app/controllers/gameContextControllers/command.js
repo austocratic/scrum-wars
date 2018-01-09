@@ -2,8 +2,11 @@
 
 const _ = require('lodash');
 
-const updateCallback = require('../../helpers').updateCallback;
+const slack = require('../libraries/slack');
+//to delete (shuld use slack library above)
 const slackAlert = require('../../libraries/slack').Alert;
+
+const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
 const Action = require('../../models/Action').Action;
@@ -390,7 +393,7 @@ const match = gameObjects => {
     gameObjects.currentMatch.end('');
 
     //Pass in old match zone when creating the new match
-    let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zoneID);
+    let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zone_id);
 
     //Setup a new match
     let newMatch = new Match(gameObjects.game.state, newMatchID);
@@ -408,11 +411,16 @@ const match = gameObjects => {
         eachCharacterInZone.resetActions();
     });
 
-    //Start a new match
+    //Start the new match
     newMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
 
     //Announce that new match has begun
-
+    slack.sendMessage({
+        // "username": this.actionCharacter.props.name,
+        //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+        "channel": ("#" + gameObjects.requestZone.props.channel),
+        "text": "_A new match begins!_"
+    });
 
     return {
         "text": "You create a new match"
