@@ -285,7 +285,6 @@ class Character extends BaseModel{
     resetActions(){
         console.log('called character.resetActions()');
         this.props.actions.forEach( eachAction => {
-            console.log('DEBUG resetting action: ', eachAction);
             eachAction.turn_used = 0
         })
     }

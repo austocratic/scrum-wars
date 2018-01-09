@@ -24,6 +24,15 @@ const userActionValueSelection = '12';
 
 const slackCallback = 'selectShopItemMenu:-KjGQEzVbaxRlWFawSqI/purchaseItemConfirmation:yes';
 
+//Callback responded to before avatar selection menu
+//command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu
+
+//Callback response after tapping More on avatar selection
+//command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu:more:6/selectCharacterAvatarMenu
+
+//Callback resonse after tapping More than previous in avatar selection menu
+//command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu:more:6/selectCharacterAvatarMenu:more:0/selectCharacterAvatarMenu
+
 describe("Testing gameContext " + gameContext + " & user selection " +  userActionValueSelection, function() {
 
     let slackResponseTemplate = {};

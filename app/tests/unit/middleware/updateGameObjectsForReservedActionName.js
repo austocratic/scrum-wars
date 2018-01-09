@@ -23,78 +23,129 @@ req = {
 
 describe("Testing updateGameObjectsForReservedActionName() Middleware", function(){
 
-    describe("with a long callback", function(){
+    describe("with reserved word back", function(){
+        describe("with a long callback", function(){
 
-        let gameObjectsLong = {
-            userActionNameSelection: 'back',
-            userActionValueSelection: 'stuff',
-            command: '',
-            slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu',
-        };
+            let gameObjectsLong = {
+                userActionNameSelection: 'back',
+                userActionValueSelection: 'stuff',
+                command: '',
+                slackCallback: 'command:profile/characterProfileMenu:inventory:inventory/selectInventoryMenu:inventorySelection:-KjGQ1IPuwE24t4LPPNd/itemDetailMenu',
+            };
 
-        updateGameObjectsForReservedActionName(gameObjectsLong);
+            updateGameObjectsForReservedActionName(gameObjectsLong);
 
-        it("should modify the callback", function(){
-            assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+            it("should modify the callback", function(){
+                assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+            });
+            it("should modify the gameContext", function(){
+                assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+            });
+            it("should modify the userActionNameSelection", function(){
+                assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
+            });
+            it("should modify the userActionValueSelection", function(){
+                assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
+            });
         });
-        it("should modify the gameContext", function(){
-            assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
-        });
-        it("should modify the userActionNameSelection", function(){
-            assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
-        });
-        it("should modify the userActionValueSelection", function(){
-            assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
+
+        /*
+         describe("with a callback from characterClassDetail", function(){
+
+         let gameObjectsLong = {
+         userActionNameSelection: 'back',
+         userActionValueSelection: 'stuff',
+         command: '',
+         slackCallback: "command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classDetailMenu:-Kird8_Vef-8Ej2aShaO/selectGenderMenu"
+         };
+
+         updateGameObjectsForReservedActionName(gameObjectsLong);
+
+         it("should modify the callback", function(){
+         assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
+         });
+         it("should modify the gameContext", function(){
+         assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
+         });
+         it("should modify the userActionNameSelection", function(){
+         assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
+         });
+         it("should modify the userActionValueSelection", function(){
+         assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
+         });
+         });*/
+
+        describe("with a short callback", function(){
+
+            let gameObjectsShort = {
+                type: 'interactive_message',
+                userActionNameSelection: 'back',
+                userActionValueSelection: '',
+                command: '',
+                slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu',
+            };
+
+            updateGameObjectsForReservedActionName(gameObjectsShort);
+
+            it("should modify the command", function(){
+                assert.equal(gameObjectsShort.gameContext, 'command')
+            });
+            it("should modify the userActionNameSelection", function(){
+                assert.equal(gameObjectsShort.userActionNameSelection, 'profile')
+            });
+            //it("should modify the slackCallback", function(){
+            //    assert.equal(gameObjectsShort.slackCallback, 'profile')
+            //});
+
         });
     });
 
-    /*
-     describe("with a callback from characterClassDetail", function(){
+    describe("with the reserved word more", function(){
 
-     let gameObjectsLong = {
-     userActionNameSelection: 'back',
-     userActionValueSelection: 'stuff',
-     command: '',
-     slackCallback: "command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classDetailMenu:-Kird8_Vef-8Ej2aShaO/selectGenderMenu"
-     };
+        describe("and a callback that does not have a pagination selection stored yet", function(){
 
-     updateGameObjectsForReservedActionName(gameObjectsLong);
+            let gameObjectsMoreNoPaginationInCallback = {
+                type: 'interactive_message',
+                gameContext: 'selectGenderMenu',
+                userActionNameSelection: 'more',
+                userActionValueSelection: '6',
+                slackCallback: 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu',
+            };
 
-     it("should modify the callback", function(){
-     assert.equal(gameObjectsLong.slackCallback, 'command:profile/characterProfileMenu')
-     });
-     it("should modify the gameContext", function(){
-     assert.equal(gameObjectsLong.gameContext, 'characterProfileMenu')
-     });
-     it("should modify the userActionNameSelection", function(){
-     assert.equal(gameObjectsLong.userActionNameSelection, 'inventory')
-     });
-     it("should modify the userActionValueSelection", function(){
-     assert.equal(gameObjectsLong.userActionValueSelection, 'inventory')
-     });
-     });*/
+            updateGameObjectsForReservedActionName(gameObjectsMoreNoPaginationInCallback);
 
-    describe("with a short callback", function(){
-
-        let gameObjectsShort = {
-            type: 'interactive_message',
-            userActionNameSelection: 'back',
-            userActionValueSelection: '',
-            command: '',
-            slackCallback: 'command:profile/characterProfileMenu:equipment:equipment/selectEquipmentMenu',
-        };
-
-        updateGameObjectsForReservedActionName(gameObjectsShort);
-
-        it("should modify the command", function(){
-            assert.equal(gameObjectsShort.gameContext, 'command')
+            it("should NOT modify the name object", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'more')
+            });
+            it("should NOT modify the value object", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionValueSelection, '6')
+            });
+            it("should NOT the slackCallback object because it does not have a pagination selection stored yet", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.slackCallback, 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu')
+            });
         });
-        it("should modify the userActionNameSelection", function(){
-            assert.equal(gameObjectsShort.userActionNameSelection, 'profile')
-        });
-        //it("should modify the slackCallback", function(){
-        //    assert.equal(gameObjectsShort.slackCallback, 'profile')
-        //});
 
-    });
+        describe("and a callback that does have a pagination selection stored", function(){
+
+            let gameObjectsMoreNoPaginationInCallback = {
+                type: 'interactive_message',
+                gameContext: 'selectCharacterAvatarMenu',
+                userActionNameSelection: 'more',
+                userActionValueSelection: '12',
+                slackCallback: 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu:more:6/selectCharacterAvatarMenu',
+            };
+
+            updateGameObjectsForReservedActionName(gameObjectsMoreNoPaginationInCallback);
+
+            it("should NOT modify the name object", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'more')
+            });
+            it("should NOT modify the value object", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionValueSelection, '12')
+            });
+            it("SHOULD modify the slackCallback object because it does have a pagination selection stored", function(){
+                assert.equal(gameObjectsMoreNoPaginationInCallback.slackCallback, 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu')
+            });
+        })
+    })
 });
