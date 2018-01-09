@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const slack = require('../libraries/slack');
+const slack = require('../../libraries/slack');
 //to delete (shuld use slack library above)
 const slackAlert = require('../../libraries/slack').Alert;
 
@@ -405,6 +405,12 @@ const match = gameObjects => {
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id);
 
     console.log('DEBUG charactersInZone: ', charactersInZone);
+
+    /*
+    gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id)
+        .forEach( eachCharacterInZone =>{
+            eachCharacterInZone.resetActions();
+        });*/
 
     //For characters participating in the match, reset their actions
     charactersInZone.forEach( eachCharacterInZone =>{
