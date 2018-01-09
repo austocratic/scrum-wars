@@ -102,13 +102,12 @@ const more = gameObjects => {
         );
     }
 
-    //let updatedCallback = gameObjects.slackCallback;
+    //let splitCallback = gameObjects.slackCallback.split("/");
 
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+    //TODO after the first time a user paginates, we should continue to replace to the previous pagination in the callback instead of building up the callback
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterAvatarMenu`);
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}`);
 
     return gameObjects.slackResponseTemplate;
 };
@@ -126,7 +125,14 @@ const selection = gameObjects => {
     gameObjects.playerCharacter.updateProperty('avatar', gameObjects.userActionValueSelection);
 
     gameObjects.slackResponseTemplate = {
-        "text": "You prepare to set out on your journey, but first, what is your name? (type /name ___ to set your name)"
+        "text":
+            `After months of travel, your long caravan ride finally comes to an end. You have arrived at the capital city of Dal Garial. The cities skyline truly lives up to its reputation, its multitiered architecture ripe with fauna. You admire the cities magnificent towers which sprout up throughout the city like shoots of duniper grass.
+            \n
+            Upon entering through the southern gates, a man approaches you.  He carries the imperial sigil on his well maintained cuirass and an enormous feather plume arcs from his helmet, eclipsing the morning sun. The captain speaks to you, a heavy air of condescension on every word, “You there, all refugees must report to the application desk for assignment.  You’re lucky you arrived when you did. By royal decree, the gates are being sealed. No longer will our city be burdened by your kind
+            \n
+            You follow a line of other beleaguered travels to register. You approach the registration desk and come upon an unnaturally thin man behind the desk flipping through a stack of parchment.  As you approach he begins to ask, “Name, name name, we don’t have all day.  State your name traveler.
+            \n
+            _Type /name ____ to set your name_`
     };
 
     return gameObjects.slackResponseTemplate;
