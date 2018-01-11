@@ -649,6 +649,7 @@ class Game {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "",
                 "fallback": "You are unable select that item",
+                //Empty slot icon.  This is overridden when there is an equipped item
                 "thumb_url": "https://scrum-wars.herokuapp.com/public/images/thumb/-Kjk3sGUJy5Nu8GWsdff.jpg",
                 //"thumb_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
                 "fields": [{
@@ -663,22 +664,32 @@ class Game {
             if(typeof equippedSlotItem !== "undefined"){
                 let equippedItem = new Item(this.state, equippedSlotItem.item_id);
 
-                baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/${equippedItem.props.icon_name}.png`
+                baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/${equippedItem.props.icon_name}.png`;
+
+                //If there is an item, add an inspect button
+                baseTemplate.actions.push({
+                    "name": "equipmentSelection",
+                    "text": "Inspect item",
+                    "style": "default",
+                    "type": "button",
+                    "value": equippedItem.id
+                })
             };
 
+            /*
             //Default to empty slot format, if not empty, over write it
             let formattedSlot = {
                 item_id: '-Kjk3sGUJy5Nu8GWsdff',
                 name: 'Empty'
             };
 
-            /*
+
             if (equippedSlotItem.length > 0){
                 formattedSlot = {
                     item_id: equippedSlotItem[0].item_id,
                     name: equippedSlotItem[0].name
                 }
-            }*/
+            }
 
             //If the item is any ID other than the "empty" item, add an inspect button
             if (equippedSlotItem.length > 0){
@@ -690,7 +701,7 @@ class Game {
                     "type": "button",
                     "value": formattedSlot.item_id
                 })
-            }
+            }*/
             
             return baseTemplate;
         });
