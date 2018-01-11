@@ -107,7 +107,7 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
             let gameObjectsMoreNoPaginationInCallback = {
                 type: 'interactive_message',
                 gameContext: 'selectGenderMenu',
-                userActionNameSelection: 'more',
+                userActionNameSelection: 'paginate',
                 userActionValueSelection: '6',
                 slackCallback: 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu',
             };
@@ -115,7 +115,7 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
             updateGameObjectsForReservedActionName(gameObjectsMoreNoPaginationInCallback);
 
             it("should NOT modify the name object", function(){
-                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'more')
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'paginate')
             });
             it("should NOT modify the value object", function(){
                 assert.equal(gameObjectsMoreNoPaginationInCallback.userActionValueSelection, '6')
@@ -130,15 +130,15 @@ describe("Testing updateGameObjectsForReservedActionName() Middleware", function
             let gameObjectsMoreNoPaginationInCallback = {
                 type: 'interactive_message',
                 gameContext: 'selectCharacterAvatarMenu',
-                userActionNameSelection: 'more',
+                userActionNameSelection: 'paginate',
                 userActionValueSelection: '12',
-                slackCallback: 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu:more:6/selectCharacterAvatarMenu',
+                slackCallback: 'command:action/generateCharacterConfirmation:yes:yes/selectCharacterClassMenu:classSelection:-KircgtGZhoRrHnKryS5/selectGenderMenu:genderSelection:male/selectCharacterAvatarMenu:paginate:6/selectCharacterAvatarMenu',
             };
 
             updateGameObjectsForReservedActionName(gameObjectsMoreNoPaginationInCallback);
 
             it("should NOT modify the name object", function(){
-                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'more')
+                assert.equal(gameObjectsMoreNoPaginationInCallback.userActionNameSelection, 'paginate')
             });
             it("should NOT modify the value object", function(){
                 assert.equal(gameObjectsMoreNoPaginationInCallback.userActionValueSelection, '12')

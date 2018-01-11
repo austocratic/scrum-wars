@@ -51,12 +51,12 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             break;
 
-        case 'more':
+        case 'paginate':
 
             let moreFinalKeyValue = slackCallbackElements[slackCallbackElements.length - 2]
                 .split(":");
 
-            if (moreFinalKeyValue[1] !== 'more'){
+            if (moreFinalKeyValue[1] !== 'paginate'){
                 return
             }
 

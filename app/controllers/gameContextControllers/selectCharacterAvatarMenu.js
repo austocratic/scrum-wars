@@ -3,7 +3,7 @@
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
-const more = gameObjects => {
+const paginate = gameObjects => {
     console.log('called function selectCharacterAvatarMenu/more');
 
     validateGameObjects(gameObjects, [
@@ -79,7 +79,7 @@ const more = gameObjects => {
     if (numericRequestActionValue > 0) {
         gameObjects.slackResponseTemplate.attachments[navigationButtonAttachmentIndex].actions.push(
             {
-                "name": "more",
+                "name": "paginate",
                 "text": "Previous",
                 "style": "default",
                 "type": "button",
@@ -93,7 +93,7 @@ const more = gameObjects => {
     if (nextPaginationEnd < avatarFileNames.length) {
         gameObjects.slackResponseTemplate.attachments[navigationButtonAttachmentIndex].actions.push(
             {
-                "name": "more",
+                "name": "paginate",
                 "text": "More",
                 "style": "default",
                 "type": "button",
@@ -132,6 +132,6 @@ const selection = gameObjects => {
 
 
 module.exports = {
-    more,
+    paginate,
     selection
 };

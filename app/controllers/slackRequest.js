@@ -99,7 +99,7 @@ const contextsAndActions = {
         unequip: require('./gameContextControllers/itemDetailMenu').unequip
     },
     selectCharacterAvatarMenu: {
-        more: require('./gameContextControllers/selectCharacterAvatarMenu').more,
+        paginate: require('./gameContextControllers/selectCharacterAvatarMenu').paginate,
         selection: require('./gameContextControllers/selectCharacterAvatarMenu').selection
     }
 };
