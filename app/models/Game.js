@@ -640,34 +640,46 @@ class Game {
             
             singleEquipmentSlot = new EquipmentSlot(this.state, eachEquipmentSlot);
 
+            //Item equipped, if nothing equipped return undefined
             let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
-            
-            //Default to empty slot format, if not empty, over write it
-            let formattedSlot = {
-                item_id: '-Kjk3sGUJy5Nu8GWsdff',
-                name: 'Empty'
-            };
-            
-            if (equippedSlotItem.length > 0){
-                formattedSlot = {
-                    item_id: equippedSlotItem[0].item_id,
-                    name: equippedSlotItem[0].name
-                }
-            }
-            
+
+            console.log('DEBUG equippedSlotItem: ', equippedSlotItem);
+
             let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
                 "callback_id": "",
                 "fallback": "You are unable select that item",
-                "thumb_url": "https://scrum-wars.herokuapp.com/public/images/thumb/" + formattedSlot.item_id + ".jpg",
+                "thumb_url": "https://scrum-wars.herokuapp.com/public/images/thumb/-Kjk3sGUJy5Nu8GWsdff.jpg",
+                //"thumb_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
                 "fields": [{
-                    "title": formattedSlot.name,
+                    "title": "itemList",
                     "value": "",
                     "short": false
                 }],
                 "actions": []
             };
-            
+
+            //If defined then there is an item equipped
+            if (equippedSlotItem){
+                let equippedItem = new Item(this.state, singleEquipmentSlot.item_id);
+
+                baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/${equippedItem.props.icon_name}.png`
+            }
+
+            //Default to empty slot format, if not empty, over write it
+            let formattedSlot = {
+                item_id: '-Kjk3sGUJy5Nu8GWsdff',
+                name: 'Empty'
+            };
+
+            /*
+            if (equippedSlotItem.length > 0){
+                formattedSlot = {
+                    item_id: equippedSlotItem[0].item_id,
+                    name: equippedSlotItem[0].name
+                }
+            }*/
+
             //If the item is any ID other than the "empty" item, add an inspect button
             if (equippedSlotItem.length > 0){
 

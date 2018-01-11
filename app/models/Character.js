@@ -217,17 +217,22 @@ class Character extends BaseModel{
     }
     
     //Argument of slot ID
+    //Returns the first equipped item found in that slot.  If no item available return undefined
     getEquipmentInSlot(slotID){
-        
+
+        //Array of equipped item IDs
         let equippedItems = this.getEquippedItems();
         
         //let equippedSlotItem = equippedItems.filter( eachEquippedItem=>{
-        return equippedItems.filter( eachEquippedItem=>{
+
+        return equippedItems.find( eachEquippedItem=>{
             return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
         });
-        
-        //return equippedSlotItem
-        
+
+        /*
+        return equippedItems.filter( eachEquippedItem=>{
+            return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
+        });*/
     }
 
     equipItem(itemObject){

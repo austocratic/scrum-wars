@@ -101,6 +101,13 @@ describe("Testing Character model", function() {
 
                 assert.equal(resetActionsTestCharacter.props.actions[0].turn_used, 0)
             })
+        });
+
+        describe("calling method getEquipmentInSlot", function(){
+
+            //console.log('items in slot: ', testCharacter.getEquipmentInSlot('-KmTV24FelP7T8rdKLEx'));
+
+            console.log('items in slot: ', testCharacter.getEquipmentInSlot('banana'));
         })
     });
 });
