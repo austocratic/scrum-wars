@@ -661,7 +661,7 @@ class Game {
 
             //If defined then there is an item equipped
             if(typeof equippedSlotItem !== "undefined"){
-                let equippedItem = new Item(this.state, singleEquipmentSlot.item_id);
+                let equippedItem = new Item(this.state, equippedSlotItem.item_id);
 
                 baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/${equippedItem.props.icon_name}.png`
             };
