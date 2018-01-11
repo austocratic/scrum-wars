@@ -53,7 +53,7 @@ const genderSelection = gameObjects => {
         "fallback": 'Button failed, try again!',
         "actions": [
             {
-                "name": "more",
+                "name": "paginate",
                 "text": "More",
                 "style": "default",
                 "type": "button",
