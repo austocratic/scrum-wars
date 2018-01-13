@@ -664,7 +664,9 @@ class Game {
             if(typeof equippedSlotItem !== "undefined"){
                 let equippedItem = new Item(this.state, equippedSlotItem.item_id);
 
-                baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/${equippedItem.props.icon_name}.png`;
+                //TODO maybe add a get file extension type so I dont hardcode .png?
+
+                baseTemplate.thumb_url = `https://scrum-wars.herokuapp.com/public/images/thumb/${equippedItem.props.icon_name}.png`;
 
                 //If there is an item, add an inspect button
                 baseTemplate.actions.push({
