@@ -40,12 +40,12 @@ class Firestorm extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'orange-flame.gif';
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'orange-flame.gif';
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
                 this.slackPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'fire-2.gif';
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-2.gif';
 
                 console.log('DEBUG Firestorm 1 slack payload: ', JSON.stringify(this.slackPayload));
 
@@ -54,7 +54,7 @@ class Firestorm extends BaseAction {
             case (turn <= 2):
                 //Build a new message based on the randomTarget
                 this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
-                //this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'fire-burst.gif';
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-burst.gif';
                 slack.sendMessage(this.slackPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);

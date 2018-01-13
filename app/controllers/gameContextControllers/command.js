@@ -422,10 +422,12 @@ const match = gameObjects => {
 
     //Announce that new match has begun
     slack.sendMessage({
-        // "username": this.actionCharacter.props.name,
+        "username": this.actionCharacter.props.name,
         //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
         "channel": ("#" + gameObjects.requestZone.props.channel),
-        "text": "_A new match begins!_"
+        "text":
+            `Ladies and Gentlemen, feast your eyes on this bloody spectacle!
+            \n_A new match begins!_`
     });
 
     return {

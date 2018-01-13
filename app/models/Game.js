@@ -48,6 +48,7 @@ class Game {
         this.avatarPath = 'public/images/fullSize/character_avatar/';
         this.skillImagePath = 'public/images/thumb/';
         this.imagePath = 'public/images/';
+        this.thumbImagePath = 'public/images/thumb/';
         
         this.maleAvatarFileNames = fs.readdirSync(this.avatarPath + 'male');
         this.femaleAvatarFileNames = fs.readdirSync(this.avatarPath + 'female');
@@ -455,83 +456,6 @@ class Game {
         return this.state.global_state.match_id
     }
 
-    /* TO DELETE
-    getAvailableActions(requestSlackUserID, requestSlackChannelID){
-
-        //Pass in the slack user id making the call.  The constructor will set the DB user ID based on slack user
-        var localUser = new User(this.state, requestSlackUserID);
-
-        var characterID = localUser.getCharacterID();
-
-        var localCharacter = new Character(this.state, characterID);
-        var localZone = new Zone(this.state, requestSlackChannelID);
-        var localMatch = new Match(this.state, this.getCurrentMatchID());
-
-        //Returns an array of all the character's action IDs with is_active = 1
-        var actionIDsAvailable = localCharacter.getActionIDs();
-
-        //Use action IDs to make an array of action objects
-        var actionObjectsAvailable = actionIDsAvailable.map( eachActionID =>{
-            return new Action(this.state, eachActionID);
-        });
-
-        //Filter the action object array for actionControllers available in the current zone
-        var actionsAvailableInZone = actionObjectsAvailable.filter( eachActionObject =>{
-            return _.indexOf(eachActionObject.props.zone_id, localZone.id) > -1;
-        });
-
-        //Group the actionControllers for slack
-        var groupedActions = _(actionsAvailableInZone).groupBy((singleAction) => {
-            return singleAction.props.type;
-        });
-        
-        //Iterate through the grouped actionControllers
-        var templateAttachments = groupedActions.map(actionCategory => {
-
-            var actionType = actionCategory[0].props.type;
-
-            //Build the template
-            var attachmentTemplate = {
-                "title": actionType,
-                "fallback": "You are unable to choose an action",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "actions": []
-            };
-
-            actionCategory.forEach(actionDetails => {
-
-                //Default button color to red ("danger").  If available, it will be overwritten
-                var actionAvailableButtonColor = "danger";
-
-                //If the button is available based on the match turn, overwrite the color to green
-                if (localCharacter.isActionAvailable(actionDetails.id, localMatch.props.number_turns)) {
-                    actionAvailableButtonColor = "primary"
-                }
-
-                //Push each action into the actionControllers array portion of the template
-                attachmentTemplate.actions.push({
-                    "name": actionDetails.id,
-                    "text": actionDetails.props.name,
-                    "style": actionAvailableButtonColor,
-                    "type": "button",
-                    "value": actionDetails.id
-                })
-            });
-
-            return attachmentTemplate;
-        });
-
-        //Get the basic action template from the JSON file
-        var finalTemplate = slackTemplates.actionMenu;
-
-        //Add the actionControllers template into the slack template to return
-        //Use .value() to unwrap the lodash wrapper
-        finalTemplate.attachments = templateAttachments.value();
-
-        return finalTemplate;
-    }*/
-
     getCharacterClasses() {
         console.log('called Game.getCharacterClasses()');
         
@@ -551,49 +475,6 @@ class Game {
             .filter( eachClassObject =>{
                 return eachClassObject.props.active === 1
             });
-        
-        
-        /*
-        characterClassesTemplate.attachments = classIDs
-            //Declare a class object for each class ID
-            .map( eachClassID =>{
-                return new Class(this.state, eachClassID);
-            })
-            //Filter active classes only
-            .filter( eachClassObject =>{
-                return eachClassObject.props.active === 1
-            })
-            .map( eachActiveClassObject =>{
-                return {
-                    "title": eachActiveClassObject.props.name,
-                    "fallback": "You are unable to choose an action",
-                    "callback_id": "",
-                    "color": "#000000",
-                    "attachment_type": "default",
-                    "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachActiveClassObject.id + ".jpg",
-                    "fields": [{
-                        "title": "Description",
-                        "value": eachActiveClassObject.props.description,
-                        "short": false
-                    }],
-                    "actions": [{
-                        "name": 'classSelection',
-                        "text": `Choose ${eachActiveClassObject.props.name}`,
-                        "style": "default",
-                        "type": "button",
-                        "value": eachActiveClassObject.id
-                    },
-                    {
-                        "name": 'classDetailMenu',
-                        "text": 'More information',
-                        "style": "default",
-                        "type": "button",
-                        "value": eachActiveClassObject.id
-                    }]
-                }
-        });
-        
-        return characterClassesTemplate;*/
     }
 
     getCharacterIDsInZone(zoneID){
@@ -677,33 +558,6 @@ class Game {
                     "value": equippedItem.id
                 })
             };
-
-            /*
-            //Default to empty slot format, if not empty, over write it
-            let formattedSlot = {
-                item_id: '-Kjk3sGUJy5Nu8GWsdff',
-                name: 'Empty'
-            };
-
-
-            if (equippedSlotItem.length > 0){
-                formattedSlot = {
-                    item_id: equippedSlotItem[0].item_id,
-                    name: equippedSlotItem[0].name
-                }
-            }
-
-            //If the item is any ID other than the "empty" item, add an inspect button
-            if (equippedSlotItem.length > 0){
-
-                baseTemplate.actions.push({
-                    "name": "equipmentSelection",
-                    "text": "Inspect item",
-                    "style": "default",
-                    "type": "button",
-                    "value": formattedSlot.item_id
-                })
-            }*/
             
             return baseTemplate;
         });
