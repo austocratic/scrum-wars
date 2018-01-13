@@ -41,7 +41,7 @@ class ForkedLightning extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 this.slackPayload.attachments[0].text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'lightning-ball.gif';
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'lightning-ball.gif';
                 slack.sendMessage(this.slackPayload);
                 break;
             case (turn <= 1):
@@ -90,7 +90,7 @@ class ForkedLightning extends BaseAction {
 
                     //Alert the channel of the action
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
-                    this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.imagePath + 'yellow-lightning-circle.gif';
+                    this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
                     slack.sendMessage(this.slackPayload);
                 }
                 break;
