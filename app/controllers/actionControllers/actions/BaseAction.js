@@ -185,10 +185,10 @@ class BaseAction {
 
     //Decrement health, processes action interrupts and hiding removal
     //Argument must be a character object
-    _processDamage(target){
+    _processDamage(target, damageAmount){
         console.log(`called _processDamage(${target})`);
         //Decrease target's health
-        this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
+        this.targetCharacter.incrementProperty('health', -damageAmount);
 
         //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
         //console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);

@@ -20,7 +20,8 @@ class Firestorm extends BaseAction {
 
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //Moving this into process function so it can calculate a new value per target
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
@@ -69,12 +70,14 @@ class Firestorm extends BaseAction {
                         return;
                     }
 
+                    let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
                     //Process damage & Interrupts
-                    this._processDamage(singleTarget);
+                    this._processDamage(singleTarget, calculatedDamage);
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
                         slack.sendMessage(this.slackPayload);
                     }, 500);
 
@@ -93,8 +96,8 @@ class Firestorm extends BaseAction {
                     }*/
 
                     //Alert the channel of the action
-                    this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                    slack.sendMessage(this.slackPayload);
+                    //this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                    //slack.sendMessage(this.slackPayload);
                 }
 
                 break;

@@ -20,7 +20,7 @@ class Whirlwind extends BaseAction {
 
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
@@ -59,12 +59,14 @@ class Whirlwind extends BaseAction {
                         return;
                     }
 
+                    let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
                     //Process damage & Interrupts
-                    this._processDamage(singleTarget);
+                    this._processDamage(singleTarget, calculatedDamage);
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
                         slack.sendMessage(this.slackPayload);
                     }, 500);
 

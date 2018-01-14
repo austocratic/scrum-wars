@@ -20,8 +20,8 @@ class ForkedLightning extends BaseAction {
 
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
-        this.calculatedDamageSecondaryTarget = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //this.calculatedDamageSecondaryTarget = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
@@ -58,20 +58,29 @@ class ForkedLightning extends BaseAction {
                 //Value will increase with each iteration
                 let avoidModifier = 1;
 
-                const processOnSingleTarget = (singleTarget, avoidModifier) => {
+                const processOnSingleTarget = (singleTarget, modifier) => {
                     console.log('Called processOnSingleTarget');
 
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
-                    if (this._avoidCheck(0, (0 + avoidModifier)) === false) {
+                    if (this._avoidCheck(0, (0 + modifier)) === false) {
                         console.log('ForkedLightning failed (dodge)');
                         this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
                         slack.sendMessage(this.slackPayload);
                         return false;
                     }
 
+                    let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
                     //Process damage & Interrupts
-                    this._processDamage(singleTarget);
+                    this._processDamage(singleTarget, calculatedDamage);
+
+                    //Build a new message based on the randomTarget
+                    setTimeout( () => {
+                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s bolts of *arcane energy* strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
+                        this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
+                        slack.sendMessage(this.slackPayload);
+                    }, 500);
 
                     return true;
                 };
@@ -80,17 +89,18 @@ class ForkedLightning extends BaseAction {
                 for(const target of targets){
                     console.log('keep processing!');
 
-                    let result = processOnSingleTarget(target, 1);
+                    let result = processOnSingleTarget(target, avoidModifier);
 
                     if(result === false){
                         break
                     }
 
+                    //Increase the avoidModifier to make each successful process more difficult
                     avoidModifier = avoidModifier * 2;
 
                     //Alert the channel of the action
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
-                    this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
+                    //this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
+                    //this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
                     slack.sendMessage(this.slackPayload);
                 }
                 break;

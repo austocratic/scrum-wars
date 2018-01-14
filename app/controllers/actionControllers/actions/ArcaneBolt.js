@@ -49,7 +49,7 @@ class ArcaneBolt extends BaseAction {
                 slack.sendMessage(this.slackPayload);
 
                 //Process damage & Interrupts
-                this._processDamage(this.targetCharacter);
+                this._processDamage(this.targetCharacter, this.calculatedDamage);
 
                 break;
             case (turn >= 1):
