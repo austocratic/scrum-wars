@@ -54,7 +54,7 @@ class Whirlwind extends BaseAction {
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, 0) === false) {
-                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades ${this.actionCharacter.props.name}'s whirling blades!`;
                         slack.sendMessage(this.slackPayload);
                         return;
                     }

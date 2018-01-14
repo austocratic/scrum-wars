@@ -371,7 +371,17 @@ const turn = gameObjects => {
         'currentMatch'
     ]);
 
-    gameObjects.currentMatch.incrementTurn(gameObjects.requestZone);
+    gameObjects.currentMatch.incrementTurn();
+
+    slack.sendMessage({
+        "username": gameObjects.requestZone.props.zone_messages.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.png',
+        "channel": ("#" + gameObjects.requestZone.props.channel),
+        "attachments": [{
+            "text": "_A new turn begins!_",
+            "color": gameObjects.game.menuColor
+        }]
+    });
 
     return {
         "text": "You increment the match's turn"
@@ -422,12 +432,15 @@ const match = gameObjects => {
 
     //Announce that new match has begun
     slack.sendMessage({
-        "username": "The Arena Master",
-        //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
+        "username": gameObjects.requestZone.props.zone_messages.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.png',
         "channel": ("#" + gameObjects.requestZone.props.channel),
-        "text":
-            `Ladies and Gentlemen, feast your eyes on this bloody spectacle!
-            \n_A new match begins!_`
+        "attachments": [{
+            "text":
+                `Ladies and Gentlemen, feast your eyes on this bloody spectacle!
+                \n_A new match begins!_`,
+            "color": gameObjects.game.menuColor
+        }]
     });
 
     return {

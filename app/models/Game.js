@@ -35,14 +35,6 @@ const actionQueue = require('../controllers/gameControllers/actionQueue').action
 class Game {
     constructor() {
         
-        //this.maleAvatarPaths = [];
-        //this.femaleAvatarPaths = [];
-
-        //helpers.getFilePaths("public/images/fullSize/character_avatar/male", this.maleAvatarPaths);
-        //helpers.getFilePaths("public/images/fullSize/character_avatar/female", this.femaleAvatarPaths);
-        
-        //var fs = fs || require('fs');
-        
         this.baseURL = 'https://scrum-wars.herokuapp.com/';
         
         this.avatarPath = 'public/images/fullSize/character_avatar/';
@@ -59,6 +51,7 @@ class Game {
         this.turnLengthMinutes = 60;
         //Default Slack left side border menu color
         this.menuColor = '#000000';
+
         
         
     }
@@ -302,10 +295,7 @@ class Game {
 
                 //Test if turn should be incremented
                 if (Date.now() > nextTurnStartTime){
-
-                    currentMatch.incrementProperty('number_turns', 1);
-                    //TODO implement this standard method (needs a argument for zone)
-                    //currentMatch.incrementTurn()
+                    currentMatch.incrementTurn();
                 }
 
                 break;

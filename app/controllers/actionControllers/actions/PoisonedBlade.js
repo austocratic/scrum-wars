@@ -26,7 +26,7 @@ class PoisonedBlade extends BaseAction {
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes out with poisonous blades but ${this.targetCharacter.props.name} dodges the attack!`;
         this.channelActionSuccessMessage =
         `${this.actionCharacter.props.name} slices ${this.targetCharacter.props.name} for ${this.calculatedDamage} damage!
-        ${this.actionCharacter.props.name}'s blade releases a noxious poison!`;
+        \n${this.actionCharacter.props.name}'s blade releases a noxious poison!`;
 
         //Modifiers to apply on action success - empty because we apply an effect, but this effect has no modifiers
         this.statsToModify = {
@@ -50,6 +50,7 @@ class PoisonedBlade extends BaseAction {
                 }
 
                 this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
+                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'green-cloud.gif';
                 slack.sendMessage(this.slackPayload);
 
                 //Process damage & Interrupts
