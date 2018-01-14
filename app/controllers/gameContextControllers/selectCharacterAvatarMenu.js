@@ -24,11 +24,6 @@ const paginate = gameObjects => {
 
     //Determine the beginning of the previous page (this will be used to determine starting point of previous page selection)
     let previousPaginationBegin = numericRequestActionValue - attachmentsPerPage;
-
-    gameObjects.slackResponseTemplate = {
-        'text': 'What does your character look like?',
-        'attachments': []
-    };
     
     let avatarFileNames, paginatedAvatarFileNames;
     if (gameObjects.playerCharacter.props.gender === 'male'){

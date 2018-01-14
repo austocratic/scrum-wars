@@ -112,9 +112,9 @@ const classDetailMenu = gameObjects => {
     //Add a back button
     gameObjects.slackResponseTemplate.attachments.push({
         "fallback": "unable to go back",
+        "color": gameObjects.game.menuColor,
         "actions": [{
             "name": "back",
-            "color": gameObjects.game.menuColor,
             "text": "Back",
             "fallback": "unable to go back",
             "type": "button",
