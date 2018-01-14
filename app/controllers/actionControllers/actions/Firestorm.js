@@ -64,7 +64,7 @@ class Firestorm extends BaseAction {
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, 0) === false) {
-                        this.slackPayload.text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
                         slack.sendMessage(this.slackPayload);
                         return;
                     }
@@ -74,7 +74,7 @@ class Firestorm extends BaseAction {
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
+                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${this.calculatedDamage} points of damage!`;
                         slack.sendMessage(this.slackPayload);
                     }, 500);
 

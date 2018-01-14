@@ -71,7 +71,7 @@ class ForkedLightning extends BaseAction {
                     }
 
                     //Process damage & Interrupts
-                    this._processDamage();
+                    this._processDamage(singleTarget);
 
                     return true;
                 };

@@ -60,7 +60,7 @@ class Whirlwind extends BaseAction {
                     }
 
                     //Process damage & Interrupts
-                    this._processDamage();
+                    this._processDamage(singleTarget);
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {

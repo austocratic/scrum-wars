@@ -53,7 +53,7 @@ class PoisonedBlade extends BaseAction {
                 slack.sendMessage(this.slackPayload);
 
                 //Process damage & Interrupts
-                this._processDamage();
+                this._processDamage(this.targetCharacter);
 
                 //Apply the effect
                 this._applyEffect(this.targetCharacter, this.statsToModify);

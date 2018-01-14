@@ -47,7 +47,7 @@ class LifeTap extends BaseAction {
                 slack.sendMessage(this.slackPayload);
 
                 //Process damage & Interrupts
-                this._processDamage();
+                this._processDamage(this.targetCharacter);
                 this.actionCharacter.incrementProperty('health', this.calculatedDamage);
 
                 break;
