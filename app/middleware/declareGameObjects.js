@@ -56,7 +56,8 @@ const declareGameObjects = (game, slackRequest) => {
     //If Slack user is not available in the DB, add them
     if (!_.find(game.state.user, {'slack_user_id': gameObjects.user.id})){
         console.log('Requesting user does not exist, adding');
-        game.createUser(gameObjects.user.id);
+        
+        game.createUser(gameObjects.user_id);
     }
 
     //Slash commands have a command attribute
