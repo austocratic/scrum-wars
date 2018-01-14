@@ -139,6 +139,7 @@ const sellButton = gameObjects => {
         gameObjects.slackResponseTemplate.attachments[0] =
             {
                 "text": "",
+                "color": gameObjects.game.menuColor,
                 "fallback": "You are unable to select that item"
             };
 

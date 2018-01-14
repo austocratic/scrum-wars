@@ -48,7 +48,6 @@ const paginate = gameObjects => {
             "text": "",
             "fallback": "Unable to select avatar",
             "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + eachPaginatedAvatarFileName,
-            //"image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
             "actions":[{
                 "name": "selection",
                 "text": "Select",

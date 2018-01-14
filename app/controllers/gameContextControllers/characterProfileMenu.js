@@ -17,6 +17,7 @@ const inventory = gameObjects => {
         "attachments": [
         {
             "text": "",
+            "color": gameObjects.game.menuColor,
             "fallback": "Unable to process image",
             "callback_id": "itemList",
             "image_url": "https://scrum-wars.herokuapp.com/assets/fullSize/inventory-menu.jpg",
@@ -24,6 +25,7 @@ const inventory = gameObjects => {
         },
         {
             "text": "",
+            "color": gameObjects.game.menuColor,
             "callback_id": "itemList",
             "actions": []
         },
@@ -31,7 +33,7 @@ const inventory = gameObjects => {
             "text": "",
             "fallback": "You are unable to go back",
             "callback_id": "itemList",
-            "color": "#3AA3E3",
+            "color": gameObjects.game.menuColor,
             "attachment_type": "default",
             "actions": [
                 {
@@ -100,6 +102,7 @@ const equipment = gameObjects => {
         "attachments": [
         {
             "text": "",
+            "color": gameObjects.game.menuColor,
             "fallback": "You are unable to go back",
             "actions": [
                 {
@@ -112,7 +115,7 @@ const equipment = gameObjects => {
             "text": "",
             "fallback": "You are unable to go back",
             "callback_id": "equipmentList",
-            "color": "#3AA3E3",
+            "color": gameObjects.game.menuColor,
             "attachment_type": "default",
             "actions": [
                 {
@@ -133,7 +136,7 @@ const equipment = gameObjects => {
         "text": "",
         "fallback": "You are unable to go back",
         "callback_id": "itemList",
-        "color": "#3AA3E3",
+        "color": gameObjects.game.menuColor,
         "attachment_type": "default",
         "actions": [
             {
@@ -147,11 +150,7 @@ const equipment = gameObjects => {
     });
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectEquipmentMenu`);
-
-    //let updatedCallback = ':equipment/selectEquipmentMenu';
     
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
-
     return gameObjects.slackResponseTemplate;
 };
 

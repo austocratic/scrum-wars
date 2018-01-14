@@ -40,6 +40,7 @@ const action = gameObjects => {
             image_url: "https://scrum-wars.herokuapp.com/public/images/fullSize/" + gameObjects.requestZone.id + ".jpg",
             fallback: "Unable to travel to " + gameObjects.requestZone.props.name + " at this time",
             text: "Would you like to travel to " + gameObjects.requestZone.props.name + " now?",
+            "color": gameObjects.game.menuColor,
             actions: [
                 {
                     "name": "yes",
