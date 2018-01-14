@@ -375,7 +375,7 @@ const turn = gameObjects => {
 
     slack.sendMessage({
         "username": gameObjects.requestZone.props.zone_messages.name,
-        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.png',
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
         "channel": ("#" + gameObjects.requestZone.props.channel),
         "attachments": [{
             "text": "_A new turn begins!_",
