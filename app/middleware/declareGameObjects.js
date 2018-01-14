@@ -59,7 +59,7 @@ const declareGameObjects = (game, slackRequest) => {
 
         console.log('DEBUG user: ', gameObjects.user);
 
-        game.createUser(gameObjects.user.props.user_id);
+        game.createUser(gameObjects.user.id);
     }
 
     //Slash commands have a command attribute
