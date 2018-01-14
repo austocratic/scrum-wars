@@ -34,7 +34,7 @@ const genderSelection = gameObjects => {
         return {
             "text": "",
             "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + eachAvatarFileName,
-            //"image_url": 'https://scrum-wars.herokuapp.com/' + eachFilePath,
+            "color": gameObjects.game.menuColor,
             "fallback": 'A strange force prevents you from choosing an avatar, try again!',
             "actions":[{
                 "name": "selection",
@@ -51,6 +51,7 @@ const genderSelection = gameObjects => {
         "text": "",
         "image_url": '',
         "fallback": 'Button failed, try again!',
+        "color": gameObjects.game.menuColor,
         "actions": [
             {
                 "name": "paginate",
@@ -61,10 +62,6 @@ const genderSelection = gameObjects => {
             }
         ]
     });
-    
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/selectCharacterAvatarMenu';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectCharacterAvatarMenu`);
 

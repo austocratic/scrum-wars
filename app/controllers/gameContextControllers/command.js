@@ -169,9 +169,6 @@ const generate = gameObjects => {
             ]
         }];
 
-    gameObjects.slackResponseTemplate.username = 'Character-create'; //gameObjects.requestZone.props.zone_messages.name;
-    gameObjects.slackResponseTemplate.icon_url = gameObjects.game.baseURL + gameObjects.game.thumbImagePath + 'arena-announcer' + '.bmp';
-
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:action/generateCharacterConfirmation`);
 
     return gameObjects.slackResponseTemplate

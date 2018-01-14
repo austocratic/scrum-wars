@@ -62,7 +62,7 @@ const classSelection = gameObjects => {
                 "text": "Select a character gender",
                 "fallback": "You are unable to go back",
                 "callback_id": "genderList",
-                "color": "#3AA3E3",
+                "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
                 "actions": [
                     {
@@ -82,10 +82,6 @@ const classSelection = gameObjects => {
                 ]
             }]
     };
-    
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/selectGenderMenu';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectGenderMenu`);
 
@@ -118,19 +114,13 @@ const classDetailMenu = gameObjects => {
         "fallback": "unable to go back",
         "actions": [{
             "name": "back",
+            "color": gameObjects.game.menuColor,
             "text": "Back",
             "fallback": "unable to go back",
             "type": "button",
             "value": "back"
         }]
     });
-
-
-    // *****************Return the gender selection menu*******************
-
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userSelection + '/classDetailMenu';
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectGenderMenu`);
 
