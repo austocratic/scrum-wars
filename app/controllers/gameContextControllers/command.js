@@ -196,6 +196,7 @@ const profile = gameObjects => {
             "title": gameObjects.playerCharacter.props.name + "'s Profile",
             "fallback": "Unable to load character image",
             "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
+            "color": gameObjects.game.menuColor,
             "fields": [
             ]
         },

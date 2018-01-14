@@ -43,6 +43,8 @@ const paginate = gameObjects => {
         }
     }
 
+    gameObjects.slackResponseTemplate.text = '';
+
     gameObjects.slackResponseTemplate.attachments = paginatedAvatarFileNames.map( eachPaginatedAvatarFileName =>{
         return {
             "text": "",
