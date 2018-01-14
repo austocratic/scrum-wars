@@ -169,6 +169,9 @@ const generate = gameObjects => {
             ]
         }];
 
+    gameObjects.slackResponseTemplate.username = 'Character-create'; //gameObjects.requestZone.props.zone_messages.name;
+    gameObjects.slackResponseTemplate.icon_url = gameObjects.game.baseURL + gameObjects.game.thumbImagePath + 'arena-announcer' + '.bmp';
+
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:action/generateCharacterConfirmation`);
 
     return gameObjects.slackResponseTemplate
@@ -433,7 +436,7 @@ const match = gameObjects => {
     //Announce that new match has begun
     slack.sendMessage({
         "username": gameObjects.requestZone.props.zone_messages.name,
-        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.png',
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
         "channel": ("#" + gameObjects.requestZone.props.channel),
         "attachments": [{
             "text":
