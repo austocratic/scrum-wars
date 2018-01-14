@@ -183,8 +183,10 @@ class BaseAction {
         return totalDamage;
     }
 
-    _processDamage(){
-        console.log('called _processDamage()')
+    //Decrement health, processes action interrupts and hiding removal
+    //Argument must be a character object
+    _processDamage(target){
+        console.log(`called _processDamage(${target})`);
         //Decrease target's health
         this.targetCharacter.incrementProperty('health', -this.calculatedDamage);
 
@@ -197,7 +199,8 @@ class BaseAction {
             this.currentMatch.props.action_queue
                 //Filter out pending actions initiated by a target of player's action (don't filter the player's own actions)
                 .filter( eachActionQueue =>{
-                    return eachActionQueue.player_character_id === this.targetCharacter.id &&
+                    //return eachActionQueue.player_character_id === this.targetCharacter.id &&
+                    return eachActionQueue.player_character_id === target.id &&
                         eachActionQueue.player_character_id !== this.actionCharacter.id;
                 })
                 //Send interrupt messages and return final list of interrupted actions
@@ -206,7 +209,8 @@ class BaseAction {
                     //console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
                     let interruptedAction = new Action(this.game.state, eachInterruptedAction.action_id);
                     //console.log('DEBUG eachInterruptedAction object: ', interruptedAction.props);
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
+                    //this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
+                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${interruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
                     slack.sendMessage(this.slackPayload);
 
@@ -220,43 +224,26 @@ class BaseAction {
                 .filter( eachActionQueue =>{
                     //Filter queue to only contain actions who were initiated by a player that is not the target of this action OR were initiated
                     //by the player that is initiating this action
-                    return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
+                    //return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
+                    return eachActionQueue.player_character_id !== target.id || eachActionQueue.player_character_id === this.actionCharacter.id;
                 })
         }
 
         //_reverseEffect(this.actionCharacter, eachEffect.action_id)
 
-        let hidingEffects = this.targetCharacter.getEffectsWithModifier('is_hidden');
+        let hidingEffects = target.getEffectsWithModifier('is_hidden');
 
         //If the target is hidden, break hiding and remove any hiding effects
         if (hidingEffects.length > 0){
-            this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${this.targetCharacter.props.name} *out of hiding!*`;
+            this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${target.props.name} *out of hiding!*`;
             slack.sendMessage(this.slackPayload);
 
             //Reverse each hiding effect
             hidingEffects.forEach( eachHidingEffect =>{
-                this._reverseEffect(this.targetCharacter, eachHidingEffect.action_id);
+                this._reverseEffect(target, eachHidingEffect.action_id);
             });
         }
     }
-
-    /*
-    _applyDamage(){
-        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
-
-        //Check if the target has a barrier
-        
-        let targetCharacterShielding = this.targetCharacter.props.effects.find( eachEffect =>{
-            return eachEffect.type === "shield"
-        });
-
-        //Target has shielding.  Apply damage to shielding
-        if (targetCharacterShielding){
-
-        }
-
-        this.targetCharacter.incrementProperty('health', -calculatedDamage);
-    }*/
 
     //modifiers should be an object of stat/modifier key/value pairs
     _changeProperty(characterToModify, modifiers){
