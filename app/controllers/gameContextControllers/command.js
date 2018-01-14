@@ -422,7 +422,7 @@ const match = gameObjects => {
 
     //Announce that new match has begun
     slack.sendMessage({
-        "username": this.actionCharacter.props.name,
+        "username": "The Arena Master",
         //"icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
         "channel": ("#" + gameObjects.requestZone.props.channel),
         "text":
