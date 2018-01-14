@@ -66,10 +66,14 @@ const equip = gameObjects => {
     //Parse the slackCallback
     let slackCallbackElements = gameObjects.slackCallback.split("/");
 
+    console.log('DEBUG itemDetailMenu/equip, slackCallbackElements: ', slackCallbackElements);
+
     //Get the item ID from the callback, it is found in the 2nd to last element of the parsed callback
     let itemSelection = slackCallbackElements[slackCallbackElements.length - 2];
 
     let valueSelection = itemSelection.split(":");
+
+    console.log('DEBUG itemDetailMenu/equip, valueSelection: ', valueSelection);
 
     let itemID = valueSelection[valueSelection.length - 1];
 
