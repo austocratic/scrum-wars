@@ -522,7 +522,7 @@ class Game {
                 "fallback": "You are unable select that item",
                 //Empty slot icon.  This is overridden when there is an equipped item
                 "thumb_url": "https://scrum-wars.herokuapp.com/public/images/thumb/-Kjk3sGUJy5Nu8GWsdff.jpg",
-                //"thumb_url": `https://scrum-wars.herokuapp.com/public/images/${this.props.icon_name}.png`,
+                "color": this.menuColor,
                 "fields": [{
                     "title": "itemList",
                     "value": "",
@@ -542,6 +542,7 @@ class Game {
                 //If there is an item, add an inspect button
                 baseTemplate.actions.push({
                     "name": "equipmentSelection",
+                    "color": this.menuColor,
                     "text": "Inspect item",
                     "style": "default",
                     "type": "button",

@@ -64,6 +64,7 @@ const inventory = gameObjects => {
         gameObjects.slackResponseTemplate.attachments[1] =
         {
             "text": "",
+            "color": gameObjects.game.menuColor,
             "fallback": "You are unable to select that item"
         };
 
@@ -77,14 +78,12 @@ const inventory = gameObjects => {
         gameObjects.slackResponseTemplate.attachments[1] =
         {
             "text": "Your backpack is empty!",
+            "color": gameObjects.game.menuColor,
             "fallback": "Unable to process"
         }
     }
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectInventoryMenu`);
-
-    //let updatedCallback = ':inventory/selectInventoryMenu';
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, (gameObjects.slackCallback + updatedCallback));
 
     return gameObjects.slackResponseTemplate;
 };
@@ -150,7 +149,7 @@ const equipment = gameObjects => {
     });
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}selectEquipmentMenu`);
-    
+
     return gameObjects.slackResponseTemplate;
 };
 

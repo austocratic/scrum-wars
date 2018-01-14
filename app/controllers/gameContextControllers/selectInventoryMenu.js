@@ -14,6 +14,7 @@ const inventorySelection = gameObjects => {
 
     gameObjects.slackResponseTemplate.attachments.push({
         "fallback": "unable to go back",
+        "color": gameObjects.game.menuColor,
         "actions": [{
             "name": 'equip',
             "text": "Equip Item",
@@ -27,12 +28,8 @@ const inventorySelection = gameObjects => {
             "value": "no"
         }]
     });
-    
-    //let updatedCallback = gameObjects.slackCallback + ':' + gameObjects.userActionValueSelection + '/itemDetailMenu';
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}itemDetailMenu`);
-
-    //gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
 
     return gameObjects.slackResponseTemplate;
 };
