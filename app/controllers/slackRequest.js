@@ -12,7 +12,7 @@ const Match = require('../models/Match').Match;
 const Permission = require('../models/Permission').Permission;
 
 const command = require('./gameContextControllers/command');
-const { action, generate, profile, travel, name, turn, match } = command;
+const { action, generate, profile, travel, name, turn, match, ranking } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
 const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
@@ -28,6 +28,7 @@ const contextsAndActions = {
         profile: profile,
         travel: travel,
         name: name,
+        ranking: ranking,
         turn: turn,
         match: match
     },
@@ -119,7 +120,6 @@ const processRequest = (gameContext, userSelection, opts) => {
     //Build the response function.  If response not available, return an error message
     actualFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": `ERROR, button ${userSelection} is not yet setup for context ${gameContext}!`}});
 
-        //console.log("DEBUG actualFn: ", actualFn)
     if (typeof actualFn === 'function') {
         return actualFn(opts);
     }

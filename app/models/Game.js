@@ -486,6 +486,16 @@ class Game {
             })
     }
 
+    getCharacters(){
+        console.log('called Game.getCharacters()');
+
+        return Object.keys(this.state.character)
+            .map( eachCharacterID =>{
+                //Create a character object for each character
+                return new Character(this.state, eachCharacterID)
+            })
+    }
+
     getCharactersInZone(zoneID){
         console.log('called getCharacterIDsInZone');
 

@@ -362,6 +362,47 @@ const name = gameObjects => {
     return gameObjects.slackResponseTemplate;
 };
 
+const ranking = gameObjects => {
+
+    validateGameObjects(gameObjects, [
+        'game'
+        //'user',
+        //'slackResponseTemplate',
+        //'playerCharacter',
+        //'requestZone',
+        //'currentMatch',
+        //'characterClass'
+    ]);
+
+    //Create a list of all characters
+    let allCharacters = gameObjects.game.getCharacters();
+
+    //Sort the list by # of wins property
+    //_.sortBy(allCharacters, 'props.match_wins')
+
+    let sortedCharacters = _.sortBy(allCharacters, characters =>{
+        return characters.props.match_wins
+    });
+
+    let slackResponse = {};
+
+    //Iterate through list of ranked characters building a template
+    slackResponse.attachments = sortedCharacters.map( eachSortedCharacter =>{
+        return {
+            "text": "",
+            "color": gameObjects.game.menuColor,
+            "fields": [
+                {
+                    "title": "Name",
+                    "value": eachSortedCharacter.name,
+                    "short": false
+                }]
+        }
+    });
+
+    return slackResponse
+};
+
 //Admin commands
 
 //Increment the match turn
@@ -457,6 +498,7 @@ module.exports = {
     profile,
     travel,
     name,
+    ranking,
     turn,
     match
 };
