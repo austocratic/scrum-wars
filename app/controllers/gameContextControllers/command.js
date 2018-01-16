@@ -391,11 +391,16 @@ const ranking = gameObjects => {
         return {
             "text": "",
             "color": gameObjects.game.menuColor,
-            "image_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachSortedCharacter.props.gender + '/' + eachSortedCharacter.props.avatar,
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachSortedCharacter.props.gender + '/' + eachSortedCharacter.props.avatar,
             "fields": [
                 {
                     "title": "Name",
                     "value": eachSortedCharacter.props.name,
+                    "short": false
+                },
+                {
+                    "title": "Match Wins",
+                    "value": eachSortedCharacter.props.match_wins,
                     "short": false
                 }]
         }
