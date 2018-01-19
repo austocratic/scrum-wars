@@ -11,6 +11,7 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 
 const Action = require('../../models/Action').Action;
 const Match = require('../../models/Match').Match;
+const Class = require('../../models/Class').Class;
 
 const action = gameObjects => {
     console.log('called function command/action');
