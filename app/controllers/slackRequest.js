@@ -38,7 +38,13 @@ const contextsAndActions = {
         quickStrike: (gameObjects)=>{
             console.log('Called quickStrike from slackRequest.js');
             //Initiate action
-            initiateAction(gameObjects);
+            let initiateResponse = initiateAction(gameObjects);
+
+            console.log('DEBUG initiateResponse: ', initiateResponse);
+
+            if (initiateResponse){
+                return initiateResponse
+            }
 
             return quickStrike(gameObjects)
         },
