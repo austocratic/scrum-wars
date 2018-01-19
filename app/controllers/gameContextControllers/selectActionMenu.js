@@ -26,7 +26,7 @@ const actionControllers = {
 const initiateAction = gameObjects => {
     console.log('Called selectActionMenu/initiateAction()')
 
-    
+
 };
 
 //Shop is the only action not using the action controller

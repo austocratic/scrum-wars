@@ -42,7 +42,7 @@ const contextsAndActions = {
 
             console.log('DEBUG initiateResponse: ', initiateResponse);
 
-            if (initiateResponse){
+            if (initiateResponse !== 'undefined'){
                 return initiateResponse
             }
 
