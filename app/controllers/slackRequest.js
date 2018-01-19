@@ -40,7 +40,7 @@ const contextsAndActions = {
             //Initiate action
             initiateAction(gameObjects);
 
-            quickStrike(gameObjects)
+            return quickStrike(gameObjects)
         },
         arcaneBolt: arcaneBolt,
         lifeTap: lifeTap,
