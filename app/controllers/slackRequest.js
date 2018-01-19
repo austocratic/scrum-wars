@@ -15,7 +15,7 @@ const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name, turn, match, ranking } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
-const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
+const { initiateAction, shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
     offensiveStance, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
     whirlwind, cleave, firestorm
 } = selectActionMenu;
@@ -34,7 +34,14 @@ const contextsAndActions = {
     },
     selectActionMenu: {
         shop: shop,
-        quickStrike: quickStrike,
+        //quickStrike: quickStrike,
+        quickStrike: (gameObjects)=>{
+            console.log('Called quickStrike from slackRequest.js');
+            //Initiate action
+            initiateAction(gameObjects);
+
+            quickStrike(gameObjects)
+        },
         arcaneBolt: arcaneBolt,
         lifeTap: lifeTap,
         defensiveStance: defensiveStance,
@@ -108,7 +115,7 @@ const contextsAndActions = {
 const processRequest = (gameContext, userSelection, opts) => {
     console.log('slackRequest.processRequest()');
 
-    let actualFn;
+    let actionFn;
 
     console.log("DEBUG gameContext: ", gameContext);
     console.log('DEBUG userSelection: ', userSelection);
@@ -117,11 +124,13 @@ const processRequest = (gameContext, userSelection, opts) => {
         return {"text": "ERROR context not configured in processRequest: ", gameContext}
     }
 
-    //Build the response function.  If response not available, return an error message
-    actualFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": `ERROR, button ${userSelection} is not yet setup for context ${gameContext}!`}});
+    
 
-    if (typeof actualFn === 'function') {
-        return actualFn(opts);
+    //Build the response function.  If response not available, return an error message
+    actionFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": `ERROR, button ${userSelection} is not yet setup for context ${gameContext}!`}});
+
+    if (typeof actionFn === 'function') {
+        return actionFn(opts);
     }
 };
 

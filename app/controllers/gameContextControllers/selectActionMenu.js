@@ -23,6 +23,10 @@ const actionControllers = {
     firestorm: Firestorm
 };
 
+const initiateAction = gameObjects => {
+    console.log('Called selectActionMenu/initiateAction()')
+};
+
 //Shop is the only action not using the action controller
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
@@ -570,6 +574,7 @@ const cleave = gameObjects => {
 };
 
 module.exports = {
+    initiateAction,
     shop,
     defensiveStance,
     offensiveStance,
