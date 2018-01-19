@@ -402,17 +402,17 @@ const ranking = gameObjects => {
                 {
                     "title": "Name",
                     "value": eachSortedCharacter.props.name,
-                    "short": false
+                    "short": true
                 },
                 {
                     "title": "Match Wins",
                     "value": eachSortedCharacter.props.match_wins,
-                    "short": false
+                    "short": true
                 },
                 {
                     "title": "Character Class",
                     "value": characterClass.props.name,
-                    "short": false
+                    "short": true
                 }]
         }
     });
