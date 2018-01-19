@@ -111,7 +111,12 @@ const action = gameObjects => {
                 let actionAvailableButtonColor = "danger";
 
                 //If the button is available based on the match turn, overwrite the color to green
+                /* REFACTORING TO AP SYSTEM
                 if (gameObjects.playerCharacter.isActionAvailable(actionDetails, gameObjects.currentMatch.props.number_turns)) {
+                    actionAvailableButtonColor = "primary"
+                }*/
+
+                if (gameObjects.playerCharacter.isActionAvailable(actionDetails)) {
                     actionAvailableButtonColor = "primary"
                 }
 
@@ -366,12 +371,6 @@ const ranking = gameObjects => {
 
     validateGameObjects(gameObjects, [
         'game'
-        //'user',
-        //'slackResponseTemplate',
-        //'playerCharacter',
-        //'requestZone',
-        //'currentMatch',
-        //'characterClass'
     ]);
 
     //Create a list of all characters
@@ -384,14 +383,21 @@ const ranking = gameObjects => {
         return characters.props.match_wins
     });
 
+    //Sorted ascending, need to reverse the order to sort descending
+    sortedCharacters.reverse();
+
     let slackResponse = {};
 
     //Iterate through list of ranked characters building a template
     slackResponse.attachments = sortedCharacters.map( eachSortedCharacter =>{
+
+        let characterClass = new Class(gameObjects.game, eachSortedCharacter.props.class_id);
+
         return {
             "text": "",
             "color": gameObjects.game.menuColor,
-            "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachSortedCharacter.props.gender + '/' + eachSortedCharacter.props.avatar,
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + eachSortedCharacter.props.avatar + '.png',
+            //"icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachSortedCharacter.props.gender + '/' + eachSortedCharacter.props.avatar,
             "fields": [
                 {
                     "title": "Name",
@@ -401,6 +407,11 @@ const ranking = gameObjects => {
                 {
                     "title": "Match Wins",
                     "value": eachSortedCharacter.props.match_wins,
+                    "short": false
+                },
+                {
+                    "title": "Character Class",
+                    "value": characterClass.props.name,
                     "short": false
                 }]
         }
