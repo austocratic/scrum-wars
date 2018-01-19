@@ -371,9 +371,16 @@ const quickStrike = gameObjects => {
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     //If action is not available return action "unavailable" template
+    /*
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
         return {
             "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+        }
+    }*/
+
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
+        return {
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
