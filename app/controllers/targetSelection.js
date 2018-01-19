@@ -23,20 +23,20 @@ const getTargetSelectionMenu = gameObjects => {
     //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
 
-    console.log('DEBUG getTargetSelectionMenu charactersInZone: ', charactersInZone);
+    //console.log('DEBUG getTargetSelectionMenu charactersInZone: ', charactersInZone);
 
     let filteredCharacters = charactersInZone
         //Filter out the player's character
         .filter( eachCharacter =>{
 
-            console.log('DEBUG getTargetSelectionMenu eachCharacter 1: ', eachCharacter);
+            //console.log('DEBUG getTargetSelectionMenu eachCharacter 1: ', eachCharacter);
 
             return eachCharacter.id !== gameObjects.playerCharacter.id
         })
         //Filter out hidden characters
         .filter( eachCharacter => {
 
-            console.log('DEBUG getTargetSelectionMenu eachCharacter 2: ', eachCharacter);
+            //console.log('DEBUG getTargetSelectionMenu eachCharacter 2: ', eachCharacter);
 
             //Only return characters that are not hidden
             return eachCharacter.getEffectsWithModifier('is_hidden').length === 0;
@@ -57,7 +57,7 @@ const getTargetSelectionMenu = gameObjects => {
             //return eachCharacter.props.is_hidden === 0
         });
 
-    console.log('DEBUG getTargetSelectionMenu filteredCharacters: ', filteredCharacters);
+    //console.log('DEBUG getTargetSelectionMenu filteredCharacters: ', filteredCharacters);
 
 
     gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacters.map( eachCharacter => {
