@@ -126,6 +126,7 @@ router.post('/api/commands', async (req, res, next) => {
         //Update game state
         //await updateGame(req);
         game.updateState();
+        console.log('Responded to request to /api/commands: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
     });
 
