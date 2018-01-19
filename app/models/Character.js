@@ -155,12 +155,26 @@ class Character extends BaseModel{
     }
 
     //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
+    /* REFACTORING TO AP SYSTEM
     isActionAvailable(actionDetails, turnNumber){
 
         let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
 
         return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
+    }*/
+
+    isActionAvailable(actionDetails){
+
+        //Does the player have more available action points than the cost of the action?
+        return this.props.action_points > actionDetails.props.action_points_cost
+
+
+        //let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
+
+        //return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
     }
+
+
 
     //Return an array of effects with that contain the modifier searched for
     getEffectsWithModifier(modifierToFind){

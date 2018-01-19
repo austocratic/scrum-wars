@@ -433,6 +433,14 @@ const turn = gameObjects => {
 
     gameObjects.currentMatch.incrementTurn();
 
+    //Increment all character's Action Points
+    let gameCharacters = gameObjects.game.getCharacters();
+
+    //Increase each character's action points by 10
+    gameCharacters.forEach( eachGameCharacter =>{
+        eachGameCharacter.incrementProperty('action_points', 10)
+    });
+
     slack.sendMessage({
         "username": gameObjects.requestZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
@@ -485,6 +493,8 @@ const match = gameObjects => {
     //For characters participating in the match, reset their actions
     charactersInZone.forEach( eachCharacterInZone =>{
         eachCharacterInZone.resetActions();
+
+        eachCharacterInZone.updateProperty('action_points', 10)
     });
 
     //Start the new match

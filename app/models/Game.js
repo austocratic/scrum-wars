@@ -295,7 +295,15 @@ class Game {
 
                 //Test if turn should be incremented
                 if (Date.now() > nextTurnStartTime){
+                    //Increase the match turn property
                     currentMatch.incrementTurn();
+
+                    let gameCharacters = this.getCharacters();
+
+                    //Increase each character's action points by 10
+                    gameCharacters.forEach( eachGameCharacter =>{
+                        eachGameCharacter.incrementProperty('action_points', 10)
+                    });
                 }
 
                 break;

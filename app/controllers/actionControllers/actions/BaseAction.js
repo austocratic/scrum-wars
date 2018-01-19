@@ -62,6 +62,9 @@ class BaseAction {
         //Process the action with turn 0
         this.process(0);
 
+        //Decrement the action cost from character's Action Points
+        this.actionCharacter.incrementProperty('action_points', -this.actionTaken.props.action_points_cost);
+
         return {
             "text": "action complete"
         }
