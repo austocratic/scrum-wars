@@ -392,7 +392,7 @@ const ranking = gameObjects => {
     //Iterate through list of ranked characters building a template
     slackResponse.attachments = sortedCharacters.map( eachSortedCharacter =>{
 
-        let characterClass = new Class(gameObjects.game, eachSortedCharacter.props.class_id);
+        let characterClass = new Class(gameObjects.game.state, eachSortedCharacter.props.class_id);
 
         return {
             "text": "",
