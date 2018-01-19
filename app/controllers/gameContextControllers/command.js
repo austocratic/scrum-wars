@@ -65,6 +65,7 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
+    /* REMOVE THE ONE ACTION PER TURN LINE
     if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
         //An action was used this turn, return a message
 
@@ -74,7 +75,7 @@ const action = gameObjects => {
         };
 
         return gameObjects.slackResponseTemplate
-    }
+    }*/
     
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();
