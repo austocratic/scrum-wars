@@ -397,7 +397,7 @@ const ranking = gameObjects => {
         return {
             "text": "",
             "color": gameObjects.game.menuColor,
-            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + eachSortedCharacter.props.avatar + '.png',
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + eachSortedCharacter.props.avatar,
             //"icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachSortedCharacter.props.gender + '/' + eachSortedCharacter.props.avatar,
             "fields": [
                 {
