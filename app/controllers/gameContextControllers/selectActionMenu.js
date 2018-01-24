@@ -110,10 +110,9 @@ const defensiveStance = gameObjects => {
     
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -151,10 +150,9 @@ const offensiveStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -192,10 +190,9 @@ const balancedStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -232,14 +229,6 @@ const intoShadow = gameObjects => {
     gameObjects.targetCharacter = gameObjects.playerCharacter;
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
-
-    //If action is not available return action "unavailable" template
-    /* REFACTORING TO AP SYSTEM
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
-        return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
-        }
-    }*/
 
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
@@ -288,10 +277,9 @@ const whirlwind = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -329,10 +317,9 @@ const firestorm = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -394,10 +381,9 @@ const lifeTap = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -419,10 +405,9 @@ const arcaneBolt = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -444,10 +429,9 @@ const forkedLightning = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -469,10 +453,9 @@ const savageStrike = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -500,11 +483,10 @@ const backstab = gameObjects => {
             "text": `_You can not use this ability if you are not hidden.  First use a hiding ability!_`
         }
     }
-    
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -526,10 +508,9 @@ const poisonedBlade = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
@@ -551,10 +532,9 @@ const cleave = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    //If action is not available return action "unavailable" template
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
 
