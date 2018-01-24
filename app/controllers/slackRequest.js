@@ -15,7 +15,7 @@ const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name, turn, match, ranking } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
-const { initiateAction, shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
+const { shop, quickStrike, arcaneBolt, lifeTap, defensiveStance, balancedStance,
     offensiveStance, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
     whirlwind, cleave, firestorm
 } = selectActionMenu;
@@ -34,20 +34,7 @@ const contextsAndActions = {
     },
     selectActionMenu: {
         shop: shop,
-        //quickStrike: quickStrike,
-        quickStrike: (gameObjects)=>{
-            console.log('Called quickStrike from slackRequest.js');
-            //Initiate action
-            let initiateResponse = initiateAction(gameObjects);
-
-            console.log('DEBUG initiateResponse: ', initiateResponse);
-
-            if (initiateResponse !== 'undefined'){
-                return initiateResponse
-            }
-
-            return quickStrike(gameObjects)
-        },
+        quickStrike: quickStrike,
         arcaneBolt: arcaneBolt,
         lifeTap: lifeTap,
         defensiveStance: defensiveStance,

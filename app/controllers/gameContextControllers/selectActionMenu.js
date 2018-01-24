@@ -23,12 +23,6 @@ const actionControllers = {
     firestorm: Firestorm
 };
 
-const initiateAction = gameObjects => {
-    console.log('Called selectActionMenu/initiateAction()')
-
-
-};
-
 //Shop is the only action not using the action controller
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
@@ -374,21 +368,13 @@ const quickStrike = gameObjects => {
         'slackResponseTemplate'
     ]);
 
-    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
-
-    //If action is not available return action "unavailable" template
-    /*
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken, gameObjects.currentMatch.props.number_turns)) {
-        return {
-            "text": `_${gameObjects.actionTaken.props.name} is still cooling down!_`
-        }
-    }*/
-
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
             "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     return targetSelection(gameObjects);
 };
@@ -576,7 +562,6 @@ const cleave = gameObjects => {
 };
 
 module.exports = {
-    initiateAction,
     shop,
     defensiveStance,
     offensiveStance,
