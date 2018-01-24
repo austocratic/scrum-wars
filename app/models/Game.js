@@ -300,10 +300,11 @@ class Game {
 
                     let gameCharacters = this.getCharacters();
 
+                    /* Remove action point increase for now
                     //Increase each character's action points by 10
                     gameCharacters.forEach( eachGameCharacter =>{
                         eachGameCharacter.incrementProperty('action_points', 10)
-                    });
+                    });*/
                 }
 
                 break;

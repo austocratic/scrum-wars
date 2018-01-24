@@ -368,13 +368,13 @@ const quickStrike = gameObjects => {
         'slackResponseTemplate'
     ]);
 
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
     if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
         return {
             "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
         }
     }
-
-    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     return targetSelection(gameObjects);
 };
