@@ -64,7 +64,7 @@ const refresh = (gameObjects) => {
                     if (eachCharacter.props.zone_id === gameObjects.currentMatch.zone_id){
                         return eachCharacter
                     }*/
-                    return eachCharacter.props.zone_id === gameObjects.currentMatch.zone_id
+                    return eachCharacter.props.zone_id === gameObjects.currentMatch.props.zone_id
 
 
                 });
