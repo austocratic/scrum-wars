@@ -73,6 +73,7 @@ router.get('/jimp', function(req, res, next) {
     //});
 });*/
 
+/*
 router.get('/assets/:folder/:id', function (req, res, next) {
 
     var options = {
@@ -92,7 +93,7 @@ router.get('/assets/:folder/:id', function (req, res, next) {
             console.log('Sent:', fileName);
         }
     });
-});
+});*/
 
 router.post('/api/commands', async (req, res, next) => {
     console.log('Received a request to /api/commands: ', JSON.stringify(req.body));
@@ -106,6 +107,7 @@ router.post('/api/commands', async (req, res, next) => {
             console.log('ERROR when calling formatPayload: ', err)
         }
 
+        //gets DB state and sets to game.state & calls game.initiateRequest() to calculate values in memory
         let game = await getGame();
 
         //Declare standard game objects based on the Slack request
@@ -124,7 +126,6 @@ router.post('/api/commands', async (req, res, next) => {
         let slackResponseTemplateReturned = await slackRequest.processRequest('command', gameObjects.command, gameObjects);
 
         //Update game state
-        //await updateGame(req);
         game.updateState();
         console.log('Responded to request to /api/commands: ', JSON.stringify(slackResponseTemplateReturned));
         res.status(200).send(slackResponseTemplateReturned);
@@ -175,6 +176,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 //Routes for getting character avatar
 //TODO should not rely on the catch all for getting images. this gets the avatar image
 //TODO Remove this and move it all to public images
+/* TESTING REMOVING
 router.all('*', function (req, res, next) {
 
     //console.log('Called .all router, req.params: ', req.params['0']);
@@ -195,6 +197,6 @@ router.all('*', function (req, res, next) {
         }
     });
 });
-
+*/
 
 module.exports = router;

@@ -19,7 +19,7 @@ const getGame = async (req) => {
     game.initiateRequest();
 
     //Refresh the game (check for new turn, player deaths, ect.)
-    game.refresh();
+    //game.refresh();
 
     return game;
 };

@@ -1,42 +1,55 @@
 
 
-10/11/17:
+1/24/18:
+I left off making a /refresh end point  I should now test it
 
-I built the basics of the ForkedLightning function, need to add in a way to get a random target, get the action added to the controller and to a character,
-then test it in production
-
-There may be some code here that I can re use for area effect spells
+Should each request also invoke a refresh? If so, then I dont need a refresh command because any command will refresh
 
 
 
 Next up:
+--Work on match winning condition (now that I can use slash commands to test)
 
---Create selection pagination function (should this be based on DB records or images)?
-~~Considerations:   ~~What are the advantages of pagination of attachments instead of a drop down?
-                    ~~A: Images and displaying more information
-~~Use cases:    ~~choosing avatar image: need to paginate through images, these don't tie to DB records
-                ~~Character rankings?  That way you can see a mini avatar and see buttons like (Inspect)
-                ~~Zone list - is DB based
-                ~~Possibly a shop if you want to see stats and a "purchase" button without having to inspect
-                ~~Class selection - is DB based
-~~Requirements: ~~Should be flexible to accomodate array of values, whether those are DB records or images from file
-                ~~Should include back and forward buttons
-~~Questions:    ~~How will pagination state be handled?  I.E: display records 1-6, how does "forward" button know to pull records 7-12 & where are those records stored locally?
+
+BUGS
+-actions can interrupt stances: "Sindria's Arcane Bolt *interrupts* Miraxus of Keld's pending Defensive Stance!"
+-Entering a combat stance does not remove previous combat stance
+--Creating a new user sets slack_user_id equal to the user object id
+--Claire is unable to equip the leather tunic
 
 
 
---Clean up views: profile (add exit button) - Exit button should be reusable and clear any interaction - ask slack what I can do for this
---Change images in class selection list - maybe class icons
---check that profile, inventory, equipped, equiping and shopping mechanics all still work
---refactor get action call to move into its own function or file
---refactor slackRequest file - make it able to be tested with unit tests, make it easier to follow
---create game refresh mechanic - working
+BACKLOG
 
 Backlog (near term):
+-Add backstory views
+-Prevent traveling until character has set their name
+-Prevent /name after initial naming
+
+-Test all flows to ensure they still work
+--Add a contextual image to actions screens
+--Scrolling around avatar selections too many times fails (I should add "more" & "less" as reserved words for navigating avatars
+--Move /command authentication to a middleware
+--Add an icon for scrum-wars application
+--Add token validation before processing any request
+--Add more items
+--Clean up views: profile (add exit button) - Exit button should be reusable and clear any interaction - ask slack what I can do for this
+--Change images in class selection list - maybe class icons
 --vendor sell item mechanic
+--Add backstory
+--Create frozen barrier action
+--Fix poisoned blade effect.  Need to leverage action processor and remove actionEffectControllers completely
 
 
 Backlog (long term):
+--Determine how to display more than 5 actions types (may not need this for initial launch since classes only have a few actions each)
+--create titles for menus (using an edited graphic menu header)
+--Change to action point system (AP recharges per turn)
+--Create basic attack for each character class
+-----Should depend on equipped weapon's damage
+--Fix hiding/stealth mechanic
+----It should probably be added into character effects - In the future, I will list a character's effects
+--Create a single action mapping file that can be used by actionQueue & selectActionTarget
 --Use canvas or something like it to combine images rendered on the server and deliver that image to slack.  I.E inventory image with empty slots.
 equip an item, then next time the image renders it will contain the item image equipped
 --Questing mechanic using EQ style context terms: "Have you heard about [the missing child] from the town of beladore?"
@@ -44,7 +57,7 @@ equip an item, then next time the image renders it will contain the item image e
 
 
 
-Plot/Quest ideas
+Plot/Quest brainstorming:
 
 "Tithes of _____"
 

@@ -28,7 +28,11 @@ var gameConfigurations = require('./gameConfigurations.json');
 var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
 
 const getActionEffectController = require('../controllers/actionEffectController').getActionEffectController;
-const effectQueue = require('../controllers/gameControllers/effectQueue').effectQueue;
+const processOngoingEffects = require('../controllers/gameControllers/processOngoingEffects').processOngoingEffects;
+const checkForCharacterDeath = require('../controllers/gameControllers/checkForCharacterDeath').checkForCharacterDeath;
+const checkForVictory = require('../controllers/gameControllers/checkForVictory').checkForVictory;
+const checkForNewTurn = require('../controllers/gameControllers/checkForNewTurn').checkForNewTurn;
+const checkForMatchStart = require('../controllers/gameControllers/checkForMatchStart').checkForMatchStart;
 const actionQueue = require('../controllers/gameControllers/actionQueue').actionQueue;
 
 
@@ -51,9 +55,7 @@ class Game {
         this.turnLengthMinutes = 60;
         //Default Slack left side border menu color
         this.menuColor = '#000000';
-
-        
-        
+        this.matchStartTime = 16;
     }
     
     //Get state of the game from DB
@@ -70,12 +72,14 @@ class Game {
     randomGenerator() {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
-    
+
+
     //Checks the game's state looking for certain conditions (player deaths, ect.)
     //It is invoked periodically by cron & always invoked by a player action
+    /*
     refresh(){
         console.log('called Game.refresh()');
-        
+
         //**********************~~  Match  ~~***********************
 
         //Read game state to find the current match ID
@@ -88,41 +92,11 @@ class Game {
             case 'pending':
                 console.log('Called game.refresh() currentMatch.props.status = pending');
 
-                let currentDate = new Date();
-
-                let currentHour = currentDate.getUTCHours();
-
-            //*************** CHECK FOR MATCH START *****************
-                if (currentHour > gameConfigurations.match.startTime){
-                    console.log('Time to start the match!');
-
-                    //TODO get all the characters currently in the zone
-
-                    //Start the match: set status, starting characters, start date
-                    //Pass in an array of character IDs to set as starting characters.  These should be characters in the zone when the match starts
-
-                    //console.log('DEBUG Game.refresh currentMatch.props.zone_id: ', currentMatch.props.zone_id);
-
-                    //console.log('DEBUG this.getCharacterIDsInZone(currentMatch.props.zone_id): ', this.getCharacterIDsInZone(currentMatch.props.zone_id));
-
-                    currentMatch.start(this.getCharacterIDsInZone(currentMatch.props.zone_id));
-
-                    let alertDetails = {
-                        "username": "A mysterious voice",
-                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                        //TODO dont hardcode the arena
-                        "channel": ("#arena"),
-                        "text": "Prepare for battle! The match begins!"
-                    };
-
-                    slack(alertDetails);
-
-                    //let matchStartAlert = new slackAlert(alertDetails);
-                    //matchStartAlert.sendToSlack(this.props)
-                }
+                //Determine if the match should start & start
+                checkForMatchStart(currentMatch, this.matchStartTime);
 
                 break;
-            
+
             //If match has started, determine if turn should be incremented or determine if game has hit end condition
             case 'started':
                 console.log('Called game.refresh() currentMatch.props.status = started');
@@ -134,178 +108,33 @@ class Game {
                     currentMatch.end()
                 }
 
-            //*************** PROCESS ONGOING EFFECTS *****************
+                //Process ongoing effects
+                //TODO fix this and make sure it is really needed
+                //processOngoingEffects();
 
-                let charactersInZone = matchStartingCharacterIDs
-                    .map( eachMatchStartingCharacterID =>{
-                        return new Character(this.state, eachMatchStartingCharacterID);
-                    })
-                    //Filter starting characters for characters currently in the zone
-                    .filter( eachMatchStartingCharacter =>{
-                        return eachMatchStartingCharacter.props.zone_id === currentMatch.props.zone_id;
-                    });
 
-                //For each character in the zone lookup IDs of all effects
-                charactersInZone.forEach( eachCharacter => {
+                //*************** PROCESS ACTION EFFECTS *****************
 
-                    //If the character has effects on them, process them
-                    if( eachCharacter.props.effects ) {
-                        eachCharacter.props.effects.forEach( eachEffect => {
+                let gameObjects = {
+                    game: this,
+                    currentMatch: new Match(this.state, this.getCurrentMatchID()),
+                    slackResponseTemplate: {}
+                };
 
-                            let effectAction = new Action(this.state, eachEffect.action_id);
+                //Process the action Queue
+                actionQueue(gameObjects);
 
-                            //Get the character who applied the effect.
-                            let playerCharacter = new Character(this.state, eachEffect.applied_by_character_id);
+                //Check for character deaths
+                //TODO need to fix
+                //checkForCharacterDeath();
 
-                            //If the action has ongoing effects, process them
-                            if (effectAction.props.ongoing_effects){
-                                effectAction.props.ongoing_effects.forEach( eachOngoingEffect =>{
+                //Check for victory
+                //TODO need to fix
+                //checkForVictory();
 
-                                    //Check if the action has an ongoing effect that should apply to the current turn.
-                                    //Also check that the effect has not already been processed this turn
-                                    if(eachOngoingEffect.active_on_turn.includes(currentMatch.props.number_turns - eachEffect.turn_applied) &&
-                                        //Don't need the relative turn here
-                                        !eachEffect.turn_effect_processed.includes(currentMatch.props.number_turns)
-                                    ){
-                                        //console.log('DEBUG the effect SHOULD be applied this turn!  Activating it!');
-
-                                        //Declare the Class function without invoking, so I can then validate
-                                        const actionEffectObjectToMake = getActionEffectController(eachOngoingEffect.functionName);
-
-                                        //TODO how to access these objects like actionCharacter, currentZone, are they necessary?
-                                        let gameObjects = {
-                                            game: {
-                                                baseURL: this.baseURL,
-                                                avatarPath: this.avatarPath,
-                                                skillImagePath: this.skillImagePath
-                                            },
-                                            targetCharacter: eachCharacter,
-                                            //TODO for now the currentZone is hard coded.  In the future, refresh() should iterate through all zones and pass each into gameObjects
-                                            requestZone: {
-                                                props: {
-                                                    channel : "arena",
-                                                    channel_id : "C4Z7F8XMW",
-                                                    name : "The Arena"
-                                                }
-                                            },
-                                            playerCharacter
-                                        };
-
-                                        //Invoke validation function using the classes's attached validation properties before instantiating the class
-                                        helpers.validateGameObjects(gameObjects, actionEffectObjectToMake.validations);
-
-                                        let actionEffectObject = new actionEffectObjectToMake(gameObjects);
-
-                                        actionEffectObject.initiate();
-
-                                        //Mark that ongoing effect as used this turn, this prevents duplicate processing
-                                        eachCharacter.updateEffectProcessed(effectAction.id, currentMatch.props.number_turns)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                });
-
-            //*************** PROCESS ACTION EFFECTS *****************
-
-            let gameObjects = {
-                game: this,
-                currentMatch: new Match(this.state, this.getCurrentMatchID()),
-                slackResponseTemplate: {}
-            };
-
-            //effectQueue(gameObjects);
-            actionQueue(gameObjects);
-
-            //*************** CHECK FOR CHARACTER DEATHS *****************
-
-                //Iterate through the characters in the zone and check if any are dead
-                charactersInZone.forEach( eachCharacterInZone =>{
-
-                    //If health has dropped below 0, character is dead
-                    if(eachCharacterInZone.props.hit_points <= 0){
-
-                        //Announce that character has been defeated
-                        let characterDefeatedMessage = {
-                            "username": "Arena Announcer",
-                            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                            //TODO dont hardcode the arena
-                            "channel": ("#arena"),
-                            "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`
-                        };
-
-                        slack(characterDefeatedMessage);
-
-                        //Move the character to the town
-                        //TODO currently hard coding to the town square
-                        eachCharacterInZone.updateProperty('zone_id', '-Khu9Zazk5XdFX9fD2Y8');
-                    }
-                });
-
-            //*************** VICTORY CONDITIONS *****************
-
-                //TODO currently a single refresh will not detect that players are dead and declare one as the winner
-                //It will move dead characters in one refresh and declare the winner in the next refresh
-                //Check for only one character left in zone (victory condition)
-                if (charactersInZone.length === 1) {
-
-                    //Last character Object is the winner.  Create reference for ease of use
-                    let winningCharacter = charactersInZone[0];
-                    //let winningCharacter = new Character(this.state, charactersInZone[0].id);
-
-                    //Notify Slack about the winner
-                    let alertDetails = {
-                        "username": "Arena Announcer",
-                        "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                        //TODO dont hardcode the arena
-                        "channel": ("#arena"),
-                        "text": `We have a winner!  Congratulations ${winningCharacter.props.name}`
-                    };
-
-                    slack(alertDetails);
-
-                    //Increment that players win count
-                    winningCharacter.incrementProperty('arena_wins', 1);
-
-                    //Reward the winning character
-                    //TODO come up with randomization function for arena gold reward
-                    let arenaReward = 10;
-
-                    //Increment that players win count
-                    winningCharacter.incrementProperty('gold', arenaReward);
-
-                    currentMatch.end(winningCharacter.id)
-                }
-
-            //*************** CHECK FOR TURN INCREMENT *****************
-
-                //console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
-
-                //Calculate the time that the next turn should start:
-                let nextTurnStartTime = (currentMatch.props.date_started + (currentMatch.props.number_turns * (this.turnLengthMinutes * 60000)));
-
-                //console.log('nextTurnStartTime: ', nextTurnStartTime);
-
-                let humanTime = new Date(nextTurnStartTime);
-
-                //console.log('nextTurnStartTime: ', humanTime.toTimeString());
-
-                //console.log("Current time: ", Date.now());
-
-                //Test if turn should be incremented
-                if (Date.now() > nextTurnStartTime){
-                    //Increase the match turn property
-                    currentMatch.incrementTurn();
-
-                    let gameCharacters = this.getCharacters();
-
-                    /* Remove action point increase for now
-                    //Increase each character's action points by 10
-                    gameCharacters.forEach( eachGameCharacter =>{
-                        eachGameCharacter.incrementProperty('action_points', 10)
-                    });*/
-                }
+                //Check for incrementing the turn
+                //TODO need to fix this
+                //checkForNewTurn()
 
                 break;
 
@@ -317,10 +146,10 @@ class Game {
 
                 //Update the global state to new match id
                 this.state.global_state.match_id = newMatchID;
-                
+
                 break;
         }
-    }
+    }*/
     
     //Calculate properties in memory (I.E: ongoing effects, item effects, ect.)
     initiateRequest(){
@@ -399,7 +228,7 @@ class Game {
         return localRandomID;
     }
 
-    createCharacter(userID){
+    createCharacter(){
         
         let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
@@ -407,10 +236,10 @@ class Game {
 
         let newChar = {
             [localRandomID]: {
+                action_points: 0,
                 active: 1,
                 name: 'Unknown Traveler',
                 level: 1,
-                //user_id: userID, Not needed
                 gold: 100,
                 health: 100, //Need to make this class dictated
                 is_hidden: 0,
@@ -591,6 +420,6 @@ class Game {
 
 
 module.exports = {
-    Game: Game
+    Game
 };
 

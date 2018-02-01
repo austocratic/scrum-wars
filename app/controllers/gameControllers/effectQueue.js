@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 const Character = require('../../../app/models/Character').Character;
@@ -74,4 +75,4 @@ const effectQueue = (gameObjects) =>{
 
 module.exports = {
     effectQueue
-};
+};*/

@@ -14,7 +14,6 @@ const slackHook = process.env.SLACK_HOOK;
 const sendMessage = payloadBody => {
 
     let requestOptions = {
-        //uri:                     slackHook,
         uri:                     process.env.SLACK_HOOK,
         resolveWithFullResponse: true,
         json:                    true,

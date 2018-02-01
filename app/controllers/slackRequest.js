@@ -2,15 +2,6 @@
 
 const _ = require('lodash');
 
-//Models
-const Game = require('../models/Game').Game;
-const Character = require('../models/Character').Character;
-const User = require('../models/User').User;
-const Class = require('../models/Class').Class;
-const Zone = require('../models/Zone').Zone;
-const Match = require('../models/Match').Match;
-const Permission = require('../models/Permission').Permission;
-
 const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name, turn, match, ranking } = command;
 
@@ -106,18 +97,13 @@ const contextsAndActions = {
 };
 
 const processRequest = (gameContext, userSelection, opts) => {
-    console.log('slackRequest.processRequest()');
+    console.log(`slackRequest.processRequest() gameContext: ${gameContext} || userSelection: ${userSelection}`);
 
     let actionFn;
-
-    console.log("DEBUG gameContext: ", gameContext);
-    console.log('DEBUG userSelection: ', userSelection);
 
     if (!contextsAndActions[gameContext]){
         return {"text": "ERROR context not configured in processRequest: ", gameContext}
     }
-
-    
 
     //Build the response function.  If response not available, return an error message
     actionFn = contextsAndActions[gameContext][userSelection] || (()=>{ return {"text": `ERROR, button ${userSelection} is not yet setup for context ${gameContext}!`}});
