@@ -163,18 +163,10 @@ class Character extends BaseModel{
         return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
     }*/
 
+    //Does the player have the same or more action points than the cost of the action
     isActionAvailable(actionDetails){
-
-        //Does the player have more available action points than the cost of the action?
-        return this.props.action_points > actionDetails.props.action_points_cost
-
-
-        //let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
-
-        //return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
+        return this.props.action_points >= actionDetails.props.action_points_cost
     }
-
-
 
     //Return an array of effects with that contain the modifier searched for
     getEffectsWithModifier(modifierToFind){

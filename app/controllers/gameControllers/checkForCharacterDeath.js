@@ -4,12 +4,14 @@ const slack = require('../../libraries/slack').sendMessage;
 
 
 const checkForCharacterDeath = (gameObjects, charactersInZone) => {
+    console.log('called checkForCharacterDeath()');
 
     //Iterate through the characters in the zone and check if any are dead
     charactersInZone.forEach( eachCharacterInZone =>{
 
         //If health has dropped below 0, character is dead
         if(eachCharacterInZone.props.hit_points <= 0){
+            console.log('Found a dead character!');
 
             //Announce that character has been defeated
             let characterDefeatedMessage = {
