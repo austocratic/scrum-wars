@@ -176,7 +176,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 //Routes for getting character avatar
 //TODO should not rely on the catch all for getting images. this gets the avatar image
 //TODO Remove this and move it all to public images
-/* TESTING REMOVING
+// TESTING REMOVING
 router.all('*', function (req, res, next) {
 
     //console.log('Called .all router, req.params: ', req.params['0']);
@@ -197,6 +197,6 @@ router.all('*', function (req, res, next) {
         }
     });
 });
-*/
+
 
 module.exports = router;
