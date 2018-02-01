@@ -5,9 +5,6 @@ const _ = require('lodash');
 //Models
 const Game = require('../models/Game').Game;
 
-const refreshController = require('../controllers/gameControllers/refresh');
-
-
 
 const getGame = async (req) => {
     console.log('called Middleware: getGame()');
@@ -19,9 +16,6 @@ const getGame = async (req) => {
 
     //Calculate properties in memory
     game.initiateRequest();
-
-    //Refresh the game (check for new turn, player deaths, ect.)
-    refreshController.refresh();
 
     return game;
 };

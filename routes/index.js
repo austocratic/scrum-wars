@@ -15,6 +15,7 @@ const updateGameObjectsForReservedActionName = require('../app/middleware/update
 const checkUserPermissions = require('../app/middleware/checkUserPermissions').checkUserPermissions;
 const updateGame = require('../app/middleware/updateGame').updateGame;
 
+const refreshController = require('../controllers/gameControllers/refresh');
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -116,6 +117,9 @@ router.post('/api/commands', async (req, res, next) => {
         //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
         gameObjects.game = game;
 
+        //Refresh the game (check for new turn, player deaths, ect.)
+        refreshController.refresh(gameObjects);
+
         //Check the user's permission to see if they can access that command
         if(checkUserPermissions(gameObjects.permission, gameObjects.command) === false) {
             return {
@@ -149,23 +153,19 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     //Declare standard game objects based on the Slack request
     let gameObjects = declareGameObjects(game, formattedRequest);
 
-    //console.log('gameObjects.slackCallback after declare: ', gameObjects.slackCallback);
-
     updateGameObjectsForReservedActionName(gameObjects);
 
-    //console.log('gameObjects.slackCallback in router BEFORE: ', gameObjects.slackCallback);
-
     gameObjects.slackCallback = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
-
-    //console.log('gameObjects.slackCallback in router AFTER: ', gameObjects.slackCallback);
 
     //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
     gameObjects.game = game;
 
+    //Refresh the game (check for new turn, player deaths, ect.)
+    refreshController.refresh(gameObjects);
+
     let slackResponseTemplateReturned = await slackRequest.processRequest(gameObjects.gameContext, gameObjects.userActionNameSelection, gameObjects);
 
     //Update game state
-    //await updateGame(req);
     game.updateState();
     console.log('Responded to request to /api/interactive-messages: ', JSON.stringify(slackResponseTemplateReturned));
     res.status(200).send(slackResponseTemplateReturned);
