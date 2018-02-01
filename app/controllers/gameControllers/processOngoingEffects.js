@@ -4,6 +4,10 @@ const getActionEffectController = require('../actionEffectController').getAction
 
 const helpers = require('../../helpers');
 
+//Models
+const Action = require('../../models/Action').Action;
+const Character = require('../../models/Character').Character;
+
 const processOngoingEffects = (gameObjects, charactersInZone) => {
 
     /*
