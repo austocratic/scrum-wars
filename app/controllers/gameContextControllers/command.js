@@ -8,7 +8,6 @@ const slackAlert = require('../../libraries/slack').Alert;
 
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
-const refreshController = require('../gameControllers/refresh').refresh;
 
 const Action = require('../../models/Action').Action;
 const Match = require('../../models/Match').Match;
@@ -526,17 +525,6 @@ const match = gameObjects => {
 
 };
 
-//Force a game refresh
-const refresh = gameObjects => {
-    console.log('called command / refresh()');
-
-    refreshController(gameObjects);
-
-    return {
-        "text": "You refresh the game"
-    }
-};
-
 module.exports = {
     action,
     generate,
@@ -545,8 +533,7 @@ module.exports = {
     name,
     ranking,
     turn,
-    match,
-    refresh
+    match
 };
 
 

@@ -5,6 +5,8 @@ const _ = require('lodash');
 //Models
 const Game = require('../models/Game').Game;
 
+const refreshController = require('../controllers/gameControllers/refresh');
+
 
 
 const getGame = async (req) => {
@@ -19,7 +21,7 @@ const getGame = async (req) => {
     game.initiateRequest();
 
     //Refresh the game (check for new turn, player deaths, ect.)
-    //game.refresh();
+    refreshController.refresh();
 
     return game;
 };
