@@ -13,14 +13,14 @@ const getGame = require('../app/middleware/getGame').getGame;
 const declareGameObjects = require('../app/middleware/declareGameObjects').declareGameObjects;
 const updateGameObjectsForReservedActionName = require('../app/middleware/updateGameObjectsForReservedActionName').updateGameObjectsForReservedActionName;
 const checkUserPermissions = require('../app/middleware/checkUserPermissions').checkUserPermissions;
-const updateGame = require('../app/middleware/updateGame').updateGame;
+//const updateGame = require('../app/middleware/updateGame').updateGame;
 
-const refreshController = require('../controllers/gameControllers/refresh');
+const refreshController = require('../app/controllers/gameControllers/refresh');
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+//var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-var Jimp = require("jimp");
+//var Jimp = require("jimp");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
