@@ -16,6 +16,7 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
         if(eachCharacterInZone.props.stats_current.hit_points <= 0){
             console.log('Found a dead character!');
 
+            /*
             //Announce that character has been defeated
             let characterDefeatedMessage = {
                 "username": "Arena Announcer",
@@ -25,7 +26,17 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
                 "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`
             };
 
-            slack(characterDefeatedMessage);
+            slack(characterDefeatedMessage);*/
+
+            slack.sendMessage({
+                "username": gameObjects.requestZone.props.zone_messages.name,
+                "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
+                "channel": ("#" + gameObjects.requestZone.props.channel),
+                "attachments": [{
+                    "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`,
+                    "color": gameObjects.game.menuColor
+                }]
+            });
 
             //Move the character to the town
             //TODO currently hard coding to the town square

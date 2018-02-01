@@ -51,12 +51,23 @@ const refresh = (gameObjects) => {
                 slackResponseTemplate: {}
             };*/
 
-            console.log('DEBUG game.state.character: ', JSON.stringify(gameObjects.game.state.character));
+            //console.log('DEBUG game.state.character: ', JSON.stringify(gameObjects.game.state.character));
 
             //Create an array of characters in the zone
-            let charactersInZone = gameObjects.currentMatch.props.starting_character_ids.map(eachStartingCharacterID=>{
-                return new Character(gameObjects.game.state, eachStartingCharacterID)
-            });
+            let charactersInZone = matchStartingCharacterIDs
+                .map(eachStartingCharacterID=>{
+                    return new Character(gameObjects.game.state, eachStartingCharacterID)
+                })
+                //Filter for characters in the match zone
+                .filter( eachCharacter =>{
+                    /*
+                    if (eachCharacter.props.zone_id === gameObjects.currentMatch.zone_id){
+                        return eachCharacter
+                    }*/
+                    return eachCharacter.props.zone_id === gameObjects.currentMatch.zone_id
+
+
+                });
 
             //Process ongoing effects
             processOngoingEffects(gameObjects, charactersInZone);
