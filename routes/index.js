@@ -174,8 +174,7 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 //All client interactive-message responses pass through this route
 
 //Routes for getting character avatar
-//TODO should not rely on the catch all for getting images. this gets the avatar image
-//TODO Remove this and move it all to public images
+//TODO should not rely on the catch all for getting images.  This serves the /public folder
 // TESTING REMOVING
 router.all('*', function (req, res, next) {
 
