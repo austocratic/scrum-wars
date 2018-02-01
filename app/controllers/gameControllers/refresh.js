@@ -51,6 +51,8 @@ const refresh = (gameObjects) => {
                 slackResponseTemplate: {}
             };*/
 
+            console.log('DEBUG game.state.character: ', JSON.stringify(gameObjects.game.state.character));
+
             //Create an array of characters in the zone
             let charactersInZone = gameObjects.currentMatch.props.starting_character_ids.map(eachStartingCharacterID=>{
                 return new Character(gameObjects.game.state, eachStartingCharacterID)
