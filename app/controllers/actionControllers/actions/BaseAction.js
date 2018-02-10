@@ -205,14 +205,27 @@ class BaseAction {
                     return eachActionQueue.player_character_id === target.id &&
                         eachActionQueue.player_character_id !== this.actionCharacter.id;
                 })
+                //Filter for action types that this action can interrupt
+                .filter( eachActionQueue => {
+
+                    let eachAction = new Action(this.game.state, eachActionQueue.action_id);
+
+                    //TODO working
+                    if (this.actionTaken.props.canInterrupt){
+                        if(_.find(this.actionTaken.props.canInterrupt, eachAction.props.type)){
+                            return eachAction
+                        }
+                    }
+
+                    //Array of action types that this action can interrupt
+                    //this.actionTaken.props.canInterrupt
+                })
                 //Send interrupt messages and return final list of interrupted actions
                 .forEach( eachInterruptedAction =>{
 
-                    //console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
-                    let interruptedAction = new Action(this.game.state, eachInterruptedAction.action_id);
-                    //console.log('DEBUG eachInterruptedAction object: ', interruptedAction.props);
-                    //this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${this.targetCharacter.props.name}'s pending ${interruptedAction.props.name}!`;
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${interruptedAction.props.name}!`;
+                    console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
+
+                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
                     slack.sendMessage(this.slackPayload);
 
