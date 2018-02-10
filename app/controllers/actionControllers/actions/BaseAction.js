@@ -211,8 +211,8 @@ class BaseAction {
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
                     //TODO working
-                    if (this.actionTaken.props.canInterrupt){
-                        if(_.find(this.actionTaken.props.canInterrupt, eachAction.props.type)){
+                    if (this.actionTaken.props.can_interrupt){
+                        if(_.find(this.actionTaken.props.can_interrupt, eachAction.props.type)){
                             return eachAction
                         }
                     }
