@@ -208,6 +208,8 @@ class BaseAction {
                 //Filter for action types that this action can interrupt
                 .filter( eachActionQueue => {
 
+                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
+
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
                     //TODO working
