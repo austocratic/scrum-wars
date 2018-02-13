@@ -64,18 +64,6 @@ const action = gameObjects => {
 
         return gameObjects.slackResponseTemplate;
     }
-
-    /* REMOVE THE ONE ACTION PER TURN LINE
-    if (gameObjects.playerCharacter.getActionsUsedOnTurn(gameObjects.currentMatch.props.number_turns).length > 0) {
-        //An action was used this turn, return a message
-
-        gameObjects.slackResponseTemplate = {
-            "text": "You have already taken an action this turn, wait until next turn"
-            //TODO I could add a message saying how long until the next turn
-        };
-
-        return gameObjects.slackResponseTemplate
-    }*/
     
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();
@@ -95,35 +83,47 @@ const action = gameObjects => {
             return singleAction.props.type;
         });
 
+    //TODO this will current return array of arrays need to finish this up
+
     let templateAttachments = groupedActions
         .map(actionCategory => {
 
-            //Build the template
-            let attachmentTemplate = {
-                "title": actionCategory[0].props.type,
-                "fallback": "You are unable to choose an action",
-                "color": gameObjects.game.menuColor,
-                "attachment_type": "default",
-                "actions": []
-            };
+            //Slack won't display more than 5 buttons in a single attachment.
+            //If category has more than 5 elements,
 
-            actionCategory.forEach(actionDetails => {
+            //An array to hold each action group's attachments.  This will have an additional element for each 5 actions in the group
+            let attachmentsForCategory = [];
+
+            //Determine how many attachments are needed for the category.  Each attachment can have 5 buttons
+            //Round up to nearest integer to make sure there is room
+            let numberOfAttachments = Math.ceil(actionCategory.length / 5);
+
+            //console.log('DEBUG numberOfAttachments: ', numberOfAttachments);
+
+            for (let i = 0; i < numberOfAttachments; i++) {
+                attachmentsForCategory.push({
+                    "title": actionCategory[0].props.type,
+                    "fallback": "You are unable to choose an action",
+                    "color": gameObjects.game.menuColor,
+                    "attachment_type": "default",
+                    "actions": []
+                })
+            }
+
+            actionCategory.forEach( (actionDetails, index) => {
+
+                //Determine which attachment to insert into
+                let elementToInsert = Math.floor(index / 5);
 
                 //Default button color to red ("danger").  If available, it will be overwritten
                 let actionAvailableButtonColor = "danger";
-
-                //If the button is available based on the match turn, overwrite the color to green
-                /* REFACTORING TO AP SYSTEM
-                if (gameObjects.playerCharacter.isActionAvailable(actionDetails, gameObjects.currentMatch.props.number_turns)) {
-                    actionAvailableButtonColor = "primary"
-                }*/
 
                 if (gameObjects.playerCharacter.isActionAvailable(actionDetails)) {
                     actionAvailableButtonColor = "primary"
                 }
 
                 //Push each action into the actionControllers array portion of the template
-                attachmentTemplate.actions.push({
+                attachmentsForCategory[elementToInsert].actions.push({
                     "name": actionDetails.props.functionName,
                     "text": actionDetails.props.name,
                     "style": actionAvailableButtonColor,
@@ -131,11 +131,21 @@ const action = gameObjects => {
                     "value": actionDetails.id
                 });
             });
-            return attachmentTemplate
+
+            //console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
+
+            return attachmentsForCategory
         });
 
+    //unwrappedTemplateAttachments is array of arrays, need to flatten:
+    function flatten(arr) {
+        return arr.reduce(function (flat, toFlatten) {
+            return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+        }, []);
+    }
+
     //Use .value() to unwrap the lodash wrapper
-    gameObjects.slackResponseTemplate.attachments = templateAttachments.value();
+    gameObjects.slackResponseTemplate.attachments = flatten(templateAttachments.value());
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:action/selectActionMenu`);
 
