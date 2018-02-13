@@ -218,9 +218,15 @@ class BaseAction {
 
                     //TODO working
                     if (this.actionTaken.props.can_interrupt){
+
+                        let foundActionType = _.find(this.actionTaken.props.can_interrupt, eachAction.props.type)
+
+                        console.log('DEBUG foundActionType, ', foundActionType)
+
+                        /*
                         if(_.find(this.actionTaken.props.can_interrupt, eachAction.props.type)){
                             return eachAction
-                        }
+                        }*/
                     }
 
                     //Array of action types that this action can interrupt
