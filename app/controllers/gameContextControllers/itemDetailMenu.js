@@ -75,6 +75,8 @@ const equip = gameObjects => {
 
     console.log('DEBUG itemDetailMenu/equip, valueSelection: ', valueSelection);
 
+    console.log('DEBUG itemDetailMenu/equip, valueSelection: ', valueSelection.length);
+
     let itemID = valueSelection[valueSelection.length - 1];
 
     let itemToEquip = new Item(gameObjects.game.state, itemID);
