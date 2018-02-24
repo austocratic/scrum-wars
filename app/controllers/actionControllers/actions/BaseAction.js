@@ -214,7 +214,7 @@ class BaseAction {
 
                     console.log('DEBUG eachAction: ', eachAction.props);
 
-                    console.log('DEBUG this.actionTaken.props: ', this.actionTaken.props);
+                    //console.log('DEBUG this.actionTaken.props: ', this.actionTaken.props);
 
                     //TODO working
                     if (this.actionTaken.props.can_interrupt){
@@ -245,6 +245,11 @@ class BaseAction {
                 .forEach( eachInterruptedAction =>{
 
                     console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
+
+                    console.log('DEBUG: this.actionCharacter: ', this.actionCharacter.props);
+                    console.log('DEBUG: this.actionTaken: ', this.actionTaken.props);
+                    console.log('DEBUG: target: ', target.props);
+                    console.log('DEBUG: eachInterruptedAction: ', eachInterruptedAction.props);
 
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
