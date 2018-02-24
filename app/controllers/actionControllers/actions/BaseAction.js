@@ -229,7 +229,7 @@ class BaseAction {
                         console.log('DEBUG foundActionType, ', foundActionIndex);
 
                         if (foundActionIndex > -1){
-                            return eachActionQueue
+                            return eachAction
                         }
 
                         /*
