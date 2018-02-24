@@ -219,9 +219,18 @@ class BaseAction {
                     //TODO working
                     if (this.actionTaken.props.can_interrupt){
 
-                        let foundActionType = _.find(this.actionTaken.props.can_interrupt, eachAction.props.type)
+                        let foundActionIndex = _.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type);
 
-                        console.log('DEBUG foundActionType, ', foundActionType)
+                        /*
+                        if(_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1){
+                            return eachActionQueue
+                        }*/
+
+                        console.log('DEBUG foundActionType, ', foundActionIndex);
+
+                        if (foundActionIndex > -1){
+                            return eachActionQueue
+                        }
 
                         /*
                         if(_.find(this.actionTaken.props.can_interrupt, eachAction.props.type)){
