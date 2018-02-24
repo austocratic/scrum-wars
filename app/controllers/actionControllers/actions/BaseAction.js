@@ -250,14 +250,14 @@ class BaseAction {
                 //Send interrupt messages and return final list of interrupted actions
                 .forEach( eachInterruptedAction =>{
 
-                    console.log('DEBUG eachInterruptedAction: ', eachInterruptedAction);
+                    console.log('DEBUG eachInterruptedAction.props: ', eachInterruptedAction.props);
 
                     //console.log('DEBUG: this.actionCharacter: ', this.actionCharacter.props);
                     //console.log('DEBUG: this.actionTaken: ', this.actionTaken.props);
                     //console.log('DEBUG: target: ', target.props);
                     //console.log('DEBUG: eachInterruptedAction: ', eachInterruptedAction.props);
 
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.name}!`;
+                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
                     slack.sendMessage(this.slackPayload);
 
