@@ -90,7 +90,8 @@ const equip = gameObjects => {
 
         let equipmentInSlot = gameObjects.playerCharacter.getEquipmentInSlot(eachEquipmentSlotID);
 
-        if (equipmentInSlot.length === 0){
+        //If equipmentInSlot is undefined then there is no equipment in that slot
+        if (!equipmentInSlot){
             gameObjects.playerCharacter.equipItem(itemToEquip);
         } else {
             gameObjects.slackResponseTemplate.text = 'You can not equip that item because you already have an item equipped in that slot!'
