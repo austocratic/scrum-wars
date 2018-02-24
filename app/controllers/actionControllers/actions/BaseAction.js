@@ -205,16 +205,22 @@ class BaseAction {
                     return eachActionQueue.player_character_id === target.id &&
                         eachActionQueue.player_character_id !== this.actionCharacter.id;
                 })
-                //Filter for action types that this action can interrupt
-                .filter( eachActionQueue => {
+                //Create action objects
+                .map( eachActionQueue =>{
 
                     console.log('DEBUG eachActionQueue: ', eachActionQueue);
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
-                    console.log('DEBUG eachAction: ', eachAction.props);
+                    console.log('DEBUG eachAction from .map: ', eachAction.props);
 
-                    //console.log('DEBUG this.actionTaken.props: ', this.actionTaken.props);
+                    return eachAction
+
+                })
+                //Filter for action types that this action can interrupt
+                .filter( eachAction => {
+
+                    console.log('DEBUG eachAction.props: ', eachAction.props);
 
                     //TODO working
                     if (this.actionTaken.props.can_interrupt){
