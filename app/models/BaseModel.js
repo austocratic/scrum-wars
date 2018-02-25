@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 
 class BaseModel {
     constructor(gameState, modelType, id) {
@@ -28,12 +30,15 @@ class BaseModel {
         this.props[propertyToUpdate] = newValue
     }
 
+    //Property name can be nested
     incrementProperty(propertyName, value){
         console.log('Called incrementProperty');
 
-        let currentProperty = this.props[propertyName];
-
-        this.props[propertyName] = currentProperty + value;
+        if(_.has(this.props, propertyName)){
+            _.set(this.props, propertyName , _.get(this.props, propertyName) + value);
+        } else {
+            return new Error(`Can't find property ${propertyName}`)
+        }
     }
 
     //Take a base object (base), for every key in newProperties that already exists in base, add to the base's value

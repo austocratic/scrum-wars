@@ -20,72 +20,97 @@ game.state = testDB;
 const gameContext = 'command';
 const userSelection = 'action';
 
-describe("Testing gameContext " + gameContext + " & user selection " +  userSelection, function() {
-    /*
-    describe("where the player typed the /action command in a channel that the player's character is not in", function(){
+describe("Testing /action command", function() {
 
-        let slackResponseTemplate = {};
-        let slackCallback = '';
+    let gameObjects = {
+        game: game,
+        user: new User(game.state, 'U4ZA6CCBG'),
+        slackResponseTemplate: {},
+        playerCharacter: new Character(game.state, '55e38d23d842e50e9026'),
+        requestZone: new Zone (game.state, 'C4Z7F8XMW'),
+        currentMatch: new Match (game.state, '-KmTBxH0tkNaSo0rdT61'),
+        characterClass: new Class (game.state, '-KircSgAkPTavnfob8F5')
+    };
 
-        let testCharacterID = '55e38d23d842e50e9026';
+    //Make sure the test character is in the arena:
+    gameObjects.playerCharacter.props.zone_id = '-Khu9Ti4cn9PQ2Q1TSBT';
 
-        //Arena channel ID
-        //slackPayload.channel_id
-        let requestChannelID = 'C4Z7F8XMW';
+    //Reset the characters actions to 8 of the same action
+    gameObjects.playerCharacter.props.actions =
+        [
+            {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kjpe29q_fDkJG-73AQO",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        },
+        {
+            "action_id" : "-Kkdk_CD5vx8vRGQD268",
+            "is_available" : 1,
+            "turn_available" : 0,
+            "turn_used" : 1
+        }];
 
-        let playerCharacter = new Character(game.state, testCharacterID);
+    const expectedResponse = {};
 
-        let requestZone = new Zone(game.state, requestChannelID);
+    const actualResponse = action(gameObjects);
 
-        //Overwrite the player character's zone to ensure the character is in the town
-        playerCharacter.props.zone_id = '-Khu9Zazk5XdFX9fD2Y8';
+    console.log('DEBUG: actualResponse.slackResponseTemplate: ', actualResponse.attachments[1].actions.length);
 
-        let slackResponseTemplateReturned = action({
-            game,
-            slackResponseTemplate,
-            requestZone,
-            slackCallback,
-            playerCharacter
-        });
-
-        testSlackResponseFormat(slackResponseTemplateReturned);
-
-        it("should return .text property of _You can't perform an action in a zone that your character is not in_", function(){
-            assert.equal(slackResponseTemplateReturned.text,"_You can't perform an action in a zone that your character is not in_")
-        })
+    it(`response should have an attachments array with 3 elements`, function() {
+        assert.equal(actualResponse.attachments.length, 3)
     });
 
-    describe("where the player typed the /action command in a channel that the player's character is in", function(){
+    it(`responses 1st attachment element should have an actions array with 5 elements`, function() {
+        assert.equal(actualResponse.attachments[0].actions.length, 5)
+    });
 
-        let slackResponseTemplate = {};
+    it(`responses 2nd attachment element should have an actions array with 2 elements`, function() {
+        assert.equal(actualResponse.attachments[1].actions.length, 2)
+    });
 
-        //Mock a character that does not have gender property set yet
-        let testCharacterID = '55e38d23d842e50e9026';
+    it(`responses 3rd attachment element should have an actions array with 1 element`, function() {
+        assert.equal(actualResponse.attachments[2].actions.length, 1)
+    });
 
-        //Arena channel ID
-        //slackPayload.channel_id
-        let requestChannelID = 'C4Z7F8XMW';
 
-        let playerCharacter = new Character(game.state, testCharacterID);
-
-        let requestZone = new Zone(game.state, requestChannelID);
-
-        let currentMatch = new Match(game.state, game.state.global_state.match_id);
-
-        //Overwrite the player character's zone to ensure the character is in the arena
-        playerCharacter.props.zone_id = '-Khu9Ti4cn9PQ2Q1TSBT';
-
-        let slackResponseTemplateReturned = action({
-            game,
-            slackResponseTemplate,
-            requestZone,
-            currentMatch,
-            playerCharacter
-        });
-
-        testSlackResponseFormat(slackResponseTemplateReturned);
-    });*/
-
+    /*
     describe("when the player has already taken an action this turn", function(){
 
         let slackResponseTemplate = {};
@@ -136,7 +161,7 @@ describe("Testing gameContext " + gameContext + " & user selection " +  userSele
 
         //testSlackResponseFormat(slackResponseTemplateReturned);
 
-    })
+    })*/
 });
 
 

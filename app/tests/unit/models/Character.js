@@ -109,5 +109,29 @@ describe("Testing Character model", function() {
 
             console.log('items in slot: ', testCharacter.getEquipmentInSlot('banana'));
         })
+
+        describe("testing incrementProperty()", function(){
+
+            console.log('testCharacter.props: ', testCharacter.props);
+
+            it("should increment the character's gold by 5", function(){
+
+                let oldGold = testCharacter.props.gold;
+
+                testCharacter.incrementProperty('gold', 5);
+
+                assert.equal(oldGold + 5, testCharacter.props.gold)
+            });
+
+            it("should increment the character's stats_current.hit_points by 10", function(){
+
+                let oldhit_points = testCharacter.props.stats_current.hit_points;
+
+                testCharacter.incrementProperty('stats_current.hit_points', 10);
+
+                assert.equal(oldhit_points + 10, testCharacter.props.stats_current.hit_points)
+            });
+
+        })
     });
 });

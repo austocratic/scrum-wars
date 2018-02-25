@@ -44,29 +44,15 @@ const refresh = (gameObjects) => {
                 gameObjects.currentMatch.end()
             }
 
-            /* I used to declare this, testing to see if I still need to
-            let gameObjects = {
-                game: this,
-                currentMatch: new Match(this.state, this.getCurrentMatchID()),
-                slackResponseTemplate: {}
-            };*/
-
-            //console.log('DEBUG game.state.character: ', JSON.stringify(gameObjects.game.state.character));
-
             //Create an array of characters in the zone
             let charactersInZone = matchStartingCharacterIDs
+                //Declare Character objects for each character ID
                 .map(eachStartingCharacterID=>{
                     return new Character(gameObjects.game.state, eachStartingCharacterID)
                 })
                 //Filter for characters in the match zone
                 .filter( eachCharacter =>{
-                    /*
-                    if (eachCharacter.props.zone_id === gameObjects.currentMatch.zone_id){
-                        return eachCharacter
-                    }*/
                     return eachCharacter.props.zone_id === gameObjects.currentMatch.props.zone_id
-
-
                 });
 
             //Process ongoing effects

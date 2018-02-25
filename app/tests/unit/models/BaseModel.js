@@ -31,11 +31,55 @@ describe("Testing BaseModel", function() {
         testPropertiesToModify.forEach( eachTestPropertiesToModify =>{
             testBaseModel.accumulateProperties(testBaseProperties, eachTestPropertiesToModify);
         });
+    });
+
+    describe("testing incrementProperty", function(){
+
+        let testBaseModel = new BaseModel(game.state, 'character', '55e38d23d842e50e9026');
+
+        /*
+        it("should not be undefined", function(){
+            assert.throws(()=> {
+                testBaseModel.incrementProperty('lasagna', 5)
+            },
+            err => {
+                if ((err instanceof Error)) {
+                    return true;
+                }
+            },
+
+            "Called incrementProperty referencing a property that does not exist")
+
+        });*/
+
+        it("should throw an error", function() {
+            assert(() => {
+                if (testBaseModel.incrementProperty('lasagna', 5) instanceof Error) {
+                    return true
+                }
+            })
+        })
+
+        console.log('Prop test: testBaseModel: ', testBaseModel.props);
+
+        console.log('TEST ', testBaseModel.incrementProperty('gold', 5));
+
+        it("should not throw an error", function() {
+            assert(() => {
+                if (testBaseModel.incrementProperty('props.gold', 5) instanceof Error) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        })
 
 
 
 
     })
+
+
 
 
 });

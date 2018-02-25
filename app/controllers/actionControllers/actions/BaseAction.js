@@ -197,7 +197,7 @@ class BaseAction {
     _processDamage(target, damageAmount){
         console.log(`called _processDamage(${target})`);
         //Decrease target's health
-        this.targetCharacter.incrementProperty('health', -damageAmount);
+        this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
 
         let interruptedActionIndex = [];
 
