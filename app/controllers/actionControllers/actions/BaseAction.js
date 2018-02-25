@@ -286,14 +286,14 @@ class BaseAction {
             //console.log('interruptedActions.length: ', interruptedActions.length);
 
             //Filter the actionQueue to remove interrupted actions
-            //REMOVE TEMPORARILY for testing
+            /*REMOVE TEMPORARILY for testing
             this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
                 .filter( eachActionQueue =>{
                     //Filter queue to only contain actions who were initiated by a player that is not the target of this action OR were initiated
                     //by the player that is initiating this action
                     //return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
                     return eachActionQueue.player_character_id !== target.id || eachActionQueue.player_character_id === this.actionCharacter.id;
-                })
+                })*/
         }
 
         console.log('DEBUG Interrupted action index: ', interruptedActionIndex);
