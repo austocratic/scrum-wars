@@ -281,6 +281,13 @@ class BaseAction {
                     //return eachInterruptedAction
                 });
 
+            //For each element identified as an action to interrupt, remove that element from the action_queue
+            interruptedActionIndex.forEach( eachActionToRemove =>{
+                this.currentMatch.props.action_queue.splice(eachActionToRemove, 1)
+            })
+
+
+
             //console.log('interruptedActions.length: ', interruptedActions.length);
 
             //Filter the actionQueue to remove interrupted actions
