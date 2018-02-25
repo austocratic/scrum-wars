@@ -227,15 +227,11 @@ class BaseAction {
                 //Filter for action types that this action can interrupt
                 .filter( (eachActionQueue, index) => {
 
-                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
+                    //console.log('DEBUG eachActionQueue: ', eachActionQueue);
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
-                    console.log('DEBUG eachAction from .map: ', eachAction.props);
-
-                    //return eachAction
-
-                    console.log('DEBUG eachAction.props: ', eachAction.props);
+                    console.log('DEBUG eachAction.props from .filter: ', eachAction.props);
 
                     if (this.actionTaken.props.can_interrupt){
 
@@ -245,6 +241,8 @@ class BaseAction {
 
                             //Store the array index so that it can be removed from action_queue
                             interruptedActionIndex.push(index)
+
+                            return eachActionQueue
 
                         }
 
