@@ -185,6 +185,13 @@ class BaseAction {
         return totalDamage;
     }
 
+
+    // Take action_queue
+
+    //Filter it down to interrupted actions only.  For each interrupted action, send a message
+
+    //Remove interrupted actions from the action_queue
+
     //Decrement health, processes action interrupts and hiding removal
     //Argument must be a character object
     _processDamage(target, damageAmount){
@@ -192,20 +199,67 @@ class BaseAction {
         //Decrease target's health
         this.targetCharacter.incrementProperty('health', -damageAmount);
 
-        //TODO an action should have a property can_interrupt [] which is an array of action types that it is able to interrupt
-        //console.log('DEBUG this.currentMatch.props.actionQueue BEFORE: ', this.currentMatch.props.action_queue);
+        let interruptedActionIndex = [];
 
         //Interrupt check: look in the action_queue for pending actions initiated by the target & interrupt them
         if (this.currentMatch.props.action_queue){
 
             this.currentMatch.props.action_queue
                 //Filter out pending actions initiated by a target of player's action (don't filter the player's own actions)
+                /*
                 .filter( eachActionQueue =>{
-                    //return eachActionQueue.player_character_id === this.targetCharacter.id &&
                     return eachActionQueue.player_character_id === target.id &&
                         eachActionQueue.player_character_id !== this.actionCharacter.id;
-                })
+                })*/
                 //Create action objects
+                /*
+                .map( eachActionQueue =>{
+
+                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
+
+                    let eachAction = new Action(this.game.state, eachActionQueue.action_id);
+
+                    console.log('DEBUG eachAction from .map: ', eachAction.props);
+
+                    return eachAction
+
+                })*/
+                //Filter for action types that this action can interrupt
+                .filter( (eachActionQueue, index) => {
+
+                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
+
+                    let eachAction = new Action(this.game.state, eachActionQueue.action_id);
+
+                    console.log('DEBUG eachAction from .map: ', eachAction.props);
+
+                    //return eachAction
+
+                    console.log('DEBUG eachAction.props: ', eachAction.props);
+
+                    if (this.actionTaken.props.can_interrupt){
+
+                        if (_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1 &&
+                            eachActionQueue.player_character_id === target.id &&
+                            eachActionQueue.player_character_id !== this.actionCharacter.id){
+
+                            //Store the array index so that it can be removed from action_queue
+                            interruptedActionIndex.push(index)
+
+                        }
+
+
+                        /*
+                        return _.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1 &&
+                            eachActionQueue.player_character_id === target.id &&
+                            eachActionQueue.player_character_id !== this.actionCharacter.id;
+                        */
+
+                        /*if (_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1){
+                            return eachAction
+                        }*/
+                    }
+                })
                 .map( eachActionQueue =>{
 
                     console.log('DEBUG eachActionQueue: ', eachActionQueue);
@@ -217,45 +271,10 @@ class BaseAction {
                     return eachAction
 
                 })
-                //Filter for action types that this action can interrupt
-                .filter( eachAction => {
-
-                    console.log('DEBUG eachAction.props: ', eachAction.props);
-
-                    //TODO working
-                    if (this.actionTaken.props.can_interrupt){
-
-                        let foundActionIndex = _.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type);
-
-                        /*
-                        if(_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1){
-                            return eachActionQueue
-                        }*/
-
-                        console.log('DEBUG foundActionType, ', foundActionIndex);
-
-                        if (foundActionIndex > -1){
-                            return eachAction
-                        }
-
-                        /*
-                        if(_.find(this.actionTaken.props.can_interrupt, eachAction.props.type)){
-                            return eachAction
-                        }*/
-                    }
-
-                    //Array of action types that this action can interrupt
-                    //this.actionTaken.props.canInterrupt
-                })
                 //Send interrupt messages and return final list of interrupted actions
                 .forEach( eachInterruptedAction =>{
 
                     console.log('DEBUG eachInterruptedAction.props: ', eachInterruptedAction.props);
-
-                    //console.log('DEBUG: this.actionCharacter: ', this.actionCharacter.props);
-                    //console.log('DEBUG: this.actionTaken: ', this.actionTaken.props);
-                    //console.log('DEBUG: target: ', target.props);
-                    //console.log('DEBUG: eachInterruptedAction: ', eachInterruptedAction.props);
 
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
@@ -267,15 +286,17 @@ class BaseAction {
             //console.log('interruptedActions.length: ', interruptedActions.length);
 
             //Filter the actionQueue to remove interrupted actions
-            /*REMOVE TEMPORARILY for testing
+            //REMOVE TEMPORARILY for testing
             this.currentMatch.props.action_queue = this.currentMatch.props.action_queue
                 .filter( eachActionQueue =>{
                     //Filter queue to only contain actions who were initiated by a player that is not the target of this action OR were initiated
                     //by the player that is initiating this action
                     //return eachActionQueue.player_character_id !== this.targetCharacter.id || eachActionQueue.player_character_id === this.actionCharacter.id;
                     return eachActionQueue.player_character_id !== target.id || eachActionQueue.player_character_id === this.actionCharacter.id;
-                })*/
+                })
         }
+
+        console.log('DEBUG Interrupted action index: ', interruptedActionIndex);
 
         //_reverseEffect(this.actionCharacter, eachEffect.action_id)
 
