@@ -32,9 +32,12 @@ class BaseModel {
 
     //Property name can be nested
     incrementProperty(propertyName, value){
-        console.log('Called incrementProperty');
+        console.log(`Called incrementProperty, value to increment: ${value}`);
 
         if(_.has(this.props, propertyName)){
+
+            console.log('DEBUG _.get(this property): ', _.get(this.props, propertyName));
+
             _.set(this.props, propertyName , _.get(this.props, propertyName) + value);
         } else {
             return new Error(`Can't find property ${propertyName}`)

@@ -241,7 +241,7 @@ class BaseAction {
                             eachActionQueue.player_character_id !== this.actionCharacter.id){
 
                             //Store the array index so that it can be removed from action_queue
-                            interruptedActionIndex.push(index)
+                            interruptedActionIndex.push(index);
 
                             return eachActionQueue
 
