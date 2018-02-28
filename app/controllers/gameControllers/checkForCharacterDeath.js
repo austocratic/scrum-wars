@@ -16,19 +16,7 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
         if(eachCharacterInZone.props.health <= 0){
             console.log('Found a dead character!');
 
-            /*
-            //Announce that character has been defeated
-            let characterDefeatedMessage = {
-                "username": "Arena Announcer",
-                "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-                //TODO dont hardcode the arena
-                "channel": ("#arena"),
-                "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`
-            };
-
-            slack(characterDefeatedMessage);*/
-
-            slack.sendMessage({
+            slack({
                 "username": gameObjects.requestZone.props.zone_messages.name,
                 "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
                 "channel": ("#" + gameObjects.requestZone.props.channel),
