@@ -9,6 +9,7 @@ const checkForMatchStart = (gameObjects) => {
 
     //Local time
     let currentDate = new Date();
+    console.log('currentDate: ', currentDate);
     let currentHour = currentDate.getHours();
     let currentDay = currentDate.getDay();
 
