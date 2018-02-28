@@ -10,6 +10,18 @@ const checkForMatchStart = (gameObjects) => {
     //Local time
     let currentDate = new Date();
     console.log('currentDate: ', currentDate);
+
+    let currentDateUTC = currentDate.UTC();
+
+    console.log('currentDateUTC: ', currentDateUTC);
+
+    //Move back 8 hours (to convert to PST)
+    let localDateUTC = currentDateUTC - 28800000;
+
+    let convertedDate = new Date(localDateUTC);
+
+    console.log('convertedDate: ', convertedDate);
+
     let currentHour = currentDate.getHours();
     let currentDay = currentDate.getDay();
 
