@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const slack = require('../../libraries/slack');
+const slack = require('../../libraries/slack').sendMessage;
 //to delete (shuld use slack library above)
 const slackAlert = require('../../libraries/slack').Alert;
 
@@ -324,6 +324,7 @@ const travel = gameObjects => {
     //Update the zone_id property locally
     gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
 
+    /*
     //Alert the channel
     let channelAlert = new slackAlert({
         "username": gameObjects.playerCharacter.props.name,
@@ -332,7 +333,14 @@ const travel = gameObjects => {
         "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
     });
 
-    channelAlert.sendToSlack();
+    channelAlert.sendToSlack();*/
+
+    slack({
+        "username": gameObjects.playerCharacter.props.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
+        "channel": ("#" + gameObjects.requestZone.props.channel),
+        "text": (gameObjects.playerCharacter.props.name + ' has entered ' + gameObjects.requestZone.props.name)
+    });
 
     //Create object to send to Slack
     gameObjects.slackResponseTemplate = {
@@ -457,7 +465,7 @@ const turn = gameObjects => {
         eachGameCharacter.incrementProperty('action_points', 10)
     });
 
-    slack.sendMessage({
+    slack({
         "username": gameObjects.requestZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
         "channel": ("#" + gameObjects.requestZone.props.channel),
@@ -517,7 +525,7 @@ const match = gameObjects => {
     newMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
 
     //Announce that new match has begun
-    slack.sendMessage({
+    slack({
         "username": gameObjects.requestZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
         "channel": ("#" + gameObjects.requestZone.props.channel),

@@ -28,6 +28,7 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
 
             //Move the character to the town
             //TODO currently hard coding to the town square
+            //TODO maybe use the travel function so that an announcement is made?
             eachCharacterInZone.updateProperty('zone_id', '-Khu9Zazk5XdFX9fD2Y8');
         }
     });

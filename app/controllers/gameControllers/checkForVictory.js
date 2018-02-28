@@ -13,21 +13,25 @@ const checkForVictory = (gameObjects, charactersInZone) => {
         //Last character Object is the winner.  Create reference for ease of use
         let winningCharacter = charactersInZone[0];
 
-        //Notify Slack about the winner
-        slack({
-            "username": "Arena Announcer",
-            "icon_url": "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-grunge-clipart-icons-animals/012979-green-grunge-clipart-icon-animals-animal-dragon3-sc28.png",
-            //TODO dont hardcode the arena
-            "channel": ("#arena"),
-            "text": `We have a winner!  Congratulations ${winningCharacter.props.name}`
-        });
-
-        //Increment that players win count
-        winningCharacter.incrementProperty('arena_wins', 1);
-
         //Reward the winning character
         //TODO come up with randomization function for arena gold reward
         let arenaReward = 10;
+
+        //Notify Slack about the winner
+        slack({
+            "username": gameObjects.requestZone.props.zone_messages.name,
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
+            //TODO dont hardcode the arena
+            "channel": ("#arena"),
+            "attachments": [{
+                "text": `We have a winner! ${winningCharacter.props.name} emerges victorious from the battle!
+                /n${winningCharacter.props.name}'s receives today's prize of ${arenaReward} gold!`,
+                "color": gameObjects.game.menuColor
+            }]
+        });
+
+        //Increment that players win count
+        winningCharacter.incrementProperty('match_wins', 1);
 
         //Increment that players win count
         winningCharacter.incrementProperty('gold', arenaReward);

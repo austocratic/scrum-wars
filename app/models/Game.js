@@ -16,24 +16,6 @@ var Item = require('./Item').Item;
 var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 //var slackTemplates = require('../slackTemplates');
 
-var slackAlert = require('../libraries/slack').Alert;
-const slack = require('../libraries/slack').sendMessage;
-
-var _ = require('lodash');
-
-var helpers = require('../helpers');
-var gameConfigurations = require('./gameConfigurations.json');
-
-//TODO - move this to a config file
-var emptyItemID = '-Kjk3sGUJy5Nu8GWsdff';
-
-const getActionEffectController = require('../controllers/actionEffectController').getActionEffectController;
-const processOngoingEffects = require('../controllers/gameControllers/processOngoingEffects').processOngoingEffects;
-const checkForCharacterDeath = require('../controllers/gameControllers/checkForCharacterDeath').checkForCharacterDeath;
-const checkForVictory = require('../controllers/gameControllers/checkForVictory').checkForVictory;
-const checkForNewTurn = require('../controllers/gameControllers/checkForNewTurn').checkForNewTurn;
-const checkForMatchStart = require('../controllers/gameControllers/checkForMatchStart').checkForMatchStart;
-const actionQueue = require('../controllers/gameControllers/actionQueue').actionQueue;
 
 
 class Game {
@@ -73,84 +55,6 @@ class Game {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
 
-
-    //Checks the game's state looking for certain conditions (player deaths, ect.)
-    //It is invoked periodically by cron & always invoked by a player action
-    /*
-    refresh(){
-        console.log('called Game.refresh()');
-
-        //**********************~~  Match  ~~***********************
-
-        //Read game state to find the current match ID
-        let currentMatch = new Match(this.state, this.getCurrentMatchID());
-
-        //Read the match status & determine needed update
-        switch(currentMatch.props.status){
-
-            //If match is pending, determine if a match starting alert should be sent
-            case 'pending':
-                console.log('Called game.refresh() currentMatch.props.status = pending');
-
-                //Determine if the match should start & start
-                checkForMatchStart(currentMatch, this.matchStartTime);
-
-                break;
-
-            //If match has started, determine if turn should be incremented or determine if game has hit end condition
-            case 'started':
-                console.log('Called game.refresh() currentMatch.props.status = started');
-
-                let matchStartingCharacterIDs = currentMatch.getStartingCharacterIDs();
-
-                //If no characters in the zone, end the match
-                if (matchStartingCharacterIDs.length === 0) {
-                    currentMatch.end()
-                }
-
-                //Process ongoing effects
-                //TODO fix this and make sure it is really needed
-                //processOngoingEffects();
-
-
-                //*************** PROCESS ACTION EFFECTS *****************
-
-                let gameObjects = {
-                    game: this,
-                    currentMatch: new Match(this.state, this.getCurrentMatchID()),
-                    slackResponseTemplate: {}
-                };
-
-                //Process the action Queue
-                actionQueue(gameObjects);
-
-                //Check for character deaths
-                //TODO need to fix
-                //checkForCharacterDeath();
-
-                //Check for victory
-                //TODO need to fix
-                //checkForVictory();
-
-                //Check for incrementing the turn
-                //TODO need to fix this
-                //checkForNewTurn()
-
-                break;
-
-
-            //If match has ended, create a new match and update the global match ID
-            case 'ended':
-                //Pass in old match zone when creating the new match
-                let newMatchID = this.createMatch(currentMatch.props.zoneID);
-
-                //Update the global state to new match id
-                this.state.global_state.match_id = newMatchID;
-
-                break;
-        }
-    }*/
-    
     //Calculate properties in memory (I.E: ongoing effects, item effects, ect.)
     initiateRequest(){
         
