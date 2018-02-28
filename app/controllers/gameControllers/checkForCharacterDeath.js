@@ -10,10 +10,10 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
 
     //Iterate through the characters in the zone and check if any are dead
     charactersInZone.forEach( eachCharacterInZone =>{
-        console.log(`Checking ${eachCharacterInZone.props.name} hit points of: ${eachCharacterInZone.props.stats_current.hit_points}`);
+        console.log(`Checking ${eachCharacterInZone.props.name} health of: ${eachCharacterInZone.props.health}`);
 
         //If health has dropped below 0, character is dead
-        if(eachCharacterInZone.props.stats_current.hit_points <= 0){
+        if(eachCharacterInZone.props.health <= 0){
             console.log('Found a dead character!');
 
             /*
