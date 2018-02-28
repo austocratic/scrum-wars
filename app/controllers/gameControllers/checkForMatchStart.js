@@ -2,30 +2,29 @@
 
 const slack = require('../../libraries/slack').sendMessage;
 const _ = require('lodash');
+const moment = require('moment');
+moment().format();
 
 
 const checkForMatchStart = (gameObjects) => {
     console.log('called checkForMatchStart()');
 
     //Local time
-    let currentDate = new Date();
+    let currentDate = new moment();
     console.log('currentDate: ', currentDate);
 
-    let currentDateUTC = currentDate.UTC();
+    //Convert to local
+    let currentDateLocal = currentDate.subtract(8, 'hours');
 
-    console.log('currentDateUTC: ', currentDateUTC);
+    console.log('currentDateLocal: ', currentDateLocal);
 
-    //Move back 8 hours (to convert to PST)
-    let localDateUTC = currentDateUTC - 28800000;
-
-    let convertedDate = new Date(localDateUTC);
-
-    console.log('convertedDate: ', convertedDate);
-
-    let currentHour = currentDate.getHours();
-    let currentDay = currentDate.getDay();
+    //let currentHour = currentDate.getHours();
+    //let currentDay = currentDate.getDay();
+    let currentHour = currentDateLocal.hour();
+    let currentDay = currentDate.day();
 
     console.log('currentHour: ', currentHour);
+    console.log('currentDay: ', currentDay);
     console.log('gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour: ', gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour);
 
     //If today does not have active flag or is undefined, escape
