@@ -7,8 +7,9 @@ const _ = require('lodash');
 const checkForMatchStart = (gameObjects) => {
     console.log('called checkForMatchStart()');
 
+    //Local time
     let currentDate = new Date();
-    let currentHour = currentDate.getUTCHours();
+    let currentHour = currentDate.getHours();
     let currentDay = currentDate.getDay();
 
     console.log('currentHour: ', currentHour);

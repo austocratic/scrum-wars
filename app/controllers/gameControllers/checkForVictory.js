@@ -25,7 +25,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             "channel": ("#arena"),
             "attachments": [{
                 "text": `We have a winner! ${winningCharacter.props.name} emerges victorious from the battle!
-                /n${winningCharacter.props.name}'s receives today's prize of ${arenaReward} gold!`,
+                \n${winningCharacter.props.name}'s receives today's prize of ${arenaReward} gold!`,
                 "color": gameObjects.game.menuColor
             }]
         });
