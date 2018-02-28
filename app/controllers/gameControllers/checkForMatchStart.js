@@ -8,14 +8,11 @@ const checkForMatchStart = (gameObjects) => {
     console.log('called checkForMatchStart()');
 
     let currentDate = new Date();
-
     let currentHour = currentDate.getUTCHours();
+    let currentDay = currentDate.getDay();
 
     console.log('currentHour: ', currentHour);
-    console.log('gameObjects.game.matchStartTime: ', gameObjects.game.matchStartTime);
-
-    //Determine what day of the week it is
-    let currentDay = currentDate.getDay();
+    console.log('gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour: ', gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour);
 
     //If today does not have active flag or is undefined, escape
     if(_.get(gameObjects, `game.state.global_settings.match.schedule[${currentDay}].active`, 0) === 0){
