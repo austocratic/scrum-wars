@@ -16,6 +16,7 @@ const declareGameObjects = (game, slackRequest) => {
 
     let gameObjects = {
         currentMatch: new Match(game.state, game.getCurrentMatchID()),
+        lastMatch: new Match(game.state, game.getLastMatchID()),
         //TODO I dont think that responseTemplate should be a standard game object....
         slackResponseTemplate: {}
     };
@@ -46,9 +47,6 @@ const declareGameObjects = (game, slackRequest) => {
         if(slackRequest.actions[0].selected_options){
             gameObjects.userActionValueSelection = slackRequest.actions[0].selected_options[0].value
         }
-
-        //Format the callback string to include the name and value of user's selection
-        //gameObjects.slackCallback = `${gameObjects.slackCallback}:${gameObjects.userActionNameSelection}:${gameObjects.userActionValueSelection}/`;
     }
 
     gameObjects.permission = new Permission(game.state, gameObjects.user.props.permission_id);
