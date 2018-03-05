@@ -28,8 +28,8 @@ const checkForMatchStart = (gameObjects) => {
     //console.log('gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour: ', gameObjects.game.state.global_settings.match.schedule[currentDay].start_hour);
 
     //Check if the most recent match was already started today
-    if(gameObjects.lastMatch.props.start_date){
-        let lastMatchStartDate = new moment(gameObjects.lastMatch.props.start_date);
+    if(gameObjects.lastMatch.props.date_started){
+        let lastMatchStartDate = new moment(gameObjects.lastMatch.props.date_started);
 
         //Convert the startDate to PST and remove time portion
         let lastMatchStartLocalDateOnly = lastMatchStartDate.subtract(8, 'hours').format("YYYY-MM-DD");
@@ -42,9 +42,6 @@ const checkForMatchStart = (gameObjects) => {
             return
         }
     }
-
-
-
 
     //If today does not have active flag or is undefined, escape
     if(_.get(gameObjects, `game.state.global_settings.match.schedule[${currentDay}].active`, 0) === 0){
