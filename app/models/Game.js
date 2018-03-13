@@ -110,7 +110,7 @@ class Game {
             });
     }
 
-    createMatch(zoneID, lastMatchID){
+    createMatch(zoneID){
         console.log(`called game.createMatch(${zoneID})`);
 
         let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
@@ -125,9 +125,6 @@ class Game {
                 zone_id : zoneID
             }
         };
-
-        //Set the global_state previous match ID
-        this.state.global_state.last_match_id = lastMatchID;
 
         //Mutate the matches object to include the new match
         Object.assign(currentMatches, newMatch);

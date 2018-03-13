@@ -76,10 +76,12 @@ const refresh = (gameObjects) => {
         //If match has ended, create a new match and update the global match ID
         case 'ended':
             //Pass in old match zone when creating the new match
-            let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zone_id, gameObjects.lastMatch.id);
+            let newMatchID = gameObjects.game.createMatch(gameObjects.currentMatch.props.zone_id);
 
             //Update the global state to new match id
             gameObjects.game.state.global_state.match_id = newMatchID;
+            //Set the global_state previous match ID
+            gameObjects.game.state.global_state.last_match_id = gameObjects.lastMatch.id;
 
             break;
     }

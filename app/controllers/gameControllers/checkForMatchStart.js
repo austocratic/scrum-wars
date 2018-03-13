@@ -59,7 +59,7 @@ const checkForMatchStart = (gameObjects) => {
 
         gameObjects.currentMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
 
-        let alertDetails = {
+        slack({
             "username": gameObjects.requestZone.props.zone_messages.name,
             "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
             //TODO dont hardcode the arena
@@ -68,10 +68,10 @@ const checkForMatchStart = (gameObjects) => {
                 "text": "Prepare for battle! The match begins!",
                 "color": gameObjects.game.menuColor
             }]
-        };
-
-        slack(alertDetails);
+        });
     }
+
+    console.log(`Did not start the match!`);
 };
 
 
