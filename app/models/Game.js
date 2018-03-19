@@ -2,21 +2,13 @@
 
 const fs = require('fs');
 
-var Firebase = require('../libraries/firebase').Firebase;
-var firebase = new Firebase();
+const Firebase = require('../libraries/firebase').Firebase;
+const firebase = new Firebase();
 
-var User = require('./User').User;
-var Character = require('./Character').Character;
-var Class = require('./Class').Class;
-var Zone = require('./Zone').Zone;
-var Match = require('./Match').Match;
-var NPC = require('./NPC').NPC;
-var Action = require('./Action').Action;
-var Item = require('./Item').Item;
-var EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
-//var slackTemplates = require('../slackTemplates');
-
-
+const Character = require('./Character').Character;
+const Class = require('./Class').Class;
+const Item = require('./Item').Item;
+const EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
 
 class Game {
     constructor() {
@@ -230,6 +222,29 @@ class Game {
                 //Return only the character's ID
                 return eachCharacter.id
             })
+    }
+
+    //Pass in a character ID.  Return all character IDs on that character's team (including ID passed)
+    getCharacterIDsOnTeam(characterID){
+
+        let nestedTeams = this.state.match[this.state.match.global_state.match_id].teams
+            .filter(eachTeam=>{
+                return eachTeam.indexOf(characterID) >= 0
+            });
+
+        return nestedTeams[0];
+
+        //Get the teams nested array
+        /*
+        let teams = this.state.match[this.state.match.global_state.match_id].teams;
+
+        //Filter for all the teams that the character ID is in
+        let nestedTeams = teams.filter(eachTeam=>{
+            return eachTeam.indexOf(characterID) >= 0
+        });
+
+        //Character should only be on one team, so return the first element (array of character IDs)
+        return nestedTeams[0];*/
     }
 
     getCharacters(){

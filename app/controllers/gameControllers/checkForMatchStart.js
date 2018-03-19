@@ -58,10 +58,11 @@ const checkForMatchStart = (gameObjects) => {
         return;
     }
 
+    //This should only set once when the match is started.  I may want to move this into the .start function to make sure
+    gameObjects.currentMatch.props.type = gameObjects.game.state.match.settings.type[_.get(gameObjects, `game.state.match.settings.schedule[${currentDay}].type_id`)];
+
     //Start the match
     gameObjects.currentMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
-
-    //Determine what type of match it is in order to announce it
 
     //Notify of match start
     slack({
@@ -70,7 +71,7 @@ const checkForMatchStart = (gameObjects) => {
         //TODO dont hardcode the arena
         "channel": ("#arena"),
         "attachments": [{
-            "text": "Prepare for battle! The match begins!",
+            "text": `Today's match will be a ${gameObjects.currentMatch.props.type.name}!\nPrepare yourselves for battle!`,
             "color": gameObjects.game.menuColor
         }]
     });

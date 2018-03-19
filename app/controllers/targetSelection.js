@@ -23,42 +23,22 @@ const getTargetSelectionMenu = gameObjects => {
     //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
 
-    //console.log('DEBUG getTargetSelectionMenu charactersInZone: ', charactersInZone);
+    //Get an array of the character IDs on the character's team (including the player)
+    let characterIDsOnTeam = gameObjects.game.getCharacterIDsOnTeam(gameObjects.playerCharacter.id);
 
     let filteredCharacters = charactersInZone
-        //Filter out the player's character
+        //Filter out the player's team (including the player's character)
         .filter( eachCharacter =>{
 
-            //console.log('DEBUG getTargetSelectionMenu eachCharacter 1: ', eachCharacter);
+            //Only include characters that are not in the characterIDsOnTeam array
+            return characterIDsOnTeam.indexOf(eachCharacter.id) === -1;
 
-            return eachCharacter.id !== gameObjects.playerCharacter.id
+            //return eachCharacter.id !== gameObjects.playerCharacter.id
         })
         //Filter out hidden characters
         .filter( eachCharacter => {
-
-            //console.log('DEBUG getTargetSelectionMenu eachCharacter 2: ', eachCharacter);
-
-            //Only return characters that are not hidden
             return eachCharacter.getEffectsWithModifier('is_hidden').length === 0;
-
-            /*
-            let isHidden = 0;
-
-            if(eachCharacter.effects){
-                let hiddenEffect = eachCharacter.effects.find( eachEffect =>{
-                    return eachEffect.is_hidden === 1
-                });
-
-                console.log('DEBUG hiddenEffect: ', hiddenEffect);
-
-            }*/
-
-
-            //return eachCharacter.props.is_hidden === 0
         });
-
-    //console.log('DEBUG getTargetSelectionMenu filteredCharacters: ', filteredCharacters);
-
 
     gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacters.map( eachCharacter => {
         return {
