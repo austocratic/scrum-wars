@@ -44,6 +44,11 @@ const refresh = (gameObjects) => {
                 gameObjects.currentMatch.end()
             }
 
+            let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
+
+            //TODO charactersInZone should only get the character IDs of characters in that zone
+
+            /*
             //Create an array of characters in the zone
             let charactersInZone = matchStartingCharacterIDs
                 //Declare Character objects for each character ID
@@ -53,7 +58,7 @@ const refresh = (gameObjects) => {
                 //Filter for characters in the match zone
                 .filter( eachCharacter =>{
                     return eachCharacter.props.zone_id === gameObjects.currentMatch.props.zone_id
-                });
+                });*/
 
             //Process ongoing effects
             processOngoingEffects(gameObjects, charactersInZone);
