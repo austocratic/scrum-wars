@@ -227,7 +227,8 @@ class Game {
     //Pass in a character ID.  Return all character IDs on that character's team (including ID passed)
     getCharacterIDsOnTeam(characterID){
 
-        let nestedTeams = this.state.match[this.state.match.global_state.match_id].teams
+        //Get a nested array of teams
+        let nestedTeams = this.state.match[this.state.global_state.match_id].teams
             .filter(eachTeam=>{
                 return eachTeam.indexOf(characterID) >= 0
             });
