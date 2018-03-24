@@ -49,6 +49,8 @@ class QuickStrike extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
+                console.log('DEBUG: processDamage is complete, about to return complete');
+
                 return 'complete';
 
                 break;

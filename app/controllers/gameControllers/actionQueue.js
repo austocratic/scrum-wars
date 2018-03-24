@@ -68,6 +68,8 @@ const actionQueue = (gameObjects) =>{
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
+            console.log('DEBUG: process action');
+
             console.log('DEBUG actionQueue, actionResponse = ', actionResponse);
 
             if (actionResponse === 'complete'){
