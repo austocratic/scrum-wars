@@ -506,7 +506,7 @@ const match = gameObjects => {
     //Get participating characters:
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id);
 
-    console.log('DEBUG charactersInZone: ', charactersInZone);
+    //console.log('DEBUG charactersInZone: ', charactersInZone);
 
     /*
     gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id)

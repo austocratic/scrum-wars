@@ -21,7 +21,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             //If the callback is less than 3 elements, we know that going "back" should invoke a /command function
             if (slackCallbackElements.length < 3) {
-                console.log('DEBUG slackCallbackElements was less than 4, setting command property');
+                //console.log('DEBUG slackCallbackElements was less than 4, setting command property');
                 let firstKeyValue = slackCallbackElements[0]
                     .split(":");
                 gameObjects.gameContext = firstKeyValue[0];
@@ -43,7 +43,7 @@ const updateGameObjectsForReservedActionName = (gameObjects) => {
 
             //If the callback had 3 game contexts, then there will be no slackCallbackElements to join, return the last 1st game context:
             if (slackCallbackElements.join("/").length === 0){
-                console.log('DEBUG passed .length if statement');
+                //console.log('DEBUG passed .length if statement');
                 return gameObjects.gameContext;
             }
 

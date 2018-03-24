@@ -59,8 +59,6 @@ describe("Testing ForkedLightning class", function() {
 
             testForkedLightning.initiate();
 
-            console.log('DEBUG, currentMatch.props.action_queue: ', testForkedLightning.currentMatch.props.action_queue)
-
             /* It wont necessarily reduce the targets health (it could miss)
             it("should reduce targetCharacter's health by ForkedLightning's calculatedDamage property", function () {
                 assert(gameObjects.targetCharacter.props.hit_points + testForkedLightning.calculatedDamage === targetCharacterPreviousHealth);

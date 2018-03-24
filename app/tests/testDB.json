@@ -1,19 +1,24 @@
 {
   "action" : {
     "-Kjpe29q_fDkJG-73AQO" : {
+      "action_points_cost" : 1,
+      "can_interrupt" : [ "offensive" ],
       "cool_down" : 1,
       "delay" : 0,
       "functionName" : "quickStrike",
+      "image_id" : "explosion-test",
       "minimum_level" : 1,
       "name" : "Quick Strike",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KjpeJT7Oct3ZCtLhENO" : {
+      "action_points_cost" : 1,
       "cool_down" : 1,
       "delay" : 0,
       "effect_duration" : 100,
       "functionName" : "defensiveStance",
+      "image_id" : 32,
       "minimum_level" : 1,
       "name" : "Defensive Stance",
       "type" : "combat stance",
@@ -28,55 +33,55 @@
       "zone_id" : [ "-Khu9Zazk5XdFX9fD2Y8" ]
     },
     "-KkOq-y2_zgEgdhY-6_U" : {
+      "action_points_cost" : 2,
       "cool_down" : 2,
       "delay" : 0,
       "functionName" : "lifeTap",
+      "image_id" : 66,
       "minimum_level" : 1,
       "name" : "Life Tap",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KkdduB9XuB46EsxqwIX" : {
+      "action_points_cost" : 3,
       "cool_down" : 2,
       "delay" : 1,
       "functionName" : "forkedLightning",
+      "image_id" : 89,
       "minimum_level" : 1,
       "name" : "Forked Lightning",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Kkdk_CD5vx8vRGQD268" : {
+      "action_points_cost" : 4,
       "cool_down" : 2,
       "delay" : 0,
       "functionName" : "intoShadow",
+      "image_id" : 62,
       "minimum_level" : 1,
       "name" : "Into Shadow",
       "type" : "special",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
-    "-Kqem2qns2gX4YBQGt4m" : {
-      "cool_down" : 2,
-      "delay" : 1,
-      "functionName" : "savageStrike",
-      "minimum_level" : 1,
-      "name" : "Savage Strike",
-      "strength" : 0,
-      "type" : "offensive",
-      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
-    },
     "-KqtOcn7MapqMfnGIZvo" : {
+      "action_points_cost" : 1,
       "cool_down" : 1,
       "delay" : 0,
       "functionName" : "balancedStance",
+      "image_id" : 27,
       "minimum_level" : 1,
       "name" : "Balanced",
       "type" : "combat stance",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Kr3hnITyH9ZKx3VuZah" : {
+      "action_points_cost" : 5,
       "cool_down" : 1,
       "delay" : 0,
       "functionName" : "backstab",
+      "image_id" : 25,
       "minimum_level" : 1,
       "name" : "Backstab",
       "type" : "shadow",
@@ -91,9 +96,11 @@
       "zone_id" : [ "-Khu9Zazk5XdFX9fD2Y8" ]
     },
     "-KrJaBvyYDGrNVfcaAd0" : {
+      "action_points_cost" : 2,
       "cool_down" : 1,
       "delay" : 0,
       "functionName" : "arcaneBolt",
+      "image_id" : "white-burst",
       "minimum_level" : 1,
       "name" : "Arcane Bolt",
       "ongoing_effects" : [ {
@@ -107,9 +114,11 @@
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KvOpJ2FyGodmZCanea7" : {
+      "action_points_cost" : 3,
       "cool_down" : 3,
       "delay" : 1,
       "functionName" : "poisonedBlade",
+      "image_id" : 67,
       "minimum_level" : 1,
       "name" : "Poisoned Blade",
       "ongoing_effects" : [ {
@@ -120,51 +129,53 @@
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-KxkBOZgjEPwKmHOWueQ" : {
+      "action_points_cost" : 4,
       "cool_down" : 2,
       "delay" : 1,
       "functionName" : "whirlwind",
+      "image_id" : 72,
       "minimum_level" : 1,
       "name" : "Whirlwind",
       "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Kxp5dhdmtUQ0aZ6YpiI" : {
+      "action_points_cost" : 1,
       "cool_down" : 1,
       "delay" : 0,
       "functionName" : "offensiveStance",
+      "image_id" : 53,
       "minimum_level" : 1,
       "name" : "Offensive Stance",
       "type" : "combat stance",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Ky1zv4JXgbAKvxFFBmp" : {
+      "action_points_cost" : 3,
       "cool_down" : 2,
       "delay" : 1,
       "functionName" : "cleave",
+      "image_id" : 23,
       "minimum_level" : 1,
       "name" : "Cleave",
-      "type" : "offensive2",
+      "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     },
     "-Ky3C664qBFIYS4R4ItQ" : {
+      "action_points_cost" : 5,
       "cool_down" : 3,
       "delay" : 2,
       "functionName" : "firestorm",
+      "image_id" : 92,
       "minimum_level" : 1,
       "name" : "Firestorm",
-      "type" : "offensive2",
-      "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
-    },
-    "-KzFQs54K3qanmeGEEgF" : {
-      "cool_down" : 2,
-      "minimum_level" : 1,
-      "name" : "Forked Lightning 2",
-      "type" : "offensive2",
+      "type" : "offensive",
       "zone_id" : [ "-Khu9Ti4cn9PQ2Q1TSBT" ]
     }
   },
   "character" : {
     "-Kkxf1ukVSF9VV6mIPlG" : {
+      "action_points" : 280,
       "actions" : [ {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "turn_available" : 0,
@@ -186,7 +197,8 @@
         "turn_available" : 0,
         "turn_used" : 0
       } ],
-      "active" : 1,
+      "active" : 0,
+      "avatar" : "m_05.png",
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "effects" : [ {
         "action_id" : "-KvOpJ2FyGodmZCanea7",
@@ -194,10 +206,14 @@
         "turn_applied" : 1,
         "turn_effect_processed" : [ 1, 2, 3, 4 ],
         "type" : "offensive"
+      }, {
+        "action_id" : "-KvOpJ2FyGodmZCanea7",
+        "applied_by_character_id" : "55e38d23d842e50e9026",
+        "type" : "offensive"
       } ],
       "gender" : "male",
       "gold" : 100,
-      "health" : 49731,
+      "health" : 49485,
       "inventory" : [ {
         "equipment_slot_id" : "hand",
         "is_equipped" : 1,
@@ -233,7 +249,73 @@
       "user_id" : "U55U8F5B7",
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
+    "0be2e03132df55a752e0" : {
+      "action_points" : 20,
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KxkBOZgjEPwKmHOWueQ",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 1,
+      "avatar" : "m_03.png",
+      "class_id" : "-KircgtGZhoRrHnKryS5",
+      "gender" : "male",
+      "gold" : 90,
+      "health" : -8,
+      "inventory" : [ {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "is_equipped" : 0,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "strength" : 5
+        },
+        "name" : "Basic Short Sword"
+      } ],
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "name" : "Miraxus",
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 10,
+        "hit_points" : 100,
+        "intelligence" : 5,
+        "strength" : 18,
+        "toughness" : 15
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 10,
+        "hit_points" : 100,
+        "intelligence" : 5,
+        "strength" : 18,
+        "toughness" : 15
+      },
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
     "55e38d23d842e50e9026" : {
+      "action_points" : 17,
       "actions" : [ {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
@@ -248,7 +330,7 @@
         "action_id" : "-KkdduB9XuB46EsxqwIX",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 15
+        "turn_used" : 0
       }, {
         "action_id" : "-KkJVqtBIhpAKBfz9tcb",
         "is_available" : 1,
@@ -293,22 +375,22 @@
         "action_id" : "-Ky1zv4JXgbAKvxFFBmp",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 14
+        "turn_used" : 0
       }, {
         "action_id" : "-Ky3C664qBFIYS4R4ItQ",
         "is_available" : 1,
         "turn_available" : 0,
-        "turn_used" : 16
+        "turn_used" : 0
       } ],
       "active" : 1,
       "avatar" : "f_10.png",
       "class_id" : "-KircnK2x1_31EQiAYlk",
       "gender" : "female",
-      "gold" : 80,
-      "health" : 50000,
+      "gold" : 320,
+      "health" : 49746,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
-        "is_equipped" : 1,
+        "is_equipped" : 0,
         "item_id" : "-KjGQEzVbaxRlWFawSqI",
         "modifiers" : {
           "intelligence" : 2,
@@ -317,26 +399,52 @@
         "name" : "Minor Staff of Ice"
       }, {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
-        "is_equipped" : 0,
+        "is_equipped" : 1,
         "item_id" : "-KjGQ1IPuwE24t4LPPNd",
         "modifiers" : {
           "strength" : 5
         },
         "name" : "Basic Short Sword"
       }, {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+        "is_equipped" : 0,
+        "item_id" : "-KjGQPbo-96j_Uikhjqh",
+        "modifiers" : {
+          "dexterity" : 2,
+          "strength" : 2
+        },
+        "name" : "Basic Spear"
+      }, {
         "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
-        "is_equipped" : 1,
+        "is_equipped" : 0,
         "item_id" : "-KysPQ1R52pWKRULl5az",
         "modifiers" : {
           "armor" : 4
         },
         "name" : "Leather Tunic"
+      }, {
+        "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+        "is_equipped" : 1,
+        "item_id" : "-L68x9NMH2P5uQZkx4lI",
+        "modifiers" : {
+          "armor" : 10,
+          "dexterity" : 2
+        },
+        "name" : "Plated Leather Tunic of Quickening"
+      }, {
+        "equipment_slot_id" : [ "-KmTVUqVKXWRDr4VCb3k" ],
+        "is_equipped" : 1,
+        "item_id" : "-L68xQjc-91yTBWYhARU",
+        "modifiers" : {
+          "armor" : 2
+        },
+        "name" : "Traveler's Boots"
       } ],
       "is_hidden" : 0,
       "level" : 1,
-      "match_wins" : 0,
+      "match_wins" : 11,
       "modified_is_hidden" : 1,
-      "name" : "Test 1",
+      "name" : "Sindria",
       "stats_base" : {
         "armor" : 0,
         "dexterity" : 12,
@@ -346,27 +454,28 @@
         "toughness" : 6
       },
       "stats_current" : {
-        "armor" : 4,
-        "dexterity" : 12,
+        "armor" : 12,
+        "dexterity" : 14,
         "hit_points" : 100,
-        "intelligence" : 20,
-        "strength" : 6,
+        "intelligence" : 18,
+        "strength" : 9,
         "toughness" : 6
       },
       "user_id" : "-Kp1Y_uOmv_EwNc8mTj4",
-      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
     "5bdfe1adfef85f3af257" : {
+      "action_points" : 250,
       "actions" : [ {
         "action_id" : "-Kjpe29q_fDkJG-73AQO",
         "is_available" : 1,
         "turn_available" : 2,
-        "turn_used" : 1
+        "turn_used" : 0
       }, {
         "action_id" : "-KjpeJT7Oct3ZCtLhENO",
         "is_available" : 1,
         "turn_available" : 2,
-        "turn_used" : 1
+        "turn_used" : 0
       }, {
         "action_id" : "-KkOq-y2_zgEgdhY-6_U",
         "is_available" : 1,
@@ -386,14 +495,23 @@
         "action_id" : "-KqtOcn7MapqMfnGIZvo",
         "is_available" : 1,
         "turn_available" : 2,
-        "turn_used" : 1
+        "turn_used" : 0
       } ],
       "active" : 1,
-      "avatar" : "app/assets/fullSize/character_avatar/male/m_07.png",
-      "class_id" : "-KircSgAkPTavnfob8F5",
+      "avatar" : "m_07.png",
+      "class_id" : "-KircgtGZhoRrHnKryS5",
+      "effects" : [ {
+        "action_id" : "-KvOpJ2FyGodmZCanea7",
+        "applied_by_character_id" : "55e38d23d842e50e9026",
+        "type" : "offensive"
+      }, {
+        "action_id" : "-KvOpJ2FyGodmZCanea7",
+        "applied_by_character_id" : "55e38d23d842e50e9026",
+        "type" : "offensive"
+      } ],
       "gender" : "male",
       "gold" : 90,
-      "health" : 49910,
+      "health" : -1,
       "inventory" : [ {
         "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
         "is_equipped" : 1,
@@ -406,11 +524,11 @@
       "is_hidden" : 0,
       "level" : 1,
       "match_wins" : 0,
-      "name" : "Sindria",
+      "name" : "Montaigne",
       "stats_base" : {
         "armor" : 0,
         "dexterity" : 10,
-        "hit_points" : 50000,
+        "hit_points" : -5,
         "intelligence" : 10,
         "strength" : 15,
         "toughness" : 10
@@ -418,30 +536,229 @@
       "stats_current" : {
         "armor" : 0,
         "dexterity" : 10,
-        "hit_points" : 50000,
+        "hit_points" : -5,
         "intelligence" : 10,
         "strength" : 20,
         "toughness" : 10
       },
       "user_id" : "-Ksu5JKx8959TviyMFIy",
-      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "6bec27e638c86895f217" : {
+      "action_points" : 20,
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkdduB9XuB46EsxqwIX",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KrJaBvyYDGrNVfcaAd0",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Ky3C664qBFIYS4R4ItQ",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 1,
+      "avatar" : "f_20.png",
+      "class_id" : "-KircnK2x1_31EQiAYlk",
+      "gender" : "female",
+      "gold" : 90,
+      "health" : -4,
+      "inventory" : [ {
+        "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+        "is_equipped" : 0,
+        "item_id" : "-KysPQ1R52pWKRULl5az",
+        "modifiers" : {
+          "armor" : 4
+        },
+        "name" : "Leather Tunic"
+      } ],
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "name" : "Clurial",
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 12,
+        "hit_points" : 100,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 6
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 12,
+        "hit_points" : 100,
+        "intelligence" : 18,
+        "strength" : 4,
+        "toughness" : 6
+      },
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "cd3addd0cb0bb7611e8b" : {
+      "action_points" : 20,
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kkdk_CD5vx8vRGQD268",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-Kr3hnITyH9ZKx3VuZah",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 1,
+      "avatar" : "m_08.png",
+      "class_id" : "-Kird8_Vef-8Ej2aShaO",
+      "gender" : "male",
+      "gold" : 80,
+      "health" : -7,
+      "inventory" : [ {
+        "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+        "is_equipped" : 1,
+        "item_id" : "-KysPQ1R52pWKRULl5az",
+        "modifiers" : {
+          "armor" : 4
+        },
+        "name" : "Leather Tunic"
+      }, {
+        "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+        "is_equipped" : 1,
+        "item_id" : "-KjGQ1IPuwE24t4LPPNd",
+        "modifiers" : {
+          "strength" : 5
+        },
+        "name" : "Basic Short Sword"
+      } ],
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "name" : "Slender Man",
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 18,
+        "hit_points" : 100,
+        "intelligence" : 8,
+        "strength" : 10,
+        "toughness" : 8
+      },
+      "stats_current" : {
+        "armor" : 4,
+        "dexterity" : 18,
+        "hit_points" : 100,
+        "intelligence" : 8,
+        "strength" : 15,
+        "toughness" : 8
+      },
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
+    },
+    "f3240bcb48063bf7637e" : {
+      "action_points" : 280,
+      "actions" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KjpeJT7Oct3ZCtLhENO",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KkJVqtBIhpAKBfz9tcb",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KqtOcn7MapqMfnGIZvo",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      }, {
+        "action_id" : "-KxkBOZgjEPwKmHOWueQ",
+        "is_available" : 1,
+        "turn_available" : 0,
+        "turn_used" : 0
+      } ],
+      "active" : 1,
+      "avatar" : "m_06.png",
+      "class_id" : "-KircgtGZhoRrHnKryS5",
+      "gender" : "male",
+      "gold" : 100,
+      "health" : 100,
+      "is_hidden" : 0,
+      "level" : 1,
+      "match_wins" : 0,
+      "name" : "Unknown Traveler",
+      "stats_base" : {
+        "armor" : 0,
+        "dexterity" : 10,
+        "hit_points" : 100,
+        "intelligence" : 5,
+        "strength" : 18,
+        "toughness" : 15
+      },
+      "stats_current" : {
+        "armor" : 0,
+        "dexterity" : 10,
+        "hit_points" : 100,
+        "intelligence" : 5,
+        "strength" : 18,
+        "toughness" : 15
+      },
+      "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
   "class" : {
-    "-KircSgAkPTavnfob8F5" : {
-      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkOq-y2_zgEgdhY-6_U", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
-      "active" : 0,
-      "name" : "Shadow Knight",
-      "starting_attributes" : {
-        "dexterity" : 10,
-        "intelligence" : 10,
-        "strength" : 15,
-        "toughness" : 10
-      }
-    },
     "-KircgtGZhoRrHnKryS5" : {
-      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo", "-KxkBOZgjEPwKmHOWueQ" ],
       "active" : 1,
+      "description" : "Battling up close in rough and brutal combat, the Warrior survives off of the thrill of close combat.  As a Warrior, you will be the most physically imposing character on the battlefield, able to deal large amounts of damage while absorbing damage in equal measure",
       "name" : "Warrior",
       "starting_attributes" : {
         "dexterity" : 10,
@@ -451,8 +768,9 @@
       }
     },
     "-KircnK2x1_31EQiAYlk" : {
-      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkdduB9XuB46EsxqwIX", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo", "-KrJaBvyYDGrNVfcaAd0" ],
+      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkdduB9XuB46EsxqwIX", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo", "-KrJaBvyYDGrNVfcaAd0", "-Ky3C664qBFIYS4R4ItQ" ],
       "active" : 1,
+      "description" : "Wizards are masters of the elements.  They are able to conjure spells to deal massive amounts of damage to opponents from afar.  However, beware, Wizards are unable to withstand much physical damage ",
       "name" : "Wizard",
       "starting_attributes" : {
         "dexterity" : 12,
@@ -461,37 +779,16 @@
         "toughness" : 6
       }
     },
-    "-KircwaX4eX6rAVoGYJm" : {
-      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kqem2qns2gX4YBQGt4m", "-KqtOcn7MapqMfnGIZvo" ],
-      "active" : 0,
-      "name" : "Paladin",
-      "starting_attributes" : {
-        "dexterity" : 10,
-        "intelligence" : 10,
-        "strength" : 15,
-        "toughness" : 10
-      }
-    },
     "-Kird8_Vef-8Ej2aShaO" : {
       "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-Kkdk_CD5vx8vRGQD268", "-KqtOcn7MapqMfnGIZvo", "-Kr3hnITyH9ZKx3VuZah" ],
       "active" : 1,
+      "description" : "Rouges live in the shadows.  The Rouge prefers to sneak up on opponents dealing massive damage before fading out of sight...",
       "name" : "Rogue",
       "starting_attributes" : {
         "dexterity" : 18,
         "intelligence" : 8,
         "strength" : 10,
         "toughness" : 8
-      }
-    },
-    "-KirdGNRIajLmQ_CRRjW" : {
-      "action_id" : [ "-Kjpe29q_fDkJG-73AQO", "-KjpeJT7Oct3ZCtLhENO", "-KkJVqtBIhpAKBfz9tcb", "-KqtOcn7MapqMfnGIZvo" ],
-      "active" : 0,
-      "name" : "Ranger",
-      "starting_attributes" : {
-        "dexterity" : 15,
-        "intelligence" : 8,
-        "strength" : 10,
-        "toughness" : 10
       }
     }
   },
@@ -519,16 +816,14 @@
     }
   },
   "global_state" : {
-    "-Kjkkd-WF6OZAa9tCOt0" : {
-      "number_turns" : 1
-    },
-    "match_id" : "8fca374b794e69b788b4",
-    "next_match_start" : 5000000000
+    "last_match_id" : "c8001845b69782ad2beb",
+    "match_id" : "373d763fb96e7c6671e1"
   },
   "item" : {
     "-KjGQ1IPuwE24t4LPPNd" : {
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx" ],
+      "icon_name" : "Sword_01",
       "modifiers" : {
         "strength" : 5
       },
@@ -537,6 +832,7 @@
     "-KjGQEzVbaxRlWFawSqI" : {
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "icon_name" : "staff_05",
       "modifiers" : {
         "intelligence" : 2,
         "strength" : 2
@@ -546,6 +842,7 @@
     "-KjGQMKZOUclKWQFER1O" : {
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "icon_name" : "bow_01",
       "modifiers" : {
         "dexterity" : 5
       },
@@ -554,6 +851,7 @@
     "-KjGQPbo-96j_Uikhjqh" : {
       "cost" : 10,
       "equipment_slot_id" : [ "-KmTV24FelP7T8rdKLEx", "-KmTVXPr_KQ1an1N2Ih1" ],
+      "icon_name" : "spear_01",
       "modifiers" : {
         "dexterity" : 2,
         "strength" : 2
@@ -573,6 +871,43 @@
         "armor" : 4
       },
       "name" : "Leather Tunic"
+    },
+    "-L68wgjmziN-QWEhu1YX" : {
+      "cost" : 50,
+      "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+      "icon_name" : "Armor02",
+      "modifiers" : {
+        "armor" : 8
+      },
+      "name" : "Banded Leather Tunic"
+    },
+    "-L68wx7CAbSorYfJ2hoU" : {
+      "cost" : 80,
+      "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+      "icon_name" : "Armor03",
+      "modifiers" : {
+        "armor" : 10
+      },
+      "name" : "Plated Leather Tunic"
+    },
+    "-L68x9NMH2P5uQZkx4lI" : {
+      "cost" : 80,
+      "equipment_slot_id" : [ "-KmTVOX1hzSD2llNT0Pk" ],
+      "icon_name" : "Armor04",
+      "modifiers" : {
+        "armor" : 10,
+        "dexterity" : 2
+      },
+      "name" : "Plated Leather Tunic of Quickening"
+    },
+    "-L68xQjc-91yTBWYhARU" : {
+      "cost" : 20,
+      "equipment_slot_id" : [ "-KmTVUqVKXWRDr4VCb3k" ],
+      "icon_name" : "boots1",
+      "modifiers" : {
+        "armor" : 2
+      },
+      "name" : "Traveler's Boots"
     }
   },
   "match" : {
@@ -601,32 +936,439 @@
       "status" : "ended",
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
     },
+    "01c6b49217901a11a1d0" : {
+      "action_queue" : [ {
+        "action_id" : "-KrJaBvyYDGrNVfcaAd0",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 27,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "5bdfe1adfef85f3af257",
+        "turn_initiated" : 26
+      } ],
+      "character_id_won" : "",
+      "date_ended" : 1515972963132,
+      "date_started" : 1515954682588,
+      "number_turns" : 27,
+      "starting_character_ids" : [ "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "0c99ed9358f11bded5bb" : {
+      "character_id_won" : "",
+      "date_ended" : 1516331344724,
+      "date_started" : 1515972963159,
+      "number_turns" : 18,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "1de051cec4f1b5d90ac8" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1520983803102,
+      "date_started" : 1520983091229,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "22c04d4eec1af96f7426" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1520209744169,
+      "date_started" : 1520209579653,
+      "number_turns" : 2,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "277417a81cbf83804e28" : {
+      "character_id_won" : "",
+      "date_ended" : 1518296290380,
+      "date_started" : 1517456483212,
+      "number_turns" : 55,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "31b325808f0629f8602a" : {
+      "action_queue" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 2,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      } ],
+      "character_id_won" : "",
+      "date_ended" : 1519509851396,
+      "date_started" : 1518489730725,
+      "number_turns" : 3,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "373d763fb96e7c6671e1" : {
+      "number_turns" : 0,
+      "status" : "pending",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "38e7fe4b22e8cb702563" : {
+      "date_started" : 1519786813927,
+      "number_turns" : 0,
+      "status" : "started"
+    },
+    "3cc9140569142eee9de2" : {
+      "character_id_won" : "",
+      "date_ended" : 1515364691386,
+      "date_started" : 1515364298304,
+      "number_turns" : 1,
+      "status" : "ended"
+    },
+    "42939e53ec54dc2419be" : {
+      "character_id_won" : "",
+      "date_ended" : 1519782500219,
+      "date_started" : 1519509851403,
+      "number_turns" : 28,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "64d681e3868a77947f9a" : {
+      "character_id_won" : "",
+      "date_ended" : 1515876744361,
+      "date_started" : 1515462950046,
+      "number_turns" : 42,
+      "starting_character_ids" : [ "cd3addd0cb0bb7611e8b", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "6ff4ab5344b38c6ebc04" : {
+      "character_id_won" : "",
+      "date_ended" : 1520209579647,
+      "date_started" : 1519850718688,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "73d009659872eeacb3e1" : {
+      "character_id_won" : "",
+      "date_ended" : 1515364084635,
+      "date_started" : 1515363251709,
+      "number_turns" : 1,
+      "status" : "ended"
+    },
+    "774b99cd7fedfdb6f45a" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519848151693,
+      "date_started" : 1519788202854,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "814effcabae6c0f6ea65" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519788028022,
+      "date_started" : 1519787245137,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "82ce0fb27f8659e67db6" : {
+      "character_id_won" : "",
+      "date_ended" : 1515365148265,
+      "date_started" : 1515365094576,
+      "number_turns" : 1,
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "8b1c04be54b001f69cb3" : {
+      "action_queue" : [ {
+        "action_id" : "-Ky3C664qBFIYS4R4ItQ",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 14,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "55e38d23d842e50e9026",
+        "turn_initiated" : 14
+      } ],
+      "character_id_won" : "",
+      "date_ended" : 1515462129377,
+      "date_started" : 1515365148300,
+      "number_turns" : 15,
+      "starting_character_ids" : [ "2bd6275b9e2a62c202c0", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended"
+    },
     "8fca374b794e69b788b4" : {
       "active" : 0,
-      "date_ended" : 0,
-      "date_started" : 1510522083610,
-      "number_turns" : 30,
+      "character_id_won" : "",
+      "date_ended" : 1515356501821,
+      "date_started" : 1511128136889,
+      "number_turns" : 789,
       "starting_character_ids" : [ "-Kkxf1ukVSF9VV6mIPlG", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257" ],
-      "status" : "started",
+      "status" : "ended",
       "turn" : 0,
       "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "a72694a77620b1790cc2" : {
+      "character_id_won" : "",
+      "date_ended" : 1515462950024,
+      "date_started" : 1515462129380,
+      "number_turns" : 1,
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "ab71e8c6e8e7a2e121c3" : {
+      "action_queue" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "5bdfe1adfef85f3af257",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "5bdfe1adfef85f3af257",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "5bdfe1adfef85f3af257",
+        "turn_initiated" : 1
+      } ],
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1520983038443,
+      "date_started" : 1520982095143,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026", "5bdfe1adfef85f3af257" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "baa13a6499ab1f915ddf" : {
+      "character_id_won" : "",
+      "date_ended" : 1515954682570,
+      "date_started" : 1515876744365,
+      "number_turns" : 18,
+      "starting_character_ids" : [ "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "c49a6ad8d13376400d86" : {
+      "character_id_won" : "",
+      "date_ended" : 1515364298300,
+      "date_started" : 1515364084636,
+      "number_turns" : 1,
+      "status" : "ended"
+    },
+    "c8001845b69782ad2beb" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1521058125303,
+      "date_started" : 1521057979568,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "ccd81f67f8b23ed62e0d" : {
+      "action_queue" : [ {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "0be2e03132df55a752e0",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "6bec27e638c86895f217",
+        "turn_initiated" : 1
+      }, {
+        "action_id" : "-Kjpe29q_fDkJG-73AQO",
+        "channel_id" : "C4Z7F8XMW",
+        "last_turn_processed" : 1,
+        "player_character_id" : "55e38d23d842e50e9026",
+        "target_character_id" : "cd3addd0cb0bb7611e8b",
+        "turn_initiated" : 1
+      } ],
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519783791698,
+      "date_started" : 1519782500255,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "d1066e22e9b6c0738116" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519788160464,
+      "date_started" : 1519788082521,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "d2c0cfd9aa59983655e7" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1520984441163,
+      "date_started" : 1520983942052,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "d4dc1b1214add67d2ffa" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519787186900,
+      "date_started" : 1519787172565,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "dae4b37910d17febf3d2" : {
+      "character_id_won" : "55e38d23d842e50e9026",
+      "date_ended" : 1519849628517,
+      "date_started" : 1519848167994,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "55e38d23d842e50e9026" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "e29f6868487d0456d794" : {
+      "character_id_won" : "",
+      "date_ended" : 1515365094571,
+      "date_started" : 1515364883904,
+      "number_turns" : 1,
+      "starting_character_ids" : [ "2bd6275b9e2a62c202c0", "55e38d23d842e50e9026", "5bdfe1adfef85f3af257", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended"
+    },
+    "eee6ffbee498367e2af4" : {
+      "character_id_won" : "",
+      "date_ended" : 1518489730644,
+      "date_started" : 1518296290388,
+      "number_turns" : 6,
+      "starting_character_ids" : [ "0be2e03132df55a752e0", "55e38d23d842e50e9026", "6bec27e638c86895f217", "cd3addd0cb0bb7611e8b" ],
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "fc35f165f204a990b1bf" : {
+      "character_id_won" : "",
+      "date_ended" : 1515364883883,
+      "date_started" : 1515364691390,
+      "number_turns" : 1,
+      "status" : "ended",
+      "zone_id" : "-Khu9Ti4cn9PQ2Q1TSBT"
+    },
+    "fd2c8d82ab48de8f5920" : {
+      "number_turns" : 0,
+      "status" : "pending"
+    },
+    "settings" : {
+      "schedule" : [ {
+        "active" : 0
+      }, {
+        "active" : 1,
+        "start_hour" : 9,
+        "type_id" : "-L7aGwOJ8m_7kqYF7eui"
+      }, {
+        "active" : 1,
+        "start_hour" : 9,
+        "type_id" : "-L7aFnA1E-zEgpyDNqJB"
+      }, {
+        "active" : 1,
+        "start_hour" : 9,
+        "type_id" : "-L7aGwOJ8m_7kqYF7eui"
+      }, {
+        "active" : 1,
+        "start_hour" : 9,
+        "type_id" : "-L7aFnA1E-zEgpyDNqJB"
+      }, {
+        "active" : 1,
+        "start_hour" : 9,
+        "type_id" : "-L7aHPEIglvi8UxPFTWf"
+      }, {
+        "active" : 0
+      } ],
+      "type" : {
+        "-L7aFnA1E-zEgpyDNqJB" : {
+          "name" : "Team Battle",
+          "player_teams" : 2
+        },
+        "-L7aGwOJ8m_7kqYF7eui" : {
+          "name" : "Free-for-all"
+        },
+        "-L7aHPEIglvi8UxPFTWf" : {
+          "name" : "Bestiary Combat",
+          "npc_teams" : 1,
+          "player_teams" : 1
+        }
+      }
     }
   },
   "merchant" : {
     "-KjGPSzj3HGaBbAitsvL" : {
-      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az" ],
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az", "-L68wgjmziN-QWEhu1YX", "-L68wx7CAbSorYfJ2hoU", "-L68x9NMH2P5uQZkx4lI", "-L68xQjc-91yTBWYhARU" ],
       "name" : "Winston",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
   "npc" : {
     "-Kr9WiJ3rRP-OuNPkpMQ" : {
-      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az" ],
+      "for_sale" : [ "-KjGQ1IPuwE24t4LPPNd", "-KjGQEzVbaxRlWFawSqI", "-KjGQMKZOUclKWQFER1O", "-KjGQPbo-96j_Uikhjqh", "-KysPQ1R52pWKRULl5az", "-L68wgjmziN-QWEhu1YX", "-L68wx7CAbSorYfJ2hoU", "-L68x9NMH2P5uQZkx4lI", "-L68xQjc-91yTBWYhARU" ],
       "name" : "Winston",
       "zone_id" : "-Khu9Zazk5XdFX9fD2Y8"
     }
   },
-  "permission": {
+  "permission" : {
     "-KztKzvAkoPFhI3ShzCu" : {
       "available_commands" : [ "rankings" ],
       "name" : "Observer"
@@ -634,28 +1376,64 @@
     "-KztL8ki0966YvCX3nGy" : {
       "available_commands" : [ "profile", "action", "generate", "travel", "name" ],
       "name" : "Player"
+    },
+    "-L28JrA2eCuLY-KK5Ax-" : {
+      "available_commands" : [ "profile", "action", "generate", "travel", "name", "turn", "match" ],
+      "name" : "Admin"
     }
   },
   "user" : {
     "-Kp1Y_uOmv_EwNc8mTj4" : {
       "character_id" : "55e38d23d842e50e9026",
-      "slack_user_id" : "U4ZA6CCBG",
-      "permission_id": "-KztL8ki0966YvCX3nGy"
+      "permission_id" : "-L28JrA2eCuLY-KK5Ax-",
+      "slack_user_id" : "U4ZA6CCBG"
     },
     "-Kp1YomnSvJC_eFbFmNk" : {
-      "character_id" : "-Kkxf1ukVSF9VV6mIPlG",
+      "character_id" : "cd3addd0cb0bb7611e8b",
+      "permission_id" : "-KztL8ki0966YvCX3nGy",
       "slack_user_id" : "U55U8F5B7"
     },
     "-Ksu5JKx8959TviyMFIy" : {
       "character_id" : "5bdfe1adfef85f3af257",
+      "permission_id" : "-KztL8ki0966YvCX3nGy",
       "slack_user_id" : "U6WPUG78C"
+    },
+    "5d68f0d8c05aff5c71be" : {
+      "permission_id" : "-KztKzvAkoPFhI3ShzCu",
+      "slack_user_id" : "-Kp1Y_uOmv_EwNc8mTj4"
+    },
+    "76e8cc4ccf274b309883" : {
+      "character_id" : "6bec27e638c86895f217",
+      "permission_id" : "-KztL8ki0966YvCX3nGy",
+      "slack_user_id" : "U8SMMGE5Q"
+    },
+    "7db059e5a4d8759be89f" : {
+      "character_id" : "0be2e03132df55a752e0",
+      "permission_id" : "-KztL8ki0966YvCX3nGy",
+      "slack_user_id" : "U84PN9XLY"
+    },
+    "85f083f9ab5643db6a4f" : {
+      "permission_id" : "-KztKzvAkoPFhI3ShzCu",
+      "slack_user_id" : "-Kp1YomnSvJC_eFbFmNk"
+    },
+    "93b6a5bcbee2e44e8415" : {
+      "permission_id" : "-KztKzvAkoPFhI3ShzCu",
+      "slack_user_id" : "7db059e5a4d8759be89f"
+    },
+    "d9b9315d9295ba6c138a" : {
+      "permission_id" : "-KztKzvAkoPFhI3ShzCu",
+      "slack_user_id" : "76e8cc4ccf274b309883"
     }
   },
   "zone" : {
     "-Khu9Ti4cn9PQ2Q1TSBT" : {
       "channel" : "arena",
       "channel_id" : "C4Z7F8XMW",
-      "name" : "The Arena"
+      "name" : "The Arena",
+      "zone_messages" : {
+        "image" : "arena-announcer",
+        "name" : "The Announcer"
+      }
     },
     "-Khu9Zazk5XdFX9fD2Y8" : {
       "channel" : "town-square",

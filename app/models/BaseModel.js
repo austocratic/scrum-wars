@@ -36,7 +36,7 @@ class BaseModel {
 
         if(_.has(this.props, propertyName)){
 
-            console.log('DEBUG _.get(this property): ', _.get(this.props, propertyName));
+            //console.log('DEBUG _.get(this property): ', _.get(this.props, propertyName));
 
             _.set(this.props, propertyName , _.get(this.props, propertyName) + value);
         } else {

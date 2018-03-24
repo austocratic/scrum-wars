@@ -48,7 +48,7 @@ class Firestorm extends BaseAction {
                 this.slackPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
                 this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-2.gif';
 
-                console.log('DEBUG Firestorm 1 slack payload: ', JSON.stringify(this.slackPayload));
+                //console.log('DEBUG Firestorm 1 slack payload: ', JSON.stringify(this.slackPayload));
 
                 slack.sendMessage(this.slackPayload);
                 break;

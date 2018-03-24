@@ -50,62 +50,10 @@ describe("Testing BaseAction class", function() {
             assert(testBaseAction);
         });
 
-        describe("testing BaseAction method _getRandomTarget", function () {
-
-            describe("when passing an empty eachTargetToExclude", function () {
-                let randomTargetObject = testBaseAction._getRandomTarget([]);
-
-                it("should return an object", function (){
-                    assert(typeof randomTargetObject === 'object');
-                });
-                it("should not return the playerCharacter", function (){
-                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
-                })
-            });
-
-            describe("when passing an eachTargetToExclude array with 1 character objects", function () {
-                let randomTargetObject = testBaseAction._getRandomTarget([
-                    {
-                        id: "5bdfe1adfef85f3af257",
-                        props: {}
-                    }
-                ]);
-
-                it("should return an object", function (){
-                    assert(typeof randomTargetObject === 'object');
-                });
-                it("should not return the playerCharacter", function (){
-                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
-                })
-            });
-
-            describe("when passing an eachTargetToExclude array with 2 character objects", function () {
-                let randomTargetObject = testBaseAction._getRandomTarget([
-                    {
-                        id: "5bdfe1adfef85f3af257",
-                        props: {}
-                    },
-                    {
-                        id: "-Kkxf1ukVSF9VV6mIPlG",
-                        props: {}
-                    }
-                ]);
-
-                it("should return undefined", function (){
-                    assert(randomTargetObject === undefined);
-                });
-                it("should not return the playerCharacter", function (){
-                    assert.notEqual(randomTargetObject, gameObjects.playerCharacter);
-                })
-            })
-        });
-
         describe("testing BaseAction method _getUniqueRandomTarget", function () {
 
             describe("with argument 1", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(1);
-
-                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 1);
@@ -114,16 +62,12 @@ describe("Testing BaseAction class", function() {
             describe("with argument 2", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(2);
 
-                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
-
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 2);
                 });
             });
             describe("with argument 3", function () {
                 let targetArray = testBaseAction._getUniqueRandomTarget(3);
-
-                //console.log('DEBUG BaseAction test targetArray: ', targetArray);
 
                 it("should return an array of length", function (){
                     assert.equal(targetArray.length, 2);

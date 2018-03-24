@@ -55,7 +55,7 @@ const declareGameObjects = (game, slackRequest) => {
     if (!_.find(game.state.user, {'slack_user_id': gameObjects.user.id})){
         console.log('Requesting user does not exist, adding');
 
-        console.log('DEBUG user: ', gameObjects.user);
+        //console.log('DEBUG user: ', gameObjects.user);
 
         game.createUser(gameObjects.user.id);
     }

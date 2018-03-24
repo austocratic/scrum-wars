@@ -91,7 +91,7 @@ describe("Testing /action command", function() {
 
     const actualResponse = action(gameObjects);
 
-    console.log('DEBUG: actualResponse.slackResponseTemplate: ', actualResponse.attachments[1].actions.length);
+    //console.log('DEBUG: actualResponse.slackResponseTemplate: ', actualResponse.attachments[1].actions.length);
 
     it(`response should have an attachments array with 3 elements`, function() {
         assert.equal(actualResponse.attachments.length, 3)

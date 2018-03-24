@@ -51,7 +51,7 @@ class BaseAction {
         this.actionCharacter.getEffectsWithModifier('is_hidden')
             .forEach( eachHidingEffect =>{
 
-                console.log('DEBUG _initiateAction called, eachHidingEffect: ', eachHidingEffect);
+                //console.log('DEBUG _initiateAction called, eachHidingEffect: ', eachHidingEffect);
 
                 this._reverseEffect(this.actionCharacter, eachHidingEffect.action_id);
             });
@@ -212,7 +212,7 @@ class BaseAction {
     //Decrement health, processes action interrupts and hiding removal
     //Argument must be a character object
     _processDamage(target, damageAmount){
-        console.log(`called _processDamage(${target})`);
+        console.log(`called _processDamage`);
         //Decrease target's health
         //this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
         target.incrementProperty('health', -damageAmount);
@@ -221,7 +221,7 @@ class BaseAction {
 
         //Needs type of strike back and % chance to strike back
         console.log('action range: ', this.actionTaken.props.range);
-        
+
         //if melee attack, chance to strike back
         if(this.actionTaken.props.range){
 
@@ -245,7 +245,7 @@ class BaseAction {
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
-                    console.log('DEBUG eachAction.props from .filter: ', eachAction.props);
+                    //console.log('DEBUG eachAction.props from .filter: ', eachAction.props);
 
                     if (this.actionTaken.props.can_interrupt){
 
@@ -262,11 +262,11 @@ class BaseAction {
                 })
                 .map( eachActionQueue =>{
 
-                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
+                    //console.log('DEBUG eachActionQueue: ', eachActionQueue);
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
-                    console.log('DEBUG eachAction from .map: ', eachAction.props);
+                    //console.log('DEBUG eachAction from .map: ', eachAction.props);
 
                     return eachAction
 
@@ -274,7 +274,7 @@ class BaseAction {
                 //Send interrupt messages and return final list of interrupted actions
                 .forEach( eachInterruptedAction =>{
 
-                    console.log('DEBUG eachInterruptedAction.props: ', eachInterruptedAction.props);
+                    //console.log('DEBUG eachInterruptedAction.props: ', eachInterruptedAction.props);
 
                     this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
                     //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
@@ -301,7 +301,7 @@ class BaseAction {
                 })*/
         }
 
-        console.log('DEBUG Interrupted action index: ', interruptedActionIndex);
+        //console.log('DEBUG Interrupted action index: ', interruptedActionIndex);
 
         //_reverseEffect(this.actionCharacter, eachEffect.action_id)
 

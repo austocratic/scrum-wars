@@ -286,7 +286,7 @@ class Game {
             //Item equipped, if nothing equipped return undefined
             let equippedSlotItem = localCharacter.getEquipmentInSlot(singleEquipmentSlot.id);
 
-            console.log('DEBUG equippedSlotItem: ', equippedSlotItem);
+            //console.log('DEBUG equippedSlotItem: ', equippedSlotItem);
 
             let baseTemplate = {
                 "title": singleEquipmentSlot.props.name,
