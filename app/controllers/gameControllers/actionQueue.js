@@ -66,9 +66,14 @@ const actionQueue = (gameObjects) =>{
             let actionObject = new actionObjectToMake(gameObjects);
 
             //Process the action by passing in the relative turn
-            actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
+            let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
-            //Mark action as processed this turn
+            if (actionResponse === 'complete'){
+                console.log('action is complete, deleting from the queue!');
+                actionObject._deleteActionInQueue();
+            }
+
+            //Always mark the action as processed this turn
             eachActionToProcess.last_turn_processed = gameObjects.currentMatch.props.number_turns;
         });
 

@@ -49,10 +49,13 @@ class QuickStrike extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
+                return 'complete';
+
                 break;
+            /*
             case (turn >= 1):
                 this._deleteActionInQueue();
-                break;
+                break;*/
         }
     }
 }

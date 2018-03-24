@@ -130,26 +130,6 @@ class BaseAction {
                 return characterIDsOnTeam.indexOf(eachCharacter.id) === -1;
             });
 
-
-        /* TESTING REFACTORED ABOVE
-        //Returns an array of character IDs
-        let availableTargets = this.currentMatch.getStartingCharacterIDs()
-            .map( eachStartingCharacterID =>{
-                return new Character(this.game.state, eachStartingCharacterID)
-            })
-            //Filter for characters in the zone (alive characters)
-            .filter( eachCharacter =>{
-                return eachCharacter.props.zone_id === this.currentMatch.props.zone_id
-            })
-            //Filter for all characters but the character performing the action
-            .filter( eachCharacterInZone =>{
-                return eachCharacterInZone.id !== this.actionCharacter.id
-            })
-            //Filter for active characters only (may have gone inactive after match started)
-            .filter( eachCharacter => {
-                return eachCharacter.props.active === 1
-            });*/
-
         //If desired # of targets is greater than the # of available targets, only return # of available targets
         if (availableTargets.length < numberOfTargets){
             numberOfTargets = availableTargets.length
@@ -218,39 +198,6 @@ class BaseAction {
         //Decrease target's health
         //this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
         target.incrementProperty('health', -damageAmount);
-
-        //Put code to strike back here
-
-        //Needs type of strike back and % chance to strike back
-        console.log('action range: ', this.actionTaken.props.range);
-
-        //if melee attack, chance to strike back
-        if(this.actionTaken.props.range){
-
-            //If character has a counter_attack property, see if it can respond to the category of the incoming attack
-            if(target.props.counter_attack){
-                let responseChance = target.props.counter_attack[this.actionTaken.props.range];
-
-                console.log('responseChance', responseChance);
-
-                this.responseAction = new Action(this.game.state, '-Kjpe29q_fDkJG-73AQO');
-
-                let responseGameObjects = {
-                    game: this.game,
-                    playerCharacter: this.targetCharacter,
-                    requestZone: this.currentZone,
-                    currentMatch: this.currentMatch,
-                    actionTaken: this.responseAction, //Need a QuickStrike action here
-                    targetCharacter: this.actionCharacter
-                };
-
-                let responseQuickStrike = new QuickStrike(responseGameObjects);
-
-                //Perform the action
-                responseQuickStrike.initiate();
-            }
-        }
-
 
         let interruptedActionIndex = [];
 
