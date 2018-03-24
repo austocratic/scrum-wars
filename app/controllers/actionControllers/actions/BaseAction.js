@@ -6,8 +6,6 @@ const _ = require('lodash');
 const Character = require('../../../models/Character').Character;
 const Action = require('../../../models/Action').Action;
 
-const QuickStrike = require('./QuickStrike');
-
 class BaseAction {
     constructor(gameObjects){
 
