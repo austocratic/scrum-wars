@@ -6,6 +6,8 @@ const _ = require('lodash');
 const Character = require('../../../models/Character').Character;
 const Action = require('../../../models/Action').Action;
 
+const QuickStrike = require('./QuickStrike');
+
 class BaseAction {
     constructor(gameObjects){
 
@@ -230,6 +232,22 @@ class BaseAction {
                 let responseChance = target.props.counter_attack[this.actionTaken.props.range];
 
                 console.log('responseChance', responseChance);
+
+                this.responseAction = new Action(this.game.state, '-Kjpe29q_fDkJG-73AQO');
+
+                let responseGameObjects = {
+                    game: this.game,
+                    playerCharacter: this.targetCharacter,
+                    requestZone: this.currentZone,
+                    currentMatch: this.currentMatch,
+                    actionTaken: this.responseAction, //Need a QuickStrike action here
+                    targetCharacter: this.actionCharacter
+                };
+
+                let responseQuickStrike = new QuickStrike(responseGameObjects);
+
+                //Perform the action
+                responseQuickStrike.initiate();
             }
         }
 
