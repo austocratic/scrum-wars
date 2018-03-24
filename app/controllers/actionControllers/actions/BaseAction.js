@@ -70,21 +70,22 @@ class BaseAction {
         }
     }
 
+    /*
     //Return a random character object who is still alive in the current match
     _getRandomTarget(targetsToExclude){
 
-        //Returns an array of character IDs
-        let startingCharacterObjects = this.currentMatch.getStartingCharacterIDs()
-            .map( eachStartingCharacterID =>{
-                return new Character(this.game.state, eachStartingCharacterID)
-            })
-            //Filter for characters in the zone (alive characters)
+        //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
+        let charactersInZone = this.game.getCharactersInZone(this.currentZone.id);
+
+        //Get an array of the character IDs on the character's team (including the player)
+        let characterIDsOnTeam = this.game.getCharacterIDsOnTeam(this.actionCharacter.id);
+
+        let filteredCharacters = charactersInZone
+        //Filter out the player's team (including the player's character)
             .filter( eachCharacter =>{
-                return eachCharacter.props.zone_id === this.currentMatch.props.zone_id
-            })
-            //Filter for all characters but the character performing the action
-            .filter( eachCharacterInZone =>{
-                return eachCharacterInZone.id !== this.actionCharacter.id
+
+                //Only include characters that are not in the characterIDsOnTeam array
+                return characterIDsOnTeam.indexOf(eachCharacter.id) === -1;
             })
             //Filter out characters that are included in the targetsToExclude argument
             .filter( eachCharacterInZone =>{
@@ -99,13 +100,13 @@ class BaseAction {
         //console.log('startingCharacterObjects: ', startingCharacterObjects);
 
         //If there are no available targets return undefined
-        if(startingCharacterObjects.length === 0){
+        if(filteredCharacters.length === 0){
             return undefined
         }
 
         //Return a random character object from filtered array of character objects
-        return startingCharacterObjects[this._getRandomIntInclusive(0, startingCharacterObjects.length - 1)]
-    }
+        return filteredCharacters[this._getRandomIntInclusive(0, filteredCharacters.length - 1)]
+    }*/
 
     //Return a random character object who is still alive in the current match
     _getUniqueRandomTarget(numberOfTargets){
@@ -113,6 +114,22 @@ class BaseAction {
         //Get targets, how can I standardize this?
         const targets = [];
 
+        //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
+        let charactersInZone = this.game.getCharactersInZone(this.currentZone.id);
+
+        //Get an array of the character IDs on the character's team (including the player)
+        let characterIDsOnTeam = this.game.getCharacterIDsOnTeam(this.actionCharacter.id);
+
+        let availableTargets = charactersInZone
+        //Filter out the player's team (including the player's character)
+            .filter( eachCharacter =>{
+
+                //Only include characters that are not in the characterIDsOnTeam array
+                return characterIDsOnTeam.indexOf(eachCharacter.id) === -1;
+            });
+
+
+        /* TESTING REFACTORED ABOVE
         //Returns an array of character IDs
         let availableTargets = this.currentMatch.getStartingCharacterIDs()
             .map( eachStartingCharacterID =>{
@@ -129,7 +146,7 @@ class BaseAction {
             //Filter for active characters only (may have gone inactive after match started)
             .filter( eachCharacter => {
                 return eachCharacter.props.active === 1
-            });
+            });*/
 
         //If desired # of targets is greater than the # of available targets, only return # of available targets
         if (availableTargets.length < numberOfTargets){
@@ -200,35 +217,31 @@ class BaseAction {
         //this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
         target.incrementProperty('health', -damageAmount);
 
+        //Put code to strike back here
+
+        //Needs type of strike back and % chance to strike back
+        console.log('action range: ', this.actionTaken.props.range);
+        
+        //if melee attack, chance to strike back
+        if(this.actionTaken.props.range){
+
+            //If character has a counter_attack property, see if it can respond to the category of the incoming attack
+            if(target.props.counter_attack){
+                let responseChance = target.props.counter_attack[this.actionTaken.props.range];
+
+                console.log('responseChance', responseChance);
+            }
+        }
+
+
         let interruptedActionIndex = [];
 
         //Interrupt check: look in the action_queue for pending actions initiated by the target & interrupt them
         if (this.currentMatch.props.action_queue){
 
             this.currentMatch.props.action_queue
-                //Filter out pending actions initiated by a target of player's action (don't filter the player's own actions)
-                /*
-                .filter( eachActionQueue =>{
-                    return eachActionQueue.player_character_id === target.id &&
-                        eachActionQueue.player_character_id !== this.actionCharacter.id;
-                })*/
-                //Create action objects
-                /*
-                .map( eachActionQueue =>{
-
-                    console.log('DEBUG eachActionQueue: ', eachActionQueue);
-
-                    let eachAction = new Action(this.game.state, eachActionQueue.action_id);
-
-                    console.log('DEBUG eachAction from .map: ', eachAction.props);
-
-                    return eachAction
-
-                })*/
                 //Filter for action types that this action can interrupt
                 .filter( (eachActionQueue, index) => {
-
-                    //console.log('DEBUG eachActionQueue: ', eachActionQueue);
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
@@ -244,19 +257,7 @@ class BaseAction {
                             interruptedActionIndex.push(index);
 
                             return eachActionQueue
-
                         }
-
-
-                        /*
-                        return _.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1 &&
-                            eachActionQueue.player_character_id === target.id &&
-                            eachActionQueue.player_character_id !== this.actionCharacter.id;
-                        */
-
-                        /*if (_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1){
-                            return eachAction
-                        }*/
                     }
                 })
                 .map( eachActionQueue =>{
@@ -286,8 +287,6 @@ class BaseAction {
             interruptedActionIndex.forEach( eachActionToRemove =>{
                 this.currentMatch.props.action_queue.splice(eachActionToRemove, 1)
             })
-
-
 
             //console.log('interruptedActions.length: ', interruptedActions.length);
 

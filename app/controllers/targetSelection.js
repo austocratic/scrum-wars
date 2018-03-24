@@ -3,6 +3,8 @@
 const updateCallback = require('../helpers').updateCallback;
 
 const getTargetSelectionMenu = gameObjects => {
+    console.log('called targetSelection/getTargetSelectionMenu');
+
 
     gameObjects.slackResponseTemplate = {
         "attachments": [
