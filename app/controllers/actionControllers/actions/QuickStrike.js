@@ -51,7 +51,14 @@ class QuickStrike extends BaseAction {
 
                 console.log('DEBUG: processDamage is complete, about to return complete');
 
-                return 'complete';
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        type: this.actionTaken.props.type,
+                        damageAmount: this.calculatedDamage
+                    }]
+                };
 
                 break;
             /*

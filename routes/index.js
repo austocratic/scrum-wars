@@ -129,6 +129,9 @@ router.post('/api/commands', async (req, res, next) => {
 
         let slackResponseTemplateReturned = await slackRequest.processRequest('command', gameObjects.command, gameObjects);
 
+        //TODO TESTING CALLING REFRESH AGAIN AFTER PROCESSING
+        refreshController.refresh(gameObjects);
+
         //Update game state
         game.updateState();
         console.log('Responded to request to /api/commands: ', JSON.stringify(slackResponseTemplateReturned));
@@ -164,6 +167,9 @@ router.post('/api/interactive-messages', async (req, res, next) => {
     refreshController.refresh(gameObjects);
 
     let slackResponseTemplateReturned = await slackRequest.processRequest(gameObjects.gameContext, gameObjects.userActionNameSelection, gameObjects);
+
+    //TODO TESTING CALLING REFRESH AGAIN AFTER PROCESSING
+    refreshController.refresh(gameObjects);
 
     //Update game state
     game.updateState();

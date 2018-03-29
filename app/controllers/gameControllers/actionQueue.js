@@ -66,20 +66,23 @@ const actionQueue = (gameObjects) =>{
             let actionObject = new actionObjectToMake(gameObjects);
 
             //Process the action by passing in the relative turn
-            //let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
-            console.log('DEBUG: action response: ', actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated));
+            let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
-            console.log('DEBUG: action processed');
+            console.log('Action processed, response: ', actionResponse);
 
-            /*
+            //Check if action dealt damage for response action check
+            if (actionResponse.damageDealt.length > 0){
+                console.log('action dealt damage, processing response');
+                actionResponse.damageDealt.forEach(eachActionResponse=>{
+                    console.log('character id damaged and will now respond: ', eachActionResponse.targetID)
+                })
+            }
 
-
-            console.log('DEBUG actionQueue, actionResponse = ', actionResponse);
-
-            if (actionResponse === 'complete'){
-                console.log('action is complete, deleting from the queue!');
+            //Check if action is complete
+            if (actionResponse.status === 'complete'){
+                console.log('action is complete, remove from queue');
                 actionObject._deleteActionInQueue();
-            }*/
+            }
 
             //Always mark the action as processed this turn
             eachActionToProcess.last_turn_processed = gameObjects.currentMatch.props.number_turns;
