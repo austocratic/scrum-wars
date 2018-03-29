@@ -426,8 +426,7 @@ class BaseAction {
             "turn_initiated": this.currentMatch.props.number_turns,
             "channel_id": this.currentZone.props.channel_id,
             "player_character_id": this.actionCharacter.id,
-            "target_character_id": this.targetCharacter.id,
-            "last_turn_processed": this.currentMatch.props.number_turns
+            "target_character_id": this.targetCharacter.id
         })
     }
 
