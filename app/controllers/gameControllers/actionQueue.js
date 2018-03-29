@@ -32,10 +32,13 @@ const actionQueue = (gameObjects) =>{
 
     //If the current match has no action_queue property, then no actions are queued.  Function should exit
     if (!gameObjects.currentMatch.props.action_queue) {
+        console.log('DEBUG no action queue property');
         return;
     }
 
     console.log('actionQueue invoked number_turns: ', gameObjects.currentMatch.props.number_turns);
+
+    console.log('action_queue: ', gameObjects.currentMatch.props.action_queue);
 
     //Iterate through effect queue
     gameObjects.currentMatch.props.action_queue
@@ -45,6 +48,8 @@ const actionQueue = (gameObjects) =>{
         })
         //Process the unprocessed actions
         .forEach( (eachActionToProcess, index) =>{
+
+            console.log('DEBUG processing action: ', eachActionToProcess);
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
