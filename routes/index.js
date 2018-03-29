@@ -168,6 +168,8 @@ router.post('/api/interactive-messages', async (req, res, next) => {
 
     let slackResponseTemplateReturned = await slackRequest.processRequest(gameObjects.gameContext, gameObjects.userActionNameSelection, gameObjects);
 
+    console.log('DEBUG about to call refresh 2nd time');
+
     //TODO TESTING CALLING REFRESH AGAIN AFTER PROCESSING
     refreshController.refresh(gameObjects);
 
