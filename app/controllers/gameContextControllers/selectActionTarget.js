@@ -59,7 +59,7 @@ const processActionOnTarget = gameObjects => {
     //If not return an error to Slack
     if (!actionControllers[previousValue]){
         return {
-            "text": "Error: that action is missing from selectActionTarget action mapping!"
+            "text": `Error: selected action value ${previousValue} but that is missing from selectActionTarget action mapping!`
         }
     }
 
