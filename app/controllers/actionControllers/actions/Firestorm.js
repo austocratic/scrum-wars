@@ -43,11 +43,23 @@ class Firestorm extends BaseAction {
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
                 this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'orange-flame.gif';
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
             case (turn <= 1):
                 this.defaultActionPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
                 this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-2.gif';
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
             case (turn <= 2):
                 //Build a new message based on the randomTarget
