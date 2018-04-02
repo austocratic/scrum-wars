@@ -40,12 +40,12 @@ class Whirlwind extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn <= 1):
-                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
+                slack.sendMessage(this.defaultActionPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
@@ -54,8 +54,8 @@ class Whirlwind extends BaseAction {
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, 0) === false) {
-                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades ${this.actionCharacter.props.name}'s whirling blades!`;
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = `${singleTarget.props.name} evades ${this.actionCharacter.props.name}'s whirling blades!`;
+                        slack.sendMessage(this.defaultActionPayload);
                         return;
                     }
 
@@ -66,8 +66,8 @@ class Whirlwind extends BaseAction {
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
+                        slack.sendMessage(this.defaultActionPayload);
                     }, 500);
 
                 };

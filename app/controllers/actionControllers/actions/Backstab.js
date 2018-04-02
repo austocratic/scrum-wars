@@ -37,29 +37,16 @@ class Backstab extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                    slack.sendMessage(this.slackPayload);
+                    this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.defaultActionPayload);
                     return;
                 }
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
 
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
-
-                //Moved this into _initiateAction call
-                /*
-                if (this.actionCharacter.props.effects) {
-                    this.actionCharacter.props.effects
-                        .filter(eachEffect => {
-                            return eachEffect.modifiers.is_hidden === 1
-                        })
-                        .forEach(eachEffect => {
-                            this._reverseEffect(this.actionCharacter, eachEffect.action_id);
-                        });
-                }*/
-
 
                 break;
             case (turn >= 1):

@@ -44,8 +44,8 @@ class DefensiveStance extends BaseAction {
                 //Apply modifiers defined in constructor
                 this._applyEffect(this.actionCharacter, this.statsToModify);
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

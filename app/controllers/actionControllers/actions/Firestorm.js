@@ -40,33 +40,69 @@ class Firestorm extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'orange-flame.gif';
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} begins conjuring a *fiery spell*`;
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'orange-flame.gif';
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn <= 1):
-                this.slackPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-2.gif';
-
-                //console.log('DEBUG Firestorm 1 slack payload: ', JSON.stringify(this.slackPayload));
-
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `Heat ripples throughout the ${this.currentZone.props.name} as ${this.actionCharacter.props.name} continues conjuring a *fiery spell!*`;
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-2.gif';
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn <= 2):
                 //Build a new message based on the randomTarget
-                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-burst.gif';
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} unleashes a tempest of fire!`;
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-burst.gif';
+                slack.sendMessage(this.defaultActionPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
+                let results = targets
+                    .filter( eachTarget =>{
+
+                        //First filter for attacks that hit and send avoid messages
+                        let avoidCheck = this._avoidCheck(0, 0);
+
+                        if (avoidCheck === false){
+                            this.defaultActionPayload.attachments[0].text = `${eachTarget.props.name} evades the the fiery downpour!`;
+                            slack.sendMessage(this.defaultActionPayload);
+                        }
+
+                        return avoidCheck;
+                    })
+                    .map(targetHit=>{
+
+                        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+                        //Process damage & Interrupts
+                        this._processDamage(targetHit, calculatedDamage);
+
+                        //Build a new message based on the randomTarget
+                        setTimeout( () => {
+                            this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${targetHit.props.name} for ${calculatedDamage} points of damage!`;
+                            slack.sendMessage(this.defaultActionPayload);
+                        }, 500);
+
+                        return {
+                            targetID: targetHit.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: calculatedDamage
+                        }
+                    });
+
+                return {
+                    status: 'complete',
+                    damageDealt: results
+                };
+
+                /*
                 const processOnSingleTarget = (singleTarget) => {
 
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, 0) === false) {
-                        this.slackPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
+                        slack.sendMessage(this.defaultActionPayload);
                         return;
                     }
 
@@ -77,8 +113,8 @@ class Firestorm extends BaseAction {
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
+                        slack.sendMessage(this.defaultActionPayload);
                     }, 500);
 
                 };
@@ -89,19 +125,10 @@ class Firestorm extends BaseAction {
 
                     //let result = processOnSingleTarget(target, 1);
                     let result = processOnSingleTarget(target, 1);
-
-                    /*
-                    if(result === false){
-                        break
-                    }*/
-
-                    //Alert the channel of the action
-                    //this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                    //slack.sendMessage(this.slackPayload);
-                }
+                }*/
 
                 break;
-            case (turn >= 3):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

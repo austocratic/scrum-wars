@@ -40,9 +40,9 @@ class ForkedLightning extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.attachments[0].text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
-                this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'lightning-ball.gif';
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'lightning-ball.gif';
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn <= 1):
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
@@ -65,8 +65,8 @@ class ForkedLightning extends BaseAction {
                     //Arguments: accuracyModifier, avoidModifier
                     if (this._avoidCheck(0, (0 + modifier)) === false) {
                         console.log('ForkedLightning failed (dodge)');
-                        this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                        slack.sendMessage(this.defaultActionPayload);
                         return false;
                     }
 
@@ -77,9 +77,9 @@ class ForkedLightning extends BaseAction {
 
                     //Build a new message based on the randomTarget
                     setTimeout( () => {
-                        this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s bolts of *arcane energy* strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
-                        this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
-                        slack.sendMessage(this.slackPayload);
+                        this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s bolts of *arcane energy* strike ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
+                        this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
+                        slack.sendMessage(this.defaultActionPayload);
                     }, 500);
 
                     return true;
@@ -99,9 +99,7 @@ class ForkedLightning extends BaseAction {
                     avoidModifier = avoidModifier * 2;
 
                     //Alert the channel of the action
-                    //this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${target.props.name} for ${this.calculatedDamage} points of damage!`;
-                    //this.slackPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'yellow-lightning-circle.gif';
-                    slack.sendMessage(this.slackPayload);
+                    slack.sendMessage(this.defaultActionPayload);
                 }
                 break;
             case (turn >= 2):

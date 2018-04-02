@@ -40,8 +40,8 @@ class IntoShadow extends BaseAction {
                 //Mark the player's character as hidden
                 this._applyEffect(this.actionCharacter, statsToModify);
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();

@@ -39,48 +39,36 @@ class QuickStrike extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                    slack.sendMessage(this.slackPayload);
+                    this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.defaultActionPayload);
                     return;
                 }
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
 
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
-
-                console.log('DEBUG: processDamage is complete, about to return complete');
 
                 return {
                     status: 'complete',
                     damageDealt: [{
                         targetID: this.targetCharacter.id,
-                        type: this.actionTaken.props.type,
+                        range: this.actionTaken.props.range,
                         damageAmount: this.calculatedDamage
                     }]
                 };
 
                 break;
-            /*
-            case (turn >= 1):
+
+            default:
                 this._deleteActionInQueue();
-                break;*/
+                break;
         }
     }
 }
 
-/* Structure to add additional property validations
- QuickStrike.validations = [
- ...BaseAttack.validations,
- 'playerCharacter',
- 'targetCharacter',
- 'requestZone',
- 'currentMatch',
- 'actionTaken'
- ];*/
-
-
+/* TESTING REMOVING.  Index file now exports this
 module.exports = {
     QuickStrike
-};
+};*/

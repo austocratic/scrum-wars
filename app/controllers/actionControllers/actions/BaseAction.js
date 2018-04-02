@@ -17,7 +17,7 @@ class BaseAction {
         this.targetCharacter = gameObjects.targetCharacter;
 
         //Base Slack template
-        this.slackPayload = {
+        this.defaultActionPayload = {
             "username": this.actionCharacter.props.name,
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": ("#" + this.currentZone.props.channel),
@@ -41,8 +41,8 @@ class BaseAction {
 
         //If failure, return a failure message and end
         if (this._successCheck(0) === false) {
-            this.slackPayload.attachments[0].text = this.channelActionFailMessage;
-            slack.sendMessage(this.slackPayload);
+            this.defaultActionPayload.attachments[0].text = this.channelActionFailMessage;
+            slack.sendMessage(this.defaultActionPayload);
             return false;
         }
 
@@ -240,9 +240,8 @@ class BaseAction {
 
                     //console.log('DEBUG eachInterruptedAction.props: ', eachInterruptedAction.props);
 
-                    this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
-                    //console.log('DEBUG interrupt message: ', this.slackPayload.attachments[0].text);
-                    slack.sendMessage(this.slackPayload);
+                    this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} *interrupts* ${target.props.name}'s pending ${eachInterruptedAction.props.name}!`;
+                    slack.sendMessage(this.defaultActionPayload);
 
                     //return eachInterruptedAction
                 });
@@ -273,8 +272,8 @@ class BaseAction {
 
         //If the target is hidden, break hiding and remove any hiding effects
         if (hidingEffects.length > 0){
-            this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${target.props.name} *out of hiding!*`;
-            slack.sendMessage(this.slackPayload);
+            this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s ${this.actionTaken.props.name} forces ${target.props.name} *out of hiding!*`;
+            slack.sendMessage(this.defaultActionPayload);
 
             //Reverse each hiding effect
             hidingEffects.forEach( eachHidingEffect =>{

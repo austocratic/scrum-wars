@@ -46,20 +46,20 @@ class Cleave extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                this.slackPayload.attachments[0].text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn <= 1):
                 //Evasion check
                 //Arguments: accuracyModifier, avoidModifier
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                    slack.sendMessage(this.slackPayload);
+                    this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.defaultActionPayload);
                     return;
                 }
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
 
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);

@@ -34,16 +34,16 @@ class BalancedStance extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 if (this._avoidCheck(0, 0) === false) {
-                    this.slackPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                    slack.sendMessage(this.slackPayload);
+                    this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
+                    slack.sendMessage(this.defaultActionPayload);
                     return;
                 }
 
                 //Reverse any effects of this type
                 this._reverseEffectsOfType(this.targetCharacter, this.actionTaken.props.type);
 
-                this.slackPayload.attachments[0].text = this.channelActionSuccessMessage;
-                slack.sendMessage(this.slackPayload);
+                this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
+                slack.sendMessage(this.defaultActionPayload);
                 break;
             case (turn >= 1):
                 this._deleteActionInQueue();
