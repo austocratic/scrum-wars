@@ -48,8 +48,17 @@ class Backstab extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: this.calculatedDamage
+                    }]
+                };
+
                 break;
-            case (turn >= 1):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

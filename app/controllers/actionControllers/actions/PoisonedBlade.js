@@ -59,8 +59,17 @@ class PoisonedBlade extends BaseAction {
                 //Apply the effect
                 this._applyEffect(this.targetCharacter, this.statsToModify);
 
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: this.calculatedDamage
+                    }]
+                };
+
                 break;
-            case (turn >= 1):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

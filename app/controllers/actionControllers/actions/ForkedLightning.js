@@ -43,6 +43,12 @@ class ForkedLightning extends BaseAction {
                 this.defaultActionPayload.attachments[0].text = `*Lightning swirls* as ${this.actionCharacter.props.name} begins to conjure a spell!`;
                 this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'lightning-ball.gif';
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
             case (turn <= 1):
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
@@ -102,7 +108,7 @@ class ForkedLightning extends BaseAction {
                     slack.sendMessage(this.defaultActionPayload);
                 }
                 break;
-            case (turn >= 2):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

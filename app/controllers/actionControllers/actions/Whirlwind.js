@@ -42,13 +42,58 @@ class Whirlwind extends BaseAction {
             case (turn <= 0):
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} enters a berserk rage becoming a *whirlwind* of blades`;
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
-            case (turn <= 1):
+            case (turn <= 1 && turn <= 5):
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
                 slack.sendMessage(this.defaultActionPayload);
 
                 let targets = this._getUniqueRandomTarget(this.maxTargetsAffected);
 
+                let results = targets
+                    .filter( eachTarget =>{
+
+                        //First filter for only attacks that hit, then send avoid messages
+                        let avoidCheck = this._avoidCheck(0, 0);
+
+                        if (avoidCheck === false){
+                            this.defaultActionPayload.attachments[0].text = `${eachTarget.props.name} evades ${this.actionCharacter.props.name}'s whirling blades!`;
+                            slack.sendMessage(this.defaultActionPayload);
+                        }
+
+                        return avoidCheck;
+                    })
+                    .map(targetHit=>{
+
+                        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+
+                        //Process damage & Interrupts
+                        this._processDamage(targetHit, calculatedDamage);
+
+                        //Build a new message based on the randomTarget
+                        setTimeout( () => {
+                            this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s whirling blades strike ${targetHit.props.name} for ${calculatedDamage} points of damage!`;
+                            slack.sendMessage(this.defaultActionPayload);
+                        }, 500);
+
+                        return {
+                            targetID: targetHit.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: calculatedDamage
+                        }
+                    });
+
+                return {
+                    status: 'complete',
+                    damageDealt: results
+                };
+
+                /*
                 const processOnSingleTarget = (singleTarget) => {
 
                     //Evasion check
@@ -77,10 +122,10 @@ class Whirlwind extends BaseAction {
                     console.log('keep processing!');
 
                     processOnSingleTarget(target, 1);
-                }
+                }*/
 
                 break;
-            case (turn >= 2):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

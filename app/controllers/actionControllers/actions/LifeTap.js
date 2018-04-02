@@ -50,8 +50,17 @@ class LifeTap extends BaseAction {
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
                 this.actionCharacter.incrementProperty('health', this.calculatedDamage);
 
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: this.calculatedDamage
+                    }]
+                };
+
                 break;
-            case (turn >= 1):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

@@ -72,7 +72,7 @@ class Firestorm extends BaseAction {
                 let results = targets
                     .filter( eachTarget =>{
 
-                        //First filter for attacks that hit and send avoid messages
+                        //First filter for only attacks that hit, then send avoid messages
                         let avoidCheck = this._avoidCheck(0, 0);
 
                         if (avoidCheck === false){

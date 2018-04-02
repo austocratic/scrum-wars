@@ -42,8 +42,14 @@ class IntoShadow extends BaseAction {
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
-            case (turn >= 1):
+            default:
                 this._deleteActionInQueue();
                 break;
         }

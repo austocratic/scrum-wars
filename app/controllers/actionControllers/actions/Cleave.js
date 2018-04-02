@@ -48,6 +48,12 @@ class Cleave extends BaseAction {
             case (turn <= 0):
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name} raises his sword to deliver a *cleaving blow!*`;
                 slack.sendMessage(this.defaultActionPayload);
+
+                return {
+                    status: 'pending',
+                    damageDealt: []
+                };
+
                 break;
             case (turn <= 1):
                 //Evasion check
@@ -64,8 +70,17 @@ class Cleave extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: this.calculatedDamage
+                    }]
+                };
+
                 break;
-            case (turn >= 2):
+            default:
                 this._deleteActionInQueue();
                 break;
         }
