@@ -49,7 +49,7 @@ class Whirlwind extends BaseAction {
                 };
 
                 break;
-            case (turn <= 1 && turn <= 5):
+            case (turn >= 1 && turn <= 5):
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirling blades* lash out`;
                 slack.sendMessage(this.defaultActionPayload);
 
