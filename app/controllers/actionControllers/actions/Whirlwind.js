@@ -89,7 +89,7 @@ class Whirlwind extends BaseAction {
                     });
 
                 return {
-                    status: 'complete',
+                    status: 'ongoing',
                     damageDealt: results
                 };
 
@@ -127,6 +127,12 @@ class Whirlwind extends BaseAction {
                 break;
             default:
                 this._deleteActionInQueue();
+
+                return {
+                    status: 'complete',
+                    damageDealt: []
+                };
+
                 break;
         }
     }

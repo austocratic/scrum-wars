@@ -91,6 +91,11 @@ class ForkedLightning extends BaseAction {
                     return true;
                 };
 
+
+                //UPDATING:
+                //When action fails, break and return.  Try .some array function
+
+
                 //Iterate through targets processing, if one fails, stop
                 for(const target of targets){
                     console.log('keep processing!');
