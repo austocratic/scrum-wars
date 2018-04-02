@@ -68,7 +68,6 @@ class QuickStrike extends BaseAction {
     }
 }
 
-/* TESTING REMOVING.  Index file now exports this
 module.exports = {
     QuickStrike
-};*/
+};
