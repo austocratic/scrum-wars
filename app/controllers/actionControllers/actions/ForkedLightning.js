@@ -88,13 +88,22 @@ class ForkedLightning extends BaseAction {
                         slack.sendMessage(this.defaultActionPayload);
                     }, 500);
 
+                    //Each time a character is damaged add it to the response
+                    response.damageDealt.push({
+                        targetID: singleTarget.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: calculatedDamage
+                    });
+
                     return true;
                 };
 
-
                 //UPDATING:
                 //When action fails, break and return.  Try .some array function
-
+                let response = {
+                    status: 'complete',
+                    damageDealt: []
+                };
 
                 //Iterate through targets processing, if one fails, stop
                 for(const target of targets){
@@ -112,6 +121,9 @@ class ForkedLightning extends BaseAction {
                     //Alert the channel of the action
                     slack.sendMessage(this.defaultActionPayload);
                 }
+
+                return response;
+
                 break;
             default:
                 this._deleteActionInQueue();

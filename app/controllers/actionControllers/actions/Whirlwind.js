@@ -128,6 +128,9 @@ class Whirlwind extends BaseAction {
             default:
                 this._deleteActionInQueue();
 
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirlwind* of blades ends!`;
+                slack.sendMessage(this.defaultActionPayload);
+
                 return {
                     status: 'complete',
                     damageDealt: []

@@ -107,38 +107,6 @@ class Firestorm extends BaseAction {
                     damageDealt: results
                 };
 
-                /*
-                const processOnSingleTarget = (singleTarget) => {
-
-                    //Evasion check
-                    //Arguments: accuracyModifier, avoidModifier
-                    if (this._avoidCheck(0, 0) === false) {
-                        this.defaultActionPayload.attachments[0].text = `${singleTarget.props.name} evades the the fiery downpour!`;
-                        slack.sendMessage(this.defaultActionPayload);
-                        return;
-                    }
-
-                    let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
-
-                    //Process damage & Interrupts
-                    this._processDamage(singleTarget, calculatedDamage);
-
-                    //Build a new message based on the randomTarget
-                    setTimeout( () => {
-                        this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *fire storm* rains down, scorching ${singleTarget.props.name} for ${calculatedDamage} points of damage!`;
-                        slack.sendMessage(this.defaultActionPayload);
-                    }, 500);
-
-                };
-
-                //Iterate through targets processing
-                for(const target of targets){
-                    console.log('keep processing!');
-
-                    //let result = processOnSingleTarget(target, 1);
-                    let result = processOnSingleTarget(target, 1);
-                }*/
-
                 break;
             default:
                 this._deleteActionInQueue();
