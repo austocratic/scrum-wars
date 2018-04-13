@@ -28,7 +28,7 @@ class BaseModel {
     updateProperty(propertyToUpdate, newValue){
         console.log(`Called updateProperty.  Updating property: ${propertyToUpdate} to ${newValue}`);
         //this.props[propertyToUpdate] = newValue
-        _.set(this.props, propertyToUpdate , _.get(this.props, propertyToUpdate) + newValue);
+        _.set(this.props, propertyToUpdate , newValue);
     }
 
     //Property name can be nested
