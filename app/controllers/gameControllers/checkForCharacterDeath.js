@@ -17,9 +17,9 @@ const checkForCharacterDeath = (gameObjects, charactersInZone) => {
             console.log('Found a dead character!');
 
             slack({
-                "username": gameObjects.requestZone.props.zone_messages.name,
-                "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
-                "channel": ("#" + gameObjects.requestZone.props.channel),
+                "username": gameObjects.matchZone.props.zone_messages.name,
+                "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.matchZone.props.zone_messages.image + '.bmp',
+                "channel": ("#" + gameObjects.matchZone.props.channel),
                 "attachments": [{
                     "text": `The crowd cheers as ${eachCharacterInZone.props.name} is defeated!`,
                     "color": gameObjects.game.menuColor
