@@ -26,7 +26,13 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.user = new User(game.state, slackRequest.user.id);
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel.id);
         gameObjects.slackCallback = slackRequest.callback_id;
+
+        console.log('****DEBUG declaring matchZone');
+        console.log('****DEBUG gameObjects.currentMatch.props.zone_id: ', gameObjects.currentMatch.props.zone_id);
+
         gameObjects.matchZone = new Zone(game.state, game.state.zone[gameObjects.currentMatch.props.zone_id].channel_id);
+
+        console.log('****DEBUG gameObjects.matchZone.props: ', gameObjects.matchZone.props);
 
         let slackCallbackMajorElements = gameObjects.slackCallback.split("/");
 
