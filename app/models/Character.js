@@ -234,11 +234,6 @@ class Character extends BaseModel{
         return equippedItems.find( eachEquippedItem=>{
             return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
         });
-
-        /*
-        return equippedItems.filter( eachEquippedItem=>{
-            return eachEquippedItem.equipment_slot_id.indexOf(slotID) >= 0
-        });*/
     }
 
     equipItem(itemObject){

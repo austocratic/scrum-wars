@@ -122,19 +122,13 @@ class Game {
 
                 //Minimum damage:
                 //Damage listed on weapon in character's hand
+                eachCharacter.updateProperty('stats_current.damage_minimum', eachCharacter.props.stats_current.damage);
+
                 //If no weapon:
                 //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
-
                 //Maximum damage:
-                //Based on Attack Power.  How does Attack Power translate to maximum damage?
-                //** FOR NOW just double the damage to get maximum damage
-
-
+                eachCharacter.updateProperty('stats_current.damage_maximum', (eachCharacter.props.stats_current.damage * 2));
             });
-
-
-
-
     }
 
     createMatch(zoneID){
