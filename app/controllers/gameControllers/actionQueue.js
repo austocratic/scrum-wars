@@ -66,11 +66,15 @@ const actionQueue = (gameObjects) =>{
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
-            //Check if action dealt damage for response action check
+            //Check if action dealt damage for response action check.  If so, character struck can respond depending on action range
             if (actionResponse.damageDealt.length > 0){
                 console.log('action dealt damage, processing response');
                 actionResponse.damageDealt.forEach(eachActionResponse=>{
                     console.log('character id damaged and will now respond: ', eachActionResponse.targetID)
+
+
+
+
 
                 })
             }

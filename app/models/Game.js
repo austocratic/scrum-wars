@@ -100,6 +100,41 @@ class Game {
                 //Now apply the cumulative modifiers
                 eachActiveCharacterObject.setModifiedStats(cumulativeModifiers);
             });
+
+        //Set each character's Attack Power, Attack Mitigation, damage min, damage max
+        //This happens after the above iterator function so that character stats are set
+        characterIDs
+            .map( eachCharacterID =>{
+                return new Character(this.state, eachCharacterID)
+            })
+            .forEach( eachCharacter=>{
+
+                //Attack Power:
+                //level modifier + strength
+                let attackPower = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.strength;
+
+                eachCharacter.updateProperty('stats_current.attack_power', attackPower);
+
+                //Attack Mitigation
+                let attackMitigation = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.armor;
+
+                eachCharacter.updateProperty('stats_current.attack_mitigation', attackMitigation);
+
+                //Minimum damage:
+                //Damage listed on weapon in character's hand
+                //If no weapon:
+                //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
+
+                //Maximum damage:
+                //Based on Attack Power.  How does Attack Power translate to maximum damage?
+                //** FOR NOW just double the damage to get maximum damage
+
+
+            });
+
+
+
+
     }
 
     createMatch(zoneID){

@@ -98,8 +98,6 @@ class ForkedLightning extends BaseAction {
                     return true;
                 };
 
-                //UPDATING:
-                //When action fails, break and return.  Try .some array function
                 let response = {
                     status: 'complete',
                     damageDealt: []

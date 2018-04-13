@@ -71,44 +71,6 @@ class BaseAction {
         }
     }
 
-    /*
-    //Return a random character object who is still alive in the current match
-    _getRandomTarget(targetsToExclude){
-
-        //let characterIDsInZone = gameObjects.game.getCharacterIDsInZone(gameObjects.requestZone.id);
-        let charactersInZone = this.game.getCharactersInZone(this.currentZone.id);
-
-        //Get an array of the character IDs on the character's team (including the player)
-        let characterIDsOnTeam = this.game.getCharacterIDsOnTeam(this.actionCharacter.id);
-
-        let filteredCharacters = charactersInZone
-        //Filter out the player's team (including the player's character)
-            .filter( eachCharacter =>{
-
-                //Only include characters that are not in the characterIDsOnTeam array
-                return characterIDsOnTeam.indexOf(eachCharacter.id) === -1;
-            })
-            //Filter out characters that are included in the targetsToExclude argument
-            .filter( eachCharacterInZone =>{
-
-                let foundTarget = targetsToExclude.find( eachTargetToExclude =>{
-                    return eachTargetToExclude.id === eachCharacterInZone.id;
-                });
-
-                return foundTarget === undefined
-            });
-
-        //console.log('startingCharacterObjects: ', startingCharacterObjects);
-
-        //If there are no available targets return undefined
-        if(filteredCharacters.length === 0){
-            return undefined
-        }
-
-        //Return a random character object from filtered array of character objects
-        return filteredCharacters[this._getRandomIntInclusive(0, filteredCharacters.length - 1)]
-    }*/
-
     //Return a random character object who is still alive in the current match
     _getUniqueRandomTarget(numberOfTargets){
 
@@ -158,20 +120,13 @@ class BaseAction {
         let successChance = this.baseSuccessChance + modifier;
 
         return this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100);
-        
-        /*
-        if ((this._getRandomIntInclusive(0, 100) >= ((1 - successChance) * 100))) {
-
-            return true
-        }
-
-        return false;*/
     }
 
     _calculateStrength(base, modifier, variableMin, variableMax){
         return base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
     }
 
+    /* REFACTORING
     _calculateDamage(damage, mitigation){
 
         let totalDamage = damage - mitigation;
@@ -181,6 +136,55 @@ class BaseAction {
         }
 
         return totalDamage;
+    }*/
+
+    _calculateMelee(){
+
+        //Get the character's weapon(s) to get the minimum
+        //Calculate the maximum based on a multiplier
+
+        let attackMargin = this.actionCharacter.props.attackPower / this.targetCharacter.props.attackMitigation;
+
+        //Attack Power:
+        //level modifier + strength
+
+        //Attack Mitigation
+        //Sum of AC rating of all equipped armor + level modifier
+
+        //Minimum damage:
+        //Damage listed on weapon in character's hand
+        //If no weapon:
+        //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
+
+        //Maximum damage:
+        //Based on Attack Power.  How does Attack Power translate to maximum damage?
+        //** FOR NOW just double the damage to get maximum damage
+
+        //Bias calculation formula:
+        //Margin > 1, bias = maximum
+        //Margin < 1, bias - minimum
+
+        //Influence calculation Formula:
+        //Influence = Absolute value of (AP - AC) / Least of AP or AC
+
+        //More than but not double:     30/20 --> .5 Influence --> .5 Influence
+        //More than double:             125/50 --> 1.5 Influence --> 1 Influence
+        //Much more than double:        400/30 --> 12.3 Influence --> 1 Influence
+        //Less but not less than half:  25/30 --> .2 Influence --> .2 Influence
+        //Less than half:               20/50 --> 1.5 Influence --> 1 Influence
+        //Much less than half:          10/550 --> 54 Influence --> 1 Influence
+
+        //Use the attack margin to determine bias & influence
+        this._calculateDamage()
+
+
+    }
+
+    _calculateDamage(min, max, bias, influence){
+        let rnd = Math.random() * (max - min) + min,   // random in range
+            mix = Math.random() * influence;           // random mixer
+
+        return Math.round(rnd * (1 - mix) + bias * mix);// mix full range and bias rounded
     }
 
 
@@ -295,21 +299,9 @@ class BaseAction {
 
         let avoidScore = this.baseAvoidScore + avoidModifier + avoidRandomInt;
 
-        //console.log('DEBUG this.baseAvoidScore: ', this.baseAvoidScore);
-        //console.log('DEBUG avoidModifier: ', avoidModifier);
-        //console.log('DEBUG avoidRandomInt: ', avoidRandomInt);
-
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
         return (accuracyScore >= avoidScore);
-
-
-        /* Replaced by above, test
-        if(accuracyScore >= avoidScore){
-            return true
-        }
-
-        return false*/
     }
 
     _applyEffect(characterToModify, modifiers){
@@ -444,7 +436,6 @@ class BaseAction {
             this.currentMatch.props.action_queue.splice(actionToRemoveID, 1);
         }
     }
-
 
     updateAction(){
 

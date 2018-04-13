@@ -27,7 +27,8 @@ class BaseModel {
     
     updateProperty(propertyToUpdate, newValue){
         console.log(`Called updateProperty.  Updating property: ${propertyToUpdate} to ${newValue}`);
-        this.props[propertyToUpdate] = newValue
+        //this.props[propertyToUpdate] = newValue
+        _.set(this.props, propertyToUpdate , _.get(this.props, propertyToUpdate) + newValue);
     }
 
     //Property name can be nested
@@ -35,9 +36,6 @@ class BaseModel {
         console.log(`Called incrementProperty, value to increment: ${value}`);
 
         if(_.has(this.props, propertyName)){
-
-            //console.log('DEBUG _.get(this property): ', _.get(this.props, propertyName));
-
             _.set(this.props, propertyName , _.get(this.props, propertyName) + value);
         } else {
             return new Error(`Can't find property ${propertyName}`)
@@ -55,11 +53,8 @@ class BaseModel {
 
             //If the property exists, increment it, otherwise add it
             if (base[eachPropertyKey]) {
-                //console.log('DEBUG accumulateProperties base[eachPropertyKey]: ', base[eachPropertyKey]);
-                //console.log('DEBUG accumulateProperties newProperties[eachPropertyKey]: ', newProperties[eachPropertyKey]);
                 base[eachPropertyKey] = base[eachPropertyKey] + newProperties[eachPropertyKey];
             } else {
-                //console.log('DEBUG accumulateProperties else: ', base[eachPropertyKey]);
                 base = Object.assign(base, {[eachPropertyKey]: newProperties[eachPropertyKey]})
             }
         });
