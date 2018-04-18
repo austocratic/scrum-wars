@@ -7,10 +7,11 @@ const Zone = require('../../../app/models/Zone').Zone;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
-const { QuickStrike, ArcaneBolt, DefensiveStance, Backstab, LifeTap, PoisonedBlade, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
+const { BasicMelee, QuickStrike, ArcaneBolt, DefensiveStance, Backstab, LifeTap, PoisonedBlade, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
     Firestorm, Cleave, ForkedLightning } = actions;
 
 const actionControllers = {
+    '-LALEuXn3oNVmTXAAvIL': BasicMelee,
     '-Kjpe29q_fDkJG-73AQO': QuickStrike,
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     '-KjpeJT7Oct3ZCtLhENO': DefensiveStance,
