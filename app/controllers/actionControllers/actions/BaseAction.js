@@ -156,18 +156,18 @@ class BaseAction {
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
         let attackMargin = this.actionCharacter.props.stats_current.attack_power - this.targetCharacter.props.stats_current.attack_mitigation;
 
-        let bias, greaterCombatValue;
+        let bias, lesserCombatValue;
 
         //Set the bias as maximum if positive margin (power > mitigation)
         if (attackMargin >= 0){
             bias = this.actionCharacter.props.stats_current.damage_maximum;
-            greaterCombatValue = this.actionCharacter.props.stats_current.attack_power;
+            lesserCombatValue = this.actionCharacter.props.stats_current.attack_power;
         } else {
             bias = this.actionCharacter.props.stats_current.damage_minimum;
-            greaterCombatValue = this.targetCharacter.props.stats_current.attack_mitigation;
+            lesserCombatValue = this.targetCharacter.props.stats_current.attack_mitigation;
         }
 
-        let rawInfluence = (Math.abs(attackMargin) / greaterCombatValue);
+        let rawInfluence = (Math.abs(attackMargin) / lesserCombatValue);
 
         let influence;
 
