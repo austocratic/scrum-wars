@@ -310,6 +310,6 @@ class Character extends BaseModel{
 
 
 module.exports = {
-    Character: Character
+    Character
 };
 

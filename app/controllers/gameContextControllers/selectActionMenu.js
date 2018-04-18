@@ -90,9 +90,6 @@ const shop = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
-const tavern = gameObjects => {
-
-};
 const defensiveStance = gameObjects => {
     console.log('Called selectActionMenu/defensiveStance');
 
@@ -342,7 +339,28 @@ const firestorm = gameObjects => {
 };
 
 //*******  These actionControllers require a target, so will return selectActionTarget game context  *******
+const basicMelee = gameObjects => {
+    console.log('Called selectActionMenu/basicMelee');
 
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
+        return {
+            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
+        }
+    }
+
+    return targetSelection(gameObjects);
+};
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
 
@@ -548,6 +566,7 @@ module.exports = {
     balancedStance,
     intoShadow,
     whirlwind,
+    basicMelee,
     quickStrike,
     arcaneBolt,
     lifeTap,

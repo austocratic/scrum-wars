@@ -143,14 +143,6 @@ class BaseAction {
         //Get the character's weapon(s) to get the minimum
         //Calculate the maximum based on a multiplier
 
-        let attackMargin = this.actionCharacter.props.attackPower / this.targetCharacter.props.attackMitigation;
-
-        //Attack Power:
-        //level modifier + strength
-
-        //Attack Mitigation
-        //Sum of AC rating of all equipped armor + level modifier
-
         //Minimum damage:
         //Damage listed on weapon in character's hand
         //If no weapon:
@@ -162,25 +154,46 @@ class BaseAction {
 
         //Bias calculation formula:
         //Margin > 1, bias = maximum
-        //Margin < 1, bias - minimum
+        //Margin < 1, bias = minimum
 
         //Influence calculation Formula:
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
+        let attackMargin = this.actionCharacter.props.stats_current.attack_power - this.actionCharacter.props.stats_current.attack_mitigation;
 
+        let bias, greaterCombatValue;
+
+        //Set the bias as maximum if positive margin (power > mitigation)
+        if (attackMargin >= 0){
+            bias = this.actionCharacter.props.stats_current.damage_maximum;
+            greaterCombatValue = this.actionCharacter.props.stats_current.attack_power;
+        } else {
+            bias = this.actionCharacter.props.stats_current.damage_minimum;
+            greaterCombatValue = this.actionCharacter.props.stats_current.attack_mitigation;
+        }
+
+        let rawInfluence = (Math.abs(attackMargin) / greaterCombatValue);
+
+        let influence;
+
+        //Convert raw influence value into influence value to use in attack calculation
         //More than but not double:     30/20 --> .5 Influence --> .5 Influence
         //More than double:             125/50 --> 1.5 Influence --> 1 Influence
         //Much more than double:        400/30 --> 12.3 Influence --> 1 Influence
         //Less but not less than half:  25/30 --> .2 Influence --> .2 Influence
         //Less than half:               20/50 --> 1.5 Influence --> 1 Influence
         //Much less than half:          10/550 --> 54 Influence --> 1 Influence
+        if (rawInfluence > 1){
+            influence = 1;
+        } else {
+            influence = rawInfluence;
+        }
 
         //Use the attack margin to determine bias & influence
-        this._calculateDamage()
-
-
+        return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence)
     }
 
     _calculateDamage(min, max, bias, influence){
+        console.log(`Calculating melee damage, range: ${min} - ${max}, bias ${bias}, influence ${influence}`);
         let rnd = Math.random() * (max - min) + min,   // random in range
             mix = Math.random() * influence;           // random mixer
 
