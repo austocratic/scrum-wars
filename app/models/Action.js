@@ -1,24 +1,30 @@
 'use strict';
 
-//var Firebase = require('../libraries/firebase').Firebase;
-//var FirebaseBaseController = require('./FirebaseBaseController').FirebaseBaseController;
 
-//var firebase = new Firebase();
-
-var BaseModel = require('./BaseModel').BaseModel;
+const BaseModel = require('./BaseModel').BaseModel;
 
 
 class Action extends BaseModel{
     constructor(gameState, actionID){
         super(gameState, 'action', actionID);
 
-        var actions = gameState.action;
+        let actions = gameState.action;
 
         //Set the character's props
         this.props = actions[actionID];
         this.id = actionID
     }
-    
+
+    /*
+    getActionText(playerCharacter){
+
+        //If the action is a basic melee attack, name should be dynamic based on the character's weapon
+        if (this.props.functionName === "BasicMelee"){
+
+        }
+
+        return this.props.name
+    }*/
  
 
 }
@@ -28,5 +34,5 @@ class Action extends BaseModel{
 
 
 module.exports = {
-    Action: Action
+    Action
 };

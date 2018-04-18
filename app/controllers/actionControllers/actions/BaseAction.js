@@ -59,10 +59,6 @@ class BaseAction {
         //Push the effects into the effect queue
         this._insertActionInQueue();
 
-        //Process the action with turn 0
-        //TODO TESTING removing this.  Route index now calls refresh() again after processing the request so it should process this
-        //this.process(0);
-
         //Decrement the action cost from character's Action Points
         this.actionCharacter.incrementProperty('action_points', -this.actionTaken.props.action_points_cost);
 

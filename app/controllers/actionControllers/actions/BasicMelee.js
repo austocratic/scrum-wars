@@ -20,7 +20,8 @@ class BasicAttack extends BaseAction {
         this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
         this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
         */
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.calculatedDamage = this._calculateMelee();
 
 
         //Alerts & Messages
