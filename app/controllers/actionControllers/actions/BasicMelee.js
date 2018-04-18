@@ -3,7 +3,7 @@
 const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
-class BasicAttack extends BaseAction {
+class BasicMelee extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 
@@ -76,5 +76,5 @@ class BasicAttack extends BaseAction {
 }
 
 module.exports = {
-    BasicAttack
+    BasicMelee
 };
