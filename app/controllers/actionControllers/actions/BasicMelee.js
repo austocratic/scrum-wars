@@ -29,9 +29,9 @@ class BasicAttack extends BaseAction {
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
 
         //TODO this message should be dynamic based on weapon type
-        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a powerful strike and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
+        this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Melee attack, but stumbles!`;
+        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Melee Attack but ${this.targetCharacter.props.name} evades the attack!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a Melee Attack and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
     }
 
     initiate(){
@@ -40,7 +40,7 @@ class BasicAttack extends BaseAction {
     }
 
     process(turn) {
-        console.log('DEBUG just called QuickStrike process() function');
+        console.log('DEBUG just called BasicMelee process() function');
         console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
 
         switch (true) {
