@@ -11,7 +11,7 @@ let Action = require('../../models/Action').Action;
 
 const actions = require('../actionControllers/actions/index');
 
-const { QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade, ForkedLightning, Cleave } = actions;
+const { BasicMelee, QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade, ForkedLightning, Cleave } = actions;
 
 //TODO I may want to make this a stand alone file/function "getActionController" so that it can be re used in Game to process effects
 const actionControllers = {
@@ -20,6 +20,7 @@ const actionControllers = {
     //Therefore I don't have access to the previous actionFunction selected.  I should restructure my callback strings to include all 3
     //values in the future.  Until then I will have to hard code the action ID's here
 
+    '-LALEuXn3oNVmTXAAvIL': BasicMelee,
     '-Kjpe29q_fDkJG-73AQO': QuickStrike,
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     '-KkOq-y2_zgEgdhY-6_U': LifeTap,
