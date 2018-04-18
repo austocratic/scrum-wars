@@ -7,11 +7,11 @@ class BasicMelee extends BaseAction {
     constructor(gameObjects) {
         super(gameObjects);
 
-
-        /*
+        //TODO NEED TO OVERHAUL DODGE CALC
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
+        /*
         this.basePower = 5;
         this.baseMitigation = 1;
         this.baseMin = 1;
