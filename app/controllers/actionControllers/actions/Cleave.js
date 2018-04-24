@@ -10,14 +10,15 @@ class Cleave extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 5;
         this.baseAvoidScore = 5;
-        this.basePower = 12;
-        this.baseMitigation = 1;
-        this.baseMin = 7;
-        this.baseMax = 8;
-
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        //this.basePower = 12;
+        //this.baseMitigation = 1;
+        //this.baseMin = 7;
+        //this.baseMax = 8;
+        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamageMultiplier = .5;
+        this.calculatedDamage = this._calculateMelee(this.bonusDamageMultiplier);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";

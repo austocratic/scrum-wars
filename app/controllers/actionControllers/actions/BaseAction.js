@@ -134,23 +134,21 @@ class BaseAction {
         return totalDamage;
     }*/
 
-    _calculateMelee(){
 
-        //Get the character's weapon(s) to get the minimum
-        //Calculate the maximum based on a multiplier
 
-        //Minimum damage:
-        //Damage listed on weapon in character's hand
-        //If no weapon:
-        //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
+    //Minimum damage:
+    //Damage listed on weapon in character's hand
+    //If no weapon:
+    //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
 
-        //Maximum damage:
-        //Based on Attack Power.  How does Attack Power translate to maximum damage?
-        //** FOR NOW just double the damage to get maximum damage
+    //Maximum damage:
+    //Based on Attack Power.  How does Attack Power translate to maximum damage?
+    //** FOR NOW just double the damage to get maximum damage
 
-        //Bias calculation formula:
-        //Margin > 1, bias = maximum
-        //Margin < 1, bias = minimum
+    //Bias calculation formula:
+    //Margin > 1, bias = maximum
+    //Margin < 1, bias = minimum
+    _calculateMelee(bonusDamageMultiplier){
 
         //Influence calculation Formula:
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
@@ -185,17 +183,34 @@ class BaseAction {
         }
 
         //Use the attack margin to determine bias & influence
-        return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence)
+        return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence, bonusDamageMultiplier)
     }
 
-    _calculateDamage(min, max, bias, influence){
-        console.log(`Calculating melee damage, range: ${min} - ${max}, bias ${bias}, influence ${influence}`);
+    static _calculateDamage(min, max, bias, influence, bonusDamageMultiplier){
+        console.log(`Calculating melee damage, range: ${min} - ${max}, bias ${bias}, influence ${influence} bonus multiplier ${bonusDamageMultiplier}`);
+
+        let bonusDamage;
+
+        //Calculate a bonus damage depending on character level
+        if (!bonusDamageMultiplier){
+            bonusDamage = 0;
+        } else {
+            bonusDamage = (this.actionCharacter.props.level * bonusDamageMultiplier)
+        }
+
         let rnd = Math.random() * (max - min) + min,   // random in range
             mix = Math.random() * influence;           // random mixer
 
-        return Math.round(rnd * (1 - mix) + bias * mix);// mix full range and bias rounded
+        return Math.round((rnd * (1 - mix) + bias * mix) + bonusDamage);// mix full range and bias rounded + Bonus Damage
     }
 
+    static _calculateBonusDamage(factor){
+        if (!factor){
+            return 0
+        }
+
+        return (this.actionCharacter.props.level * factor)
+    }
 
     // Take action_queue
 

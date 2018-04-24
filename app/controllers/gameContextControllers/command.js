@@ -83,8 +83,6 @@ const action = gameObjects => {
             return singleAction.props.type;
         });
 
-    //TODO this will current return array of arrays need to finish this up
-
     let templateAttachments = groupedActions
         .map(actionCategory => {
 
@@ -126,6 +124,7 @@ const action = gameObjects => {
                 attachmentsForCategory[elementToInsert].actions.push({
                     "name": actionDetails.props.functionName,
                     "text": actionDetails.props.name,
+                    //"text": actionDetails.getActionText(gameObjects.playerCharacter),
                     "style": actionAvailableButtonColor,
                     "type": "button",
                     "value": actionDetails.id
