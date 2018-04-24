@@ -186,7 +186,7 @@ class BaseAction {
         return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence, bonusDamageMultiplier)
     }
 
-    static _calculateDamage(min, max, bias, influence, bonusDamageMultiplier){
+    _calculateDamage(min, max, bias, influence, bonusDamageMultiplier){
         console.log(`Calculating melee damage, range: ${min} - ${max}, bias ${bias}, influence ${influence} bonus multiplier ${bonusDamageMultiplier}`);
 
         let bonusDamage;
