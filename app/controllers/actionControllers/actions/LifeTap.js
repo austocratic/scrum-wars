@@ -48,7 +48,7 @@ class LifeTap extends BaseAction {
 
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
-                this.actionCharacter.incrementProperty('health', this.calculatedDamage);
+                this.actionCharacter.incrementProperty('hit_points', this.calculatedDamage);
 
                 return {
                     status: 'complete',

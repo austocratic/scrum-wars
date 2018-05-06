@@ -31,8 +31,8 @@ const classSelection = gameObjects => {
         return {
             action_id: eachActionID,
             turn_used: 0,
-            turn_available: 0,
-            is_available: 1
+            //turn_available: 0,
+            //is_available: 1
         }
     });
 

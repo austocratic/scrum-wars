@@ -237,7 +237,7 @@ const profile = gameObjects => {
                 },
                 {
                     "title": "Current Health",
-                    "value": gameObjects.playerCharacter.props.health,
+                    "value": gameObjects.playerCharacter.props.hit_points,
                     "short": true
                 },
                 {

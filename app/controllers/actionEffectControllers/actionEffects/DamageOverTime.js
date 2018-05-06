@@ -49,7 +49,7 @@ class DamageOverTime extends BaseActionEffect{
     initiate() {
 
         //Process all the other effects of the action
-        this._changeProperty(this.targetCharacter, {health: -this.calculatedDamage});
+        this._changeProperty(this.targetCharacter, {hit_points: -this.calculatedDamage});
 
         //console.log('DEBUG just changed the property');
 

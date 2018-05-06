@@ -3,7 +3,7 @@
 const slack = require('../../../libraries/slack');
 const _ = require('lodash');
 
-const Character = require('../../../models/Character').Character;
+//const Character = require('../../../models/Character').Character;
 const Action = require('../../../models/Action').Action;
 
 class BaseAction {
@@ -224,7 +224,7 @@ class BaseAction {
         console.log(`called _processDamage`);
         //Decrease target's health
         //this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
-        target.incrementProperty('health', -damageAmount);
+        target.incrementProperty('hit_points', -damageAmount);
 
         let interruptedActionIndex = [];
 
@@ -474,7 +474,7 @@ class BaseAction {
         var newTurnUsed = this.currentMatch.props.number_turns;
 
         //actionsToUpdate[actionKey].turn_available = actionsToUpdate;
-        this.actionCharacter.props.actions[actionKey].turn_available = newTurnAvailable;
+        //this.actionCharacter.props.actions[actionKey].turn_available = newTurnAvailable;
         this.actionCharacter.props.actions[actionKey].turn_used = newTurnUsed;
     }
 }
