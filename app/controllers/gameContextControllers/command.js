@@ -242,7 +242,7 @@ const profile = gameObjects => {
                 },
                 {
                     "title": "Max Health",
-                    "value": `${gameObjects.playerCharacter.props.stats_base.hit_points} + ${gameObjects.playerCharacter.props.stats_current.hit_points - gameObjects.playerCharacter.props.stats_base.hit_points} = ${gameObjects.playerCharacter.props.stats_current.hit_points}`,
+                    "value": `${gameObjects.playerCharacter.props.stats_base.health} + ${gameObjects.playerCharacter.props.stats_current.health - gameObjects.playerCharacter.props.stats_base.health} = ${gameObjects.playerCharacter.props.stats_current.health}`,
                     "short": true
                 },
                 {
