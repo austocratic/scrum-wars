@@ -140,7 +140,7 @@ class Game {
 
                 eachCharacter.updateProperty('stats_current.magic_attack_power', magicAttackPower);
 
-                let magicResistance = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.magic_resitance;
+                let magicResistance = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.magic_resistance;
 
                 eachCharacter.updateProperty('stats_current.magic_resistance', magicResistance);
             });
