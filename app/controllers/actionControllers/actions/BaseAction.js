@@ -142,6 +142,7 @@ class BaseAction {
     }*/
 
     _calculateMagic(bonusDamageMultiplier){
+        console.log(`Calculating Magic: magic_attack_power ${this.actionCharacter.props.stats_current.magic_attack_power},  magic_resistance ${this.targetCharacter.props.stats_current.magic_resistance}, damage_maximum ${this.actionTaken.props.damage_maximum}, damage_minimum ${this.actionTaken.props.damage_minimum}`);
 
         //Influence calculation Formula:
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
@@ -152,10 +153,10 @@ class BaseAction {
         //Set the bias as maximum if positive margin (power > mitigation)
         if (attackMargin >= 0){
             bias = this.actionTaken.props.damage_maximum;
-            lesserCombatValue = this.actionCharacter.props.stats_current.attack_power;
+            lesserCombatValue = this.actionCharacter.props.stats_current.magic_attack_power;
         } else {
             bias = this.actionTaken.props.damage_minimum;
-            lesserCombatValue = this.targetCharacter.props.stats_current.attack_mitigation;
+            lesserCombatValue = this.targetCharacter.props.stats_current.magic_resistance;
         }
 
         let rawInfluence = (Math.abs(attackMargin) / lesserCombatValue);
@@ -218,7 +219,7 @@ class BaseAction {
     }
 
     _calculateDamage(min, max, bias, influence, bonusDamageMultiplier){
-        console.log(`Calculating melee damage, range: ${min} - ${max}, bias ${bias}, influence ${influence} bonus multiplier ${bonusDamageMultiplier}`);
+        console.log(`Calculating damage, range: ${min} - ${max}, bias ${bias}, influence ${influence} bonus multiplier ${bonusDamageMultiplier}`);
 
         let bonusDamage;
 
