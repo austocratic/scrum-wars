@@ -134,20 +134,44 @@ class BaseAction {
         return totalDamage;
     }*/
 
+    _calculateMagic(bonusDamageMultiplier){
 
+        //Influence calculation Formula:
+        //Influence = Absolute value of (AP - AC) / Least of AP or AC
+        let attackMargin = this.actionCharacter.props.stats_current.magic_attack_power - this.targetCharacter.props.stats_current.magic_resistance;
 
-    //Minimum damage:
-    //Damage listed on weapon in character's hand
-    //If no weapon:
-    //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
+        let bias, lesserCombatValue;
 
-    //Maximum damage:
-    //Based on Attack Power.  How does Attack Power translate to maximum damage?
-    //** FOR NOW just double the damage to get maximum damage
+        //Set the bias as maximum if positive margin (power > mitigation)
+        if (attackMargin >= 0){
+            bias = this.actionTaken.props.damage_maximum;
+            lesserCombatValue = this.actionCharacter.props.stats_current.attack_power;
+        } else {
+            bias = this.actionTaken.props.damage_minimum;
+            lesserCombatValue = this.targetCharacter.props.stats_current.attack_mitigation;
+        }
 
-    //Bias calculation formula:
-    //Margin > 1, bias = maximum
-    //Margin < 1, bias = minimum
+        let rawInfluence = (Math.abs(attackMargin) / lesserCombatValue);
+
+        let influence;
+
+        //Convert raw influence value into influence value to use in attack calculation
+        //More than but not double:     30/20 --> .5 Influence --> .5 Influence
+        //More than double:             125/50 --> 1.5 Influence --> 1 Influence
+        //Much more than double:        400/30 --> 12.3 Influence --> 1 Influence
+        //Less but not less than half:  25/30 --> .2 Influence --> .2 Influence
+        //Less than half:               20/50 --> 1.5 Influence --> 1 Influence
+        //Much less than half:          10/550 --> 54 Influence --> 1 Influence
+        if (rawInfluence > 1){
+            influence = 1;
+        } else {
+            influence = rawInfluence;
+        }
+
+        //Use the attack margin to determine bias & influence
+        return this._calculateDamage(this.actionTaken.props.damage_minimum, this.actionTaken.props.damage_maximum, bias, influence, bonusDamageMultiplier)
+    }
+
     _calculateMelee(bonusDamageMultiplier){
 
         //Influence calculation Formula:

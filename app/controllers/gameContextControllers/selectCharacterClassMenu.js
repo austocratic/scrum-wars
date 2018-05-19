@@ -30,7 +30,7 @@ const classSelection = gameObjects => {
     let characterActions = gameObjects.characterClass.props.action_id.map( eachActionID =>{
         return {
             action_id: eachActionID,
-            turn_used: 0,
+            turn_used: 0
             //turn_available: 0,
             //is_available: 1
         }

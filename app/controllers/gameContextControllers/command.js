@@ -241,8 +241,18 @@ const profile = gameObjects => {
                     "short": true
                 },
                 {
+                    "title": "Current Mana",
+                    "value": gameObjects.playerCharacter.props.mana_points,
+                    "short": true
+                },
+                {
                     "title": "Max Health",
                     "value": `${gameObjects.playerCharacter.props.stats_base.health} + ${gameObjects.playerCharacter.props.stats_current.health - gameObjects.playerCharacter.props.stats_base.health} = ${gameObjects.playerCharacter.props.stats_current.health}`,
+                    "short": true
+                },
+                {
+                    "title": "Max Mana",
+                    "value": `${gameObjects.playerCharacter.props.stats_base.mana} + ${gameObjects.playerCharacter.props.stats_current.mana - gameObjects.playerCharacter.props.stats_base.mana} = ${gameObjects.playerCharacter.props.stats_current.mana}`,
                     "short": true
                 },
                 {

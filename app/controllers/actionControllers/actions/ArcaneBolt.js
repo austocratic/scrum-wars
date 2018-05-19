@@ -9,15 +9,18 @@ class ArcaneBolt extends BaseAction {
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
-        this.baseAvoidScore = 5;
-        this.basePower = 5;
-        this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
+        //this.baseAvoidScore = 5;
+        //this.basePower = 5;
+        //this.baseMitigation = 1;
+        //this.baseMin = 1;
+        //this.baseMax = 5;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamageMultiplier = 0;
+        this.calculatedDamage = this._calculateMagic(this.bonusDamageMultiplier);
+
+        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";

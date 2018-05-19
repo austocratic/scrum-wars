@@ -109,6 +109,8 @@ class Game {
             })
             .forEach( eachCharacter=>{
 
+                //----Physical damage (attack & mitigation)----
+
                 //Attack Power:
                 //level modifier + strength
                 let attackPower = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.strength;
@@ -128,6 +130,19 @@ class Game {
                 //If 2 weapons: use primary hand, **Wont worry about secondary hand for now
                 //Maximum damage:
                 eachCharacter.updateProperty('stats_current.damage_maximum', (eachCharacter.props.stats_current.damage * 2));
+
+
+                //----Magic damage (attack & mitigation)----
+
+                //Attack Power:
+                //level modifier + intelligence
+                let magicAttackPower = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.intelligence;
+
+                eachCharacter.updateProperty('stats_current.magic_attack_power', magicAttackPower);
+
+                let magicResistance = (eachCharacter.props.level * 4) + eachCharacter.props.stats_current.magic_resitance;
+
+                eachCharacter.updateProperty('stats_current.magic_resistance', magicResistance);
             });
     }
 
