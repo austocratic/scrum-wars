@@ -9,7 +9,7 @@ class ArcaneBolt extends BaseAction {
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
-        //this.baseAvoidScore = 5;
+        this.baseAvoidScore = 5;
         //this.basePower = 5;
         //this.baseMitigation = 1;
         //this.baseMin = 1;
