@@ -36,7 +36,9 @@ class BaseModel {
         console.log(`Called incrementProperty, value to increment: ${value}`);
 
         if(_.has(this.props, propertyName)){
-            _.set(this.props, propertyName , _.get(this.props, propertyName) + value);
+
+            this.props[propertyName] = this.props[propertyName] + value;
+            //_.set(this.props, propertyName, _.get(this.props, propertyName) + value);
         } else {
             return new Error(`Can't find property ${propertyName}`)
         }
