@@ -73,7 +73,7 @@ const actionQueue = (gameObjects) =>{
                 actionResponse.damageDealt.forEach(eachActionResponse=>{
                     console.log('character id damaged and will now respond: ', eachActionResponse.targetID)
 
-
+                    //Character struck now responds
 
 
 

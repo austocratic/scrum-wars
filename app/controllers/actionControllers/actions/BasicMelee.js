@@ -38,7 +38,13 @@ class BasicMelee extends BaseAction {
                 if (this._avoidCheck(0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
-                    return;
+                    return {
+                        status: 'complete',
+                        damageDealt: [{
+                            targetID: this.targetCharacter.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: 0
+                        }]};
                 }
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
@@ -53,8 +59,7 @@ class BasicMelee extends BaseAction {
                         targetID: this.targetCharacter.id,
                         range: this.actionTaken.props.range,
                         damageAmount: this.calculatedDamage
-                    }]
-                };
+                    }]};
 
                 break;
 

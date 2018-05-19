@@ -59,8 +59,15 @@ class BaseAction {
         //Push the effects into the effect queue
         this._insertActionInQueue();
 
-        //Decrement the action cost from character's Action Points
-        this.actionCharacter.incrementProperty('action_points', -this.actionTaken.props.action_points_cost);
+        if (this.actionTaken.props.action_points_cost){
+            //Decrement the action cost from character's Stamina points
+            this.actionCharacter.incrementProperty('action_points', -this.actionTaken.props.action_points_cost);
+        }
+
+        if (this.actionTaken.props.stamina_cost){
+            //Decrement the action cost from character's Mana Points
+            this.actionCharacter.incrementProperty('stamina_cost', -this.actionTaken.props.stamina_cost);
+        }
 
         return {
             "text": "action complete"

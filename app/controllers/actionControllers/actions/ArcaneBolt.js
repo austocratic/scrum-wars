@@ -25,7 +25,7 @@ class ArcaneBolt extends BaseAction {
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
-        this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
+        this.channelActionAvoidedMessage = `Bolts of arcane energy streak from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the bolt's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure an Arcane Bolt, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches bolts of arcane energy which strike ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;
     }
@@ -44,7 +44,13 @@ class ArcaneBolt extends BaseAction {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'white-burst.gif';
                     slack.sendMessage(this.defaultActionPayload);
-                    return;
+                    return {
+                        status: 'complete',
+                        damageDealt: [{
+                            targetID: this.targetCharacter.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: 0
+                        }]};
                 }
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
