@@ -57,7 +57,6 @@ const actionQueue = (gameObjects) =>{
             }
 
             //Declare the Class function without invoking
-            //TODO need a way to handle if ID for actionControllers is undefined
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
             validateGameObjects(gameObjects, actionObjectToMake.validations);
@@ -68,17 +67,48 @@ const actionQueue = (gameObjects) =>{
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
             //Check if action dealt damage for response action check.  If so, character struck can respond depending on action range
-            if (actionResponse.damageDealt.length > 0){
-                console.log('action dealt damage, processing response');
-                actionResponse.damageDealt.forEach(eachActionResponse=>{
-                    console.log('character id damaged and will now respond: ', eachActionResponse.targetID)
+            if (actionResponse.damageDealt) {
+                if (actionResponse.damageDealt > 0){
+                    console.log('action dealt damage, processing response');
+                    actionResponse.damageDealt.forEach(eachActionResponse=>{
+                        console.log('character id damaged and will now respond: ', eachActionResponse.targetID);
 
-                    //Character struck now responds
+                        //Character struck now responds
+                        //Using a placeholder for now.  Should strike back use BaseAction or should the be unique functions?
+                        let characterDamaged = new Character(gameObjects.game.state, eachActionResponse.targetID);
 
+                        //Check if that character damaged has a strike_back property
+                        if (characterDamaged.props.strike_back){
 
+                            //Compare the action range to see if the character has that type in its strike_back property:
+                            if (characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
 
-                })
+                                let strikeBackRoll = actionObject._getRandomIntInclusive(0, 100);
+                                console.log(`[${characterDamaged}] rolled for strikeback, rolled a ${strikeBackRoll} compare to minimum of ${characterDamaged.props.strike_back[actionObject.actionTaken.props.range]}!`);
+
+                                //Roll to see if the action successfully initiates a strikeback
+                                if (strikeBackRoll > characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
+                                    console.log(`Strikeback succeeded!`);
+
+                                    //Push a basic attack into the queue for processing.  It should process during this refresh
+                                    //TODO in the future this action should be dynamic (depending on range)
+                                    gameObjects.currentMatch.props.action_queue.push({
+
+                                        //Push the action ID into the action queue
+                                        //TODO hard coded basic melee
+                                        "action_id": "-LALEuXn3oNVmTXAAvIL",
+                                        "turn_initiated": gameObjects.currentMatch.props.number_turns,
+                                        "channel_id": gameObjects.currentZone.props.channel_id,
+                                        "player_character_id": gameObjects.playerCharacter.id,
+                                        "target_character_id": characterDamaged.id
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }
             }
+
 
             //Check if action is complete
             if (actionResponse.status === 'complete'){
@@ -94,6 +124,10 @@ const actionQueue = (gameObjects) =>{
     //console.log('gameObjects after filter: ', gameObjects.currentMatch.props.action_queue);
 
 };
+
+const processResponse = (gameObjects) =>{
+
+}
 
 module.exports = {
     actionQueue
