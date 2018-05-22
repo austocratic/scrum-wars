@@ -53,6 +53,7 @@ class BasicMelee extends BaseAction {
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
+                console.log('DEBUG about to return complete');
                 return {
                     status: 'complete',
                     damageDealt: [{
@@ -64,7 +65,14 @@ class BasicMelee extends BaseAction {
                 break;
 
             default:
-                this._deleteActionInQueue();
+                console.log('DEBUG hit default');
+                return {
+                    status: 'complete',
+                    damageDealt: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: this.calculatedDamage
+                    }]};
                 break;
         }
     }
