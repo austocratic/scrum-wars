@@ -59,12 +59,18 @@ const actionQueue = (gameObjects) =>{
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
-            validateGameObjects(gameObjects, actionObjectToMake.validations);
+            //validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+            validateGameObjects(gameObjects, [
+                'game',
+                'actionCharacter',
+                'currentZone',
+                'currentMatch',
+                'actionTaken',
+                'targetCharacter'
+            ]);
 
             let actionObject = new actionObjectToMake(gameObjects);
-
-            console.log('DEBUG gameObjects.currentMatch.props.number_turns: ', gameObjects.currentMatch.props.number_turns);
-            console.log('DEBUG eachActionToProcess.turn_initiated: ', eachActionToProcess.turn_initiated);
 
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
