@@ -63,8 +63,8 @@ const actionQueue = (gameObjects) =>{
 
             validateGameObjects(gameObjects, [
                 'game',
-                'actionCharacter',
-                'currentZone',
+                'playerCharacter',
+                'requestZone',
                 'currentMatch',
                 'actionTaken',
                 'targetCharacter'
