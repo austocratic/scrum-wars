@@ -98,10 +98,10 @@ const actionQueue = (gameObjects) =>{
                                     gameObjects.currentMatch.props.action_queue.push({
 
                                         //Push the action ID into the action queue
-                                        //TODO hard coded basic melee
+                                        //TODO remove hard coded basic melee
                                         "action_id": "-LALEuXn3oNVmTXAAvIL",
                                         "turn_initiated": gameObjects.currentMatch.props.number_turns,
-                                        "channel_id": gameObjects.currentZone.props.channel_id,
+                                        "channel_id": gameObjects.requestZone.props.channel_id,
                                         "player_character_id": gameObjects.playerCharacter.id,
                                         "target_character_id": characterDamaged.id
                                     })
@@ -127,10 +127,6 @@ const actionQueue = (gameObjects) =>{
     //console.log('gameObjects after filter: ', gameObjects.currentMatch.props.action_queue);
 
 };
-
-const processResponse = (gameObjects) =>{
-
-}
 
 module.exports = {
     actionQueue
