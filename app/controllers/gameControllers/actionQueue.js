@@ -115,7 +115,9 @@ const actionQueue = (gameObjects) =>{
                                         "target_character_id": gameObjects.playerCharacter.id
                                         //"player_character_id": gameObjects.playerCharacter.id,
                                         //"target_character_id": characterDamaged.id
-                                    })
+                                    });
+
+                                    console.log('DEBUG ACTIONQUEUE: ', JSON.stringify(gameObjects.currentMatch.props.action_queue))
                                 }
                             }
                         }
