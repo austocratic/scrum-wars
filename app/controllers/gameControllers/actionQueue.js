@@ -85,11 +85,12 @@ const actionQueue = (gameObjects) =>{
                             //Compare the action range to see if the character has that type in its strike_back property:
                             if (characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
 
+                                //Calculate a strikeback score.
                                 let strikeBackRoll = actionObject._getRandomIntInclusive(0, 100);
                                 console.log(`[${characterDamaged}] rolled for strikeback, rolled a ${strikeBackRoll} compare to minimum of ${characterDamaged.props.strike_back[actionObject.actionTaken.props.range]}!`);
 
                                 //Roll to see if the action successfully initiates a strikeback
-                                if (strikeBackRoll > characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
+                                if (strikeBackRoll <= characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
                                     console.log(`Strikeback succeeded!`);
 
                                     //Push a basic attack into the queue for processing.  It should process during this refresh
