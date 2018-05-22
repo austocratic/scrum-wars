@@ -47,7 +47,11 @@ const actionQueue = (gameObjects) =>{
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
-            gameObjects.playerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
+            //TODO this overwrites the original game objects from the original request.  The problem is that the response from the original request returns this value
+            //It needs to
+
+            let queuePlayerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
+            //gameObjects.playerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
             gameObjects.requestZone = new Zone(gameObjects.game.state, eachActionToProcess.channel_id);
 
             if (eachActionToProcess.target_character_id) {
@@ -70,7 +74,7 @@ const actionQueue = (gameObjects) =>{
                 'targetCharacter'
             ]);
 
-            let actionObject = new actionObjectToMake(gameObjects);
+            let actionObject = new actionObjectToMake(gameObjects, queuePlayerCharacter);
 
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);

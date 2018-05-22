@@ -326,7 +326,7 @@ const firestorm = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 

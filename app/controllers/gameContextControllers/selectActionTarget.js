@@ -70,7 +70,7 @@ const processActionOnTarget = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
     
-    let actionData = new actionObjectToMake(gameObjects);
+    let actionData = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     //Perform the action
     actionData.initiate();
