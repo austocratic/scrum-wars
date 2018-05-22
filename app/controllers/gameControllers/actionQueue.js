@@ -101,8 +101,7 @@ const actionQueue = (gameObjects) =>{
                                 //Roll to see if the action successfully initiates a strikeback
                                 if (strikeBackRoll <= characterDamaged.props.strike_back[actionObject.actionTaken.props.range]){
                                     console.log(`Strikeback succeeded!`);
-
-                                    /*
+                                    
                                     //Push a basic attack into the queue for processing.  It should process during this refresh
                                     //TODO in the future this action should be dynamic (depending on range)
                                     gameObjects.currentMatch.props.action_queue.push({
@@ -114,7 +113,7 @@ const actionQueue = (gameObjects) =>{
                                         "channel_id": gameObjects.requestZone.props.channel_id,
                                         "player_character_id": gameObjects.playerCharacter.id,
                                         "target_character_id": characterDamaged.id
-                                    })*/
+                                    })
                                 }
                             }
                         }
