@@ -70,7 +70,7 @@ const actionQueue = (gameObjects) =>{
 
             //Check if action dealt damage for response action check.  If so, character struck can respond depending on action range
             if (actionResponse.damageDealt) {
-                if (actionResponse.damageDealt > 0){
+                if (actionResponse.damageDealt.length > 0){
                     console.log('action dealt damage, processing response');
                     actionResponse.damageDealt.forEach(eachActionResponse=>{
                         console.log('character id damaged and will now respond: ', eachActionResponse.targetID);
