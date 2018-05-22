@@ -26,14 +26,14 @@ class BaseModel {
     }*/
     
     updateProperty(propertyToUpdate, newValue){
-        console.log(`Called updateProperty.  Updating property: ${propertyToUpdate} to ${newValue}`);
+        //console.log(`Called updateProperty.  Updating property: ${propertyToUpdate} to ${newValue}`);
         //this.props[propertyToUpdate] = newValue
         _.set(this.props, propertyToUpdate , newValue);
     }
 
     //Property name can be nested
     incrementProperty(propertyName, value){
-        console.log(`Called incrementProperty, value to increment: ${value}`);
+        //console.log(`Called incrementProperty, value to increment: ${value}`);
 
         if(_.has(this.props, propertyName)){
 
