@@ -7,10 +7,13 @@ const _ = require('lodash');
 const Action = require('../../../models/Action').Action;
 
 class BaseAction {
-    constructor(gameObjects){
+    constructor(gameObjects, actionCharacter){
 
         this.game = gameObjects.game;
-        this.actionCharacter = gameObjects.playerCharacter;
+
+        //Updating to take an argument - TESTING
+        this.actionCharacter = actionCharacter;
+        //this.actionCharacter = gameObjects.playerCharacter;
         this.currentZone = gameObjects.requestZone;
         this.currentMatch = gameObjects.currentMatch;
         this.actionTaken = gameObjects.actionTaken;
