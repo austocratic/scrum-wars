@@ -109,7 +109,7 @@ const actionQueue = (gameObjects) =>{
                                         //Push the action ID into the action queue
                                         //TODO remove hard coded basic melee
                                         "action_id": "-LALEuXn3oNVmTXAAvIL",
-                                        "turn_initiated": gameObjects.currentMatch.props.number_turns,
+                                        "turn_initiated": (gameObjects.currentMatch.props.number_turns - 1),
                                         "channel_id": gameObjects.requestZone.props.channel_id,
                                         "player_character_id": characterDamaged.id,
                                         "target_character_id": gameObjects.playerCharacter.id
