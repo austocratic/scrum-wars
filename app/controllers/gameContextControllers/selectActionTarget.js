@@ -31,6 +31,7 @@ const actionControllers = {
 };
 
 const processActionOnTarget = gameObjects => {
+    console.log('called processActionOnTarget');
 
     validateGameObjects(gameObjects, [
         'game',
