@@ -9,6 +9,8 @@ const Action = require('../../../models/Action').Action;
 class BaseAction {
     constructor(gameObjects, actionCharacter){
 
+        console.log('DEBUG declaring BaseAction');
+
         this.game = gameObjects.game;
 
         //Updating to take an argument - TESTING
@@ -18,6 +20,8 @@ class BaseAction {
         this.currentMatch = gameObjects.currentMatch;
         this.actionTaken = gameObjects.actionTaken;
         this.targetCharacter = gameObjects.targetCharacter;
+
+        console.log('DEBUG finished declaring the basics');
 
         //Base Slack template
         this.defaultActionPayload = {
