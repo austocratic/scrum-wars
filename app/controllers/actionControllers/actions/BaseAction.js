@@ -3,11 +3,18 @@
 const slack = require('../../../libraries/slack');
 const _ = require('lodash');
 
-//const Character = require('../../../models/Character').Character;
+const validateGameObjects = require('../../../helpers').validateGameObjects;
+
 const Action = require('../../../models/Action').Action;
 
 class BaseAction {
     constructor(gameObjects, actionCharacter){
+
+        validateGameObjects(gameObjects, [
+            'targetCharacter',
+            'actionTaken',
+            'playerCharacter'
+        ]);
 
         console.log('DEBUG declaring BaseAction');
 
@@ -33,6 +40,8 @@ class BaseAction {
                 "color": this.game.menuColor
             }]
         };
+
+        console.log('DEBUG finished declaring the default actionPayload');
     }
 
     //TODO this should probably be moved to the helpers file

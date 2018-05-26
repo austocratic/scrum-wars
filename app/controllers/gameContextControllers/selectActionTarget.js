@@ -60,7 +60,8 @@ const processActionOnTarget = gameObjects => {
 
     validateGameObjects(gameObjects, [
         'targetCharacter',
-        'actionTaken'
+        'actionTaken',
+        'playerCharacter'
     ]);
 
     //Validate that the action is in the actionControllers mapping above
