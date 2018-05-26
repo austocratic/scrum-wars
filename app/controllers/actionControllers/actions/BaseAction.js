@@ -9,8 +9,12 @@ const Action = require('../../../models/Action').Action;
 
 class BaseAction {
     constructor(gameObjects, actionCharacter){
+        if (actionCharacter === undefined){
+            throw new Error('declared a BaseAction with an undefined actionCharacter');
+        }
 
         validateGameObjects(gameObjects, [
+            'game',
             'targetCharacter',
             'actionTaken',
             'playerCharacter'
@@ -29,6 +33,9 @@ class BaseAction {
         this.targetCharacter = gameObjects.targetCharacter;
 
         console.log('DEBUG finished declaring the basics');
+
+        console.log('DEBUG BaseAction this.actionCharacter.props: ', this.actionCharacter.props);
+        console.log('DEBUG BaseAction this.actionTaken.props: ', this.actionTaken.props);
 
         //Base Slack template
         this.defaultActionPayload = {
