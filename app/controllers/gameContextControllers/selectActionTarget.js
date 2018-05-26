@@ -44,13 +44,19 @@ const processActionOnTarget = gameObjects => {
 
     //User selected a target character ID.  Create a character for that target
     gameObjects.targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    console.log('DEBUG Got here - declared target');
     
     let slackCallbackElements = gameObjects.slackCallback.split("/");
 
     let previousSelectionElements = slackCallbackElements[slackCallbackElements.length - 3];
     let previousValue = previousSelectionElements.split(":")[2];
 
+    console.log('DEBUG Got here - got the values');
+
     gameObjects.actionTaken = new Action(gameObjects.game.state, previousValue);
+
+    console.log('DEBUG Got here - declared action');
 
     validateGameObjects(gameObjects, [
         'targetCharacter',
@@ -65,16 +71,26 @@ const processActionOnTarget = gameObjects => {
         }
     }
 
+    console.log('DEBUG Got here - passed the error check');
+
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers[previousValue];
 
+    console.log('DEBUG Got here - passed the action object to make');
+
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    console.log('DEBUG Got here - passed validate');
     
     let actionData = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
+    console.log('DEBUG Got here - declard the action');
+
     //Perform the action
     actionData.initiate();
+
+    console.log('DEBUG Got here - passed inititae');
 
     //Mark the action as used, pass in action id & turn number
     gameObjects.playerCharacter.updateActionUsed(actionData.actionTaken.id, gameObjects.currentMatch.props.number_turns);
