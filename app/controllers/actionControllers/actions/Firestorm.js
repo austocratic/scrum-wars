@@ -10,21 +10,13 @@ class Firestorm extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 1;
-        //this.basePower = 5;
-        //this.baseMitigation = 1;
-        //this.baseMin = 1;
-        //this.baseMax = 5;
 
         //AOE Specific attributes
         this.maxTargetsAffected = 5;
 
-        this.bonusDamageMultiplier = 0;
-        this.calculatedDamage = this._calculateMagic(this.bonusDamageMultiplier);
-
-        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        //Moving this into process function so it can calculate a new value per target
-        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamage = this.actionCharacter.props.level;
+        this.calculatedDamage = this._calculateMagic(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
