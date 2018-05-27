@@ -54,7 +54,7 @@ class PoisonedBlade extends BaseAction {
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
                 //Apply the effect
-                this._applyEffect(this.targetCharacter, this.statsToModify);
+                //this._applyEffect(this.targetCharacter, this.statsToModify);
 
                 return {
                     status: 'complete',
@@ -64,6 +64,35 @@ class PoisonedBlade extends BaseAction {
                         damageAmount: this.calculatedDamage
                     }]
                 };
+
+                break;
+            case (turn >= 1 && turn <= 5):
+
+                this.defaultActionPayload.attachments = [{
+                    "text": `${this.targetCharacter.props.name} reels in pain from poison taking ${this.calculatedDamage} damage!`,
+                    "thumb_url": this.game.baseURL + this.game.skillImagePath + '67.png',
+                    "fields": [
+                        {
+                            "title": "Damage Type",
+                            "value": "Poison",
+                            "short": true
+                        },
+                        {
+                            "title": "Damage Amount",
+                            "value": this.calculatedDamage,
+                            "short": true
+                        }
+                    ]
+                }];
+
+                slack.sendMessage(this.defaultActionPayload);
+
+                //this.bonusDamage = this.actionCharacter.props.level;
+                //this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+                this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
+
+                this._processDamage(this.targetCharacter, this.calculatedDamage);
+
 
                 break;
             default:

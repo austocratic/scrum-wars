@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 const path = require('path');
@@ -12,3 +13,4 @@ require('fs').readdirSync(__dirname)
     .forEach( eachFilteredFileName =>{
         module.exports[path.basename(eachFilteredFileName, '.js')] = require(path.join(__dirname, eachFilteredFileName))[path.basename(eachFilteredFileName, '.js')];
     });
+*/

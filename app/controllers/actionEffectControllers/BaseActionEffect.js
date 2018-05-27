@@ -1,3 +1,5 @@
+
+/*
 'use strict';
 
 //const slack = require('../../../libraries/slack');
@@ -47,4 +49,4 @@ BaseActionEffect.validations = [
 
 module.exports = {
     BaseActionEffect
-};
+};*/

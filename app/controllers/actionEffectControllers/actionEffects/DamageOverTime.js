@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 const slack = require('../../../libraries/slack');
@@ -66,12 +67,7 @@ class DamageOverTime extends BaseActionEffect{
 
 
 
-//Attach validations
-/*
-DamageOverTime.validations = [
-    'game'
-];*/
 
 module.exports = {
     DamageOverTime
-};
+};*/
