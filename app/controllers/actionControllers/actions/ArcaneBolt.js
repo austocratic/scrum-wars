@@ -34,6 +34,8 @@ class ArcaneBolt extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
+                console.log('DEBUG arcane bolt about to check for avoid');
+
                 if (this._avoidCheck(0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'white-burst.gif';
@@ -46,6 +48,8 @@ class ArcaneBolt extends BaseAction {
                             damageAmount: 0
                         }]};
                 }
+
+                console.log('DEBUG arcane bolt passed the avoid check');
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
                 this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'white-burst.gif';
