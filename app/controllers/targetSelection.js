@@ -39,7 +39,8 @@ const getTargetSelectionMenu = gameObjects => {
         })
         //Filter out hidden characters
         .filter( eachCharacter => {
-            return eachCharacter.getEffectsWithModifier('is_hidden').length === 0;
+            //return eachCharacter.getEffectsWithModifier('is_hidden').length === 0;
+            return eachCharacter.props.stats_current.is_hidden === 0;
         });
 
     gameObjects.slackResponseTemplate.attachments[0].actions[0].options = filteredCharacters.map( eachCharacter => {
