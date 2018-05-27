@@ -154,18 +154,9 @@ class Character extends BaseModel{
             });
     }
 
-    //Checks to see if the action ID passed as an argument is available on the turn passed as an argument
-    /* REFACTORING TO AP SYSTEM
-    isActionAvailable(actionDetails, turnNumber){
-
-        let characterActionStatus = _.find(this.props.actions, {'action_id': actionDetails.id});
-
-        return characterActionStatus.turn_used + actionDetails.props.cool_down <= turnNumber
-    }*/
-
-    //Does the player have the same or more action points than the cost of the action
+    //Does the player have the same or more mana and stamina points than the cost of the action
     isActionAvailable(actionDetails){
-        return this.props.action_points >= actionDetails.props.action_points_cost
+        return (this.props.mana_points >= actionDetails.props.mana_points_cost && this.props.stamina_points >= actionDetails.props.stamina_points_cost);
     }
 
     //Return an array of effects with that contain the modifier searched for
