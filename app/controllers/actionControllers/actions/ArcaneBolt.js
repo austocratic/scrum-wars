@@ -12,9 +12,8 @@ class ArcaneBolt extends BaseAction {
         this.baseAvoidScore = 5;
 
         this.bonusDamage = this.actionCharacter.props.level;
-        console.log('DEBUG character level ', this.actionCharacter.props.level);
         this.calculatedDamage = this._calculateMagic(this.actionTaken.props.damage_multiplier, this.bonusDamage);
-        console.log('Arcane Bolt calculated damage of: ', this.calculatedDamage);
+        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";

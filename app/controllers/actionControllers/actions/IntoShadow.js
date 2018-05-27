@@ -11,12 +11,7 @@ class IntoShadow extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        //this.basePower = 5;
-        //this.baseMitigation = 1;
-        //this.baseMin = 1;
-        //this.baseMax = 5;
 
-        this.bonusDamageMultiplier = 0;
         this.calculatedDamage = 0;
 
         this.playerActionFailedMessage = "You fail to enter the shadows!";

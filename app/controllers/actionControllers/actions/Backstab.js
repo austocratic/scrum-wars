@@ -10,17 +10,10 @@ class Backstab extends BaseAction {
         this.baseSuccessChance = .8;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 2;
-        //this.basePower = 10;
-        //this.baseMitigation = 1;
-        //this.baseMin = 3;
-        //this.baseMax = 8;
 
-        this.bonusDamageMultiplier = .75;
-        this.calculatedDamage = this._calculateMelee(this.bonusDamageMultiplier);
-
-        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamage = (this.actionCharacter.props.level * 2);
+        this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
         
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
