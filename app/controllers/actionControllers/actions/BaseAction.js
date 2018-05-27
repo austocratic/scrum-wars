@@ -157,8 +157,8 @@ class BaseAction {
         return totalDamage;
     }*/
 
-    _calculateMagic(bonusDamageMultiplier){
-        console.log(`Calculating Magic: magic_attack_power ${this.actionCharacter.props.stats_current.magic_attack_power},  magic_resistance ${this.targetCharacter.props.stats_current.magic_resistance}, damage_maximum ${this.actionTaken.props.damage_maximum}, damage_minimum ${this.actionTaken.props.damage_minimum}`);
+    _calculateMagic(damageMultiplier, bonusDamage){
+        console.log(`Calculating Magic: magic_attack_power ${this.actionCharacter.props.stats_current.magic_attack_power},  magic_resistance ${this.targetCharacter.props.stats_current.magic_resistance}, damage_maximum ${this.actionTaken.props.damage_maximum}, damage_minimum ${this.actionTaken.props.damage_minimum}, damage multiplier ${damageMultiplier}, bonus damage ${bonusDamage}`);
 
         //Influence calculation Formula:
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
@@ -193,10 +193,10 @@ class BaseAction {
         }
 
         //Use the attack margin to determine bias & influence
-        return this._calculateDamage(this.actionTaken.props.damage_minimum, this.actionTaken.props.damage_maximum, bias, influence, bonusDamageMultiplier)
+        return this._calculateDamage(this.actionTaken.props.damage_minimum, this.actionTaken.props.damage_maximum, bias, influence, damageMultiplier, bonusDamage)
     }
 
-    _calculateMelee(damageMultiplier, levelDamageMultiplier){
+    _calculateMelee(damageMultiplier, bonusDamage){
 
         //Influence calculation Formula:
         //Influence = Absolute value of (AP - AC) / Least of AP or AC
@@ -231,23 +231,26 @@ class BaseAction {
         }
 
         //Use the attack margin to determine bias & influence
-        return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence, damageMultiplier, levelDamageMultiplier)
+        return this._calculateDamage(this.actionCharacter.props.stats_current.damage_minimum, this.actionCharacter.props.stats_current.damage_maximum, bias, influence, damageMultiplier, bonusDamage)
     }
 
     _calculateDamage(min, max, bias, influence, damageMultiplier, bonusDamage){
         console.log(`Calculating damage, range: ${min} - ${max}, bias ${bias}, influence ${influence} damage multiplier ${damageMultiplier} bonus damage ${bonusDamage}`);
 
-        //Calculate a bonus damage depending on character level
+        //If no bonus passed in, use 0
+        if (!damageMultiplier){
+            damageMultiplier = 1;
+        }
+
+        //If no bonus passed in, use 0
         if (!bonusDamage){
             bonusDamage = 0;
-        } /*else {
-            bonusDamage = (this.actionCharacter.props.level * bonusDamageMultiplier)
-        }*/
+        }
 
         let rnd = Math.random() * (max - min) + min,   // random in range
             mix = Math.random() * influence;           // random mixer
 
-        return Math.round((rnd * (1 - mix) + bias * mix) + bonusDamage);// mix full range and bias rounded + Bonus Damage
+        return Math.round(((rnd * (1 - mix) + bias * mix) * damageMultiplier) + bonusDamage);// mix full range and bias rounded + Bonus Damage
     }
 
     static _calculateBonusDamage(factor){
