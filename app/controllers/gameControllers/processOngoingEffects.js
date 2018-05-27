@@ -16,7 +16,7 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
     charactersInZone.forEach( eachCharacter => {
         //If the character has effects on them, determine if that effect should fade
         if(eachCharacter.props.effects) {
-            eachCharacter.props.effects.forEach( (eachEffect, index, allEffects) => {
+            eachCharacter.props.effects.forEach( (eachEffect, index) => {
                 //If effect has no end_turn, it stays permanently
                 if(eachEffect.end_turn){
                     if(gameObjects.currentMatch.props.number_turns >= eachEffect.end_turn){
@@ -32,7 +32,7 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
                             "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachCharacter.props.gender + '/' + eachCharacter.props.avatar,
                             "channel": ("#" + gameObjects.requestZone.props.channel),
                             "attachments": [{
-                                "text": "_A new turn begins!_",
+                                "text": `_${eachCharacter.props.name}'s ${eachEffect.name} fades away_`,
                                 "color": gameObjects.game.menuColor
                             }]
                         })

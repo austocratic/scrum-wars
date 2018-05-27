@@ -14,7 +14,7 @@ class DefensiveStance extends BaseAction {
         this.baseAvoidScore = 5;
 
         //TODO for testing, will be infinite duration in the future;
-        this.duration = 4;
+        //this.duration = 4;
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
