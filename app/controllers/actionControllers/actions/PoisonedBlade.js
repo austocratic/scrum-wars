@@ -57,7 +57,7 @@ class PoisonedBlade extends BaseAction {
                 //this._applyEffect(this.targetCharacter, this.statsToModify);
 
                 return {
-                    status: 'complete',
+                    status: 'ongoing',
                     damageDealt: [{
                         targetID: this.targetCharacter.id,
                         range: this.actionTaken.props.range,
@@ -89,10 +89,19 @@ class PoisonedBlade extends BaseAction {
 
                 //this.bonusDamage = this.actionCharacter.props.level;
                 //this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
-                this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
+                let ongoingDamageAmount = this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
 
-                this._processDamage(this.targetCharacter, this.calculatedDamage);
+                this._processDamage(this.targetCharacter, ongoingDamageAmount);
 
+                return {
+                    targetID: this.targetCharacter.id,
+                    range: this.actionTaken.props.range,
+                    damageAmount: [{
+                        targetID: this.targetCharacter.id,
+                        range: this.actionTaken.props.range,
+                        damageAmount: ongoingDamageAmount
+                    }]
+                };
 
                 break;
             default:
