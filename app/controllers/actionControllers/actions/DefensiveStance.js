@@ -28,7 +28,7 @@ class DefensiveStance extends BaseAction {
         };
 
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing armor by ${this.statsToModify.armor}, attack mitigation ${this.statsToModify.attack_mitigation} while lowering attack power by ${this.statsToModify.attack_power}!`;
-        
+
     }
 
     initiate(){

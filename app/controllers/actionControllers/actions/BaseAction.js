@@ -369,7 +369,8 @@ class BaseAction {
 
         let endingTurn;
 
-        console.log('DEBUG this.actionTaken.duration');
+        console.log('DEBUG this.actionTaken.duration: ', this.actionTaken.duration);
+        console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.number_turns);
 
         if (this.actionTaken.duration) {
             endingTurn = this.currentMatch.number_turns + this.actionTaken.duration
