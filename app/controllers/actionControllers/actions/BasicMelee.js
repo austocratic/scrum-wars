@@ -6,15 +6,13 @@ const BaseAction = require('./BaseAction').BaseAction;
 class BasicMelee extends BaseAction {
     constructor(gameObjects, actionCharacter) {
         super(gameObjects, actionCharacter);
-        console.log('DEBUG declaring BasicMelee');
-
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
 
-        this.bonusDamageMultiplier = 0;
-        this.calculatedDamage = this._calculateMelee(this.bonusDamageMultiplier);
+        this.bonusDamage = this.props.level;
+        this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
