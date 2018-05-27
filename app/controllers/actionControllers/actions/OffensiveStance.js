@@ -12,23 +12,20 @@ class OffensiveStance extends BaseAction {
         this.baseSuccessChance = 1; //% chance of success
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 4;
-        this.baseMitigation = 1;
-        this.baseMin = 0;
-        this.baseMax = 0;
 
         this.calculatedPower = this._calculateStrength(this.basePower, this.actionCharacter.props.level, this.baseMin, this.baseMax);
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts an offensive stance, but stumbles!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a berserker's frenzy, increasing strength by ${this.calculatedPower} while lowering dexterity by ${this.calculatedPower}!`;
 
         //Modifiers to apply on action success
         this.statsToModify = {
-            dexterity: -this.calculatedPower,
-            strength: this.calculatedPower
+            attack_mitigation: -5,
+            attack_power: 10
         };
+
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters an *offensive stance*, increasing attack power by ${this.statsToModify.attack_power} while lowering attack mitigation by ${this.statsToModify.attack_mitigation}!`;
     }
 
     initiate(){
@@ -60,10 +57,6 @@ class OffensiveStance extends BaseAction {
     }
 }
 
-/*
-DefensiveStance.validations = [
-    ...BaseModify.validations
-];*/
 
 module.exports = {
     OffensiveStance
