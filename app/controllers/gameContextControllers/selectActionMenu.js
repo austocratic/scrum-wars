@@ -119,7 +119,7 @@ const defensiveStance = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 
@@ -159,7 +159,7 @@ const offensiveStance = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 
@@ -199,7 +199,7 @@ const balancedStance = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 
@@ -246,7 +246,7 @@ const intoShadow = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 
@@ -286,7 +286,7 @@ const whirlwind = gameObjects => {
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
 
-    let actionObject = new actionObjectToMake(gameObjects);
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
     actionObject.initiate();
 
