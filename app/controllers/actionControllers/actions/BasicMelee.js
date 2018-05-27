@@ -11,7 +11,7 @@ class BasicMelee extends BaseAction {
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
 
-        this.bonusDamage = this.props.level;
+        this.bonusDamage = this.actionCharacter.props.level;
         this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
 
         //Alerts & Messages
