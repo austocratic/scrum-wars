@@ -365,8 +365,11 @@ class BaseAction {
     }
 
     _applyEffect(characterToModify, modifiers){
+        console.log('called BaseAction._applyEffect()');
 
         let endingTurn;
+
+        console.log('DEBUG this.actionTaken.duration');
 
         if (this.actionTaken.duration) {
             endingTurn = this.currentMatch.number_turns + this.actionTaken.duration
@@ -381,7 +384,6 @@ class BaseAction {
                 end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
-                //modifiers: modifierObject
             });
         } else {
             characterToModify.props.effects = [{
@@ -391,7 +393,6 @@ class BaseAction {
                 end_turn: endingTurn,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
-                //modifiers: modifierObject
             }]
         }
 

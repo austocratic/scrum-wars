@@ -19,7 +19,6 @@ class DefensiveStance extends BaseAction {
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a defensive stance, but stumbles!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing toughness by ${this.calculatedPower} while lowering strength by ${this.calculatedPower}!`;
 
         //Modifiers to apply on action success
         this.statsToModify = {
@@ -27,6 +26,9 @@ class DefensiveStance extends BaseAction {
             attack_mitigation: 5,
             attack_power: -5
         };
+
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} crouches and enters a defensive stance, increasing armor by ${this.statsToModify.armor}, attack mitigation ${this.statsToModify.attack_mitigation} while lowering attack power by ${this.statsToModify.attack_power}!`;
+        
     }
 
     initiate(){
