@@ -4,6 +4,8 @@
 
 //const helpers = require('../../helpers');
 
+const slack = require('../../libraries/slack').sendMessage;
+
 //Models
 //const Action = require('../../models/Action').Action;
 //const Character = require('../../models/Character').Character;
@@ -23,12 +25,17 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
                         //Delete that effect
                         eachCharacter.props.effects.splice(index, 1);
 
-                        //If only one effect, delete the whole effects property
-                        //if (allEffects.length === 1){}
+                        console.log('DEBUG gameObjects.requestZone.props.channel: ', gameObjects.requestZone.props.channel);
 
-
-                        //If more than one effect, remove that effect
-
+                        slack({
+                            "username": eachCharacter.props.name,
+                            "icon_url": this.game.baseURL + this.game.avatarPath + eachCharacter.props.gender + '/' + eachCharacter.props.avatar,
+                            "channel": ("#" + gameObjects.requestZone.props.channel),
+                            "attachments": [{
+                                "text": "_A new turn begins!_",
+                                "color": gameObjects.game.menuColor
+                            }]
+                        })
                     }
                 }
             });
