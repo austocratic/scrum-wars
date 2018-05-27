@@ -68,7 +68,7 @@ class Backstab extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

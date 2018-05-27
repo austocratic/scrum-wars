@@ -4,22 +4,25 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class ForkedLightning extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 5;
-        this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
+        //this.basePower = 5;
+        //this.baseMitigation = 1;
+        //this.baseMin = 1;
+        //this.baseMax = 5;
 
         //AOE Specific attributes
         this.maxTargetsAffected = 5;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        this.bonusDamageMultiplier = 0;
+        this.calculatedDamage = this._calculateMagic(this.bonusDamageMultiplier);
+
+        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
         //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
         //this.calculatedDamageSecondaryTarget = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
@@ -124,7 +127,7 @@ class ForkedLightning extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

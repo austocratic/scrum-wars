@@ -6,8 +6,8 @@ const BaseAction = require('./BaseAction').BaseAction;
 //Defensive Stance is a stance that increases AC & lowers attack
 //Static success chance
 class DefensiveStance extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = 1; //% chance of success
         this.baseAccuracyScore = 10;
@@ -54,7 +54,7 @@ class DefensiveStance extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

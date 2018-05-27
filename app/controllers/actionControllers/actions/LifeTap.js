@@ -4,20 +4,23 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class LifeTap extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 4;
-        this.baseMitigation = 1;
-        this.baseMin = 0;
-        this.baseMax = 4;
+        //this.basePower = 4;
+        //this.baseMitigation = 1;
+        //this.baseMin = 0;
+        //this.baseMax = 4;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamageMultiplier = 0;
+        this.calculatedDamage = this._calculateMagic(this.bonusDamageMultiplier);
+
+        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your target resists your spell!";
@@ -61,7 +64,7 @@ class LifeTap extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

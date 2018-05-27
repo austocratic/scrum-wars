@@ -4,8 +4,8 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class QuickStrike extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
@@ -62,7 +62,7 @@ class QuickStrike extends BaseAction {
                 break;
 
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

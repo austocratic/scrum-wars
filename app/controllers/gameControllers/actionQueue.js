@@ -129,7 +129,6 @@ const actionQueue = (gameObjects) =>{
                 }
             }
 
-
             //Check if action is complete
             if (actionResponse.status === 'complete'){
                 console.log('action is complete, remove from queue');

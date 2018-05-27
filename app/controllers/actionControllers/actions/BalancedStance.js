@@ -6,8 +6,8 @@ const BaseAction = require('./BaseAction').BaseAction;
 //Balanced Stance is a stance that removes other stances (reverses the effects of stances)
 //Static success chance
 class BalancedStance extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
@@ -52,7 +52,7 @@ class BalancedStance extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

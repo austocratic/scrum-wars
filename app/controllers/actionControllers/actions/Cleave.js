@@ -4,8 +4,8 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class Cleave extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 5;
@@ -62,7 +62,13 @@ class Cleave extends BaseAction {
                 if (this._avoidCheck(0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
-                    return;
+                    return {
+                        status: 'complete',
+                        damageDealt: [{
+                            targetID: this.targetCharacter.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: 0
+                        }]};
                 }
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
@@ -82,7 +88,7 @@ class Cleave extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

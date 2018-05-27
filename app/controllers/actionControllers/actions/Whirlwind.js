@@ -4,8 +4,8 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class Whirlwind extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
@@ -100,10 +100,7 @@ class Whirlwind extends BaseAction {
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirlwind* of blades ends!`;
                 slack.sendMessage(this.defaultActionPayload);
 
-                return {
-                    status: 'complete',
-                    damageDealt: []
-                };
+                return this._getDefaultProcessResponse();
 
                 break;
         }
