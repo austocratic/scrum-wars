@@ -116,7 +116,7 @@ const action = gameObjects => {
                 //Default button color to red ("danger").  If available, it will be overwritten
                 let actionAvailableButtonColor = "danger";
 
-                if (gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken.props.mana_points_cost, gameObjects.actionTaken.props.stamina_points_cost)) {
+                if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
                     actionAvailableButtonColor = "primary"
                 }
 
