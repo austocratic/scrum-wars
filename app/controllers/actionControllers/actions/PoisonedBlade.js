@@ -68,8 +68,10 @@ class PoisonedBlade extends BaseAction {
                 break;
             case (turn >= 1 && turn <= 5):
 
+                let ongoingDamageAmount = this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
+
                 this.defaultActionPayload.attachments = [{
-                    "text": `${this.targetCharacter.props.name} reels in pain from poison taking ${this.calculatedDamage} damage!`,
+                    "text": `${this.targetCharacter.props.name} reels in pain from poison taking ${ongoingDamageAmount} damage!`,
                     "thumb_url": this.game.baseURL + this.game.skillImagePath + '67.png',
                     "fields": [
                         {
@@ -79,17 +81,13 @@ class PoisonedBlade extends BaseAction {
                         },
                         {
                             "title": "Damage Amount",
-                            "value": this.calculatedDamage,
+                            "value": ongoingDamageAmount,
                             "short": true
                         }
                     ]
                 }];
 
                 slack.sendMessage(this.defaultActionPayload);
-
-                //this.bonusDamage = this.actionCharacter.props.level;
-                //this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
-                let ongoingDamageAmount = this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
 
                 this._processDamage(this.targetCharacter, ongoingDamageAmount);
 
