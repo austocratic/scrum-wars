@@ -13,6 +13,7 @@ class BasicMelee extends BaseAction {
 
         this.bonusDamage = this.actionCharacter.props.level;
         this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        console.log('Basic Melee calculated damage of: ', this.calculatedDamage);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
