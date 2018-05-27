@@ -155,8 +155,16 @@ class Character extends BaseModel{
     }
 
     //Does the player have the same or more mana and stamina points than the cost of the action
-    isActionAvailable(actionDetails){
-        return (this.props.mana_points >= actionDetails.props.mana_points_cost && this.props.stamina_points >= actionDetails.props.stamina_points_cost);
+    isActionAvailable(manaCost, staminaCost){
+        return (this.checkMana(manaCost) && this.checkStamina(staminaCost));
+    }
+
+    checkMana(manaCost){
+        return this.props.mana_points >= manaCost;
+    }
+
+    checkStamina(staminaCost){
+        return this.props.stamina_points >= staminaCost;
     }
 
     //Return an array of effects with that contain the modifier searched for
@@ -187,8 +195,6 @@ class Character extends BaseModel{
         if (!this.props.inventory) {
             return [];
         }
-        
-        //let items = this.props.inventory;
 
         //return items
         return this.props.inventory
