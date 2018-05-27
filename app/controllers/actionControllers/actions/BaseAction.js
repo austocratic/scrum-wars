@@ -17,7 +17,8 @@ class BaseAction {
             'game',
             'targetCharacter',
             'actionTaken',
-            'playerCharacter'
+            'playerCharacter',
+            'currentMatch'
         ]);
 
         this.game = gameObjects.game;
@@ -367,22 +368,23 @@ class BaseAction {
     _applyEffect(characterToModify, modifiers){
         console.log('called BaseAction._applyEffect()');
 
-        let endingTurn;
+        //let endingTurn;
 
-        console.log('DEBUG this.actionTaken.duration: ', this.actionTaken.duration);
-        console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.number_turns);
+        console.log('DEBUG this.actionTaken.props.effect_duration: ', this.actionTaken.props.effect_duration);
+        console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.props.number_turns);
 
+        /*
         if (this.actionTaken.duration) {
             endingTurn = this.currentMatch.number_turns + this.actionTaken.duration
-        }
+        }*/
 
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
                 action_id: this.actionTaken.id,
                 applied_by_character_id: this.actionCharacter.id,
-                turn_applied: this.currentMatch.number_turns,
-                end_turn: endingTurn,
+                turn_applied: this.currentMatch.props.number_turns,
+                end_turn:  this.actionTaken.props.effect_duration + this.currentMatch.props.number_turns,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
             });
@@ -390,8 +392,8 @@ class BaseAction {
             characterToModify.props.effects = [{
                 action_id: this.actionTaken.id,
                 applied_by_character_id: this.actionCharacter.id,
-                turn_applied: this.currentMatch.number_turns,
-                end_turn: endingTurn,
+                turn_applied: this.currentMatch.props.number_turns,
+                end_turn:  this.actionTaken.props.effect_duration + this.currentMatch.props.number_turns,
                 type: this.actionTaken.props.type,
                 modifiers: modifiers
             }]
