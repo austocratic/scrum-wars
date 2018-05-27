@@ -4,20 +4,23 @@ const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
 
 class Backstab extends BaseAction {
-    constructor(gameObjects) {
-        super(gameObjects);
+    constructor(gameObjects, actionCharacter) {
+        super(gameObjects, actionCharacter);
 
         this.baseSuccessChance = .8;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 2;
-        this.basePower = 10;
-        this.baseMitigation = 1;
-        this.baseMin = 3;
-        this.baseMax = 8;
+        //this.basePower = 10;
+        //this.baseMitigation = 1;
+        //this.baseMin = 3;
+        //this.baseMax = 8;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamageMultiplier = .75;
+        this.calculatedDamage = this._calculateMelee(this.bonusDamageMultiplier);
+
+        //this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
+        //this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
+        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
         
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
@@ -39,7 +42,13 @@ class Backstab extends BaseAction {
                 if (this._avoidCheck(0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
-                    return;
+                    return {
+                        status: 'complete',
+                        damageDealt: [{
+                            targetID: this.targetCharacter.id,
+                            range: this.actionTaken.props.range,
+                            damageAmount: 0
+                        }]};
                 }
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
