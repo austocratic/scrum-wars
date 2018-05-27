@@ -382,7 +382,7 @@ class BaseAction {
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
                 action_id: this.actionTaken.id,
-                effect_name: this.actionTaken.props.name,
+                name: this.actionTaken.props.name,
                 applied_by_character_id: this.actionCharacter.id,
                 turn_applied: this.currentMatch.props.number_turns,
                 end_turn:  this.actionTaken.props.effect_duration + this.currentMatch.props.number_turns,
@@ -392,7 +392,7 @@ class BaseAction {
         } else {
             characterToModify.props.effects = [{
                 action_id: this.actionTaken.id,
-                effect_name: this.actionTaken.props.name,
+                name: this.actionTaken.props.name,
                 applied_by_character_id: this.actionCharacter.id,
                 turn_applied: this.currentMatch.props.number_turns,
                 end_turn:  this.actionTaken.props.effect_duration + this.currentMatch.props.number_turns,
