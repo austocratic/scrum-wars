@@ -66,14 +66,7 @@ class BasicMelee extends BaseAction {
                 break;
 
             default:
-                console.log('DEBUG hit default');
-                return {
-                    status: 'complete',
-                    damageDealt: [{
-                        targetID: this.targetCharacter.id,
-                        range: this.actionTaken.props.range,
-                        damageAmount: this.calculatedDamage
-                    }]};
+                return this._getDefaultProcessResponse();
                 break;
         }
     }

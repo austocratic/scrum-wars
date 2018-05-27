@@ -145,18 +145,6 @@ class BaseAction {
         return base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
     }
 
-    /* REFACTORING
-    _calculateDamage(damage, mitigation){
-
-        let totalDamage = damage - mitigation;
-
-        if (totalDamage < 0) {
-            return 0;
-        }
-
-        return totalDamage;
-    }*/
-
     _calculateMagic(damageMultiplier, bonusDamage){
         console.log(`Calculating Magic: magic_attack_power ${this.actionCharacter.props.stats_current.magic_attack_power},  magic_resistance ${this.targetCharacter.props.stats_current.magic_resistance}, damage_maximum ${this.actionTaken.props.damage_maximum}, damage_minimum ${this.actionTaken.props.damage_minimum}, damage multiplier ${damageMultiplier}, bonus damage ${bonusDamage}`);
 
@@ -253,19 +241,15 @@ class BaseAction {
         return Math.round(((rnd * (1 - mix) + bias * mix) * damageMultiplier) + bonusDamage);// mix full range and bias rounded + Bonus Damage
     }
 
-    static _calculateBonusDamage(factor){
-        if (!factor){
-            return 0
-        }
-
-        return (this.actionCharacter.props.level * factor)
+    _getDefaultProcessResponse(){
+        return {
+            status: 'complete',
+            damageDealt: [{
+                targetID: this.targetCharacter.id,
+                range: this.actionTaken.props.range,
+                damageAmount: this.calculatedDamage
+            }]};
     }
-
-    // Take action_queue
-
-    //Filter it down to interrupted actions only.  For each interrupted action, send a message
-
-    //Remove interrupted actions from the action_queue
 
     //Decrement health, processes action interrupts and hiding removal
     //Argument must be a character object
