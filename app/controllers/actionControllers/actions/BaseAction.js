@@ -238,6 +238,9 @@ class BaseAction {
         let rnd = Math.random() * (max - min) + min,   // random in range
             mix = Math.random() * influence;           // random mixer
 
+        console.log('DEBUG rnd: ', rnd);
+        console.log('DEBUG mix: ', mix);
+
         return Math.round(((rnd * (1 - mix) + bias * mix) * damageMultiplier) + bonusDamage);// mix full range and bias rounded + Bonus Damage
     }
 

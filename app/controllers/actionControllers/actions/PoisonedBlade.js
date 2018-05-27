@@ -105,6 +105,9 @@ class PoisonedBlade extends BaseAction {
 
                 break;
             default:
+                this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *poison* runs its course from ${this.targetCharacter.props.name}!`;
+                slack.sendMessage(this.defaultActionPayload);
+
                 return this._getDefaultProcessResponse();
                 break;
         }
