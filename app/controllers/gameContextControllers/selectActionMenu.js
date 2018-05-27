@@ -107,10 +107,10 @@ const defensiveStance = gameObjects => {
     
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Declare the Class function without invoking
@@ -147,10 +147,10 @@ const offensiveStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Declare the Class function without invoking
@@ -187,10 +187,10 @@ const balancedStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Declare the Class function without invoking
@@ -227,10 +227,10 @@ const intoShadow = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Check if the character is already hidden
@@ -274,10 +274,10 @@ const whirlwind = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Declare the Class function without invoking
@@ -314,10 +314,10 @@ const firestorm = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     //Declare the Class function without invoking
@@ -375,10 +375,10 @@ const quickStrike = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -399,10 +399,10 @@ const lifeTap = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -423,10 +423,10 @@ const arcaneBolt = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -447,10 +447,10 @@ const forkedLightning = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -471,10 +471,10 @@ const savageStrike = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -502,10 +502,10 @@ const backstab = gameObjects => {
         }
     }
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -526,10 +526,10 @@ const poisonedBlade = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
@@ -550,10 +550,10 @@ const cleave = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
 
     return targetSelection(gameObjects);
