@@ -29,7 +29,7 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
 
                         slack({
                             "username": eachCharacter.props.name,
-                            "icon_url": this.game.baseURL + this.game.avatarPath + eachCharacter.props.gender + '/' + eachCharacter.props.avatar,
+                            "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachCharacter.props.gender + '/' + eachCharacter.props.avatar,
                             "channel": ("#" + gameObjects.requestZone.props.channel),
                             "attachments": [{
                                 "text": "_A new turn begins!_",
