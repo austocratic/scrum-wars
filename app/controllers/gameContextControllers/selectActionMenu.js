@@ -3,12 +3,12 @@
 const _ = require('lodash');
 
 const NPC = require('../../models/NPC').NPC;
-//const Item = require('../../models/Item').Item;
 const Action = require('../../models/Action').Action;
-//const Character = require('../../models/Character').Character;
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection').getTargetSelectionMenu;
+
+const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
 const actions = require('../actionControllers/actions/index');
 
@@ -353,33 +353,11 @@ const basicMelee = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    console.log('DEBUG mana: ', gameObjects.playerCharacter.props.mana_points);
-    console.log('DEBUG mana cost: ', gameObjects.actionTaken.props.mana_points_cost);
-    console.log('DEBUG stamina: ', gameObjects.playerCharacter.props.stamina_points);
-    console.log('DEBUG stamina cost: ', gameObjects.actionTaken.props.stamina_points_cost);
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
 
-    if (!gameObjects.playerCharacter.checkMana(gameObjects.actionTaken.props.mana_points_cost) && !gameObjects.playerCharacter.checkStamina(gameObjects.actionTaken.props.stamina_points_cost)){
-        return {
-            "text": `_You don't have enough mana or stamina to use ${gameObjects.actionTaken.props.name}_`
-        }
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
     }
-    if (!gameObjects.playerCharacter.checkMana(gameObjects.actionTaken.props.mana_points_cost)){
-        return {
-            "text": `_You don't have enough mana to use ${gameObjects.actionTaken.props.name}_`
-        }
-    }
-    if (!gameObjects.playerCharacter.checkStamina(gameObjects.actionTaken.props.stamina_points_cost)){
-        return {
-            "text": `_You don't have enough stamina to use ${gameObjects.actionTaken.props.name}_`
-        }
-    }
-
-    /*
-    if (!gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken)) {
-        return {
-            "text": `_You don't have enough action points to use ${gameObjects.actionTaken.props.name}_`
-        }
-    }*/
 
     return targetSelection(gameObjects);
 };

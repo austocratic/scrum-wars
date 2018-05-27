@@ -16,11 +16,6 @@ class BasicMelee extends BaseAction {
         this.bonusDamageMultiplier = 0;
         this.calculatedDamage = this._calculateMelee(this.bonusDamageMultiplier);
 
-        console.log('DEBUG finished calculating melee');
-
-        console.log('DEBUG actionCharacter ', this.actionCharacter.props.name);
-        console.log('DEBUG targetCharacter ', this.targetCharacter.props.name);
-
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
