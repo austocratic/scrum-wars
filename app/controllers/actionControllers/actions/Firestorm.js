@@ -15,8 +15,8 @@ class Firestorm extends BaseAction {
         this.maxTargetsAffected = 5;
 
         this.bonusDamage = this.actionCharacter.props.level;
-        this.calculatedDamage = this._calculateMagic(this.actionTaken.props.damage_multiplier, this.bonusDamage);
-        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
+        //this.calculatedDamage = this._calculateMagic(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        //console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
@@ -79,7 +79,7 @@ class Firestorm extends BaseAction {
                     })
                     .map(targetHit=>{
 
-                        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+                        let calculatedDamage = this._calculateMagic(this.actionTaken.props.damage_multiplier, this.bonusDamage);
 
                         //Process damage & Interrupts
                         this._processDamage(targetHit, calculatedDamage);
