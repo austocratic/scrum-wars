@@ -14,19 +14,6 @@ class Action extends BaseModel{
         this.props = actions[actionID];
         this.id = actionID
     }
-
-    /*
-    getActionText(playerCharacter){
-
-        //If the action is a basic melee attack, name should be dynamic based on the character's weapon
-        if (this.props.functionName === "BasicMelee"){
-
-        }
-
-        return this.props.name
-    }*/
- 
-
 }
 
 

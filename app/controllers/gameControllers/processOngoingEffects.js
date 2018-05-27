@@ -1,27 +1,43 @@
 "use strict";
 
-const getActionEffectController = require('../actionEffectController').getActionEffectController;
+//const getActionEffectController = require('../actionEffectController').getActionEffectController;
 
-const helpers = require('../../helpers');
+//const helpers = require('../../helpers');
 
 //Models
-const Action = require('../../models/Action').Action;
-const Character = require('../../models/Character').Character;
+//const Action = require('../../models/Action').Action;
+//const Character = require('../../models/Character').Character;
 
 const processOngoingEffects = (gameObjects, charactersInZone) => {
+    console.log('DEBUG processingOngoingEffects');
+
+    charactersInZone.forEach( eachCharacter => {
+        //If the character has effects on them, determine if that effect should fade
+        if(eachCharacter.props.effects) {
+            eachCharacter.props.effects.forEach( (eachEffect, index, allEffects) => {
+                //If effect has no end_turn, it stays permanently
+                if(eachEffect.end_turn){
+                    if(gameObjects.currentMatch.props.number_turns >= eachEffect.end_turn){
+                        console.log(`DEBUG found an effect to fade, deleting effect at index ${index}`);
+
+                        //Delete that effect
+                        eachCharacter.props.effects.splice(index, 1);
+
+                        //If only one effect, delete the whole effects property
+                        //if (allEffects.length === 1){}
+
+
+                        //If more than one effect, remove that effect
+
+                    }
+                }
+            });
+        }
+    });
+
+
 
     /*
-    let charactersInZone = matchStartingCharacterIDs
-        .map( eachMatchStartingCharacterID =>{
-            return new Character(this.state, eachMatchStartingCharacterID);
-        })
-        //Filter starting characters for characters currently in the zone
-        .filter( eachMatchStartingCharacter =>{
-            return eachMatchStartingCharacter.props.zone_id === currentMatch.props.zone_id;
-        });*/
-
-    //Do I need to filter for only characters in the match?  Probably not, refresh should apply to all entire game
-
     //For each character in the zone lookup IDs of all effects
     charactersInZone.forEach( eachCharacter => {
 
@@ -82,7 +98,7 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
                 }
             })
         }
-    });
+    });*/
 };
 
 

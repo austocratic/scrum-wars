@@ -71,13 +71,10 @@ class Game {
                 if (eachActiveCharacterObject.props.effects){
 
                     eachActiveCharacterObject.props.effects
-                        //Do I really need to filter with an "end turn"  Effects are active for as long as they are still character properties
-                        //.filter( eachEffect => {
-                        //    return eachEffect.end_turn > 5
-                        //})
-                        .forEach( eachFilteredEffect => {
-                            if(eachFilteredEffect.modifiers){
-                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachFilteredEffect.modifiers);
+                        .forEach( eachEffect => {
+                            //Accumulate the modifiers
+                            if(eachEffect.modifiers){
+                                eachActiveCharacterObject.accumulateProperties(cumulativeModifiers, eachEffect.modifiers);
                             }
                         });
                 }

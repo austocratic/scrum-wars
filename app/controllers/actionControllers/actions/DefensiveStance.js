@@ -12,12 +12,9 @@ class DefensiveStance extends BaseAction {
         this.baseSuccessChance = 1; //% chance of success
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 4;
-        this.baseMitigation = 1;
-        this.baseMin = 0;
-        this.baseMax = 0;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, this.actionCharacter.props.level, this.baseMin, this.baseMax);
+        //TODO for testing, will be infinite duration in the future;
+        this.duration = 4;
 
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
@@ -26,8 +23,9 @@ class DefensiveStance extends BaseAction {
 
         //Modifiers to apply on action success
         this.statsToModify = {
-            toughness: this.calculatedPower,
-            strength: -this.calculatedPower
+            armor: 5,
+            attack_mitigation: 5,
+            attack_power: -5
         };
     }
 
@@ -48,7 +46,7 @@ class DefensiveStance extends BaseAction {
                 slack.sendMessage(this.defaultActionPayload);
 
                 return {
-                    status: 'pending',
+                    status: 'complete',
                     damageDealt: []
                 };
 
@@ -60,10 +58,6 @@ class DefensiveStance extends BaseAction {
     }
 }
 
-/*
-DefensiveStance.validations = [
-    ...BaseModify.validations
-];*/
 
 module.exports = {
     DefensiveStance
