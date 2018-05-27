@@ -351,12 +351,12 @@ const basicMelee = gameObjects => {
         'slackResponseTemplate'
     ]);
 
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
     console.log('DEBUG mana: ', gameObjects.playerCharacter.props.mana_points);
     console.log('DEBUG mana cost: ', gameObjects.actionTaken.props.mana_points_cost);
     console.log('DEBUG stamina: ', gameObjects.playerCharacter.props.stamina_points);
     console.log('DEBUG stamina cost: ', gameObjects.actionTaken.props.stamina_points_cost);
-
-    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
     if (!gameObjects.playerCharacter.checkMana(gameObjects.actionTaken.props.mana_points_cost) && !gameObjects.playerCharacter.checkStamina(gameObjects.actionTaken.props.stamina_points_cost)){
         return {
