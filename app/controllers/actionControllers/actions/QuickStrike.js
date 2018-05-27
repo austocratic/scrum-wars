@@ -10,18 +10,15 @@ class QuickStrike extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 5;
-        this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamage = this.actionCharacter.props.level;
+        this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Quick Strike, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} lunges forward with a powerful strike and lands a crushing blow on ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;

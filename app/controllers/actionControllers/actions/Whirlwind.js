@@ -10,17 +10,9 @@ class Whirlwind extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 5;
-        this.baseMitigation = 1;
-        this.baseMin = 1;
-        this.baseMax = 5;
 
         //AOE Specific attributes
         this.maxTargetsAffected = 3;
-
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        //this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "Your attack fails!";
@@ -70,7 +62,7 @@ class Whirlwind extends BaseAction {
                     })
                     .map(targetHit=>{
 
-                        let calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+                        let calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
 
                         //Process damage & Interrupts
                         this._processDamage(targetHit, calculatedDamage);
@@ -95,7 +87,6 @@ class Whirlwind extends BaseAction {
 
                 break;
             default:
-                this._deleteActionInQueue();
 
                 this.defaultActionPayload.attachments[0].text = `${this.actionCharacter.props.name}'s *whirlwind* of blades ends!`;
                 slack.sendMessage(this.defaultActionPayload);

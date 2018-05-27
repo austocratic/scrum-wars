@@ -10,18 +10,15 @@ class PoisonedBlade extends BaseAction {
         this.baseSuccessChance = .9;
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
-        this.basePower = 3;
-        this.baseMitigation = 1;
-        this.baseMin = 0;
-        this.baseMax = 3;
 
-        this.calculatedPower = this._calculateStrength(this.basePower, 0, this.baseMin, this.baseMax);
-        this.calculatedMitigation = this._calculateStrength(this.baseMitigation, 0, 0, 0);
-        this.calculatedDamage = this._calculateDamage(this.calculatedPower, this.calculatedMitigation);
+        this.bonusDamage = this.actionCharacter.props.level;
+        this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
+        console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
         this.playerActionFailedMessage = "You lunge towards your enemy but stumble";
         this.playerActionAvoidedMessage = "Your target avoids your attack!";
+
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a poisonous strike, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes out with poisonous blades but ${this.targetCharacter.props.name} dodges the attack!`;
         this.channelActionSuccessMessage =
