@@ -53,6 +53,7 @@ class BaseAction {
     }
 
     //All actions call this function when invoked
+    //Checks for action failure
     _initiateAction(){
         console.log('_initiateAction() called');
 
@@ -351,6 +352,22 @@ class BaseAction {
     _changeProperty(characterToModify, modifiers){
         characterToModify.props = _.merge(characterToModify.props, modifiers);
     }
+
+    //How should avoid work?
+
+    //Magic versus melee
+
+    //Magic should be about resistance & level
+
+
+    //Melee should be about dexterity & level
+
+    _resistanceCheck(characterToCheck, attackModifier, avoidModifier){
+        let randomInt = this._getRandomIntInclusive(1, 100);
+        console.log(`Called _resistanceCheck, is ${randomInt} + ${attackModifier} >= ${characterToCheck.props.stats_current.magic_resistance} + ${avoidModifier}?`);
+        return ((randomInt + attackModifier) >= (characterToCheck.props.stats_current.magic_resistance + avoidModifier))
+    }
+
 
     _avoidCheck(accuracyModifier, avoidModifier){
 
