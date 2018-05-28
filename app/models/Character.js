@@ -278,6 +278,7 @@ class Character extends BaseModel{
     }
 
     updateActionUsed(actionID, turnNumber){
+        console.log('called character.updateActionUsed()');
 
         let actionKey = _.findKey(this.props.actions, {'action_id': actionID});
 

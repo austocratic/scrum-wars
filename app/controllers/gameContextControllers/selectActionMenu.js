@@ -244,8 +244,12 @@ const axeorsShielding = gameObjects => {
 
     actionObject.initiate();
 
+    console.log('DEBUG passed initiate in Axeors');
+
     //Mark the action as used, pass in action id & turn number
     gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
+    console.log('DEBUG passed updateActionUsed in Axeors');
 
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
