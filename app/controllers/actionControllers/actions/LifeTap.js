@@ -33,7 +33,7 @@ class LifeTap extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                if (this._avoidCheck(0, 0) === false) {
+                if (this._resistanceCheck(this.targetCharacter, this.actionCharacter.props.level, this.targetCharacter.props.level) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
                     return;

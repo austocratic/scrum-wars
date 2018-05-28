@@ -62,7 +62,8 @@ class ForkedLightning extends BaseAction {
 
                     //Evasion check
                     //Arguments: accuracyModifier, avoidModifier
-                    if (this._avoidCheck(0, (0 + modifier)) === false) {
+                    if(this._resistanceCheck(singleTarget, this.actionCharacter.props.level, singleTarget.props.level) === false) {
+                    //if (this._avoidCheck(0, (0 + modifier)) === false) {
                         console.log('ForkedLightning failed (dodge)');
                         this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                         slack.sendMessage(this.defaultActionPayload);

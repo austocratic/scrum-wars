@@ -375,7 +375,7 @@ class BaseAction {
         return ((randomInt + attackModifier + this.actionCharacter.props.stats_current.dexterity) >= (defenderModifiedDexterity + avoidModifier))
     }
 
-
+    /* TO DELETE
     _avoidCheck(accuracyModifier, avoidModifier){
 
         let accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
@@ -387,7 +387,7 @@ class BaseAction {
         console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
 
         return (accuracyScore >= avoidScore);
-    }
+    }*/
 
     _applyEffect(characterToModify, modifiers){
         console.log('called BaseAction._applyEffect()');

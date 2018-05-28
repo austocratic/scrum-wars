@@ -68,7 +68,8 @@ class Firestorm extends BaseAction {
                     .filter( eachTarget =>{
 
                         //First filter for only attacks that hit, then send avoid messages
-                        let avoidCheck = this._avoidCheck(0, 0);
+                        let avoidCheck = this._resistanceCheck(eachTarget, this.actionCharacter.props.level, eachTarget.props.level);
+                        //let avoidCheck = this._avoidCheck(0, 0);
 
                         if (avoidCheck === false){
                             this.defaultActionPayload.attachments[0].text = `${eachTarget.props.name} evades the the fiery downpour!`;
