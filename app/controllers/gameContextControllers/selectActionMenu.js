@@ -646,6 +646,7 @@ module.exports = {
     offensiveStance,
     balancedStance,
     axeorsShielding,
+    inspiringShout,
     intoShadow,
     whirlwind,
     basicMelee,
