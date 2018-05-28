@@ -2,6 +2,7 @@
 
 const slack = require('../../../libraries/slack');
 const BaseAction = require('./BaseAction').BaseAction;
+const Character = require('../../../models/Character').Character;
 
 //Defensive Stance is a stance that increases AC & lowers attack
 //Static success chance
