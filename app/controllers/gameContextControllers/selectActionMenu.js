@@ -244,12 +244,48 @@ const axeorsShielding = gameObjects => {
 
     actionObject.initiate();
 
-    console.log('DEBUG passed initiate in Axeors');
-
     //Mark the action as used, pass in action id & turn number
     gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
-    console.log('DEBUG passed updateActionUsed in Axeors');
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
+};
+const inspiringShout = gameObjects => {
+    console.log('Called selectActionMenu/inspiringShout');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['inspiringShout'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
+
+    actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
 
     return {
         "text": `_You perform ${actionObject.actionTaken.props.name}_`
