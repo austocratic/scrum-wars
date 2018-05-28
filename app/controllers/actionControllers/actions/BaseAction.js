@@ -368,6 +368,13 @@ class BaseAction {
         return ((randomInt + attackModifier) >= (characterToCheck.props.stats_current.magic_resistance + avoidModifier))
     }
 
+    _dodgeCheck(characterToCheck, attackModifier, avoidModifier){
+        let randomInt = this._getRandomIntInclusive(1, 100);
+        let defenderModifiedDexterity = (characterToCheck.props.stats_current.dexterity * 2);
+        console.log(`Called _dodgeCheck, is ${randomInt} + ${attackModifier} + ${this.actionCharacter.props.stats_current.dexterity} >= ${defenderModifiedDexterity} + ${avoidModifier}?`);
+        return ((randomInt + attackModifier + this.actionCharacter.props.stats_current.dexterity) >= (defenderModifiedDexterity + avoidModifier))
+    }
+
 
     _avoidCheck(accuracyModifier, avoidModifier){
 
