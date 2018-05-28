@@ -12,12 +12,13 @@ const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+const { DefensiveStance, BalancedStance, AxeorsShielding, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
     offensiveStance: OffensiveStance,
     balancedStance: BalancedStance,
+    axeorsShielding: AxeorsShielding,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
     firestorm: Firestorm
@@ -195,6 +196,46 @@ const balancedStance = gameObjects => {
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['balancedStance'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
+
+    actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
+};
+const axeorsShielding = gameObjects => {
+    console.log('Called selectActionMenu/axeorsShielding');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['axeorsShielding'];
 
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
@@ -564,6 +605,7 @@ module.exports = {
     defensiveStance,
     offensiveStance,
     balancedStance,
+    axeorsShielding,
     intoShadow,
     whirlwind,
     basicMelee,
