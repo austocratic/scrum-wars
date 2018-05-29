@@ -52,9 +52,7 @@ class Cleave extends BaseAction {
 
                 break;
             case (turn <= 1):
-                //Evasion check
-                //Arguments: accuracyModifier, avoidModifier
-                if (this._dodgeCheck(this.targetCharacter, this.actionCharacter.props.level, this.targetCharacter.props.level) === false) {
+                if (this._dodgeCheck(this.targetCharacter, 0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
                     return {

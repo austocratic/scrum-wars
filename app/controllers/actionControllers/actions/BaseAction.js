@@ -353,15 +353,6 @@ class BaseAction {
         characterToModify.props = _.merge(characterToModify.props, modifiers);
     }
 
-    //How should avoid work?
-
-    //Magic versus melee
-
-    //Magic should be about resistance & level
-
-
-    //Melee should be about dexterity & level
-
     _resistanceCheck(characterToCheck, attackModifier, avoidModifier){
         let randomInt = this._getRandomIntInclusive(1, 100);
         console.log(`Called _resistanceCheck, is ${randomInt} + ${attackModifier} >= ${characterToCheck.props.stats_current.magic_resistance} + ${avoidModifier}?`);
@@ -377,20 +368,6 @@ class BaseAction {
         console.log(`Called _dodgeCheck, is ${randomInt} + ${attackModifier} + ${this.actionCharacter.props.level} + ${this.actionCharacter.props.stats_current.dexterity}  >= ${defenderModifiedDexterity} + ${avoidModifier} + ${characterToCheck.props.level} + ${characterToCheck.props.stats_current.dodge_bonus}?`);
         return ((randomInt + attackModifier + this.actionCharacter.props.level + this.actionCharacter.props.stats_current.dexterity) >= (defenderModifiedDexterity + avoidModifier + characterToCheck.props.level + characterToCheck.props.stats_current.dodge_bonus))
     }
-
-    /* TO DELETE
-    _avoidCheck(accuracyModifier, avoidModifier){
-
-        let accuracyScore = this.baseAccuracyScore + accuracyModifier + this._getRandomIntInclusive(1, 10);
-
-        let avoidRandomInt = this._getRandomIntInclusive(1, 10);
-
-        let avoidScore = this.baseAvoidScore + avoidModifier + avoidRandomInt;
-
-        console.log('_isAvoided check, accuracyScore = ' + accuracyScore + ' avoidScore = ' + avoidScore);
-
-        return (accuracyScore >= avoidScore);
-    }*/
 
     _applyEffect(characterToModify, modifiers){
         console.log('called BaseAction._applyEffect()');

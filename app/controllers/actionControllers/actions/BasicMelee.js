@@ -34,7 +34,6 @@ class BasicMelee extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 if (this._dodgeCheck(this.targetCharacter, 0, 0) === false) {
-                //if (this._avoidCheck(0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
                     return {

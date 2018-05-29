@@ -40,7 +40,7 @@ class PoisonedBlade extends BaseAction {
 
         switch (true) {
             case (turn <= 0):
-                if (this._dodgeCheck(this.targetCharacter, this.actionCharacter.props.level, this.targetCharacter.props.level) === false) {
+                if (this._dodgeCheck(this.targetCharacter, 0, 0) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
                     slack.sendMessage(this.defaultActionPayload);
                     return;
@@ -52,9 +52,6 @@ class PoisonedBlade extends BaseAction {
 
                 //Process damage & Interrupts
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
-
-                //Apply the effect
-                //this._applyEffect(this.targetCharacter, this.statsToModify);
 
                 return {
                     status: 'ongoing',
