@@ -12,13 +12,14 @@ const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, SmokeBomb, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
     offensiveStance: OffensiveStance,
     balancedStance: BalancedStance,
     axeorsShielding: AxeorsShielding,
+    smokeBomb: SmokeBomb,
     inspiringShout: InspiringShout,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
@@ -237,6 +238,46 @@ const axeorsShielding = gameObjects => {
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['axeorsShielding'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
+
+    actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
+};
+const smokeBomb = gameObjects => {
+    console.log('Called selectActionMenu/smokeBomb');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['smokeBomb'];
 
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
@@ -647,6 +688,7 @@ module.exports = {
     offensiveStance,
     balancedStance,
     axeorsShielding,
+    smokeBomb,
     inspiringShout,
     intoShadow,
     whirlwind,
