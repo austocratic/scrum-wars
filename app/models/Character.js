@@ -46,9 +46,6 @@ class Character extends BaseModel{
     }
 
     setModifiedStats(modifiers){
-
-        //console.log(`DEBUG: ${this.props.name}'s total modifiers: `, modifiers);
-
         _.forEach(this.props.stats_current, (value, key) =>{
 
             this.props.stats_current[key] = this.props.stats_base[key] +

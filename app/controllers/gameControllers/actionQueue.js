@@ -65,8 +65,6 @@ const actionQueue = (gameObjects) =>{
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
-            //validateGameObjects(gameObjects, actionObjectToMake.validations);
-
             validateGameObjects(gameObjects, [
                 'game',
                 'playerCharacter',

@@ -369,10 +369,13 @@ class BaseAction {
     }
 
     _dodgeCheck(characterToCheck, attackModifier, avoidModifier){
+
         let randomInt = this._getRandomIntInclusive(1, 100);
+
         let defenderModifiedDexterity = (characterToCheck.props.stats_current.dexterity * 2);
-        console.log(`Called _dodgeCheck, is ${randomInt} + ${attackModifier} + ${this.actionCharacter.props.stats_current.dexterity} >= ${defenderModifiedDexterity} + ${avoidModifier}?`);
-        return ((randomInt + attackModifier + this.actionCharacter.props.stats_current.dexterity) >= (defenderModifiedDexterity + avoidModifier))
+
+        console.log(`Called _dodgeCheck, is ${randomInt} + ${attackModifier} + ${this.actionCharacter.props.level} + ${this.actionCharacter.props.stats_current.dexterity}  >= ${defenderModifiedDexterity} + ${avoidModifier} + ${characterToCheck.props.level} + ${characterToCheck.props.stats_current.dodge_bonus}?`);
+        return ((randomInt + attackModifier + this.actionCharacter.props.level + this.actionCharacter.props.stats_current.dexterity) >= (defenderModifiedDexterity + avoidModifier + characterToCheck.props.level + characterToCheck.props.stats_current.dodge_bonus))
     }
 
     /* TO DELETE
