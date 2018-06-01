@@ -173,15 +173,15 @@ class Game {
 
         let newChar = {
             [localRandomID]: {
-                action_points: 0,
                 active: 1,
-                name: 'Unknown Traveler',
-                level: 1,
+                avatar: '', //Default blank character avatar
                 gold: 100,
-                health: 100, //Need to make this class dictated
-                is_hidden: 0,
+                hit_points: 10, //Move this to class specific
+                level: 1,
+                mana_points: 10, //Move this to class specific
                 match_wins: 0,
-                zone_id: '-Khu9Zazk5XdFX9fD2Y8',
+                name: 'Unknown Traveler',
+                stamina_points: 10, //Move this to class specific
                 stats_base: {
                     hit_points: 100,
                     armor: 0
@@ -189,7 +189,12 @@ class Game {
                 stats_current: {
                     hit_points: 100,
                     armor: 0
-                }
+                },
+                strike_back: {
+                    melee: 0,
+                    range: 0
+                },
+                zone_id: '-Khu9Zazk5XdFX9fD2Y8', //Default starting zone
             }
         };
 

@@ -231,13 +231,13 @@ const profile = gameObjects => {
                     "short": false
                 },
                 {
-                    "title": "Action Points",
-                    "value": gameObjects.playerCharacter.props.action_points,
-                    "short": false
-                },
-                {
                     "title": "Current Health",
                     "value": gameObjects.playerCharacter.props.hit_points,
+                    "short": true
+                },
+                {
+                    "title": "Current Stamina",
+                    "value": gameObjects.playerCharacter.props.stamina_points,
                     "short": true
                 },
                 {
@@ -268,11 +268,6 @@ const profile = gameObjects => {
                 {
                     "title": "Dexterity",
                     "value": `${gameObjects.playerCharacter.props.stats_base.dexterity} + ${gameObjects.playerCharacter.props.stats_current.dexterity - gameObjects.playerCharacter.props.stats_base.dexterity} = ${gameObjects.playerCharacter.props.stats_current.dexterity}`,
-                    "short": true
-                },
-                {
-                    "title": "Toughness",
-                    "value": `${gameObjects.playerCharacter.props.stats_base.toughness} + ${gameObjects.playerCharacter.props.stats_current.toughness - gameObjects.playerCharacter.props.stats_base.toughness} = ${gameObjects.playerCharacter.props.stats_current.toughness}`,
                     "short": true
                 },
                 {

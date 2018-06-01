@@ -23,9 +23,6 @@ const yes = gameObjects => {
     //Update the user to new character
     gameObjects.user.updateProperty('character_id', newPlayerCharacterID);
 
-    //Return a class selection template with all available classes from the DB
-    //gameObjects.slackResponseTemplate = gameObjects.game.getCharacterClasses();
-
     gameObjects.slackResponseTemplate = {};
     
     let characterClasses = gameObjects.game.getCharacterClasses();

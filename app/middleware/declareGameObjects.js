@@ -37,12 +37,7 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.requestZone = new Zone(game.state, slackRequest.channel_id)
     }
 
-    console.log('****DEBUG declaring matchZone');
-    console.log('****DEBUG gameObjects.currentMatch.props.zone_id: ', gameObjects.currentMatch.props.zone_id);
-
     gameObjects.matchZone = new Zone(game.state, game.state.zone[gameObjects.currentMatch.props.zone_id].channel_id);
-
-    console.log('****DEBUG gameObjects.matchZone.props: ', gameObjects.matchZone.props);
 
     if (slackRequest.actions){
         if(slackRequest.actions[0].name) {

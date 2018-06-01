@@ -3,7 +3,7 @@
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 
-var Class = require('../../models/Class').Class;
+const Class = require('../../models/Class').Class;
 
 
 const classSelection = gameObjects => {
@@ -31,8 +31,6 @@ const classSelection = gameObjects => {
         return {
             action_id: eachActionID,
             turn_used: 0
-            //turn_available: 0,
-            //is_available: 1
         }
     });
 
@@ -41,6 +39,12 @@ const classSelection = gameObjects => {
         actions: characterActions,
         class_id: gameObjects.characterClass.id
     });
+    Object.assign(gameObjects.playerCharacter.props.stats_base, gameObjects.characterClass.props.starting_attributes);
+    //This is only necessary because the refresh mechanic depends on the .stats_current properties each existing before updating
+    Object.assign(gameObjects.playerCharacter.props.stats_current, gameObjects.characterClass.props.starting_attributes);
+
+
+    /*
     Object.assign(gameObjects.playerCharacter.props.stats_base, {
         strength: gameObjects.characterClass.props.starting_attributes.strength,
         toughness: gameObjects.characterClass.props.starting_attributes.toughness,
@@ -52,7 +56,7 @@ const classSelection = gameObjects => {
         toughness: gameObjects.characterClass.props.starting_attributes.toughness,
         dexterity: gameObjects.characterClass.props.starting_attributes.dexterity,
         intelligence: gameObjects.characterClass.props.starting_attributes.intelligence
-    });
+    });*/
 
     // *****************Return the gender selection menu*******************
 
