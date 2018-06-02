@@ -83,6 +83,8 @@ const action = gameObjects => {
             return singleAction.props.type;
         });
 
+    console.log('DEBUG groupedActions: ', JSON.stringify(groupedActions));
+
     let templateAttachments = groupedActions
         .map(actionCategory => {
 
