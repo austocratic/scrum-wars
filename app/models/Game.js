@@ -331,7 +331,7 @@ class Game {
             })
             .find(eachZone =>{
 
-                console.log('DEBUG eachZone: ', JSON.stringify(arena.props));
+                console.log('DEBUG eachZone: ', JSON.stringify(eachZone.props));
                 return eachZone.channel === "arena"
             });
 
