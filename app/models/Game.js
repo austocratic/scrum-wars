@@ -329,7 +329,7 @@ class Game {
 
                 //console.log('DEBUG eachZoneID: ', eachZoneID);
 
-                let zone = new Zone(this.state, this.state.zone[eachZoneID].channel_id);
+                return new Zone(this.state, this.state.zone[eachZoneID].channel_id);
 
                 //console.log('DEBUG eachZone: ', JSON.stringify(zone.props));
 
