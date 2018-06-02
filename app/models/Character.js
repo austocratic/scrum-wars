@@ -134,9 +134,10 @@ class Character extends BaseModel{
     getActionIDs(){
 
         return this.props.actions
+            /*
             .filter( eachAction =>{
                 return eachAction.is_available === 1
-            })
+            })*/
             .map( eachAction =>{
                 return eachAction.action_id;
             });
