@@ -110,6 +110,8 @@ const action = gameObjects => {
 
             actionCategory.forEach( (actionDetails, index) => {
 
+                console.log('DEBUG actionDetails 1: ', actionDetails.id);
+
                 //Determine which attachment to insert into
                 let elementToInsert = Math.floor(index / 5);
 
@@ -120,6 +122,8 @@ const action = gameObjects => {
                     actionAvailableButtonColor = "primary"
                 }
 
+                console.log('DEBUG actionDetails 2: ', actionDetails.id);
+
                 //Push each action into the actionControllers array portion of the template
                 attachmentsForCategory[elementToInsert].actions.push({
                     "name": actionDetails.props.functionName,
@@ -129,6 +133,8 @@ const action = gameObjects => {
                     "type": "button",
                     "value": actionDetails.id
                 });
+
+                console.log('DEBUG attachmentsForCategory[elementToInsert]: ', attachmentsForCategory[elementToInsert]);
             });
 
             console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
@@ -136,7 +142,7 @@ const action = gameObjects => {
             return attachmentsForCategory
         });
 
-    console.log('DEBUG templateAttachments: ', templateAttachments);
+    //console.log('DEBUG templateAttachments: ', templateAttachments);
 
     //unwrappedTemplateAttachments is array of arrays, need to flatten:
     function flatten(arr) {
