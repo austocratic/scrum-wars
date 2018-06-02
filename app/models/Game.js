@@ -327,11 +327,9 @@ class Game {
             })
             .find(eachZone =>{
                 return eachZone.channel === "arena"
-            })
-        
-        console.log('DEBUG found the arena: ', arena);
+            });
 
-        return arena
+        return this.getCharactersInZone(arena.id)
     }
 
 

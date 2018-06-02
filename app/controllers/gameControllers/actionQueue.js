@@ -141,7 +141,6 @@ const actionQueue = (gameObjects) =>{
         });
 
     return true;
-    //console.log('gameObjects after filter: ', gameObjects.currentMatch.props.action_queue);
 
 };
 

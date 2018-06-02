@@ -275,8 +275,6 @@ class BaseAction {
 
                     let eachAction = new Action(this.game.state, eachActionQueue.action_id);
 
-                    //console.log('DEBUG eachAction.props from .filter: ', eachAction.props);
-
                     if (this.actionTaken.props.can_interrupt){
 
                         if (_.indexOf(this.actionTaken.props.can_interrupt, eachAction.props.type) > -1 &&

@@ -44,33 +44,24 @@ const refresh = (gameObjects) => {
                 gameObjects.currentMatch.end()
             }
 
-            let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
+            //let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.requestZone.id);
 
-            //TODO charactersInZone should only get the character IDs of characters in that zone
+            //TODO should only check the arena zone for victory
+            const charactersInArena = gameObjects.game.getCharactersInArena();
 
-            /*
-            //Create an array of characters in the zone
-            let charactersInZone = matchStartingCharacterIDs
-                //Declare Character objects for each character ID
-                .map(eachStartingCharacterID=>{
-                    return new Character(gameObjects.game.state, eachStartingCharacterID)
-                })
-                //Filter for characters in the match zone
-                .filter( eachCharacter =>{
-                    return eachCharacter.props.zone_id === gameObjects.currentMatch.props.zone_id
-                });*/
+            console.log('DEBUG charactersInArena: ', charactersInArena);
 
             //Process ongoing effects
-            processOngoingEffects(gameObjects, charactersInZone);
+            processOngoingEffects(gameObjects, charactersInArena);
 
             //Process the action Queue
             actionQueue(gameObjects);
 
             //Check for character deaths
-            checkForCharacterDeath(gameObjects, charactersInZone);
+            checkForCharacterDeath(gameObjects, charactersInArena);
 
             //Check for victory
-            checkForVictory(gameObjects, charactersInZone);
+            checkForVictory(gameObjects, charactersInArena);
 
             //Check for incrementing the turn
             checkForNewTurn(gameObjects);
