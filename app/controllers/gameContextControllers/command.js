@@ -96,7 +96,7 @@ const action = gameObjects => {
             //Round up to nearest integer to make sure there is room
             let numberOfAttachments = Math.ceil(actionCategory.length / 5);
 
-            //console.log('DEBUG numberOfAttachments: ', numberOfAttachments);
+            console.log('DEBUG numberOfAttachments: ', numberOfAttachments);
 
             for (let i = 0; i < numberOfAttachments; i++) {
                 attachmentsForCategory.push({
@@ -131,10 +131,12 @@ const action = gameObjects => {
                 });
             });
 
-            //console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
+            console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
 
             return attachmentsForCategory
         });
+
+    console.log('DEBUG templateAttachments: ', templateAttachments);
 
     //unwrappedTemplateAttachments is array of arrays, need to flatten:
     function flatten(arr) {
