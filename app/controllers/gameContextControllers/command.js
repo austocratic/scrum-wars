@@ -142,7 +142,7 @@ const action = gameObjects => {
             return attachmentsForCategory
         });
 
-    //console.log('DEBUG templateAttachments: ', templateAttachments);
+    console.log('DEBUG templateAttachments: ', templateAttachments);
 
     //unwrappedTemplateAttachments is array of arrays, need to flatten:
     function flatten(arr) {
