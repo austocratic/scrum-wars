@@ -324,6 +324,9 @@ class Game {
         //Get the arena
         const arena = Object.keys(this.state.zone)
             .map(eachZoneID=>{
+
+                console.log('DEBUG eachZoneID: ', eachZoneID);
+
                 return new Zone(this.state, eachZoneID)
             })
             .find(eachZone =>{
