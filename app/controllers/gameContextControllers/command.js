@@ -77,6 +77,8 @@ const action = gameObjects => {
             return _.indexOf(eachActionObject.props.zone_id, gameObjects.requestZone.id) > -1;
         });
 
+    console.log('DEBUG actionObjectsAvailable: ', JSON.stringify(actionObjectsAvailable));
+
     //Group the actionControllers for slack (this will add a lodash wrapper)
     let groupedActions = _(actionObjectsAvailable)
         .groupBy(singleAction => {
