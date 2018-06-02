@@ -324,28 +324,14 @@ class Game {
         //Get the arena
         const arena = Object.keys(this.state.zone)
             .map(eachZoneID=>{
-
-                console.log('DEBUG eachZoneID: ', eachZoneID);
-
-                //console.log('DEBUG eachZoneID: ', eachZoneID);
-
                 return new Zone(this.state, this.state.zone[eachZoneID].channel_id);
-
-                //console.log('DEBUG eachZone: ', JSON.stringify(zone.props));
-
             })
             .find(eachZone =>{
-
-                console.log('DEBUG eachZone: ', JSON.stringify(eachZone.props));
-                return eachZone.props.channel === "arena"
+                return eachZone.props.channel === "arena";
             });
-
-        console.log('DEBUG arena: ', JSON.stringify(arena.props));
 
         return this.getCharactersInZone(arena.id)
     }
-
-
 
     getEquippedItemView(localCharacter){
 

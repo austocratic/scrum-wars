@@ -11,7 +11,7 @@ const slack = require('../../libraries/slack').sendMessage;
 //const Character = require('../../models/Character').Character;
 
 const processOngoingEffects = (gameObjects, charactersInZone) => {
-    console.log('DEBUG processingOngoingEffects');
+    console.log('called processingOngoingEffects()');
 
     charactersInZone.forEach( eachCharacter => {
         //If the character has effects on them, determine if that effect should fade
@@ -20,12 +20,12 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
                 //If effect has no end_turn, it stays permanently
                 if(eachEffect.end_turn){
                     if(gameObjects.currentMatch.props.number_turns >= eachEffect.end_turn){
-                        console.log(`DEBUG found an effect to fade, deleting effect at index ${index}`);
+                        //console.log(`DEBUG found an effect to fade, deleting effect at index ${index}`);
 
                         //Delete that effect
                         eachCharacter.props.effects.splice(index, 1);
 
-                        console.log('DEBUG gameObjects.requestZone.props.channel: ', gameObjects.requestZone.props.channel);
+                        //console.log('DEBUG gameObjects.requestZone.props.channel: ', gameObjects.requestZone.props.channel);
 
                         slack({
                             "username": eachCharacter.props.name,

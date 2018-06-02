@@ -30,7 +30,7 @@ class QuickStrike extends BaseAction {
     }
 
     process(turn) {
-        console.log('DEBUG just called QuickStrike process() function');
+        //console.log('DEBUG just called QuickStrike process() function');
         console.log(`called ${this.actionTaken.props.name}.process on turn: ${turn}`);
 
         switch (true) {

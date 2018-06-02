@@ -18,7 +18,7 @@ const yes = gameObjects => {
 
     channelAlert.sendToSlack();
 
-    console.log('DEBUG sent travel message to slack')
+    //console.log('DEBUG sent travel message to slack')
 
     //Return the response to the player
     gameObjects.slackResponseTemplate = {

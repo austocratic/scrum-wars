@@ -49,7 +49,7 @@ const refresh = (gameObjects) => {
             //TODO should only check the arena zone for victory
             const charactersInArena = gameObjects.game.getCharactersInArena();
 
-            console.log('DEBUG charactersInArena: ', charactersInArena);
+            //console.log('DEBUG charactersInArena: ', charactersInArena);
 
             //Process ongoing effects
             processOngoingEffects(gameObjects, charactersInArena);

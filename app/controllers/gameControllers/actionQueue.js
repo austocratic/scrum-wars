@@ -80,8 +80,6 @@ const actionQueue = (gameObjects) =>{
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);
 
-            console.log('DEBUG actionResponse: ', actionResponse);
-
             //Check if action dealt damage for response action check.  If so, character struck can respond depending on action range
             if (actionResponse.damageDealt) {
                 if (actionResponse.damageDealt.length > 0){
@@ -121,8 +119,6 @@ const actionQueue = (gameObjects) =>{
                                         //"player_character_id": gameObjects.playerCharacter.id,
                                         //"target_character_id": characterDamaged.id
                                     });
-
-                                    console.log('DEBUG ACTIONQUEUE: ', JSON.stringify(gameObjects.currentMatch.props.action_queue))
                                 }
                             }
                         }

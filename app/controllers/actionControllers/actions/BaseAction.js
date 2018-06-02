@@ -42,7 +42,7 @@ class BaseAction {
             }]
         };
 
-        console.log('DEBUG finished declaring the default actionPayload');
+        //console.log('DEBUG finished declaring the default actionPayload');
     }
 
     //TODO this should probably be moved to the helpers file
@@ -240,8 +240,8 @@ class BaseAction {
         let rnd = Math.random() * (max - min) + min,   // random in range
             mix = Math.random() * influence;           // random mixer
 
-        console.log('DEBUG rnd: ', rnd);
-        console.log('DEBUG mix: ', mix);
+        //console.log('DEBUG rnd: ', rnd);
+        //console.log('DEBUG mix: ', mix);
 
         return Math.round(((rnd * (1 - mix) + bias * mix) * damageMultiplier) + bonusDamage);// mix full range and bias rounded + Bonus Damage
     }
@@ -372,8 +372,8 @@ class BaseAction {
 
         //let endingTurn;
 
-        console.log('DEBUG this.actionTaken.props.effect_duration: ', this.actionTaken.props.effect_duration);
-        console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.props.number_turns);
+        //console.log('DEBUG this.actionTaken.props.effect_duration: ', this.actionTaken.props.effect_duration);
+        //console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.props.number_turns);
 
         /*
         if (this.actionTaken.duration) {

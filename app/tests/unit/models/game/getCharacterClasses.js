@@ -22,7 +22,7 @@ describe("Testing game.getCharacterClasses", function() {
     //In the arena
     let availableClasses = game.getCharacterClasses();
 
-    console.log('DEBUG availableClasses: ', availableClasses);
+    //console.log('DEBUG availableClasses: ', availableClasses);
 
     it("should not be undefined", function(){
         assert(availableClasses)
