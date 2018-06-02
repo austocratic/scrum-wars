@@ -322,16 +322,16 @@ class Game {
 
         //Get the arena
         const arena = Object.keys(this.state.zone)
-            .filter( eachZone =>{
+            .map(eachZoneID=>{
+                return new Zone(this.state, eachZoneID)
+            })
+            .find(eachZone =>{
                 return eachZone.channel === "arena"
-            });
-
-        console.log('DEBUG found the arean: ', arena)
+            })
+        
+        console.log('DEBUG found the arena: ', arena);
 
         return arena
-
-
-
     }
 
 
