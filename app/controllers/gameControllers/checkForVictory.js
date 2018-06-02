@@ -4,6 +4,7 @@ const slack = require('../../libraries/slack').sendMessage;
 
 
 const checkForVictory = (gameObjects, charactersInZone) => {
+    console.log('called checkForVictory()');
 
     //TODO currently a single refresh will not detect that players are dead and declare one as the winner
     //It will move dead characters in one refresh and declare the winner in the next refresh

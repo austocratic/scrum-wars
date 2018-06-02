@@ -305,7 +305,7 @@ class Game {
     }
 
     getCharactersInZone(zoneID){
-        console.log('called getCharacterIDsInZone');
+        console.log('called getCharactersInZone');
 
         return Object.keys(this.state.character)
             .map( eachCharacterID =>{
@@ -316,6 +316,25 @@ class Game {
                 return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
             })
     }
+
+    getCharactersInArena(){
+        console.log('called getCharactersInArena()');
+
+        //Get the arena
+        const arena = Object.keys(this.state.zone)
+            .filter( eachZone =>{
+                return eachZone.channel === "arena"
+            });
+
+        console.log('DEBUG found the arean: ', arena)
+
+        return arena
+
+
+
+    }
+
+
 
     getEquippedItemView(localCharacter){
 
