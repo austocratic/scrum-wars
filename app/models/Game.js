@@ -327,7 +327,7 @@ class Game {
 
                 console.log('DEBUG eachZoneID: ', eachZoneID);
 
-                return new Zone(this.state, eachZoneID)
+                return new Zone(this.state, this.state.zone[eachZoneID].channel_id)
             })
             .find(eachZone =>{
                 return eachZone.channel === "arena"
