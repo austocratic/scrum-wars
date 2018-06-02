@@ -330,8 +330,12 @@ class Game {
                 return new Zone(this.state, this.state.zone[eachZoneID].channel_id)
             })
             .find(eachZone =>{
+
+                console.log('DEBUG eachZone: ', JSON.stringify(arena.props));
                 return eachZone.channel === "arena"
             });
+
+        console.log('DEBUG arena: ', JSON.stringify(arena.props));
 
         return this.getCharactersInZone(arena.id)
     }
