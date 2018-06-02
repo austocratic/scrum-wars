@@ -327,12 +327,17 @@ class Game {
 
                 console.log('DEBUG eachZoneID: ', eachZoneID);
 
-                return new Zone(this.state, this.state.zone[eachZoneID].channel_id)
+                //console.log('DEBUG eachZoneID: ', eachZoneID);
+
+                let zone = new Zone(this.state, this.state.zone[eachZoneID].channel_id);
+
+                //console.log('DEBUG eachZone: ', JSON.stringify(zone.props));
+
             })
             .find(eachZone =>{
 
                 console.log('DEBUG eachZone: ', JSON.stringify(eachZone.props));
-                return eachZone.channel === "arena"
+                return eachZone.props.channel === "arena"
             });
 
         console.log('DEBUG arena: ', JSON.stringify(arena.props));
