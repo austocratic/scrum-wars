@@ -9,6 +9,7 @@ const Character = require('./Character').Character;
 const Class = require('./Class').Class;
 const Item = require('./Item').Item;
 const EquipmentSlot = require('./EquipmentSlot').EquipmentSlot;
+const Zone = require('./Zone').Zone;
 
 class Game {
     constructor() {
