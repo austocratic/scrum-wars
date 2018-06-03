@@ -554,6 +554,30 @@ const arcaneBolt = gameObjects => {
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
+const flameBurst = gameObjects => {
+    console.log('Called selectActionMenu/flameBurst');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
+};
 const forkedLightning = gameObjects => {
     console.log('Called selectActionMenu/forkedLightning');
 
@@ -719,6 +743,7 @@ module.exports = {
     basicMelee,
     quickStrike,
     arcaneBolt,
+    flameBurst,
     lifeTap,
     forkedLightning,
     savageStrike,
