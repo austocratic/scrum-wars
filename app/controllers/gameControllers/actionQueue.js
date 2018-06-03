@@ -8,7 +8,7 @@ const validateGameObjects = require('../../helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
 const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, DefensiveStance, AxeorsShielding, InspiringShout, SmokeBomb, Backstab, LifeTap, PoisonedBlade, BalancedStance, IntoShadow, Whirlwind, OffensiveStance,
-    Firestorm, Cleave, ForkedLightning, MinorHealing } = actions;
+    Firestorm, Cleave, ForkedLightning, MinorHealing, CoatOfBark } = actions;
 
 const actionControllers = {
     '-LALEuXn3oNVmTXAAvIL': BasicMelee,
@@ -29,7 +29,8 @@ const actionControllers = {
     '-Ky3C664qBFIYS4R4ItQ': Firestorm,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning,
-    '-LE68rplHU9ntql53T4q': MinorHealing
+    '-LE68rplHU9ntql53T4q': MinorHealing,
+    '-LE6ST406BzgFqGn2dDK': CoatOfBark
 };
 
 //Check that action queue for functions that should be initiated on the current turn

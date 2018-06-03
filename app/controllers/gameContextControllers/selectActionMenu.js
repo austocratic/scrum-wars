@@ -729,6 +729,28 @@ const minorHealing = gameObjects => {
 
     return targetSelection.getBenefitTargetSelectionMenu(gameObjects);
 };
+const coatOfBark = gameObjects => {
+    console.log('Called selectActionMenu/coatOfBark');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    return targetSelection.getBenefitTargetSelectionMenu(gameObjects);
+};
 
 module.exports = {
     shop,
@@ -751,5 +773,6 @@ module.exports = {
     poisonedBlade,
     cleave,
     firestorm,
-    minorHealing
+    minorHealing,
+    coatOfBark
 };
