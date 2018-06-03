@@ -39,7 +39,7 @@ class MinorHealing extends BaseAction {
                 slack.sendMessage(this.defaultActionPayload);
 
                 //Process damage & Interrupts
-                this._processHealing(this.targetCharacter, this.calculatedDamage);
+                this._processHealing(this.targetCharacter, this.healingAmount);
 
                 return {
                     status: 'complete',
