@@ -37,6 +37,7 @@ class BaseAction {
             "icon_url": this.game.baseURL + this.game.avatarPath + this.actionCharacter.props.gender + '/' + this.actionCharacter.props.avatar,
             "channel": ("#" + this.currentZone.props.channel),
             "attachments": [{
+                //TODO how can I make the default dynamic to find any file extension?
                 "thumb_url": this.game.baseURL + this.game.thumbImagePath + this.actionTaken.props.image_id + '.png',
                 "color": this.game.menuColor
             }]

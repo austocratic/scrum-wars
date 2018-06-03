@@ -35,7 +35,7 @@ class MinorHealing extends BaseAction {
         switch (true) {
             case (turn <= 0):
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
-                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'white-burst.gif';
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + this.actionTaken.props.image_id + '.gif';
                 slack.sendMessage(this.defaultActionPayload);
 
                 //Process damage & Interrupts
