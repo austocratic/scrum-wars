@@ -11,7 +11,7 @@ let Action = require('../../models/Action').Action;
 
 const actions = require('../actionControllers/actions/index');
 
-const { BasicMelee, QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade, ForkedLightning, Cleave } = actions;
+const { BasicMelee, QuickStrike, ArcaneBolt, LifeTap, Backstab, PoisonedBlade, ForkedLightning, Cleave, MinorHealing } = actions;
 
 //TODO I may want to make this a stand alone file/function "getActionController" so that it can be re used in Game to process effects
 const actionControllers = {
@@ -27,7 +27,8 @@ const actionControllers = {
     '-Kr3hnITyH9ZKx3VuZah': Backstab,
     '-KvOpJ2FyGodmZCanea7': PoisonedBlade,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning,
-    '-Ky1zv4JXgbAKvxFFBmp': Cleave
+    '-Ky1zv4JXgbAKvxFFBmp': Cleave,
+    '-LE68rplHU9ntql53T4q': MinorHealing
 };
 
 const processActionOnTarget = gameObjects => {

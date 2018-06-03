@@ -147,6 +147,10 @@ class BaseAction {
         return base + modifier + this._getRandomIntInclusive(Math.round(variableMin), Math.round(variableMax));
     }
 
+    _calculateHealing(){
+        return this._getRandomIntInclusive(this.actionTaken.props.healing_minimum, this.actionTaken.props.healing_maximum);
+    }
+
     _calculateMagic(damageMultiplier, bonusDamage){
         console.log(`Calculating Magic: magic_attack_power ${this.actionCharacter.props.stats_current.magic_attack_power},  magic_resistance ${this.targetCharacter.props.stats_current.magic_resistance}, damage_maximum ${this.actionTaken.props.damage_maximum}, damage_minimum ${this.actionTaken.props.damage_minimum}, damage multiplier ${damageMultiplier}, bonus damage ${bonusDamage}`);
 
@@ -259,9 +263,9 @@ class BaseAction {
     //Decrement health, processes action interrupts and hiding removal
     //Argument must be a character object
     _processDamage(target, damageAmount){
-        console.log(`called _processDamage`);
+        console.log(`called _processDamage()`);
+
         //Decrease target's health
-        //this.targetCharacter.incrementProperty('stats_current.hit_points', -damageAmount);
         target.incrementProperty('hit_points', -damageAmount);
 
         let interruptedActionIndex = [];
@@ -344,6 +348,11 @@ class BaseAction {
                 this._reverseEffect(target, eachHidingEffect.action_id);
             });
         }
+    }
+
+    _processHealing(target, healingAmount){
+        console.log(`called _processHealing() for amount of ${healingAmount}`);
+        target.incrementProperty('hit_points', healingAmount);
     }
 
     //modifiers should be an object of stat/modifier key/value pairs

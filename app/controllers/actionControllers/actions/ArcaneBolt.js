@@ -68,9 +68,6 @@ class ArcaneBolt extends BaseAction {
                 break;
         }
     }
-
-
-
 }
 
 

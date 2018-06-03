@@ -6,7 +6,7 @@ const NPC = require('../../models/NPC').NPC;
 const Action = require('../../models/Action').Action;
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
-const targetSelection = require('../targetSelection').getTargetSelectionMenu;
+const targetSelection = require('../targetSelection');
 
 const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
@@ -482,7 +482,7 @@ const basicMelee = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const quickStrike = gameObjects => {
     console.log('Called selectActionMenu/quickStrike');
@@ -504,7 +504,7 @@ const quickStrike = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const lifeTap = gameObjects => {
     console.log('Called selectActionMenu/lifeTap');
@@ -528,7 +528,7 @@ const lifeTap = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const arcaneBolt = gameObjects => {
     console.log('Called selectActionMenu/arcaneBolt');
@@ -552,7 +552,7 @@ const arcaneBolt = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const forkedLightning = gameObjects => {
     console.log('Called selectActionMenu/forkedLightning');
@@ -576,7 +576,7 @@ const forkedLightning = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const savageStrike = gameObjects => {
     console.log('Called selectActionMenu/savageStrike');
@@ -600,7 +600,7 @@ const savageStrike = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const backstab = gameObjects => {
     console.log('Called selectActionMenu/backstab');
@@ -631,7 +631,7 @@ const backstab = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const poisonedBlade = gameObjects => {
     console.log('Called selectActionMenu/poisonedBlade');
@@ -655,7 +655,7 @@ const poisonedBlade = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
 const cleave = gameObjects => {
     console.log('Called selectActionMenu/cleave');
@@ -679,7 +679,31 @@ const cleave = gameObjects => {
         return insufficientMessage
     }
 
-    return targetSelection(gameObjects);
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
+};
+
+//*******  These actionControllers require a target for beneficial actions, so will return selectActionTarget game context  *******
+const minorHealing = gameObjects => {
+    console.log('Called selectActionMenu/minorHealing');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    return targetSelection.getBenefitTargetSelectionMenu(gameObjects);
 };
 
 module.exports = {
@@ -701,5 +725,6 @@ module.exports = {
     backstab,
     poisonedBlade,
     cleave,
-    firestorm
+    firestorm,
+    minorHealing
 };

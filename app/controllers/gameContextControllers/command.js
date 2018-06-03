@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const slack = require('../../libraries/slack').sendMessage;
 //to delete (shuld use slack library above)
-const slackAlert = require('../../libraries/slack').Alert;
+//const slackAlert = require('../../libraries/slack').Alert;
 
 const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
@@ -77,15 +77,11 @@ const action = gameObjects => {
             return _.indexOf(eachActionObject.props.zone_id, gameObjects.requestZone.id) > -1;
         });
 
-    console.log('DEBUG actionObjectsAvailable: ', JSON.stringify(actionObjectsAvailable));
-
     //Group the actionControllers for slack (this will add a lodash wrapper)
     let groupedActions = _(actionObjectsAvailable)
         .groupBy(singleAction => {
             return singleAction.props.type;
         });
-
-    console.log('DEBUG groupedActions: ', JSON.stringify(groupedActions));
 
     let templateAttachments = groupedActions
         .map(actionCategory => {
@@ -100,7 +96,7 @@ const action = gameObjects => {
             //Round up to nearest integer to make sure there is room
             let numberOfAttachments = Math.ceil(actionCategory.length / 5);
 
-            console.log('DEBUG numberOfAttachments: ', numberOfAttachments);
+            //console.log('DEBUG numberOfAttachments: ', numberOfAttachments);
 
             for (let i = 0; i < numberOfAttachments; i++) {
                 attachmentsForCategory.push({
@@ -114,8 +110,6 @@ const action = gameObjects => {
 
             actionCategory.forEach( (actionDetails, index) => {
 
-                console.log('DEBUG actionDetails 1: ', actionDetails.id);
-
                 //Determine which attachment to insert into
                 let elementToInsert = Math.floor(index / 5);
 
@@ -125,8 +119,6 @@ const action = gameObjects => {
                 if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
                     actionAvailableButtonColor = "primary"
                 }
-
-                console.log('DEBUG actionDetails 2: ', actionDetails.id);
 
                 //Push each action into the actionControllers array portion of the template
                 attachmentsForCategory[elementToInsert].actions.push({
@@ -138,15 +130,15 @@ const action = gameObjects => {
                     "value": actionDetails.id
                 });
 
-                console.log('DEBUG attachmentsForCategory[elementToInsert]: ', attachmentsForCategory[elementToInsert]);
+                //console.log('DEBUG attachmentsForCategory[elementToInsert]: ', attachmentsForCategory[elementToInsert]);
             });
 
-            console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
+            //console.log('DEBUG attachmentsForCategory: ', attachmentsForCategory);
 
             return attachmentsForCategory
         });
 
-    console.log('DEBUG templateAttachments: ', templateAttachments);
+    //console.log('DEBUG templateAttachments: ', templateAttachments);
 
     //unwrappedTemplateAttachments is array of arrays, need to flatten:
     function flatten(arr) {
