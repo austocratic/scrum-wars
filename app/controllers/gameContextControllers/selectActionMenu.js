@@ -12,13 +12,14 @@ const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, SmokeBomb, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, CoatOfBark, SmokeBomb, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
     offensiveStance: OffensiveStance,
     balancedStance: BalancedStance,
     axeorsShielding: AxeorsShielding,
+    coatOfBark: CoatOfBark,
     smokeBomb: SmokeBomb,
     inspiringShout: InspiringShout,
     intoShadow: IntoShadow,
