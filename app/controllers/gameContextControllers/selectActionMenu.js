@@ -12,7 +12,8 @@ const selectActionHelpers = require('../../helpers/selectActionHelpers');
 
 const actions = require('../actionControllers/actions/index');
 
-const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, CoatOfBark, SmokeBomb, IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, CoatOfBark, SmokeBomb,
+    IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -682,6 +683,30 @@ const poisonedBlade = gameObjects => {
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
+const stingingBees = gameObjects => {
+    console.log('Called selectActionMenu/stingingBees');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+
+    if (insufficientMessage !== undefined){
+        return insufficientMessage
+    }
+
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
+};
 const cleave = gameObjects => {
     console.log('Called selectActionMenu/cleave');
 
@@ -772,6 +797,7 @@ module.exports = {
     savageStrike,
     backstab,
     poisonedBlade,
+    stingingBees,
     cleave,
     firestorm,
     minorHealing,
