@@ -35,7 +35,7 @@ const yes = gameObjects => {
                 "callback_id": "",
                 "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
-                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachCharacterClass.id + ".jpg",
+                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + eachCharacterClass.props.image_id + ".png",
                 "fields": [{
                     "title": "Description",
                     "value": eachCharacterClass.props.description,

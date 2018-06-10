@@ -40,7 +40,7 @@ class StingingBees extends BaseAction {
             case (turn <= 0):
                 if (this._resistanceCheck(this.targetCharacter, this.actionCharacter.props.level, this.targetCharacter.props.level) === false) {
                     this.defaultActionPayload.attachments[0].text = this.channelActionAvoidedMessage;
-                    this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-burst.gif';
+                    this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + this.actionTaken.props.image_id + '.png';
                     slack.sendMessage(this.defaultActionPayload);
                     return {
                         status: 'complete',
@@ -52,7 +52,7 @@ class StingingBees extends BaseAction {
                 }
 
                 this.defaultActionPayload.attachments[0].text = this.channelActionSuccessMessage;
-                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + 'fire-burst.gif';
+                this.defaultActionPayload.attachments[0].thumb_url = this.game.baseURL + this.game.thumbImagePath + this.actionTaken.props.image_id + '.png';
                 slack.sendMessage(this.defaultActionPayload);
 
                 return {
