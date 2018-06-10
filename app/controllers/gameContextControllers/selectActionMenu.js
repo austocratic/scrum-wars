@@ -352,6 +352,16 @@ const intoShadow = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
+
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
+    }
+
+    /*
     const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
 
     if (insufficientMessage !== undefined){
@@ -363,7 +373,7 @@ const intoShadow = gameObjects => {
         return {
             "text": `_You are already hidden!_`
         }
-    }
+    }*/
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['intoShadow'];
