@@ -116,7 +116,7 @@ const action = gameObjects => {
                 //Default button color to red ("danger").  If available, it will be overwritten
                 let actionAvailableButtonColor = "danger";
 
-                console.log(`DEBUG about to check an action: ${JSON.stringify(actionDetails.props)}`);
+                //console.log(`DEBUG about to check an action: ${JSON.stringify(actionDetails.props)}`);
 
                 //Set the action costs, if property does not exist, default to 0
                 let manaCost = (actionDetails.props.mana_points_cost !== undefined) ? actionDetails.props.mana_points_cost : 0;
@@ -124,9 +124,11 @@ const action = gameObjects => {
                 let spiritCost = (actionDetails.props.spirit_points_cost !== undefined) ? actionDetails.props.spirit_points_cost : 0;
                 let requirements = (actionDetails.props.requirements !== undefined) ? actionDetails.props.requirements : [];
 
-                console.log(`DEBUG checking ${actionDetails.props.name} requirements: ${requirements}`);
+                //console.log(`DEBUG checking ${actionDetails.props.name} requirements: ${requirements}`);
 
                 let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(manaCost, staminaCost, spiritCost, requirements);
+
+                console.log('DEBUG isActionAvailable.reason: ', isActionAvailable.reason);
 
                 //if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
                 if (isActionAvailable.availability) {

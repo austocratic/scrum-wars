@@ -162,24 +162,24 @@ class Character extends BaseModel{
 
         let actionCheck = {
             availability: true,
-            reason: 'You are unable to perform that action for an unknown reason!'
+            reason: ''
         };
 
-        if (this.checkMana(manaCost)){
+        if (!this.checkMana(manaCost)){
             actionCheck = {
                 availability: false,
                 reason: 'Insufficient Mana'
             }
         }
 
-        if (this.checkStamina(staminaCost)){
+        if (!this.checkStamina(staminaCost)){
             actionCheck = {
                 availability: false,
                 reason: 'Insufficient Stamina'
             }
         }
 
-        if (this.checkSpirit(spiritCost)){
+        if (!this.checkSpirit(spiritCost)){
             actionCheck = {
                 availability: false,
                 reason: 'Insufficient Spirit'
