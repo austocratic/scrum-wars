@@ -153,12 +153,12 @@ class Character extends BaseModel{
     }
 
     //Does the player have the same or more mana and stamina points than the cost of the action
-    isActionAvailable(manaCost, staminaCost, spiritCost, requirements){
+    isActionAvailable(actionObject){
 
-        //What are some other actions that could have different requirements?
-        //not stunned
-        //frozen
-        //Enraged - when below 30% hp, you become enraged
+        let manaCost = (actionObject.props.mana_points_cost !== undefined) ? actionObject.props.mana_points_cost : 0;
+        let staminaCost = (actionObject.props.stamina_points_cost !== undefined) ? actionObject.props.stamina_points_cost : 0;
+        let spiritCost = (actionObject.props.spirit_points_cost !== undefined) ? actionObject.props.spirit_points_cost : 0;
+        let requirements = (actionObject.props.requirements !== undefined) ? actionObject.props.requirements : [];
 
         let actionCheck = {
             availability: true,

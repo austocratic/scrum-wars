@@ -478,11 +478,20 @@ const basicMelee = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": isActionAvailable.reason
+        }
+    }
+
+    //const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    /*
     if (insufficientMessage !== undefined){
         return insufficientMessage
-    }
+    }*/
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
