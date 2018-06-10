@@ -153,8 +153,96 @@ class Character extends BaseModel{
     }
 
     //Does the player have the same or more mana and stamina points than the cost of the action
-    isActionAvailable(manaCost, staminaCost){
-        return (this.checkMana(manaCost) && this.checkStamina(staminaCost));
+    isActionAvailable(manaCost, staminaCost, spiritCost, requirements){
+
+        //What are some other actions that could have different requirements?
+        //not stunned
+        //frozen
+        //Enraged - when below 30% hp, you become enraged
+
+        let actionCheck = {
+            availability: true,
+            reason: 'You are unable to perform that action for an unknown reason!'
+        };
+
+        if (this.checkMana(manaCost)){
+            actionCheck = {
+                availability: false,
+                reason: 'Insufficient Mana'
+            }
+        }
+
+        if (this.checkStamina(staminaCost)){
+            actionCheck = {
+                availability: false,
+                reason: 'Insufficient Stamina'
+            }
+        }
+
+        if (this.checkSpirit(spiritCost)){
+            actionCheck = {
+                availability: false,
+                reason: 'Insufficient Spirit'
+            }
+        }
+
+        if (requirements){
+            requirements.forEach(eachRequirement=>{
+                if(this.props.stats_current[eachRequirement.key] !== eachRequirement.value){
+                    actionCheck.availability = false;
+                    actionCheck.reason = eachRequirement.failure_message
+                }
+            })
+        }
+
+        return actionCheck;
+
+        /*
+        if(requirements){
+            let requirementKeys = Object.keys(requirements);
+
+            requirementKeys.forEach(eachRequirementKey=>{
+                if(_.get(this.props, eachRequirementKey) === requirements[eachRequirementKey]){
+                    actionCheck = {
+                        availability: false
+                    }
+                }
+            });
+
+            requirements.forEach(eachRequirement=>{
+                _.get(this.props, eachRequirement)
+            })
+        }*/
+
+        //What if there are other properties, stats needed to determine if an action is available?
+
+        //For example, backstab is only available if the character is hidden
+
+        //For each action, look at the "requirements" property to see what is required:
+
+        /*Backstab:
+
+        .requirements_to_display: {
+
+        }
+        .requirements_to_use: {
+            is_hidden: 1
+        }
+        .requirements_to_use: [
+            {
+                key: 'is_hidden'
+                value: 1
+                error: 'You must be hidden to use this skill'
+            }
+        ]
+        .cost: {
+            mana: 0
+            stamina: 0
+            spirit: 0
+        }
+
+
+        */
     }
 
     checkMana(manaCost){
@@ -163,6 +251,13 @@ class Character extends BaseModel{
 
     checkStamina(staminaCost){
         return this.props.stamina_points >= staminaCost;
+    }
+
+    checkSpirit(spiritCost){
+
+        let spiritPoints = (this.props.spirit_points !== undefined) ? this.props.spirit_points : 0;
+
+        return spiritPoints >= spiritCost;
     }
 
     //Return an array of effects with that contain the modifier searched for

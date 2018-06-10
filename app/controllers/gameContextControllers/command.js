@@ -116,7 +116,16 @@ const action = gameObjects => {
                 //Default button color to red ("danger").  If available, it will be overwritten
                 let actionAvailableButtonColor = "danger";
 
-                if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
+                //Set the action costs, if property does not exist, default to 0
+                let manaCost = (actionDetails.props.mana_points_cost !== undefined) ? actionDetails.props.mana_points_cost : 0;
+                let staminaCost = (actionDetails.props.stamina_points_cost !== undefined) ? actionDetails.props.stamina_points_cost : 0;
+                let spiritCost = (actionDetails.props.spirit_points_cost !== undefined) ? actionDetails.props.spirit_points_cost : 0;
+                let requirements = (actionDetails.props.requirements !== undefined) ? actionDetails.props.requirements : [];
+
+                let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(manaCost, staminaCost, spiritCost, requirements);
+
+                //if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
+                if (isActionAvailable.availability) {
                     actionAvailableButtonColor = "primary"
                 }
 
@@ -468,10 +477,11 @@ const turn = gameObjects => {
     //Increment all character's Action Points
     let gameCharacters = gameObjects.game.getCharacters();
 
+    /* REPLACE WITH MANA & STAMINA REGEN
     //Increase each character's action points by 10
     gameCharacters.forEach( eachGameCharacter =>{
         eachGameCharacter.incrementProperty('action_points', 10)
-    });
+    });*/
 
     slack({
         "username": gameObjects.requestZone.props.zone_messages.name,
