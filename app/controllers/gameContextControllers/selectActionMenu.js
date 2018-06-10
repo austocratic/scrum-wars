@@ -663,6 +663,17 @@ const backstab = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
+
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": isActionAvailable.reason
+        }
+    }
+
+
+    /*
     //Check if the initiating character is not hidden.  This character must be hidden to use this ability
     if (gameObjects.playerCharacter.getEffectsWithModifier('is_hidden').length === 0){
         return {
@@ -674,7 +685,7 @@ const backstab = gameObjects => {
 
     if (insufficientMessage !== undefined){
         return insufficientMessage
-    }
+    }*/
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
