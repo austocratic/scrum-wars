@@ -1,6 +1,6 @@
 "use strict";
 
-
+/*
 const checkManaStamina = (character, actionTaken) => {
 
     //console.log('DEBUG mana: ', character.props.mana_points);
@@ -27,4 +27,4 @@ const checkManaStamina = (character, actionTaken) => {
 
 module.exports = {
     checkManaStamina
-};
+};*/

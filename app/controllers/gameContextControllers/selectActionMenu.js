@@ -8,8 +8,6 @@ const updateCallback = require('../../helpers').updateCallback;
 const validateGameObjects = require('../../helpers').validateGameObjects;
 const targetSelection = require('../targetSelection');
 
-const selectActionHelpers = require('../../helpers/selectActionHelpers');
-
 const actions = require('../actionControllers/actions/index');
 
 const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, CoatOfBark, SmokeBomb,
@@ -28,7 +26,7 @@ const actionControllers = {
     firestorm: Firestorm
 };
 
-//Shop is the only action not using the action controller
+//*******  These actionControllers do not require a target they will take effect immediately when clicked  *******
 const shop = gameObjects => {
     console.log('Called selectActionMenu/shop');
 
@@ -112,10 +110,13 @@ const defensiveStance = gameObjects => {
     
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -152,10 +153,13 @@ const offensiveStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -192,10 +196,13 @@ const balancedStance = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -232,10 +239,13 @@ const axeorsShielding = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -272,10 +282,13 @@ const smokeBomb = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -312,10 +325,13 @@ const inspiringShout = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -361,20 +377,6 @@ const intoShadow = gameObjects => {
         }
     }
 
-    /*
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
-
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
-    }
-
-    //Check if the character is already hidden
-    if(gameObjects.playerCharacter.getEffectsWithModifier('is_hidden').length > 0){
-        return {
-            "text": `_You are already hidden!_`
-        }
-    }*/
-
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['intoShadow'];
 
@@ -409,10 +411,13 @@ const whirlwind = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -449,10 +454,13 @@ const firestorm = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     //Declare the Class function without invoking
@@ -493,15 +501,9 @@ const basicMelee = gameObjects => {
     //If action is not available return the reason
     if(!isActionAvailable.availability){
         return {
-            "text": isActionAvailable.reason
+            "text": `_${isActionAvailable.reason}_`
         }
     }
-
-    //const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
-    /*
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
-    }*/
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
@@ -519,10 +521,13 @@ const quickStrike = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -543,10 +548,13 @@ const lifeTap = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -567,10 +575,13 @@ const arcaneBolt = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -591,10 +602,13 @@ const flameBurst = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -615,10 +629,13 @@ const forkedLightning = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -639,10 +656,13 @@ const savageStrike = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -668,24 +688,9 @@ const backstab = gameObjects => {
     //If action is not available return the reason
     if(!isActionAvailable.availability){
         return {
-            "text": isActionAvailable.reason
+            "text": `_${isActionAvailable.reason}_`
         }
     }
-
-
-    /*
-    //Check if the initiating character is not hidden.  This character must be hidden to use this ability
-    if (gameObjects.playerCharacter.getEffectsWithModifier('is_hidden').length === 0){
-        return {
-            "text": `_You can not use this ability if you are not hidden.  First use a hiding ability!_`
-        }
-    }
-
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
-
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
-    }*/
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
@@ -705,10 +710,13 @@ const poisonedBlade = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -729,10 +737,13 @@ const stingingBees = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -753,10 +764,13 @@ const cleave = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
@@ -777,10 +791,13 @@ const minorHealing = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getBenefitTargetSelectionMenu(gameObjects);
@@ -799,10 +816,13 @@ const coatOfBark = gameObjects => {
 
     gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
 
-    const insufficientMessage = selectActionHelpers.checkManaStamina(gameObjects.playerCharacter, gameObjects.actionTaken);
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
 
-    if (insufficientMessage !== undefined){
-        return insufficientMessage
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
     }
 
     return targetSelection.getBenefitTargetSelectionMenu(gameObjects);
