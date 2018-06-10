@@ -70,8 +70,8 @@ class StingingBees extends BaseAction {
                 let ongoingDamageAmount = this._calculateDamage(this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, this.actionTaken.props.ongoing_damage, 1, 1, 0);
 
                 this.defaultActionPayload.attachments = [{
-                    "text": `${this.targetCharacter.props.name} reels in pain from poison taking ${ongoingDamageAmount} damage!`,
-                    "thumb_url": this.game.baseURL + this.game.skillImagePath + '67.png',
+                    "text": `${this.targetCharacter.props.name} is stung from all directions by a swarm of bees for ${ongoingDamageAmount} damage!`,
+                    "thumb_url": this.game.baseURL + this.game.skillImagePath + this.actionTaken.props.image_id + '.png',
                     "fields": [
                         {
                             "title": "Damage Type",
