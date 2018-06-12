@@ -88,6 +88,11 @@ class BaseAction {
             this.actionCharacter.incrementProperty('mana_points', -this.actionTaken.props.mana_points_cost);
         }
 
+        if (this.actionTaken.props.vigor_points_cost){
+            //Decrement the action cost from character's Vigor Points
+            this.actionCharacter.incrementProperty('vigor_points', -this.actionTaken.props.vigor_points_cost);
+        }
+
         return {
             "text": "action complete"
         }

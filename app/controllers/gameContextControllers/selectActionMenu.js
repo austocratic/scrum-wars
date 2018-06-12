@@ -586,6 +586,33 @@ const arcaneBolt = gameObjects => {
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
+const risingPunch = gameObjects => {
+    console.log('Called selectActionMenu/risingPunch');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
+
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
+    }
+
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
+};
 const flameBurst = gameObjects => {
     console.log('Called selectActionMenu/flameBurst');
 
@@ -841,6 +868,7 @@ module.exports = {
     basicMelee,
     quickStrike,
     arcaneBolt,
+    risingPunch,
     flameBurst,
     lifeTap,
     forkedLightning,
