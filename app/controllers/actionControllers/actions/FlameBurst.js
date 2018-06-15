@@ -16,8 +16,8 @@ class FlameBurst extends BaseAction {
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionAvoidedMessage = `Flames burst from ${this.actionCharacter.props.name}'s fingers, but ${this.targetCharacter.props.name} resists the flame's damage!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to conjure a Flame Burst, but the spell fizzles away!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} launches a Flame Burst which strikes ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;

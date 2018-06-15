@@ -6,9 +6,9 @@ const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name, turn, match, ranking } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
-const { shop, quickStrike, basicMelee, arcaneBolt, flameBurst, lifeTap, risingPunch, defensiveStance, balancedStance, inspiringShout,
-    offensiveStance, axeorsShielding, coatOfBark, smokeBomb, forkedLightning, intoShadow, savageStrike, backstab, poisonedBlade,
-    stingingBees, whirlwind, cleave, firestorm, minorHealing
+const { shop, quickStrike, basicMelee, arcaneBolt, flameBurst, lifeTap, risingPunch, fistOfThunder, defensiveStance, balancedStance,
+    inspiringShout, offensiveStance, axeorsShielding, coatOfBark, smokeBomb, forkedLightning, intoShadow, savageStrike, backstab,
+    poisonedBlade, stingingBees, whirlwind, cleave, firestorm, minorHealing
 } = selectActionMenu;
 
 //Route the slackRequest
@@ -30,6 +30,7 @@ const contextsAndActions = {
         arcaneBolt: arcaneBolt,
         flameBurst: flameBurst,
         risingPunch: risingPunch,
+        fistOfThunder: fistOfThunder,
         lifeTap: lifeTap,
         defensiveStance: defensiveStance,
         balancedStance: balancedStance,

@@ -15,8 +15,8 @@ class OffensiveStance extends BaseAction {
 
         this.calculatedPower = this._calculateStrength(this.basePower, this.actionCharacter.props.level, this.baseMin, this.baseMax);
 
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts an offensive stance, but stumbles!`;
 
         //Modifiers to apply on action success

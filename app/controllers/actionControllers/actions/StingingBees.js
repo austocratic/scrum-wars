@@ -16,8 +16,8 @@ class StingingBees extends BaseAction {
         //console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "You lunge towards your enemy but stumble";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "You lunge towards your enemy but stumble";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
 
         //this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes out with poisonous blades but ${this.targetCharacter.props.name} dodges the attack!`;
         this.channelActionFailMessage = `${this.actionCharacter.props.name} conjure a swarm of stinging bees, but the spell fizzles away!`;

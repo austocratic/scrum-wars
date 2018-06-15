@@ -14,7 +14,7 @@ class SmokeBomb extends BaseAction {
         //TODO for testing, will be infinite duration in the future;
         //this.duration = 4;
 
-        this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionFailedMessage = "Your attack fails!";
         //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to ignite a smoke bomb but fails!`;
 

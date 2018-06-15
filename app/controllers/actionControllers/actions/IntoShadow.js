@@ -14,8 +14,8 @@ class IntoShadow extends BaseAction {
 
         this.calculatedDamage = 0;
 
-        this.playerActionFailedMessage = "You fail to enter the shadows!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "You fail to enter the shadows!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to fade into the shadows but is noticed, action failed!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} fades into the shadows!`;
     }

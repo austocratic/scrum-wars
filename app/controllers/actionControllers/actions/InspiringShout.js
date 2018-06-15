@@ -14,8 +14,8 @@ class InspiringShout extends BaseAction {
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
 
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to shout, but is distracted by the heat of combat!`;
 
         //Modifiers to apply on action success

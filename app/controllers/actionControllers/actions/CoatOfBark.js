@@ -13,8 +13,8 @@ class CoatOfBark extends BaseAction {
         this.baseAccuracyScore = 10;
         this.baseAvoidScore = 5;
 
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} to conjure a Coat of Bark, but their spell fizzles!`;
 
         //Modifiers to apply on action success

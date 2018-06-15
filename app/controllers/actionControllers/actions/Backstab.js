@@ -15,8 +15,8 @@ class Backstab extends BaseAction {
         this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
         
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Backstab, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} lunges forward for a Quick Strike but ${this.targetCharacter.props.name} evades the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} emerges from the shadows and backstabs ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;

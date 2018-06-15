@@ -16,8 +16,8 @@ class RisingPunch extends BaseAction {
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
 
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a *Rising Punch* but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes with a *Rising Punch* but ${this.targetCharacter.props.name} blocks the blow!`;

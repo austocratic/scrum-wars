@@ -16,8 +16,8 @@ class LifeTap extends BaseAction {
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your target resists your spell!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your target resists your spell!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts to cast Life Tap, but the spell fizzles away!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} conjures a life tapping effect but ${this.targetCharacter.props.name} resists the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} conjures a life tapping effect and drains ${this.targetCharacter.props.name} for ${this.calculatedDamage} health!`;

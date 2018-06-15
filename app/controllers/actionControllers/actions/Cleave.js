@@ -16,8 +16,8 @@ class Cleave extends BaseAction {
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a massive cleaving attack, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} attempts a massive cleaving attack but ${this.targetCharacter.props.name} evades the attack!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name}'s blade comes *cleaving* down delivering a massive blow to ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!`;

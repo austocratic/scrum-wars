@@ -16,8 +16,8 @@ class BasicMelee extends BaseAction {
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
         //Alerts & Messages
-        this.playerActionFailedMessage = "Your attack fails!";
-        this.playerActionAvoidedMessage = "Your target avoids your attack!";
+        //this.playerActionFailedMessage = "Your attack fails!";
+        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
 
         //TODO this message should be dynamic based on weapon type
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a Melee attack, but stumbles!`;
