@@ -157,7 +157,7 @@ class Character extends BaseModel{
 
         let manaCost = (actionObject.props.mana_points_cost !== undefined) ? actionObject.props.mana_points_cost : 0;
         let staminaCost = (actionObject.props.stamina_points_cost !== undefined) ? actionObject.props.stamina_points_cost : 0;
-        let spiritCost = (actionObject.props.spirit_points_cost !== undefined) ? actionObject.props.spirit_points_cost : 0;
+        let vigorCost = (actionObject.props.vigor_points_cost !== undefined) ? actionObject.props.vigor_points_cost : 0;
         let requirements = (actionObject.props.requirements !== undefined) ? actionObject.props.requirements : [];
 
         let actionCheck = {
@@ -179,10 +179,10 @@ class Character extends BaseModel{
             }
         }
 
-        if (!this.checkSpirit(spiritCost)){
+        if (!this.checkVigor(vigorCost)){
             actionCheck = {
                 availability: false,
-                reason: 'Insufficient Spirit'
+                reason: 'Insufficient Vigor'
             }
         }
 
@@ -253,11 +253,11 @@ class Character extends BaseModel{
         return this.props.stamina_points >= staminaCost;
     }
 
-    checkSpirit(spiritCost){
+    checkVigor(vigorCost){
 
-        let spiritPoints = (this.props.spirit_points !== undefined) ? this.props.spirit_points : 0;
+        let vigorPoints = (this.props.vigor_points !== undefined) ? this.props.vigor_points : 0;
 
-        return spiritPoints >= spiritCost;
+        return vigorPoints >= vigorCost;
     }
 
     //Return an array of effects with that contain the modifier searched for
