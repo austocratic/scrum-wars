@@ -21,7 +21,8 @@ class RisingPunch extends BaseAction {
 
         this.channelActionFailMessage = `${this.actionCharacter.props.name} attempts a *Rising Punch* but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes with a *Rising Punch* but ${this.targetCharacter.props.name} blocks the blow!`;
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} strikes ${this.targetCharacter.props.name} with a *Rising Punch* for ${this.calculatedDamage} points of damage!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} strikes ${this.targetCharacter.props.name} with a *Rising Punch* for ${this.calculatedDamage} points of damage!
+        \n_${this.actionCharacter.props.name} generates ${this.actionTaken.props.vigor_generated} points of vigor!_`;
     }
 
     initiate(){
@@ -51,8 +52,7 @@ class RisingPunch extends BaseAction {
                 this._processDamage(this.targetCharacter, this.calculatedDamage);
 
                 //Generate vigor, if action has no vigor_generated prop, adjust by 0
-                let vigorGenerated = this.actionTaken.props.vigor_generated ? this.actionTaken.props.vigor_generated : 0;
-                this.actionCharacter.incrementProperty('vigor_points', vigorGenerated);
+                this.actionCharacter.incrementProperty('vigor_points', this.actionTaken.props.vigor_generated);
 
                 return {
                     status: 'complete',
