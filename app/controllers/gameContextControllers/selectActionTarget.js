@@ -1,9 +1,9 @@
 "use strict";
 
 const _ = require('lodash');
-const updateCallback = require('../../helpers').updateCallback;
+const updateCallback = require('../../helpers/helpers').updateCallback;
 
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 //let NPC = require('../../models/NPC').NPC;
 let Character = require('../../models/Character').Character;

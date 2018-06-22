@@ -73,6 +73,10 @@ const contextsAndActions = {
         yes: require('./gameContextControllers/travelConfirmation').yes,
         no: require('./gameContextControllers/travelConfirmation').no
     },
+    breakMeditationConfirmation: {
+        yes: require('./gameContextControllers/breakMeditationConfirmation').yes,
+        no: require('./gameContextControllers/breakMeditationConfirmation').no
+    },
     characterProfileMenu: {
         inventory: require('./gameContextControllers/characterProfileMenu').inventory,
         equipment: require('./gameContextControllers/characterProfileMenu').equipment,

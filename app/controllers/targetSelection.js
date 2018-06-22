@@ -1,6 +1,6 @@
 "use strict";
 
-const updateCallback = require('../helpers').updateCallback;
+const updateCallback = require('../helpers/helpers').updateCallback;
 
 //Returns drop down of targets including all characters on enemy teams
 const getAttackTargetSelectionMenu = gameObjects => {

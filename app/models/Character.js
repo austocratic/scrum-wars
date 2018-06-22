@@ -1,7 +1,6 @@
 'use strict';
 
 const BaseModel = require('./BaseModel').BaseModel;
-const slackTemplates = require('../slackTemplates');
 
 const _ = require('lodash');
 
@@ -62,12 +61,10 @@ class Character extends BaseModel{
 
     purchaseItem(itemObject){
 
-        var responseTemplate;
+        let responseTemplate;
 
         //Check if the player has sufficient gold
         if (this.props.gold < itemObject.props.cost) {
-            //If insufficient gold: return template
-            responseTemplate = slackTemplates.insufficientFunds;
 
             responseTemplate.text = "I'm sorry traveler, you don't have " + itemObject.props.cost + " gold." +
                 "\nCan I interest you in something else?";
@@ -98,9 +95,7 @@ class Character extends BaseModel{
         var updatedPlayerGold = this.props.gold - itemObject.props.cost;
         this.updateProperty('gold', updatedPlayerGold);
 
-        responseTemplate = {
-            "text": "_You successfully purchase the item_"
-        };
+        //responseTemplate = {"text": "_You successfully purchase the item_"};
 
         responseTemplate.text = "_You hand the merchant " + itemObject.props.cost + " in exchange for the " + itemObject.props.name + "_" + "\nThank you for you patronage.  Safe travels, my friend";
 

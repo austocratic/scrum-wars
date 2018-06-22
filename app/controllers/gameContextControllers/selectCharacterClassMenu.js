@@ -1,7 +1,7 @@
 "use strict";
 
-const updateCallback = require('../../helpers').updateCallback;
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const updateCallback = require('../../helpers/helpers').updateCallback;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 const Class = require('../../models/Class').Class;
 

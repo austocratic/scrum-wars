@@ -3,7 +3,7 @@
 const slack = require('../../../libraries/slack');
 const _ = require('lodash');
 
-const validateGameObjects = require('../../../helpers').validateGameObjects;
+const validateGameObjects = require('../../../helpers/helpers').validateGameObjects;
 
 const Action = require('../../../models/Action').Action;
 
@@ -385,16 +385,6 @@ class BaseAction {
     _applyEffect(characterToModify, modifiers){
         console.log('called BaseAction._applyEffect()');
 
-        //let endingTurn;
-
-        //console.log('DEBUG this.actionTaken.props.effect_duration: ', this.actionTaken.props.effect_duration);
-        //console.log('DEBUG this.currentMatch.number_turns: ', this.currentMatch.props.number_turns);
-
-        /*
-        if (this.actionTaken.duration) {
-            endingTurn = this.currentMatch.number_turns + this.actionTaken.duration
-        }*/
-
         //If character has a effects array, add the action ID to it, else create an effects array and add to it
         if (characterToModify.props.effects){
             characterToModify.props.effects.push({
@@ -417,9 +407,6 @@ class BaseAction {
                 modifiers: modifiers
             }]
         }
-
-        //Update the character's properties
-        //this._incrementProperties(characterToModify, modifiers)
     }
 
     _reverseEffect(characterToModify, actionID){

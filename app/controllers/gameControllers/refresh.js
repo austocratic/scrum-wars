@@ -7,7 +7,7 @@ const checkForMatchStart = require('./checkForMatchStart').checkForMatchStart;
 const processOngoingEffects = require('./processOngoingEffects').processOngoingEffects;
 
 const actionQueue = require('../../controllers/gameControllers/actionQueue').actionQueue;
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 const Character = require('../../models/Character').Character;
 

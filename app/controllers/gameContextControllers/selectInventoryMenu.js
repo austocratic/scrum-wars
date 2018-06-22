@@ -1,5 +1,5 @@
 
-const updateCallback = require('../../helpers').updateCallback;
+const updateCallback = require('../../helpers/helpers').updateCallback;
 const Item = require('../../models/Item').Item;
 
 

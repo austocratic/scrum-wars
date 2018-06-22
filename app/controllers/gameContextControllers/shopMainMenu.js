@@ -5,8 +5,8 @@ const _ = require('lodash');
 const NPC = require('../../models/NPC').NPC;
 const Item = require('../../models/Item').Item;
 
-const updateCallback = require('../../helpers').updateCallback;
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const updateCallback = require('../../helpers/helpers').updateCallback;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 
 const purchaseButton = gameObjects => {

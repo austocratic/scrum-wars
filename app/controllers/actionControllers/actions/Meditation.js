@@ -24,7 +24,7 @@ class Meditation extends BaseAction {
             stamina_regeneration: 10
         };
 
-        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a deep *meditative Trance*, increaing stamina regeneration by ${this.statsToModify.stamina_regeneration}!`;
+        this.channelActionSuccessMessage = `${this.actionCharacter.props.name} enters a deep *meditative Trance*, increasing stamina regeneration by ${this.statsToModify.stamina_regeneration}!`;
     }
 
     initiate(){

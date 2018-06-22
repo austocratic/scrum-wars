@@ -1,7 +1,6 @@
 'use strict';
 
 const BaseModel = require('./BaseModel').BaseModel;
-const slackTemplates = require('../slackTemplates');
 
 const _ = require('lodash');
 

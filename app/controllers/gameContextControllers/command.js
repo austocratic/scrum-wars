@@ -3,11 +3,9 @@
 const _ = require('lodash');
 
 const slack = require('../../libraries/slack').sendMessage;
-//to delete (shuld use slack library above)
-//const slackAlert = require('../../libraries/slack').Alert;
-
-const updateCallback = require('../../helpers').updateCallback;
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const getActionAttachments = require('../../helpers/getActionAttachments').getActionAttachments;
+const updateCallback = require('../../helpers/helpers').updateCallback;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 const Action = require('../../models/Action').Action;
 const Match = require('../../models/Match').Match;
@@ -64,7 +62,45 @@ const action = gameObjects => {
 
         return gameObjects.slackResponseTemplate;
     }
-    
+
+    //Meditation check
+    if (gameObjects.playerCharacter.props.effects){
+        let meditationEffect = _.find(gameObjects.playerCharacter.props.effects, 'meditation');
+
+        //If character does have a meditation effect, return a confirmation view
+        if (meditationEffect !== undefined){
+            gameObjects.slackResponseTemplate.text =  "_You are currently meditating_";
+
+            gameObjects.slackResponseTemplate.attachments = [{
+                //image_url: "https://scrum-wars.herokuapp.com/public/images/fullSize/" + gameObjects.requestZone.id + ".jpg",
+                fallback: "requestFallback",
+                text: "Would you like to end your meditation now?",
+                "color": gameObjects.game.menuColor,
+                actions: [
+                    {
+                        "name": "yes",
+                        "text": "Yes",
+                        "type": "button",
+                        "value": "yes"
+                    },
+                    {
+                        "name": "no",
+                        "text": "No",
+                        "type": "button",
+                        "value": "no"
+                    }
+                ]
+            }];
+
+            let updatedCallback = 'command:action/breakMeditationConfirmation';
+
+            gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, updatedCallback);
+
+            return gameObjects.slackResponseTemplate;
+        }
+    }
+
+    /*
     //Returns an array of all the character's action IDs with is_active = 1
     let actionIDsAvailable = gameObjects.playerCharacter.getActionIDs();
 
@@ -116,16 +152,6 @@ const action = gameObjects => {
                 //Default button color to red ("danger").  If available, it will be overwritten
                 let actionAvailableButtonColor = "danger";
 
-                //console.log(`DEBUG about to check an action: ${JSON.stringify(actionDetails.props)}`);
-
-                //Set the action costs, if property does not exist, default to 0
-                //let manaCost = (actionDetails.props.mana_points_cost !== undefined) ? actionDetails.props.mana_points_cost : 0;
-                //let staminaCost = (actionDetails.props.stamina_points_cost !== undefined) ? actionDetails.props.stamina_points_cost : 0;
-                //let spiritCost = (actionDetails.props.spirit_points_cost !== undefined) ? actionDetails.props.spirit_points_cost : 0;
-                //let requirements = (actionDetails.props.requirements !== undefined) ? actionDetails.props.requirements : [];
-
-                //console.log(`DEBUG checking ${actionDetails.props.name} requirements: ${requirements}`);
-
                 let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(actionDetails);
 
                 //if (gameObjects.playerCharacter.isActionAvailable(actionDetails.props.mana_points_cost, actionDetails.props.stamina_points_cost)) {
@@ -151,17 +177,16 @@ const action = gameObjects => {
             return attachmentsForCategory
         });
 
-    //console.log('DEBUG templateAttachments: ', templateAttachments);
-
     //unwrappedTemplateAttachments is array of arrays, need to flatten:
     function flatten(arr) {
         return arr.reduce(function (flat, toFlatten) {
             return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
         }, []);
-    }
+    }*/
 
     //Use .value() to unwrap the lodash wrapper
-    gameObjects.slackResponseTemplate.attachments = flatten(templateAttachments.value());
+    //gameObjects.slackResponseTemplate.attachments = flatten(templateAttachments.value());
+    gameObjects.slackResponseTemplate.attachments = getActionAttachments(gameObjects);
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `command:action/selectActionMenu`);
 

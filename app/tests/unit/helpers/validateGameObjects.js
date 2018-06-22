@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const validateGameObjects = require('../../../helpers').validateGameObjects;
+const validateGameObjects = require('../../../helpers/helpers').validateGameObjects;
 let Game = require('../../../models/Game').Game;
 let Character = require('../../../models/Character').Character;
 let User = require('../../../models/User').User;

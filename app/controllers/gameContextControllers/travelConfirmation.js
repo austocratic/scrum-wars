@@ -1,6 +1,6 @@
 "use strict";
 
-const updateCallback = require('../../helpers').updateCallback;
+const updateCallback = require('../../helpers/helpers').updateCallback;
 
 const slackAlert = require('../../libraries/slack').Alert;
 

@@ -4,14 +4,14 @@ const _ = require('lodash');
 
 const NPC = require('../../models/NPC').NPC;
 const Action = require('../../models/Action').Action;
-const updateCallback = require('../../helpers').updateCallback;
-const validateGameObjects = require('../../helpers').validateGameObjects;
+const updateCallback = require('../../helpers/helpers').updateCallback;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 const targetSelection = require('../targetSelection');
 
 const actions = require('../actionControllers/actions/index');
 
 const { DefensiveStance, BalancedStance, AxeorsShielding, InspiringShout, CoatOfBark, SmokeBomb,
-    IntoShadow, Whirlwind, OffensiveStance, Firestorm } = actions;
+    IntoShadow, Whirlwind, OffensiveStance, Firestorm, Meditation } = actions;
 
 const actionControllers = {
     defensiveStance: DefensiveStance,
@@ -23,7 +23,8 @@ const actionControllers = {
     inspiringShout: InspiringShout,
     intoShadow: IntoShadow,
     whirlwind: Whirlwind,
-    firestorm: Firestorm
+    firestorm: Firestorm,
+    meditation: Meditation
 };
 
 //*******  These actionControllers do not require a target they will take effect immediately when clicked  *******
@@ -465,6 +466,49 @@ const firestorm = gameObjects => {
 
     //Declare the Class function without invoking
     const actionObjectToMake = actionControllers['firestorm'];
+
+    //Invoke validation function using the classes's attached validation properties before instantiating the class
+    validateGameObjects(gameObjects, actionObjectToMake.validations);
+
+    let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
+
+    actionObject.initiate();
+
+    //Mark the action as used, pass in action id & turn number
+    gameObjects.playerCharacter.updateActionUsed(actionObject.actionTaken.id, gameObjects.currentMatch.props.number_turns);
+
+    return {
+        "text": `_You perform ${actionObject.actionTaken.props.name}_`
+    }
+};
+const meditation = gameObjects => {
+    console.log('Called selectActionMenu/meditation');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'currentMatch' ,
+        'userActionValueSelection'
+    ]);
+
+    //User selected a target character ID.  Create a character for that target
+    //let targetCharacter = new Character(gameObjects.game.state, gameObjects.userActionValueSelection);
+    gameObjects.targetCharacter = gameObjects.playerCharacter;
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
+
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
+    }
+
+    //Declare the Class function without invoking
+    const actionObjectToMake = actionControllers['meditation'];
 
     //Invoke validation function using the classes's attached validation properties before instantiating the class
     validateGameObjects(gameObjects, actionObjectToMake.validations);
