@@ -950,6 +950,7 @@ module.exports = {
     stingingBees,
     cleave,
     firestorm,
+    meditation,
     minorHealing,
     coatOfBark
 };
