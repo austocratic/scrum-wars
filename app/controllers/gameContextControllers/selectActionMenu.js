@@ -657,6 +657,33 @@ const risingPunch = gameObjects => {
 
     return targetSelection.getAttackTargetSelectionMenu(gameObjects);
 };
+const flurryOfFists = gameObjects => {
+    console.log('Called selectActionMenu/flurryOfFists');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'playerCharacter',
+        'slackCallback',
+        'userActionValueSelection',
+        'slackResponseTemplate',
+        'currentMatch',
+        'userActionValueSelection'
+    ]);
+
+    gameObjects.actionTaken = new Action(gameObjects.game.state, gameObjects.userActionValueSelection);
+
+    let isActionAvailable = gameObjects.playerCharacter.isActionAvailable(gameObjects.actionTaken);
+
+    //If action is not available return the reason
+    if(!isActionAvailable.availability){
+        return {
+            "text": `_${isActionAvailable.reason}_`
+        }
+    }
+
+    return targetSelection.getAttackTargetSelectionMenu(gameObjects);
+};
 const fistOfThunder = gameObjects => {
     console.log('Called selectActionMenu/fistOfThunder');
 
@@ -940,6 +967,7 @@ module.exports = {
     quickStrike,
     arcaneBolt,
     risingPunch,
+    flurryOfFists,
     fistOfThunder,
     flameBurst,
     lifeTap,

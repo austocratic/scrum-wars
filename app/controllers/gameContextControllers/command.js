@@ -67,7 +67,7 @@ const action = gameObjects => {
     if (gameObjects.playerCharacter.props.effects){
         let meditationEffect = _.find(gameObjects.playerCharacter.props.effects, {name: 'Meditation'});
 
-        console.log('DEBUG meditiationEffect: ', meditationEffect);
+        console.log('DEBUG meditationEffect: ', meditationEffect);
 
         //If character does have a meditation effect, return a confirmation view
         if (meditationEffect !== undefined){

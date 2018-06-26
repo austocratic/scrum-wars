@@ -7,7 +7,7 @@ const Zone = require('../../../app/models/Zone').Zone;
 const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 const actions = require('../actionControllers/actions/index');
 
-const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, RisingPunch, FistOfThunder, DefensiveStance, AxeorsShielding,
+const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, RisingPunch, FlurryOfFists, FistOfThunder, DefensiveStance, AxeorsShielding,
     InspiringShout, SmokeBomb, Backstab, LifeTap, PoisonedBlade, StingingBees, BalancedStance, IntoShadow,
     Whirlwind, OffensiveStance, Firestorm, Cleave, ForkedLightning, MinorHealing, CoatOfBark, Meditation } = actions;
 
@@ -17,6 +17,7 @@ const actionControllers = {
     '-KrJaBvyYDGrNVfcaAd0': ArcaneBolt,
     '-LE6OGOxY_a8_vELbQ0O': FlameBurst,
     '-LEq2YugJUJ7r1Eae7--': RisingPunch,
+    '-LFt_V-Jd3KiFv4qXRWI': FlurryOfFists,
     '-LF41ilkoZfJTgtk2JYk': FistOfThunder,
     '-KjpeJT7Oct3ZCtLhENO': DefensiveStance,
     '-LDZ4GJde7BFOcsHj-A8': AxeorsShielding,
