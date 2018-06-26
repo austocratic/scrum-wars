@@ -11,7 +11,7 @@ let Action = require('../../models/Action').Action;
 
 const actions = require('../actionControllers/actions/index');
 
-const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, RisingPunch, FistOfThunder, LifeTap, Backstab, PoisonedBlade, StingingBees,
+const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, RisingPunch, FistOfThunder, FlurryOfFists, LifeTap, Backstab, PoisonedBlade, StingingBees,
     ForkedLightning, Cleave, MinorHealing, CoatOfBark, Meditation } = actions;
 
 //TODO I may want to make this a stand alone file/function "getActionController" so that it can be re used in Game to process effects
@@ -27,6 +27,7 @@ const actionControllers = {
     '-LE6OGOxY_a8_vELbQ0O': FlameBurst,
     '-LEq2YugJUJ7r1Eae7--': RisingPunch,
     '-LF41ilkoZfJTgtk2JYk': FistOfThunder,
+    '-LFt_V-Jd3KiFv4qXRWI': FlurryOfFists,
     '-KkOq-y2_zgEgdhY-6_U': LifeTap,
     '-Kr3hnITyH9ZKx3VuZah': Backstab,
     '-KvOpJ2FyGodmZCanea7': PoisonedBlade,
