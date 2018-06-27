@@ -61,7 +61,7 @@ class Character extends BaseModel{
 
     purchaseItem(itemObject){
 
-        let responseTemplate;
+        let responseTemplate = {};
 
         //Check if the player has sufficient gold
         if (this.props.gold < itemObject.props.cost) {
