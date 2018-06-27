@@ -9,7 +9,7 @@ const actions = require('../actionControllers/actions/index');
 
 const { BasicMelee, QuickStrike, ArcaneBolt, FlameBurst, RisingPunch, FlurryOfFists, FistOfThunder, DefensiveStance, AxeorsShielding,
     InspiringShout, SmokeBomb, Backstab, LifeTap, PoisonedBlade, StingingBees, BalancedStance, IntoShadow,
-    Whirlwind, OffensiveStance, Firestorm, Cleave, ForkedLightning, MinorHealing, CoatOfBark, Meditation } = actions;
+    Whirlwind, OffensiveStance, Firestorm, RoundingKick, Cleave, ForkedLightning, MinorHealing, CoatOfBark, Meditation } = actions;
 
 const actionControllers = {
     '-LALEuXn3oNVmTXAAvIL': BasicMelee,
@@ -32,6 +32,7 @@ const actionControllers = {
     '-Kkdk_CD5vx8vRGQD268': IntoShadow,
     '-KxkBOZgjEPwKmHOWueQ': Whirlwind,
     '-Ky3C664qBFIYS4R4ItQ': Firestorm,
+    '-LFyji8EIPsJnjPf15Ah': RoundingKick,
     '-Ky1zv4JXgbAKvxFFBmp': Cleave,
     '-KkdduB9XuB46EsxqwIX': ForkedLightning,
     '-LE68rplHU9ntql53T4q': MinorHealing,

@@ -109,19 +109,7 @@ class Firestorm extends BaseAction {
                 break;
         }
     }
-
-
 }
-
-/* Structure to add additional property validations
- QuickStrike.validations = [
- ...BaseAttack.validations,
- 'playerCharacter',
- 'targetCharacter',
- 'requestZone',
- 'currentMatch',
- 'actionTaken'
- ];*/
 
 
 module.exports = {

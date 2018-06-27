@@ -15,10 +15,6 @@ class FlurryOfFists extends BaseAction {
         this.calculatedDamage = this._calculateMelee(this.actionTaken.props.damage_multiplier, this.bonusDamage);
         console.log(`${this.actionTaken.props.name} calculated damage of: ${this.calculatedDamage}`);
 
-        //Alerts & Messages
-        //this.playerActionFailedMessage = "Your attack fails!";
-        //this.playerActionAvoidedMessage = "Your target avoids your attack!";
-
         this.channelActionFailMessage = `${this.actionCharacter.props.name}'s *Flurry of Fists* strike out, but stumbles!`;
         this.channelActionAvoidedMessage = `${this.actionCharacter.props.name} strikes with a *Flurry of Fists* but ${this.targetCharacter.props.name} blocks the blow!`;
         this.channelActionSuccessMessage = `${this.actionCharacter.props.name} fists become a blur, striking ${this.targetCharacter.props.name} for ${this.calculatedDamage} points of damage!
