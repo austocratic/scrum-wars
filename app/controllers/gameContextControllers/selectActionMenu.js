@@ -1022,6 +1022,7 @@ module.exports = {
     stingingBees,
     cleave,
     firestorm,
+    roundingKick,
     meditation,
     minorHealing,
     coatOfBark
