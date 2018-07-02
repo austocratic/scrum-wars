@@ -66,12 +66,9 @@ const checkForMatchStart = (gameObjects) => {
 
     //Notify of match start
     slack({
-        //TODO need to add a game object for the arena
-        //"username": gameObjects.requestZone.props.zone_messages.name,
         "username": gameObjects.arenaZone.props.zone_messages.name,
-        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
-        //TODO dont hardcode the arena
-        "channel": ("#arena"),
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',
+        "channel": (`#${gameObjects.arenaZone.props.channel}`),
         "attachments": [{
             "text": `Today's match will be a ${gameObjects.currentMatch.props.type.name}!\nPrepare yourselves for battle!`,
             "color": gameObjects.game.menuColor
