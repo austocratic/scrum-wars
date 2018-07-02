@@ -4,8 +4,7 @@
 
 
 const checkForNewTurn = (gameObjects) => {
-    console.log('called checkForNewTurn()')
-
+    console.log('called checkForNewTurn()');
 
     //*************** CHECK FOR TURN INCREMENT *****************
 

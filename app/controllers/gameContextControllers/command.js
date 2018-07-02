@@ -555,19 +555,14 @@ const match = gameObjects => {
     //Get participating characters:
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id);
 
-    //console.log('DEBUG charactersInZone: ', charactersInZone);
-
-    /*
-    gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id)
-        .forEach( eachCharacterInZone =>{
-            eachCharacterInZone.resetActions();
-        });*/
-
     //For characters participating in the match, reset their actions
     charactersInZone.forEach( eachCharacterInZone =>{
         eachCharacterInZone.resetActions();
 
-        eachCharacterInZone.updateProperty('action_points', 10)
+        //Reset HP/MP/VP:
+        eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.stats_current.health);
+        eachCharacterInZone.updateProperty('mana_points', eachCharacterInZone.stats_current.mana);
+        eachCharacterInZone.updateProperty('vigor_points', 0);
     });
 
     //Start the new match

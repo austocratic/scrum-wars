@@ -17,6 +17,8 @@ const declareGameObjects = (game, slackRequest) => {
     let gameObjects = {
         currentMatch: new Match(game.state, game.getCurrentMatchID()),
         lastMatch: new Match(game.state, game.getLastMatchID()),
+        //TODO should not hard code here
+        arenaZone: new Zone(game.state, "C4Z7F8XMW"),
         //TODO I dont think that responseTemplate should be a standard game object....
         slackResponseTemplate: {}
     };

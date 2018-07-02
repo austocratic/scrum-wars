@@ -49,8 +49,6 @@ const refresh = (gameObjects) => {
             //TODO should only check the arena zone for victory
             const charactersInArena = gameObjects.game.getCharactersInArena();
 
-            //console.log('DEBUG charactersInArena: ', charactersInArena);
-
             //Process ongoing effects
             processOngoingEffects(gameObjects, charactersInArena);
 
@@ -67,7 +65,6 @@ const refresh = (gameObjects) => {
             checkForNewTurn(gameObjects);
 
             break;
-
 
         //If match has ended, create a new match and update the global match ID
         case 'ended':
