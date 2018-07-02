@@ -560,8 +560,9 @@ const match = gameObjects => {
         eachCharacterInZone.resetActions();
 
         //Reset HP/MP/VP:
-        eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.stats_current.health);
-        eachCharacterInZone.updateProperty('mana_points', eachCharacterInZone.stats_current.mana);
+        eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.props.stats_current.health);
+        eachCharacterInZone.updateProperty('mana_points', eachCharacterInZone.props.stats_current.mana);
+        eachCharacterInZone.updateProperty('stamina_points', eachCharacterInZone.props.stats_current.stamina);
         eachCharacterInZone.updateProperty('vigor_points', 0);
     });
 
