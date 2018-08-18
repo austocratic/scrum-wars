@@ -232,7 +232,7 @@ class Game {
     }
 
     getCharacterClasses() {
-        console.log('called Game.getCharacterClasses()');
+        console.log('Info: called Game.getCharacterClasses()');
         
         //Get all available classes from local
         let localCharacterClasses = this.state.class;
@@ -261,12 +261,9 @@ class Game {
                 return new Character(this.state, eachCharacterID)
             })
             .filter( eachCharacter => {
-                //Why did I only return not hidden characters?
-                //return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID && eachCharacter.props.is_hidden === 0
                 return eachCharacter.props.active === 1 && eachCharacter.props.zone_id === zoneID
             })
             .map( eachCharacter => {
-                //Return only the character's ID
                 return eachCharacter.id
             })
     }
@@ -281,18 +278,6 @@ class Game {
             });
 
         return nestedTeams[0];
-
-        //Get the teams nested array
-        /*
-        let teams = this.state.match[this.state.match.global_state.match_id].teams;
-
-        //Filter for all the teams that the character ID is in
-        let nestedTeams = teams.filter(eachTeam=>{
-            return eachTeam.indexOf(characterID) >= 0
-        });
-
-        //Character should only be on one team, so return the first element (array of character IDs)
-        return nestedTeams[0];*/
     }
 
     getCharacters(){
@@ -306,7 +291,7 @@ class Game {
     }
 
     getCharactersInZone(zoneID){
-        console.log('called getCharactersInZone');
+        console.log('Info: called getCharactersInZone');
 
         return Object.keys(this.state.character)
             .map( eachCharacterID =>{
@@ -319,7 +304,7 @@ class Game {
     }
 
     getCharactersInArena(){
-        console.log('called getCharactersInArena()');
+        console.log('Info: called getCharactersInArena()');
 
         //Get the arena
         const arena = Object.keys(this.state.zone)

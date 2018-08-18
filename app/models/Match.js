@@ -49,18 +49,18 @@ class Match extends BaseModel{
                 return eachTeam.length
             });
 
-            console.log('numberOfPlayersPerTeam: ', numberOfPlayersPerTeam);
+            //console.log('numberOfPlayersPerTeam: ', numberOfPlayersPerTeam);
 
             let maxNumberOfPlayers = Math.max(...numberOfPlayersPerTeam);
 
-            console.log('Team with most players has: ', maxNumberOfPlayers);
+            //console.log('Team with most players has: ', maxNumberOfPlayers);
 
             //Get the indexes of team(s) with the most players
             let teamsWithMostPlayers = numberOfPlayersPerTeam
                 .map((eachTeam, index) =>{
-                    console.log('filter function, eachTeam: ', eachTeam);
+                    //console.log('filter function, eachTeam: ', eachTeam);
                     if (eachTeam === maxNumberOfPlayers) {
-                        console.log('returning index of: ', index);
+                        //console.log('returning index of: ', index);
                         return index
                     }
                 })
@@ -68,12 +68,12 @@ class Match extends BaseModel{
                     return eachTeam !== undefined;
                 });
 
-            console.log('teamsWithMostPlayers: ', teamsWithMostPlayers);
+            //console.log('teamsWithMostPlayers: ', teamsWithMostPlayers);
 
             //Assign a random team
             let teamAssigned = Math.floor(Math.random() * (numberOfPlayerTeams));
 
-            console.log('assigned to team: ', teamAssigned);
+            //console.log('assigned to team: ', teamAssigned);
 
             //If all teams are ties for most # of players, assign the player to the random team determined and exit
             if (teams.length === teamsWithMostPlayers.length){
@@ -84,10 +84,10 @@ class Match extends BaseModel{
             //If the random team assigned has a max number of players already, reassign to a new team and check again
             while(teamsWithMostPlayers.indexOf(teamAssigned) >= 0) {
                 teamAssigned = Math.floor(Math.random() * (numberOfPlayerTeams));
-                console.log('reassigning to team: ', teamAssigned);
+                //console.log('reassigning to team: ', teamAssigned);
             }
 
-            console.log('Assigning player to team: ', teamAssigned);
+            //console.log('Assigning player to team: ', teamAssigned);
 
             //Push character ID into team assigned
             teams[teamAssigned].push(eachCharacterID);
@@ -100,10 +100,11 @@ class Match extends BaseModel{
 
     }
 
-    end(winningCharacterID){
+    end(){
 
         this.updateProperty('date_ended', Date.now());
-        this.updateProperty('character_id_won', winningCharacterID);
+        //Temporarily removing character ID, this won't support team wins (multiple winning characters)
+        //this.updateProperty('character_id_won', winningCharacterID);
         this.updateProperty('status', 'ended');
     }
 
