@@ -51,20 +51,22 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             charactersInZone.forEach(eachCharacterInZone=>{
                 //Determine what team that character is on:
 
+                let characterTeamIndexes = [];
+
                 //Iterate through the teams
-                let characterTeams = gameObjects.currentMatch.props.teams.map((eachTeam, index) =>{
+                gameObjects.currentMatch.props.teams.forEach((eachTeam, index) =>{
                     if (eachTeam[eachCharacterInZone.id]){
                         //Found a living character's team
-                        return index;
+                        characterTeamIndexes.push(index)
                     }
                 });
 
-                console.log('DEBUG: characterTeams: ', characterTeams);
+                console.log('DEBUG: characterTeams: ', characterTeamIndexes);
 
                 //Find unique teams
-                const teamsWithLivingCharacters = [...new Set(characterTeams)];
+                const teamsWithLivingCharacters = [...new Set(characterTeamIndexes)];
 
-                console.log('DEBUG: teamsWithLivingCharacters: ', characterTeams);
+                console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
 
                 //If one team with living characters left, that team wins!
                 if (teamsWithLivingCharacters.length === 1){
