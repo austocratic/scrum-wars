@@ -115,7 +115,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
             break;
         default:
-            console.log('ERROR: checkForVictory() called with an unknown match type', )
+            console.log('ERROR: checkForVictory() called with an unknown match type:', gameObjects.match.props.type.name)
 
     }
 
