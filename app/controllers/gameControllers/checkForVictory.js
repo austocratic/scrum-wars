@@ -59,8 +59,12 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                     }
                 });
 
+                console.log('DEBUG: characterTeams: ', characterTeams);
+
                 //Find unique teams
                 const teamsWithLivingCharacters = [...new Set(characterTeams)];
+
+                console.log('DEBUG: teamsWithLivingCharacters: ', characterTeams);
 
                 //If one team with living characters left, that team wins!
                 if (teamsWithLivingCharacters.length === 1){
