@@ -47,77 +47,78 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             break;
         case 'Team Battle':
 
-            //Iterate through charactes in zone, determine the number of teams still alive.
-            charactersInZone.forEach(eachCharacterInZone=>{
+            //Create an array of team index IDs representing each character
+            let characterTeams = charactersInZone.map(eachCharacterInZone=>{
                 //Determine what team that character is on:
 
-                let characterTeamIndexes = [];
-
                 //Iterate through the teams
-                gameObjects.currentMatch.props.teams.forEach((eachTeam, index) =>{
-                    if (eachTeam[eachCharacterInZone.id]){
-                        //Found a living character's team
-                        characterTeamIndexes.push(index)
-                    }
+                return gameObjects.currentMatch.props.teams
+                    //Determine which team index the character is on
+                    .filter(eachTeam=>{
+                        return eachTeam[eachCharacterInZone.id]
+                    })
+                    //Return that team index
+                    .map((eachTeam, index) =>{
+                        return index;
+                });
+            });
+
+            console.log('DEBUG: characterTeams: ', characterTeams);
+
+            //Find unique teams
+            const teamsWithLivingCharacters = [...new Set(characterTeams)];
+
+            console.log('DEBUG: teamsWithLivingCharacters: ', characterTeams);
+
+            //If one team with living characters left, that team wins!
+            if (teamsWithLivingCharacters.length === 1){
+
+                //Reward the winning character
+                //TODO come up with randomization function for arena gold reward
+                let arenaReward = 5;
+
+                let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
+
+                console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
+
+                //Get character objects for winning team
+                let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{
+                    return new Character(gameObjects.game.state, eachWinningCharacterId)
                 });
 
-                console.log('DEBUG: characterTeams: ', characterTeamIndexes);
+                let winningCharacterNameString = '';
 
-                //Find unique teams
-                const teamsWithLivingCharacters = [...new Set(characterTeamIndexes)];
+                winningCharacters.forEach((eachWinningCharacter, index)=>{
 
-                console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
+                    //First winning character name, format into string differently:
+                    if (index === 0){
+                        winningCharacterNameString = winningCharacterNameString + `${eachWinningCharacter.props.name}`;
+                    } else {
+                        winningCharacterNameString = winningCharacterNameString + `, ${eachWinningCharacter.props.name}`;
+                    }
 
-                //If one team with living characters left, that team wins!
-                if (teamsWithLivingCharacters.length === 1){
+                    //Increment that players win count
+                    eachWinningCharacter.incrementProperty('match_wins', 1);
 
-                    //Reward the winning character
-                    //TODO come up with randomization function for arena gold reward
-                    let arenaReward = 5;
+                    //Increment that players win count
+                    eachWinningCharacter.incrementProperty('gold', arenaReward);
+                });
 
-                    let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
+                //Notify Slack about the winner
+                slack({
+                    "username": gameObjects.requestZone.props.zone_messages.name,
+                    "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
+                    //TODO dont hardcode the arena
+                    "channel": ("#arena"),
+                    "attachments": [{
+                        "text": `A team is triumphant! ${winningCharacterNameString} emerge victorious from the battle!
+                        \nThey each receive today's prize of ${arenaReward} gold!`,
+                        "color": gameObjects.game.menuColor
+                    }]
+                });
 
-                    console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
-
-                    //Get character objects for winning team
-                    let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{
-                        return new Character(gameObjects.game.state, eachWinningCharacterId)
-                    });
-
-                    let winningCharacterNameString = '';
-
-                    winningCharacters.forEach((eachWinningCharacter, index)=>{
-
-                        //First winning character name, format into string differently:
-                        if (index === 0){
-                            winningCharacterNameString = winningCharacterNameString + `${eachWinningCharacter.props.name}`;
-                        } else {
-                            winningCharacterNameString = winningCharacterNameString + `, ${eachWinningCharacter.props.name}`;
-                        }
-
-                        //Increment that players win count
-                        eachWinningCharacter.incrementProperty('match_wins', 1);
-
-                        //Increment that players win count
-                        eachWinningCharacter.incrementProperty('gold', arenaReward);
-                    });
-
-                    //Notify Slack about the winner
-                    slack({
-                        "username": gameObjects.requestZone.props.zone_messages.name,
-                        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
-                        //TODO dont hardcode the arena
-                        "channel": ("#arena"),
-                        "attachments": [{
-                            "text": `A team is triumphant! ${winningCharacterNameString} emerge victorious from the battle!
-                            \nThey each receive today's prize of ${arenaReward} gold!`,
-                            "color": gameObjects.game.menuColor
-                        }]
-                    });
-
-                    gameObjects.currentMatch.end()
-                }
-            });
+                gameObjects.currentMatch.end()
+            }
 
             break;
         default:
