@@ -32,7 +32,7 @@ class Match extends BaseModel{
         //TODO add logic to see if number of starting charactes is less than number of teams
         let numberOfPlayerTeams = _.get(this, 'props.type.player_teams', startingCharacterIds.length);
 
-        console.log('numberOfPlayerTeams: ', numberOfPlayerTeams);
+        //console.log('numberOfPlayerTeams: ', numberOfPlayerTeams);
 
         let teams = [];
 
@@ -93,7 +93,7 @@ class Match extends BaseModel{
             teams[teamAssigned].push(eachCharacterID);
         });
 
-        console.log('teams assigned: ', teams);
+        //console.log('teams assigned: ', teams);
 
         //Now assign the teams to the match
         this.props.teams = teams;

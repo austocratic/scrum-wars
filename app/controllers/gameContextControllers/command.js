@@ -531,7 +531,7 @@ const turn = gameObjects => {
 
 //End the current match & start a new match
 const match = gameObjects => {
-    console.log('slackRequest called function command/match');
+    console.log('Info: slackRequest called function command/match');
 
     validateGameObjects(gameObjects, [
         'requestZone',
@@ -555,16 +555,27 @@ const match = gameObjects => {
     //Get participating characters:
     let charactersInZone = gameObjects.game.getCharactersInZone(gameObjects.currentMatch.props.zone_id);
 
-    //For characters participating in the match, reset their actions
-    charactersInZone.forEach( eachCharacterInZone =>{
-        eachCharacterInZone.resetActions();
+    try {
+        //For characters participating in the match, reset their actions
+        charactersInZone.forEach( eachCharacterInZone =>{
 
-        //Reset HP/MP/VP:
-        eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.props.stats_current.health);
-        eachCharacterInZone.updateProperty('mana_points', eachCharacterInZone.props.stats_current.mana);
-        eachCharacterInZone.updateProperty('stamina_points', eachCharacterInZone.props.stats_current.stamina);
-        eachCharacterInZone.updateProperty('vigor_points', 0);
-    });
+            console.log('DEBUG: command/match iterating eachCharacterInZone');
+
+            eachCharacterInZone.resetActions();
+
+            console.log('DEBUG resetting characters properties... before update ', JSON.stringify(eachCharacterInZone.props));
+
+            //Reset HP/MP/VP:
+            eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.props.stats_current.health);
+            eachCharacterInZone.updateProperty('mana_points', eachCharacterInZone.props.stats_current.mana);
+            eachCharacterInZone.updateProperty('stamina_points', eachCharacterInZone.props.stats_current.stamina);
+            eachCharacterInZone.updateProperty('vigor_points', 0);
+
+            console.log('DEBUG resetting characters properties... after update ', JSON.stringify(eachCharacterInZone.props));
+        });
+    } catch (err){
+        console.log('ERROR: processing command/match charactersInZone loop')
+    }
 
     //Start the new match
     newMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
