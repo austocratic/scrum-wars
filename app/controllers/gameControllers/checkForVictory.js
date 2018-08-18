@@ -7,7 +7,7 @@ const Character = require('../../models/Character').Character;
 const checkForVictory = (gameObjects, charactersInZone) => {
     console.log('Info: called checkForVictory()');
 
-    switch (gameObjects.match.props.type.name){
+    switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
 
             //TODO currently a single refresh will not detect that players are dead and declare one as the winner
@@ -52,7 +52,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 //Determine what team that character is on:
 
                 //Iterate through the teams
-                let characterTeams = gameObjects.match.props.teams.map((eachTeam, index) =>{
+                let characterTeams = gameObjects.currentMatch.props.teams.map((eachTeam, index) =>{
                     if (eachTeam[eachCharacterInZone.id]){
                         //Found a living character's team
                         return index;
@@ -69,7 +69,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                     //TODO come up with randomization function for arena gold reward
                     let arenaReward = 5;
 
-                    let winningCharacterIDs = gameObjects.match.props.teams[teamsWithLivingCharacters[0]];
+                    let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
 
                     console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
 
@@ -115,7 +115,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
             break;
         default:
-            console.log('ERROR: checkForVictory() called with an unknown match type:', gameObjects.match.props.type.name)
+            console.log('ERROR: checkForVictory() called with an unknown match type:', gameObjects.currentMatch.props.type.name)
 
     }
 
