@@ -49,14 +49,16 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
             //Determine what team each character in the zone is on.
             let characterTeams = charactersInZone.map(eachCharacterInZone=>{
-                return gameObjects.currentMatch.props.teams
+                let characterTeamArray = gameObjects.currentMatch.props.teams
                     .map((eachTeam, index)=>{
                         if (eachTeam.includes(eachCharacterInZone.id)){
                             return index;
                         }})
                     .filter(eachElement=>{
                         return eachElement !== undefined
-                    })
+                    });
+
+                return characterTeamArray[0]
             });
 
             console.log('DEBUG: characterTeams: ', characterTeams);
