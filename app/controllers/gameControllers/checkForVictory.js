@@ -66,7 +66,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             //Find unique teams
             const teamsWithLivingCharacters = [...new Set(characterTeams)];
 
-            console.log('DEBUG: teamsWithLivingCharacters: ', characterTeams);
+            console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
 
             //If one team with living characters left, that team wins!
             if (teamsWithLivingCharacters.length === 1){
