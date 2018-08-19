@@ -47,20 +47,16 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             break;
         case 'Team Battle':
 
-            //Create an array of team index IDs representing each character
+            //Determine what team each character in the zone is on.
             let characterTeams = charactersInZone.map(eachCharacterInZone=>{
-                //Determine what team that character is on:
-
-                //Iterate through the teams
                 return gameObjects.currentMatch.props.teams
-                    //Determine which team index the character is on
-                    .filter(eachTeam=>{
-                        return eachTeam[eachCharacterInZone.id]
+                    .map((eachTeam, index)=>{
+                        if (eachTeam.includes(eachCharacterInZone.id)){
+                            return index;
+                        }})
+                    .filter(eachElement=>{
+                        return eachElement !== undefined
                     })
-                    //Return that team index
-                    .map((eachTeam, index) =>{
-                        return index;
-                });
             });
 
             console.log('DEBUG: characterTeams: ', characterTeams);
