@@ -1,5 +1,6 @@
 "use strict";
 
+const slack = require('../../libraries/slack').sendMessage;
 
 
 
@@ -26,9 +27,15 @@ const checkForNewTurn = (gameObjects) => {
         //Increase the match turn property
         gameObjects.currentMatch.incrementTurn();
 
-        //What is this for?
-        //let gameCharacters = this.getCharacters();
-
+        slack({
+            "username": gameObjects.arenaZone.props.zone_messages.name,
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',
+            "channel": ("#" + gameObjects.arenaZone.props.channel),
+            "attachments": [{
+                "text": "_A new turn begins!_",
+                "color": gameObjects.game.menuColor
+            }]
+        });
     }
 
 };
