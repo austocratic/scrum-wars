@@ -249,6 +249,8 @@ class Character extends BaseModel{
         //If trying to regenerate more than maximum, only regen up to maximum
         let appliedAmountToRegenerate = ((amountToRegenerate > maxManaToRegen) ? maxManaToRegen : amountToRegenerate);
 
+        console.log('DEBUG: mana points to regenerate: ', appliedAmountToRegenerate);
+
         this.incrementProperty('mana_points', appliedAmountToRegenerate)
     }
 
