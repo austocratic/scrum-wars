@@ -21,14 +21,11 @@ const newTurn = gameObjects => {
     //TODO hard coded 10% regen rate
     const REGEN_RATE = .1;
 
-    // REPLACE WITH MANA & STAMINA REGEN
-    //Increase each character's action points by 10
     gameCharacters.forEach( eachGameCharacter =>{
 
-        //Determine the character's maximum mana
-        let manaRegenAmount = eachGameCharacter.props.stats_current.mana * REGEN_RATE;
-
-        eachGameCharacter.regenerateMana(manaRegenAmount)
+        //Regen mana & stamina up to the maximum
+        eachGameCharacter.regenerateMana(eachGameCharacter.props.stats_current.mana * REGEN_RATE);
+        eachGameCharacter.regenerateStamina(eachGameCharacter.props.stats_current.stamina * REGEN_RATE)
     });
 
     slack({
