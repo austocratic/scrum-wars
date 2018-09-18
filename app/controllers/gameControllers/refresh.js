@@ -9,10 +9,7 @@ const processOngoingEffects = require('./processOngoingEffects').processOngoingE
 const actionQueue = require('../../controllers/gameControllers/actionQueue').actionQueue;
 const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
-const Character = require('../../models/Character').Character;
-
 //Invoked to refresh the game
-
 const refresh = (gameObjects) => {
     console.log('refresh controller called');
 
@@ -26,7 +23,7 @@ const refresh = (gameObjects) => {
 
         //If match is pending, determine if a match starting alert should be sent
         case 'pending':
-            console.log('currentMatch.props.status = pending');
+            console.log('Info: currentMatch.props.status = pending');
 
             //Determine if the match should start & start
             checkForMatchStart(gameObjects);
@@ -35,7 +32,7 @@ const refresh = (gameObjects) => {
 
         //If match has started, determine if turn should be incremented or determine if game has hit end condition
         case 'started':
-            console.log('Called game.refresh() currentMatch.props.status = started');
+            console.log('Info: Called game.refresh() currentMatch.props.status = started');
 
             let matchStartingCharacterIDs = gameObjects.currentMatch.getStartingCharacterIDs();
 

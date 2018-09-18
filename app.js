@@ -8,8 +8,10 @@ const bodyParser = require('body-parser');
 
 const Scheduler = require('./app/libraries/scheduler').Scheduler;
 const getGame = require('./app/middleware/getGame').getGame;
-const declareGameObjects = require('./app/middleware/declareGameObjects').declareGameObjects;
+//const declareGameObjects = require('./app/middleware/declareGameObjects').declareGameObjects;
 const refreshController = require('./app/controllers/gameControllers/refresh');
+const Zone = require('./app/models/Zone').Zone;
+const Match = require('./app/models/Match').Match;
 
 const index = require('./routes/index');
 
@@ -35,7 +37,13 @@ let cron = new Scheduler({
                 let game = await getGame();
 
                 //Declare standard game objects passing in an empty request object
-                let gameObjects = declareGameObjects(game, {});
+                //let gameObjects = declareGameObjects(game, {});
+                let gameObjects = {
+                    currentMatch: new Match(game.state, game.getCurrentMatchID()),
+                    lastMatch: new Match(game.state, game.getLastMatchID()),
+                    //TODO should not hard code here
+                    arenaZone: new Zone(game.state, "C4Z7F8XMW"),
+                };
 
                 //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
                 gameObjects.game = game;

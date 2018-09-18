@@ -47,9 +47,9 @@ const contextsAndActions = {
         poisonedBlade: poisonedBlade,
         stingingBees: stingingBees,
         whirlwind: whirlwind,
+        roundingKick, roundingKick,
         cleave: cleave,
         firestorm: firestorm,
-        roundingKick, roundingKick,
         meditation: meditation,
         minorHealing: minorHealing
     },
