@@ -1,0 +1,31 @@
+"use strict";
+
+const _ = require('lodash');
+const validateGameObjects = require('../helpers').validateGameObjects;
+const slack = require('../../libraries/slack').sendMessage;
+
+const newTurn = gameObjects => {
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'arenaZone',
+        'currentMatch'
+    ]);
+
+    //Increase the match turn property
+    gameObjects.currentMatch.incrementTurn();
+
+    slack({
+        "username": gameObjects.arenaZone.props.zone_messages.name,
+        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',
+        "channel": ("#" + gameObjects.arenaZone.props.channel),
+        "attachments": [{
+            "text": "_A new turn begins!_",
+            "color": gameObjects.game.menuColor
+        }]
+    });
+};
+
+module.exports = {
+    newTurn
+};

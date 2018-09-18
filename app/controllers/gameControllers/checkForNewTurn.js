@@ -1,6 +1,7 @@
 "use strict";
 
 const slack = require('../../libraries/slack').sendMessage;
+const newTurn = require('../../helpers/turn/newTurn').newTurn;
 
 
 
@@ -24,6 +25,11 @@ const checkForNewTurn = (gameObjects) => {
 
     //Test if turn should be incremented
     if (Date.now() > nextTurnStartTime){
+
+        //New turn helper - increment turn and message via slack
+        newTurn(gameObjects);
+
+        /*
         //Increase the match turn property
         gameObjects.currentMatch.incrementTurn();
 
@@ -35,7 +41,7 @@ const checkForNewTurn = (gameObjects) => {
                 "text": "_A new turn begins!_",
                 "color": gameObjects.game.menuColor
             }]
-        });
+        });*/
     }
 
 };

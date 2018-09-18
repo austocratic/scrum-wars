@@ -6,6 +6,7 @@ const slack = require('../../libraries/slack').sendMessage;
 const getActionAttachments = require('../../helpers/getActionAttachments').getActionAttachments;
 const updateCallback = require('../../helpers/helpers').updateCallback;
 const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
+const newTurn = require('../../helpers/turn/newTurn').newTurn;
 
 const Action = require('../../models/Action').Action;
 const Match = require('../../models/Match').Match;
@@ -503,10 +504,12 @@ const turn = gameObjects => {
         'currentMatch'
     ]);
 
-    gameObjects.currentMatch.incrementTurn();
+    newTurn(gameObjects);
+
+    //gameObjects.currentMatch.incrementTurn();
 
     //Increment all character's Action Points
-    let gameCharacters = gameObjects.game.getCharacters();
+    //let gameCharacters = gameObjects.game.getCharacters();
 
     /* REPLACE WITH MANA & STAMINA REGEN
     //Increase each character's action points by 10
@@ -514,6 +517,7 @@ const turn = gameObjects => {
         eachGameCharacter.incrementProperty('action_points', 10)
     });*/
 
+    /*
     slack({
         "username": gameObjects.requestZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
@@ -522,7 +526,7 @@ const turn = gameObjects => {
             "text": "_A new turn begins!_",
             "color": gameObjects.game.menuColor
         }]
-    });
+    });*/
 
     return {
         "text": "You increment the match's turn"
