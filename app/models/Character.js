@@ -244,12 +244,15 @@ class Character extends BaseModel{
     regenerateMana(amountToRegenerate){
 
         //Determine maximum
-        let maxManaToRegen = this.props.mana_points - this.props.stats_current.mana;
+        let maxManaToRegen = this.props.stats_current.mana - this.props.mana_points;
 
         //If trying to regenerate more than maximum, only regen up to maximum
         let appliedAmountToRegenerate = ((amountToRegenerate > maxManaToRegen) ? maxManaToRegen : amountToRegenerate);
 
-        console.log('DEBUG: mana points to regenerate: ', appliedAmountToRegenerate);
+        console.log('DEBUG: amountToRegenerate: ', amountToRegenerate);
+        console.log('DEBUG: this.props.stats_current.mana: ', this.props.stats_current.mana);
+        console.log('DEBUG: this.props.mana_points: ', this.props.mana_points);
+        console.log('DEBUG: appliedAmountToRegenerate: ', appliedAmountToRegenerate);
 
         this.incrementProperty('mana_points', appliedAmountToRegenerate)
     }
