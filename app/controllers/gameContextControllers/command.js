@@ -506,28 +506,6 @@ const turn = gameObjects => {
 
     newTurn(gameObjects);
 
-    //gameObjects.currentMatch.incrementTurn();
-
-    //Increment all character's Action Points
-    //let gameCharacters = gameObjects.game.getCharacters();
-
-    /* REPLACE WITH MANA & STAMINA REGEN
-    //Increase each character's action points by 10
-    gameCharacters.forEach( eachGameCharacter =>{
-        eachGameCharacter.incrementProperty('action_points', 10)
-    });*/
-
-    /*
-    slack({
-        "username": gameObjects.requestZone.props.zone_messages.name,
-        "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
-        "channel": ("#" + gameObjects.requestZone.props.channel),
-        "attachments": [{
-            "text": "_A new turn begins!_",
-            "color": gameObjects.game.menuColor
-        }]
-    });*/
-
     return {
         "text": "You increment the match's turn"
     }

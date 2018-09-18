@@ -15,6 +15,22 @@ const newTurn = gameObjects => {
     //Increase the match turn property
     gameObjects.currentMatch.incrementTurn();
 
+    //Increment all character's Action Points
+    let gameCharacters = gameObjects.game.getCharacters();
+
+    //TODO hard coded 10% regen rate
+    const REGEN_RATE = .1;
+
+    // REPLACE WITH MANA & STAMINA REGEN
+    //Increase each character's action points by 10
+    gameCharacters.forEach( eachGameCharacter =>{
+
+        //Determine the character's maximum mana
+        let manaRegenAmount = eachGameCharacter.props.stats_current.mana * REGEN_RATE;
+
+        eachGameCharacter.regenerateMana(manaRegenAmount)
+    });
+
     slack({
         "username": gameObjects.arenaZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',

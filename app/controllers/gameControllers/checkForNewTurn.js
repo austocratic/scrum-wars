@@ -28,20 +28,6 @@ const checkForNewTurn = (gameObjects) => {
 
         //New turn helper - increment turn and message via slack
         newTurn(gameObjects);
-
-        /*
-        //Increase the match turn property
-        gameObjects.currentMatch.incrementTurn();
-
-        slack({
-            "username": gameObjects.arenaZone.props.zone_messages.name,
-            "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',
-            "channel": ("#" + gameObjects.arenaZone.props.channel),
-            "attachments": [{
-                "text": "_A new turn begins!_",
-                "color": gameObjects.game.menuColor
-            }]
-        });*/
     }
 
 };
