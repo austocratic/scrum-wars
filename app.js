@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const Scheduler = require('./app/libraries/scheduler').Scheduler;
+const getGame = require('./app/middleware/getGame').getGame;
+const declareGameObjects = require('./app/middleware/declareGameObjects').declareGameObjects;
+const refreshController = require('./app/controllers/gameControllers/refresh');
 
 const index = require('./routes/index');
 
@@ -25,10 +28,27 @@ let cron = new Scheduler({
     delay: 60000,
     processes: [
         {
-            action: ()=>{
-                console.log('Scheduler triggered!')
+            action: async ()=>{
+                console.log('Info: scheduler triggered');
+
+                //gets DB state and sets to game.state & calls game.initiateRequest() to calculate values in memory
+                let game = await getGame();
+
+                //Declare standard game objects passing in an empty request object
+                let gameObjects = declareGameObjects(game, {});
+
+                //TODO I probably should not tack on the game as a gameObject.  If I do it probably should not happen here
+                gameObjects.game = game;
+
+                //Refresh the game (check for new turn, player deaths, ect.)
+                refreshController.refresh(gameObjects);
+
+                //Update game state
+                game.updateState();
+
+                console.log('Info: scheduler finished processing');
             }
-        },
+        }
     ]
 });
 

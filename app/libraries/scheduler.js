@@ -10,9 +10,14 @@ class Scheduler {
     }
 
     _iterateAllProcesses() {
-        this.processes.forEach( process => {
-            process.action();
-        })
+        try {
+            this.processes.forEach( process => {
+                process.action();
+            })
+        } catch(err){
+            console.log('ERROR: when processing a scheduler process - ', err)
+        }
+
     }
 
     start() {
