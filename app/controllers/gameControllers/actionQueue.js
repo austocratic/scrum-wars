@@ -56,15 +56,15 @@ const actionQueue = (gameObjects) =>{
             return eachActionInQueue.last_turn_processed !== gameObjects.currentMatch.props.number_turns
         })
         //Process the unprocessed actions
-        .forEach( (eachActionToProcess, index) =>{
+        .forEach( (eachActionToProcess) =>{
+
+            console.log('DEBUG: processing an action from the queue');
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
             //TODO this overwrites the original game objects from the original request.  The problem is that the response from the original request returns this value
-            //It needs to
 
             let queuePlayerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
-            //gameObjects.playerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
             gameObjects.requestZone = new Zone(gameObjects.game.state, eachActionToProcess.channel_id);
 
             if (eachActionToProcess.target_character_id) {
@@ -76,6 +76,8 @@ const actionQueue = (gameObjects) =>{
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
+            console.log('DEBUG: about to call validateGameObjects');
+
             validateGameObjects(gameObjects, [
                 'game',
                 'requestZone',
@@ -84,6 +86,8 @@ const actionQueue = (gameObjects) =>{
             ]);
 
             let actionObject = new actionObjectToMake(gameObjects, queuePlayerCharacter);
+
+            console.log('DEBUG: about to call .process');
 
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);

@@ -1,17 +1,9 @@
 "use strict";
 
-//const getActionEffectController = require('../actionEffectController').getActionEffectController;
-
-//const helpers = require('../../helpers');
-
 const slack = require('../../libraries/slack').sendMessage;
 
-//Models
-//const Action = require('../../models/Action').Action;
-//const Character = require('../../models/Character').Character;
-
 const processOngoingEffects = (gameObjects, charactersInZone) => {
-    console.log('called processingOngoingEffects()');
+    console.log('Info: called processingOngoingEffects()');
 
     charactersInZone.forEach( eachCharacter => {
         //If the character has effects on them, determine if that effect should fade
