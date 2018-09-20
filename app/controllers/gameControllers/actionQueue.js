@@ -42,7 +42,7 @@ const actionControllers = {
 
 //Check that action queue for functions that should be initiated on the current turn
 const actionQueue = (gameObjects) =>{
-    console.log('Called actionQueue()');
+    console.log('Info: called actionQueue()');
 
     //If the current match has no action_queue property, then no actions are queued.  Function should exit
     if (!gameObjects.currentMatch.props.action_queue) {
@@ -78,11 +78,9 @@ const actionQueue = (gameObjects) =>{
 
             validateGameObjects(gameObjects, [
                 'game',
-                'playerCharacter',
                 'requestZone',
                 'currentMatch',
                 'actionTaken',
-                'targetCharacter'
             ]);
 
             let actionObject = new actionObjectToMake(gameObjects, queuePlayerCharacter);
@@ -125,7 +123,7 @@ const actionQueue = (gameObjects) =>{
                                         "turn_initiated": gameObjects.currentMatch.props.number_turns,
                                         "channel_id": gameObjects.requestZone.props.channel_id,
                                         "player_character_id": characterDamaged.id,
-                                        "target_character_id": gameObjects.playerCharacter.id
+                                        "target_character_id": queuePlayerCharacter.id
                                         //"player_character_id": gameObjects.playerCharacter.id,
                                         //"target_character_id": characterDamaged.id
                                     });
