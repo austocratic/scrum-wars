@@ -62,9 +62,12 @@ const actionQueue = (gameObjects) =>{
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
-            //TODO this overwrites the original game objects from the original request.  The problem is that the response from the original request returns this value
 
-            let queuePlayerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
+            //Replacing this by setting gameobject playerCharacter
+            //let queuePlayerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
+
+            gameObjects.playerCharacter = new Character(gameObjects.game.state, eachActionToProcess.player_character_id);
+
             gameObjects.requestZone = new Zone(gameObjects.game.state, eachActionToProcess.channel_id);
 
             if (eachActionToProcess.target_character_id) {
@@ -87,7 +90,7 @@ const actionQueue = (gameObjects) =>{
 
             console.log('DEBUG: about to make a game object');
 
-            let actionObject = new actionObjectToMake(gameObjects, queuePlayerCharacter);
+            let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
             console.log('DEBUG: about to call .process');
 
@@ -101,8 +104,7 @@ const actionQueue = (gameObjects) =>{
                     actionResponse.damageDealt.forEach(eachActionResponse=>{
                         console.log('character id damaged and will now respond: ', eachActionResponse.targetID);
 
-                        //Character struck now responds
-                        //Using a placeholder for now.  Should strike back use BaseAction or should the be unique functions?
+                        //Character struck now responds.  Create character object
                         let characterDamaged = new Character(gameObjects.game.state, eachActionResponse.targetID);
 
                         //Check if that character damaged has a strike_back property
@@ -129,7 +131,7 @@ const actionQueue = (gameObjects) =>{
                                         "turn_initiated": gameObjects.currentMatch.props.number_turns,
                                         "channel_id": gameObjects.requestZone.props.channel_id,
                                         "player_character_id": characterDamaged.id,
-                                        "target_character_id": queuePlayerCharacter.id
+                                        "target_character_id": gameObjects.playerCharacter.id
                                         //"player_character_id": gameObjects.playerCharacter.id,
                                         //"target_character_id": characterDamaged.id
                                     });
