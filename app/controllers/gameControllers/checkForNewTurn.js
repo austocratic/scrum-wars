@@ -13,7 +13,7 @@ const checkForNewTurn = (gameObjects) => {
     //console.log('currentMatch.props.date_started: ', currentMatch.props.date_started);
 
     //Calculate the time that the next turn should start based on when the game started, # of turns * the length of the turns
-    let nextTurnStartTime = (gameObjects.currentMatch.props.date_started + (gameObjects.currentMatch.props.number_turns * (gameObjects.game.turnLengthMinutes * 60000)));
+    let nextTurnStartTime = (gameObjects.currentMatch.props.date_started + (gameObjects.currentMatch.props.number_turns * (game.state.match.settings.turn_length_minutes * 60000)));
 
     //console.log('nextTurnStartTime: ', nextTurnStartTime);
 
