@@ -85,6 +85,8 @@ const actionQueue = (gameObjects) =>{
                 'actionTaken',
             ]);
 
+            console.log('DEBUG: about to make a game object');
+
             let actionObject = new actionObjectToMake(gameObjects, queuePlayerCharacter);
 
             console.log('DEBUG: about to call .process');
