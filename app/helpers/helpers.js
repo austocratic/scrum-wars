@@ -18,6 +18,8 @@ const validateGameObjects = (gameObjectsToValidate, expectedGameObjects) => {
         throw new Error('validateGameObjects invoked with argument expectedGameObjects that is not an array');
     }
 
+    console.log('DEBUG: expectedGameObjects: ', expectedGameObjects);
+
     expectedGameObjects.forEach( eachExpectedGameObject =>{
         //Verify that gameObject property was passed in
         if (!gameObjectsToValidate[eachExpectedGameObject]){
