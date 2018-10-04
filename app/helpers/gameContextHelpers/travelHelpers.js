@@ -1,10 +1,11 @@
 
 
-const slack = require('../../libraries/slack').sendMessage;
-
 
 const checkForTravelToArenaAndMatchStart = (gameObjects) => {
-     //Determine if attempting to travel to the arena
+    
+    console.log('DEBUG, checking character zone & match status');
+    
+    //Determine if attempting to travel to the arena
      if(gameObjects.requestZone.name === "The Arena" && gameObjects.currentMatch.status === 'started'){
         console.log('Info: a character attempted to travel to the arena after match started');
 

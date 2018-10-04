@@ -289,7 +289,9 @@ const travel = gameObjects => {
     //Check if character attempting to travel to arena & match already started
     let arenaAndMatchStartResponse = checkForTravelToArenaAndMatchStart(gameObjects)
 
-    if(arenaAndMatchStartResponse != undefined){
+    console.log('DEBUG, arenaAndMatchStartResponse: ', arenaAndMatchStartResponse);
+
+    if(arenaAndMatchStartResponse !== undefined){
         return arenaAndMatchStartResponse
     }
 
