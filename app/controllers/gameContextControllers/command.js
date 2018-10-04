@@ -283,7 +283,8 @@ const travel = gameObjects => {
         'characterClass',
         'playerCharacter',
         'slackResponseTemplate',
-        'currentMatch'
+        'currentMatch',
+        'requestZone'
     ]);
 
     //Check if character attempting to travel to arena & match already started
