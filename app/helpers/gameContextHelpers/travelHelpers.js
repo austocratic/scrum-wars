@@ -2,14 +2,14 @@
 
 
 const checkForTravelToArenaAndMatchStart = (gameObjects) => {
-    
-    console.log('DEBUG, checking character zone & match status');
+    console.log("Info: called checkForTravelToArenaAndMatchStart()");
+    //console.log('DEBUG, checking character zone & match status');
     //console.log('DEBUG, gameObjects passed into travelHelper: ', gameObjects);
-    console.log('DEBUG, gameObjects.requestZone.name: ', gameObjects.requestZone);
-    console.log('DEBUG, gameObjects.currentMatch.status: ', gameObjects.currentMatch);
+    //console.log('DEBUG, gameObjects.requestZone.name: ', gameObjects.requestZone);
+    //console.log('DEBUG, gameObjects.currentMatch.status: ', gameObjects.currentMatch);
     
     //Determine if attempting to travel to the arena
-     if(gameObjects.requestZone.name === "The Arena" && gameObjects.currentMatch.status === 'started'){
+     if(gameObjects.requestZone.props.name === "The Arena" && gameObjects.currentMatch.props.status === 'started'){
         console.log('Info: a character attempted to travel to the arena after match started');
 
         //Create object to send to Slack
