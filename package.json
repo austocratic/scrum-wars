@@ -18,6 +18,7 @@
     "test:unit:models": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models",
     "test:unit:models:BaseModel": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models/BaseModel.js",
     "test:unit:models:Character": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models/Character.js",
+    "test:unit:models:Match": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models/Match.js",
     "test:unit:models:Permission": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models/Permission.js",
     "test:unit:models:game": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/models/game",
     "test:unit:controllers": "USE_LOCAL_ENV=true mocha --recursive --timeout 45000 ./app/tests/unit/controllers",

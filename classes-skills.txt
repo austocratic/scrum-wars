@@ -1,0 +1,35 @@
+
+
+
+
+
+Warrior
+--Whirlwind - Attack 3 random targets
+--Cleave - High damage attack, high chance to dodge
+--Defensive stance
+--Balanced stance
+--offensive stance
+
+Rouge
+--Backstab
+--Into shadow
+--Poisoned blade
+
+Wizard - high damage, high delay spells, defensive shields to protect until spell goes off
+--Arcane bolt
+--Lifetap
+--Forked lightning - one turn delay
+--Firestorm - two turn delay
+**Frozen barrier - breaks when firestorm goes off, but absorbs damage until then
+**Armageddon
+
+
+
+
+Delayed until later:
+
+Warlock
+Ranger
+Monk
+Shadow Knight
+Paladin

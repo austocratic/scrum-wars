@@ -61,12 +61,12 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 return characterTeamArray[0]
             });
 
-            console.log('DEBUG: characterTeams: ', characterTeams);
+            //console.log('DEBUG: characterTeams: ', characterTeams);
 
             //Find unique teams
             const teamsWithLivingCharacters = [...new Set(characterTeams)];
 
-            console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
+            //console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
 
             //If one team with living characters left, that team wins!
             if (teamsWithLivingCharacters.length === 1){
@@ -77,7 +77,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
                 let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
 
-                console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
+                //console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
 
                 //Get character objects for winning team
                 let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{

@@ -58,7 +58,7 @@ const actionQueue = (gameObjects) =>{
         //Process the unprocessed actions
         .forEach( (eachActionToProcess) =>{
 
-            console.log('DEBUG: processing an action from the queue');
+            //console.log('DEBUG: processing an action from the queue');
 
             //Create an action model
             gameObjects.actionTaken = new Action(gameObjects.game.state, eachActionToProcess.action_id);
@@ -79,7 +79,7 @@ const actionQueue = (gameObjects) =>{
             //Declare the Class function without invoking
             const actionObjectToMake = actionControllers[gameObjects.actionTaken.id];
 
-            console.log('DEBUG: about to call validateGameObjects');
+            //console.log('DEBUG: about to call validateGameObjects');
 
             validateGameObjects(gameObjects, [
                 'game',
@@ -88,11 +88,11 @@ const actionQueue = (gameObjects) =>{
                 'actionTaken',
             ]);
 
-            console.log('DEBUG: about to make a game object');
+            //console.log('DEBUG: about to make a game object');
 
             let actionObject = new actionObjectToMake(gameObjects, gameObjects.playerCharacter);
 
-            console.log('DEBUG: about to call .process');
+            //console.log('DEBUG: about to call .process');
 
             //Process the action by passing in the relative turn
             let actionResponse = actionObject.process(gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated);

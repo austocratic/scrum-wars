@@ -7,6 +7,7 @@ const getActionAttachments = require('../../helpers/getActionAttachments').getAc
 const updateCallback = require('../../helpers/helpers').updateCallback;
 const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 const newTurn = require('../../helpers/turn/newTurn').newTurn;
+const checkForTravelToArenaAndMatchStart = require('../../helpers/gameContextHelpers/travelHelpers').checkForTravelToArenaAndMatchStart;
 
 const Action = require('../../models/Action').Action;
 const Match = require('../../models/Match').Match;
@@ -68,7 +69,7 @@ const action = gameObjects => {
     if (gameObjects.playerCharacter.props.effects){
         let meditationEffect = _.find(gameObjects.playerCharacter.props.effects, {name: 'Meditation'});
 
-        console.log('DEBUG meditationEffect: ', meditationEffect);
+        //console.log('DEBUG meditationEffect: ', meditationEffect);
 
         //If character does have a meditation effect, return a confirmation view
         if (meditationEffect !== undefined){
@@ -285,23 +286,12 @@ const travel = gameObjects => {
         'currentMatch'
     ]);
 
-    //Determine if attempting to travel to the arena
-    if(gameObjects.requestZone.name === "The Arena" && gameObjects.currentMatch.status === 'started'){
-        console.log('Info: a character attempted to travel to the arena');
+    //Check if character attempting to travel to arena & match already started
+    let arenaAndMatchStartResponse = checkForTravelToArenaAndMatchStart(gameObjects)
 
-        //Create object to send to Slack
-        gameObjects.slackResponseTemplate = {
-            "username": gameObjects.playerCharacter.props.name,
-            "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
-            "channel": ("#" + gameObjects.requestZone.props.channel),
-            "text": "_You are unable to travel to this zone because a match has already started!_"
-        };
-
-        return gameObjects.slackResponseTemplate;
+    if(arenaAndMatchStartResponse != undefined){
+        return arenaAndMatchStartResponse
     }
-
-    //Update the zone_id property locally
-    gameObjects.playerCharacter.updateProperty('zone_id', gameObjects.requestZone.id);
 
     slack({
         "username": gameObjects.playerCharacter.props.name,
@@ -460,11 +450,11 @@ const match = gameObjects => {
         //For characters participating in the match, reset their actions
         charactersInZone.forEach( eachCharacterInZone =>{
 
-            console.log('DEBUG: command/match iterating eachCharacterInZone');
+            //console.log('DEBUG: command/match iterating eachCharacterInZone');
 
             eachCharacterInZone.resetActions();
 
-            console.log('DEBUG resetting characters properties... before update ', JSON.stringify(eachCharacterInZone.props));
+            //console.log('DEBUG resetting characters properties... before update ', JSON.stringify(eachCharacterInZone.props));
 
             //Reset HP/MP/VP:
             eachCharacterInZone.updateProperty('hit_points', eachCharacterInZone.props.stats_current.health);
@@ -472,7 +462,7 @@ const match = gameObjects => {
             eachCharacterInZone.updateProperty('stamina_points', eachCharacterInZone.props.stats_current.stamina);
             eachCharacterInZone.updateProperty('vigor_points', 0);
 
-            console.log('DEBUG resetting characters properties... after update ', JSON.stringify(eachCharacterInZone.props));
+            //console.log('DEBUG resetting characters properties... after update ', JSON.stringify(eachCharacterInZone.props));
         });
     } catch (err){
         console.log('ERROR: processing command/match charactersInZone loop')

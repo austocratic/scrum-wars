@@ -1,48 +1,61 @@
 
+Where I left off 9/20/18:
 
-1/24/18:
-I left off making a /refresh end point  I should now test it
-
-Should each request also invoke a refresh? If so, then I dont need a refresh command because any command will refresh
-
-
+Fixed issue with action queue not processing do to missing gameObject
 
 Next up:
---Work on match winning condition (now that I can use slash commands to test)
-
-
-BUGS
--actions can interrupt stances: "Sindria's Arcane Bolt *interrupts* Miraxus of Keld's pending Defensive Stance!"
--Entering a combat stance does not remove previous combat stance
---Creating a new user sets slack_user_id equal to the user object id
---Claire is unable to equip the leather tunic
 
 
 
-BACKLOG
+
+
+
+BACKLOG:
 
 Backlog (near term):
--Add backstory views
--Prevent traveling until character has set their name
--Prevent /name after initial naming
-
--Test all flows to ensure they still work
---Add a contextual image to actions screens
---Scrolling around avatar selections too many times fails (I should add "more" & "less" as reserved words for navigating avatars
---Move /command authentication to a middleware
---Add an icon for scrum-wars application
---Add token validation before processing any request
+--Starting a new match should set all starting character's HP, MP, SP
+--If a match has started, characters should be unable to travel to the arena. Needs to change in 2 places
+----/travel
+----travelConfirmation-yes
+--Add /who to see all players in the zone with combat stats, such as health and effects.  Need to show what team they are on
 --Add more items
---Clean up views: profile (add exit button) - Exit button should be reusable and clear any interaction - ask slack what I can do for this
---Change images in class selection list - maybe class icons
---vendor sell item mechanic
---Add backstory
---Create frozen barrier action
---Fix poisoned blade effect.  Need to leverage action processor and remove actionEffectControllers completely
+--level up mechanic
+--scrumdo integration.  I dont think scrumdo cards should be the only way to gain experience.  This experience should be called tradeskill xp.  On launch, xp should be gained:
+----Participating in arena match
+----Winning arena match
+----Completing tradeskills
+
+BUGS:
+-If a match hasn't started, characters are unable to call /action "*/action* failed with the error "no_text""
+-Using an action and failing (such as stumble) do not reduce characters action points is that ok?
+-Entering a combat stance does not remove previous combat stance
+--Creating a new user sets slack_user_id equal to the user object id
+--Equipping minor staff correctly sets the DB but displays a "an item is already equipped" message - likely because of 2handed
 
 
 Backlog (long term):
---Determine how to display more than 5 actions types (may not need this for initial launch since classes only have a few actions each)
+--Possibly reorganize actions into 5 attachment blocks each with a picture and a button for more information.  The 5 current actions can be equipped from a characters menu.  In the future, I can create hotkey /commands to initiate your loaded action
+--endpoint authentication to verify source was slack
+--A way to see all your actions and more advanced details of each action
+--Change whirlwind so that it does damage to everyone for several turns.  If action character is hit during this time it interrupts.  Cant take other actions
+--Change announcement of team battle to saw who is on what team
+--Add to /rankings inspect buttons to look at each character
+-Make a standard travel function so that checkForCharacterDeath and /travel can share
+-Only allow actions in arena if there is an active match
+----Or change the action list to not combat actions
+--Change images in class selection list - maybe class icons
+--vendor sell item mechanic
+--Add armor limitations, certain classes can wear certain armor
+--Support for summoned pets - these should add a pet character to the character's team.  Typing /action should have a row with pet's abilities
+-BUG evading an attack still triggers strike_back
+--Prevent traveling until character has set their name
+-Prevent /name after initial naming
+--Add a contextual image to actions screens
+--Add an icon for scrum-wars application
+--Add token validation before processing any request
+--Make BasicMelee show text specific to the type of weapon being held
+--Quest system.  Talking to a character will respond with dialogue options.  Navigating through dialogue can initiate a quest.  When quest is accomplished they receive a message and reward
+----I.E: travel to the arena
 --create titles for menus (using an edited graphic menu header)
 --Change to action point system (AP recharges per turn)
 --Create basic attack for each character class
@@ -53,7 +66,8 @@ Backlog (long term):
 --Use canvas or something like it to combine images rendered on the server and deliver that image to slack.  I.E inventory image with empty slots.
 equip an item, then next time the image renders it will contain the item image equipped
 --Questing mechanic using EQ style context terms: "Have you heard about [the missing child] from the town of beladore?"
---Generate .gif images to show animations in slack
+--Create frozen barrier action
+--Fix poisoned blade effect.  Need to leverage action processor and remove actionEffectControllers completely
 
 
 
@@ -63,5 +77,4 @@ Plot/Quest brainstorming:
 
 King died and you have traveled to pay your respects.
 
-King has summoned you to
 
