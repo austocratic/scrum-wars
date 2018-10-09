@@ -325,7 +325,7 @@ const travel = gameObjects => {
 };
 
 const name = gameObjects => {
-    console.log('slackRequest called function command/name');
+    console.log('Info: slackRequest called function command/name');
 
     if(!gameObjects.user.getCharacterID()){
         return {
@@ -364,6 +364,7 @@ const name = gameObjects => {
 };
 
 const ranking = gameObjects => {
+    console.log('Info: slackRequest called function command/ranking');
 
     validateGameObjects(gameObjects, [
         'game'
@@ -371,9 +372,6 @@ const ranking = gameObjects => {
 
     //Create a list of all characters
     let allCharacters = gameObjects.game.getCharacters();
-
-    //Sort the list by # of wins property
-    //_.sortBy(allCharacters, 'props.match_wins')
 
     let sortedCharacters = _.sortBy(allCharacters, characters =>{
         return characters.props.match_wins
@@ -414,6 +412,58 @@ const ranking = gameObjects => {
 
     return slackResponse
 };
+
+const who = gameObjects => {
+    console.log('Info: slackRequest called function command/who');
+
+    validateGameObjects(gameObjects, [
+        'game'
+    ]);
+
+    //Create a list of all characters in the arena
+    let allCharacters = gameObjects.game.getCharactersInArena();
+
+    let sortedCharacters = _.sortBy(allCharacters, characters =>{
+        return characters.props.match_wins
+    });
+
+    //Sorted ascending, need to reverse the order to sort descending
+    sortedCharacters.reverse();
+
+    let slackResponse = {};
+
+    //Iterate through list of ranked characters building a template
+    slackResponse.attachments = sortedCharacters.map( eachSortedCharacter =>{
+
+        let characterClass = new Class(gameObjects.game.state, eachSortedCharacter.props.class_id);
+
+        return {
+            "text": "",
+            "color": gameObjects.game.menuColor,
+            "thumb_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + eachSortedCharacter.props.avatar,
+            "fields": [
+                {
+                    "title": "Name",
+                    "value": eachSortedCharacter.props.name,
+                    "short": true
+                },
+                {
+                    "title": "Match Wins",
+                    "value": eachSortedCharacter.props.match_wins,
+                    "short": true
+                },
+                {
+                    "title": "Character Class",
+                    "value": characterClass.props.name,
+                    "short": true
+                }]
+        }
+    });
+
+    return slackResponse
+
+
+}
 
 //Admin commands
 
@@ -510,6 +560,7 @@ module.exports = {
     travel,
     name,
     ranking,
+    who,
     turn,
     match
 };

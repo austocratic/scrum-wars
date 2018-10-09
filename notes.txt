@@ -1,17 +1,17 @@
 
 Where I left off 10/3/18:
 
-
+--Added a check to /actions that prevents an action if match has not started, need to test
+--should now refresh each character in the arena to full HP/MP/SP when match begins
+--Left off working on command /who function
 
 Next up:
 
---Characters in the arena should not be able to take actions if the match has not started yet
+--Add /who to see all players in the zone with combat stats, such as health and effects.  Need to show what team they are on
 
 BACKLOG:
 
 Backlog (near term):
---Starting a new match should set all starting character's HP, MP, SP
---Add /who to see all players in the zone with combat stats, such as health and effects.  Need to show what team they are on
 --Add more items
 --level up mechanic
 --scrumdo integration.  I dont think scrumdo cards should be the only way to gain experience.  This experience should be called tradeskill xp.  On launch, xp should be gained:

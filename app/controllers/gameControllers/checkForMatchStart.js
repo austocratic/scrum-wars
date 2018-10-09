@@ -61,8 +61,12 @@ const checkForMatchStart = (gameObjects) => {
     //This should only set once when the match is started.  I may want to move this into the .start function to make sure
     gameObjects.currentMatch.props.type = gameObjects.game.state.match.settings.type[_.get(gameObjects, `game.state.match.settings.schedule[${currentDay}].type_id`)];
 
-    //Start the match
+    //Start the match (this assigns characters to teams)
     gameObjects.currentMatch.start(gameObjects.game.getCharacterIDsInZone(gameObjects.currentMatch.props.zone_id));
+
+    //Refresh all characters HP/MP/SP
+    let charactersInArena = gameObjects.game.getCharactersInArena()
+    charactersInArena.forEach(eachCharacter=>eachCharacter.refreshCombatPoints())
 
     //Notify of match start
     slack({

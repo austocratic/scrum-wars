@@ -264,6 +264,13 @@ class Character extends BaseModel{
         this.incrementProperty('stamina_points', appliedAmountToRegenerate)
     }
 
+    //Restore character's HP, MP, SP to max
+    refreshCombatPoints(){
+        this.updateProperty('hit_points', this.props.stats_current.health)
+        this.updateProperty('mana_points', Math.round(this.props.stats_current.mana * .5))
+        this.updateProperty('stamina_points', Math.round(this.props.stats_current.stamina * .5))
+    }
+
     checkMana(manaCost){
         return this.props.mana_points >= manaCost;
     }
