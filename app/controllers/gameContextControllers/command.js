@@ -413,8 +413,8 @@ const ranking = gameObjects => {
     return slackResponse
 };
 
-const who = gameObjects => {
-    console.log('Info: slackRequest called function command/who');
+const list = gameObjects => {
+    console.log('Info: slackRequest called function command/list');
 
     validateGameObjects(gameObjects, [
         'game'
@@ -448,15 +448,26 @@ const who = gameObjects => {
                     "short": true
                 },
                 {
-                    "title": "Match Wins",
-                    "value": eachSortedCharacter.props.match_wins,
+                    "title": "Class",
+                    "value": characterClass.props.name,
                     "short": true
                 },
                 {
-                    "title": "Character Class",
-                    "value": characterClass.props.name,
+                    "title": "Current HP",
+                    "value": `${eachSortedCharacter.props.hit_points} / ${gameObjects.playerCharacter.props.stats_current.health}`,
                     "short": true
-                }]
+                },
+                {
+                    "title": "Current MP",
+                    "value": `${eachSortedCharacter.props.mana_points} / ${gameObjects.playerCharacter.props.stats_current.mana}`,
+                    "short": true
+                },
+                {
+                    "title": "Current SP",
+                    "value": `${eachSortedCharacter.props.stamina_points} / ${gameObjects.playerCharacter.props.stats_current.stamina}`,
+                    "short": true
+                }
+               ]
         }
     });
 
@@ -560,7 +571,7 @@ module.exports = {
     travel,
     name,
     ranking,
-    who,
+    list,
     turn,
     match
 };

@@ -3,7 +3,7 @@ Where I left off 10/3/18:
 
 --Added a check to /actions that prevents an action if match has not started, need to test
 --should now refresh each character in the arena to full HP/MP/SP when match begins
---Left off working on command /who function
+--Left off working on command /who function.  Made a basic command need to add to slack
 
 Next up:
 

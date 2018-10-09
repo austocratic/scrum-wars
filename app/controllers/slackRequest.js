@@ -3,7 +3,7 @@
 const _ = require('lodash');
 
 const command = require('./gameContextControllers/command');
-const { action, generate, profile, travel, name, turn, match, ranking, who } = command;
+const { action, generate, profile, travel, name, turn, match, ranking, list } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
 const { shop, quickStrike, basicMelee, arcaneBolt, flameBurst, lifeTap, risingPunch, flurryOfFists, fistOfThunder, defensiveStance,
@@ -20,7 +20,7 @@ const contextsAndActions = {
         travel: travel,
         name: name,
         ranking: ranking,
-        who: who,
+        list: list,
         turn: turn,
         match: match
     },
