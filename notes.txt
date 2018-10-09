@@ -1,22 +1,16 @@
 
-Where I left off 9/20/18:
+Where I left off 10/3/18:
 
-Fixed issue with action queue not processing do to missing gameObject
+
 
 Next up:
 
-
-
-
-
+--Characters in the arena should not be able to take actions if the match has not started yet
 
 BACKLOG:
 
 Backlog (near term):
 --Starting a new match should set all starting character's HP, MP, SP
---If a match has started, characters should be unable to travel to the arena. Needs to change in 2 places
-----/travel
-----travelConfirmation-yes
 --Add /who to see all players in the zone with combat stats, such as health and effects.  Need to show what team they are on
 --Add more items
 --level up mechanic

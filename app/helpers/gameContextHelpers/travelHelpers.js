@@ -3,10 +3,6 @@
 
 const checkForTravelToArenaAndMatchStart = (gameObjects) => {
     console.log("Info: called checkForTravelToArenaAndMatchStart()");
-    //console.log('DEBUG, checking character zone & match status');
-    //console.log('DEBUG, gameObjects passed into travelHelper: ', gameObjects);
-    //console.log('DEBUG, gameObjects.requestZone.name: ', gameObjects.requestZone);
-    //console.log('DEBUG, gameObjects.currentMatch.status: ', gameObjects.currentMatch);
     
     //Determine if attempting to travel to the arena
      if(gameObjects.requestZone.props.name === "The Arena" && gameObjects.currentMatch.props.status === 'started'){

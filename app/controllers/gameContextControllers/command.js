@@ -65,6 +65,16 @@ const action = gameObjects => {
         return gameObjects.slackResponseTemplate;
     }
 
+    //Test if character is in the arena, but the match has not yet started, return "unable to perform action" message
+    if(gameObjects.requestZone.props.name === "The Arena" && gameObjects.currentMatch.props.status !== 'started'){
+        return {
+            "username": gameObjects.playerCharacter.props.name,
+            "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + gameObjects.playerCharacter.props.gender + '/' + gameObjects.playerCharacter.props.avatar,
+            "channel": ("#" + gameObjects.requestZone.props.channel),
+            "text": "_You are unable to perform an action since a match has not yet started!_"
+        }
+    };
+
     //Meditation check
     if (gameObjects.playerCharacter.props.effects){
         let meditationEffect = _.find(gameObjects.playerCharacter.props.effects, {name: 'Meditation'});
