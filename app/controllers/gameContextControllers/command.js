@@ -454,17 +454,17 @@ const list = gameObjects => {
                 },
                 {
                     "title": "Current HP",
-                    "value": `${eachSortedCharacter.props.hit_points} / ${gameObjects.playerCharacter.props.stats_current.health}`,
+                    "value": `${eachSortedCharacter.props.hit_points} / ${eachSortedCharacter.props.stats_current.health}`,
                     "short": true
                 },
                 {
                     "title": "Current MP",
-                    "value": `${eachSortedCharacter.props.mana_points} / ${gameObjects.playerCharacter.props.stats_current.mana}`,
+                    "value": `${eachSortedCharacter.props.mana_points} / ${eachSortedCharacter.props.stats_current.mana}`,
                     "short": true
                 },
                 {
                     "title": "Current SP",
-                    "value": `${eachSortedCharacter.props.stamina_points} / ${gameObjects.playerCharacter.props.stats_current.stamina}`,
+                    "value": `${eachSortedCharacter.props.stamina_points} / ${eachSortedCharacter.props.stats_current.stamina}`,
                     "short": true
                 }
                ]

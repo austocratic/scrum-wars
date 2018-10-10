@@ -1,13 +1,14 @@
 
-Where I left off 10/3/18:
+Where I left off 10/9/18:
 
 --Added a check to /actions that prevents an action if match has not started, need to test
 --should now refresh each character in the arena to full HP/MP/SP when match begins
---Left off working on command /who function.  Made a basic command need to add to slack
+--Left off setting up the /list command.  
+----I may want to add a little bit more to it.  Show: current effects, player's team, ect.
 
 Next up:
 
---Add /who to see all players in the zone with combat stats, such as health and effects.  Need to show what team they are on
+-- I need to make sure new turn refresh mechanic is working.  /list shows weird HP amounts
 
 BACKLOG:
 
@@ -20,12 +21,10 @@ Backlog (near term):
 ----Completing tradeskills
 
 BUGS:
--If a match hasn't started, characters are unable to call /action "*/action* failed with the error "no_text""
 -Using an action and failing (such as stumble) do not reduce characters action points is that ok?
 -Entering a combat stance does not remove previous combat stance
 --Creating a new user sets slack_user_id equal to the user object id
 --Equipping minor staff correctly sets the DB but displays a "an item is already equipped" message - likely because of 2handed
-
 
 Backlog (long term):
 --Possibly reorganize actions into 5 attachment blocks each with a picture and a button for more information.  The 5 current actions can be equipped from a characters menu.  In the future, I can create hotkey /commands to initiate your loaded action
