@@ -5,7 +5,7 @@ const _ = require('lodash');
 const slack = require('../../libraries/slack').sendMessage;
 const Character = require('../../models/Character').Character;
 
-const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers/').earnExperienceAndCheckForLevel;
+const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers').earnExperienceAndCheckForLevel;
 
 const checkForVictory = (gameObjects, charactersInZone) => {
     console.log('Info: called checkForVictory()');
