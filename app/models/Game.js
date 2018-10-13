@@ -176,6 +176,7 @@ class Game {
             [localRandomID]: {
                 active: 1,
                 avatar: '', //Default blank character avatar
+                experience: 0,
                 gold: 100,
                 hit_points: 10, //Move this to class specific
                 level: 1,

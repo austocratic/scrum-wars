@@ -1,11 +1,28 @@
 "use strict";
 
+const _ = require('lodash');
+
 const slack = require('../../libraries/slack').sendMessage;
 const Character = require('../../models/Character').Character;
 
+const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers/').earnExperienceAndCheckForLevel;
 
 const checkForVictory = (gameObjects, charactersInZone) => {
     console.log('Info: called checkForVictory()');
+
+    let participantXpReward = gameObjects.game.settings.match.participant_xp;
+
+    //Get all participants
+    let matchParticipants = gameObjects.currentMatch.getStartingCharacterIDs()
+
+    let participatingCharacters = matchParticipants.forEach(eachParticipantId => {
+        let participatingCharacter = new Character(gameObjects.game.state, eachParticipantId)
+        earnExperienceAndCheckForLevel(gameObjects, participatingCharacter, participantXpReward)
+        //participatingCharacter.incrementProperty('experience', participantXpReward);
+    });
+
+    //Increment all chracters xp for participating
+    participatingCharacters.forEach()
 
     switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
@@ -19,9 +36,9 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 let winningCharacter = charactersInZone[0];
 
                 //Reward the winning character
-                //TODO come up with randomization function for arena gold reward
-                let arenaReward = 10;
-
+                let winnerGoldReward = gameObjects.game.settings.match.free_for_all.victory_gold_base + _.random(1, 10);
+                let winnerXpReward = gameObjects.game.settings.match.free_for_all.victory_xp;
+                
                 //Notify Slack about the winner
                 slack({
                     "username": gameObjects.requestZone.props.zone_messages.name,
@@ -30,17 +47,18 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                     "channel": ("#arena"),
                     "attachments": [{
                         "text": `We have a winner! ${winningCharacter.props.name} emerges victorious from the battle!
-                        \n${winningCharacter.props.name}'s receives today's prize of ${arenaReward} gold!`,
+                        \n${winningCharacter.props.name}'s receives today's prize of ${winnerGoldReward} gold!
+                        \n${winningCharacter.props.name}'s earns ${winnerXpReward} experience for the glorious victory!,
+                        \nAll of today's participants earn ${participantXpReward} for their thrilling display!`,
                         "color": gameObjects.game.menuColor
                     }]
                 });
 
-                //Increment that players win count
+                //Increment character by winning amounts
                 winningCharacter.incrementProperty('match_wins', 1);
-
-                //Increment that players win count
-                winningCharacter.incrementProperty('gold', arenaReward);
-
+                winningCharacter.incrementProperty('gold', winnerGoldReward);
+                earnExperienceAndCheckForLevel(gameObjects, winningCharacter, winnerXpReward)
+              
                 gameObjects.currentMatch.end(winningCharacter.id)
             }
 
@@ -73,16 +91,17 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
                 //Reward the winning character
                 //TODO come up with randomization function for arena gold reward
-                let arenaReward = 5;
+                //let arenaReward = 5;
+                //Reward the characters on the winning team
+                let winnerGoldReward = gameObjects.game.settings.match.team_battle.victory_gold_base + _.random(1, 10);
+                let winnerXpReward = gameObjects.game.settings.match.team_battle.victory_xp;
 
                 let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
 
                 //console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
 
                 //Get character objects for winning team
-                let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{
-                    return new Character(gameObjects.game.state, eachWinningCharacterId)
-                });
+                let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{return new Character(gameObjects.game.state, eachWinningCharacterId)});
 
                 let winningCharacterNameString = '';
 
@@ -97,9 +116,8 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
                     //Increment that players win count
                     eachWinningCharacter.incrementProperty('match_wins', 1);
-
-                    //Increment that players win count
-                    eachWinningCharacter.incrementProperty('gold', arenaReward);
+                    eachWinningCharacter.incrementProperty('gold', winnerGoldReward);
+                    earnExperienceAndCheckForLevel(gameObjects, eachWinningCharacter, winnerXpReward)
                 });
 
                 //Notify Slack about the winner
@@ -110,7 +128,8 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                     "channel": ("#arena"),
                     "attachments": [{
                         "text": `A team is triumphant! ${winningCharacterNameString} emerge victorious from the battle!
-                        \nThey each receive today's prize of ${arenaReward} gold!`,
+                        \nThey each receive today's prize of ${winnerGoldReward} gold & ${winnerXpReward}!
+                        \nAll of today's participants earn ${participantXpReward} for their thrilling display!`,
                         "color": gameObjects.game.menuColor
                     }]
                 });
