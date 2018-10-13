@@ -12,17 +12,15 @@ const checkForVictory = (gameObjects, charactersInZone) => {
 
     let participantXpReward = gameObjects.game.state.settings.match.participant_xp;
 
-    //Get all participants
+    //Get all participant's IDs
     let matchParticipants = gameObjects.currentMatch.getStartingCharacterIDs()
 
-    let participatingCharacters = matchParticipants.forEach(eachParticipantId => {
+    //For each participating character ID, create a character obj, aware xp, and check for level up
+    matchParticipants.forEach(eachParticipantId => {
         let participatingCharacter = new Character(gameObjects.game.state, eachParticipantId)
         earnExperienceAndCheckForLevel(gameObjects, participatingCharacter, participantXpReward)
         //participatingCharacter.incrementProperty('experience', participantXpReward);
     });
-
-    //Increment all chracters xp for participating
-    participatingCharacters.forEach()
 
     switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
