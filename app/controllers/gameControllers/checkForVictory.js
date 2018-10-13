@@ -7,11 +7,11 @@ const Character = require('../../models/Character').Character;
 
 const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers').earnExperienceAndCheckForLevel;
 
-const checkForVictory = (gameObjects, charactersInZone) => {
-    console.log('Info: called checkForVictory()');
-
+//This may not be the best place to put this function, but this way I dont have to repeat code by putting it within each match type's victory condition
+const rewardParticipants = gameObjects => {
+    
     let participantXpReward = gameObjects.game.state.settings.match.participant_xp;
-
+    
     //Get all participant's IDs
     let matchParticipants = gameObjects.currentMatch.getStartingCharacterIDs()
 
@@ -21,6 +21,10 @@ const checkForVictory = (gameObjects, charactersInZone) => {
         earnExperienceAndCheckForLevel(gameObjects, participatingCharacter, participantXpReward)
         //participatingCharacter.incrementProperty('experience', participantXpReward);
     });
+}
+
+const checkForVictory = (gameObjects, charactersInZone) => {
+    console.log('Info: called checkForVictory()');
 
     switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
@@ -56,6 +60,9 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 winningCharacter.incrementProperty('match_wins', 1);
                 winningCharacter.incrementProperty('gold', winnerGoldReward);
                 earnExperienceAndCheckForLevel(gameObjects, winningCharacter, winnerXpReward)
+
+                //Reward all characters
+                rewardParticipants(gameObjects)
               
                 gameObjects.currentMatch.end(winningCharacter.id)
             }
@@ -131,6 +138,9 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                         "color": gameObjects.game.menuColor
                     }]
                 });
+
+                //Reward all characters
+                rewardParticipants(gameObjects)
 
                 gameObjects.currentMatch.end()
             }
