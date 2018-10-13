@@ -10,7 +10,7 @@ const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers')
 const checkForVictory = (gameObjects, charactersInZone) => {
     console.log('Info: called checkForVictory()');
 
-    let participantXpReward = gameObjects.game.settings.match.participant_xp;
+    let participantXpReward = gameObjects.game.state.settings.match.participant_xp;
 
     //Get all participants
     let matchParticipants = gameObjects.currentMatch.getStartingCharacterIDs()
