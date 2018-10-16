@@ -38,8 +38,8 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 let winningCharacter = charactersInZone[0];
 
                 //Reward the winning character
-                let winnerGoldReward = gameObjects.game.settings.match.free_for_all.victory_gold_base + _.random(1, 10);
-                let winnerXpReward = gameObjects.game.settings.match.free_for_all.victory_xp;
+                let winnerGoldReward = gameObjects.game.state.settings.match.free_for_all.victory_gold_base + _.random(1, 10);
+                let winnerXpReward = gameObjects.game.state.settings.match.free_for_all.victory_xp;
                 
                 //Notify Slack about the winner
                 slack({
@@ -98,15 +98,15 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 //TODO come up with randomization function for arena gold reward
                 //let arenaReward = 5;
                 //Reward the characters on the winning team
-                let winnerGoldReward = gameObjects.game.settings.match.team_battle.victory_gold_base + _.random(1, 10);
-                let winnerXpReward = gameObjects.game.settings.match.team_battle.victory_xp;
+                let winnerGoldReward = gameObjects.game.state.settings.match.team_battle.victory_gold_base + _.random(1, 10);
+                let winnerXpReward = gameObjects.game.state.settings.match.team_battle.victory_xp;
 
                 let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
 
                 //console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
 
                 //Get character objects for winning team
-                let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>{return new Character(gameObjects.game.state, eachWinningCharacterId)});
+                let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>new Character(gameObjects.game.state, eachWinningCharacterId));
 
                 let winningCharacterNameString = '';
 

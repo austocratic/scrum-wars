@@ -5,20 +5,35 @@ Where I left off 10/9/18:
 --should now refresh each character in the arena to full HP/MP/SP when match begins
 --Left off setting up the /list command.  
 ----I may want to add a little bit more to it.  Show: current effects, player's team, ect.
+--Left off adding a new action Krom's smithy
 
 Next up:
 
--- I need to make sure new turn refresh mechanic is working.  /list shows weird HP amounts
+--Split town up into 2 vendors:
+----Winston's Curiosities (more expensive items, more magic related)
+----Krom's Smithy (Basic armor, weapons)
+
 
 BACKLOG:
 
 Backlog (near term):
 --Add more items
---level up mechanic
---scrumdo integration.  I dont think scrumdo cards should be the only way to gain experience.  This experience should be called tradeskill xp.  On launch, xp should be gained:
-----Participating in arena match
-----Winning arena match
+--XP mechanic:
+----Participating in arena match (earns a little XP)
+----Winning arena match (earns a lot of XP)
 ----Completing tradeskills
+--level up mechanic:
+----In refresh()
+--scrumdo integration.
+----Update users table to store scrumdo account ID
+----Add DB table/fields to store scrumdo cards
+----Refresh mechanic should check scrumdo to see if card status = complete
+----Scrumdo should power "tradeskill".
+----Completing tradeskill "tasks" should add xp and notify the character.
+----In the future: completing tasks should earn trade points.  Tradepoints can be redeemed for items which can be sold for gold
+----In the future: access tradeskills via "workshop" option in the town
+--
+
 
 BUGS:
 -Using an action and failing (such as stumble) do not reduce characters action points is that ok?
