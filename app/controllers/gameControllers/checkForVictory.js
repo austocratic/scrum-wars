@@ -26,6 +26,8 @@ const rewardParticipants = gameObjects => {
 const checkForVictory = (gameObjects, charactersInZone) => {
     console.log('Info: called checkForVictory()');
 
+    let participantXpReward = gameObjects.game.state.settings.match.participant_xp;
+
     switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
 
