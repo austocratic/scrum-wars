@@ -504,24 +504,24 @@ class BaseAction {
             return
         }
 
-        console.log('DEBUG processing _deleteActionInQueue()..... Looking for actionTaken id this.actionTaken.id: ', this.actionTaken.id);
+        //console.log('DEBUG processing _deleteActionInQueue()..... Looking for actionTaken id this.actionTaken.id: ', this.actionTaken.id);
 
         let actionToRemoveID = this.currentMatch.props.action_queue.findIndex( eachActionInQueue =>{
 
-            console.log(`DEBUG searching for teh action to delete, does ${eachActionInQueue.action_id} = ${this.actionTaken.id}?`)
+            //console.log(`DEBUG searching for teh action to delete, does ${eachActionInQueue.action_id} = ${this.actionTaken.id}?`)
 
             return eachActionInQueue.action_id === this.actionTaken.id;
         });
 
-        console.log('DEBUG actionToRemoveID found to remove: ', actionToRemoveID)
+        //console.log('DEBUG actionToRemoveID found to remove: ', actionToRemoveID)
 
-        console.log('DEBUG action queue BEFORE removing action: ', this.currentMatch.props.action_queue)
+        //console.log('DEBUG action queue BEFORE removing action: ', this.currentMatch.props.action_queue)
 
         if(actionToRemoveID !== -1) {
             this.currentMatch.props.action_queue.splice(actionToRemoveID, 1);
         }
 
-        console.log('DEBUG action queue AFTER removing action: ', this.currentMatch.props.action_queue)
+        //console.log('DEBUG action queue AFTER removing action: ', this.currentMatch.props.action_queue)
     }
 
     updateAction(){

@@ -153,9 +153,9 @@ const actionQueue = (gameObjects) =>{
             //Check if action is complete
             if (actionResponse.status === 'complete'){
 
-                console.log('DEBUG: action responded with status complete, deleting ID: ', gameObjects.actionTaken.id);
+                //console.log('DEBUG: action responded with status complete, deleting ID: ', gameObjects.actionTaken.id);
                 
-                console.log('Info: action is complete, remove from queue');
+                console.log(`Info: action ${gameObjects.actionTaken.id} is complete, remove from queue`);
                 actionObject._deleteActionInQueue();
             }
 
