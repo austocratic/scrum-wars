@@ -8,9 +8,7 @@ const checkForCharacterLevelUp = (gameObjects) => {
     //Get all active characters
     let allCharacters = gameObjects.game.getCharacters();
 
-    //filter for active characters only
-    let activeCharacters = allCharacters.filter(eachCharacter=>eachCharacter.props.active === 1)
-
+    //Iterate characters, if they are active, check for leveling up
     allCharacters.forEach(eachCharacter=>{
         //If character is active, check for level up
         if(eachCharacter.props.active === 1){

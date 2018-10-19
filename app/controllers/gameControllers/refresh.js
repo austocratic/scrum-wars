@@ -1,7 +1,7 @@
 "use strict";
 
 const checkForCharacterDeath = require('./checkForCharacterDeath').checkForCharacterDeath;
-const checkForCharacterDeath = require('./checkForCharacterLevelUp').checkForCharacterLevelUp;
+const checkForCharacterLevelUp = require('./checkForCharacterLevelUp').checkForCharacterLevelUp;
 const checkForVictory = require('./checkForVictory').checkForVictory;
 const checkForNewTurn = require('./checkForNewTurn').checkForNewTurn;
 const checkForMatchStart = require('./checkForMatchStart').checkForMatchStart;
