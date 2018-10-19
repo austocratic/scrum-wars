@@ -12,14 +12,13 @@ const characterLevelUp = (gameObjects, characterToLevel) => {
         //TODO dont hardcode the arena
         "channel": ("#arena"),
         "attachments": [{
-            "text": `${characterToLevel.props.name} grows stronger!
-            \n*reaches level ${characterToLevel.props.level}!*`
+            "text": `*${characterToLevel.props.name} grows stronger and reaches level ${characterToLevel.props.level}!*`
         }]
     });
 }
 
 const checkForLevelAndLevelUp = (gameObjects, characterEarning) => {
-    //See what the XP required for next level would be
+    //See what the XP required for next level would be.  Take current level
     let xpToLevel = gameObjects.game.state.settings.character.levels.experience_to_level[characterEarning.props.level]
 
     //See if current XP is greater than required

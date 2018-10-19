@@ -6,9 +6,7 @@ Where I left off 10/9/18:
 
 Next up:
 
---level up mechanic is not working.  Sindria is level 1 with 114 xp, should level
-----The problem is that I only check for new level when earning experience.  In theory this should work for leveling, but if it does not, there is no chance until that character earns more experience
-----I may want to share the helper into the refresh function
+--level up mechanic bug.  when leveling inititiated, sindria gained 2 levels instead of 1.  Other characters also leveled when they probably shouldnt have
 
 BACKLOG:
 
