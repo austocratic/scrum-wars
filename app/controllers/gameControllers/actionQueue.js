@@ -148,13 +148,13 @@ const actionQueue = (gameObjects) =>{
                 }
             }
 
-            console.log(`DEBUG action ID ${actionObject.id} processed on turn ${gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated} with response of ${actionResponse}`)
+            console.log(`DEBUG action ID ${gameObjects.actionTaken.id} processed on turn ${gameObjects.currentMatch.props.number_turns - eachActionToProcess.turn_initiated} with response of ${JSON.stringify(actionResponse)}`)
 
             //Check if action is complete
             if (actionResponse.status === 'complete'){
 
-                console.log('DEBUG: action responded with status complete, deleting ID: ', actionObject.id);
-
+                console.log('DEBUG: action responded with status complete, deleting ID: ', gameObjects.actionTaken.id);
+                
                 console.log('Info: action is complete, remove from queue');
                 actionObject._deleteActionInQueue();
             }
