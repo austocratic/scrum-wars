@@ -51,8 +51,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                     "channel": ("#arena"),
                     "attachments": [{
                         "text": `We have a winner! ${winningCharacter.props.name} emerges victorious from the battle!
-                        \n${winningCharacter.props.name}'s receives today's prize of ${winnerGoldReward} gold!
-                        \n${winningCharacter.props.name}'s earns ${winnerXpReward} experience for the glorious victory!,
+                        \n${winningCharacter.props.name} receives today's prize of ${winnerGoldReward} gold & earns ${winnerXpReward} experience for the glorious victory!
                         \nAll of today's participants earn ${participantXpReward} for their thrilling display!`,
                         "color": gameObjects.game.menuColor
                     }]
