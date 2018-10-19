@@ -11,6 +11,8 @@ Next up:
 ----When second action is added to the queue, it got added with turn initiated as the next turn, but had an undefined "last turn processed value"
 ----ACtion queue .filter checks the last turn processed value of each action in the queue
 ----action queue appears to be correctly finding the right action to remove from queue.  Issue must be in _deleteActionInQueue function
+----_deleteActionInQueue iterates through the queue looking for the right action to delete, it finds the right action to delete
+----issue seems to be in _deleteActionInQueue() .splice call
 
 BACKLOG:
 

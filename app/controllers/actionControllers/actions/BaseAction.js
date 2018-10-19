@@ -506,7 +506,7 @@ class BaseAction {
 
         console.log('DEBUG processing _deleteActionInQueue()..... Looking for actionTaken id this.actionTaken.id: ', this.actionTaken.id);
 
-        let actionToRemoveID = this.currentMatch.props.action_queue.find( eachActionInQueue =>{
+        let actionToRemoveID = this.currentMatch.props.action_queue.findIndex( eachActionInQueue =>{
 
             console.log(`DEBUG searching for teh action to delete, does ${eachActionInQueue.action_id} = ${this.actionTaken.id}?`)
 
