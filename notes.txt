@@ -6,7 +6,7 @@ Where I left off 10/9/18:
 Next up:
 
 --BUG: actions clearing from the queue often clear the wrong action:
-----Cast a delayed action then cast a instant action - deayed actions is incorrectly cleared and instanct action stays in queue
+----Cast a delayed action then cast a instant action - deayed actions is incorrectly cleared and instanct action stays in queue.  Finds wrong queue ID
 
 
 BACKLOG:

@@ -44,12 +44,14 @@ const actionControllers = {
 const actionQueue = (gameObjects) =>{
     console.log('Info: called actionQueue()');
 
+    console.log('DEBUG actionQueue: ', gameObjects.currentMatch.props.action_queue)
+
     //If the current match has no action_queue property, then no actions are queued.  Function should exit
     if (!gameObjects.currentMatch.props.action_queue) {
         return;
     }
 
-    //Iterate through effect queue
+    //Iterate through action queue
     gameObjects.currentMatch.props.action_queue
         //Determine if action has already been processed this turn
         .filter( eachActionInQueue =>{
