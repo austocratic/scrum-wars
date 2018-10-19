@@ -281,6 +281,7 @@ class Game {
         return nestedTeams[0];
     }
 
+    //Returns all characters (even inactive characters)
     getCharacters(){
         console.log('called Game.getCharacters()');
 

@@ -6,6 +6,9 @@ Where I left off 10/9/18:
 
 Next up:
 
+--level up mechanic is not working.  Sindria is level 1 with 114 xp, should level
+----The problem is that I only check for new level when earning experience.  In theory this should work for leveling, but if it does not, there is no chance until that character earns more experience
+----I may want to share the helper into the refresh function
 
 BACKLOG:
 
@@ -18,8 +21,6 @@ Backlog (near term):
 ----Participating in arena match (earns a little XP)
 ----Winning arena match (earns a lot of XP)
 ----Completing tradeskills
---level up mechanic:
-----In refresh()
 --scrumdo integration.
 ----Update users table to store scrumdo account ID
 ----Add DB table/fields to store scrumdo cards
@@ -28,13 +29,9 @@ Backlog (near term):
 ----Completing tradeskill "tasks" should add xp and notify the character.
 ----In the future: completing tasks should earn trade points.  Tradepoints can be redeemed for items which can be sold for gold
 ----In the future: access tradeskills via "workshop" option in the town
---
-
 
 BUGS:
--Attack evasion response times out (but still posts team message in slack)
 -Melee attack strike back can have some weird effects.  I think sometimes the player context can get switched..... If you kill a character with a melee attack and then use /action it registers as if you are the character that was killed
--Poisoned blade response times out when target dodges
 -CHeck for match start is off by 1 hour.  At 8:40am it was logging "hour of 7 is less than 9, don't start the match"
 -Using an action and failing (such as stumble) do not reduce characters action points is that ok?
 -Entering a combat stance does not remove previous combat stance

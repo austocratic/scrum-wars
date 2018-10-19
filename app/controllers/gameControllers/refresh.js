@@ -1,6 +1,7 @@
 "use strict";
 
 const checkForCharacterDeath = require('./checkForCharacterDeath').checkForCharacterDeath;
+const checkForCharacterDeath = require('./checkForCharacterLevelUp').checkForCharacterLevelUp;
 const checkForVictory = require('./checkForVictory').checkForVictory;
 const checkForNewTurn = require('./checkForNewTurn').checkForNewTurn;
 const checkForMatchStart = require('./checkForMatchStart').checkForMatchStart;
@@ -18,7 +19,14 @@ const refresh = (gameObjects) => {
         'currentMatch'
     ]);
 
-    //Read the match status & determine needed update
+    //-----Universal refresh checks -----
+    //These checks will be performed with every refresh call
+
+    //Check for characters leveling up
+    checkForCharacterLevelUp(gameObjects)
+
+    //-----Match specific mechanics-----
+    //These checks depend on the status of the match
     switch(gameObjects.currentMatch.props.status) {
 
         //If match is pending, determine if a match starting alert should be sent
