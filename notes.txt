@@ -6,8 +6,11 @@ Where I left off 10/9/18:
 Next up:
 
 --BUG: actions clearing from the queue often clear the wrong action:
-----Cast a delayed action then cast a instant action - deayed actions is incorrectly cleared and instanct action stays in queue.  Finds wrong queue ID
-
+----Cast a delayed action then cast a instant action - delayed actions is incorrectly cleared and instanct action stays in queue.  Finds wrong queue ID
+----Bug research:
+----When second action is added to the queue, it got added with turn initiated as the next turn, but had an undefined "last turn processed value"
+----ACtion queue .filter checks the last turn processed value of each action in the queue
+----action queue appears to be correctly finding the right action to remove from queue.  Issue must be in _deleteActionInQueue function
 
 BACKLOG:
 

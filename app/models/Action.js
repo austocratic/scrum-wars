@@ -10,7 +10,6 @@ class Action extends BaseModel{
 
         let actions = gameState.action;
 
-        //Set the character's props
         this.props = actions[actionID];
         this.id = actionID
     }
