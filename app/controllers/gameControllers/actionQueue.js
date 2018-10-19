@@ -55,6 +55,10 @@ const actionQueue = (gameObjects) =>{
     gameObjects.currentMatch.props.action_queue
         //Determine if action has already been processed this turn
         .filter( eachActionInQueue =>{
+
+            console.log('DEBUG actionqueue, running .filter on ID ', eachActionInQueue.action_id)
+            console.log('DEBUG actionqueue, last_turn_processed ', eachActionInQueue.last_turn_processed)
+
             return eachActionInQueue.last_turn_processed !== gameObjects.currentMatch.props.number_turns
         })
         //Process the unprocessed actions
