@@ -7,15 +7,15 @@ const characterLevelUp = (gameObjects, characterToLevel) => {
 
     validateGameObjects(gameObjects, [
         'game',
-        'matchZone'
+        'arenaZone'
     ]);
 
-    console.log('DEBUG: matchZone: ', JSON.stringify(gameObjects.matchZone.props))
+    console.log('DEBUG: arenaZone: ', JSON.stringify(gameObjects.arenaZone.props))
     console.log('DEBUG: characterToLevel: ', JSON.stringify(characterToLevel.props))
 
     //Notify Slack about level up!
     slack({
-        "username": gameObjects.matchZone.props.zone_messages.name,
+        "username": gameObjects.arenaZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + characterToLevel.props.avatar,
         //TODO dont hardcode the arena
         "channel": ("#arena"),
