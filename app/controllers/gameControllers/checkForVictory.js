@@ -91,26 +91,23 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 return characterTeamArray[0]
             });
 
-            //console.log('DEBUG: characterTeams: ', characterTeams);
+            console.log('DEBUG: characterTeams: ', characterTeams);
 
             //Find unique teams
             const teamsWithLivingCharacters = [...new Set(characterTeams)];
 
-            //console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
+            console.log('DEBUG: teamsWithLivingCharacters: ', teamsWithLivingCharacters);
 
             //If one team with living characters left, that team wins!
             if (teamsWithLivingCharacters.length === 1){
 
-                //Reward the winning character
-                //TODO come up with randomization function for arena gold reward
-                //let arenaReward = 5;
                 //Reward the characters on the winning team
                 let winnerGoldReward = gameObjects.game.state.settings.match.team_battle.victory_gold_base + _.random(1, 10);
                 let winnerXpReward = gameObjects.game.state.settings.match.team_battle.victory_xp;
 
                 let winningCharacterIDs = gameObjects.currentMatch.props.teams[teamsWithLivingCharacters[0]];
 
-                //console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
+                console.log('DEBUG: winningCharacter IDs: ', winningCharacterIDs);
 
                 //Get character objects for winning team
                 let winningCharacters = winningCharacterIDs.map(eachWinningCharacterId=>new Character(gameObjects.game.state, eachWinningCharacterId));
