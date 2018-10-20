@@ -81,6 +81,9 @@ const checkForVictory = (gameObjects, charactersInZone) => {
             let characterTeams = charactersInZone.map(eachCharacterInZone=>{
                 let characterTeamArray = gameObjects.currentMatch.props.teams
                     .map((eachTeam, index)=>{
+
+                        console.log("DEBUG: checking eachTeam: ", eachTeam);
+
                         if (eachTeam.includes(eachCharacterInZone.id)){
                             return index;
                         }})
