@@ -1,9 +1,17 @@
 
 const slack = require('../libraries/slack').sendMessage;
-
+const validateGameObjects = require('./helpers').validateGameObjects;
 
 const characterLevelUp = (gameObjects, characterToLevel) => {
     characterToLevel.incrementProperty('level', 1);
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'matchZone'
+    ]);
+
+    console.log('DEBUG: matchZone: ', JSON.stringify(gameObjects.matchZone.props))
+    console.log('DEBUG: characterToLevel: ', JSON.stringify(characterToLevel.props))
 
     //Notify Slack about level up!
     slack({
