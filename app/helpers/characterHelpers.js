@@ -7,7 +7,7 @@ const characterLevelUp = (gameObjects, characterToLevel) => {
 
     //Notify Slack about level up!
     slack({
-        "username": gameObjects.requestZone.props.zone_messages.name,
+        "username": gameObjects.matchZone.props.zone_messages.name,
         "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + characterToLevel.props.avatar,
         //TODO dont hardcode the arena
         "channel": ("#arena"),
