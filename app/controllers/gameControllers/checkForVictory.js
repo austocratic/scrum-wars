@@ -52,7 +52,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 //Notify Slack about the winner
                 slack({
                     "username": gameObjects.arenaZone.props.zone_messages.name,
-                    "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
+                    "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.arenaZone.props.zone_messages.image + '.bmp',
                     //TODO dont hardcode the arena
                     "channel": ("#arena"),
                     "attachments": [{
