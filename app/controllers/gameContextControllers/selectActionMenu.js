@@ -95,6 +95,72 @@ const shop = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
+const shop1 = gameObjects => {
+    console.log('Info: Called selectActionMenu/shop1');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'requestZone',
+        'slackCallback',
+        'slackResponseTemplate',
+        'userActionNameSelection',
+        'userActionValueSelection'
+    ]);
+
+    //Due to the DB data structure, I use _findKey()
+    let npcID = _.findKey(gameObjects.game.state.npc, {name: "Kromm"});
+
+    let vendor = new NPC(gameObjects.game.state, npcID);
+
+    //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
+    gameObjects.slackResponseTemplate = {
+        "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
+        "attachments": [
+            {
+                "fallback": "You are unable to choose an action",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
+                "attachment_type": "default",
+                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg",
+                "actions": []
+            },
+            {
+                "text": "",
+                "fallback": "You are unable to go back",
+                "callback_id": "",
+                "color": gameObjects.game.menuColor,
+                "attachment_type": "default",
+                "actions": [
+                    {
+                        "name": "purchaseButton",
+                        "text": "Purchase Items",
+                        "style": "",
+                        "type": "button",
+                        "value": "purchaseButton"
+                    },
+                    {
+                        "name": "sellButton",
+                        "text": "Sell Items",
+                        "style": "",
+                        "type": "button",
+                        "value": "sellButton"
+                    },
+                    {
+                        "name": "back",
+                        "text": "Exit shop",
+                        "style": "",
+                        "type": "button",
+                        "value": "back"
+                    }
+                ]
+            }
+        ]
+    };
+
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopMainMenu`);
+
+    return gameObjects.slackResponseTemplate;
+};
 const defensiveStance = gameObjects => {
     console.log('Called selectActionMenu/defensiveStance');
 
@@ -999,6 +1065,7 @@ const coatOfBark = gameObjects => {
 
 module.exports = {
     shop,
+    shop1,
     defensiveStance,
     offensiveStance,
     balancedStance,

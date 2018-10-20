@@ -6,11 +6,12 @@ Where I left off 10/9/18:
 
 Next up:
 
---level up mechanic bug.  when leveling inititiated, sindria gained 2 levels instead of 1.  Other characters also leveled when they probably shouldnt have
+
 
 BACKLOG:
 
 Backlog (near term):
+--Level up mechanic should do other stuff (increase stat points, allow access to other actions, ect.)
 --Split town up into 2 vendors:
 ----Winston's Curiosities (more expensive items, more magic related)
 ----Krom's Smithy (Basic armor, weapons)

@@ -6,6 +6,7 @@ const slack = require('../../libraries/slack').sendMessage;
 const Character = require('../../models/Character').Character;
 
 const earnExperienceAndCheckForLevel = require('../../helpers/characterHelpers').earnExperienceAndCheckForLevel;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 //This may not be the best place to put this function, but this way I dont have to repeat code by putting it within each match type's victory condition
 const rewardParticipants = gameObjects => {
@@ -31,6 +32,11 @@ const checkForVictory = (gameObjects, charactersInZone) => {
     switch (gameObjects.currentMatch.props.type.name){
         case 'Free-for-all':
 
+            validateGameObjects(gameObjects, [
+                'game',
+                'arenaZone'
+            ]);
+
             //TODO currently a single refresh will not detect that players are dead and declare one as the winner
             //It will move dead characters in one refresh and declare the winner in the next refresh
             //Check for only one character left in zone (victory condition)
@@ -45,7 +51,7 @@ const checkForVictory = (gameObjects, charactersInZone) => {
                 
                 //Notify Slack about the winner
                 slack({
-                    "username": gameObjects.requestZone.props.zone_messages.name,
+                    "username": gameObjects.arenaZone.props.zone_messages.name,
                     "icon_url": gameObjects.game.baseURL + gameObjects.game.thumbImagePath + gameObjects.requestZone.props.zone_messages.image + '.bmp',
                     //TODO dont hardcode the arena
                     "channel": ("#arena"),
