@@ -108,20 +108,20 @@ const shop1 = gameObjects => {
     ]);
 
     //Due to the DB data structure, I use _findKey()
-    let npcID = _.findKey(gameObjects.game.state.npc, {name: "Kromm"});
+    //let npcID = _.findKey(gameObjects.game.state.npc, {name: "Kromm"});
 
-    let vendor = new NPC(gameObjects.game.state, npcID);
+    //let vendor = new NPC(gameObjects.game.state, npcID);
 
     //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
     gameObjects.slackResponseTemplate = {
-        "text": "_You enter the general store and the merchant greets you warmly_ \nHello there traveler!  Welcome to my shop.  What can I interest you in?",
+        "text": "_You enter Kromm's Smithy, the heat from the forge ripples against your body_ \nHail!  Welcome to Kromm's Smithy where the forge is hot and the steel is sharp!",
         "attachments": [
             {
                 "fallback": "You are unable to choose an action",
                 "callback_id": "",
                 "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
-                "image_url": "https://scrum-wars.herokuapp.com/public/images/fullSize/" + vendor.id + ".jpg",
+                "image_url": gameObjects.game.baseURL + gameObjects.game.imagePath + eachSortedCharacter.props.avatar + ".png",
                 "actions": []
             },
             {
@@ -157,7 +157,7 @@ const shop1 = gameObjects => {
         ]
     };
 
-    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}shopMainMenu`);
+    gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}krommMainMenu`);
 
     return gameObjects.slackResponseTemplate;
 };
