@@ -2,6 +2,7 @@
 
 // ---Modules---
 const request = require('request');
+var rp = require('request-promise');
 
 if(process.env.USE_LOCAL_ENV) {
     require('dotenv').load();
@@ -30,6 +31,19 @@ const sendMessage = payloadBody => {
 
 const apiMethod = async (method, dialog, trigger) => {
 
+    let options = {
+        method: 'POST',
+        uri: `https://slack.com/api/${method}`,
+        form:{
+            token: process.env.SLACK_TOKEN,
+            dialog: dialog,
+            trigger_id: trigger
+        }
+    };
+
+    let response = await rp.post(options)
+
+    /*
     let response = await request.post(`https://slack.com/api/${method}`, {
         form:{
             token: process.env.SLACK_TOKEN,
@@ -42,7 +56,7 @@ const apiMethod = async (method, dialog, trigger) => {
             return err
         }
         //return httpResponse
-    });
+    });*/
 
     console.log('DEBUG response: ', JSON.stringify(response))
     /*
