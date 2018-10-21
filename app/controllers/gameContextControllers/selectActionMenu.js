@@ -100,17 +100,13 @@ const shop1 = gameObjects => {
 
     validateGameObjects(gameObjects, [
         'game',
-        'requestZone',
-        'slackCallback',
-        'slackResponseTemplate',
-        'userActionNameSelection',
-        'userActionValueSelection'
+        'slackResponseTemplate'
     ]);
 
     //Due to the DB data structure, I use _findKey()
-    //let npcID = _.findKey(gameObjects.game.state.npc, {name: "Kromm"});
+    let npcID = _.findKey(gameObjects.game.state.npc, {name: "Kromm"});
 
-    //let vendor = new NPC(gameObjects.game.state, npcID);
+    let vendor = new NPC(gameObjects.game.state, npcID);
 
     //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
     gameObjects.slackResponseTemplate = {
@@ -121,7 +117,7 @@ const shop1 = gameObjects => {
                 "callback_id": "",
                 "color": gameObjects.game.menuColor,
                 "attachment_type": "default",
-                "image_url": gameObjects.game.baseURL + gameObjects.game.imagePath + eachSortedCharacter.props.avatar + ".png",
+                "image_url": gameObjects.game.baseURL + gameObjects.game.imagePath + vendor.props.avatar + ".png",
                 "actions": []
             },
             {
