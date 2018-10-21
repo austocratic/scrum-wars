@@ -73,6 +73,10 @@ const declareGameObjects = (game, slackRequest) => {
         gameObjects.slackText = slackRequest.text;
     }
 
+    if (slackRequest.trigger_id){
+        gameObjects.triggerId = slackRequest.trigger_id;
+    }
+
     //Only instantiate playerCharacter if there is a character ID available to use
     if (gameObjects.user.props.character_id){
         gameObjects.playerCharacter = new Character(game.state, gameObjects.user.props.character_id);

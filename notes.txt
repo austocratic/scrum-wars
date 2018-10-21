@@ -25,6 +25,8 @@ Backlog (near term):
 ----Completing tradeskill "tasks" should add xp and notify the character.
 ----In the future: completing tasks should earn trade points.  Tradepoints can be redeemed for items which can be sold for gold
 ----In the future: access tradeskills via "workshop" option in the town or "trade guild"
+--TODO
+1) Make new town action "Crafters Guild" - opens a dialogue menu
 
 BUGS:
 -starting a team match with only one character can have issues.  Random team assignment can place the character on team 2, so team array is missing element 0

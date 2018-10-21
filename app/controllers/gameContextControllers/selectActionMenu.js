@@ -167,8 +167,11 @@ const craftersGuild = gameObjects => {
         'slackResponseTemplate'
     ]);
 
+    //command:action/selectActionMenu:shop1:-LOiwEeSoLskc5qlVptW/krommMainMenu
+
     //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
     gameObjects.slackResponseTemplate = {
+        "gameObjects.triggerId": gameObjects.triggerId,
         "dialog": {
             "title": "Crafter's Guild",
             "callback_id": "",
