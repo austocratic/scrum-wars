@@ -26,7 +26,24 @@ const sendMessage = payloadBody => {
             return err
         }
     });
-    
+};
+
+const apiMethod = async (method, payloadBody) => {
+
+    let requestOptions = {
+        uri:                     `https://slack.com/api/${method}`,
+        resolveWithFullResponse: true,
+        json:                    true,
+        body:                    payloadBody
+    };
+
+    return await request.post(requestOptions, (err, httpResponse, body) => {
+        if (err) {
+            console.log('ERROR when sending message to slack: ' + err);
+            return err
+        }
+        return body
+    });
 };
 
 
@@ -67,5 +84,6 @@ class Alert extends Slack {
 
 module.exports = {
     Alert,
-    sendMessage
+    sendMessage,
+    apiMethod
 };

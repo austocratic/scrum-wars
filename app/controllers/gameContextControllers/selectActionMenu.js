@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require('lodash');
+const slack = require('../../libraries/slack')
 
 const NPC = require('../../models/NPC').NPC;
 const Action = require('../../models/Action').Action;
@@ -159,7 +160,7 @@ const shop1 = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
-const craftersGuild = gameObjects => {
+const craftersGuild = async gameObjects => {
     console.log('Info: Called selectActionMenu/craftersGuild');
 
     validateGameObjects(gameObjects, [
@@ -170,7 +171,7 @@ const craftersGuild = gameObjects => {
     //command:action/selectActionMenu:shop1:-LOiwEeSoLskc5qlVptW/krommMainMenu
 
     //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
-    gameObjects.slackResponseTemplate = {
+    let craftingMenu = {
         "gameObjects.triggerId": gameObjects.triggerId,
         "dialog": {
             "title": "Crafter's Guild",
@@ -199,6 +200,9 @@ const craftersGuild = gameObjects => {
             ]
         }
     };
+
+    //Send a post
+    return await slack.apiMethod('dialog.open', craftingMenu)
 
     //gameObjects.slackResponseTemplate = updateCallback(gameObjects.slackResponseTemplate, `${gameObjects.slackCallback}craftersGuildForm`);
 
