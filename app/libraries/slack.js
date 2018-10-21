@@ -31,7 +31,7 @@ const sendMessage = payloadBody => {
 const apiMethod = async (method, payloadBody) => {
 
     let requestOptions = {
-        uri:                     `https://slack.com/api/${method}`,
+        uri:                     `https://slack.com/api/${method}?token${process.env.SLACK_TOKEN}`,
         resolveWithFullResponse: true,
         json:                    true,
         body:                    payloadBody
@@ -42,7 +42,7 @@ const apiMethod = async (method, payloadBody) => {
             console.log('ERROR when sending message to slack: ' + err);
             return err
         }
-        return body
+        return httpResponse
     });
 };
 
