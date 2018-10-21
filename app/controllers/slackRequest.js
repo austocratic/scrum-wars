@@ -6,7 +6,7 @@ const command = require('./gameContextControllers/command');
 const { action, generate, profile, travel, name, turn, match, ranking, list } = command;
 
 const selectActionMenu = require('./gameContextControllers/selectActionMenu');
-const { shop, shop1, quickStrike, basicMelee, arcaneBolt, flameBurst, lifeTap, risingPunch, flurryOfFists, fistOfThunder, defensiveStance,
+const { shop, shop1, craftersGuild, quickStrike, basicMelee, arcaneBolt, flameBurst, lifeTap, risingPunch, flurryOfFists, fistOfThunder, defensiveStance,
     balancedStance, inspiringShout, offensiveStance, axeorsShielding, coatOfBark, smokeBomb, forkedLightning, intoShadow, savageStrike,
     backstab, poisonedBlade, stingingBees, whirlwind, cleave, firestorm, roundingKick, minorHealing, meditation
 } = selectActionMenu;
@@ -27,6 +27,7 @@ const contextsAndActions = {
     selectActionMenu: {
         shop: shop,
         shop1: shop1,
+        craftersGuild: craftersGuild,
         quickStrike: quickStrike,
         basicMelee: basicMelee,
         arcaneBolt: arcaneBolt,

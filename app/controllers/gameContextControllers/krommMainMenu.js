@@ -10,7 +10,7 @@ const validateGameObjects = require('../../helpers/helpers').validateGameObjects
 
 
 const purchaseButton = gameObjects => {
-    console.log('Called shopMainMenu/purchaseButton');
+    console.log('Called krommMainMenu/purchaseButton');
 
     validateGameObjects(gameObjects, [
         'game',

@@ -12,9 +12,6 @@ BACKLOG:
 
 Backlog (near term):
 --Level up mechanic should do other stuff (increase stat points, allow access to other actions, ect.)
---Split town up into 2 vendors:
-----Winston's Curiosities (more expensive items, more magic related)
-----Krom's Smithy (Basic armor, weapons)
 --Add more items
 --XP mechanic:
 ----Participating in arena match (earns a little XP)
@@ -27,9 +24,10 @@ Backlog (near term):
 ----Scrumdo should power "tradeskill".
 ----Completing tradeskill "tasks" should add xp and notify the character.
 ----In the future: completing tasks should earn trade points.  Tradepoints can be redeemed for items which can be sold for gold
-----In the future: access tradeskills via "workshop" option in the town
+----In the future: access tradeskills via "workshop" option in the town or "trade guild"
 
 BUGS:
+-starting a team match with only one character can have issues.  Random team assignment can place the character on team 2, so team array is missing element 0
 -Melee attack strike back can have some weird effects.  I think sometimes the player context can get switched..... If you kill a character with a melee attack and then use /action it registers as if you are the character that was killed
 -CHeck for match start is off by 1 hour.  At 8:40am it was logging "hour of 7 is less than 9, don't start the match"
 -Using an action and failing (such as stumble) do not reduce characters action points is that ok?

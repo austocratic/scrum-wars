@@ -157,6 +157,49 @@ const shop1 = gameObjects => {
 
     return gameObjects.slackResponseTemplate;
 };
+const craftersGuild = gameObjects => {
+    console.log('Info: Called selectActionMenu/craftersGuild');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'slackResponseTemplate'
+    ]);
+
+    //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
+    gameObjects.slackResponseTemplate = {
+        "dialog": {
+            "title": "Crafter's Guild",
+            "elements": [
+                {
+                    "label": "Convert crafting points into what?",
+                    "type": "select",
+                    "name": "craftingSelection",
+                    "options": [
+                        {
+                            "label": "Experience",
+                            "value": "experience"
+                        },
+                        {
+                            "label": "Gold",
+                            "value": "gold"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "How many points to convert?",
+                    "name": "pointsToConvert"
+                }
+            ]
+        }
+    };
+
+    gameObjects.slackResponseTemplate = updateCallback(gameObjects.slackResponseTemplate, `${gameObjects.slackCallback}craftersGuildForm`);
+
+    console.log("DEBUG: slack response template: ", JSON.stringify(gameObjects.slackResponseTemplate) );
+
+    return gameObjects.slackResponseTemplate;
+};
 const defensiveStance = gameObjects => {
     console.log('Called selectActionMenu/defensiveStance');
 
@@ -1062,6 +1105,7 @@ const coatOfBark = gameObjects => {
 module.exports = {
     shop,
     shop1,
+    craftersGuild,
     defensiveStance,
     offensiveStance,
     balancedStance,
