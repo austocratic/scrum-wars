@@ -30,7 +30,7 @@ const sendMessage = payloadBody => {
 
 const apiMethod = async (method, dialog, trigger) => {
 
-    return await request.post(`https://slack.com/api/${method}`, {
+    let response = await request.post(`https://slack.com/api/${method}`, {
         form:{
             token: process.env.SLACK_TOKEN,
             dialog: dialog,
@@ -41,9 +41,10 @@ const apiMethod = async (method, dialog, trigger) => {
             console.log('ERROR when sending message to slack: ' + err);
             return err
         }
-        return httpResponse
+        //return httpResponse
     });
 
+    console.log('DEBUG response: ', JSON.stringify(response))
     /*
     let requestOptions = {
         uri:                     `https://slack.com/api/${method}?token${process.env.SLACK_TOKEN}`,
@@ -59,6 +60,8 @@ const apiMethod = async (method, dialog, trigger) => {
         }
         return httpResponse
     });*/
+
+    return response
 };
 
 
