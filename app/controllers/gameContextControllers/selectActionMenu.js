@@ -171,38 +171,35 @@ const craftersGuild = async gameObjects => {
     //command:action/selectActionMenu:shop1:-LOiwEeSoLskc5qlVptW/krommMainMenu
 
     //shopMainMenu template.  Name shopMainMenu is added to the callback to control the flow to file shopMainMenu
-    let craftingMenu = {
-        "gameObjects.triggerId": gameObjects.triggerId,
-        "dialog": {
-            "title": "Crafter's Guild",
-            "callback_id": "",
-            "elements": [
-                {
-                    "label": "Convert crafting points into what?",
-                    "type": "select",
-                    "name": "craftingSelection",
-                    "options": [
-                        {
-                            "label": "Experience",
-                            "value": "experience"
-                        },
-                        {
-                            "label": "Gold",
-                            "value": "gold"
-                        }
-                    ]
-                },
-                {
-                    "type": "text",
-                    "label": "How many points to convert?",
-                    "name": "pointsToConvert"
-                }
-            ]
-        }
+    let dialog = {
+        "title": "Crafter's Guild",
+        "callback_id": "",
+        "elements": [
+            {
+                "label": "Convert crafting points into what?",
+                "type": "select",
+                "name": "craftingSelection",
+                "options": [
+                    {
+                        "label": "Experience",
+                        "value": "experience"
+                    },
+                    {
+                        "label": "Gold",
+                        "value": "gold"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "label": "How many points to convert?",
+                "name": "pointsToConvert"
+            }
+        ]
     };
 
     //Send a post
-    return await slack.apiMethod('dialog.open', craftingMenu)
+    return await slack.apiMethod('dialog.open', dialog, gameObjects.triggerId)
 
     //gameObjects.slackResponseTemplate = updateCallback(gameObjects.slackResponseTemplate, `${gameObjects.slackCallback}craftersGuildForm`);
 

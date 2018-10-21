@@ -28,8 +28,23 @@ const sendMessage = payloadBody => {
     });
 };
 
-const apiMethod = async (method, payloadBody) => {
+const apiMethod = async (method, dialog, trigger) => {
 
+    return await request.post(`https://slack.com/api/${method}`, {
+        form:{
+            token: process.env.SLACK_TOKEN,
+            dialog: dialog,
+            trigger_id: trigger
+        }
+    }, (err, httpResponse, body) => {
+        if (err) {
+            console.log('ERROR when sending message to slack: ' + err);
+            return err
+        }
+        return httpResponse
+    });
+
+    /*
     let requestOptions = {
         uri:                     `https://slack.com/api/${method}?token${process.env.SLACK_TOKEN}`,
         resolveWithFullResponse: true,
@@ -43,7 +58,7 @@ const apiMethod = async (method, payloadBody) => {
             return err
         }
         return httpResponse
-    });
+    });*/
 };
 
 
