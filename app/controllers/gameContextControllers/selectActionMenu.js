@@ -155,6 +155,8 @@ const shop1 = gameObjects => {
 
     gameObjects.slackResponseTemplate.attachments = updateCallback(gameObjects.slackResponseTemplate.attachments, `${gameObjects.slackCallback}krommMainMenu`);
 
+    console.log('DEBUG: gameObjects.slackResponseTemplate: ', JSON.stringify(gameObjects.slackResponseTemplate))
+
     return gameObjects.slackResponseTemplate;
 };
 const craftersGuild = gameObjects => {
@@ -169,6 +171,7 @@ const craftersGuild = gameObjects => {
     gameObjects.slackResponseTemplate = {
         "dialog": {
             "title": "Crafter's Guild",
+            "callback_id": "",
             "elements": [
                 {
                     "label": "Convert crafting points into what?",
@@ -194,7 +197,7 @@ const craftersGuild = gameObjects => {
         }
     };
 
-    gameObjects.slackResponseTemplate = updateCallback(gameObjects.slackResponseTemplate, `${gameObjects.slackCallback}craftersGuildForm`);
+    //gameObjects.slackResponseTemplate = updateCallback(gameObjects.slackResponseTemplate, `${gameObjects.slackCallback}craftersGuildForm`);
 
     console.log("DEBUG: slack response template: ", JSON.stringify(gameObjects.slackResponseTemplate) );
 
