@@ -91,6 +91,10 @@ const contextsAndActions = {
         purchaseButton: require('./gameContextControllers/shopMainMenu').purchaseButton,
         sellButton: require('./gameContextControllers/shopMainMenu').sellButton
     },
+    krommMainMenu: {
+        purchaseButton: require('./gameContextControllers/shopMainMenu').purchaseButton,
+        sellButton: require('./gameContextControllers/shopMainMenu').sellButton
+    },
     shopPurchaseMenu: {
         itemList: require('./gameContextControllers/shopPurchaseMenu').itemList
     },
