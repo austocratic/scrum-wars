@@ -2,7 +2,7 @@
 
 // ---Modules---
 const request = require('request');
-var rp = require('request-promise');
+const rp = require('request-promise');
 
 if(process.env.USE_LOCAL_ENV) {
     require('dotenv').load();
