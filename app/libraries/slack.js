@@ -3,6 +3,7 @@
 // ---Modules---
 const request = require('request');
 const rp = require('request-promise');
+const axios = require('axios');
 
 if(process.env.USE_LOCAL_ENV) {
     require('dotenv').load();
@@ -12,8 +13,9 @@ const slackHook = process.env.SLACK_HOOK;
 
 
 //New Slack functionality.  To replace class hierarchy below
-const sendMessage = payloadBody => {
+const sendMessage = async payloadBody => {
 
+    /*
     let requestOptions = {
         uri:                     process.env.SLACK_HOOK,
         resolveWithFullResponse: true,
@@ -26,7 +28,9 @@ const sendMessage = payloadBody => {
             console.log('ERROR when sending message to slack: ' + err);
             return err
         }
-    });
+    });*/
+
+    await axios.post(process.env.SLACK_HOOK, payloadBody)
 };
 
 const apiMethod = async (method, dialog, trigger) => {
