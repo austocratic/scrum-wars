@@ -5,7 +5,7 @@ const refreshController = require('../../controllers/gameControllers/refresh');
 const Zone = require('../../models/Zone').Zone;
 const Match = require('../../models/Match').Match;
 
-const processTradeskills = require('../../controllers/gameControllers/processTradeskills').processTradeskills;
+const processTradeskills = require('../../controllers/gameControllers/processTradeskills');
 
 //Create a cron object to process scheduled tasks
 let oneMinuteCron = new Scheduler({
@@ -42,7 +42,7 @@ let oneMinuteCron = new Scheduler({
                     //a) Scrumdo workspace name
                     //b) "Complete" column name
 
-                await processTradeskills(gameObjects);
+                await processTradeskills.processTradeskills(gameObjects);
 
                 //Refresh the game (check for new turn, player deaths, ect.)
                 refreshController.refresh(gameObjects);
