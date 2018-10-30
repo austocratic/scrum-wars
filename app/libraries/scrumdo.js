@@ -2,12 +2,21 @@
 
 const axios = require('axios');
 
-const BASE_URL = 'https://app.scrumdo.com/api/v3/organizations/icracked'
+const BASE_URL = 'https://app.scrumdo.com/api/v3/organizations/icracked/'
 
-axios.defaults.headers.common['Authorization'] = `Basic ${process.env.SCRUMDO_KEY}`;
+//axios.defaults.headers.common['Authorization'] = `Basic ${process.env.SCRUMDO_KEY}`;
 
 const getStories = async (page = 1) => {
-    return await axios.get(`${BASE_URL}/projects/icracked1/stories?page=${page}`);
+    let getStoriesResponse = await axios({
+        baseURL: BASE_URL,
+        url: `projects/icracked1/stories?page=${page}`,
+        auth: {
+            username: process.env.SCRUMDO_KEY
+          }
+    })
+    .catch(err=>{console.log('Error: calling getStories(): ', err)})
+
+    console.log('DEBUG: getStoriesResponse ', getStoriesResponse);
 }
 
 const getAllStories = async () => {
