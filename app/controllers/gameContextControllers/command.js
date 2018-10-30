@@ -472,11 +472,9 @@ const list = gameObjects => {
     });
 
     return slackResponse
-
-
 }
 
-//Admin commands
+//Admin commands - only user with admin credentials can access
 
 //Increment the match turn
 const turn = gameObjects => {

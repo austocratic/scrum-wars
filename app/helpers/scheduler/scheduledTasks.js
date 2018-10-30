@@ -5,7 +5,7 @@ const refreshController = require('../../controllers/gameControllers/refresh');
 const Zone = require('../../models/Zone').Zone;
 const Match = require('../../models/Match').Match;
 
-const processTradeskills = require('../../controllers/gameControllers/processTradeskills');
+const processTradeskills = require('../../controllers/gameControllers/processTradeskills').processTradeskills
 
 //Create a cron object to process scheduled tasks
 let oneMinuteCron = new Scheduler({
@@ -30,19 +30,7 @@ let oneMinuteCron = new Scheduler({
                 gameObjects.game = game;
 
                 //Execute functionality that does now exist in the refresh() function.  This is functionality that should not be executed on every player action
-
-                //1) Call scrumdo API to get all cards in the icracked1 workspace
-                //2) Find all cards in the complete state.
-                //3) compare these cards against DB of "complete" cards.
-                //4) Any complete cards, not in DB should be added to DB
-
-                //TODO:
-                //1) Add a scrumdo library for getting cards
-                //2) Add a place to configure scrumdo settings such as:
-                    //a) Scrumdo workspace name
-                    //b) "Complete" column name
-
-                await processTradeskills.processTradeskills(gameObjects);
+                await processTradeskills(gameObjects);
 
                 //Refresh the game (check for new turn, player deaths, ect.)
                 refreshController.refresh(gameObjects);
