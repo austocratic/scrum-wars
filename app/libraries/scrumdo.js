@@ -13,6 +13,8 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
+    console.log("debug: got first set of scrumdo stories: ", JSON.stringify(firstResults[0]));
+
     let cardList = firstResults.items;
 
     //If more than 1 page of results, make multiple calls to get all pages of results

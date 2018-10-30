@@ -13,15 +13,18 @@ const processTradeskills = async (gameObjects) => {
     //1) Call scrumdo API to get all cards in the icracked1 workspace
     let scrumdoStoriesResult = await scrumdo.getAllStories()
 
+    console.log("debug got card list: ", JSON.stringify(scrumdoStoriesResult[0]));
+
+
     //2) Find all cards in the complete state.
-    let completeCards = scrumdoStoriesResult
-        .filter(eachScrumdoStory => {
-            eachScrumdoStory.status === 'complete'
-        })
-        .filter(eachCompleteStory => {
-            //Does the story already exist in the DB?
-            return _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id})
-        })
+    // let completeCards = scrumdoStoriesResult
+    //     .filter(eachScrumdoStory => {
+    //         eachScrumdoStory.status === 'complete'
+    //     })
+    //     .filter(eachCompleteStory => {
+    //         //Does the story already exist in the DB?
+    //         return _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id})
+    //     })
 
    
 
@@ -33,7 +36,7 @@ const processTradeskills = async (gameObjects) => {
             //a) Scrumdo workspace name
             //b) "Complete" column name
 
-    console.log("debug got card list: ", JSON.stringify(scrumdoStoriesResult[0]));
+    
 }
 
 
