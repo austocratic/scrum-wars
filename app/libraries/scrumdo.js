@@ -11,7 +11,7 @@ const getStories = async (page = 1) => {
         baseURL: BASE_URL,
         url: `projects/icracked1/stories?page=${page}`,
         headers: {
-            Authorization: `Bearer ${process.env.SCRUMDO_KEY}`
+            Authorization: `Basic ${process.env.SCRUMDO_KEY}`
           }
     })
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
