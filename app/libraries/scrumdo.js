@@ -10,8 +10,8 @@ const getStories = async (page = 1) => {
     let getStoriesResponse = await axios({
         baseURL: BASE_URL,
         url: `projects/icracked1/stories?page=${page}`,
-        auth: {
-            username: process.env.SCRUMDO_KEY
+        headers: {
+            Authorization: `Bearer ${process.env.SCRUMDO_KEY}`
           }
     })
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
