@@ -17,15 +17,17 @@ const getStories = async (page = 1) => {
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
 
     console.log('DEBUG: getStoriesResponse ', getStoriesResponse);
-    console.log('DEBUG: response body: ', getStoriesResponse.body);
+    //console.log('DEBUG: response body: ', getStoriesResponse.body);
 };
 
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    console.log("debug: got first set of scrumdo stories: ", firstResults[0]);
+    //console.log("debug: got first set of scrumdo stories: ", firstResults[0]);
 
     let cardList = firstResults.items;
+
+    console.log('Debug: ', cardList);
 
     //If more than 1 page of results, make multiple calls to get all pages of results
     if (firstResults.max_page > 1) {
