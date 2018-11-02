@@ -16,8 +16,8 @@ const getStories = async (page = 1) => {
     })
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
 
-    console.log('DEBUG: getStoriesResponse ', JSON.stringify(getStoriesResponse));
-    console.log('DEBUG: response body: ', JSON.stringify(getStoriesResponse.body));
+    console.log('DEBUG: getStoriesResponse ', getStoriesResponse);
+    console.log('DEBUG: response body: ', getStoriesResponse.body);
 };
 
 const getAllStories = async () => {
