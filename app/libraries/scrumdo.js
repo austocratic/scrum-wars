@@ -23,7 +23,7 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    console.log("debug: got first set of scrumdo stories: ", JSON.stringify(firstResults[0]));
+    console.log("debug: got first set of scrumdo stories: ", firstResults[0]);
 
     let cardList = firstResults.items;
 
