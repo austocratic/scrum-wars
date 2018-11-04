@@ -17,29 +17,28 @@ const getStories = async (page = 1) => {
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
 
     return getStoriesResponse
-
-    console.log('DEBUG: getStoriesResponse ', getStoriesResponse);
     //console.log('DEBUG: response body: ', getStoriesResponse.body);
 };
 
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    console.log('Debug: firstResults[0]', firstResults[0]);
-    //console.log('Debug: ', firstResults[0]);
+    console.log('firstResults: ', firstResults);
 
-    //If more than 1 page of results, make multiple calls to get all pages of results
-    if (firstResults.max_page > 1) {
+    // console.log('Debug: firstResults[0]', firstResults[0]);
 
-        //Execute a getStories call for each page
-        async () => {
-            for (let page = 2; i < firstResults.max_page; x++) {
-                let pageResults = await getStories(page);
-                cardList.push(pageResults.items)
-            }
-        }
-    }
-    return cardList;
+    // //If more than 1 page of results, make multiple calls to get all pages of results
+    // if (firstResults.max_page > 1) {
+
+    //     //Execute a getStories call for each page
+    //     async () => {
+    //         for (let page = 2; i < firstResults.max_page; x++) {
+    //             let pageResults = await getStories(page);
+    //             cardList.push(pageResults.items)
+    //         }
+    //     }
+    // }
+    // return cardList;
 }
 
 
