@@ -16,6 +16,8 @@ const getStories = async (page = 1) => {
     })
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
 
+    return getStoriesResponse
+
     console.log('DEBUG: getStoriesResponse ', getStoriesResponse);
     //console.log('DEBUG: response body: ', getStoriesResponse.body);
 };
@@ -23,7 +25,8 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    console.log('Debug: ', firstResults[0]);
+    console.log('Debug: firstResults[0]', firstResults[0]);
+    //console.log('Debug: ', firstResults[0]);
 
     //If more than 1 page of results, make multiple calls to get all pages of results
     if (firstResults.max_page > 1) {
