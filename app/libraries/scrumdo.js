@@ -23,6 +23,10 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
+    let resultsArray = Object.keys(firstResults)
+
+    resultsArray.forEach((eachResult)=>{console.log(eachResult);})
+
     console.log('firstResults: ', firstResults);
     console.log('firstResults type of: ', typeof firstResults);
 
