@@ -21,11 +21,11 @@ const processTradeskills = async (gameObjects) => {
         .filter(eachScrumdoStory=>{
             console.log('Debug .cell data type: ', typeof eachScrumdoStory.cell);
             //eachScrumdoStory.cell !== 'null'
-            typeof eachScrumdoStory.cell === 'object'
+            return typeof eachScrumdoStory.cell === 'object'
         })
         .filter(eachScrumdoStory => {
             console.log('Debug, checking cell label: ', eachScrumdoStory.cell.label);
-            eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+            return eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
         })
     
         console.log('# of complete cards: ', completeCards.length);
