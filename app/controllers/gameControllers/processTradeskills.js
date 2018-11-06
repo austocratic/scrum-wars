@@ -24,7 +24,7 @@ const processTradeskills = async (gameObjects) => {
         //     //return typeof eachScrumdoStory.cell === 'object'
         // })
         .filter(eachScrumdoStory => {
-            if (eachScrumdoStory.cell === 'object'){
+            if (typeof eachScrumdoStory.cell === 'object'){
                 console.log('Debug, it was an object');
                 if (eachScrumdoStory.cell.label){
                     console.log('Debug, it has a .label: ', eachScrumdoStory.cell.label);
