@@ -18,14 +18,19 @@ const processTradeskills = async (gameObjects) => {
 
     //2) Find all cards in the complete state.
     let completeCards = scrumdoStoriesResult
-        .filter(eachScrumdoStory=>{
-            console.log('Debug .cell data type: ', typeof eachScrumdoStory.cell);
-            return eachScrumdoStory.cell !== 'null'
-            //return typeof eachScrumdoStory.cell === 'object'
-        })
+        // .filter(eachScrumdoStory=>{
+        //     console.log('Debug .cell data type: ', typeof eachScrumdoStory.cell);
+        //     return eachScrumdoStory.cell !== 'null'
+        //     //return typeof eachScrumdoStory.cell === 'object'
+        // })
         .filter(eachScrumdoStory => {
-            console.log('Debug, checking cell label: ', eachScrumdoStory.cell.label);
-            return eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+            if (eachScrumdoStory.cell === 'object'){
+                console.log('Debug, it was an object');
+                if (eachScrumdoStory.cell.label){
+                    console.log('Debug, it has a .label: ', eachScrumdoStory.cell.label);
+                    return eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+                }
+            }
         })
     
         console.log('# of complete cards: ', completeCards.length);
