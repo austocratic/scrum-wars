@@ -27,7 +27,7 @@ const getAllStories = async () => {
 
     resultsArray.forEach((eachResult)=>{console.log(eachResult);})
 
-    console.log('firstResults: ', firstResults);
+    //console.log('firstResults: ', firstResults);
     console.log('firstResults type of: ', typeof firstResults);
 
     // console.log('Debug: firstResults[0]', firstResults[0]);
