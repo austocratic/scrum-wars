@@ -16,7 +16,7 @@ const getStories = async (page = 1) => {
     })
     .catch(err=>{console.log('Error: calling getStories(): ', err)})
 
-    return getStoriesResponse
+    return getStoriesResponse.data
     //console.log('DEBUG: response body: ', getStoriesResponse.body);
 };
 
