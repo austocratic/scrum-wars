@@ -20,8 +20,8 @@ const processTradeskills = async (gameObjects) => {
     let completeCards = scrumdoStoriesResult
         .filter(eachScrumdoStory=>{
             console.log('Debug .cell data type: ', typeof eachScrumdoStory.cell);
-            //eachScrumdoStory.cell !== 'null'
-            return typeof eachScrumdoStory.cell === 'object'
+            return eachScrumdoStory.cell !== 'null'
+            //return typeof eachScrumdoStory.cell === 'object'
         })
         .filter(eachScrumdoStory => {
             console.log('Debug, checking cell label: ', eachScrumdoStory.cell.label);
