@@ -3,7 +3,7 @@ Where I left off 10/28/18:
 
 --Left off trying to implement slack dialogue menus.  I cant get it to work though.  It responds and posts the dialogue JSON into slack body
 --I think I fixed the issue with processTradeskills, I need to push & test.
---I started adding more to processTradeskills.  I need to make sure all the property references are correct
+--I started adding more to processTradeskills.  Left off fixing processTradeskills, need to filter for the right status
 
 Next up:
 
