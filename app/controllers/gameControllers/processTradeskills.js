@@ -19,7 +19,9 @@ const processTradeskills = async (gameObjects) => {
     //2) Find all cards in the complete state.
     let completeCards = scrumdoStoriesResult
         .filter(eachScrumdoStory => {
-            eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+            if (eachScrumdoStory.cell !== null){
+                eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+            }
         })
     
         console.log('# of complete cards: ', completeCards.length);
