@@ -41,7 +41,7 @@ const getAllStories = async () => {
         }
     }
 
-    console.log('cardList: ', JSON.stringify(cardList))
+    //console.log('cardList: ', JSON.stringify(cardList))
 
     return cardList;
 }

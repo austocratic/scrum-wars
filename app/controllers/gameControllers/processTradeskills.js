@@ -17,14 +17,18 @@ const processTradeskills = async (gameObjects) => {
 
 
     //2) Find all cards in the complete state.
-    // let completeCards = scrumdoStoriesResult
-    //     .filter(eachScrumdoStory => {
-    //         eachScrumdoStory.status === 'complete'
-    //     })
-    //     .filter(eachCompleteStory => {
-    //         //Does the story already exist in the DB?
-    //         return _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id})
-    //     })
+    let completeCards = scrumdoStoriesResult
+        .filter(eachScrumdoStory => {
+            eachScrumdoStory.cell.label === 'Deployed to Prod | Done'
+        })
+    
+        console.log('# of complete cards: ', completeCards.length);
+        console.log('first complete card: ', completeCards[0]);
+
+        // .filter(eachCompleteStory => {
+        //     //Does the story already exist in the DB?
+        //     return _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id})
+        // })
 
    
 
