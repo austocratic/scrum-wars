@@ -23,7 +23,8 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    console.log('firstResults: ', JSON.stringify(firstResults));
+    console.log('firstResults: ', firstResults);
+    console.log('firstResults type of: ', typeof firstResults);
 
     // console.log('Debug: firstResults[0]', firstResults[0]);
 
