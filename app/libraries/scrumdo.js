@@ -23,27 +23,27 @@ const getStories = async (page = 1) => {
 const getAllStories = async () => {
     let firstResults = await getStories();
 
-    let resultsArray = Object.keys(firstResults)
+    let cardList = firstResults.items;
 
-    resultsArray.forEach((eachResult)=>{console.log(eachResult);})
+    //let resultsArray = Object.keys(firstResults)
 
-    //console.log('firstResults: ', firstResults);
-    console.log('firstResults type of: ', typeof firstResults);
+    //resultsArray.forEach((eachResult)=>{console.log(eachResult);})
 
-    // console.log('Debug: firstResults[0]', firstResults[0]);
+    //If more than 1 page of results, make multiple calls to get all pages of results
+    if (firstResults.max_page > 1) {
 
-    // //If more than 1 page of results, make multiple calls to get all pages of results
-    // if (firstResults.max_page > 1) {
+        //Execute a getStories call for each page
+        async () => {
+            for (let page = 2; i < firstResults.max_page; x++) {
+                let pageResults = await getStories(page);
+                cardList.push(pageResults.items)
+            }
+        }
+    }
 
-    //     //Execute a getStories call for each page
-    //     async () => {
-    //         for (let page = 2; i < firstResults.max_page; x++) {
-    //             let pageResults = await getStories(page);
-    //             cardList.push(pageResults.items)
-    //         }
-    //     }
-    // }
-    // return cardList;
+    console.log('cardList: ', JSON.stringify(cardList))
+
+    return cardList;
 }
 
 
