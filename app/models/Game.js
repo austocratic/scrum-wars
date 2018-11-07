@@ -146,7 +146,7 @@ class Game {
     }
 
     createMatch(zoneID){
-        console.log(`called game.createMatch(${zoneID})`);
+        console.log(`Info: called game.createMatch(${zoneID})`);
 
         let localRandomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
 
@@ -221,6 +221,24 @@ class Game {
 
         //Mutate the object
         Object.assign(currentUsers, newUser);
+
+        return randomID;
+    }
+
+    createScrumdoStory(storyID, assignee){
+        let randomID = (this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator() + this.randomGenerator()).toLowerCase();
+
+        let currentScrumdoStories = this.state.scrumdo_story;
+
+        let newScrumdoStory = {
+            [randomID]: {
+                assignee: assignee,
+                story_id: storyID
+            }
+        };
+
+        //Mutate the object
+        Object.assign(currentScrumdoStories, newScrumdoStory);
 
         return randomID;
     }

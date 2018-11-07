@@ -31,6 +31,8 @@ Backlog (near term):
 1) Make new town action "Crafters Guild" - opens a dialogue menu
 
 BUGS:
+-New slack user does not generate a new user in firebase.  Request fails, I have to manually create a user record in firebase
+-New users have issues equipping their first item.  
 -starting a team match with only one character can have issues.  Random team assignment can place the character on team 2, so team array is missing element 0
 -Melee attack strike back can have some weird effects.  I think sometimes the player context can get switched..... If you kill a character with a melee attack and then use /action it registers as if you are the character that was killed
 -CHeck for match start is off by 1 hour.  At 8:40am it was logging "hour of 7 is less than 9, don't start the match"

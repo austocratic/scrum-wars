@@ -30,7 +30,7 @@ let oneMinuteCron = new Scheduler({
                 gameObjects.game = game;
 
                 //Execute functionality that does now exist in the refresh() function.  This is functionality that should not be executed on every player action
-                //await processTradeskills(gameObjects);
+                await processTradeskills(gameObjects);
 
                 //Refresh the game (check for new turn, player deaths, ect.)
                 refreshController.refresh(gameObjects);
