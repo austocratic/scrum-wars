@@ -1,9 +1,15 @@
 "use strict";
 
 const slack = require('../../libraries/slack').sendMessage;
+const validateGameObjects = require('../../helpers/helpers').validateGameObjects;
 
 const processOngoingEffects = (gameObjects, charactersInZone) => {
     console.log('Info: called processingOngoingEffects()');
+
+    validateGameObjects(gameObjects, [
+        'game',
+        'currentMatch'
+    ]);
 
     charactersInZone.forEach( eachCharacter => {
         //If the character has effects on them, determine if that effect should fade
