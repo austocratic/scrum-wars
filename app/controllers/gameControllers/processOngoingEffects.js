@@ -28,7 +28,7 @@ const processOngoingEffects = (gameObjects, charactersInZone) => {
                         slack({
                             "username": eachCharacter.props.name,
                             "icon_url": gameObjects.game.baseURL + gameObjects.game.avatarPath + eachCharacter.props.gender + '/' + eachCharacter.props.avatar,
-                            "channel": ("#" + gameObjects.requestZone.props.channel),
+                            "channel": ("#" + gameObjects.arenaZone.props.channel),
                             "attachments": [{
                                 "text": `_${eachCharacter.props.name}'s ${eachEffect.name} fades away_`,
                                 "color": gameObjects.game.menuColor
