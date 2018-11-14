@@ -35,7 +35,7 @@ const processTradeskills = async (gameObjects) => {
 
             console.log('Debug: eachCompleteStory: ', JSON.stringify(eachCompleteStory));;
             //Check if the story already exists in the DB & if the card is assigned
-            let storyExists = _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id}) && (eachCompleteStory.assignee.length > 0)
+            let storyExists = _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id}) //&& (eachCompleteStory.assignee.length > 0)
 
             console.log('Debug: storyExists: ', storyExists);
         })
