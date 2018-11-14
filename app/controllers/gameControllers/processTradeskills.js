@@ -35,6 +35,8 @@ const processTradeskills = async (gameObjects) => {
             //Check if the story already exists in the DB & if the card is assigned
             return _.find(gameObjects.game.state.scrumdo_story, {card_id: eachCompleteStory.id}) && (eachCompleteStory.assignee.length > 0)
         })
+
+        console.log('Debug: completed cards total: ', completeCards.length);
          
         //Return array of all scrumdo card IDs generated
         return completeCards.map(eachCompleteCard=>{

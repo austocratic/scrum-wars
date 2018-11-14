@@ -237,6 +237,8 @@ class Game {
             }
         };
 
+        console.log('Info: Adding new scrumdo story: ', JSON.stringify(newScrumdoStory));
+
         //Mutate the object
         Object.assign(currentScrumdoStories, newScrumdoStory);
 
